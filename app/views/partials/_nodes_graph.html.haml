@@ -1,0 +1,28 @@
+.visualization-graph{"data-spy" => "affix", "data-offset-top" => "50"}
+
+  .visualization-graph-header
+    .container-fluid
+      %h2.pull-left Visualization Title
+      %span.visualization-status.draft Draft
+      .pull-right.dropdown
+        %button#actions-dropdown.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          %i.glyphicon.glyphicon-wrench
+          Actions
+          %span.caret
+          %ul.dropdown-menu{"aria-labelledby" => "actions-dropdown"}
+            %li
+              %a{:href => "#"} Dashboard
+            %li
+              %a{:href => "#"} Settings
+            %li.divider{:role => "separator"}
+            %li
+              %a{:href => "#"} Logout
+      .clearfix
+
+  .visualization-graph-container
+    %img.img-responsive{:src => 'http://placehold.it/1920x820'}
+      .visualization-graph-btn-top.btn-group{:role => "group"}
+        %button.btn.btn-default.search{:type => "button"}
+          %i.glyphicon.glyphicon-search
+        %button.btn.btn-default.share{"data-target" => "#graph-share-modal", "data-toggle" => "modal", :type => "button"}
+          %i.glyphicon.glyphicon-share

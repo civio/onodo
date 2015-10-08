@@ -1,0 +1,24 @@
+/ data offset top: 74 (viz-graph-header) + 500 (viz-graph)
+.visualization-table.container-fluid
+  .visualization-table-header.row
+    .col-sm-4
+      .btn-toolbar
+        .btn-group{ role: "group" }
+          %button.btn.btn-default{ type: "button" } Nodes
+          %button.btn.btn-primary.active{ type: "button" } Relationships
+        %button#btn-visualization-preview.btn.btn-default{ type: "button" }
+          %i.glyphicon.glyphicon-eye-open
+          Preview
+    .col-sm-8
+      .btn-toolbar.pull-right{ role: "group" }
+        %button.btn.btn-default{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
+          %i.glyphicon.glyphicon-option-horizontal
+          Add Node
+        %button.btn.btn-default{ type: "button" }
+          %i.glyphicon.glyphicon-option-vertical
+          Add Columns
+        %button.btn.btn-default{ type: "button" }
+          %i.glyphicon.glyphicon-flash
+          Network Analysis
+
+  = react_component 'Nodes', { data: @nodes }

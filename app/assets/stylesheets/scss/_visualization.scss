@@ -1,0 +1,97 @@
+@import 'bootstrap/variables';
+@import '_variables';
+@import 'bootstrap/mixins/vendor-prefixes';
+
+.visualization-graph{
+
+  //display: none;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  z-index: 90;
+
+  &.affix{
+    position: fixed;
+    top: 0;
+  }
+  
+  .visualization-graph-header{
+    position: relative;
+    background: $body-bg;
+    padding: 15px 0;
+    z-index: 90;
+    @include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.5) );
+
+    h2{
+      margin: 0;
+    }
+
+    .visualization-status{
+      display: inline-block;
+      margin-top: 8px;
+      margin-left: 15px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      color: white;
+      line-height: 1em;
+      font-size: 0.813em;
+      letter-spacing: 0.05em;
+      font-weight: 300;
+      text-transform: uppercase;
+
+      &.draft{
+        background: $brand-warning;
+      }
+      &.public{
+        background: $brand-success;
+      }
+    }
+  }  
+
+  .visualization-graph-container{
+    position: relative;
+    z-index: 60;
+
+    > img{
+      width: 100%;
+      height: auto;
+      //height: 500px;
+    }
+  }
+
+  .visualization-graph-btn-top{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}
+
+.visualization-table{
+  position: relative;
+  top: 550px;
+  width: 100%;
+  background: $body-bg;
+  z-index: 99;
+  @include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.6) );
+
+  &.affix{
+    position: fixed;
+    top: 74px;
+  }
+
+  .visualization-table-header{
+    padding: 15px 0;
+    height: 64px;
+    background: mix( $gray-light, $gray-lighter, 40% );
+  }
+
+  thead{
+    background-color: $gray;
+    color: white;
+
+    th{
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+  }
+}
