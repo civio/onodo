@@ -17,5 +17,10 @@
 //= require react
 //= require react_ujs
 //= require handsontable.full
+//= require underscore
+//= require backbone
+//= require backbone_rails_sync
+//= require backbone_datalink
+//= require backbone/onodo
 //= require_tree ./components
 //= require_tree .
