@@ -43,6 +43,9 @@ gem 'bootstrap-sass', '~> 3.3.5'
 # Use HAML as templating engine
 gem "haml-rails", "~> 0.9"
 
+# Handsontable for rails. Browser base Excel In rails. Read more: https://github.com/mahinder/rails_handsontable
+gem 'rails_handsontable'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -16,5 +16,6 @@
 //= require turbolinks
 //= require react
 //= require react_ujs
+//= require handsontable.full
 //= require_tree ./components
 //= require_tree .
