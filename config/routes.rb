@@ -1,10 +1,21 @@
 Rails.application.routes.draw do
-  resources :nodes
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'home#index'
+
+  resources :nodes
+
+  # API routes
+  scope 'api' do
+    get     'nodes'     => 'api#nodes'
+    post    'nodes'     => 'api#node_create'
+    get     'nodes/:id' => 'api#node'
+    put     'nodes/:id' => 'api#node_update'
+    delete  'nodes/:id' => 'api#node_destroy'
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
