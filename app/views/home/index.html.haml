@@ -3,3 +3,18 @@
   %hr
   .text-center
     %a.btn.btn-lg.btn-primary{:href => "/nodes", :title => "Explore a Visualization"} Explore a Visualization
+  %h3 Nodes list
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Description
+        %th Created
+        %th Updated
+    %tbody
+      - @nodes.each do |node|
+        %tr
+          %td= node.name
+          %td= node.description
+          %td= node.created_at
+          %td= node.updated_at
