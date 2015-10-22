@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151002165001) do
+ActiveRecord::Schema.define(version: 20151014102413) do
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20151002165001) do
     t.boolean  "visible"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "node_type"
   end
 
 end

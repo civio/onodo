@@ -59,6 +59,13 @@
     }
   }
 
+  .visualization-graph-component{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 99;
+  }
+
   .visualization-graph-btn-top{
     position: absolute;
     right: 10px;

@@ -4,6 +4,8 @@ class Onodo.Models.Node extends Backbone.Model
   defaults:
     name: null
     description: null
+    visible: false
+    node_type: null
 
 class Onodo.Collections.NodesCollection extends Backbone.Collection
   model: Onodo.Models.Node

@@ -10,11 +10,12 @@ Rails.application.routes.draw do
 
   # API routes
   scope 'api' do
-    get     'nodes'     => 'api#nodes'
-    post    'nodes'     => 'api#node_create'
-    get     'nodes/:id' => 'api#node'
-    put     'nodes/:id' => 'api#node_update'
-    delete  'nodes/:id' => 'api#node_destroy'
+    get     'nodes'       => 'api#nodes'
+    post    'nodes'       => 'api#node_create'
+    get     'nodes/:id'   => 'api#node'
+    put     'nodes/:id'   => 'api#node_update'
+    delete  'nodes/:id'   => 'api#node_destroy'
+    get     'nodes-types' => 'api#node_types'
   end
 
   # Example of regular route:
