@@ -1,4 +1,7 @@
-VisualizationGraphNode = React.createClass
+React = require 'react'
+
+# Node Component
+VisualizationGraphNodeComponent = React.createClass
   
   # Update Node when model change
   componentDidMount: ->
@@ -11,10 +14,11 @@ VisualizationGraphNode = React.createClass
       display: if @props.model.get('visible') then 'list-item' else 'none'
     return <li style={style}>{@props.model.get('name')+' '+@props.model.get('description')}</li>
 
-VisualizationGraph = React.createClass
+# Visualization Component
+VisualizationGraphComponent = React.createClass
 
   render: ->
     return <ul>{ for item in @props.data 
-      <VisualizationGraphNode key={item.id} model={item}/> }</ul>
+      <VisualizationGraphNodeComponent key={item.id} model={item}/> }</ul>
 
-window.VisualizationGraph = VisualizationGraph
+module.exports = VisualizationGraphComponent

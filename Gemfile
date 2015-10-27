@@ -15,7 +15,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '>=4.0.5'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -33,9 +33,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 # Use React.js for Rails
-gem 'react-rails', '~> 1.3.0'
+#gem 'react-rails', '~> 1.3.0'
+
 # A sprockets preprocessor which lets you write your components using CJSX (CoffeeScript with JSX markup)
-gem 'sprockets-coffee-react'
+#gem 'sprockets-coffee-react'
 
 # Use Twitter Bootstrap
 gem 'bootstrap-sass', '~> 3.3.5'
@@ -63,5 +64,7 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-end
 
+  # Manage Procfile-based applications http://ddollar.github.com/foreman
+  gem 'foreman'
+end

@@ -14,11 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require turbolinks
-//= require react
-//= require react_ujs
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
-//= require_tree ./dist
-//= require backbone/onodo
+//= require app-bundle

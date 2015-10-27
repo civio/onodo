@@ -24,6 +24,6 @@ module RailsRectTest
     config.active_record.raise_in_transactional_callbacks = true
 
     # Activate React Addons
-    config.react.addons = true
+    # config.react.addons = true
   end
 end

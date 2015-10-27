@@ -1,11 +1,11 @@
-Onodo.Views.Nodes ||= {}
+Handsontable  = require './../dist/handsontable.full.js'
 
-class Onodo.Views.Nodes.TableView extends Backbone.View
-
-  #template: JST["backbone/templates/nodes/index"]
+class VisualizationTableView extends Backbone.View
 
   table         = null
   nodes_type    = null
+
+  # HandsOnTable Options
   table_options = 
     contextMenu: [ 'row_below', 'remove_row', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
     height: 360
@@ -35,9 +35,9 @@ class Onodo.Views.Nodes.TableView extends Backbone.View
     ]
 
   initialize: ->
-    console.log 'initialize view'
-    #@collection.bind('reset', @addAll)
-    @collection.once('sync', @onCollectionSync , @)
+    console.log 'initialize TableView'
+    #@collection.bind 'reset', @addAll
+    @collection.once 'sync', @onCollectionSync , @
 
   onCollectionSync: =>
     table_options.data = @collection.toJSON()
@@ -45,11 +45,11 @@ class Onodo.Views.Nodes.TableView extends Backbone.View
 
   getNodeTypes: ->
     console.log 'getNodeTypes'
-    $.ajax({
+    $.ajax {
       url: '/api/nodes-types.json'
       dataType: 'json'
       success: @onNodesTypesSucess
-    })
+    }
 
   onNodesTypesSucess: (response) =>
     nodes_type = response
@@ -58,8 +58,8 @@ class Onodo.Views.Nodes.TableView extends Backbone.View
     table_options.afterRemoveRow    = @onTableRemoveRow
     table_options.afterCreateRow    = @onTableCreateRow
     # Setup HandsOnTable
-    table = new Handsontable( document.getElementById('visualization-table-nodes') , table_options )
-
+    table = new Handsontable @$el.get(0), table_options
+    
   onTableChange: (changes, source) =>
     if source != 'loadData'
       for change in changes
@@ -92,3 +92,5 @@ class Onodo.Views.Nodes.TableView extends Backbone.View
   
   render: =>
     return this
+
+module.exports = VisualizationTableView

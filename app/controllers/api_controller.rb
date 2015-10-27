@@ -1,35 +1,35 @@
 class ApiController < ApplicationController
-  
-  respond_to :json
-  
+
+  #respond_to :json
+
   # Get all Nodes
   def nodes
-    respond_with Node.all
+    render json: Node.all
   end
 
   # Get a Node
   def node
-    respond_with Node.find(params[:id])
+    render json: Node.find(params[:id])
   end
 
   # Create a new Node
   def node_create
-    respond_with Node.create(node_params)
+    render json: Node.create(node_params)
   end
 
   # Update a Node attribute
   def node_update
-    respond_with Node.update(params[:id], node_params)
+    render json: Node.update(params[:id], node_params)
   end
 
   # Delete a Node
   def node_destroy
-    respond_with Node.destroy(params[:id])
+    render json: Node.destroy(params[:id])
   end
 
   # Get uniques & non-blank Nodes Types 
   def node_types
-    respond_with Node.select(:node_type).map(&:node_type).reject(&:blank?).uniq
+    render json: Node.select(:node_type).map(&:node_type).reject(&:blank?).uniq
   end
 
   private
