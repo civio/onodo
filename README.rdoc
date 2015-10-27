@@ -6,8 +6,9 @@
 * PostgreSQL
 
 === Installation instructions
-$ bundle install
-$ npm install -g webpack
-$ npm install
-$ rake db:setup
-$ foreman start -f Procfile.dev
+
+  $ bundle install
+  $ npm install -g webpack
+  $ npm install
+  $ rake db:setup
+  $ foreman start -f Procfile.dev
