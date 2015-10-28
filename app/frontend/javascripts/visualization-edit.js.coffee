@@ -1,13 +1,13 @@
 # Imports
-NodesCollection         = require './collections/nodes-collection.js'
-VisualizationGraphView  = require './views/visualization-graph-view.js'
-VisualizationTableView  = require './views/visualization-table-view.js'
+NodesCollection               = require './collections/nodes-collection.js'
+VisualizationGraphView        = require './views/visualization-graph-view.js'
+VisualizationTableNodesView   = require './views/visualization-table-nodes-view.js'
 
 class VisualizationEdit
 
-  nodes:                  null
-  visualizationGraphView: null
-  visualizationTableView: null
+  nodes:                        null
+  visualizationGraphView:       null
+  visualizationTableNodesView:  null
 
   constructor: ->
     # Collection
@@ -15,8 +15,13 @@ class VisualizationEdit
     # Views
     @visualizationGraphView = new VisualizationGraphView {collection: @nodes}
     @visualizationGraphView.setElement '.visualization-graph-component'
-    @visualizationTableView = new VisualizationTableView {collection: @nodes}
-    @visualizationTableView.setElement '.visualization-table-nodes'
+    @visualizationTableNodesView = new VisualizationTableNodesView {collection: @nodes}
+    @visualizationTableNodesView.setElement '.visualization-table-nodes'
+
+  setupAffix: ->
+    $('.visualization-graph').affix
+      offset:
+        top: 50
 
   resize: =>
     #console.log 'resize!'
@@ -28,7 +33,8 @@ class VisualizationEdit
     $('.footer').css 'top', graphHeight+64
 
   render: ->
-    @nodes.fetch()  # fetch nodes collection
+    @setupAffix()   # setup affix bootstrap
     @resize()       # force resize
+    @nodes.fetch()  # fetch nodes collection
 
 module.exports = VisualizationEdit;

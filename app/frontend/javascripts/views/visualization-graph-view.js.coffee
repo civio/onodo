@@ -1,6 +1,6 @@
 React     = require 'react'
 ReactDOM  = require 'react-dom'
-VisualizationGraphComponent = require './../views/components/visualization-graph.cjsx'
+VisualizationGraphD3Component = require './../views/components/visualization-graph.cjsx'
 
 class VisualizationGraphView extends Backbone.View
   
@@ -17,7 +17,11 @@ class VisualizationGraphView extends Backbone.View
 
   render: () ->
     console.log 'render GraphView'
-    ReactDOM.render React.createElement(VisualizationGraphComponent, {data: @collection.models}), @$el.get(0)
+    ReactDOM.render(
+      React.createElement(VisualizationGraphD3Component, {collection: @collection}),
+      @$el.get(0)
+    )
+    #ReactDOM.render React.createElement(VisualizationGraphComponent, {data: @collection.models}), @$el.get(0)
     return this
 
 module.exports = VisualizationGraphView
