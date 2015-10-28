@@ -15,13 +15,16 @@
     "coffee-loader": "^0.7.2",
     "expose-loader": "~0.6.0",
     "imports-loader": "~0.6.3",
-    "exports-loader": "~0.6.2",
+    "exports-loader": "~0.6.2"
+  },
+  "peerDependencies": {
+    "react": "0.x",
+    "d3": "*"
+  },
+  "dependencies": {
     "react": "~0.14",
-    "react-dom": "~0.14"
-  },
-  "dependencies": {
-    "handsontable": "git://github.com/handsontable/handsontable.git"
-  },
-  "dependencies": {
+    "react-dom": "~0.14",
+    "d3": "~3.5.6",
+    "react-faux-dom": "~2.0.1"
   }
 }

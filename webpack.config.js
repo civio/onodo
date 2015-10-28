@@ -24,11 +24,6 @@ var config = module.exports = {
     devtoolModuleFilenameTemplate: '[resourcePath]',
     devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]'
   },
-  /*
-  externals: {
-    jquery: "var jQuery"
-  },
-  */
   resolve: {
     // tell webpack which extensions to auto search when it resolves modules. With this,
     // you'll be able to do `require('./utils')` instead of `require('./utils.js')`
@@ -37,13 +32,16 @@ var config = module.exports = {
   module: {
     loaders: [
       //{ test: /\.jsx?$/, loader: 'babel-loader'},
-      { test: /\.cjsx$/, loaders: ["coffee", "cjsx"]},
-      { test: /\.coffee$/,   loader: "coffee-loader"}
+      { test: /\.cjsx$/,    loaders: ["coffee", "cjsx"]},
+      { test: /\.coffee$/,  loader: "coffee-loader"}
     ]
-  },
+  }
+  /*,
   plugins: [
     new webpack.ProvidePlugin({
       'React': 'react/addons',
+      //'react-faux-dom': 'react-d3-core/react-faux-dom', //'react-d3-core/react-faux-dom',
+      //'d3': 'd3',
       //$: "jquery",
       //jQuery: "jquery"
       //Backbone: 'backbone',
@@ -53,4 +51,5 @@ var config = module.exports = {
     // http://clarkdave.net/2015/01/how-to-use-webpack-with-rails/#a-mix-of-multiple-entry-points-and-exposing-modules
     //new webpack.optimize.CommonsChunkPlugin('common-bundle.js')
   ]
+  */
 };
