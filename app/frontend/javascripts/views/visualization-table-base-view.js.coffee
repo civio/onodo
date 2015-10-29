@@ -18,6 +18,11 @@ class VisualizationTableBaseView extends Backbone.View
   onCollectionSync: =>
     @table_options.data = @collection.toJSON()
 
+  setupTable: ->
+    @table_options.afterRemoveRow    = @onTableRemoveRow
+    @table_options.afterCreateRow    = @onTableCreateRow
+    table = new Handsontable @$el.get(0), @table_options
+
   onTableRemoveRow: (index, amount) =>
     console.log index, amount
     while amount > 0
