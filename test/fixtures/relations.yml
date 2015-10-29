@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  source_id: 
+  target_id: 
+  from: 2015-10-29
+  to: 2015-10-29
+  at: 2015-10-29
+
+two:
+  type: 
+  source_id: 
+  target_id: 
+  from: 2015-10-29
+  to: 2015-10-29
+  at: 2015-10-29
