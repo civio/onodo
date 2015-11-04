@@ -3,9 +3,9 @@
   .visualization-table-header.row
     .col-sm-4
       .btn-toolbar
-        .btn-group{ role: "group" }
-          %button.btn.btn-default{ type: "button" } Nodes
-          %button.btn.btn-primary.active{ type: "button" } Relationships
+        #visualization-table-selector.btn-group{ role: "group" }
+          %a.btn.btn-primary.active{ :href => "#nodes", type: "button" } Nodes
+          %a.btn.btn-default{ :href => "#relationships", type: "button" } Relationships
         %button#btn-visualization-preview.btn.btn-default{ type: "button" }
           %i.glyphicon.glyphicon-eye-open
           Preview
@@ -22,5 +22,6 @@
           Network Analysis
 
   .visualization-table-nodes
+  .visualization-table-relations.hide
 
 /  = react_component 'Nodes', { data: @nodes }

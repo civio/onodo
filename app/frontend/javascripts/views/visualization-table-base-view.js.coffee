@@ -12,6 +12,12 @@ class VisualizationTableBaseView extends Backbone.View
       stretchH: 'all'
       columnSorting: true
 
+  destroy: ->
+    @undelegateEvents()
+    @$el.removeData().unbind()
+    @remove()
+    Backbone.View.prototype.remove.call(@)
+
   initialize: ->
     @collection.once 'sync', @onCollectionSync , @
 
@@ -21,7 +27,7 @@ class VisualizationTableBaseView extends Backbone.View
   setupTable: ->
     @table_options.afterRemoveRow    = @onTableRemoveRow
     @table_options.afterCreateRow    = @onTableCreateRow
-    table = new Handsontable @$el.get(0), @table_options
+    @table = new Handsontable @$el.get(0), @table_options
 
   onTableRemoveRow: (index, amount) =>
     console.log index, amount
@@ -35,6 +41,13 @@ class VisualizationTableBaseView extends Backbone.View
     model = @collection.create {}
     console.log model, model.get('id')
   
+  show: ->
+    @$el.removeClass('hide')
+    @table.render()
+
+  hide: ->
+    @$el.addClass('hide')
+
   render: =>
     return this
 

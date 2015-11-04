@@ -17,8 +17,6 @@ VisualizationGraphD3Component = React.createClass
     # setup a data array with Models attributes
     data = @props.collection.models.map( (d) -> return d.attributes )
 
-    console.log data
-
     # This is where we create the faux DOM node and give it to D3.
     svg = d3.select( ReactFauxDOM.createElement('svg') )
       .attr('width', 600)
