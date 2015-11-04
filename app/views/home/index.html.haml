@@ -7,14 +7,34 @@
   %table.table.table-striped
     %thead
       %tr
+        %th
         %th Name
         %th Description
+        %th Type
         %th Created
         %th Updated
     %tbody
       - @nodes.each do |node|
         %tr
+          %td= node.id
           %td= node.name
           %td= node.description
+          %td= node.node_type
           %td= node.created_at
           %td= node.updated_at
+  %hr
+  %h3 Relations list
+  %table.table.table-striped
+    %thead
+      %tr
+        %th
+        %th Node
+        %th Node
+        %th Relation
+    %tbody
+      - @relations.each do |relation|
+        %tr
+          %td= relation.id
+          %td= relation.source.name
+          %td= relation.target.name
+          %td= relation.relation_type
