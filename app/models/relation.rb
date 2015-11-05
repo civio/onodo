@@ -1,4 +1,5 @@
 class Relation < ActiveRecord::Base
+  belongs_to :dataset
   belongs_to :source, 
               foreign_key: :source_id, 
               class_name: Node, 

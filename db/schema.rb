@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151029180432) do
+ActiveRecord::Schema.define(version: 20151105183431) do
+
+  create_table "datasets", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -20,7 +26,10 @@ ActiveRecord::Schema.define(version: 20151029180432) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "node_type"
+    t.integer  "dataset_id"
   end
+
+  add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id"
 
   create_table "relations", force: :cascade do |t|
     t.string   "relation_type"
@@ -31,6 +40,9 @@ ActiveRecord::Schema.define(version: 20151029180432) do
     t.date     "at"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "dataset_id"
   end
+
+  add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id"
 
 end
