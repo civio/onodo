@@ -6,8 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-milesViz = Visualization.create!( name: 'Miles Davis Relations')
+### Miles Davis Relations
 
+milesViz = Visualization.create!( name: 'Miles Davis Relations')
 milesDB = Dataset.create!( visualization: milesViz )
 
 miles = Node.create!( name: 'Miles Davis',
@@ -33,6 +34,11 @@ red = Node.create!( name: 'Red Garland',
 trane = Node.create!( name: 'John Coltrane', 
                           description: '', 
                           node_type: 'tenor sax',
+                          dataset: milesDB)
+
+add = Node.create!( name: 'Cannonball Adderley', 
+                          description: '', 
+                          node_type: 'alto sax',
                           dataset: milesDB)
 
 wayne = Node.create!( name: 'Wayne Shorter', 
@@ -91,6 +97,11 @@ Relation.create!(source: miles,
                 dataset: milesDB)
 
 Relation.create!(source: miles,
+                target: add,
+                relation_type: 'music',
+                dataset: milesDB)
+
+Relation.create!(source: miles,
                 target: trane,
                 relation_type: 'music',
                 dataset: milesDB)
@@ -134,3 +145,42 @@ Relation.create!(source: miles,
                 target: jack,
                 relation_type: 'music',
                 dataset: milesDB)
+
+
+### The Godfather Characters
+
+godfatherViz = Visualization.create!( 
+                  name: 'The Godfather Characters',
+                  description: "A list of characters from 1972 film The Godfather, directed by Francis Ford Coppola & produced by Albert S. Ruddy from a screenplay by Mario Puzo and Coppola.")
+godfatherDB = Dataset.create!( visualization: godfatherViz )
+
+
+Node.create!( name: 'Anthony Corleone', 
+              description: '', 
+              node_type: 'Corleone',
+              dataset: godfatherDB)
+
+Node.create!( name: 'Carmella Corleone', 
+              description: '', 
+              node_type: 'Corleone',
+              dataset: godfatherDB)
+
+Node.create!( name: 'Connie Corleone', 
+              description: '', 
+              node_type: 'Corleone',
+              dataset: godfatherDB)
+
+Node.create!( name: 'Sonny Corleone', 
+              description: '', 
+              node_type: 'Corleone',
+              dataset: godfatherDB)
+
+Node.create!( name: 'Michael Corleone', 
+              description: '', 
+              node_type: 'Corleone',
+              dataset: godfatherDB)
+
+Node.create!( name: 'Fredo Corleone', 
+              description: '', 
+              node_type: 'Corleone',
+              dataset: godfatherDB)
