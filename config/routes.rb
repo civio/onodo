@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   resources :datasets
   resources :relations
   resources :nodes
-  
+
+  get '/explore' => 'pages#explore'
+  get '/gallery' => 'pages#gallery'
+
   # API routes
   scope 'api' do
     scope 'visualizations' do

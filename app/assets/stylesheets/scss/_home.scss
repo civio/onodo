@@ -1,21 +1,20 @@
 @import 'bootstrap/variables';
 @import '_variables';
-@import '_mixins';
 
 .home-background{
   width: 100%;
   height: 440px;
   margin: -50px 0 0;
   background: url('http://placehold.it/1920x560') no-repeat center 0 fixed;
-  //@include background-size( cover );
 }
 
 #gallery-carousel{
-  padding: 30px 0;
+  margin: 30px 0;
+  padding: 30px 0 15px;
   background: $jumbotron-bg;
   text-align: center;
   
-  > h4,
+  > strong,
   > a.btn{
     display: inline-block;
     margin: 0 4px;
@@ -23,31 +22,5 @@
 
   .gallery-carousel-container{
     margin-top: 30px;
-  }
-}
-
-.item-preview{
-  background: $gray-light;
-  padding: 5px;
-  text-align: left;
-
-  .item-type{
-    display: inline;
-    padding: 3px 6px;
-    margin-left: -15px;
-    color: white;
-    background: $gray-dark;
-    font-size: 0.875em;
-    text-transform: uppercase;
-  }
-
-  .item-info{
-    padding: 10px 15px;
-    background: white;
-
-    a h4{
-      color: $brand-primary;
-      font-weight: 300;
-    }
   }
 }

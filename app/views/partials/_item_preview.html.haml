@@ -1,11 +1,11 @@
 .item-preview
   .container-fluid
     .row.no-gutter
-      .item-picture.col-sm-5
+      %div{:class => (defined? large) ? 'item-picture col-sm-8' : 'item-picture col-sm-5'}
         %p.item-type Visualization
-      .item-info.col-sm-7
+      %div{:class => (defined? large) ? 'item-info col-sm-4' : 'item-info col-sm-7'}
         %a{:href => visualization_path(visualization), :title => visualization.name} 
-          %h4= visualization.name
+          %h3= visualization.name
         - if visualization.description?
           %p= visualization.description
         %hr

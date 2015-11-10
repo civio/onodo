@@ -1,0 +1,30 @@
+@import 'bootstrap/variables';
+@import '_variables';
+
+.item-preview{
+  background: $gray-light;
+  padding: 5px;
+  text-align: left;
+  margin-bottom: 15px;
+
+  .item-type{
+    display: inline;
+    padding: 3px 6px;
+    margin-left: -15px;
+    color: white;
+    background: $gray-dark;
+    font-size: 0.875em;
+    text-transform: uppercase;
+  }
+
+  .item-info{
+    padding: 0 15px 15px;
+    min-height: 180px;      // Fix equal height!!!
+    background: white;
+
+    a h3{
+      color: $brand-primary;
+      font-weight: 300;
+    }
+  }
+}
