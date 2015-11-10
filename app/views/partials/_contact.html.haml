@@ -1,0 +1,33 @@
+#contact.collapse
+  .well.container-fluid
+    .row
+      .col-sm-3
+        %h4 Contact Us
+        %p If you need help or have any inquires, you can contact us using our different channels
+      .col-sm-3
+        %p
+          %a{:href => "#"}
+            %i.glyphicon.glyphicon-earphone
+            91 123 123
+        %p
+          %a{:href => "mailto:hello@onodo.org"}
+            %i.glyphicon.glyphicon-envelope
+            hello@onodo.org
+        %p
+          %a.pull-left{:href => "#"}
+          Twitter
+          %a{:href => "#"}
+          facebook
+      .col-sm-3
+        %p
+          %strong Fundación Ciudadana Civio
+          C/ Sebastián Elcano 32
+          28003 Madrid
+        %p
+          %a{:href => "#", "title" => "View in Google Maps"}
+            %i.glyphicon.glyphicon-map-marker 
+            View in Google Maps
+      .col-sm-3
+        %a.close{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
+          %span{"aria-hidden" => "true"}
+            &times;

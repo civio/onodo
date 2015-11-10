@@ -1,3 +1,4 @@
+= render 'partials/contact'
 %nav.navbar.navbar-default.navbar-static-top
   .container-fluid
     .navbar-header
@@ -15,7 +16,7 @@
         %li
           %a{:href => "#"} Gallery
         %li
-          %a{:href => "#"} Contacto
+          %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"} Contact
       %ul.nav.navbar-nav.navbar-right
         %li.dropdown
           %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}

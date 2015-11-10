@@ -1,3 +1,6 @@
+@import 'bootstrap/variables';
+@import '_variables';
+
 .navbar-brand h1{
   font-size: 1em;
   margin: 0;
@@ -5,4 +8,15 @@
 
 .navbar-default{
   z-index: 92;
+}
+
+#contact{
+
+  .well{
+    margin: 0;
+  }
+
+  .col-sm-3:first-child{
+    border-right: 1px solid $gray-light;
+  }
 }

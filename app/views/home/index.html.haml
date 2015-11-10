@@ -1,8 +1,59 @@
 .container-fluid
-  %h2.text-center Welcome to Onodo!
-  %hr
-  .text-center
-    %a.btn.btn-lg.btn-primary{:href => "/visualizations", :title => "Explore a Visualization"} Explore a Visualization
-  %p
-  .text-center
-    %a.btn.btn-lg.btn-primary{:href => "/nodes", :title => "See all Nodes & Realtions"} See all Nodes & Relations
+  .row
+    .home-background
+    .jumbotron.text-center
+      %h2 Relationships are complicated
+      %p.lead Let's create visualizations to understand them
+      %button.btn.btn-lg.btn-primary{:href => "#", :title => "Signup"} Signup
+      %button.btn.btn-lg.btn-primary{:href => "#", :title => "Explore"} Explore
+      %button.btn.btn-lg.btn-primary{:href => "#", :title => "Demo"} Demo
+    .text-center
+      %h3 We make it easy
+      .container
+        .row
+          .col-sm-4
+            %img{:src => 'http://placehold.it/120x120'}
+            %h4 1. Quick creation
+            %p Using our node & relationship table template, you are ready to go. Import it, duplicate it from another visualization or create it from scratch
+          .col-sm-4
+            %img{:src => 'http://placehold.it/120x120'}
+            %h4 2. Rich information
+            %p You can add to each node all the data you need (text, media & links)
+          .col-sm-4
+            %img{:src => 'http://placehold.it/120x120'}
+            %h4 3. Share it anywhere
+            %p Share & embed the visualization or story wherever you want. We provide you some stats to track it
+    %hr
+    .text-center
+      %h3 We make it great
+      .container
+        .row
+          .col-sm-4
+            %img{:src => 'http://placehold.it/120x120'}
+            %h4 Collaborations
+            %p You can add collaborators to your visualization o duplicate the users visualizations to start your own
+          .col-sm-4
+            %img{:src => 'http://placehold.it/120x120'}
+            %h4 Live preview
+            %p View the final result of the visualization as you edit the nodes & relationships
+          .col-sm-4
+            %img{:src => 'http://placehold.it/120x120'}
+            %h4 Do you want to tell a story?
+            %p You can create your own story with chapters that reveal how the relationship network developed
+    #gallery-carousel
+      %h4 These are the latest additions to our gallery
+      %a.btn.btn-default.btn-primary{:href => '/gallery'} 
+        %i.glyphicon.glyphicon-plus
+        View More
+      .gallery-carousel-container.container
+        .row
+          - @visualizations.each do |visualization|
+            .col-sm-6
+              = render 'partials/item_preview', :visualization => visualization
+
+    .text-center
+      %p
+      %a.btn.btn-lg.btn-primary{:href => "/visualizations", :title => "Explore a Visualization"} Explore a Visualization
+      %p
+      %a.btn.btn-lg.btn-primary{:href => "/nodes", :title => "See all Nodes & Realtions"} See all Nodes & Relations
+    %hr
