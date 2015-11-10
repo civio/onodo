@@ -13,10 +13,13 @@ class VisualizationEdit
   visualizationTableRelationsView:  null
   $tableSelector:                   null
 
-  constructor: ->
+  constructor: (_id) ->
+    console.log('setup visualization', _id);
     # Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
+    @nodes.url      = '/api/visualizations/'+_id+'/nodes/';
+    @relations.url  = '/api/visualizations/'+_id+'/relations/';
     # Set Graph View
     @visualizationGraphView = new VisualizationGraphView {collection: @nodes}
     @visualizationGraphView.setElement '.visualization-graph-component'

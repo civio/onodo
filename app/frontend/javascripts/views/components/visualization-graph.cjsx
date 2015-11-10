@@ -39,7 +39,7 @@ VisualizationGraphD3Component = React.createClass
       .attr('fill','gray')
       .attr('dx', 18)
       .attr('dy', 5)
-      .text((d) -> d.name+' '+d.description)
+      .text((d) -> d.name)
 
     #We ask D3 for the underlying fake node and then render it as React elements.
     return svg.node().toReact()

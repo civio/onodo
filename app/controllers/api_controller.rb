@@ -1,8 +1,8 @@
 class ApiController < ApplicationController
 
-  # Get all Nodes
+  # Get all Nodes (for a visualization)
   def nodes
-    render json: Node.all
+    render json: Node.where(dataset_id: params[:dataset_id])
   end
 
   # Get a Node
@@ -32,9 +32,9 @@ class ApiController < ApplicationController
 
   ###
 
-  # Get all Relations
+  # Get all Relations (for a visualization)
   def relations
-    render json: Relation.all
+    render json: Relation.where(dataset_id: params[:dataset_id])
   end
 
   # Get a Relation
@@ -60,11 +60,11 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:id, :node).permit(:name, :description, :created_at, :updated_at, :visible, :node_type) if params[:node]
+      params.require(:id).permit(:dataset_id, :name, :description, :created_at, :updated_at, :visible, :node_type) if params[:node]
     end
 
     def relation_params
-      params.require(:id, :source_id, :source_id).permit(:created_at, :updated_at, :relation_type) if params[:relation]
+      params.require(:id, :source_id, :target_id).permit(:dataset_id, :created_at, :updated_at, :relation_type) if params[:relation]
     end
 
 end

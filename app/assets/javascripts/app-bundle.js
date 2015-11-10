@@ -48,10 +48,10 @@
 
 	App.VisualizationEdit = __webpack_require__(1);
 
-	$(document).on("page:change", function() {
+	$(document).on('page:change', function() {
 	  var appVisualizationEdit;
-	  if ($("body.visualizations.show").length > 0) {
-	    appVisualizationEdit = new App.VisualizationEdit;
+	  if ($('body.visualizations.show').length > 0) {
+	    appVisualizationEdit = new App.VisualizationEdit($('body').data('id'));
 	    appVisualizationEdit.render();
 	    return $(window).resize(appVisualizationEdit.resize);
 	  }
@@ -86,11 +86,14 @@
 
 	  VisualizationEdit.prototype.$tableSelector = null;
 
-	  function VisualizationEdit() {
+	  function VisualizationEdit(_id) {
 	    this.resize = bind(this.resize, this);
 	    this.updateTable = bind(this.updateTable, this);
+	    console.log('setup visualization', _id);
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
+	    this.nodes.url = '/api/visualizations/' + _id + '/nodes/';
+	    this.relations.url = '/api/visualizations/' + _id + '/relations/';
 	    this.visualizationGraphView = new VisualizationGraphView({
 	      collection: this.nodes
 	    });
@@ -19908,7 +19911,7 @@
 	    });
 	    svg.selectAll('.dot').append('circle').attr('r', 10).attr('fill', 'gray');
 	    svg.selectAll('.dot').append('text').attr('fill', 'gray').attr('dx', 18).attr('dy', 5).text(function(d) {
-	      return d.name + ' ' + d.description;
+	      return d.name;
 	    });
 	    return svg.node().toReact();
 	  }
