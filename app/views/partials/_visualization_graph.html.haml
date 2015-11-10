@@ -2,8 +2,11 @@
 
   .visualization-graph-header
     .container-fluid
-      %h2.pull-left Visualization Title
-      %span.visualization-status.draft Draft
+      %h2.pull-left= @visualization.name
+      - if @visualization.published?
+        %span.visualization-status.public Public
+      - else
+        %span.visualization-status.draft Draft
       .pull-right.dropdown
         %button#actions-dropdown.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
           %i.glyphicon.glyphicon-wrench

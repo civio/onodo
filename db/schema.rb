@@ -11,13 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105183431) do
+ActiveRecord::Schema.define(version: 20151106184251) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "visualization_id"
   end
+
+  add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id"
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -44,5 +47,13 @@ ActiveRecord::Schema.define(version: 20151105183431) do
   end
 
   add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id"
+
+  create_table "visualizations", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.boolean  "published"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
 end

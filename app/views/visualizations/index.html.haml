@@ -1,0 +1,5 @@
+.container-fluid
+  .row
+  - @visualizations.each do |visualization|
+    %a.col-sm-4{:href => visualization_path(visualization), :title => visualization.name} 
+      %h3= visualization.name

@@ -6,7 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-milesDB = Dataset.create!( name: 'Miles Davis Relations')
+milesViz = Visualization.create!( name: 'Miles Davis Relations')
+
+milesDB = Dataset.create!( visualization: milesViz )
 
 miles = Node.create!( name: 'Miles Davis',
                           description: '', 

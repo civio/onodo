@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :datasets
   # You can have the root of your site routed with "root"
   root 'home#index'
 
-  resources :nodes
+  resources :visualizations
+  resources :datasets
   resources :relations
+  resources :nodes
 
   # API routes
   scope 'api' do
