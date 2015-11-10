@@ -50,7 +50,7 @@
 
 	$(document).on("page:change", function() {
 	  var appVisualizationEdit;
-	  if ($("body.nodes").length > 0) {
+	  if ($("body.visualizations.show").length > 0) {
 	    appVisualizationEdit = new App.VisualizationEdit;
 	    appVisualizationEdit.render();
 	    return $(window).resize(appVisualizationEdit.resize);
