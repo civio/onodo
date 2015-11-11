@@ -3,10 +3,13 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
-  resources :visualizations
-  resources :datasets
-  resources :relations
-  resources :nodes
+  resources :visualizations, only: [:index, :show, :edit] do 
+    collection do 
+      post 'publish'
+      post 'unpublish'
+    end 
+  end 
+  resources :nodes, only: [:index]
 
   get '/explore' => 'pages#explore'
   get '/gallery' => 'pages#gallery'

@@ -14,4 +14,24 @@ class VisualizationsController < ApplicationController
   def edit
     @visualization = Visualization.find(params[:id])
   end
+
+  def publish
+    @visualization = Visualization.find(params[:id])
+
+    if @visualization.update_attributes(:published => true)
+      redirect_to visualization_path( @visualization )
+    else
+      redirect_to edit_visualization_path( @visualization )
+    end
+  end
+
+  def unpublish
+    @visualization = Visualization.find(params[:id])
+
+    if @visualization.update_attributes(:published => false)
+      redirect_to visualization_path( @visualization )
+    else
+      redirect_to edit_visualization_path( @visualization )
+    end
+  end
 end

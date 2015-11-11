@@ -6,6 +6,7 @@
         %span.visualization-status.public Public
       - else
         %span.visualization-status.draft Draft
+
     .pull-right.dropdown
       %button#actions-dropdown.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
         %i.glyphicon.glyphicon-wrench
@@ -28,7 +29,7 @@
           %li
             %a{:href => "#"} Duplicate visualization
           %li
-            %a{:href => "#"} Make private
+            = link_to "Make private", {:controller => "visualizations", :action => "unpublish", :id => @visualization.id}, {:method => :post}
           %li
             %a{:href => "#"} Preview visualization
           %li
@@ -44,5 +45,9 @@
           %li
             %a{:href => "#"} Duplicate visualization
           %li
-            %a{:href => request.original_url+"/edit"} Edit visualization
+            %a{href: edit_visualization_path(@visualization)} Edit visualization
+
+    - if defined? edit and !@visualization.published?
+      = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:class => 'btn btn-default btn-primary pull-right', :method => :post}
+
     .clearfix
