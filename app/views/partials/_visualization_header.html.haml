@@ -15,35 +15,35 @@
       %ul.dropdown-menu{"aria-labelledby" => "actions-dropdown"}
         - if defined? edit and !@visualization.published?
           %li
-            %a{:href => "#"} Edit info
+            %a{href: edit_visualization_path(@visualization)+'/info'} Edit info
           %li
-            %a{:href => "#"} Duplicate visualization
+            %a{href: "#"} Duplicate visualization
           %li
-            %a{:href => "#"} Preview visualization
+            %a{href: "#"} Preview visualization
           %li.divider{:role => "separator"}
           %li
-            %a.text-danger{:href => "#"} Delete
+            %a.text-danger{href: "#"} Delete
         - elsif defined? edit and @visualization.published?
           %li
-            %a{:href => "#"} Edit info
+            %a{href: edit_visualization_path(@visualization)+'/info'} Edit info
           %li
-            %a{:href => "#"} Duplicate visualization
+            %a{href: "#"} Duplicate visualization
           %li
             = link_to "Make private", {:controller => "visualizations", :action => "unpublish", :id => @visualization.id}, {:method => :post}
           %li
-            %a{:href => "#"} Preview visualization
+            %a{href: "#"} Preview visualization
           %li
-            %a{:href => "#"} Create story
+            %a{href: "#"} Create story
           %li
-            %a{:href => "#"} Your related stories
+            %a{href: "#"} Your related stories
           %li.divider{:role => "separator"}
           %li
-            %a.text-danger{:href => "#"} Delete
+            %a.text-danger{href: "#"} Delete
         - else
           %li
-            %a{:href => "#"} Create story
+            %a{href: "#"} Create story
           %li
-            %a{:href => "#"} Duplicate visualization
+            %a{href: "#"} Duplicate visualization
           %li
             %a{href: edit_visualization_path(@visualization)} Edit visualization
 

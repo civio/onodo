@@ -15,6 +15,16 @@ class VisualizationsController < ApplicationController
     @visualization = Visualization.find(params[:id])
   end
 
+  def editinfo
+    @visualization = Visualization.find(params[:id])
+  end
+
+  def updateinfo
+    @visualization = Visualization.find(params[:id])
+    @visualization.update_attributes( edit_info_params )
+    redirect_to visualization_path( @visualization )
+  end
+
   def publish
     @visualization = Visualization.find(params[:id])
 
@@ -34,4 +44,12 @@ class VisualizationsController < ApplicationController
       redirect_to edit_visualization_path( @visualization )
     end
   end
+
+  private
+
+    # TODO: aqui deberíamos validar los parámetros que queremos recibir
+    def edit_info_params
+      params.require(:visualization).permit(:name, :description)
+    end
+
 end

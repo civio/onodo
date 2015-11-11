@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :visualizations, only: [:index, :show, :edit] do 
     collection do 
+      get ':id/edit/info' => 'visualizations#editinfo'
+      post ':id/edit/info' => 'visualizations#updateinfo'
       post 'publish'
       post 'unpublish'
     end 

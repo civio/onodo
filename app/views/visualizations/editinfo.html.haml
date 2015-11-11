@@ -1,0 +1,15 @@
+.visualization-edit-info.container
+  %h2 Edit Visualization Info
+  .row
+    .col-sm-6
+      = form_for @visualization, url: {action: "updateinfo"} , method: "post" do |f|
+        .form-group
+          = f.label "visualization-input-title", "Title"
+          = f.text_field :name, class: "form-control"
+        .form-group
+          = f.label "visualization-input-description", "Description"
+          = f.text_area :description, rows: 5, class: "form-control"
+        = f.submit "Save", class: "btn btn-default btn-primary"
+        %a.btn.btn-default{href: edit_visualization_path(@visualization)} Cancel
+    .col-sm-6
+      %strong Collaborators
