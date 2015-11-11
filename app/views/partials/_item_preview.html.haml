@@ -4,10 +4,10 @@
       %div{:class => (defined? large) ? 'item-picture col-sm-8' : 'item-picture col-sm-5'}
         %p.item-type Visualization
       %div{:class => (defined? large) ? 'item-info col-sm-4' : 'item-info col-sm-7'}
-        %a{:href => visualization_path(visualization), :title => visualization.name} 
-          %h3= visualization.name
-        - if visualization.description?
-          %p= visualization.description
+        %a{:href => visualization_path(item), :title => item.name} 
+          %h3= item.name
+        - if item.description?
+          %p= item.description
         %hr
         %p 
           %i.glyphicon.glyphicon-user

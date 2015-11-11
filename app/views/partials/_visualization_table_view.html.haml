@@ -1,0 +1,39 @@
+.visualization-table.container-fluid.hide
+  .visualization-table-header.row
+    .col-sm-6
+      .btn-toolbar
+        #visualization-table-selector.btn-group{ role: "group" }
+          %a.btn.btn-primary.active{ :href => "#nodes", type: "button" } Nodes
+          %a.btn.btn-default{ :href => "#relationships", type: "button" } Relationships
+    .col-sm-6
+      %button.btn.btn-default.pull-right{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
+        %i.glyphicon.glyphicon-save
+        Download
+
+  .visualization-table-nodes
+    %table.table
+      %thead
+        %tr
+          %th Name
+          %th Description
+          %th Type
+      %tbody
+      - @nodes.each do |node|
+        %tr
+          %td= node.name
+          %td= node.description
+          %td= node.node_type
+
+  .visualization-table-relations.hide
+    %table.table
+      %thead
+        %tr
+          %th Source
+          %th Target
+          %th Type
+      %tbody
+      - @relations.each do |relation|
+        %tr
+          %td= relation.source.name
+          %td= relation.target.name
+          %td= relation.relation_type

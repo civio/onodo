@@ -46,14 +46,20 @@
 
 	window.App || (window.App = {});
 
+	App.VisualizationShow = __webpack_require__(221);
+
 	App.VisualizationEdit = __webpack_require__(1);
 
 	$(document).on('page:change', function() {
-	  var appVisualizationEdit;
-	  if ($('body.visualizations.show').length > 0) {
+	  var appVisualizationEdit, appVisualizationShow;
+	  if ($('body.visualizations.edit').length > 0) {
 	    appVisualizationEdit = new App.VisualizationEdit($('body').data('id'));
 	    appVisualizationEdit.render();
 	    return $(window).resize(appVisualizationEdit.resize);
+	  } else if ($('body.visualizations.show').length > 0) {
+	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
+	    appVisualizationShow.render();
+	    return $(window).resize(appVisualizationShow.resize);
 	  }
 	});
 
@@ -64778,6 +64784,75 @@
 	})(VisualizationTableBaseView);
 
 	module.exports = VisualizationTableRelationsView;
+
+
+/***/ },
+/* 221 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var NodesCollection, RelationsCollection, VisualizationGraphView, VisualizationShow, VisualizationTableNodesView, VisualizationTableRelationsView,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+	NodesCollection = __webpack_require__(2);
+
+	RelationsCollection = __webpack_require__(4);
+
+	VisualizationGraphView = __webpack_require__(6);
+
+	VisualizationTableNodesView = __webpack_require__(217);
+
+	VisualizationTableRelationsView = __webpack_require__(220);
+
+	VisualizationShow = (function() {
+	  VisualizationShow.prototype.nodes = null;
+
+	  VisualizationShow.prototype.visualizationGraphView = null;
+
+	  VisualizationShow.prototype.visualizationTableNodesView = null;
+
+	  VisualizationShow.prototype.visualizationTableRelationsView = null;
+
+	  VisualizationShow.prototype.$tableSelector = null;
+
+	  function VisualizationShow(_id) {
+	    this.resize = bind(this.resize, this);
+	    console.log('setup visualization', _id);
+	    this.nodes = new NodesCollection();
+	    this.relations = new RelationsCollection();
+	    this.nodes.url = '/api/visualizations/' + _id + '/nodes/';
+	    this.relations.url = '/api/visualizations/' + _id + '/relations/';
+	    this.visualizationGraphView = new VisualizationGraphView({
+	      collection: this.nodes
+	    });
+	    this.visualizationGraphView.setElement('.visualization-graph-component');
+	  }
+
+	  VisualizationShow.prototype.setupAffix = function() {
+	    return $('.visualization-graph').affix({
+	      offset: {
+	        top: 50
+	      }
+	    });
+	  };
+
+	  VisualizationShow.prototype.resize = function() {
+	    var graphHeight, windowHeight;
+	    windowHeight = $(window).height();
+	    graphHeight = windowHeight - 50 - 64 - 64;
+	    return this.visualizationGraphView.$el.height(graphHeight);
+	  };
+
+	  VisualizationShow.prototype.render = function() {
+	    this.resize();
+	    this.nodes.fetch();
+	    return this.relations.fetch();
+	  };
+
+	  return VisualizationShow;
+
+	})();
+
+	module.exports = VisualizationShow;
 
 
 /***/ }

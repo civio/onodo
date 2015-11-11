@@ -1,2 +1,40 @@
-= render 'partials/visualization_graph'
-= render 'partials/visualization_table'
+= render 'partials/visualization_header'
+
+.visualization-graph
+  = render 'partials/visualization_graph'
+
+.visualization-info
+  .container
+    .row
+      .col-sm-4
+        %strong Created by
+        %p
+          %i.glyphicon.glyphicon-user
+          The Buffalo Daily
+      .col-sm-4
+        %strong Status
+        - if @visualization.published?
+          %p.visualization-status.public Public
+        - else
+          %p.visualization-status.draft Draft
+      .col-sm-4
+        %button.btn.btn-default.pull-right{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
+          %i.glyphicon.glyphicon-plus
+          View Data Table
+  - if @visualization.description?
+    %hr
+    .container
+      .row
+        .col-sm-8
+          %strong Description
+          %p= @visualization.description
+  
+= render 'partials/visualization_table_view'
+
+.visualization-related-items
+  .container
+    %strong Related visualizations & stories
+    .row
+      - @related_items.each do |item|
+        .col-sm-6
+          = render 'partials/item_preview', :item => item

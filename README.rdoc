@@ -12,3 +12,7 @@
   $ npm install
   $ rake db:setup
   $ foreman start -f Procfile.dev
+
+=== Purge & Update DB with seed file
+
+  $ rake db:purge db:create db:migrate db:seed
