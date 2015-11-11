@@ -19,6 +19,6 @@
             %i.glyphicon.glyphicon-search
   %hr
   .row
-    - @visualizations.each do |visualization|
+    - @visualizations.each do |item|
       .col-sm-6
-        = render 'partials/item_preview', :visualization => visualization
+        = render 'partials/item_preview', :item => item
