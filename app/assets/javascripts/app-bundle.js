@@ -64816,6 +64816,7 @@
 
 	  function VisualizationShow(_id) {
 	    this.resize = bind(this.resize, this);
+	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
@@ -64825,14 +64826,23 @@
 	      collection: this.nodes
 	    });
 	    this.visualizationGraphView.setElement('.visualization-graph-component');
+	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	  }
 
-	  VisualizationShow.prototype.setupAffix = function() {
-	    return $('.visualization-graph').affix({
-	      offset: {
-	        top: 50
-	      }
-	    });
+	  VisualizationShow.prototype.updateTable = function(e) {
+	    e.preventDefault();
+	    if ($(e.target).hasClass('active')) {
+	      return;
+	    }
+	    this.$tableSelector.filter('.active').removeClass('active btn-primary').addClass('btn-default');
+	    $(e.target).addClass('active btn-primary');
+	    if ($(e.target).attr('href') === '#nodes') {
+	      $('.visualization-table-nodes').show();
+	      return $('.visualization-table-relations').hide();
+	    } else {
+	      $('.visualization-table-nodes').hide();
+	      return $('.visualization-table-relations').show();
+	    }
 	  };
 
 	  VisualizationShow.prototype.resize = function() {

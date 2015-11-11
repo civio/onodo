@@ -23,11 +23,24 @@ class VisualizationShow
     # Set Graph View
     @visualizationGraphView = new VisualizationGraphView {collection: @nodes}
     @visualizationGraphView.setElement '.visualization-graph-component'
+    # Setup Table Selector
+    @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
 
-  setupAffix: ->
-    $('.visualization-graph').affix
-      offset:
-        top: 50
+  updateTable: (e) =>
+    e.preventDefault()
+    if $(e.target).hasClass('active')
+      return
+    @$tableSelector
+      .filter '.active'
+      .removeClass 'active btn-primary'
+      .addClass 'btn-default'
+    $(e.target).addClass 'active btn-primary'
+    if $(e.target).attr('href') == '#nodes'
+      $('.visualization-table-nodes').show()
+      $('.visualization-table-relations').hide()
+    else
+      $('.visualization-table-nodes').hide()
+      $('.visualization-table-relations').show()
 
   resize: =>
     #console.log 'resize!'
@@ -38,7 +51,6 @@ class VisualizationShow
     #$('.footer').css 'top', graphHeight+64
 
   render: ->
-    #@setupAffix()   # setup affix bootstrap
     @resize()       # force resize
     # fetch collections
     @nodes.fetch()

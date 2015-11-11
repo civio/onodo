@@ -137,6 +137,27 @@
   }
 }
 
+#visualization-table-view{
+  position: relative;
+
+  .title{
+    padding-bottom: 10px;  
+
+    .close{
+      position: absolute;
+      top: 20px;
+      right: 15px;
+    }
+  }
+}
+
+// Visualization Edit
+body.visualizations.show{
+  .visualization-table-relations{
+    display: none;
+  }
+}
+
 // Visualization Edit
 body.visualizations.edit{
 

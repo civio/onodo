@@ -1,4 +1,9 @@
-.visualization-table.container-fluid.hide
+#visualization-table-view.visualization-table.container-fluid.collapse
+  .title
+    %h3= @visualization.name+" data table"
+    %a.close.pull-right{:href => "#visualization-table-view", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "visualization-table-view"}
+      %span{"aria-hidden" => "true"}
+        &times;
   .visualization-table-header.row
     .col-sm-6
       .btn-toolbar
@@ -24,7 +29,7 @@
           %td= node.description
           %td= node.node_type
 
-  .visualization-table-relations.hide
+  .visualization-table-relations
     %table.table
       %thead
         %tr

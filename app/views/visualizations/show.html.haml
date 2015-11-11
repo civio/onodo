@@ -18,9 +18,14 @@
         - else
           %p.visualization-status.draft Draft
       .col-sm-4
-        %button.btn.btn-default.pull-right{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
-          %i.glyphicon.glyphicon-plus
-          View Data Table
+        %button.btn.btn-default.btn-collapse.collapsed.pull-right{ type: "button", "aria-controls" => "visualization-table-view", data: { toggle: "collapse", target: "#visualization-table-view" } }
+          %span.collapsible-label
+            %i.glyphicon.glyphicon-plus
+            View Data Table
+          %span.collapsed-label
+            %i.glyphicon.glyphicon-minus
+            Hide Data Table
+
   - if @visualization.description?
     %hr
     .container
