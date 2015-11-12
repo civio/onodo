@@ -8,5 +8,6 @@
     = csrf_meta_tags
   %body{ :class => controller.controller_path+' '+controller.action_name, "data-id" => params[:id] }
     = render 'partials/header'
+    = render 'partials/alerts'
     = yield
     = render 'partials/footer'

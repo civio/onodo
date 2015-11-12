@@ -46,9 +46,9 @@
 
 	window.App || (window.App = {});
 
-	App.VisualizationShow = __webpack_require__(221);
+	App.VisualizationShow = __webpack_require__(1);
 
-	App.VisualizationEdit = __webpack_require__(1);
+	App.VisualizationEdit = __webpack_require__(221);
 
 	$(document).on('page:change', function() {
 	  var appVisualizationEdit, appVisualizationShow;
@@ -68,7 +68,7 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraphView, VisualizationTableNodesView, VisualizationTableRelationsView,
+	var NodesCollection, RelationsCollection, VisualizationGraphView, VisualizationShow, VisualizationTableNodesView, VisualizationTableRelationsView,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 	NodesCollection = __webpack_require__(2);
@@ -81,18 +81,18 @@
 
 	VisualizationTableRelationsView = __webpack_require__(220);
 
-	VisualizationEdit = (function() {
-	  VisualizationEdit.prototype.nodes = null;
+	VisualizationShow = (function() {
+	  VisualizationShow.prototype.nodes = null;
 
-	  VisualizationEdit.prototype.visualizationGraphView = null;
+	  VisualizationShow.prototype.visualizationGraphView = null;
 
-	  VisualizationEdit.prototype.visualizationTableNodesView = null;
+	  VisualizationShow.prototype.visualizationTableNodesView = null;
 
-	  VisualizationEdit.prototype.visualizationTableRelationsView = null;
+	  VisualizationShow.prototype.visualizationTableRelationsView = null;
 
-	  VisualizationEdit.prototype.$tableSelector = null;
+	  VisualizationShow.prototype.$tableSelector = null;
 
-	  function VisualizationEdit(_id) {
+	  function VisualizationShow(_id) {
 	    this.resize = bind(this.resize, this);
 	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
@@ -104,63 +104,43 @@
 	      collection: this.nodes
 	    });
 	    this.visualizationGraphView.setElement('.visualization-graph-component');
-	    this.visualizationTableNodesView = new VisualizationTableNodesView({
-	      collection: this.nodes
-	    });
-	    this.visualizationTableNodesView.setElement('.visualization-table-nodes');
-	    this.visualizationTableRelationsView = new VisualizationTableRelationsView({
-	      collection: this.relations
-	    });
-	    this.visualizationTableRelationsView.setElement('.visualization-table-relations');
 	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	  }
 
-	  VisualizationEdit.prototype.setupAffix = function() {
-	    return $('.visualization-graph').affix({
-	      offset: {
-	        top: 50
-	      }
-	    });
-	  };
-
-	  VisualizationEdit.prototype.updateTable = function(e) {
+	  VisualizationShow.prototype.updateTable = function(e) {
 	    e.preventDefault();
 	    if ($(e.target).hasClass('active')) {
 	      return;
 	    }
-	    console.log('updateTable', e);
 	    this.$tableSelector.filter('.active').removeClass('active btn-primary').addClass('btn-default');
 	    $(e.target).addClass('active btn-primary');
 	    if ($(e.target).attr('href') === '#nodes') {
-	      this.visualizationTableRelationsView.hide();
-	      return this.visualizationTableNodesView.show();
+	      $('.visualization-table-nodes').show();
+	      return $('.visualization-table-relations').hide();
 	    } else {
-	      this.visualizationTableNodesView.hide();
-	      return this.visualizationTableRelationsView.show();
+	      $('.visualization-table-nodes').hide();
+	      return $('.visualization-table-relations').show();
 	    }
 	  };
 
-	  VisualizationEdit.prototype.resize = function() {
+	  VisualizationShow.prototype.resize = function() {
 	    var graphHeight, windowHeight;
 	    windowHeight = $(window).height();
 	    graphHeight = windowHeight - 50 - 64 - 64;
-	    this.visualizationGraphView.$el.height(graphHeight);
-	    $('.visualization-table').css('top', graphHeight + 64);
-	    return $('.footer').css('top', graphHeight + 64);
+	    return this.visualizationGraphView.$el.height(graphHeight);
 	  };
 
-	  VisualizationEdit.prototype.render = function() {
-	    this.setupAffix();
+	  VisualizationShow.prototype.render = function() {
 	    this.resize();
 	    this.nodes.fetch();
 	    return this.relations.fetch();
 	  };
 
-	  return VisualizationEdit;
+	  return VisualizationShow;
 
 	})();
 
-	module.exports = VisualizationEdit;
+	module.exports = VisualizationShow;
 
 
 /***/ },
@@ -64790,7 +64770,7 @@
 /* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var NodesCollection, RelationsCollection, VisualizationGraphView, VisualizationShow, VisualizationTableNodesView, VisualizationTableRelationsView,
+	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraphView, VisualizationTableNodesView, VisualizationTableRelationsView,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 	NodesCollection = __webpack_require__(2);
@@ -64803,18 +64783,18 @@
 
 	VisualizationTableRelationsView = __webpack_require__(220);
 
-	VisualizationShow = (function() {
-	  VisualizationShow.prototype.nodes = null;
+	VisualizationEdit = (function() {
+	  VisualizationEdit.prototype.nodes = null;
 
-	  VisualizationShow.prototype.visualizationGraphView = null;
+	  VisualizationEdit.prototype.visualizationGraphView = null;
 
-	  VisualizationShow.prototype.visualizationTableNodesView = null;
+	  VisualizationEdit.prototype.visualizationTableNodesView = null;
 
-	  VisualizationShow.prototype.visualizationTableRelationsView = null;
+	  VisualizationEdit.prototype.visualizationTableRelationsView = null;
 
-	  VisualizationShow.prototype.$tableSelector = null;
+	  VisualizationEdit.prototype.$tableSelector = null;
 
-	  function VisualizationShow(_id) {
+	  function VisualizationEdit(_id) {
 	    this.resize = bind(this.resize, this);
 	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
@@ -64826,43 +64806,63 @@
 	      collection: this.nodes
 	    });
 	    this.visualizationGraphView.setElement('.visualization-graph-component');
+	    this.visualizationTableNodesView = new VisualizationTableNodesView({
+	      collection: this.nodes
+	    });
+	    this.visualizationTableNodesView.setElement('.visualization-table-nodes');
+	    this.visualizationTableRelationsView = new VisualizationTableRelationsView({
+	      collection: this.relations
+	    });
+	    this.visualizationTableRelationsView.setElement('.visualization-table-relations');
 	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	  }
 
-	  VisualizationShow.prototype.updateTable = function(e) {
+	  VisualizationEdit.prototype.setupAffix = function() {
+	    return $('.visualization-graph').affix({
+	      offset: {
+	        top: 50
+	      }
+	    });
+	  };
+
+	  VisualizationEdit.prototype.updateTable = function(e) {
 	    e.preventDefault();
 	    if ($(e.target).hasClass('active')) {
 	      return;
 	    }
+	    console.log('updateTable', e);
 	    this.$tableSelector.filter('.active').removeClass('active btn-primary').addClass('btn-default');
 	    $(e.target).addClass('active btn-primary');
 	    if ($(e.target).attr('href') === '#nodes') {
-	      $('.visualization-table-nodes').show();
-	      return $('.visualization-table-relations').hide();
+	      this.visualizationTableRelationsView.hide();
+	      return this.visualizationTableNodesView.show();
 	    } else {
-	      $('.visualization-table-nodes').hide();
-	      return $('.visualization-table-relations').show();
+	      this.visualizationTableNodesView.hide();
+	      return this.visualizationTableRelationsView.show();
 	    }
 	  };
 
-	  VisualizationShow.prototype.resize = function() {
+	  VisualizationEdit.prototype.resize = function() {
 	    var graphHeight, windowHeight;
 	    windowHeight = $(window).height();
 	    graphHeight = windowHeight - 50 - 64 - 64;
-	    return this.visualizationGraphView.$el.height(graphHeight);
+	    this.visualizationGraphView.$el.height(graphHeight);
+	    $('.visualization-table').css('top', graphHeight + 64);
+	    return $('.footer').css('top', graphHeight + 64);
 	  };
 
-	  VisualizationShow.prototype.render = function() {
+	  VisualizationEdit.prototype.render = function() {
+	    this.setupAffix();
 	    this.resize();
 	    this.nodes.fetch();
 	    return this.relations.fetch();
 	  };
 
-	  return VisualizationShow;
+	  return VisualizationEdit;
 
 	})();
 
-	module.exports = VisualizationShow;
+	module.exports = VisualizationEdit;
 
 
 /***/ }

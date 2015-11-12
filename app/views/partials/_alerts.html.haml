@@ -1,0 +1,6 @@
+-# TODO: Move these into pages
+.container
+  - unless notice.nil?
+    %p.alert-info= notice
+  - unless alert.nil?
+    %p.alert-info= alert
