@@ -64,6 +64,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     ejs (1.1.1)
+    erb2haml (0.1.5)
+      html2haml
     erubis (2.7.0)
     execjs (2.6.0)
     foreman (0.78.0)
@@ -187,6 +189,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise (~> 3.4.0)
+  erb2haml
   foreman
   haml-rails (~> 0.9)
   jbuilder (~> 2.0)
