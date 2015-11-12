@@ -1,16 +1,23 @@
 Rails.application.routes.draw do
 
+  # You can have the root of your site routed with "root"
+  root 'home#index'
+
   devise_for :users, :skip => [:sessions]
   devise_scope :user do
     get 'login' => 'devise/sessions#new', :as => :new_user_session
     post 'login' => 'devise/sessions#create', :as => :user_session
     delete 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
+  # Add user profile page, dashboard & settings
+  resources :users, :only => [:show] do
+    collection do
+      get ':id/dashboard' => 'users#dashboard'
+      get ':id/settings' => 'users#settings'
+    end
+  end
 
-  # You can have the root of your site routed with "root"
-  root 'home#index'
-
-  resources :visualizations, only: [:index, :show, :edit] do 
+  resources :visualizations do 
     collection do 
       get ':id/edit/info' => 'visualizations#editinfo'
       post ':id/edit/info' => 'visualizations#updateinfo'
@@ -18,6 +25,7 @@ Rails.application.routes.draw do
       post 'unpublish'
     end 
   end 
+
   resources :nodes, only: [:index]
 
   get '/explore' => 'pages#explore'

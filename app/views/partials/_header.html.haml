@@ -27,13 +27,13 @@
           %li.dropdown
             %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               %i.glyphicon.glyphicon-user
-              The Buffalo Daily
+              = current_user.email
               %span.caret
               %ul.dropdown-menu{"aria-labelledby" => "user-dropdown"}
                 %li
-                  %a{:href => "#"} Dashboard
+                  = link_to "Dashboard", user_path(current_user)+'/dashboard'
                 %li
-                  %a{:href => "#"} Settings
+                  = link_to "Settings", user_path(current_user)+'/settings'
                 %li.divider{:role => "separator"}
                 %li
                   = link_to "Logout", destroy_user_session_path, :method => 'delete'
