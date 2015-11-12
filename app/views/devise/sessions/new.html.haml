@@ -1,17 +1,23 @@
-%h2 Log in
-= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  - if devise_mapping.rememberable?
-    .field
-      = f.check_box :remember_me
-      = f.label :remember_me
-  .actions
-    = f.submit "Log in"
-= render "devise/shared/links"
+.container
+  .row
+    .col-sm-8
+      %h2 Login to Onodo
+      %p.lead Create your relationships visualizations & tell meaningful stories through them
+      = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+        .form-group
+          = f.label :email
+          = f.email_field :email, autofocus: true, class: "form-control"
+        .form-group
+          = f.label :password
+          = f.password_field :password, autocomplete: "off", class: "form-control"
+        - if devise_mapping.rememberable?
+          .checkbox
+            %label{ :for => "remember_me" }
+              = f.check_box :remember_me
+              Remember
+        .actions
+          = f.submit "Log in", class: "btn btn-default btn-primary"
+      %p
+      = link_to "Did you forget your password?", new_password_path(resource_name)
+    .col-sm-4
+      = render "devise/shared/links"

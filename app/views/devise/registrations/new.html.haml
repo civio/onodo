@@ -1,21 +1,31 @@
-%h2 Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    - if @validatable
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+.container
+  .row
+    .col-sm-8
+      %h2 Sign up for Onodo
+      %p.lead Create your relationships visualizations & tell meaningful stories through them
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        = devise_error_messages!
+        .form-group
+          = f.label :email
+          = f.email_field :email, autofocus: true, class: "form-control"
+        .form-group
+          = f.label :password
+          - if @validatable
+            %em
+              (#{@minimum_password_length} characters minimum)
+          = f.password_field :password, autocomplete: "off", class: "form-control"
+        .form-group
+          = f.label :password_confirmation
+          = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
+        -# TODO! Add terms & conditions modal
+        - if devise_mapping.rememberable?
+          .checkbox
+            %label{ :for => "agreement" }
+              = f.check_box :agreement
+              I accept the 
+              %a{href: "#"}
+                terms & conditions
+        .actions
+          = f.submit "Sign up", class: "btn btn-default btn-primary"
+    .col-sm-4
+      = render "devise/shared/links"

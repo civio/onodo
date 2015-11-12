@@ -18,16 +18,22 @@
         %li
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"} Contact
       %ul.nav.navbar-nav.navbar-right
-        %li.dropdown
-          %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-            %i.glyphicon.glyphicon-user
-            The Buffalo Daily
-            %span.caret
-            %ul.dropdown-menu{"aria-labelledby" => "user-dropdown"}
-              %li
-                %a{:href => "#"} Dashboard
-              %li
-                %a{:href => "#"} Settings
-              %li.divider{:role => "separator"}
-              %li
-                %a{:href => "#"} Logout
+        -if current_user.nil?
+          %li
+            = link_to "Log in", new_user_session_path
+          %li
+            = link_to "Sign up", new_user_registration_path
+        -else
+          %li.dropdown
+            %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              %i.glyphicon.glyphicon-user
+              The Buffalo Daily
+              %span.caret
+              %ul.dropdown-menu{"aria-labelledby" => "user-dropdown"}
+                %li
+                  %a{:href => "#"} Dashboard
+                %li
+                  %a{:href => "#"} Settings
+                %li.divider{:role => "separator"}
+                %li
+                  = link_to "Logout", destroy_user_session_path, :method => 'delete'
