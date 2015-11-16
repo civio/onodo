@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates :agreement, acceptance: { accept: true }
+  validates :terms_of_service, acceptance: true
 end

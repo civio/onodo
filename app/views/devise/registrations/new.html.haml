@@ -20,8 +20,8 @@
         -# TODO! Add terms & conditions modal
         - if devise_mapping.rememberable?
           .checkbox
-            %label{ :for => "agreement" }
-              = f.check_box :agreement
+            %label{ :for => "terms_of_service" }
+              = f.check_box :terms_of_service
               I accept the 
               %a{href: "#"}
                 terms & conditions
