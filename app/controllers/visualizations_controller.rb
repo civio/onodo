@@ -15,6 +15,7 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/new
   def new
+    @visualization = Visualization.new
   end
 
   # GET /visualizations/:id/edit
