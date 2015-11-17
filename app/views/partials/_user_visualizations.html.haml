@@ -1,0 +1,37 @@
+.row
+  .col-sm-12
+    %ul.nav.nav-pills.pull-left{ role: 'tablist' }
+      %li.active{ role: 'presentation' }
+        %a.btn.btn-default{ href: '#user-dashboard-visualizations', role: 'tab', data: {toggle: 'pill'}, aria: {controls: 'user-dashboard-visualizations'}}
+          Visualizations
+      %li{ role: 'presentation' }
+        %a.btn.btn-default{ href: '#user-dashboard-stories', role: 'tab', data: {toggle: 'pill'}, aria: {controls: 'user-dashboard-stories'}}
+          Stories
+    .explore-order.pull-right
+      Order by
+      %button.btn.btn-default.btn-primary Popularity
+      %button.btn.btn-default Most recent
+%hr
+.row.tab-content
+  #user-dashboard-visualizations.tab-pane.active{ role: 'tabpanel' }
+    -if visualizations.blank?
+      .text-center
+        %p
+          You haven't create any visualization yet
+        %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}
+          Start creating one
+    -else
+      - visualizations.each do |item|
+        .col-sm-6
+          = render 'partials/item_preview', :item => item
+  #user-dashboard-stories.tab-pane{ role: 'tabpanel' }
+    -if stories.blank?
+      .text-center
+        %p
+          You haven't create any story yet
+        %a.btn.btn-default.btn-primary{href: '#', title: 'Start creating one'}
+          Start creating one
+    -else
+      - stories.each do |item|
+        .col-sm-6
+          = render 'partials/item_preview', :item => item
