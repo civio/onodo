@@ -2,23 +2,4 @@
   %h2 Explore
   %p.lead Take a look to the visualizations & stories Onodo users are creating
   %hr
-  .explore-menu.row
-    .col-sm-9
-      %button.btn.btn-default.btn-primary Visualizations
-      %button.btn.btn-default Stories
-      .explore-order.pull-right
-        Order by
-        %button.btn.btn-default.btn-primary Popularity
-        %button.btn.btn-default Most recent
-
-    .col-sm-3
-      .input-group
-        %input.form-control{:type => "text", :placeholder => "Search..."}
-        %span.input-group-btn
-          %button.btn.btn-default{:type => "button"}
-            %i.glyphicon.glyphicon-search
-  %hr
-  .row
-    - @visualizations.each do |item|
-      .col-sm-6
-        = render 'partials/item_preview', :item => item
+  = render 'partials/visualizations_stories_tabs', :visualizations => @visualizations, :stories => @stories, :search => true

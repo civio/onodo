@@ -1,5 +1,5 @@
 .row
-  .col-sm-12
+  %div{ class: (defined?(search) and search) ? 'col-sm-9' : 'col-sm-12' }
     %ul.nav.nav-pills.pull-left{ role: 'tablist' }
       %li.active{ role: 'presentation' }
         %a.btn.btn-default{ href: '#user-dashboard-visualizations', role: 'tab', data: {toggle: 'pill'}, aria: {controls: 'user-dashboard-visualizations'}}
@@ -7,10 +7,17 @@
       %li{ role: 'presentation' }
         %a.btn.btn-default{ href: '#user-dashboard-stories', role: 'tab', data: {toggle: 'pill'}, aria: {controls: 'user-dashboard-stories'}}
           Stories
-    .explore-order.pull-right
+    .orderby.pull-right
       Order by
       %button.btn.btn-default.btn-primary Popularity
       %button.btn.btn-default Most recent
+  -if defined?(search) and search
+    .col-sm-3
+      .input-group
+        %input.form-control{:type => "text", :placeholder => "Search..."}
+        %span.input-group-btn
+          %button.btn.btn-default{:type => "button"}
+            %i.glyphicon.glyphicon-search
 %hr
 .row.tab-content
   #user-dashboard-visualizations.tab-pane.active{ role: 'tabpanel' }
@@ -29,7 +36,7 @@
       .text-center
         %p
           You haven't create any story yet
-        %a.btn.btn-default.btn-primary{href: '#', title: 'Start creating one'}
+        %a.btn.btn-default.btn-primary{href: new_story_path(), title: 'Start creating one'}
           Start creating one
     -else
       - stories.each do |item|

@@ -13,6 +13,6 @@
       %p
         %strong What do you want to do?
       %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
-      %a.btn.btn-default.btn-primary{href: '#'} Create a Story
+      %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
       %a.btn.btn-default{href: user_path(current_user)+'/settings'} Edit your settings
-  = render 'partials/user_visualizations', :visualizations => @visualizations, :stories => []
+  = render 'partials/visualizations_stories_tabs', :visualizations => @visualizations, :stories => @stories

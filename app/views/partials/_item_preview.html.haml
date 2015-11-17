@@ -2,11 +2,11 @@
   .container-fluid
     .row.no-gutter
       %div{:class => (defined? large) ? 'item-picture col-sm-8' : 'item-picture col-sm-5'}
-        %p.item-type Visualization
+        %p.item-type= item.class.to_s
       %div{:class => (defined? large) ? 'item-info col-sm-4' : 'item-info col-sm-7'}
         %a{:href => visualization_path(item), :title => item.name} 
           %h3= item.name
-        - if item.description?
+        - if item.class.to_s.downcase == 'visualization' and item.description?
           %p= item.description
         %hr
         %p

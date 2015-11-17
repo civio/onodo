@@ -17,8 +17,10 @@ class UsersController < ApplicationController
       redirect_to '/login'
     elsif current_user != @user 
       redirect_to '/'
+    else
+      @visualizations = Visualization.where(author_id: params[:id])
+      @stories = Story.where(author_id: params[:id])
     end
-    @visualizations = Visualization.where(author_id: params[:id])
   end
 
   # GET /user/:id/settings
