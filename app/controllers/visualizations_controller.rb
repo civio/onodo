@@ -1,10 +1,5 @@
 class VisualizationsController < ApplicationController
 
-  # GET /visualizations
-  def index
-    @visualizations = Visualization.all
-  end
-
   # GET /visualizations/:id
   def show
     @visualization = Visualization.find(params[:id])

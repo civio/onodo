@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :stories
   # You can have the root of your site routed with "root"
   root 'home#index'
 
@@ -17,7 +16,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :visualizations do 
+  resources :visualizations, :only => [:show, :edit, :new] do 
     collection do 
       get ':id/edit/info' => 'visualizations#editinfo'
       post ':id/edit/info' => 'visualizations#updateinfo'
@@ -25,6 +24,8 @@ Rails.application.routes.draw do
       post 'unpublish'
     end 
   end 
+
+  resources :stories, :only => [:show]
 
   resources :nodes, only: [:index]
 
