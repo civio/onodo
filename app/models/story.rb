@@ -1,8 +1,7 @@
-class Visualization < ActiveRecord::Base
+class Story < ActiveRecord::Base
   belongs_to :author, foreign_key: :author_id, class_name: User
-  belongs_to :visualization
 
-  has_one :dataset
+  has_one :visualization
 
   validates :name, presence: true, uniqueness: true
 end

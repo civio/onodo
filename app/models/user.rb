@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :visualizations, foreign_key: :author_id
+  has_many :stories, foreign_key: :author_id
 
   validates :terms_of_service, acceptance: true
 end

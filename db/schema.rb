@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117112629) do
+ActiveRecord::Schema.define(version: 20151117145417) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 20151117112629) do
 
   add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id"
 
+  create_table "stories", force: :cascade do |t|
+    t.text     "name"
+    t.integer  "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "stories", ["author_id"], name: "index_stories_on_author_id"
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -74,8 +83,10 @@ ActiveRecord::Schema.define(version: 20151117112629) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.integer  "author_id"
+    t.integer  "story_id"
   end
 
   add_index "visualizations", ["author_id"], name: "index_visualizations_on_author_id"
+  add_index "visualizations", ["story_id"], name: "index_visualizations_on_story_id"
 
 end
