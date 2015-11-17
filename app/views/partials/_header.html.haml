@@ -27,7 +27,7 @@
           %li.dropdown
             %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               %i.glyphicon.glyphicon-user
-              = current_user.email
+              = current_user.name
               %span.caret
               %ul.dropdown-menu{"aria-labelledby" => "user-dropdown"}
                 %li

@@ -4,5 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :visualizations, foreign_key: :author_id
+
   validates :terms_of_service, acceptance: true
 end
