@@ -9,6 +9,7 @@
         - if item.description?
           %p= item.description
         %hr
-        %p 
-          %i.glyphicon.glyphicon-user
-          = item.author.name
+        %p
+          %a{href: user_path(item.author_id), title: item.author.name}
+            %i.glyphicon.glyphicon-user
+            = item.author.name
