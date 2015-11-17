@@ -197,3 +197,10 @@ Node.create!( name: 'Fredo Corleone',
               description: '', 
               node_type: 'Corleone',
               dataset: godfatherDB)
+
+
+### Miles Davis Story
+
+milesStory = Story.create!( name: 'The Miles Davis Story', 
+              visualization: milesViz,
+              author_id: admin.id)
