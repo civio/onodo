@@ -6,9 +6,21 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+### Users
+
+admin = User.create!(name: 'Admin', 
+                    email: 'admin@onodo.org', 
+                    password: 'password', 
+                    password_confirmation: 'password')
+
+user = User.create!( name: 'A user', 
+                    email: 'user@example.com', 
+                    password: 'password', 
+                    password_confirmation: 'password')
+
 ### Miles Davis Relations
 
-milesViz = Visualization.create!( name: 'Miles Davis Relations')
+milesViz = Visualization.create!( name: 'Miles Davis Relations', author_id: admin.id)
 milesDB = Dataset.create!( visualization: milesViz )
 
 miles = Node.create!( name: 'Miles Davis',
@@ -151,7 +163,8 @@ Relation.create!(source: miles,
 
 godfatherViz = Visualization.create!( 
                   name: 'The Godfather Characters',
-                  description: "A list of characters from 1972 film The Godfather, directed by Francis Ford Coppola & produced by Albert S. Ruddy from a screenplay by Mario Puzo and Coppola.")
+                  description: "A list of characters from 1972 film The Godfather, directed by Francis Ford Coppola & produced by Albert S. Ruddy from a screenplay by Mario Puzo and Coppola.",
+                  author_id: admin.id)
 godfatherDB = Dataset.create!( visualization: godfatherViz )
 
 
