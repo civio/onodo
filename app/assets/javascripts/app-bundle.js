@@ -37365,7 +37365,7 @@
 	  VisualizationTableNodesView.prototype.getNodeTypes = function() {
 	    console.log('getNodeTypes');
 	    return $.ajax({
-	      url: '/api/nodes-types.json',
+	      url: '/api/nodes/types.json',
 	      dataType: 'json',
 	      success: this.onNodesTypesSucess
 	    });
@@ -37394,6 +37394,7 @@
 	          obj = {};
 	          obj[key] = value;
 	          model = this.collection.at(change[0]);
+	          console.log(obj);
 	          results.push(model.save(obj));
 	        } else {
 	          results.push(void 0);
@@ -64784,6 +64785,8 @@
 	VisualizationTableRelationsView = __webpack_require__(220);
 
 	VisualizationEdit = (function() {
+	  VisualizationEdit.prototype.id = null;
+
 	  VisualizationEdit.prototype.nodes = null;
 
 	  VisualizationEdit.prototype.visualizationGraphView = null;
@@ -64798,10 +64801,9 @@
 	    this.resize = bind(this.resize, this);
 	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
+	    this.id = _id;
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
-	    this.nodes.url = '/api/visualizations/' + _id + '/nodes/';
-	    this.relations.url = '/api/visualizations/' + _id + '/relations/';
 	    this.visualizationGraphView = new VisualizationGraphView({
 	      collection: this.nodes
 	    });
@@ -64854,8 +64856,12 @@
 	  VisualizationEdit.prototype.render = function() {
 	    this.setupAffix();
 	    this.resize();
-	    this.nodes.fetch();
-	    return this.relations.fetch();
+	    this.nodes.fetch({
+	      url: '/api/visualizations/' + this.id + '/nodes/'
+	    });
+	    return this.relations.fetch({
+	      url: '/api/visualizations/' + this.id + '/relations/'
+	    });
 	  };
 
 	  return VisualizationEdit;

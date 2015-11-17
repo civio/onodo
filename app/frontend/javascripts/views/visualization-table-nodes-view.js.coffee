@@ -41,7 +41,7 @@ class VisualizationTableNodesView extends VisualizationTableBaseView
   getNodeTypes: ->
     console.log 'getNodeTypes'
     $.ajax {
-      url: '/api/nodes-types.json'
+      url: '/api/nodes/types.json'
       dataType: 'json'
       success: @onNodesTypesSucess
     }
@@ -64,6 +64,7 @@ class VisualizationTableNodesView extends VisualizationTableBaseView
           obj = {}
           obj[ key ] = value
           model = @collection.at change[0]
+          console.log obj
           model.save obj
 
   addNodeType: (type) ->

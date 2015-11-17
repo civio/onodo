@@ -35,21 +35,22 @@ Rails.application.routes.draw do
   # API routes
   scope 'api' do
     scope 'visualizations' do
-      # Node routes
-      get     ':dataset_id/nodes'         => 'api#nodes'
-      post    ':dataset_id/nodes'         => 'api#node_create'
-      get     ':dataset_id/nodes/:id'     => 'api#node'
-      put     ':dataset_id/nodes/:id'     => 'api#node_update'
-      delete  ':dataset_id/nodes/:id'     => 'api#node_destroy'
-      # Relation routes
-      get     ':dataset_id/relations'       => 'api#relations'
-      post    ':dataset_id/relations'       => 'api#relation_create'
-      get     ':dataset_id/relations/:id'   => 'api#relation'
-      put     ':dataset_id/relations/:id'   => 'api#relation_update'
-      delete  ':dataset_id/relations/:id'   => 'api#relation_destroy'
+      get     ':dataset_id/nodes'       => 'api#nodes'
+      get     ':dataset_id/relations'   => 'api#relations'
     end
-    # Nodes Types
-    get     '/nodes-types'   => 'api#node_types'
+    scope 'nodes' do
+      post    ''        => 'api#node_create'
+      get     'types'   => 'api#node_types'
+      get     ':id'     => 'api#node'
+      put     ':id'     => 'api#node_update'
+      delete  ':id'     => 'api#node_destroy'
+    end
+    scope 'relations' do
+      post    ''        => 'api#relation_create'
+      get     ':id'     => 'api#relation'
+      put     ':id'     => 'api#relation_update'
+      delete  ':id'     => 'api#relation_destroy'
+    end
   end
 
   # Example of regular route:
