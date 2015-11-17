@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112120452) do
+ActiveRecord::Schema.define(version: 20151117112629) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20151112120452) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name",                   default: "", null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -72,6 +73,9 @@ ActiveRecord::Schema.define(version: 20151112120452) do
     t.boolean  "published"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "author_id"
   end
+
+  add_index "visualizations", ["author_id"], name: "index_visualizations_on_author_id"
 
 end
