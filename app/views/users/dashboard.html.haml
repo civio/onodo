@@ -1,8 +1,41 @@
-.container-fluid
-  %h2= current_user.name
+.user-dashboard.container-fluid
+  .media
+    .media-left
+      %img.media-object{:src => 'http://placehold.it/150x150'}
+    .media-body
+      %p Hi!
+      %h2= current_user.name
+      -# TODO! Add site to User model
+      %p
+        %a{href: 'http://www.usersite.com', title: 'www.usersite.com'}
+          www.usersite.com
+      %hr
+      %p
+        %strong What do you want to do?
+      %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
+      %a.btn.btn-default.btn-primary{href: '#'} Create a Story
+      %a.btn.btn-default{href: user_path(current_user)+'/settings'} Edit your settings
+  .row
+    .col-sm-12
+      %ul.nav.nav-pills.pull-left{ role: 'tablist' }
+        %li.active{ role: 'presentation' }
+          %a.btn.btn-default{ href: '#user-dashboard-visualizations', role: 'tab', data: {toggle: 'pill'}, aria: {controls: 'user-dashboard-visualizations'}}
+            Visualizations
+        %li{ role: 'presentation' }
+          %a.btn.btn-default{ href: '#user-dashboard-stories', role: 'tab', data: {toggle: 'pill'}, aria: {controls: 'user-dashboard-stories'}}
+            Stories
+      .explore-order.pull-right
+        Order by
+        %button.btn.btn-default.btn-primary Popularity
+        %button.btn.btn-default Most recent
   %hr
-  %p
-    %strong What do you want to do?
-  %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
-  %a.btn.btn-default.btn-primary{href: '#'} Create a Story
-  %a.btn.btn-default{href: user_path(current_user)+'/settings'} Edit your settings
+  .row.tab-content
+    #user-dashboard-visualizations.tab-pane.active{ role: 'tabpanel' }
+      -if @visualizations.blank?
+        %p.text-center
+          You don't have any visualization or story yet
+      -else
+        - @visualizations.each do |item|
+          .col-sm-6
+            = render 'partials/item_preview', :item => item
+    #user-dashboard-stories.tab-pane{ role: 'tabpanel' }
