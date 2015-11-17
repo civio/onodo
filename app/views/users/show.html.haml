@@ -1,1 +1,20 @@
-%h2= @user.name
+.user-profile.container-fluid
+  .media
+    .media-left
+      %img.media-object{:src => (@user == current_user) ? 'http://placehold.it/160x160' : 'http://placehold.it/80x80'}
+    .media-body
+      -if @user == current_user
+        %p Hi!
+      %h2= @user.name
+      -# TODO! Add site to User model
+      %p
+        %a{href: 'http://www.usersite.com', title: 'www.usersite.com'}
+          www.usersite.com
+      -if @user == current_user
+        %hr
+        %p
+          %strong What do you want to do?
+        %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
+        %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
+        %a.btn.btn-default{href: user_path(@user)+'/settings'} Edit your settings
+  = render 'partials/visualizations_stories_tabs', :visualizations => @visualizations, :stories => @stories

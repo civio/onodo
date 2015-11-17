@@ -13,7 +13,6 @@ Rails.application.routes.draw do
   # Add user profile page, dashboard & settings
   resources :users, :only => [:show] do
     collection do
-      get ':id/dashboard' => 'users#dashboard'
       get ':id/settings' => 'users#settings'
     end
   end

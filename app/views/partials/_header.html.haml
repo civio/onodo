@@ -31,7 +31,7 @@
               %span.caret
               %ul.dropdown-menu{"aria-labelledby" => "user-dropdown"}
                 %li
-                  = link_to "Dashboard", user_path(current_user)+'/dashboard'
+                  = link_to "Dashboard", user_path(current_user)
                 %li
                   = link_to "Settings", user_path(current_user)+'/settings'
                 %li.divider{:role => "separator"}
