@@ -7,6 +7,7 @@ VisualizationTableRelationsView   = require './views/visualization-table-relatio
 
 class VisualizationShow
 
+  id:                               null
   nodes:                            null
   visualizationGraphView:           null
   visualizationTableNodesView:      null
@@ -15,13 +16,12 @@ class VisualizationShow
 
   constructor: (_id) ->
     console.log('setup visualization', _id);
+    @id = _id
     # Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
-    @nodes.url      = '/api/visualizations/'+_id+'/nodes/';
-    @relations.url  = '/api/visualizations/'+_id+'/relations/';
     # Set Graph View
-    @visualizationGraphView = new VisualizationGraphView {collection: @nodes}
+    @visualizationGraphView = new VisualizationGraphView {collection: {nodes: @nodes, relations: @relations} }
     @visualizationGraphView.setElement '.visualization-graph-component'
     # Setup Table Selector
     @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
@@ -53,7 +53,8 @@ class VisualizationShow
   render: ->
     @resize()       # force resize
     # fetch collections
-    @nodes.fetch()
-    @relations.fetch()
+    @nodes.fetch {url: '/api/visualizations/'+@id+'/nodes/'}
+    @relations.fetch {url: '/api/visualizations/'+@id+'/relations/'}
+
 
 module.exports = VisualizationShow

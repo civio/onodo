@@ -1,92 +1,71 @@
 d3            = require 'd3'
-React         = require 'react'
-ReactFauxDOM  = require 'react-faux-dom'
 
-#ReactFauxDOM Example 
-VisualizationGraphD3Component = React.createClass
+class VisualizationGraphViewCanvas extends Backbone.View
   #propTypes:
   #  data: React.PropTypes.arrayOf(React.PropTypes.number)
 
-  color:    d3.scale.category20()
   svg:      null
+  color:    d3.scale.category20()
+  data:     null
   force:    null
 
-  getDefaultProps: ->
-    return {
-      width: 600
-      height: 400
-      collection: {}
-      data: {}
-    }
-
-  getInitialState: ->
-    return {} 
-
-  # Setup before render call
-  componentWillMount: ->
-    console.log 'componentWillMount -> setup force'
-    # This is where we create the faux DOM node and give it to D3.
-    @svg = d3.select( ReactFauxDOM.createElement('svg') )
-      .attr('width', @props.width)
-      .attr('height', @props.height)
-    # Setup Force Layout
+  initialize: (options) ->
+    console.log 'initialize canvas'
+    @data = options.data
+    # Setup force
     @force = d3.layout.force()
       .charge(-120)
       .linkDistance(60)
       #.linkStrength(2)
-      .size([@props.width, @props.height])
+      .size([@$el.width(), @$el.height()])
+    # Setup SVG
+    @svg = d3.select( @$el.get(0) )
+      .append('svg:svg')
+        .attr('width', @$el.width())
+        .attr('height', @$el.height())
 
-  # Update Node when model change
-  componentDidMount: ->
-    console.log 'componentDidMount'
-
-    @props.collection.nodes.on 'change', (e) =>
-      @forceUpdate()
-    , @
-    @props.collection.relations.on 'change', (e) =>
-      @forceUpdate()
-    , @
+    #@collection.nodes.on 'change', (e) =>
+    #@collection.relations.on 'change', (e) =>
 
   render: ->
 
-    console.log('render')
+    console.log 'render canvas' 
     
     # setup nodes & relations as arrays with Models attributes
-    @props.data.nodes      = @props.collection.nodes.models.map((d) -> return d.attributes)
-    @props.data.relations  = @props.collection.relations.models.map((d) -> return d.attributes)
+    #@data.nodes      = @collection.nodes.models.map((d) -> return d.attributes)
+    #@data.relations  = @collection.relations.models.map((d) -> return d.attributes)
 
     # Fix relations source & target index (based on 1 instead of 0)
-    @props.data.relations.forEach (d) ->
-      d.source = d.source_id-1
-      d.target = d.target_id-1
+    #@data.relations.forEach (d) ->
+    #  d.source = d.source_id-1
+    #  d.target = d.target_id-1
 
     @force
-      .nodes(@props.data.nodes)
-      .links(@props.data.relations)
+      .nodes(@data.nodes)
+      .links(@data.relations)
       .start();
 
     # Setup Links
     link = @svg.selectAll('.link')
-      .data(@props.data.relations)
+      .data(@data.relations)
     .enter().append('line')
       .attr('class', 'link');
 
     # Setup Nodes
     nodes = @svg.selectAll('.node')
-      .data(@props.data.nodes)
+      .data(@data.nodes)
     .enter().append('circle')
       .attr('class', 'node')
       .attr('r', 6)
-      .attr('cx', @props.width*0.5)
+      .attr('cx', @$el.width()*0.5)
       #.attr('cx', (d,i) -> return 20+30*i )
-      .attr('cy', @props.height*0.5)
+      .attr('cy', @$el.height()*0.5)
       #.style('visibility', (d) -> return if d.visible then 'visible' else 'hidden') 
       .style('fill', (d) => return @color(d.node_type))
       .call(@force.drag)
 
     # Setup Force Layout tick
-    @force.on 'tick', ->
-      console.log 'tick'
+    @force.on 'tick', () ->
       link.attr('x1', (d) -> return d.source.x)
           .attr('y1', (d) -> return d.source.y)
           .attr('x2', (d) -> return d.target.x)
@@ -114,6 +93,6 @@ VisualizationGraphD3Component = React.createClass
     #   .text((d) -> d.name)
 
     #We ask D3 for the underlying fake node and then render it as React elements.
-    return @svg.node().toReact()
+    #return svg.node().toReact()
 
-module.exports = VisualizationGraphD3Component
+module.exports = VisualizationGraphViewCanvas

@@ -12,4 +12,5 @@ class PagesController < ApplicationController
     stories = Story.all
     @items = (visualizations + stories).sort_by(&:created_at).reverse
   end
+  
 end

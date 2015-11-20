@@ -20,10 +20,8 @@ class VisualizationEdit
     # Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
-    #@nodes.url      = '/api/visualizations/'+_id+'/nodes/';
-    #@relations.url  = '/api/visualizations/'+_id+'/relations/';
     # Set Graph View
-    @visualizationGraphView = new VisualizationGraphView {collection: @nodes}
+    @visualizationGraphView = new VisualizationGraphView {collection: {nodes: @nodes, relations: @relations} }
     @visualizationGraphView.setElement '.visualization-graph-component'
     # Set Table Nodes
     @visualizationTableNodesView = new VisualizationTableNodesView {collection: @nodes}
