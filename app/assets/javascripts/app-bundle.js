@@ -40,16 +40,15 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
 	window.App || (window.App = {});
 
 	App.VisualizationShow = __webpack_require__(1);
 
-	App.VisualizationEdit = __webpack_require__(169);
+	App.VisualizationEdit = __webpack_require__(15);
 
 	$(document).on('page:change', function() {
 	  var appVisualizationEdit, appVisualizationShow;
@@ -66,8 +65,7 @@
 
 
 /***/ },
-
-/***/ 1:
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var NodesCollection, RelationsCollection, VisualizationGraphView, VisualizationShow, VisualizationTableNodesView, VisualizationTableRelationsView,
@@ -79,9 +77,9 @@
 
 	VisualizationGraphView = __webpack_require__(6);
 
-	VisualizationTableNodesView = __webpack_require__(165);
+	VisualizationTableNodesView = __webpack_require__(10);
 
-	VisualizationTableRelationsView = __webpack_require__(168);
+	VisualizationTableRelationsView = __webpack_require__(14);
 
 	VisualizationShow = (function() {
 	  VisualizationShow.prototype.id = null;
@@ -133,7 +131,8 @@
 	    var graphHeight, windowHeight;
 	    windowHeight = $(window).height();
 	    graphHeight = windowHeight - 50 - 64 - 64;
-	    return this.visualizationGraphView.$el.height(graphHeight);
+	    this.visualizationGraphView.$el.height(graphHeight);
+	    return this.visualizationGraphView.resize();
 	  };
 
 	  VisualizationShow.prototype.render = function() {
@@ -154,8 +153,7 @@
 
 
 /***/ },
-
-/***/ 2:
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Node, NodesCollection,
@@ -183,8 +181,7 @@
 
 
 /***/ },
-
-/***/ 3:
+/* 3 */
 /***/ function(module, exports) {
 
 	var Node,
@@ -215,8 +212,7 @@
 
 
 /***/ },
-
-/***/ 4:
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Relation, RelationsCollection,
@@ -244,8 +240,7 @@
 
 
 /***/ },
-
-/***/ 5:
+/* 5 */
 /***/ function(module, exports) {
 
 	var Relation,
@@ -275,16 +270,19 @@
 
 
 /***/ },
-
-/***/ 6:
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var VisualizationGraphView, VisualizationGraphViewCanvas,
+	var VisualizationGraphCanvasView, VisualizationGraphConfigurationView, VisualizationGraphNavigationView, VisualizationGraphView,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	VisualizationGraphViewCanvas = __webpack_require__(222);
+	VisualizationGraphCanvasView = __webpack_require__(7);
+
+	VisualizationGraphConfigurationView = __webpack_require__(8);
+
+	VisualizationGraphNavigationView = __webpack_require__(9);
 
 	VisualizationGraphView = (function(superClass) {
 	  extend(VisualizationGraphView, superClass);
@@ -300,10 +298,26 @@
 
 	  VisualizationGraphView.prototype.relationsSync = false;
 
+	  VisualizationGraphView.prototype.visualizationGraphViewCanvas = null;
+
+	  VisualizationGraphView.prototype.visualizationGraphConfiguration = null;
+
+	  VisualizationGraphView.prototype.visualizationGraphNavigation = null;
+
 	  VisualizationGraphView.prototype.initialize = function() {
 	    console.log('initialize GraphView', this.collection);
 	    this.collection.nodes.once('sync', this.onNodesSync, this);
-	    return this.collection.relations.once('sync', this.onRelationsSync, this);
+	    this.collection.relations.once('sync', this.onRelationsSync, this);
+	    $('.visualization-graph-menu-actions .configure').click(this.onShowPanelConfigure);
+	    return $('.visualization-graph-panel-configuration .close').click(this.onHidePanelConfigure);
+	  };
+
+	  VisualizationGraphView.prototype.onShowPanelConfigure = function() {
+	    return $('.visualization-graph-panel-configuration').addClass('active');
+	  };
+
+	  VisualizationGraphView.prototype.onHidePanelConfigure = function() {
+	    return $('.visualization-graph-panel-configuration').removeClass('active');
 	  };
 
 	  VisualizationGraphView.prototype.onNodesSync = function(nodes) {
@@ -346,14 +360,25 @@
 	  };
 
 	  VisualizationGraphView.prototype.render = function() {
-	    var visualizationGraphViewCanvas;
 	    console.log('render GraphView');
-	    visualizationGraphViewCanvas = new VisualizationGraphViewCanvas({
+	    this.visualizationGraphCanvas = new VisualizationGraphCanvasView({
 	      el: this.$el,
 	      data: this.getDataFromCollection()
 	    });
-	    visualizationGraphViewCanvas.render();
+	    this.visualizationGraphCanvas.render();
+	    this.visualizationGraphConfiguration = new VisualizationGraphConfigurationView;
+	    this.visualizationGraphConfiguration.setElement('.visualization-graph-panel-configuration');
+	    this.visualizationGraphConfiguration.render();
+	    this.visualizationGraphNavigation = new VisualizationGraphNavigationView;
+	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
+	    this.visualizationGraphNavigation.render();
 	    return this;
+	  };
+
+	  VisualizationGraphView.prototype.resize = function() {
+	    if (this.visualizationGraphCanvas) {
+	      return this.visualizationGraphCanvas.resize();
+	    }
 	  };
 
 	  return VisualizationGraphView;
@@ -364,106 +389,355 @@
 
 
 /***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
 
-/***/ 10:
-/***/ function(module, exports) {
+	var VisualizationGraphCanvasView, d3,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
 
-	// shim for using process in browser
+	d3 = __webpack_require__(16);
 
-	var process = module.exports = {};
-	var queue = [];
-	var draining = false;
-	var currentQueue;
-	var queueIndex = -1;
+	VisualizationGraphCanvasView = (function(superClass) {
+	  extend(VisualizationGraphCanvasView, superClass);
 
-	function cleanUpNextTick() {
-	    draining = false;
-	    if (currentQueue.length) {
-	        queue = currentQueue.concat(queue);
-	    } else {
-	        queueIndex = -1;
+	  function VisualizationGraphCanvasView() {
+	    this.onTick = bind(this.onTick, this);
+	    this.onNodeClick = bind(this.onNodeClick, this);
+	    this.onNodeOut = bind(this.onNodeOut, this);
+	    this.onNodeOver = bind(this.onNodeOver, this);
+	    this.onNodeDragEnd = bind(this.onNodeDragEnd, this);
+	    this.onNodeDragStart = bind(this.onNodeDragStart, this);
+	    this.onCanvasDragEnd = bind(this.onCanvasDragEnd, this);
+	    this.onCanvasDragStart = bind(this.onCanvasDragStart, this);
+	    this.onCanvasDrag = bind(this.onCanvasDrag, this);
+	    return VisualizationGraphCanvasView.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphCanvasView.prototype.NODES_SIZE = 8;
+
+	  VisualizationGraphCanvasView.prototype.svg = null;
+
+	  VisualizationGraphCanvasView.prototype.container = null;
+
+	  VisualizationGraphCanvasView.prototype.color = null;
+
+	  VisualizationGraphCanvasView.prototype.data = null;
+
+	  VisualizationGraphCanvasView.prototype.force = null;
+
+	  VisualizationGraphCanvasView.prototype.nodes = null;
+
+	  VisualizationGraphCanvasView.prototype.nodes_symbol = null;
+
+	  VisualizationGraphCanvasView.prototype.links = null;
+
+	  VisualizationGraphCanvasView.prototype.labels = null;
+
+	  VisualizationGraphCanvasView.prototype.linkedByIndex = {};
+
+	  VisualizationGraphCanvasView.prototype.viewport = {
+	    width: 0,
+	    height: 0,
+	    center: {
+	      x: 0,
+	      y: 0
+	    },
+	    origin: {
+	      x: 0,
+	      y: 0
+	    },
+	    x: 0,
+	    y: 0,
+	    dx: 0,
+	    dy: 0,
+	    drag: {
+	      x: 0,
+	      y: 0
+	    },
+	    scale: 1
+	  };
+
+	  VisualizationGraphCanvasView.prototype.initialize = function(options) {
+	    console.log('initialize canvas');
+	    this.data = options.data;
+	    this.data.relations.forEach((function(_this) {
+	      return function(d) {
+	        return _this.linkedByIndex[d.source + ',' + d.target] = true;
+	      };
+	    })(this));
+	    this.viewport.width = this.$el.width();
+	    this.viewport.height = this.$el.height();
+	    this.viewport.center.x = this.viewport.width * 0.5;
+	    this.viewport.center.y = this.viewport.height * 0.5;
+	    this.color = d3.scale.category20();
+	    this.force = d3.layout.force().charge(-120).linkDistance(90).size([this.viewport.width, this.viewport.height]);
+	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
+	    this.container = this.svg.append('g');
+	    return this.rescale();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.render = function() {
+	    console.log('render canvas');
+	    this.force.nodes(this.data.nodes).links(this.data.relations).start();
+	    this.links = this.container.selectAll('.link').data(this.data.relations).enter().append('line').attr('class', 'link');
+	    this.nodes = this.container.selectAll('.node').data(this.data.nodes).enter().append('g').attr('class', 'node').call(this.force.drag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick);
+	    this.nodes_symbol = this.nodes.append('circle').attr('class', 'node-symbol').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
+	      return function(d) {
+	        return _this.color(d.node_type);
+	      };
+	    })(this));
+	    this.labels = this.container.selectAll('.text').data(this.data.nodes).enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em').text(function(d) {
+	      return d.name;
+	    });
+	    this.force.on('tick', this.onTick);
+	    return this.setupEvents();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.setupEvents = function() {
+	    Backbone.on('config.param.change', this.updateForceParameters, this);
+	    Backbone.on('navigation.zoomin', this.onZoomIn, this);
+	    Backbone.on('navigation.zoomout', this.onZoomOut, this);
+	    return Backbone.on('navigation.fullscreen', this.onFullscreen, this);
+	  };
+
+	  VisualizationGraphCanvasView.prototype.updateForceParameters = function(e) {
+	    this.force.stop();
+	    if (e.name === 'linkDistance') {
+	      this.force.linkDistance(e.value);
+	    } else if (e.name === 'linkStrength') {
+	      this.force.linkStrength(e.value);
+	    } else if (e.name === 'friction') {
+	      this.force.friction(e.value);
+	    } else if (e.name === 'charge') {
+	      this.force.charge(e.value);
+	    } else if (e.name === 'theta') {
+	      this.force.theta(e.value);
+	    } else if (e.name === 'gravity') {
+	      this.force.gravity(e.value);
 	    }
-	    if (queue.length) {
-	        drainQueue();
-	    }
-	}
+	    return this.force.start();
+	  };
 
-	function drainQueue() {
-	    if (draining) {
-	        return;
-	    }
-	    var timeout = setTimeout(cleanUpNextTick);
-	    draining = true;
+	  VisualizationGraphCanvasView.prototype.onZoomIn = function() {
+	    return console.log('zoomin');
+	  };
 
-	    var len = queue.length;
-	    while(len) {
-	        currentQueue = queue;
-	        queue = [];
-	        while (++queueIndex < len) {
-	            if (currentQueue) {
-	                currentQueue[queueIndex].run();
-	            }
+	  VisualizationGraphCanvasView.prototype.onZoomOut = function() {
+	    return console.log('zoomout');
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onFullscreen = function() {
+	    return console.log('fullscreen');
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onCanvasDrag = function() {
+	    this.viewport.x += d3.event.dx;
+	    this.viewport.y += d3.event.dy;
+	    this.viewport.dx += d3.event.dx;
+	    this.viewport.dy += d3.event.dy;
+	    this.rescale();
+	    return d3.event.sourceEvent.stopPropagation();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onCanvasDragStart = function() {
+	    return this.svg.style('cursor', 'move');
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onCanvasDragEnd = function() {
+	    if (this.viewport.dx === 0 && this.viewport.dy === 0) {
+	      return;
+	    }
+	    this.viewport.dx = this.viewport.dy = 0;
+	    return this.svg.style('cursor', 'default');
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onNodeDragStart = function(d) {
+	    d3.event.sourceEvent.stopPropagation();
+	    this.viewport.drag.x = d.x;
+	    return this.viewport.drag.y = d.y;
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onNodeDragEnd = function(d) {
+	    if (this.viewport.drag.x === d.x && this.viewport.drag.y === d.y) {
+
+	    }
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onNodeOver = function(d) {
+	    this.nodes_symbol.attr('class', (function(_this) {
+	      return function(o) {
+	        if (_this.isConnected(d, o)) {
+	          return 'node-symbol highlighted';
+	        } else {
+	          return 'node-symbol weaken';
 	        }
-	        queueIndex = -1;
-	        len = queue.length;
-	    }
-	    currentQueue = null;
-	    draining = false;
-	    clearTimeout(timeout);
-	}
-
-	process.nextTick = function (fun) {
-	    var args = new Array(arguments.length - 1);
-	    if (arguments.length > 1) {
-	        for (var i = 1; i < arguments.length; i++) {
-	            args[i - 1] = arguments[i];
+	      };
+	    })(this));
+	    this.labels.attr('class', (function(_this) {
+	      return function(o) {
+	        if (_this.isConnected(d, o)) {
+	          return 'label highlighted';
+	        } else {
+	          return 'label weaken';
 	        }
+	      };
+	    })(this));
+	    return this.links.attr('class', (function(_this) {
+	      return function(o) {
+	        if (o.source.index === d.index || o.target.index === d.index) {
+	          return 'link highlighted';
+	        } else {
+	          return 'link weaken';
+	        }
+	      };
+	    })(this));
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onNodeOut = function(d) {
+	    this.nodes_symbol.attr('class', 'node-symbol');
+	    this.labels.attr('class', 'label');
+	    return this.links.attr('class', 'link');
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onNodeClick = function(d) {};
+
+	  VisualizationGraphCanvasView.prototype.onTick = function() {
+	    this.links.attr('x1', function(d) {
+	      return d.source.x;
+	    }).attr('y1', function(d) {
+	      return d.source.y;
+	    }).attr('x2', function(d) {
+	      return d.target.x;
+	    }).attr('y2', function(d) {
+	      return d.target.y;
+	    });
+	    this.nodes.attr('transform', function(d) {
+	      return 'translate(' + d.x + ',' + d.y + ')';
+	    });
+	    return this.labels.attr('transform', function(d) {
+	      return 'translate(' + d.x + ',' + d.y + ')';
+	    });
+	  };
+
+	  VisualizationGraphCanvasView.prototype.resize = function() {
+	    this.viewport.width = this.$el.width();
+	    this.viewport.height = this.$el.height();
+	    this.viewport.origin.x = (this.viewport.width * 0.5) - this.viewport.center.x;
+	    this.viewport.origin.y = (this.viewport.height * 0.5) - this.viewport.center.y;
+	    this.svg.attr('width', this.viewport.width);
+	    this.svg.attr('height', this.viewport.height);
+	    this.rescale();
+	    return this.force.size([this.viewport.width, this.viewport.height]);
+	  };
+
+	  VisualizationGraphCanvasView.prototype.rescale = function() {
+	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
+	  };
+
+	  VisualizationGraphCanvasView.prototype.isConnected = function(a, b) {
+	    return this.linkedByIndex[a.index + ',' + b.index] || this.linkedByIndex[b.index + ',' + a.index] || a.index === b.index;
+	  };
+
+	  VisualizationGraphCanvasView.prototype.hasConnections = function(a) {
+	    var i, len, property, ref, s;
+	    ref = this.linkedByIndex;
+	    for (i = 0, len = ref.length; i < len; i++) {
+	      property = ref[i];
+	      s = property.split(',');
+	      if ((s[0] === a.index || s[1] === a.index) && this.linkedByIndex[property]) {
+	        return true;
+	      }
 	    }
-	    queue.push(new Item(fun, args));
-	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
-	    }
-	};
+	    return false;
+	  };
 
-	// v8 likes predictible objects
-	function Item(fun, array) {
-	    this.fun = fun;
-	    this.array = array;
-	}
-	Item.prototype.run = function () {
-	    this.fun.apply(null, this.array);
-	};
-	process.title = 'browser';
-	process.browser = true;
-	process.env = {};
-	process.argv = [];
-	process.version = ''; // empty string to avoid regexp issues
-	process.versions = {};
+	  return VisualizationGraphCanvasView;
 
-	function noop() {}
+	})(Backbone.View);
 
-	process.on = noop;
-	process.addListener = noop;
-	process.once = noop;
-	process.off = noop;
-	process.removeListener = noop;
-	process.removeAllListeners = noop;
-	process.emit = noop;
-
-	process.binding = function (name) {
-	    throw new Error('process.binding is not supported');
-	};
-
-	process.cwd = function () { return '/' };
-	process.chdir = function (dir) {
-	    throw new Error('process.chdir is not supported');
-	};
-	process.umask = function() { return 0; };
+	module.exports = VisualizationGraphCanvasView;
 
 
 /***/ },
+/* 8 */
+/***/ function(module, exports) {
 
-/***/ 165:
+	var VisualizationGraphConfigurationView,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationGraphConfigurationView = (function(superClass) {
+	  extend(VisualizationGraphConfigurationView, superClass);
+
+	  function VisualizationGraphConfigurationView() {
+	    this.onChangeValue = bind(this.onChangeValue, this);
+	    return VisualizationGraphConfigurationView.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphConfigurationView.prototype.onChangeValue = function(e) {
+	    return Backbone.trigger('config.param.change', {
+	      name: $(e.target).attr('name'),
+	      value: $(e.target).val()
+	    });
+	  };
+
+	  VisualizationGraphConfigurationView.prototype.render = function() {
+	    this.$el.find('#linkdistante').change(this.onChangeValue);
+	    this.$el.find('#linkstrengh').change(this.onChangeValue);
+	    this.$el.find('#friction').change(this.onChangeValue);
+	    this.$el.find('#charge').change(this.onChangeValue);
+	    this.$el.find('#theta').change(this.onChangeValue);
+	    this.$el.find('#gravity').change(this.onChangeValue);
+	    return this;
+	  };
+
+	  return VisualizationGraphConfigurationView;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraphConfigurationView;
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports) {
+
+	var VisualizationGraphNavigationView,
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationGraphNavigationView = (function(superClass) {
+	  extend(VisualizationGraphNavigationView, superClass);
+
+	  function VisualizationGraphNavigationView() {
+	    return VisualizationGraphNavigationView.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphNavigationView.prototype.render = function() {
+	    this.$el.find('.zoomin').click(function() {
+	      return Backbone.trigger('navigation.zoomin');
+	    });
+	    this.$el.find('.zoomout').click(function() {
+	      return Backbone.trigger('navigation.zoomout');
+	    });
+	    this.$el.find('.fullscreen').click(function() {
+	      return Backbone.trigger('navigation.fullscreen');
+	    });
+	    return this;
+	  };
+
+	  return VisualizationGraphNavigationView;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraphNavigationView;
+
+
+/***/ },
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBaseView, VisualizationTableNodesView,
@@ -471,9 +745,9 @@
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	Handsontable = __webpack_require__(166);
+	Handsontable = __webpack_require__(11);
 
-	VisualizationTableBaseView = __webpack_require__(167);
+	VisualizationTableBaseView = __webpack_require__(13);
 
 	VisualizationTableNodesView = (function(superClass) {
 	  var nodes_type, tableColHeaders, tableColumns;
@@ -573,8 +847,7 @@
 
 
 /***/ },
-
-/***/ 166:
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -27773,11 +28046,107 @@
 	}());
 	},{}]},{},[23,57,59,58,60,81,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,98,99,100,88,89,90,91,92,93,30,34,31,32,39,33,35,36,37,38])("zeroclipboard")
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12), (function() { return this; }())))
 
 /***/ },
+/* 12 */
+/***/ function(module, exports) {
 
-/***/ 167:
+	// shim for using process in browser
+
+	var process = module.exports = {};
+	var queue = [];
+	var draining = false;
+	var currentQueue;
+	var queueIndex = -1;
+
+	function cleanUpNextTick() {
+	    draining = false;
+	    if (currentQueue.length) {
+	        queue = currentQueue.concat(queue);
+	    } else {
+	        queueIndex = -1;
+	    }
+	    if (queue.length) {
+	        drainQueue();
+	    }
+	}
+
+	function drainQueue() {
+	    if (draining) {
+	        return;
+	    }
+	    var timeout = setTimeout(cleanUpNextTick);
+	    draining = true;
+
+	    var len = queue.length;
+	    while(len) {
+	        currentQueue = queue;
+	        queue = [];
+	        while (++queueIndex < len) {
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
+	        }
+	        queueIndex = -1;
+	        len = queue.length;
+	    }
+	    currentQueue = null;
+	    draining = false;
+	    clearTimeout(timeout);
+	}
+
+	process.nextTick = function (fun) {
+	    var args = new Array(arguments.length - 1);
+	    if (arguments.length > 1) {
+	        for (var i = 1; i < arguments.length; i++) {
+	            args[i - 1] = arguments[i];
+	        }
+	    }
+	    queue.push(new Item(fun, args));
+	    if (queue.length === 1 && !draining) {
+	        setTimeout(drainQueue, 0);
+	    }
+	};
+
+	// v8 likes predictible objects
+	function Item(fun, array) {
+	    this.fun = fun;
+	    this.array = array;
+	}
+	Item.prototype.run = function () {
+	    this.fun.apply(null, this.array);
+	};
+	process.title = 'browser';
+	process.browser = true;
+	process.env = {};
+	process.argv = [];
+	process.version = ''; // empty string to avoid regexp issues
+	process.versions = {};
+
+	function noop() {}
+
+	process.on = noop;
+	process.addListener = noop;
+	process.once = noop;
+	process.off = noop;
+	process.removeListener = noop;
+	process.removeAllListeners = noop;
+	process.emit = noop;
+
+	process.binding = function (name) {
+	    throw new Error('process.binding is not supported');
+	};
+
+	process.cwd = function () { return '/' };
+	process.chdir = function (dir) {
+	    throw new Error('process.chdir is not supported');
+	};
+	process.umask = function() { return 0; };
+
+
+/***/ },
+/* 13 */
 /***/ function(module, exports) {
 
 	var VisualizationTableBaseView,
@@ -27844,6 +28213,7 @@
 
 	  VisualizationTableBaseView.prototype.onTableCreateRow = function(index, amount) {
 	    var model;
+	    console.log('onTableCreateRow');
 	    console.log(index, amount);
 	    model = this.collection.create({});
 	    return console.log(model, model.get('id'));
@@ -27870,8 +28240,7 @@
 
 
 /***/ },
-
-/***/ 168:
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBaseView, VisualizationTableRelationsView,
@@ -27879,9 +28248,9 @@
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	Handsontable = __webpack_require__(166);
+	Handsontable = __webpack_require__(11);
 
-	VisualizationTableBaseView = __webpack_require__(167);
+	VisualizationTableBaseView = __webpack_require__(13);
 
 	VisualizationTableRelationsView = (function(superClass) {
 	  var nodes_type, tableColHeaders, tableColumns;
@@ -27927,8 +28296,7 @@
 
 
 /***/ },
-
-/***/ 169:
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraphView, VisualizationTableNodesView, VisualizationTableRelationsView,
@@ -27940,20 +28308,20 @@
 
 	VisualizationGraphView = __webpack_require__(6);
 
-	VisualizationTableNodesView = __webpack_require__(165);
+	VisualizationTableNodesView = __webpack_require__(10);
 
-	VisualizationTableRelationsView = __webpack_require__(168);
+	VisualizationTableRelationsView = __webpack_require__(14);
 
 	VisualizationEdit = (function() {
 	  VisualizationEdit.prototype.id = null;
 
 	  VisualizationEdit.prototype.nodes = null;
 
-	  VisualizationEdit.prototype.visualizationGraphView = null;
+	  VisualizationEdit.prototype.visualizationGraph = null;
 
-	  VisualizationEdit.prototype.visualizationTableNodesView = null;
+	  VisualizationEdit.prototype.visualizationTableNodes = null;
 
-	  VisualizationEdit.prototype.visualizationTableRelationsView = null;
+	  VisualizationEdit.prototype.visualizationTableRelations = null;
 
 	  VisualizationEdit.prototype.$tableSelector = null;
 
@@ -27964,22 +28332,22 @@
 	    this.id = _id;
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
-	    this.visualizationGraphView = new VisualizationGraphView({
+	    this.visualizationTableNodes = new VisualizationTableNodesView({
+	      collection: this.nodes
+	    });
+	    this.visualizationTableNodes.setElement('.visualization-table-nodes');
+	    this.visualizationTableRelations = new VisualizationTableRelationsView({
+	      collection: this.relations
+	    });
+	    this.visualizationTableRelations.setElement('.visualization-table-relations');
+	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
+	    this.visualizationGraph = new VisualizationGraphView({
 	      collection: {
 	        nodes: this.nodes,
 	        relations: this.relations
 	      }
 	    });
-	    this.visualizationGraphView.setElement('.visualization-graph-component');
-	    this.visualizationTableNodesView = new VisualizationTableNodesView({
-	      collection: this.nodes
-	    });
-	    this.visualizationTableNodesView.setElement('.visualization-table-nodes');
-	    this.visualizationTableRelationsView = new VisualizationTableRelationsView({
-	      collection: this.relations
-	    });
-	    this.visualizationTableRelationsView.setElement('.visualization-table-relations');
-	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
+	    this.visualizationGraphsetElement('.visualization-graph-component');
 	  }
 
 	  VisualizationEdit.prototype.setupAffix = function() {
@@ -27999,19 +28367,21 @@
 	    this.$tableSelector.filter('.active').removeClass('active btn-primary').addClass('btn-default');
 	    $(e.target).addClass('active btn-primary');
 	    if ($(e.target).attr('href') === '#nodes') {
-	      this.visualizationTableRelationsView.hide();
-	      return this.visualizationTableNodesView.show();
+	      this.visualizationTableRelations.hide();
+	      return this.visualizationTableNodes.show();
 	    } else {
-	      this.visualizationTableNodesView.hide();
-	      return this.visualizationTableRelationsView.show();
+	      this.visualizationTableNodes.hide();
+	      return this.visualizationTableRelations.show();
 	    }
 	  };
 
 	  VisualizationEdit.prototype.resize = function() {
 	    var graphHeight, windowHeight;
+	    console.log('resize!');
 	    windowHeight = $(window).height();
 	    graphHeight = windowHeight - 50 - 64 - 64;
-	    this.visualizationGraphView.$el.height(graphHeight);
+	    this.visualizationGraph.$el.height(graphHeight);
+	    this.visualizationGraph.resize();
 	    $('.visualization-table').css('top', graphHeight + 64);
 	    return $('.footer').css('top', graphHeight + 64);
 	  };
@@ -28035,8 +28405,7 @@
 
 
 /***/ },
-
-/***/ 170:
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function() {
@@ -37544,74 +37913,5 @@
 	  this.d3 = d3;
 	}();
 
-/***/ },
-
-/***/ 222:
-/***/ function(module, exports, __webpack_require__) {
-
-	var VisualizationGraphViewCanvas, d3,
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	d3 = __webpack_require__(170);
-
-	VisualizationGraphViewCanvas = (function(superClass) {
-	  extend(VisualizationGraphViewCanvas, superClass);
-
-	  function VisualizationGraphViewCanvas() {
-	    return VisualizationGraphViewCanvas.__super__.constructor.apply(this, arguments);
-	  }
-
-	  VisualizationGraphViewCanvas.prototype.svg = null;
-
-	  VisualizationGraphViewCanvas.prototype.color = d3.scale.category20();
-
-	  VisualizationGraphViewCanvas.prototype.data = null;
-
-	  VisualizationGraphViewCanvas.prototype.force = null;
-
-	  VisualizationGraphViewCanvas.prototype.initialize = function(options) {
-	    console.log('initialize canvas');
-	    this.data = options.data;
-	    this.force = d3.layout.force().charge(-120).linkDistance(60).size([this.$el.width(), this.$el.height()]);
-	    return this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.$el.width()).attr('height', this.$el.height());
-	  };
-
-	  VisualizationGraphViewCanvas.prototype.render = function() {
-	    var link, nodes;
-	    console.log('render canvas');
-	    this.force.nodes(this.data.nodes).links(this.data.relations).start();
-	    link = this.svg.selectAll('.link').data(this.data.relations).enter().append('line').attr('class', 'link');
-	    nodes = this.svg.selectAll('.node').data(this.data.nodes).enter().append('circle').attr('class', 'node').attr('r', 6).attr('cx', this.$el.width() * 0.5).attr('cy', this.$el.height() * 0.5).style('fill', (function(_this) {
-	      return function(d) {
-	        return _this.color(d.node_type);
-	      };
-	    })(this)).call(this.force.drag);
-	    return this.force.on('tick', function() {
-	      link.attr('x1', function(d) {
-	        return d.source.x;
-	      }).attr('y1', function(d) {
-	        return d.source.y;
-	      }).attr('x2', function(d) {
-	        return d.target.x;
-	      }).attr('y2', function(d) {
-	        return d.target.y;
-	      });
-	      return nodes.attr('cx', function(d) {
-	        return d.x;
-	      }).attr('cy', function(d) {
-	        return d.y;
-	      });
-	    });
-	  };
-
-	  return VisualizationGraphViewCanvas;
-
-	})(Backbone.View);
-
-	module.exports = VisualizationGraphViewCanvas;
-
-
 /***/ }
-
-/******/ });
+/******/ ]);

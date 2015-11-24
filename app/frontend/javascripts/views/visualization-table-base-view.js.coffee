@@ -37,6 +37,7 @@ class VisualizationTableBaseView extends Backbone.View
       amount--
      
   onTableCreateRow: (index, amount) =>
+    console.log 'onTableCreateRow'
     console.log index, amount
     model = @collection.create {}
     console.log model, model.get('id')

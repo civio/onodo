@@ -1,4 +1,4 @@
-Handsontable                      = require './../dist/handsontable.full.js'
+Handsontable                 = require './../dist/handsontable.full.js'
 VisualizationTableBaseView   = require './visualization-table-base-view.js'
 
 class VisualizationTableRelationsView extends VisualizationTableBaseView

@@ -1,17 +1,30 @@
 #React     = require 'react'
 #ReactDOM  = require 'react-dom'
 #VisualizationGraphD3Component = require './../views/components/visualization-graph.cjsx'
-VisualizationGraphViewCanvas  = require './../views/visualization-graph-view-canvas.js'
+VisualizationGraphCanvasView          = require './../views/visualization-graph-canvas-view.js'
+VisualizationGraphConfigurationView   = require './../views/visualization-graph-configuration-view.js'
+VisualizationGraphNavigationView      = require './../views/visualization-graph-navigation-view.js'
 
 class VisualizationGraphView extends Backbone.View
   
   nodesSync:      false
   relationsSync:  false
+  visualizationGraphViewCanvas:     null
+  visualizationGraphConfiguration:  null
+  visualizationGraphNavigation:     null
 
   initialize: ->
     console.log 'initialize GraphView', @collection
     @collection.nodes.once 'sync', @onNodesSync , @
     @collection.relations.once 'sync', @onRelationsSync , @
+    $('.visualization-graph-menu-actions .configure').click @onShowPanelConfigure
+    $('.visualization-graph-panel-configuration .close').click @onHidePanelConfigure
+
+  onShowPanelConfigure: ->
+    $('.visualization-graph-panel-configuration').addClass 'active'
+
+  onHidePanelConfigure: ->
+    $('.visualization-graph-panel-configuration').removeClass 'active'
 
   onNodesSync: (nodes) =>
     @nodesSync = true
@@ -42,9 +55,18 @@ class VisualizationGraphView extends Backbone.View
 
   render: ->
     console.log 'render GraphView'
-    visualizationGraphViewCanvas = new VisualizationGraphViewCanvas {el: @$el, data: @getDataFromCollection()}
-    visualizationGraphViewCanvas.render()
-    #visualizationGraphViewCanvas.setElement '.visualization-graph-component'
+    # Setup D3 Canvas
+    @visualizationGraphCanvas = new VisualizationGraphCanvasView {el: @$el, data: @getDataFromCollection()}
+    @visualizationGraphCanvas.render()
+    # Setup Configuration Panel
+    @visualizationGraphConfiguration = new VisualizationGraphConfigurationView
+    @visualizationGraphConfiguration.setElement '.visualization-graph-panel-configuration'
+    @visualizationGraphConfiguration.render()
+    # Setup Nevigation Menu
+    @visualizationGraphNavigation = new VisualizationGraphNavigationView
+    @visualizationGraphNavigation.setElement '.visualization-graph-menu-navigation'
+    @visualizationGraphNavigation.render()
+    
     #VisualizationGraphViewCanvas
     # ReactDOM.render(
     #   React.createElement(VisualizationGraphD3Component, {collection: @collection}),
@@ -52,5 +74,9 @@ class VisualizationGraphView extends Backbone.View
     # )
     #ReactDOM.render React.createElement(VisualizationGraphComponent, {data: @collection.models}), @$el.get(0)
     return this
+
+  resize: ->
+    if @visualizationGraphCanvas
+      @visualizationGraphCanvas.resize()
 
 module.exports = VisualizationGraphView

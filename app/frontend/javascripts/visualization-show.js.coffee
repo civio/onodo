@@ -47,6 +47,7 @@ class VisualizationShow
     windowHeight = $(window).height()
     graphHeight = windowHeight - 50 - 64 - 64
     @visualizationGraphView.$el.height graphHeight
+    @visualizationGraphView.resize()
     # $('.visualization-table').height( windowHeight - 64 );
     #$('.footer').css 'top', graphHeight+64
 

@@ -7,12 +7,12 @@ VisualizationTableRelationsView   = require './views/visualization-table-relatio
 
 class VisualizationEdit
 
-  id:                               null
-  nodes:                            null
-  visualizationGraphView:           null
-  visualizationTableNodesView:      null
-  visualizationTableRelationsView:  null
-  $tableSelector:                   null
+  id:                           null
+  nodes:                        null
+  visualizationGraph:           null
+  visualizationTableNodes:      null
+  visualizationTableRelations:  null
+  $tableSelector:               null
 
   constructor: (_id) ->
     console.log('setup visualization', _id);
@@ -20,17 +20,17 @@ class VisualizationEdit
     # Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
-    # Set Graph View
-    @visualizationGraphView = new VisualizationGraphView {collection: {nodes: @nodes, relations: @relations} }
-    @visualizationGraphView.setElement '.visualization-graph-component'
     # Set Table Nodes
-    @visualizationTableNodesView = new VisualizationTableNodesView {collection: @nodes}
-    @visualizationTableNodesView.setElement '.visualization-table-nodes'
+    @visualizationTableNodes = new VisualizationTableNodesView {collection: @nodes}
+    @visualizationTableNodes.setElement '.visualization-table-nodes'
     # Set Table Relations
-    @visualizationTableRelationsView = new VisualizationTableRelationsView {collection: @relations}
-    @visualizationTableRelationsView.setElement '.visualization-table-relations'
+    @visualizationTableRelations = new VisualizationTableRelationsView {collection: @relations}
+    @visualizationTableRelations.setElement '.visualization-table-relations'
     # Setup Table Selector
     @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
+    # Set Graph View
+    @visualizationGraph = new VisualizationGraphView {collection: {nodes: @nodes, relations: @relations} }
+    @visualizationGraphsetElement '.visualization-graph-component'
 
   setupAffix: ->
     $('.visualization-graph').affix
@@ -48,18 +48,19 @@ class VisualizationEdit
       .addClass 'btn-default'
     $(e.target).addClass 'active btn-primary'
     if $(e.target).attr('href') == '#nodes'
-      @visualizationTableRelationsView.hide()
-      @visualizationTableNodesView.show()
+      @visualizationTableRelations.hide()
+      @visualizationTableNodes.show()
     else
-      @visualizationTableNodesView.hide()
-      @visualizationTableRelationsView.show()
+      @visualizationTableNodes.hide()
+      @visualizationTableRelations.show()
 
 
   resize: =>
-    #console.log 'resize!'
+    console.log 'resize!'
     windowHeight = $(window).height()
     graphHeight = windowHeight - 50 - 64 - 64
-    @visualizationGraphView.$el.height graphHeight
+    @visualizationGraph.$el.height graphHeight
+    @visualizationGraph.resize()
     $('.visualization-table').css 'top', graphHeight+64
     # $('.visualization-table').height( windowHeight - 64 );
     $('.footer').css 'top', graphHeight+64
