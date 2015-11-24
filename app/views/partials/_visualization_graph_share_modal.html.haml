@@ -1,0 +1,12 @@
+#graph-share-modal.modal.fade{ tabindex: "-1", role: "dialog", "aria-labelledby" => "graph-share-modal-label"}
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+          %span{"aria-hidden" => "true"}
+            &times
+        %h4#graph-share-modal-label.modal-title
+          Share
+      .modal-body
+        .lead
+          Embed
