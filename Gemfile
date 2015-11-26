@@ -55,6 +55,8 @@ gem "rails-backbone"
 # A set of Rails responders to dry up your application. Read more: https://github.com/plataformatec/responders
 gem 'responders', '~> 2.0'
 
+gem 'charlock_holmes_bundle_icu'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
