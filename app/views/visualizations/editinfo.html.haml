@@ -2,7 +2,7 @@
   %h2 Edit Visualization Info
   .row
     .col-sm-6
-      = form_for @visualization, url: {action: "updateinfo"} , method: "post" do |f|
+      = form_for @visualization, url: {action: "update"} , method: "patch" do |f|
         .form-group
           = f.label "visualization-input-title", "Title"
           = f.text_field :name, class: "form-control"
