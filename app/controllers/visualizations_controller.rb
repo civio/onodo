@@ -10,22 +10,34 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/new
   def new
-    @visualization = Visualization.new
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    else
+      @visualization = Visualization.new
+    end
   end
 
   # POST /visualizations
   def create
-    
+  
   end
 
   # GET /visualizations/:id/edit
   def edit
-    @visualization = Visualization.find(params[:id])
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    else
+      @visualization = Visualization.find(params[:id])
+    end
   end
 
   # GET /visualizations/:id/edit/info
   def editinfo
-    @visualization = Visualization.find(params[:id])
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    else
+      @visualization = Visualization.find(params[:id])
+    end
   end
 
   # PATCH /visualizations/:id/
