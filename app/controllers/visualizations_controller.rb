@@ -1,3 +1,6 @@
+require 'charlock_holmes'
+require 'csv'
+
 class VisualizationsController < ApplicationController
 
   # GET /visualizations/:id
@@ -17,12 +20,22 @@ class VisualizationsController < ApplicationController
 
   # POST /visualizations
   def create
-    @visualization = Visualization.new( create_params )
-    @visualization.author_id = current_user.id; 
-    #@visualization.name = params[:name]
-    puts @visualization
-    @visualization.save
-    redirect_to visualization_path( @visualization )
+    visualization_params              = {}
+    visualization_params[:name]       = params[:visualization][:name]
+    visualization_params[:author_id]  = current_user.id
+    @visualization  = Visualization.new( visualization_params )
+    dataset         = Dataset.new
+    @visualization.dataset = dataset
+
+    unless params[:visualization][:nodes].nil?
+      import_nodes(params[:visualization][:nodes], dataset)
+    end
+
+    if @visualization.save
+      redirect_to visualization_path( @visualization ), :notice => "Your visualization was created!"
+    else
+      render "new"
+    end
   end
 
   # GET /visualizations/:id/edit
@@ -91,4 +104,22 @@ class VisualizationsController < ApplicationController
       params.require(:visualization).permit(:name, :description)
     end
 
+    def import_nodes( file, dataset )
+      puts file.to_s
+      puts dataset.to_s
+      # We can't rely on the file encoding being correct, so find out which one we got...
+      content = File.read(file.path)
+      detection = CharlockHolmes::EncodingDetector.detect(content)
+      utf8_encoded_content = CharlockHolmes::Converter.convert content, detection[:encoding], 'UTF-8'
+     
+      CSV.parse(utf8_encoded_content, headers: true) do |row|
+        next if row.size == 0  # Skip empty lines
+
+        Node.new( name: row['Name'],
+                  description: row['Url'], 
+                  node_type: row['Family'],
+                  custom_field: row['Appareances'],
+                  dataset: dataset).save
+      end
+    end
 end
