@@ -13,6 +13,11 @@ class VisualizationsController < ApplicationController
     @visualization = Visualization.new
   end
 
+  # POST /visualizations
+  def create
+    
+  end
+
   # GET /visualizations/:id/edit
   def edit
     @visualization = Visualization.find(params[:id])
@@ -23,11 +28,16 @@ class VisualizationsController < ApplicationController
     @visualization = Visualization.find(params[:id])
   end
 
-  # POST /visualizations/:id/edit/info
-  def updateinfo
+  # PATCH /visualizations/:id/
+  def update
     @visualization = Visualization.find(params[:id])
     @visualization.update_attributes( edit_info_params )
     redirect_to visualization_path( @visualization )
+  end
+
+  # DELETE /visualizations/:id/
+  def destroy
+    @visualization = Visualization.find(params[:id])
   end
 
   # POST /visualizations/:id/publish

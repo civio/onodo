@@ -16,21 +16,23 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :visualizations, :only => [:show, :edit, :new] do 
+  resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do 
     collection do 
       get ':id/edit/info' => 'visualizations#editinfo'
-      post ':id/edit/info' => 'visualizations#updateinfo'
       post 'publish'
       post 'unpublish'
     end 
   end 
 
-  resources :stories, :only => [:show]
+  resources :stories, :only => [:show, :edit, :new, :update, :destroy]
 
   resources :nodes, only: [:index]
 
   get '/explore' => 'pages#explore'
   get '/gallery' => 'pages#gallery'
+  get '/import' => 'import#index'
+  post '/import/nodes' => 'import#nodes'
+  post '/import/relations' => 'import#relations'
 
   # API routes
   scope 'api' do
