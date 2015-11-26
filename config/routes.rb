@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   resources :stories, :only => [:show, :edit, :new, :update, :destroy]
 
+  resources :datasets, only: [:index]
   resources :nodes, only: [:index]
 
   get '/explore' => 'pages#explore'
