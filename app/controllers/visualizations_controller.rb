@@ -31,6 +31,10 @@ class VisualizationsController < ApplicationController
       import_nodes(params[:visualization][:nodes], dataset)
     end
 
+    unless params[:visualization][:relations].nil?
+      import_relations(params[:visualization][:relations], dataset)
+    end
+
     if @visualization.save
       redirect_to visualization_path( @visualization ), :notice => "Your visualization was created!"
     else
@@ -105,8 +109,6 @@ class VisualizationsController < ApplicationController
     end
 
     def import_nodes( file, dataset )
-      puts file.to_s
-      puts dataset.to_s
       # We can't rely on the file encoding being correct, so find out which one we got...
       content = File.read(file.path)
       detection = CharlockHolmes::EncodingDetector.detect(content)
@@ -115,11 +117,31 @@ class VisualizationsController < ApplicationController
       CSV.parse(utf8_encoded_content, headers: true) do |row|
         next if row.size == 0  # Skip empty lines
 
-        Node.new( name: row['Name'],
-                  description: row['Url'], 
-                  node_type: row['Family'],
-                  custom_field: row['Appareances'],
-                  dataset: dataset).save
+        Node.new( name:         row['name'],
+                  description:  row['description'], 
+                  node_type:    row['type'],
+                  custom_field: row['custom_field'],
+                  dataset:      dataset).save
+      end
+    end
+
+    def import_relations( file, dataset )
+      # We can't rely on the file encoding being correct, so find out which one we got...
+      content = File.read(file.path)
+      detection = CharlockHolmes::EncodingDetector.detect(content)
+      utf8_encoded_content = CharlockHolmes::Converter.convert content, detection[:encoding], 'UTF-8'
+     
+      id_base = dataset.nodes.nil? ? 0 : dataset.nodes.first.id
+
+      puts id_base
+
+      CSV.parse(utf8_encoded_content, headers: true) do |row|
+        next if row.size == 0  # Skip empty lines
+
+        Relation.new( source:         dataset.nodes.find( id_base+row['source'].to_i-1 ),
+                      target:         dataset.nodes.find( id_base+row['target'].to_i-1 ), 
+                      relation_type:  row['type'],
+                      dataset:        dataset ).save
       end
     end
 end
