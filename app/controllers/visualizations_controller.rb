@@ -12,14 +12,17 @@ class VisualizationsController < ApplicationController
   def new
     if current_user.nil?
       redirect_to new_user_session_path()
-    else
-      @visualization = Visualization.new
     end
   end
 
   # POST /visualizations
   def create
-  
+    @visualization = Visualization.new( create_params )
+    @visualization.author_id = current_user.id; 
+    #@visualization.name = params[:name]
+    puts @visualization
+    @visualization.save
+    redirect_to visualization_path( @visualization )
   end
 
   # GET /visualizations/:id/edit
@@ -50,6 +53,8 @@ class VisualizationsController < ApplicationController
   # DELETE /visualizations/:id/
   def destroy
     @visualization = Visualization.find(params[:id])
+    @visualization.destroy
+    redirect_to user_path( current_user ), :flash => { :success => "Visualization destroyed" }
   end
 
   # POST /visualizations/:id/publish
@@ -77,6 +82,11 @@ class VisualizationsController < ApplicationController
   private
 
     # TODO: aqui deberíamos validar los parámetros que queremos recibir
+
+    def create_params
+      params.require(:visualization).permit(:name, :nodes, :relations)
+    end
+
     def edit_info_params
       params.require(:visualization).permit(:name, :description)
     end

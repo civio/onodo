@@ -15,7 +15,6 @@
         %p
           %strong
             %i Are you sure?
-
-        = link_to "Yes", {controller: "visualizations", action: "destroy", id: @visualization.id, :method => :delete}, {:class => "btn btn-danger"}
+        = button_to "Yes", @visualization, :method => :delete, :class => "btn btn-danger"
         %button.btn.btn-default{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
           Cancel

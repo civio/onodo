@@ -2,7 +2,7 @@
   %h2 Create Visualization
   .row
     .col-sm-6
-      = form_for @visualization, url: {action: "create"} , method: "post" do |f|
+      = form_for :visualization, url: visualizations_path , method: "post" do |f|
         .form-group
           = f.label :name, "Visualization title"
           = f.text_field :name, class: "form-control"
