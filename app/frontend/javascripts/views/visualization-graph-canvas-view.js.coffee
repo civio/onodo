@@ -8,11 +8,12 @@ class VisualizationGraphCanvasView extends Backbone.View
   container:  null
   color:      null
   data:       null
-  force:      null
   nodes:      null
   nodes_symbol: null
   links:      null
   labels:     null
+  force:      null
+  forceDrag:  null
   linkedByIndex: {}
   # Viewport object to store drag/zoom values
   viewport:
@@ -59,6 +60,10 @@ class VisualizationGraphCanvasView extends Backbone.View
       #.linkStrength(2)
       .size([@viewport.width, @viewport.height])
 
+    @forceDrag = @force.drag()
+      .on('dragstart',  @onNodeDragStart)
+      .on('dragend',    @onNodeDragEnd)
+
     # Setup SVG
     @svg = d3.select( @$el.get(0) )
       .append('svg:svg')
@@ -93,10 +98,11 @@ class VisualizationGraphCanvasView extends Backbone.View
       .data(@data.nodes)
     .enter().append('g')
       .attr('class', 'node')
-      .call(@force.drag)
+      .call(@forceDrag)
       .on('mouseover',  @onNodeOver)
       .on('mouseout',   @onNodeOut)
       .on('click',      @onNodeClick)
+      .on('dblclick',   @onNodeDoubleClick)
 
     # Setup Nodes Symbol    
     @nodes_symbol = @nodes.append('circle')
@@ -181,7 +187,7 @@ class VisualizationGraphCanvasView extends Backbone.View
     if @viewport.drag.x == d.x and @viewport.drag.y == d.y
       return  # Skip if has no translation
     # fix the node position when the node is dragged
-    # d.fixed = true;
+    d.fixed = true;
 
   onNodeOver: (d) =>
     @nodes_symbol.attr('class', (o) =>
@@ -197,6 +203,10 @@ class VisualizationGraphCanvasView extends Backbone.View
     @links.attr('class', 'link')
 
   onNodeClick: (d) =>
+
+  onNodeDoubleClick: (d) =>
+    # unfix the node position when the node is double clicked
+    d.fixed = false
 
   # Tick Function
   onTick: =>

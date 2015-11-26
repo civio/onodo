@@ -18,6 +18,9 @@
   }
 }
 
+.text-danger {
+  color: $state-danger-text !important;
+}
 
 .item-preview{
   background: $gray-light;

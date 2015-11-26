@@ -30,7 +30,7 @@ class VisualizationEdit
     @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
     # Set Graph View
     @visualizationGraph = new VisualizationGraphView {collection: {nodes: @nodes, relations: @relations} }
-    @visualizationGraphsetElement '.visualization-graph-component'
+    @visualizationGraph.setElement '.visualization-graph-component'
 
   setupAffix: ->
     $('.visualization-graph').affix
