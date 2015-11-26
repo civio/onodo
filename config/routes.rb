@@ -31,9 +31,6 @@ Rails.application.routes.draw do
 
   get '/explore' => 'pages#explore'
   get '/gallery' => 'pages#gallery'
-  get '/import' => 'import#index'
-  post '/import/nodes' => 'import#nodes'
-  post '/import/relations' => 'import#relations'
 
   # API routes
   scope 'api' do
