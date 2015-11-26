@@ -40,8 +40,12 @@ class VisualizationGraphCanvasView extends Backbone.View
 
     @data = options.data
 
-    # Setup linkedByIndex object
+    nodes_base_id = +@data.nodes[0].id  # Get first node id
+
+    # Change relations source & target N based id to 0 based ids & setup linkedByIndex object
     @data.relations.forEach (d) =>
+      d.source    = d.source_id-nodes_base_id
+      d.target    = d.target_id-nodes_base_id
       @linkedByIndex[d.source+','+d.target] = true
 
     # Setup Viewport attributes

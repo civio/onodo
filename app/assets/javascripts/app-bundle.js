@@ -463,10 +463,14 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.initialize = function(options) {
+	    var nodes_base_id;
 	    console.log('initialize canvas');
 	    this.data = options.data;
+	    nodes_base_id = +this.data.nodes[0].id;
 	    this.data.relations.forEach((function(_this) {
 	      return function(d) {
+	        d.source = d.source_id - nodes_base_id;
+	        d.target = d.target_id - nodes_base_id;
 	        return _this.linkedByIndex[d.source + ',' + d.target] = true;
 	      };
 	    })(this));
