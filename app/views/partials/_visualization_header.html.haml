@@ -22,7 +22,7 @@
             %a{href: "#"} Preview visualization
           %li.divider{:role => "separator"}
           %li
-            %a.text-danger{href: "#"} Delete
+            %a.text-danger{href: "#visualization-delete-modal", data: {toggle: "modal"}} Delete
         - elsif defined? edit and @visualization.published?
           %li
             %a{href: edit_visualization_path(@visualization)+'/info'} Edit info
@@ -38,7 +38,7 @@
             %a{href: "#"} Your related stories
           %li.divider{:role => "separator"}
           %li
-            %a.text-danger{href: "#"} Delete
+            %a.text-danger{href: "#visualization-delete-modal", data: {toggle: "modal"}} Delete
         - else
           %li
             %a{href: "#"} Create story
