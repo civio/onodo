@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117145417) do
+ActiveRecord::Schema.define(version: 20151126092606) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
@@ -26,10 +26,11 @@ ActiveRecord::Schema.define(version: 20151117145417) do
     t.string   "name"
     t.string   "description"
     t.boolean  "visible"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "node_type"
     t.integer  "dataset_id"
+    t.string   "custom_field"
   end
 
   add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id"
