@@ -1,0 +1,18 @@
+= render 'partials/visualization_header'
+
+.visualization-graph
+  = render 'partials/visualization_graph'
+
+= render 'partials/visualization_info'
+  
+= render 'partials/visualization_table_view'
+
+.visualization-related-items
+  .container
+    %strong Related visualizations & stories
+    .row
+      - @related_items.each do |item|
+        .col-sm-6
+          = render 'partials/item_preview', :item => item
+
+= render 'partials/visualization_share_modal'
