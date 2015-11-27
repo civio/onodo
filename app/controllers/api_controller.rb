@@ -21,15 +21,17 @@ class ApiController < ApplicationController
   # Update a Node attribute
   # PUT /api/nodes/:id
   def node_update
-    puts params[:id]
-    puts node_params
-    render json: Node.update(params[:id], node_params)
+    Node.update(params[:id], node_params)
+    render json: {}
+    #TODO! Add error validation
   end
 
   # Delete a Node
   # DELETE /api/nodes/:id
   def node_destroy
-    render json: Node.destroy(params[:id])
+    Node.destroy(params[:id])
+    render json: {}
+    #TODO! Add error validation
   end
 
   # Get uniques & non-blank Nodes Types 
@@ -55,31 +57,32 @@ class ApiController < ApplicationController
   # Create a new Relation
   # POST /api/relations
   def relation_create
-    render json: Relation.create(relation_params)
+    Relation.create(relation_params)
+    render json: {}
   end
 
   # Update a Relation attribute
   # PUT /api/relations/:id
   def relation_update
-    render json: Relation.update(params[:id], relation_params)
+    Relation.update(params[:id], relation_params)
+    render json: {}
   end
 
   # Delete a Relation
   # DELETE /api/relations/:id
   def relation_destroy
-    render json: Relation.destroy(params[:id])
+    Relation.destroy(params[:id])
+    render json: {}
   end
 
   private
 
     def node_params
-      params.require(:id) if params[:node]
-      #.permit(:dataset_id, :name, :description, :created_at, :updated_at, :visible, :node_type)
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field) if params[:node]
     end
 
     def relation_params
-      params.require(:id, :source_id, :target_id)
-      #.permit(:dataset_id, :created_at, :updated_at, :relation_type)
+      params.require(:relation).permit(:source_id, :target_id, :relation_type) if params[:relation]
     end
 
 end
