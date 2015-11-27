@@ -121,6 +121,7 @@ class VisualizationsController < ApplicationController
                   description:  row['description'], 
                   node_type:    row['type'],
                   custom_field: row['custom_field'],
+                  visible:      row['visible'] ? row['visible'] : true,
                   dataset:      dataset).save
       end
     end

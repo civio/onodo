@@ -6,6 +6,14 @@
         &times
   .panel-body
     -# Attributes drom https://github.com/mbostock/d3/wiki/Force-Layout
+    .checkbox
+      %label{ :for => "hideLabels" }
+        = check_box_tag :hideLabels
+        Hide labels
+    .checkbox
+      %label{ :for => "hideNoRelations" }
+        = check_box_tag :hideNoRelations
+        Hide nodes without relations
     %p
       linkDistance
     %input#linkdistante{name: "linkDistance", type: "range", min: "10", max: "200", value: "60"}

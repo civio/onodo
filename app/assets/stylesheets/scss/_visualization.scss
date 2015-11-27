@@ -93,12 +93,14 @@
       stroke: $gray-lighter;
       stroke-width: 1.5px;
 
-      &.highlighted{
-        stroke-width: 0px;
-      }
-
       &.weaken{
         opacity: 0.5;
+      }
+
+      &.highlighted,
+      &.highlighted.weaken{
+        stroke-width: 0px;
+        opacity: 1;
       }
     }
 
@@ -107,13 +109,15 @@
       stroke-opacity: .6;
       stroke-width: 1px;
 
-      &.highlighted{
-        stroke-opacity: 1;
-        stroke-width: 2px;
-      }
-
       &.weaken{
         opacity: 0.5;
+      }
+
+      &.highlighted,
+      &.highlighted.weaken{
+        stroke-opacity: 1;
+        stroke-width: 2px;
+        opacity: 1;
       }
     }
 
@@ -123,11 +127,15 @@
       font-size: 1em;
       font-weight: normal;
 
-      &.highlighted{
-      }
-
       &.weaken{
         opacity: 0;
+      }
+
+      &.highlighted,
+      &.highlighted.weaken,
+      &.highlighted.hide{
+        display: inline !important;
+        opacity: 1;
       }
     }
   }

@@ -413,6 +413,8 @@
 	    this.onCanvasDragEnd = bind(this.onCanvasDragEnd, this);
 	    this.onCanvasDragStart = bind(this.onCanvasDragStart, this);
 	    this.onCanvasDrag = bind(this.onCanvasDrag, this);
+	    this.onToogleNodesWithoutRelation = bind(this.onToogleNodesWithoutRelation, this);
+	    this.onToogleLabels = bind(this.onToogleLabels, this);
 	    return VisualizationGraphCanvasView.__super__.constructor.apply(this, arguments);
 	  }
 
@@ -425,6 +427,10 @@
 	  VisualizationGraphCanvasView.prototype.color = null;
 
 	  VisualizationGraphCanvasView.prototype.data = null;
+
+	  VisualizationGraphCanvasView.prototype.data_nodes = [];
+
+	  VisualizationGraphCanvasView.prototype.data_relations = [];
 
 	  VisualizationGraphCanvasView.prototype.nodes = null;
 
@@ -471,7 +477,13 @@
 	      return function(d) {
 	        d.source = d.source_id - nodes_base_id;
 	        d.target = d.target_id - nodes_base_id;
-	        return _this.linkedByIndex[d.source + ',' + d.target] = true;
+	        _this.linkedByIndex[d.source + ',' + d.target] = true;
+	        return _this.data_relations.push(d);
+	      };
+	    })(this));
+	    this.data.nodes.forEach((function(_this) {
+	      return function(d) {
+	        return _this.data_nodes.push(d);
 	      };
 	    })(this));
 	    this.viewport.width = this.$el.width();
@@ -488,15 +500,15 @@
 
 	  VisualizationGraphCanvasView.prototype.render = function() {
 	    console.log('render canvas');
-	    this.force.nodes(this.data.nodes).links(this.data.relations).start();
-	    this.links = this.container.selectAll('.link').data(this.data.relations).enter().append('line').attr('class', 'link');
-	    this.nodes = this.container.selectAll('.node').data(this.data.nodes).enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick);
+	    this.force.nodes(this.data_nodes).links(this.data_relations).start();
+	    this.links = this.container.selectAll('.link').data(this.data_relations).enter().append('line').attr('class', 'link');
+	    this.nodes = this.container.selectAll('.node').data(this.data_nodes).enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick);
 	    this.nodes_symbol = this.nodes.append('circle').attr('class', 'node-symbol').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
 	      return function(d) {
 	        return _this.color(d.node_type);
 	      };
 	    })(this));
-	    this.labels = this.container.selectAll('.text').data(this.data.nodes).enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em').text(function(d) {
+	    this.labels = this.container.selectAll('.text').data(this.data_nodes).enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em').text(function(d) {
 	      return d.name;
 	    });
 	    this.force.on('tick', this.onTick);
@@ -504,11 +516,19 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.setupEvents = function() {
+	    Backbone.on('config.toogle.labels', this.onToogleLabels, this);
+	    Backbone.on('config.toogle.norelations', this.onToogleNodesWithoutRelation, this);
 	    Backbone.on('config.param.change', this.updateForceParameters, this);
 	    Backbone.on('navigation.zoomin', this.onZoomIn, this);
 	    Backbone.on('navigation.zoomout', this.onZoomOut, this);
 	    return Backbone.on('navigation.fullscreen', this.onFullscreen, this);
 	  };
+
+	  VisualizationGraphCanvasView.prototype.onToogleLabels = function(e) {
+	    return this.labels.classed('hide', e.value);
+	  };
+
+	  VisualizationGraphCanvasView.prototype.onToogleNodesWithoutRelation = function(e) {};
 
 	  VisualizationGraphCanvasView.prototype.updateForceParameters = function(e) {
 	    this.force.stop();
@@ -575,39 +595,33 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeOver = function(d) {
-	    this.nodes_symbol.attr('class', (function(_this) {
+	    this.nodes_symbol.classed('weaken', true);
+	    this.nodes_symbol.classed('highlighted', (function(_this) {
 	      return function(o) {
-	        if (_this.isConnected(d, o)) {
-	          return 'node-symbol highlighted';
-	        } else {
-	          return 'node-symbol weaken';
-	        }
+	        return _this.isConnected(d, o);
 	      };
 	    })(this));
-	    this.labels.attr('class', (function(_this) {
+	    this.labels.classed('weaken', true);
+	    this.labels.classed('highlighted', (function(_this) {
 	      return function(o) {
-	        if (_this.isConnected(d, o)) {
-	          return 'label highlighted';
-	        } else {
-	          return 'label weaken';
-	        }
+	        return _this.isConnected(d, o);
 	      };
 	    })(this));
-	    return this.links.attr('class', (function(_this) {
+	    this.links.classed('weaken', true);
+	    return this.links.classed('highlighted', (function(_this) {
 	      return function(o) {
-	        if (o.source.index === d.index || o.target.index === d.index) {
-	          return 'link highlighted';
-	        } else {
-	          return 'link weaken';
-	        }
+	        return o.source.index === d.index || o.target.index === d.index;
 	      };
 	    })(this));
 	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeOut = function(d) {
-	    this.nodes_symbol.attr('class', 'node-symbol');
-	    this.labels.attr('class', 'label');
-	    return this.links.attr('class', 'link');
+	    this.nodes_symbol.classed('weaken', false);
+	    this.nodes_symbol.classed('highlighted', false);
+	    this.labels.classed('weaken', false);
+	    this.labels.classed('highlighted', false);
+	    this.links.classed('weaken', false);
+	    return this.links.classed('highlighted', false);
 	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeClick = function(d) {};
@@ -10195,6 +10209,8 @@
 	  extend(VisualizationGraphConfigurationView, superClass);
 
 	  function VisualizationGraphConfigurationView() {
+	    this.onToogleNoRelations = bind(this.onToogleNoRelations, this);
+	    this.onToogleLabels = bind(this.onToogleLabels, this);
 	    this.onChangeValue = bind(this.onChangeValue, this);
 	    return VisualizationGraphConfigurationView.__super__.constructor.apply(this, arguments);
 	  }
@@ -10206,7 +10222,21 @@
 	    });
 	  };
 
+	  VisualizationGraphConfigurationView.prototype.onToogleLabels = function(e) {
+	    return Backbone.trigger('config.toogle.labels', {
+	      value: $(e.target).prop('checked')
+	    });
+	  };
+
+	  VisualizationGraphConfigurationView.prototype.onToogleNoRelations = function(e) {
+	    return Backbone.trigger('config.toogle.norelations', {
+	      value: $(e.target).prop('checked')
+	    });
+	  };
+
 	  VisualizationGraphConfigurationView.prototype.render = function() {
+	    this.$el.find('#hideLabels').change(this.onToogleLabels);
+	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
 	    this.$el.find('#linkdistante').change(this.onChangeValue);
 	    this.$el.find('#linkstrengh').change(this.onChangeValue);
 	    this.$el.find('#friction').change(this.onChangeValue);

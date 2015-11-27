@@ -4,17 +4,19 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   NODES_SIZE: 8
 
-  svg:        null
-  container:  null
-  color:      null
-  data:       null
-  nodes:      null
-  nodes_symbol: null
-  links:      null
-  labels:     null
-  force:      null
-  forceDrag:  null
-  linkedByIndex: {}
+  svg:            null
+  container:      null
+  color:          null
+  data:           null
+  data_nodes:     []
+  data_relations: []
+  nodes:          null
+  nodes_symbol:   null
+  links:          null
+  labels:         null
+  force:          null
+  forceDrag:      null
+  linkedByIndex:  {}
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -47,6 +49,10 @@ class VisualizationGraphCanvasView extends Backbone.View
       d.source    = d.source_id-nodes_base_id
       d.target    = d.target_id-nodes_base_id
       @linkedByIndex[d.source+','+d.target] = true
+      @data_relations.push d 
+
+    @data.nodes.forEach (d) =>
+      @data_nodes.push d 
 
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
@@ -87,22 +93,23 @@ class VisualizationGraphCanvasView extends Backbone.View
     console.log 'render canvas' 
   
     @force
-      .nodes(@data.nodes)
-      .links(@data.relations)
+      .nodes(@data_nodes)
+      .links(@data_relations)
       .start();
 
     # Setup Links
     @links = @container.selectAll('.link')
-      .data(@data.relations)
+      .data(@data_relations)
     .enter().append('line')
       .attr('class', 'link')
 
     # Setup Nodes
     @nodes = @container.selectAll('.node')
-      .data(@data.nodes)
+      .data(@data_nodes)
     .enter().append('g')
       .attr('class', 'node')
       .call(@forceDrag)
+
       .on('mouseover',  @onNodeOver)
       .on('mouseout',   @onNodeOut)
       .on('click',      @onNodeClick)
@@ -116,7 +123,7 @@ class VisualizationGraphCanvasView extends Backbone.View
     
     # Setup Nodes Text
     @labels = @container.selectAll('.text')
-      .data(@data.nodes)
+      .data(@data_nodes)
     .enter().append('text')
       .attr('class', 'label')
       .attr('dx', @NODES_SIZE+6)
@@ -130,11 +137,19 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   setupEvents: ->
     # Subscribe Config Panel Events
+    Backbone.on 'config.toogle.labels', @onToogleLabels, @
+    Backbone.on 'config.toogle.norelations', @onToogleNodesWithoutRelation, @
     Backbone.on 'config.param.change', @updateForceParameters, @
     # Subscribe Navigation Events
     Backbone.on 'navigation.zoomin', @onZoomIn, @
     Backbone.on 'navigation.zoomout', @onZoomOut, @
     Backbone.on 'navigation.fullscreen', @onFullscreen, @
+
+  onToogleLabels: (e) =>
+    @labels.classed 'hide', e.value
+
+  onToogleNodesWithoutRelation: (e) =>
+
 
   updateForceParameters: (e) ->
     @force.stop()
@@ -194,17 +209,29 @@ class VisualizationGraphCanvasView extends Backbone.View
     d.fixed = true;
 
   onNodeOver: (d) =>
-    @nodes_symbol.attr('class', (o) =>
-      return if @isConnected(d, o) then 'node-symbol highlighted' else 'node-symbol weaken')
-    @labels.attr('class', (o) =>
-      return if @isConnected(d, o) then 'label highlighted' else 'label weaken')
-    @links.attr('class', (o) =>
-      return if o.source.index == d.index || o.target.index == d.index then 'link highlighted' else 'link weaken')
+    @nodes_symbol.classed 'weaken', true
+    @nodes_symbol.classed 'highlighted', (o) => return @isConnected(d, o)
+
+    @labels.classed 'weaken', true
+    @labels.classed 'highlighted', (o) => return @isConnected(d, o)
+
+    @links.classed 'weaken', true
+    @links.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+
+    # @nodes_symbol.attr('class', (o) =>
+    #   return if @isConnected(d, o) then 'node-symbol highlighted' else 'node-symbol weaken')
+    # @labels.attr('class', (o) =>
+    #   return if @isConnected(d, o) then 'label highlighted' else 'label weaken')
+    # @links.attr('class', (o) =>
+    #   return if o.source.index == d.index || o.target.index == d.index then 'link highlighted' else 'link weaken')
 
   onNodeOut: (d) =>
-    @nodes_symbol.attr('class', 'node-symbol')
-    @labels.attr('class', 'label')
-    @links.attr('class', 'link')
+    @nodes_symbol.classed 'weaken', false
+    @nodes_symbol.classed 'highlighted', false
+    @labels.classed 'weaken', false
+    @labels.classed 'highlighted', false
+    @links.classed 'weaken', false
+    @links.classed 'highlighted', false
 
   onNodeClick: (d) =>
 
