@@ -3,7 +3,7 @@ window.App ||= {}
 App.VisualizationShow = require './visualization-show.js'
 App.VisualizationEdit = require './visualization-edit.js'
 
-$(document).on 'page:change', ->
+$(document).ready ->
   # /visualizations/:id/edit
   if $('body.visualizations.edit').length > 0
     appVisualizationEdit = new App.VisualizationEdit $('body').data('id')
