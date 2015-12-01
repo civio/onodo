@@ -10,16 +10,14 @@ Onodo
 
 ### Installation instructions
 
-  $ bundle install
-  $ npm install -g webpack
-  $ npm install
-  $ rake db:setup
-  $ foreman start -f Procfile.dev
+    $ bundle install
+    $ npm install -g webpack
+    $ npm install
+    $ rake db:setup
+    $ foreman start -f Procfile.dev
 
 ### Purge & Update DB with seed file
 
-  $ rake db:purge db:create db:migrate db:seed
+    $ rake db:purge db:create db:migrate db:seed
 
-### Waffle
-
-  [Onodo Waffle](https://waffle.io/civio/onodo)
+**[Waffle](https://waffle.io/civio/onodo)**
