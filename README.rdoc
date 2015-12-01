@@ -16,3 +16,7 @@
 === Purge & Update DB with seed file
 
   $ rake db:purge db:create db:migrate db:seed
+
+=== Waffle
+
+  [Onodo Waffle](https://waffle.io/civio/onodo)
