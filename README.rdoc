@@ -19,4 +19,4 @@
 
 === Waffle
 
-  [Onodo Waffle](https://waffle.io/civio/onodo)
+  https://waffle.io/civio/onodo
