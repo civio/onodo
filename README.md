@@ -1,11 +1,14 @@
-=== Stack
+Onodo
+=============
+
+### Stack
 * Rails 4.2
 * React.js
 * Backbone
 * Webpack for js management
 * PostgreSQL
 
-=== Installation instructions
+### Installation instructions
 
   $ bundle install
   $ npm install -g webpack
@@ -13,10 +16,10 @@
   $ rake db:setup
   $ foreman start -f Procfile.dev
 
-=== Purge & Update DB with seed file
+### Purge & Update DB with seed file
 
   $ rake db:purge db:create db:migrate db:seed
 
-=== Waffle
+### Waffle
 
-  (Onodo Waffle)[https://waffle.io/civio/onodo]
+  [Onodo Waffle](https://waffle.io/civio/onodo)
