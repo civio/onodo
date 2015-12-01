@@ -66,7 +66,9 @@ class VisualizationGraphView extends Backbone.View
     @visualizationGraphNavigation = new VisualizationGraphNavigationView
     @visualizationGraphNavigation.setElement '.visualization-graph-menu-navigation'
     @visualizationGraphNavigation.render()
-    
+    # Setup Events Listeners
+    Backbone.on 'visualization.node.visible', @onNodeChangeVisible, @
+
     #VisualizationGraphViewCanvas
     # ReactDOM.render(
     #   React.createElement(VisualizationGraphD3Component, {collection: @collection}),
@@ -78,5 +80,14 @@ class VisualizationGraphView extends Backbone.View
   resize: ->
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
+
+  onNodeChangeVisible: (e) ->
+    console.log 'onNodeChangeVisible', e.value, e.node
+    if e.value
+      @visualizationGraphCanvas.showNode e.node.attributes
+    else
+      @visualizationGraphCanvas.hideNode e.node.attributes
+    @visualizationGraphCanvas.updateLayout()
+
 
 module.exports = VisualizationGraphView

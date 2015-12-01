@@ -4,19 +4,22 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   NODES_SIZE: 8
 
-  svg:            null
-  container:      null
-  color:          null
-  data:           null
-  data_nodes:     []
-  data_relations: []
-  nodes:          null
-  nodes_symbol:   null
-  links:          null
-  labels:         null
-  force:          null
-  forceDrag:      null
-  linkedByIndex:  {}
+  svg:              null
+  container:        null
+  color:            null
+  data:             null
+  data_nodes:       []
+  data_nodes_map:   d3.map()
+  data_relations:   []
+  data_current_nodes:     []
+  data_current_relations: []
+  nodes:            null
+  nodes_symbol:     null
+  relations:        null
+  labels:           null
+  force:            null
+  forceDrag:        null
+  linkedByIndex:    {}
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -40,19 +43,9 @@ class VisualizationGraphCanvasView extends Backbone.View
 
     console.log 'initialize canvas'
 
+    # Setup Data
     @data = options.data
-
-    nodes_base_id = +@data.nodes[0].id  # Get first node id
-
-    # Change relations source & target N based id to 0 based ids & setup linkedByIndex object
-    @data.relations.forEach (d) =>
-      d.source    = d.source_id-nodes_base_id
-      d.target    = d.target_id-nodes_base_id
-      @linkedByIndex[d.source+','+d.target] = true
-      @data_relations.push d 
-
-    @data.nodes.forEach (d) =>
-      @data_nodes.push d 
+    @initializaData()
 
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
@@ -69,6 +62,7 @@ class VisualizationGraphCanvasView extends Backbone.View
       .linkDistance(90)
       #.linkStrength(2)
       .size([@viewport.width, @viewport.height])
+      .on('tick', @onTick)
 
     @forceDrag = @force.drag()
       .on('dragstart',  @onNodeDragStart)
@@ -88,58 +82,149 @@ class VisualizationGraphCanvasView extends Backbone.View
 
     @rescale()  # Translate svg
 
+  initializaData: ->
+
+    # Setup Nodes
+    @data.nodes.forEach (d) =>
+      @data_nodes_map.set d.id, d
+      @data_nodes.push d
+      # Add to data_current_nodes if visible
+      if d.visible
+        @data_current_nodes.push d
+
+    # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
+    @data.relations.forEach (d) =>
+      # Set source & target as nodes objetcs instead of index number
+      d.source = @data_nodes_map.get d.source_id
+      d.target = @data_nodes_map.get d.target_id
+      @data_relations.push d
+      # Add to data_current_relations if both nodes are visibles
+      if d.source.visible and d.target.visible
+        @data_current_relations.push d
+      @linkedByIndex[d.source_id+','+d.target_id] = true
+
+    console.log 'current nodes', @data_current_nodes
+    console.log 'current relations', @data_current_relations
+
   render: ->
 
     console.log 'render canvas' 
   
-    @force
-      .nodes(@data_nodes)
-      .links(@data_relations)
-      .start();
-
     # Setup Links
-    @links = @container.selectAll('.link')
-      .data(@data_relations)
-    .enter().append('line')
-      .attr('class', 'link')
-
+    @relations = @container.selectAll('.relation')
     # Setup Nodes
     @nodes = @container.selectAll('.node')
-      .data(@data_nodes)
-    .enter().append('g')
+    # Setup Nodes Text
+    @labels = @container.selectAll('.text')
+
+    @setupEvents()
+    @updateLayout()
+
+  updateLayout: ->
+
+    console.log 'updateLayout'
+
+    # Setup Links
+    @relations = @relations.data(@data_current_relations)
+    @relations.enter().append('line')
+      #.attr('id', (d) -> return 'relation-'+d.id)
+      .attr('class', 'relation')
+    @relations.exit().remove()
+
+    # Setup Nodes
+    @nodes = @nodes.data(@data_current_nodes)
+    @nodes.enter().append('g')
+      #.attr('id', (d) -> return 'node-'+d.id)
       .attr('class', 'node')
       .call(@forceDrag)
-
       .on('mouseover',  @onNodeOver)
       .on('mouseout',   @onNodeOut)
       .on('click',      @onNodeClick)
       .on('dblclick',   @onNodeDoubleClick)
+    @nodes.exit().remove()
 
-    # Setup Nodes Symbol    
+    # Setup Nodes Symbol
     @nodes_symbol = @nodes.append('circle')
       .attr('class', 'node-symbol')
       .attr('r', @NODES_SIZE)
       .style('fill', (d) => return @color(d.node_type))
-    
+
     # Setup Nodes Text
-    @labels = @container.selectAll('.text')
-      .data(@data_nodes)
-    .enter().append('text')
+    @labels = @labels.data(@data_current_nodes)
+    @labels.enter().append('text')
+      #.attr('id', (d,i) -> return 'label-'+d.id)
       .attr('class', 'label')
       .attr('dx', @NODES_SIZE+6)
       .attr('dy', '.35em')
-      .text((d) -> return d.name)
+    @labels.text((d) -> return d.name)  # Enter+Update text label
+    @labels.exit().remove()
 
-    # Setup Force Layout tick
-    @force.on 'tick', @onTick
+    @updateForce()
+    
+  updateForce: ->
+    @force
+      .nodes(@data_current_nodes)
+      .links(@data_current_relations)
+      .start()
 
-    @setupEvents()
+
+  # Nodes / Relations methods
+  # --------------------------
+
+  addNodeData: (node) ->
+    @data_current_nodes.push node
+
+  removeNodeData: (node) ->
+    index = @data_current_nodes.indexOf node
+    if index >= 0
+      @data_current_nodes.splice index, 1
+  
+  addRelationData: (relation) ->
+    @data_current_relations.push relation
+
+  removeRelationData: (relation) ->
+    index = @data_current_relations.indexOf relation
+    if index >= 0
+      @data_current_relations.splice index, 1
+
+  addNode: (node) ->
+    @addNodeData node
+
+  removeNode: (node) ->
+    @removeNodeData node
+    @removeNodeRelations node
+
+  removeNodeRelations: (node) =>
+    # update data_current_relations removing relations with removed node
+    @data_current_relations = @data_current_relations.filter (d) =>
+      return d.source.id != node.id and d.target.id != node.id
+
+  addRelation: (relation) ->
+    @addRelationData relation
+
+  removeRelation: (relation) ->
+    @removeRelationData relation
+
+  showNode: (node) ->
+    # add node to data_current_nodes array
+    @addNodeData node
+    # check node relations (in data_relations)
+    @data_relations.forEach (relation) =>
+      if (relation.source.id == node.id and relation.target.visible) or (relation.target.id == node.id and relation.source.visible)
+        @addRelationData relation   # add relation to data_current_relations array
+
+  hideNode: (node) ->
+    @removeNode node
+
+
+  # Events Methods
+  # ---------------
 
   setupEvents: ->
     # Subscribe Config Panel Events
     Backbone.on 'config.toogle.labels', @onToogleLabels, @
     Backbone.on 'config.toogle.norelations', @onToogleNodesWithoutRelation, @
-    Backbone.on 'config.param.change', @updateForceParameters, @
+    Backbone.on 'config.param.change', @onUpdateForceParameters, @
     # Subscribe Navigation Events
     Backbone.on 'navigation.zoomin', @onZoomIn, @
     Backbone.on 'navigation.zoomout', @onZoomOut, @
@@ -148,10 +233,16 @@ class VisualizationGraphCanvasView extends Backbone.View
   onToogleLabels: (e) =>
     @labels.classed 'hide', e.value
 
+  # TODO!!! Revisar!
   onToogleNodesWithoutRelation: (e) =>
+    console.log @data_current_nodes.length
+    @data_current_nodes.forEach (d) =>
+      if !@hasNodeRelations(d)
+        @removeNode d
+    console.log @data_current_nodes.length
+    @updateLayout()
 
-
-  updateForceParameters: (e) ->
+  onUpdateForceParameters: (e) ->
     @force.stop()
     if e.name == 'linkDistance'
       @force.linkDistance e.value
@@ -210,28 +301,21 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   onNodeOver: (d) =>
     @nodes_symbol.classed 'weaken', true
-    @nodes_symbol.classed 'highlighted', (o) => return @isConnected(d, o)
+    @nodes_symbol.classed 'highlighted', (o) => return @hasNodesRelation(d, o)
 
     @labels.classed 'weaken', true
-    @labels.classed 'highlighted', (o) => return @isConnected(d, o)
+    @labels.classed 'highlighted', (o) => return @hasNodesRelation(d, o)
 
-    @links.classed 'weaken', true
-    @links.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
-
-    # @nodes_symbol.attr('class', (o) =>
-    #   return if @isConnected(d, o) then 'node-symbol highlighted' else 'node-symbol weaken')
-    # @labels.attr('class', (o) =>
-    #   return if @isConnected(d, o) then 'label highlighted' else 'label weaken')
-    # @links.attr('class', (o) =>
-    #   return if o.source.index == d.index || o.target.index == d.index then 'link highlighted' else 'link weaken')
+    @relations.classed 'weaken', true
+    @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
     @nodes_symbol.classed 'weaken', false
     @nodes_symbol.classed 'highlighted', false
     @labels.classed 'weaken', false
     @labels.classed 'highlighted', false
-    @links.classed 'weaken', false
-    @links.classed 'highlighted', false
+    @relations.classed 'weaken', false
+    @relations.classed 'highlighted', false
 
   onNodeClick: (d) =>
 
@@ -241,7 +325,7 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   # Tick Function
   onTick: =>
-    @links.attr('x1', (d) -> return d.source.x)
+    @relations.attr('x1', (d) -> return d.source.x)
         .attr('y1', (d) -> return d.source.y)
         .attr('x2', (d) -> return d.target.x)
         .attr('y2', (d) -> return d.target.y)
@@ -265,14 +349,18 @@ class VisualizationGraphCanvasView extends Backbone.View
     @container.attr 'transform', 'translate(' + (@viewport.origin.x+@viewport.x) + ',' + (@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
 
   # Utils Functions
-  isConnected: (a, b) ->
+  hasNodesRelation: (a, b) ->
     return @linkedByIndex[a.index + ',' + b.index] || @linkedByIndex[b.index + ',' + a.index] || a.index == b.index
 
-  hasConnections: (a) ->
-    for property in @linkedByIndex
-      s = property.split(',')
-      if (s[0] == a.index || s[1] == a.index) and @linkedByIndex[property]       
-        return true;
-    return false
+  hasNodeRelations: (node) ->
+    return @data_current_relations.some (d) ->
+      return d.source.id == node.id || d.target.id == node.id
+
+  getNodeRelations: (node) ->
+    arr = []
+    @data_current_relations.forEach (d) ->
+      if d.source.id == node.id || d.target.id == node.id
+        arr.push d
+    return arr
 
 module.exports = VisualizationGraphCanvasView

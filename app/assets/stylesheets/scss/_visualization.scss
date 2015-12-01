@@ -104,7 +104,7 @@
       }
     }
 
-    .link {
+    .relation {
       stroke: $gray;
       stroke-opacity: .6;
       stroke-width: 1px;
@@ -122,7 +122,7 @@
     }
 
     .label{
-      stroke: none;
+      text-shadow: 0px 1px 0 $gray-lighter;
       fill: $text-color;
       font-size: 1em;
       font-weight: normal;
