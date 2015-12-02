@@ -17,7 +17,6 @@ class VisualizationGraphCanvasView extends Backbone.View
   relations_cont:   null
   labels_cont:      null
   nodes:            null
-  nodes_symbol:     null
   relations:        null
   labels:           null
   force:            null
@@ -145,13 +144,11 @@ class VisualizationGraphCanvasView extends Backbone.View
       .on('mouseout',   @onNodeOut)
       .on('click',      @onNodeClick)
       .on('dblclick',   @onNodeDoubleClick)
-    @nodes.exit().remove()
-
-    # Setup Nodes Symbol
-    @nodes_symbol = @nodes.append('circle')
-      .attr('class', 'node-symbol')
+    .append('circle')
+      .attr('class', 'node-circle')
       .attr('r', @NODES_SIZE)
-      .style('fill', (d) => return @color(d.node_type))
+      .style('fill', (d) => console.log 'nodes symbol for '+d.name; return @color(d.node_type))
+    @nodes.exit().remove()
 
     # Setup Nodes Text
     @labels = @labels.data(@data_current_nodes)
@@ -304,18 +301,18 @@ class VisualizationGraphCanvasView extends Backbone.View
     d.fixed = true;
 
   onNodeOver: (d) =>
-    @nodes_symbol.classed 'weaken', true
-    @nodes_symbol.classed 'highlighted', (o) => return @hasNodesRelation(d, o)
+    @nodes.classed 'weaken', true
+    @nodes.classed 'highlighted', (o) => return @areNodesRelated(d, o)
 
     @labels.classed 'weaken', true
-    @labels.classed 'highlighted', (o) => return @hasNodesRelation(d, o)
+    @labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
 
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
-    @nodes_symbol.classed 'weaken', false
-    @nodes_symbol.classed 'highlighted', false
+    @nodes.classed 'weaken', false
+    @nodes.classed 'highlighted', false
     @labels.classed 'weaken', false
     @labels.classed 'highlighted', false
     @relations.classed 'weaken', false
@@ -353,9 +350,9 @@ class VisualizationGraphCanvasView extends Backbone.View
     @container.attr 'transform', 'translate(' + (@viewport.origin.x+@viewport.x) + ',' + (@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
 
   # Utils Functions
-  hasNodesRelation: (a, b) ->
-    return @linkedByIndex[a.index + ',' + b.index] || @linkedByIndex[b.index + ',' + a.index] || a.index == b.index
-
+  areNodesRelated: (a, b) ->
+    return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
+  
   hasNodeRelations: (node) ->
     return @data_current_relations.some (d) ->
       return d.source.id == node.id || d.target.id == node.id

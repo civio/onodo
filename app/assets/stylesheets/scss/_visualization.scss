@@ -87,18 +87,18 @@
    
     .node{
       cursor: pointer;
-    }
 
-    .node-symbol{
-      stroke: $gray-lighter;
-      stroke-width: 1.5px;
+      .node-circle{
+        stroke: $gray-lighter;
+        stroke-width: 1.5px;
+      }
 
-      &.weaken{
+      &.weaken .node-circle{
         opacity: 0.5;
       }
 
-      &.highlighted,
-      &.highlighted.weaken{
+      &.highlighted .node-circle,
+      &.highlighted.weaken .node-circle{
         stroke-width: 0px;
         opacity: 1;
       }

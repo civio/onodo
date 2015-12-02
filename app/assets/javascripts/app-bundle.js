@@ -458,8 +458,6 @@
 
 	  VisualizationGraphCanvasView.prototype.nodes = null;
 
-	  VisualizationGraphCanvasView.prototype.nodes_symbol = null;
-
 	  VisualizationGraphCanvasView.prototype.relations = null;
 
 	  VisualizationGraphCanvasView.prototype.labels = null;
@@ -551,13 +549,13 @@
 	    this.relations.enter().append('line').attr('class', 'relation');
 	    this.relations.exit().remove();
 	    this.nodes = this.nodes.data(this.data_current_nodes);
-	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick);
-	    this.nodes.exit().remove();
-	    this.nodes_symbol = this.nodes.append('circle').attr('class', 'node-symbol').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
+	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
 	      return function(d) {
+	        console.log('nodes symbol for ' + d.name);
 	        return _this.color(d.node_type);
 	      };
 	    })(this));
+	    this.nodes.exit().remove();
 	    this.labels = this.labels.data(this.data_current_nodes);
 	    this.labels.enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
 	    this.labels.text(function(d) {
@@ -726,16 +724,16 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeOver = function(d) {
-	    this.nodes_symbol.classed('weaken', true);
-	    this.nodes_symbol.classed('highlighted', (function(_this) {
+	    this.nodes.classed('weaken', true);
+	    this.nodes.classed('highlighted', (function(_this) {
 	      return function(o) {
-	        return _this.hasNodesRelation(d, o);
+	        return _this.areNodesRelated(d, o);
 	      };
 	    })(this));
 	    this.labels.classed('weaken', true);
 	    this.labels.classed('highlighted', (function(_this) {
 	      return function(o) {
-	        return _this.hasNodesRelation(d, o);
+	        return _this.areNodesRelated(d, o);
 	      };
 	    })(this));
 	    this.relations.classed('weaken', true);
@@ -747,8 +745,8 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeOut = function(d) {
-	    this.nodes_symbol.classed('weaken', false);
-	    this.nodes_symbol.classed('highlighted', false);
+	    this.nodes.classed('weaken', false);
+	    this.nodes.classed('highlighted', false);
 	    this.labels.classed('weaken', false);
 	    this.labels.classed('highlighted', false);
 	    this.relations.classed('weaken', false);
@@ -794,8 +792,8 @@
 	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
 	  };
 
-	  VisualizationGraphCanvasView.prototype.hasNodesRelation = function(a, b) {
-	    return this.linkedByIndex[a.index + ',' + b.index] || this.linkedByIndex[b.index + ',' + a.index] || a.index === b.index;
+	  VisualizationGraphCanvasView.prototype.areNodesRelated = function(a, b) {
+	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
 	  };
 
 	  VisualizationGraphCanvasView.prototype.hasNodeRelations = function(node) {
