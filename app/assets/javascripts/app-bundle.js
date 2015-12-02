@@ -372,6 +372,8 @@
 	    this.visualizationGraphNavigation = new VisualizationGraphNavigationView;
 	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
 	    this.visualizationGraphNavigation.render();
+	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
+	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
 	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
 	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
 	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
@@ -388,8 +390,15 @@
 	    }
 	  };
 
+	  VisualizationGraphView.prototype.onNodeChangeName = function(e) {
+	    return this.visualizationGraphCanvas.updateNodeName(e.node.attributes, e.value);
+	  };
+
+	  VisualizationGraphView.prototype.onNodeChangeDescription = function(e) {
+	    return this.visualizationGraphCanvas.updateNodeDescription(e.node.attributes, e.value);
+	  };
+
 	  VisualizationGraphView.prototype.onNodeChangeVisible = function(e) {
-	    console.log('onNodeChangeVisible', e.value, e.node);
 	    if (e.value) {
 	      this.visualizationGraphCanvas.showNode(e.node.attributes);
 	    } else {
@@ -574,24 +583,35 @@
 
 	  VisualizationGraphCanvasView.prototype.updateLayout = function() {
 	    console.log('updateLayout');
-	    this.relations = this.relations.data(this.data_current_relations);
-	    this.relations.enter().append('line').attr('class', 'relation');
-	    this.relations.exit().remove();
+	    this.updateRelations();
+	    this.updateNodes();
+	    this.updateLabels();
+	    return this.updateForce();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.updateNodes = function() {
 	    this.nodes = this.nodes.data(this.data_current_nodes);
 	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
 	      return function(d) {
-	        console.log('nodes symbol for ' + d.name);
 	        return _this.color(d.node_type);
 	      };
 	    })(this));
-	    this.nodes.exit().remove();
+	    return this.nodes.exit().remove();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.updateRelations = function() {
+	    this.relations = this.relations.data(this.data_current_relations);
+	    this.relations.enter().append('line').attr('class', 'relation');
+	    return this.relations.exit().remove();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.updateLabels = function() {
 	    this.labels = this.labels.data(this.data_current_nodes);
 	    this.labels.enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
 	    this.labels.text(function(d) {
 	      return d.name;
 	    });
-	    this.labels.exit().remove();
-	    return this.updateForce();
+	    return this.labels.exit().remove();
 	  };
 
 	  VisualizationGraphCanvasView.prototype.updateForce = function() {
@@ -660,6 +680,23 @@
 
 	  VisualizationGraphCanvasView.prototype.hideNode = function(node) {
 	    return this.removeNode(node);
+	  };
+
+	  VisualizationGraphCanvasView.prototype.updateNodeName = function(node, value) {
+	    var index;
+	    index = this.data_nodes.indexOf(node);
+	    if (index >= 0) {
+	      this.data_nodes[index].name = value;
+	    }
+	    return this.updateLabels();
+	  };
+
+	  VisualizationGraphCanvasView.prototype.updateNodeDescription = function(node, value) {
+	    var index;
+	    index = this.data_nodes.indexOf(node);
+	    if (index >= 0) {
+	      return this.data_nodes[index].description = value;
+	    }
 	  };
 
 	  VisualizationGraphCanvasView.prototype.resize = function() {
@@ -10539,11 +10576,12 @@
 
 	  VisualizationTableNodesView.prototype.updateNode = function(change) {
 	    var key, model, obj, value;
+	    console.log('change', change);
 	    key = change[1];
 	    value = change[3];
 	    model = this.collection.at(change[0]);
-	    if (key === 'visible') {
-	      Backbone.trigger('visualization.node.visible', {
+	    if (key === 'visible' || key === 'name' || key === 'description') {
+	      Backbone.trigger('visualization.node.' + key, {
 	        value: value,
 	        node: model
 	      });

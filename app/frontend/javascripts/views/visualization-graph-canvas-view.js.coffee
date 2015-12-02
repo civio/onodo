@@ -126,14 +126,12 @@ class VisualizationGraphCanvasView extends Backbone.View
 
     console.log 'updateLayout'
 
-    # Setup Links
-    @relations = @relations.data(@data_current_relations)
-    @relations.enter().append('line')
-      #.attr('id', (d) -> return 'relation-'+d.id)
-      .attr('class', 'relation')
-    @relations.exit().remove()
+    @updateRelations()
+    @updateNodes()
+    @updateLabels()
+    @updateForce()
 
-    # Setup Nodes
+  updateNodes: ->
     @nodes = @nodes.data(@data_current_nodes)
     @nodes.enter().append('g')
       #.attr('id', (d) -> return 'node-'+d.id)
@@ -146,10 +144,17 @@ class VisualizationGraphCanvasView extends Backbone.View
     .append('circle')
       .attr('class', 'node-circle')
       .attr('r', @NODES_SIZE)
-      .style('fill', (d) => console.log 'nodes symbol for '+d.name; return @color(d.node_type))
+      .style('fill', (d) => return @color(d.node_type))
     @nodes.exit().remove()
 
-    # Setup Nodes Text
+  updateRelations: ->
+    @relations = @relations.data(@data_current_relations)
+    @relations.enter().append('line')
+      #.attr('id', (d) -> return 'relation-'+d.id)
+      .attr('class', 'relation')
+    @relations.exit().remove()
+
+  updateLabels: ->
     @labels = @labels.data(@data_current_nodes)
     @labels.enter().append('text')
       #.attr('id', (d,i) -> return 'label-'+d.id)
@@ -159,8 +164,6 @@ class VisualizationGraphCanvasView extends Backbone.View
     @labels.text((d) -> return d.name)  # Enter+Update text label
     @labels.exit().remove()
 
-    @updateForce()
-    
   updateForce: ->
     @force
       .nodes(@data_current_nodes)
@@ -215,6 +218,17 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   hideNode: (node) ->
     @removeNode node
+
+  updateNodeName: (node, value) ->
+    index = @data_nodes.indexOf node
+    if index >= 0
+      @data_nodes[index].name = value
+    @updateLabels()
+
+  updateNodeDescription: (node, value) ->
+    index = @data_nodes.indexOf node
+    if index >= 0
+      @data_nodes[index].description = value
 
 
   # Resize Methods

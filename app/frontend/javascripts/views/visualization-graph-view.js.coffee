@@ -67,6 +67,8 @@ class VisualizationGraphView extends Backbone.View
     @visualizationGraphNavigation.setElement '.visualization-graph-menu-navigation'
     @visualizationGraphNavigation.render()
     # Setup Events Listeners
+    Backbone.on 'visualization.node.name', @onNodeChangeName, @
+    Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
     Backbone.on 'visualization.node.visible', @onNodeChangeVisible, @
     # Subscribe Config Panel Events
     Backbone.on 'visualization.config.toogleLabels', @onToogleLabels, @
@@ -89,8 +91,13 @@ class VisualizationGraphView extends Backbone.View
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
 
+  onNodeChangeName: (e) ->
+    @visualizationGraphCanvas.updateNodeName e.node.attributes, e.value
+
+  onNodeChangeDescription: (e) ->  
+    @visualizationGraphCanvas.updateNodeDescription e.node.attributes, e.value
+
   onNodeChangeVisible: (e) ->
-    console.log 'onNodeChangeVisible', e.value, e.node
     if e.value
       @visualizationGraphCanvas.showNode e.node.attributes
     else
