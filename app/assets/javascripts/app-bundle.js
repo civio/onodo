@@ -373,6 +373,12 @@
 	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
 	    this.visualizationGraphNavigation.render();
 	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
+	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
+	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
+	    Backbone.on('visualization.config.updateParam', this.onUpdateParam, this);
+	    Backbone.on('visualization.navigation.zoomin', this.onZoomIn, this);
+	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
+	    Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
 	    return this;
 	  };
 
@@ -390,6 +396,30 @@
 	      this.visualizationGraphCanvas.hideNode(e.node.attributes);
 	    }
 	    return this.visualizationGraphCanvas.updateLayout();
+	  };
+
+	  VisualizationGraphView.prototype.onToogleLabels = function(e) {
+	    return this.visualizationGraphCanvas.toogleLabels(e.value);
+	  };
+
+	  VisualizationGraphView.prototype.onToogleNodesWithoutRelation = function(e) {
+	    return this.visualizationGraphCanvas.toogleNodesWithoutRelation(e.value);
+	  };
+
+	  VisualizationGraphView.prototype.onUpdateParam = function(e) {
+	    return this.visualizationGraphCanvas.updateForceLayoutParameter(e.name, e.value);
+	  };
+
+	  VisualizationGraphView.prototype.onZoomIn = function(e) {
+	    return this.visualizationGraphCanvas.zoomIn();
+	  };
+
+	  VisualizationGraphView.prototype.onZoomOut = function(e) {
+	    return this.visualizationGraphCanvas.zoomOut();
+	  };
+
+	  VisualizationGraphView.prototype.onFullscreen = function(e) {
+	    return this.visualizationGraphCanvas.toogleFullscreen();
 	  };
 
 	  return VisualizationGraphView;
@@ -424,8 +454,8 @@
 	    this.onCanvasDragEnd = bind(this.onCanvasDragEnd, this);
 	    this.onCanvasDragStart = bind(this.onCanvasDragStart, this);
 	    this.onCanvasDrag = bind(this.onCanvasDrag, this);
-	    this.onToogleNodesWithoutRelation = bind(this.onToogleNodesWithoutRelation, this);
-	    this.onToogleLabels = bind(this.onToogleLabels, this);
+	    this.toogleNodesWithoutRelation = bind(this.toogleNodesWithoutRelation, this);
+	    this.toogleLabels = bind(this.toogleLabels, this);
 	    this.removeNodeRelations = bind(this.removeNodeRelations, this);
 	    return VisualizationGraphCanvasView.__super__.constructor.apply(this, arguments);
 	  }
@@ -539,7 +569,6 @@
 	    this.nodes = this.nodes_cont.selectAll('.node');
 	    this.relations = this.relations_cont.selectAll('.relation');
 	    this.labels = this.labels_cont.selectAll('.text');
-	    this.setupEvents();
 	    return this.updateLayout();
 	  };
 
@@ -574,11 +603,11 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.removeNodeData = function(node) {
-	    var index;
-	    index = this.data_current_nodes.indexOf(node);
-	    if (index >= 0) {
-	      return this.data_current_nodes.splice(index, 1);
-	    }
+	    return this.data_current_nodes = this.data_current_nodes.filter((function(_this) {
+	      return function(d) {
+	        return d.id !== node.id;
+	      };
+	    })(this));
 	  };
 
 	  VisualizationGraphCanvasView.prototype.addRelationData = function(relation) {
@@ -633,59 +662,73 @@
 	    return this.removeNode(node);
 	  };
 
-	  VisualizationGraphCanvasView.prototype.setupEvents = function() {
-	    Backbone.on('config.toogle.labels', this.onToogleLabels, this);
-	    Backbone.on('config.toogle.norelations', this.onToogleNodesWithoutRelation, this);
-	    Backbone.on('config.param.change', this.onUpdateForceParameters, this);
-	    Backbone.on('navigation.zoomin', this.onZoomIn, this);
-	    Backbone.on('navigation.zoomout', this.onZoomOut, this);
-	    return Backbone.on('navigation.fullscreen', this.onFullscreen, this);
+	  VisualizationGraphCanvasView.prototype.resize = function() {
+	    this.viewport.width = this.$el.width();
+	    this.viewport.height = this.$el.height();
+	    this.viewport.origin.x = (this.viewport.width * 0.5) - this.viewport.center.x;
+	    this.viewport.origin.y = (this.viewport.height * 0.5) - this.viewport.center.y;
+	    this.svg.attr('width', this.viewport.width);
+	    this.svg.attr('height', this.viewport.height);
+	    this.rescale();
+	    return this.force.size([this.viewport.width, this.viewport.height]);
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onToogleLabels = function(e) {
-	    return this.labels.classed('hide', e.value);
+	  VisualizationGraphCanvasView.prototype.rescale = function() {
+	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onToogleNodesWithoutRelation = function(e) {
-	    console.log(this.data_current_nodes.length);
-	    this.data_current_nodes.forEach((function(_this) {
-	      return function(d) {
-	        if (!_this.hasNodeRelations(d)) {
-	          return _this.removeNode(d);
-	        }
-	      };
-	    })(this));
-	    console.log(this.data_current_nodes.length);
+	  VisualizationGraphCanvasView.prototype.toogleLabels = function(value) {
+	    return this.labels.classed('hide', value);
+	  };
+
+	  VisualizationGraphCanvasView.prototype.toogleNodesWithoutRelation = function(value) {
+	    if (value) {
+	      this.data_current_nodes.forEach((function(_this) {
+	        return function(d) {
+	          if (!_this.hasNodeRelations(d)) {
+	            return _this.removeNode(d);
+	          }
+	        };
+	      })(this));
+	    } else {
+	      this.data_nodes.forEach((function(_this) {
+	        return function(d) {
+	          if (!_this.hasNodeRelations(d)) {
+	            return _this.addNode(d);
+	          }
+	        };
+	      })(this));
+	    }
 	    return this.updateLayout();
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onUpdateForceParameters = function(e) {
+	  VisualizationGraphCanvasView.prototype.updateForceLayoutParameter = function(param, value) {
 	    this.force.stop();
-	    if (e.name === 'linkDistance') {
-	      this.force.linkDistance(e.value);
-	    } else if (e.name === 'linkStrength') {
-	      this.force.linkStrength(e.value);
-	    } else if (e.name === 'friction') {
-	      this.force.friction(e.value);
-	    } else if (e.name === 'charge') {
-	      this.force.charge(e.value);
-	    } else if (e.name === 'theta') {
-	      this.force.theta(e.value);
-	    } else if (e.name === 'gravity') {
-	      this.force.gravity(e.value);
+	    if (param === 'linkDistance') {
+	      this.force.linkDistance(value);
+	    } else if (param === 'linkStrength') {
+	      this.force.linkStrength(value);
+	    } else if (param === 'friction') {
+	      this.force.friction(value);
+	    } else if (param === 'charge') {
+	      this.force.charge(value);
+	    } else if (param === 'theta') {
+	      this.force.theta(value);
+	    } else if (param === 'gravity') {
+	      this.force.gravity(value);
 	    }
 	    return this.force.start();
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onZoomIn = function() {
+	  VisualizationGraphCanvasView.prototype.zoomIn = function() {
 	    return console.log('zoomin');
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onZoomOut = function() {
+	  VisualizationGraphCanvasView.prototype.zoomOut = function() {
 	    return console.log('zoomout');
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onFullscreen = function() {
+	  VisualizationGraphCanvasView.prototype.toogleFullscreen = function() {
 	    return console.log('fullscreen');
 	  };
 
@@ -775,21 +818,6 @@
 	    return this.labels.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
 	    });
-	  };
-
-	  VisualizationGraphCanvasView.prototype.resize = function() {
-	    this.viewport.width = this.$el.width();
-	    this.viewport.height = this.$el.height();
-	    this.viewport.origin.x = (this.viewport.width * 0.5) - this.viewport.center.x;
-	    this.viewport.origin.y = (this.viewport.height * 0.5) - this.viewport.center.y;
-	    this.svg.attr('width', this.viewport.width);
-	    this.svg.attr('height', this.viewport.height);
-	    this.rescale();
-	    return this.force.size([this.viewport.width, this.viewport.height]);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.rescale = function() {
-	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
 	  };
 
 	  VisualizationGraphCanvasView.prototype.areNodesRelated = function(a, b) {
@@ -10349,20 +10377,20 @@
 	  }
 
 	  VisualizationGraphConfigurationView.prototype.onChangeValue = function(e) {
-	    return Backbone.trigger('config.param.change', {
+	    return Backbone.trigger('visualization.config.updateParam', {
 	      name: $(e.target).attr('name'),
 	      value: $(e.target).val()
 	    });
 	  };
 
 	  VisualizationGraphConfigurationView.prototype.onToogleLabels = function(e) {
-	    return Backbone.trigger('config.toogle.labels', {
+	    return Backbone.trigger('visualization.config.toogleLabels', {
 	      value: $(e.target).prop('checked')
 	    });
 	  };
 
 	  VisualizationGraphConfigurationView.prototype.onToogleNoRelations = function(e) {
-	    return Backbone.trigger('config.toogle.norelations', {
+	    return Backbone.trigger('visualization.config.toogleNodesWithoutRelation', {
 	      value: $(e.target).prop('checked')
 	    });
 	  };
@@ -10403,13 +10431,13 @@
 
 	  VisualizationGraphNavigationView.prototype.render = function() {
 	    this.$el.find('.zoomin').click(function() {
-	      return Backbone.trigger('navigation.zoomin');
+	      return Backbone.trigger('visualization.navigation.zoomin');
 	    });
 	    this.$el.find('.zoomout').click(function() {
-	      return Backbone.trigger('navigation.zoomout');
+	      return Backbone.trigger('visualization.navigation.zoomout');
 	    });
 	    this.$el.find('.fullscreen').click(function() {
-	      return Backbone.trigger('navigation.fullscreen');
+	      return Backbone.trigger('visualization.navigation.fullscreen');
 	    });
 	    return this;
 	  };

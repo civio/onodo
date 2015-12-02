@@ -1,13 +1,13 @@
 class VisualizationGraphConfigurationView extends Backbone.View
 
   onChangeValue: (e) =>
-    Backbone.trigger 'config.param.change', {name: $(e.target).attr('name'), value: $(e.target).val()}
+    Backbone.trigger 'visualization.config.updateParam', {name: $(e.target).attr('name'), value: $(e.target).val()}
 
   onToogleLabels: (e) =>
-    Backbone.trigger 'config.toogle.labels', {value: $(e.target).prop('checked')}
+    Backbone.trigger 'visualization.config.toogleLabels', {value: $(e.target).prop('checked')}
   
   onToogleNoRelations: (e) =>
-    Backbone.trigger 'config.toogle.norelations', {value: $(e.target).prop('checked')}
+    Backbone.trigger 'visualization.config.toogleNodesWithoutRelation', {value: $(e.target).prop('checked')}
 
   render: -> 
     # Visualization Styles

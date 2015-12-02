@@ -120,7 +120,6 @@ class VisualizationGraphCanvasView extends Backbone.View
     @relations  = @relations_cont.selectAll('.relation')
     @labels     = @labels_cont.selectAll('.text')
 
-    @setupEvents()
     @updateLayout()
 
   updateLayout: ->
@@ -176,9 +175,9 @@ class VisualizationGraphCanvasView extends Backbone.View
     @data_current_nodes.push node
 
   removeNodeData: (node) ->
-    index = @data_current_nodes.indexOf node
-    if index >= 0
-      @data_current_nodes.splice index, 1
+    # We can't use Array.splice because this function could be called inside a loop over nodes & causes drop
+    @data_current_nodes = @data_current_nodes.filter (d) =>
+      return d.id != node.id
   
   addRelationData: (relation) ->
     @data_current_relations.push relation
@@ -218,55 +217,76 @@ class VisualizationGraphCanvasView extends Backbone.View
     @removeNode node
 
 
-  # Events Methods
+  # Resize Methods
   # ---------------
 
-  setupEvents: ->
-    # Subscribe Config Panel Events
-    Backbone.on 'config.toogle.labels', @onToogleLabels, @
-    Backbone.on 'config.toogle.norelations', @onToogleNodesWithoutRelation, @
-    Backbone.on 'config.param.change', @onUpdateForceParameters, @
-    # Subscribe Navigation Events
-    Backbone.on 'navigation.zoomin', @onZoomIn, @
-    Backbone.on 'navigation.zoomout', @onZoomOut, @
-    Backbone.on 'navigation.fullscreen', @onFullscreen, @
+  resize: ->
+    # Update Viewport attributes
+    @viewport.width     = @$el.width()
+    @viewport.height    = @$el.height()
+    @viewport.origin.x  = (@viewport.width*0.5) - @viewport.center.x
+    @viewport.origin.y  = (@viewport.height*0.5) - @viewport.center.y
+    # Update canvas
+    @svg.attr   'width', @viewport.width
+    @svg.attr   'height', @viewport.height
+    @rescale()
+    # Update force size
+    @force.size [@viewport.width, @viewport.height]
 
-  onToogleLabels: (e) =>
-    @labels.classed 'hide', e.value
+  rescale: ->
+    @container.attr 'transform', 'translate(' + (@viewport.origin.x+@viewport.x) + ',' + (@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
 
-  # TODO!!! Revisar!
-  onToogleNodesWithoutRelation: (e) =>
-    console.log @data_current_nodes.length
-    @data_current_nodes.forEach (d) =>
-      if !@hasNodeRelations(d)
-        @removeNode d
-    console.log @data_current_nodes.length
+
+  # Config Methods
+  # ---------------
+
+  toogleLabels: (value) =>
+    @labels.classed 'hide', value
+  
+  toogleNodesWithoutRelation: (value) =>
+    if value
+      @data_current_nodes.forEach (d) =>
+        if !@hasNodeRelations(d)
+          @removeNode d
+    else
+      # TODO!!! Check visibility before add a node
+      @data_nodes.forEach (d) =>
+        if !@hasNodeRelations(d)
+          @addNode d
     @updateLayout()
 
-  onUpdateForceParameters: (e) ->
+  updateForceLayoutParameter: (param, value) ->
     @force.stop()
-    if e.name == 'linkDistance'
-      @force.linkDistance e.value
-    else if e.name == 'linkStrength'
-      @force.linkStrength e.value
-    else if e.name == 'friction'
-      @force.friction e.value
-    else if e.name == 'charge'
-      @force.charge e.value
-    else if e.name == 'theta'
-      @force.theta e.value
-    else if e.name == 'gravity'
-      @force.gravity e.value
+    if param == 'linkDistance'
+      @force.linkDistance value
+    else if param == 'linkStrength'
+      @force.linkStrength value
+    else if param == 'friction'
+      @force.friction value
+    else if param == 'charge'
+      @force.charge value
+    else if param == 'theta'
+      @force.theta value
+    else if param == 'gravity'
+      @force.gravity value
     @force.start()
 
-  onZoomIn: ->
+
+  # Navigation Methods
+  # ---------------
+
+  zoomIn: ->
     console.log 'zoomin'
     
-  onZoomOut: ->
+  zoomOut: ->
     console.log 'zoomout'
 
-  onFullscreen: ->
+  toogleFullscreen: ->
     console.log 'fullscreen'
+
+
+  # Events Methods
+  # ---------------
 
   # Canvas Drag Events
   onCanvasDrag: =>
@@ -333,23 +353,10 @@ class VisualizationGraphCanvasView extends Backbone.View
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')  
 
-  resize: ->
-    # Update Viewport attributes
-    @viewport.width     = @$el.width()
-    @viewport.height    = @$el.height()
-    @viewport.origin.x  = (@viewport.width*0.5) - @viewport.center.x
-    @viewport.origin.y  = (@viewport.height*0.5) - @viewport.center.y
-    # Update canvas
-    @svg.attr   'width', @viewport.width
-    @svg.attr   'height', @viewport.height
-    @rescale()
-    # Update force size
-    @force.size [@viewport.width, @viewport.height]
+  
+  # Auxiliar Methods
+  # ----------------
 
-  rescale: ->
-    @container.attr 'transform', 'translate(' + (@viewport.origin.x+@viewport.x) + ',' + (@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
-
-  # Utils Functions
   areNodesRelated: (a, b) ->
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
   
@@ -363,5 +370,6 @@ class VisualizationGraphCanvasView extends Backbone.View
       if d.source.id == node.id || d.target.id == node.id
         arr.push d
     return arr
+
 
 module.exports = VisualizationGraphCanvasView

@@ -68,6 +68,14 @@ class VisualizationGraphView extends Backbone.View
     @visualizationGraphNavigation.render()
     # Setup Events Listeners
     Backbone.on 'visualization.node.visible', @onNodeChangeVisible, @
+    # Subscribe Config Panel Events
+    Backbone.on 'visualization.config.toogleLabels', @onToogleLabels, @
+    Backbone.on 'visualization.config.toogleNodesWithoutRelation', @onToogleNodesWithoutRelation, @
+    Backbone.on 'visualization.config.updateParam', @onUpdateParam, @
+    # Subscribe Navigation Events
+    Backbone.on 'visualization.navigation.zoomin', @onZoomIn, @
+    Backbone.on 'visualization.navigation.zoomout', @onZoomOut, @
+    Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
 
     #VisualizationGraphViewCanvas
     # ReactDOM.render(
@@ -88,6 +96,24 @@ class VisualizationGraphView extends Backbone.View
     else
       @visualizationGraphCanvas.hideNode e.node.attributes
     @visualizationGraphCanvas.updateLayout()
+
+  onToogleLabels: (e) ->
+    @visualizationGraphCanvas.toogleLabels e.value
+  
+  onToogleNodesWithoutRelation: (e) ->
+    @visualizationGraphCanvas.toogleNodesWithoutRelation e.value
+
+  onUpdateParam: (e) ->
+    @visualizationGraphCanvas.updateForceLayoutParameter e.name, e.value
+
+  onZoomIn: (e) ->
+    @visualizationGraphCanvas.zoomIn()
+    
+  onZoomOut: (e) ->
+    @visualizationGraphCanvas.zoomOut()
+
+  onFullscreen: (e) ->
+    @visualizationGraphCanvas.toogleFullscreen()
 
 
 module.exports = VisualizationGraphView
