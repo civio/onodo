@@ -48,7 +48,7 @@
 
 	App.VisualizationShow = __webpack_require__(1);
 
-	App.VisualizationEdit = __webpack_require__(16);
+	App.VisualizationEdit = __webpack_require__(17);
 
 	$(document).ready(function() {
 	  var appVisualizationEdit, appVisualizationShow;
@@ -77,9 +77,9 @@
 
 	VisualizationGraphView = __webpack_require__(6);
 
-	VisualizationTableNodesView = __webpack_require__(11);
+	VisualizationTableNodesView = __webpack_require__(12);
 
-	VisualizationTableRelationsView = __webpack_require__(15);
+	VisualizationTableRelationsView = __webpack_require__(16);
 
 	VisualizationShow = (function() {
 	  VisualizationShow.prototype.id = null;
@@ -273,7 +273,7 @@
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var VisualizationGraphCanvasView, VisualizationGraphConfigurationView, VisualizationGraphNavigationView, VisualizationGraphView,
+	var VisualizationGraphCanvasView, VisualizationGraphConfigurationView, VisualizationGraphInfo, VisualizationGraphNavigationView, VisualizationGraphView,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
@@ -283,6 +283,8 @@
 	VisualizationGraphConfigurationView = __webpack_require__(9);
 
 	VisualizationGraphNavigationView = __webpack_require__(10);
+
+	VisualizationGraphInfo = __webpack_require__(11);
 
 	VisualizationGraphView = (function(superClass) {
 	  extend(VisualizationGraphView, superClass);
@@ -372,6 +374,10 @@
 	    this.visualizationGraphNavigation = new VisualizationGraphNavigationView;
 	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
 	    this.visualizationGraphNavigation.render();
+	    this.visualizationGraphInfo = new VisualizationGraphInfo;
+	    this.visualizationGraphInfo.setElement('.visualization-graph-info');
+	    this.visualizationGraphInfo.render();
+	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
 	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
 	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
@@ -388,6 +394,11 @@
 	    if (this.visualizationGraphCanvas) {
 	      return this.visualizationGraphCanvas.resize();
 	    }
+	  };
+
+	  VisualizationGraphView.prototype.onNodeShowInfo = function(e) {
+	    console.log('show info', e.node);
+	    return this.visualizationGraphInfo.show();
 	  };
 
 	  VisualizationGraphView.prototype.onNodeChangeName = function(e) {
@@ -797,6 +808,7 @@
 	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeDragEnd = function(d) {
+	    d3.event.sourceEvent.stopPropagation();
 	    if (this.viewport.drag.x === d.x && this.viewport.drag.y === d.y) {
 	      return;
 	    }
@@ -833,7 +845,14 @@
 	    return this.relations.classed('highlighted', false);
 	  };
 
-	  VisualizationGraphCanvasView.prototype.onNodeClick = function(d) {};
+	  VisualizationGraphCanvasView.prototype.onNodeClick = function(d) {
+	    if (d3.event.defaultPrevented) {
+	      return;
+	    }
+	    return Backbone.trigger('visualization.node.showInfo', {
+	      node: d
+	    });
+	  };
 
 	  VisualizationGraphCanvasView.prototype.onNodeDoubleClick = function(d) {
 	    return d.fixed = false;
@@ -10488,6 +10507,36 @@
 
 /***/ },
 /* 11 */
+/***/ function(module, exports) {
+
+	var VisualizationGraphInfo,
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationGraphInfo = (function(superClass) {
+	  extend(VisualizationGraphInfo, superClass);
+
+	  function VisualizationGraphInfo() {
+	    return VisualizationGraphInfo.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphInfo.prototype.show = function() {
+	    return this.$el.addClass('active');
+	  };
+
+	  VisualizationGraphInfo.prototype.hide = function() {
+	    return this.$el.removeClass('active');
+	  };
+
+	  return VisualizationGraphInfo;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraphInfo;
+
+
+/***/ },
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBaseView, VisualizationTableNodesView,
@@ -10495,9 +10544,9 @@
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	Handsontable = __webpack_require__(12);
+	Handsontable = __webpack_require__(13);
 
-	VisualizationTableBaseView = __webpack_require__(14);
+	VisualizationTableBaseView = __webpack_require__(15);
 
 	VisualizationTableNodesView = (function(superClass) {
 	  var nodes_type, tableColHeaders, tableColumns;
@@ -10606,7 +10655,7 @@
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -37805,10 +37854,10 @@
 	}());
 	},{}]},{},[23,57,59,58,60,81,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,98,99,100,88,89,90,91,92,93,30,34,31,32,39,33,35,36,37,38])("zeroclipboard")
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), (function() { return this; }())))
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -37905,7 +37954,7 @@
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	var VisualizationTableBaseView,
@@ -37999,7 +38048,7 @@
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBaseView, VisualizationTableRelationsView,
@@ -38007,9 +38056,9 @@
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	Handsontable = __webpack_require__(12);
+	Handsontable = __webpack_require__(13);
 
-	VisualizationTableBaseView = __webpack_require__(14);
+	VisualizationTableBaseView = __webpack_require__(15);
 
 	VisualizationTableRelationsView = (function(superClass) {
 	  var nodes_type, tableColHeaders, tableColumns;
@@ -38055,7 +38104,7 @@
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraphView, VisualizationTableNodesView, VisualizationTableRelationsView,
@@ -38067,9 +38116,9 @@
 
 	VisualizationGraphView = __webpack_require__(6);
 
-	VisualizationTableNodesView = __webpack_require__(11);
+	VisualizationTableNodesView = __webpack_require__(12);
 
-	VisualizationTableRelationsView = __webpack_require__(15);
+	VisualizationTableRelationsView = __webpack_require__(16);
 
 	VisualizationEdit = (function() {
 	  VisualizationEdit.prototype.id = null;

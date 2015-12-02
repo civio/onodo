@@ -329,6 +329,7 @@ class VisualizationGraphCanvasView extends Backbone.View
     @viewport.drag.y = d.y
   
   onNodeDragEnd: (d) =>
+    d3.event.sourceEvent.stopPropagation() # silence other listeners
     if @viewport.drag.x == d.x and @viewport.drag.y == d.y
       return  # Skip if has no translation
     # fix the node position when the node is dragged
@@ -353,6 +354,10 @@ class VisualizationGraphCanvasView extends Backbone.View
     @relations.classed 'highlighted', false
 
   onNodeClick: (d) =>
+    # Avoid trigger click on dragEnd
+    if d3.event.defaultPrevented 
+      return
+    Backbone.trigger 'visualization.node.showInfo', {node: d}
 
   onNodeDoubleClick: (d) =>
     # unfix the node position when the node is double clicked

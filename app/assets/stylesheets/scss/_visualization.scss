@@ -170,6 +170,20 @@
       top: 17px;
     }
   }
+
+  .visualization-graph-info{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: -350px;
+    width: 350px;
+    margin: 0;
+    border-radius: 0;
+
+    &.active{
+      right: 0;
+    }
+  }
 }
 
 .visualization-info{

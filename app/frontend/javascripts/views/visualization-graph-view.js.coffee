@@ -4,6 +4,7 @@
 VisualizationGraphCanvasView          = require './../views/visualization-graph-canvas-view.js'
 VisualizationGraphConfigurationView   = require './../views/visualization-graph-configuration-view.js'
 VisualizationGraphNavigationView      = require './../views/visualization-graph-navigation-view.js'
+VisualizationGraphInfo                = require './../views/visualization-graph-info.js'
 
 class VisualizationGraphView extends Backbone.View
   
@@ -66,7 +67,14 @@ class VisualizationGraphView extends Backbone.View
     @visualizationGraphNavigation = new VisualizationGraphNavigationView
     @visualizationGraphNavigation.setElement '.visualization-graph-menu-navigation'
     @visualizationGraphNavigation.render()
+    # Setup Graph Info
+    @visualizationGraphInfo = new VisualizationGraphInfo
+    @visualizationGraphInfo.setElement '.visualization-graph-info'
+    @visualizationGraphInfo.render()
     # Setup Events Listeners
+    # Canvas Events
+    Backbone.on 'visualization.node.showInfo', @onNodeShowInfo, @
+    # Table Events
     Backbone.on 'visualization.node.name', @onNodeChangeName, @
     Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
     Backbone.on 'visualization.node.visible', @onNodeChangeVisible, @
@@ -90,6 +98,11 @@ class VisualizationGraphView extends Backbone.View
   resize: ->
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
+
+
+  onNodeShowInfo: (e) ->
+    console.log 'show info', e.node
+    @visualizationGraphInfo.show()
 
   onNodeChangeName: (e) ->
     @visualizationGraphCanvas.updateNodeName e.node.attributes, e.value
