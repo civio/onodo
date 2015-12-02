@@ -13,6 +13,9 @@ class VisualizationGraphCanvasView extends Backbone.View
   data_relations:   []
   data_current_nodes:     []
   data_current_relations: []
+  nodes_cont:       null
+  relations_cont:   null
+  labels_cont:      null
   nodes:            null
   nodes_symbol:     null
   relations:        null
@@ -78,7 +81,11 @@ class VisualizationGraphCanvasView extends Backbone.View
           .on('dragstart',  @onCanvasDragStart)
           .on('dragend',    @onCanvasDragEnd))
 
-    @container = @svg.append('g')
+    # Setup containers
+    @container      = @svg.append('g')
+    @relations_cont = @container.append('g').attr('class', 'relations-cont')
+    @nodes_cont     = @container.append('g').attr('class', 'nodes-cont')
+    @labels_cont    = @container.append('g').attr('class', 'labels-cont')
 
     @rescale()  # Translate svg
 
@@ -108,14 +115,11 @@ class VisualizationGraphCanvasView extends Backbone.View
 
   render: ->
 
-    console.log 'render canvas' 
-  
-    # Setup Links
-    @relations = @container.selectAll('.relation')
-    # Setup Nodes
-    @nodes = @container.selectAll('.node')
-    # Setup Nodes Text
-    @labels = @container.selectAll('.text')
+    console.log 'render canvas'
+
+    @nodes      = @nodes_cont.selectAll('.node')
+    @relations  = @relations_cont.selectAll('.relation')
+    @labels     = @labels_cont.selectAll('.text')
 
     @setupEvents()
     @updateLayout()

@@ -450,6 +450,12 @@
 
 	  VisualizationGraphCanvasView.prototype.data_current_relations = [];
 
+	  VisualizationGraphCanvasView.prototype.nodes_cont = null;
+
+	  VisualizationGraphCanvasView.prototype.relations_cont = null;
+
+	  VisualizationGraphCanvasView.prototype.labels_cont = null;
+
 	  VisualizationGraphCanvasView.prototype.nodes = null;
 
 	  VisualizationGraphCanvasView.prototype.nodes_symbol = null;
@@ -499,6 +505,9 @@
 	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
 	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
 	    this.container = this.svg.append('g');
+	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
+	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
+	    this.labels_cont = this.container.append('g').attr('class', 'labels-cont');
 	    return this.rescale();
 	  };
 
@@ -529,9 +538,9 @@
 
 	  VisualizationGraphCanvasView.prototype.render = function() {
 	    console.log('render canvas');
-	    this.relations = this.container.selectAll('.relation');
-	    this.nodes = this.container.selectAll('.node');
-	    this.labels = this.container.selectAll('.text');
+	    this.nodes = this.nodes_cont.selectAll('.node');
+	    this.relations = this.relations_cont.selectAll('.relation');
+	    this.labels = this.labels_cont.selectAll('.text');
 	    this.setupEvents();
 	    return this.updateLayout();
 	  };
