@@ -27,14 +27,22 @@ var config = module.exports = {
   resolve: {
     // tell webpack which extensions to auto search when it resolves modules. With this,
     // you'll be able to do `require('./utils')` instead of `require('./utils.js')`
-    extensions: ["", ".jsx", ".cjsx", ".coffee", ".js"]
+    extensions: ["", ".coffee", ".js"],
+    // Avoid Handebars warning require.extentions not supported
+    // https://github.com/wycats/handlebars.js/issues/953
+    //alias: {
+    //  'handlebars': 'handlebars/runtime.js'
+    //}
   },
   module: {
     loaders: [
-      //{ test: /\.jsx?$/, loader: 'babel-loader'},
-      { test: /\.cjsx$/,    loaders: ["coffee", "cjsx"]},
-      { test: /\.coffee$/,  loader: "coffee-loader"}
+      { test: /\.coffee$/,      loader: "coffee-loader"}
     ]
+  },
+  // Avoid Handlebars Error about 'fs' module
+  // https://github.com/josephsavona/valuable/issues/9
+  node: {
+    fs: "empty"
   }
   /*,
   plugins: [
