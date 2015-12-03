@@ -102,7 +102,7 @@ class VisualizationGraphView extends Backbone.View
 
   onNodeShowInfo: (e) ->
     console.log 'show info', e.node
-    @visualizationGraphInfo.show()
+    @visualizationGraphInfo.show e.node
 
   onNodeChangeName: (e) ->
     @visualizationGraphCanvas.updateNodeName e.node.attributes, e.value

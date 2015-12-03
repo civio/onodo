@@ -1,9 +1,10 @@
 .visualization-graph-info.panel.panel-default
   .panel-heading
   .panel-body
-    %h3.name
-      Stefano Magaddino
-    .picture
-    .description
-      Lorem ipsum dolor sit amet
-  .panel-footer
+
+%script#visualization-graph-info-template{:type => "text/template"}
+  %h3.name
+    {{ name }}
+  .picture
+  .description
+    {{ description }}
