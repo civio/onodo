@@ -29,8 +29,8 @@ class VisualizationTableRelations extends VisualizationTableBase
     console.log 'relations', @collection
 
     # Override Table Options
-    @table_options.colHeaders  = tableColHeaders
-    @table_options.columns     = tableColumns
+    @table_options.colHeaders  = @tableColHeaders
+    @table_options.columns     = @tableColumns
 
   onCollectionSync: =>
     super()

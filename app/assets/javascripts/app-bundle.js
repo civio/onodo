@@ -42907,8 +42907,8 @@
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
 	    VisualizationTableNodes.__super__.constructor.call(this, this.collection);
-	    this.table_options.colHeaders = tableColHeaders;
-	    this.table_options.columns = tableColumns;
+	    this.table_options.colHeaders = this.tableColHeaders;
+	    this.table_options.columns = this.tableColumns;
 	  }
 
 	  VisualizationTableNodes.prototype.onCollectionSync = function() {
@@ -42927,9 +42927,8 @@
 	  };
 
 	  VisualizationTableNodes.prototype.onNodesTypesSucess = function(response) {
-	    var nodes_type;
-	    nodes_type = response;
-	    this.table_options.columns[3].source = nodes_type;
+	    this.nodes_type = response;
+	    this.table_options.columns[3].source = this.nodes_type;
 	    this.table_options.afterChange = this.onTableChange;
 	    return this.setupTable();
 	  };
@@ -42970,8 +42969,8 @@
 	  };
 
 	  VisualizationTableNodes.prototype.addNodeType = function(type) {
-	    nodes_type.push(type);
-	    return this.table_options.columns[3].source = nodes_type;
+	    this.nodes_type.push(type);
+	    return this.table_options.columns[3].source = this.nodes_type;
 	  };
 
 	  return VisualizationTableNodes;
@@ -43021,8 +43020,8 @@
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
 	    VisualizationTableRelations.__super__.constructor.call(this, this.collection);
 	    console.log('relations', this.collection);
-	    this.table_options.colHeaders = tableColHeaders;
-	    this.table_options.columns = tableColumns;
+	    this.table_options.colHeaders = this.tableColHeaders;
+	    this.table_options.columns = this.tableColumns;
 	  }
 
 	  VisualizationTableRelations.prototype.onCollectionSync = function() {

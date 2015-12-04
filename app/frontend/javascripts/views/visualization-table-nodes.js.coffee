@@ -31,8 +31,8 @@ class VisualizationTableNodes extends VisualizationTableBase
   constructor: (@collection) ->
     super(@collection)
     # Override Table Options
-    @table_options.colHeaders  = tableColHeaders
-    @table_options.columns     = tableColumns
+    @table_options.colHeaders  = @tableColHeaders
+    @table_options.columns     = @tableColumns
 
   onCollectionSync: =>
     super()
@@ -48,8 +48,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     }
 
   onNodesTypesSucess: (response) =>
-    nodes_type = response
-    @table_options.columns[3].source = nodes_type
+    @nodes_type = response
+    @table_options.columns[3].source = @nodes_type
     @table_options.afterChange       = @onTableChange
     @setupTable()
     
@@ -74,7 +74,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     #console.log obj
 
   addNodeType: (type) ->
-    nodes_type.push type
-    @table_options.columns[3].source = nodes_type
+    @nodes_type.push type
+    @table_options.columns[3].source = @nodes_type
 
 module.exports = VisualizationTableNodes
