@@ -1,4 +1,4 @@
-class VisualizationGraphNavigationView extends Backbone.View
+class VisualizationGraphNavigation extends Backbone.View
 
   render: -> 
     @$el.find('.zoomin').click ->
@@ -9,4 +9,4 @@ class VisualizationGraphNavigationView extends Backbone.View
       Backbone.trigger 'visualization.navigation.fullscreen'
     return this
 
-module.exports = VisualizationGraphNavigationView
+module.exports = VisualizationGraphNavigation

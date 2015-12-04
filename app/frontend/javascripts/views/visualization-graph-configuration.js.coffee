@@ -1,4 +1,4 @@
-class VisualizationGraphConfigurationView extends Backbone.View
+class VisualizationGraphConfiguration extends Backbone.View
 
   onChangeValue: (e) =>
     Backbone.trigger 'visualization.config.updateParam', {name: $(e.target).attr('name'), value: $(e.target).val()}
@@ -22,4 +22,4 @@ class VisualizationGraphConfigurationView extends Backbone.View
     @$el.find('#gravity').change @onChangeValue 
     return this
 
-module.exports = VisualizationGraphConfigurationView
+module.exports = VisualizationGraphConfiguration

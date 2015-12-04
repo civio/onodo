@@ -1,7 +1,7 @@
-Handsontable                 = require './../dist/handsontable.full.js'
-VisualizationTableBaseView   = require './visualization-table-base-view.js'
+Handsontable             = require './../dist/handsontable.full.js'
+VisualizationTableBase   = require './visualization-table-base.js'
 
-class VisualizationTableRelationsView extends VisualizationTableBaseView
+class VisualizationTableRelations extends VisualizationTableBase
 
   nodes_type      = null
   tableColHeaders = ['', 'Source', 'Target', 'Type']
@@ -36,4 +36,4 @@ class VisualizationTableRelationsView extends VisualizationTableBaseView
     @setupTable()
 
 
-module.exports = VisualizationTableRelationsView
+module.exports = VisualizationTableRelations

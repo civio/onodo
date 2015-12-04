@@ -1,5 +1,5 @@
-# Base Class for VisualizationTableNodesView & VisualizationTableRelationsView
-class VisualizationTableBaseView extends Backbone.View
+# Base Class for VisualizationTableNodes & VisualizationTableRelations
+class VisualizationTableBase extends Backbone.View
 
   table         = null
   table_options = null
@@ -52,4 +52,4 @@ class VisualizationTableBaseView extends Backbone.View
   render: =>
     return this
 
-module.exports = VisualizationTableBaseView
+module.exports = VisualizationTableBase

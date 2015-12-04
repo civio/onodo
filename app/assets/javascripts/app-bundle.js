@@ -48,7 +48,7 @@
 
 	App.VisualizationShow = __webpack_require__(1);
 
-	App.VisualizationEdit = __webpack_require__(47);
+	App.VisualizationEdit = __webpack_require__(48);
 
 	$(document).ready(function() {
 	  var appVisualizationEdit, appVisualizationShow;
@@ -68,29 +68,29 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var NodesCollection, RelationsCollection, VisualizationGraphView, VisualizationShow, VisualizationTableNodesView, VisualizationTableRelationsView,
+	var NodesCollection, RelationsCollection, VisualizationGraph, VisualizationShow, VisualizationTableNodes, VisualizationTableRelations,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 	NodesCollection = __webpack_require__(2);
 
 	RelationsCollection = __webpack_require__(4);
 
-	VisualizationGraphView = __webpack_require__(6);
+	VisualizationGraph = __webpack_require__(53);
 
-	VisualizationTableNodesView = __webpack_require__(42);
+	VisualizationTableNodes = __webpack_require__(54);
 
-	VisualizationTableRelationsView = __webpack_require__(46);
+	VisualizationTableRelations = __webpack_require__(55);
 
 	VisualizationShow = (function() {
 	  VisualizationShow.prototype.id = null;
 
 	  VisualizationShow.prototype.nodes = null;
 
-	  VisualizationShow.prototype.visualizationGraphView = null;
+	  VisualizationShow.prototype.visualizationGraph = null;
 
-	  VisualizationShow.prototype.visualizationTableNodesView = null;
+	  VisualizationShow.prototype.visualizationTableNodes = null;
 
-	  VisualizationShow.prototype.visualizationTableRelationsView = null;
+	  VisualizationShow.prototype.visualizationTableRelations = null;
 
 	  VisualizationShow.prototype.$tableSelector = null;
 
@@ -101,13 +101,13 @@
 	    this.id = _id;
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
-	    this.visualizationGraphView = new VisualizationGraphView({
+	    this.visualizationGraph = new VisualizationGraph({
 	      collection: {
 	        nodes: this.nodes,
 	        relations: this.relations
 	      }
 	    });
-	    this.visualizationGraphView.setElement('.visualization-graph-component');
+	    this.visualizationGraph.setElement('.visualization-graph-component');
 	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	  }
 
@@ -131,8 +131,8 @@
 	    var graphHeight, windowHeight;
 	    windowHeight = $(window).height();
 	    graphHeight = windowHeight - 50 - 64 - 64;
-	    this.visualizationGraphView.$el.height(graphHeight);
-	    return this.visualizationGraphView.resize();
+	    this.visualizationGraph.$el.height(graphHeight);
+	    return this.visualizationGraph.resize();
 	  };
 
 	  VisualizationShow.prototype.render = function() {
@@ -270,641 +270,8 @@
 
 
 /***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var VisualizationGraphCanvasView, VisualizationGraphConfigurationView, VisualizationGraphInfo, VisualizationGraphNavigationView, VisualizationGraphView,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	VisualizationGraphCanvasView = __webpack_require__(7);
-
-	VisualizationGraphConfigurationView = __webpack_require__(9);
-
-	VisualizationGraphNavigationView = __webpack_require__(10);
-
-	VisualizationGraphInfo = __webpack_require__(11);
-
-	VisualizationGraphView = (function(superClass) {
-	  extend(VisualizationGraphView, superClass);
-
-	  function VisualizationGraphView() {
-	    this.onCollectionChange = bind(this.onCollectionChange, this);
-	    this.onRelationsSync = bind(this.onRelationsSync, this);
-	    this.onNodesSync = bind(this.onNodesSync, this);
-	    return VisualizationGraphView.__super__.constructor.apply(this, arguments);
-	  }
-
-	  VisualizationGraphView.prototype.nodesSync = false;
-
-	  VisualizationGraphView.prototype.relationsSync = false;
-
-	  VisualizationGraphView.prototype.visualizationGraphViewCanvas = null;
-
-	  VisualizationGraphView.prototype.visualizationGraphConfiguration = null;
-
-	  VisualizationGraphView.prototype.visualizationGraphNavigation = null;
-
-	  VisualizationGraphView.prototype.initialize = function() {
-	    console.log('initialize GraphView', this.collection);
-	    this.collection.nodes.once('sync', this.onNodesSync, this);
-	    this.collection.relations.once('sync', this.onRelationsSync, this);
-	    $('.visualization-graph-menu-actions .configure').click(this.onShowPanelConfigure);
-	    return $('.visualization-graph-panel-configuration .close').click(this.onHidePanelConfigure);
-	  };
-
-	  VisualizationGraphView.prototype.onShowPanelConfigure = function() {
-	    return $('.visualization-graph-panel-configuration').addClass('active');
-	  };
-
-	  VisualizationGraphView.prototype.onHidePanelConfigure = function() {
-	    return $('.visualization-graph-panel-configuration').removeClass('active');
-	  };
-
-	  VisualizationGraphView.prototype.onNodesSync = function(nodes) {
-	    this.nodesSync = true;
-	    console.log('onNodesSync');
-	    this.collection.nodes.bind('change', this.onCollectionChange, this);
-	    if (this.nodesSync && this.relationsSync) {
-	      return this.render();
-	    }
-	  };
-
-	  VisualizationGraphView.prototype.onRelationsSync = function(relations) {
-	    this.relationsSync = true;
-	    console.log('onRelationsSync');
-	    this.collection.relations.bind('change', this.onCollectionChange, this);
-	    if (this.nodesSync && this.relationsSync) {
-	      return this.render();
-	    }
-	  };
-
-	  VisualizationGraphView.prototype.onCollectionChange = function(e) {
-	    return console.log('Collection has changed', e);
-	  };
-
-	  VisualizationGraphView.prototype.getDataFromCollection = function() {
-	    var data;
-	    data = {
-	      nodes: this.collection.nodes.models.map(function(d) {
-	        return d.attributes;
-	      }),
-	      relations: this.collection.relations.models.map(function(d) {
-	        return d.attributes;
-	      })
-	    };
-	    data.relations.forEach(function(d) {
-	      d.source = d.source_id - 1;
-	      return d.target = d.target_id - 1;
-	    });
-	    return data;
-	  };
-
-	  VisualizationGraphView.prototype.render = function() {
-	    console.log('render GraphView');
-	    this.visualizationGraphCanvas = new VisualizationGraphCanvasView({
-	      el: this.$el,
-	      data: this.getDataFromCollection()
-	    });
-	    this.visualizationGraphCanvas.render();
-	    this.visualizationGraphConfiguration = new VisualizationGraphConfigurationView;
-	    this.visualizationGraphConfiguration.setElement('.visualization-graph-panel-configuration');
-	    this.visualizationGraphConfiguration.render();
-	    this.visualizationGraphNavigation = new VisualizationGraphNavigationView;
-	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
-	    this.visualizationGraphNavigation.render();
-	    this.visualizationGraphInfo = new VisualizationGraphInfo;
-	    this.visualizationGraphInfo.setElement('.visualization-graph-info');
-	    this.visualizationGraphInfo.render();
-	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
-	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
-	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
-	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
-	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
-	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
-	    Backbone.on('visualization.config.updateParam', this.onUpdateParam, this);
-	    Backbone.on('visualization.navigation.zoomin', this.onZoomIn, this);
-	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
-	    Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
-	    return this;
-	  };
-
-	  VisualizationGraphView.prototype.resize = function() {
-	    if (this.visualizationGraphCanvas) {
-	      return this.visualizationGraphCanvas.resize();
-	    }
-	  };
-
-	  VisualizationGraphView.prototype.onNodeShowInfo = function(e) {
-	    console.log('show info', e.node);
-	    return this.visualizationGraphInfo.show(e.node);
-	  };
-
-	  VisualizationGraphView.prototype.onNodeChangeName = function(e) {
-	    return this.visualizationGraphCanvas.updateNodeName(e.node.attributes, e.value);
-	  };
-
-	  VisualizationGraphView.prototype.onNodeChangeDescription = function(e) {
-	    return this.visualizationGraphCanvas.updateNodeDescription(e.node.attributes, e.value);
-	  };
-
-	  VisualizationGraphView.prototype.onNodeChangeVisible = function(e) {
-	    if (e.value) {
-	      this.visualizationGraphCanvas.showNode(e.node.attributes);
-	    } else {
-	      this.visualizationGraphCanvas.hideNode(e.node.attributes);
-	    }
-	    return this.visualizationGraphCanvas.updateLayout();
-	  };
-
-	  VisualizationGraphView.prototype.onToogleLabels = function(e) {
-	    return this.visualizationGraphCanvas.toogleLabels(e.value);
-	  };
-
-	  VisualizationGraphView.prototype.onToogleNodesWithoutRelation = function(e) {
-	    return this.visualizationGraphCanvas.toogleNodesWithoutRelation(e.value);
-	  };
-
-	  VisualizationGraphView.prototype.onUpdateParam = function(e) {
-	    return this.visualizationGraphCanvas.updateForceLayoutParameter(e.name, e.value);
-	  };
-
-	  VisualizationGraphView.prototype.onZoomIn = function(e) {
-	    return this.visualizationGraphCanvas.zoomIn();
-	  };
-
-	  VisualizationGraphView.prototype.onZoomOut = function(e) {
-	    return this.visualizationGraphCanvas.zoomOut();
-	  };
-
-	  VisualizationGraphView.prototype.onFullscreen = function(e) {
-	    return this.visualizationGraphCanvas.toogleFullscreen();
-	  };
-
-	  return VisualizationGraphView;
-
-	})(Backbone.View);
-
-	module.exports = VisualizationGraphView;
-
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var VisualizationGraphCanvasView, d3,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	d3 = __webpack_require__(8);
-
-	VisualizationGraphCanvasView = (function(superClass) {
-	  extend(VisualizationGraphCanvasView, superClass);
-
-	  function VisualizationGraphCanvasView() {
-	    this.onTick = bind(this.onTick, this);
-	    this.onNodeDoubleClick = bind(this.onNodeDoubleClick, this);
-	    this.onNodeClick = bind(this.onNodeClick, this);
-	    this.onNodeOut = bind(this.onNodeOut, this);
-	    this.onNodeOver = bind(this.onNodeOver, this);
-	    this.onNodeDragEnd = bind(this.onNodeDragEnd, this);
-	    this.onNodeDragStart = bind(this.onNodeDragStart, this);
-	    this.onCanvasDragEnd = bind(this.onCanvasDragEnd, this);
-	    this.onCanvasDragStart = bind(this.onCanvasDragStart, this);
-	    this.onCanvasDrag = bind(this.onCanvasDrag, this);
-	    this.toogleNodesWithoutRelation = bind(this.toogleNodesWithoutRelation, this);
-	    this.toogleLabels = bind(this.toogleLabels, this);
-	    this.removeNodeRelations = bind(this.removeNodeRelations, this);
-	    return VisualizationGraphCanvasView.__super__.constructor.apply(this, arguments);
-	  }
-
-	  VisualizationGraphCanvasView.prototype.NODES_SIZE = 8;
-
-	  VisualizationGraphCanvasView.prototype.svg = null;
-
-	  VisualizationGraphCanvasView.prototype.container = null;
-
-	  VisualizationGraphCanvasView.prototype.color = null;
-
-	  VisualizationGraphCanvasView.prototype.data = null;
-
-	  VisualizationGraphCanvasView.prototype.data_nodes = [];
-
-	  VisualizationGraphCanvasView.prototype.data_nodes_map = d3.map();
-
-	  VisualizationGraphCanvasView.prototype.data_relations = [];
-
-	  VisualizationGraphCanvasView.prototype.data_current_nodes = [];
-
-	  VisualizationGraphCanvasView.prototype.data_current_relations = [];
-
-	  VisualizationGraphCanvasView.prototype.nodes_cont = null;
-
-	  VisualizationGraphCanvasView.prototype.relations_cont = null;
-
-	  VisualizationGraphCanvasView.prototype.labels_cont = null;
-
-	  VisualizationGraphCanvasView.prototype.nodes = null;
-
-	  VisualizationGraphCanvasView.prototype.relations = null;
-
-	  VisualizationGraphCanvasView.prototype.labels = null;
-
-	  VisualizationGraphCanvasView.prototype.force = null;
-
-	  VisualizationGraphCanvasView.prototype.forceDrag = null;
-
-	  VisualizationGraphCanvasView.prototype.linkedByIndex = {};
-
-	  VisualizationGraphCanvasView.prototype.viewport = {
-	    width: 0,
-	    height: 0,
-	    center: {
-	      x: 0,
-	      y: 0
-	    },
-	    origin: {
-	      x: 0,
-	      y: 0
-	    },
-	    x: 0,
-	    y: 0,
-	    dx: 0,
-	    dy: 0,
-	    drag: {
-	      x: 0,
-	      y: 0
-	    },
-	    scale: 1
-	  };
-
-	  VisualizationGraphCanvasView.prototype.initialize = function(options) {
-	    console.log('initialize canvas');
-	    this.data = options.data;
-	    this.initializaData();
-	    this.viewport.width = this.$el.width();
-	    this.viewport.height = this.$el.height();
-	    this.viewport.center.x = this.viewport.width * 0.5;
-	    this.viewport.center.y = this.viewport.height * 0.5;
-	    this.color = d3.scale.category20();
-	    this.force = d3.layout.force().charge(-120).linkDistance(90).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
-	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
-	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
-	    this.container = this.svg.append('g');
-	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
-	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
-	    this.labels_cont = this.container.append('g').attr('class', 'labels-cont');
-	    return this.rescale();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.initializaData = function() {
-	    this.data.nodes.forEach((function(_this) {
-	      return function(d) {
-	        _this.data_nodes_map.set(d.id, d);
-	        _this.data_nodes.push(d);
-	        if (d.visible) {
-	          return _this.data_current_nodes.push(d);
-	        }
-	      };
-	    })(this));
-	    this.data.relations.forEach((function(_this) {
-	      return function(d) {
-	        d.source = _this.data_nodes_map.get(d.source_id);
-	        d.target = _this.data_nodes_map.get(d.target_id);
-	        _this.data_relations.push(d);
-	        if (d.source.visible && d.target.visible) {
-	          _this.data_current_relations.push(d);
-	        }
-	        return _this.linkedByIndex[d.source_id + ',' + d.target_id] = true;
-	      };
-	    })(this));
-	    console.log('current nodes', this.data_current_nodes);
-	    return console.log('current relations', this.data_current_relations);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.render = function() {
-	    console.log('render canvas');
-	    this.nodes = this.nodes_cont.selectAll('.node');
-	    this.relations = this.relations_cont.selectAll('.relation');
-	    this.labels = this.labels_cont.selectAll('.text');
-	    return this.updateLayout();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateLayout = function() {
-	    console.log('updateLayout');
-	    this.updateRelations();
-	    this.updateNodes();
-	    this.updateLabels();
-	    return this.updateForce();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateNodes = function() {
-	    this.nodes = this.nodes.data(this.data_current_nodes);
-	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
-	      return function(d) {
-	        return _this.color(d.node_type);
-	      };
-	    })(this));
-	    return this.nodes.exit().remove();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateRelations = function() {
-	    this.relations = this.relations.data(this.data_current_relations);
-	    this.relations.enter().append('line').attr('class', 'relation');
-	    return this.relations.exit().remove();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateLabels = function() {
-	    this.labels = this.labels.data(this.data_current_nodes);
-	    this.labels.enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
-	    this.labels.text(function(d) {
-	      return d.name;
-	    });
-	    return this.labels.exit().remove();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateForce = function() {
-	    return this.force.nodes(this.data_current_nodes).links(this.data_current_relations).start();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.addNodeData = function(node) {
-	    return this.data_current_nodes.push(node);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.removeNodeData = function(node) {
-	    return this.data_current_nodes = this.data_current_nodes.filter((function(_this) {
-	      return function(d) {
-	        return d.id !== node.id;
-	      };
-	    })(this));
-	  };
-
-	  VisualizationGraphCanvasView.prototype.addRelationData = function(relation) {
-	    return this.data_current_relations.push(relation);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.removeRelationData = function(relation) {
-	    var index;
-	    index = this.data_current_relations.indexOf(relation);
-	    if (index >= 0) {
-	      return this.data_current_relations.splice(index, 1);
-	    }
-	  };
-
-	  VisualizationGraphCanvasView.prototype.addNode = function(node) {
-	    return this.addNodeData(node);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.removeNode = function(node) {
-	    this.removeNodeData(node);
-	    return this.removeNodeRelations(node);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.removeNodeRelations = function(node) {
-	    return this.data_current_relations = this.data_current_relations.filter((function(_this) {
-	      return function(d) {
-	        return d.source.id !== node.id && d.target.id !== node.id;
-	      };
-	    })(this));
-	  };
-
-	  VisualizationGraphCanvasView.prototype.addRelation = function(relation) {
-	    return this.addRelationData(relation);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.removeRelation = function(relation) {
-	    return this.removeRelationData(relation);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.showNode = function(node) {
-	    this.addNodeData(node);
-	    return this.data_relations.forEach((function(_this) {
-	      return function(relation) {
-	        if ((relation.source.id === node.id && relation.target.visible) || (relation.target.id === node.id && relation.source.visible)) {
-	          return _this.addRelationData(relation);
-	        }
-	      };
-	    })(this));
-	  };
-
-	  VisualizationGraphCanvasView.prototype.hideNode = function(node) {
-	    return this.removeNode(node);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateNodeName = function(node, value) {
-	    var index;
-	    index = this.data_nodes.indexOf(node);
-	    if (index >= 0) {
-	      this.data_nodes[index].name = value;
-	    }
-	    return this.updateLabels();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateNodeDescription = function(node, value) {
-	    var index;
-	    index = this.data_nodes.indexOf(node);
-	    if (index >= 0) {
-	      return this.data_nodes[index].description = value;
-	    }
-	  };
-
-	  VisualizationGraphCanvasView.prototype.resize = function() {
-	    this.viewport.width = this.$el.width();
-	    this.viewport.height = this.$el.height();
-	    this.viewport.origin.x = (this.viewport.width * 0.5) - this.viewport.center.x;
-	    this.viewport.origin.y = (this.viewport.height * 0.5) - this.viewport.center.y;
-	    this.svg.attr('width', this.viewport.width);
-	    this.svg.attr('height', this.viewport.height);
-	    this.rescale();
-	    return this.force.size([this.viewport.width, this.viewport.height]);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.rescale = function() {
-	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
-	  };
-
-	  VisualizationGraphCanvasView.prototype.toogleLabels = function(value) {
-	    return this.labels.classed('hide', value);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.toogleNodesWithoutRelation = function(value) {
-	    if (value) {
-	      this.data_current_nodes.forEach((function(_this) {
-	        return function(d) {
-	          if (!_this.hasNodeRelations(d)) {
-	            return _this.removeNode(d);
-	          }
-	        };
-	      })(this));
-	    } else {
-	      this.data_nodes.forEach((function(_this) {
-	        return function(d) {
-	          if (!_this.hasNodeRelations(d)) {
-	            return _this.addNode(d);
-	          }
-	        };
-	      })(this));
-	    }
-	    return this.updateLayout();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.updateForceLayoutParameter = function(param, value) {
-	    this.force.stop();
-	    if (param === 'linkDistance') {
-	      this.force.linkDistance(value);
-	    } else if (param === 'linkStrength') {
-	      this.force.linkStrength(value);
-	    } else if (param === 'friction') {
-	      this.force.friction(value);
-	    } else if (param === 'charge') {
-	      this.force.charge(value);
-	    } else if (param === 'theta') {
-	      this.force.theta(value);
-	    } else if (param === 'gravity') {
-	      this.force.gravity(value);
-	    }
-	    return this.force.start();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.zoomIn = function() {
-	    return console.log('zoomin');
-	  };
-
-	  VisualizationGraphCanvasView.prototype.zoomOut = function() {
-	    return console.log('zoomout');
-	  };
-
-	  VisualizationGraphCanvasView.prototype.toogleFullscreen = function() {
-	    return console.log('fullscreen');
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onCanvasDrag = function() {
-	    this.viewport.x += d3.event.dx;
-	    this.viewport.y += d3.event.dy;
-	    this.viewport.dx += d3.event.dx;
-	    this.viewport.dy += d3.event.dy;
-	    this.rescale();
-	    return d3.event.sourceEvent.stopPropagation();
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onCanvasDragStart = function() {
-	    return this.svg.style('cursor', 'move');
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onCanvasDragEnd = function() {
-	    if (this.viewport.dx === 0 && this.viewport.dy === 0) {
-	      return;
-	    }
-	    this.viewport.dx = this.viewport.dy = 0;
-	    return this.svg.style('cursor', 'default');
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onNodeDragStart = function(d) {
-	    d3.event.sourceEvent.stopPropagation();
-	    this.viewport.drag.x = d.x;
-	    return this.viewport.drag.y = d.y;
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onNodeDragEnd = function(d) {
-	    d3.event.sourceEvent.stopPropagation();
-	    if (this.viewport.drag.x === d.x && this.viewport.drag.y === d.y) {
-	      return;
-	    }
-	    return d.fixed = true;
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onNodeOver = function(d) {
-	    this.nodes.classed('weaken', true);
-	    this.nodes.classed('highlighted', (function(_this) {
-	      return function(o) {
-	        return _this.areNodesRelated(d, o);
-	      };
-	    })(this));
-	    this.labels.classed('weaken', true);
-	    this.labels.classed('highlighted', (function(_this) {
-	      return function(o) {
-	        return _this.areNodesRelated(d, o);
-	      };
-	    })(this));
-	    this.relations.classed('weaken', true);
-	    return this.relations.classed('highlighted', (function(_this) {
-	      return function(o) {
-	        return o.source.index === d.index || o.target.index === d.index;
-	      };
-	    })(this));
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onNodeOut = function(d) {
-	    this.nodes.classed('weaken', false);
-	    this.nodes.classed('highlighted', false);
-	    this.labels.classed('weaken', false);
-	    this.labels.classed('highlighted', false);
-	    this.relations.classed('weaken', false);
-	    return this.relations.classed('highlighted', false);
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onNodeClick = function(d) {
-	    if (d3.event.defaultPrevented) {
-	      return;
-	    }
-	    return Backbone.trigger('visualization.node.showInfo', {
-	      node: d
-	    });
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onNodeDoubleClick = function(d) {
-	    return d.fixed = false;
-	  };
-
-	  VisualizationGraphCanvasView.prototype.onTick = function() {
-	    this.relations.attr('x1', function(d) {
-	      return d.source.x;
-	    }).attr('y1', function(d) {
-	      return d.source.y;
-	    }).attr('x2', function(d) {
-	      return d.target.x;
-	    }).attr('y2', function(d) {
-	      return d.target.y;
-	    });
-	    this.nodes.attr('transform', function(d) {
-	      return 'translate(' + d.x + ',' + d.y + ')';
-	    });
-	    return this.labels.attr('transform', function(d) {
-	      return 'translate(' + d.x + ',' + d.y + ')';
-	    });
-	  };
-
-	  VisualizationGraphCanvasView.prototype.areNodesRelated = function(a, b) {
-	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
-	  };
-
-	  VisualizationGraphCanvasView.prototype.hasNodeRelations = function(node) {
-	    return this.data_current_relations.some(function(d) {
-	      return d.source.id === node.id || d.target.id === node.id;
-	    });
-	  };
-
-	  VisualizationGraphCanvasView.prototype.getNodeRelations = function(node) {
-	    var arr;
-	    arr = [];
-	    this.data_current_relations.forEach(function(d) {
-	      if (d.source.id === node.id || d.target.id === node.id) {
-	        return arr.push(d);
-	      }
-	    });
-	    return arr;
-	  };
-
-	  return VisualizationGraphCanvasView;
-
-	})(Backbone.View);
-
-	module.exports = VisualizationGraphCanvasView;
-
-
-/***/ },
+/* 6 */,
+/* 7 */,
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -10414,98 +9781,8 @@
 	}();
 
 /***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	var VisualizationGraphConfigurationView,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	VisualizationGraphConfigurationView = (function(superClass) {
-	  extend(VisualizationGraphConfigurationView, superClass);
-
-	  function VisualizationGraphConfigurationView() {
-	    this.onToogleNoRelations = bind(this.onToogleNoRelations, this);
-	    this.onToogleLabels = bind(this.onToogleLabels, this);
-	    this.onChangeValue = bind(this.onChangeValue, this);
-	    return VisualizationGraphConfigurationView.__super__.constructor.apply(this, arguments);
-	  }
-
-	  VisualizationGraphConfigurationView.prototype.onChangeValue = function(e) {
-	    return Backbone.trigger('visualization.config.updateParam', {
-	      name: $(e.target).attr('name'),
-	      value: $(e.target).val()
-	    });
-	  };
-
-	  VisualizationGraphConfigurationView.prototype.onToogleLabels = function(e) {
-	    return Backbone.trigger('visualization.config.toogleLabels', {
-	      value: $(e.target).prop('checked')
-	    });
-	  };
-
-	  VisualizationGraphConfigurationView.prototype.onToogleNoRelations = function(e) {
-	    return Backbone.trigger('visualization.config.toogleNodesWithoutRelation', {
-	      value: $(e.target).prop('checked')
-	    });
-	  };
-
-	  VisualizationGraphConfigurationView.prototype.render = function() {
-	    this.$el.find('#hideLabels').change(this.onToogleLabels);
-	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
-	    this.$el.find('#linkdistante').change(this.onChangeValue);
-	    this.$el.find('#linkstrengh').change(this.onChangeValue);
-	    this.$el.find('#friction').change(this.onChangeValue);
-	    this.$el.find('#charge').change(this.onChangeValue);
-	    this.$el.find('#theta').change(this.onChangeValue);
-	    this.$el.find('#gravity').change(this.onChangeValue);
-	    return this;
-	  };
-
-	  return VisualizationGraphConfigurationView;
-
-	})(Backbone.View);
-
-	module.exports = VisualizationGraphConfigurationView;
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	var VisualizationGraphNavigationView,
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	VisualizationGraphNavigationView = (function(superClass) {
-	  extend(VisualizationGraphNavigationView, superClass);
-
-	  function VisualizationGraphNavigationView() {
-	    return VisualizationGraphNavigationView.__super__.constructor.apply(this, arguments);
-	  }
-
-	  VisualizationGraphNavigationView.prototype.render = function() {
-	    this.$el.find('.zoomin').click(function() {
-	      return Backbone.trigger('visualization.navigation.zoomin');
-	    });
-	    this.$el.find('.zoomout').click(function() {
-	      return Backbone.trigger('visualization.navigation.zoomout');
-	    });
-	    this.$el.find('.fullscreen').click(function() {
-	      return Backbone.trigger('visualization.navigation.fullscreen');
-	    });
-	    return this;
-	  };
-
-	  return VisualizationGraphNavigationView;
-
-	})(Backbone.View);
-
-	module.exports = VisualizationGraphNavigationView;
-
-
-/***/ },
+/* 9 */,
+/* 10 */,
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -10573,7 +9850,7 @@
 
 	// Publish a Node.js require() handler for .handlebars and .hbs files
 	function extension(module, filename) {
-	  var fs = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"fs\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	  var fs = __webpack_require__(42);
 	  var templateString = fs.readFileSync(filename, 'utf8');
 	  module.exports = handlebars.compile(templateString);
 	}
@@ -15341,125 +14618,13 @@
 
 /***/ },
 /* 42 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var Handsontable, VisualizationTableBaseView, VisualizationTableNodesView,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	Handsontable = __webpack_require__(43);
-
-	VisualizationTableBaseView = __webpack_require__(45);
-
-	VisualizationTableNodesView = (function(superClass) {
-	  var nodes_type, tableColHeaders, tableColumns;
-
-	  extend(VisualizationTableNodesView, superClass);
-
-	  nodes_type = null;
-
-	  tableColHeaders = ['', 'Name', 'Description', 'Type', 'Visible'];
-
-	  tableColumns = [
-	    {
-	      data: 'id',
-	      type: 'numeric'
-	    }, {
-	      data: 'name'
-	    }, {
-	      data: 'description'
-	    }, {
-	      data: 'node_type',
-	      type: 'autocomplete',
-	      strict: false
-	    }, {
-	      data: 'visible',
-	      type: 'checkbox'
-	    }
-	  ];
-
-	  function VisualizationTableNodesView(collection) {
-	    this.collection = collection;
-	    this.onTableChange = bind(this.onTableChange, this);
-	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
-	    this.onCollectionSync = bind(this.onCollectionSync, this);
-	    VisualizationTableNodesView.__super__.constructor.call(this, this.collection);
-	    this.table_options.colHeaders = tableColHeaders;
-	    this.table_options.columns = tableColumns;
-	  }
-
-	  VisualizationTableNodesView.prototype.onCollectionSync = function() {
-	    VisualizationTableNodesView.__super__.onCollectionSync.call(this);
-	    console.log(this.table_options.data);
-	    return this.getNodeTypes();
-	  };
-
-	  VisualizationTableNodesView.prototype.getNodeTypes = function() {
-	    console.log('getNodeTypes');
-	    return $.ajax({
-	      url: '/api/nodes/types.json',
-	      dataType: 'json',
-	      success: this.onNodesTypesSucess
-	    });
-	  };
-
-	  VisualizationTableNodesView.prototype.onNodesTypesSucess = function(response) {
-	    nodes_type = response;
-	    this.table_options.columns[3].source = nodes_type;
-	    this.table_options.afterChange = this.onTableChange;
-	    return this.setupTable();
-	  };
-
-	  VisualizationTableNodesView.prototype.onTableChange = function(changes, source) {
-	    var change, i, len, results;
-	    if (source !== 'loadData') {
-	      results = [];
-	      for (i = 0, len = changes.length; i < len; i++) {
-	        change = changes[i];
-	        if (change[2] !== change[3]) {
-	          results.push(this.updateNode(change));
-	        } else {
-	          results.push(void 0);
-	        }
-	      }
-	      return results;
-	    }
-	  };
-
-	  VisualizationTableNodesView.prototype.updateNode = function(change) {
-	    var key, model, obj, value;
-	    console.log('change', change);
-	    key = change[1];
-	    value = change[3];
-	    model = this.collection.at(change[0]);
-	    if (key === 'visible' || key === 'name' || key === 'description') {
-	      Backbone.trigger('visualization.node.' + key, {
-	        value: value,
-	        node: model
-	      });
-	    } else if (key === 'node_type' && !_.contains(nodes_type, value)) {
-	      this.addNodeType(value);
-	    }
-	    obj = {};
-	    obj[key] = value;
-	    return model.save(obj);
-	  };
-
-	  VisualizationTableNodesView.prototype.addNodeType = function(type) {
-	    nodes_type.push(type);
-	    return this.table_options.columns[3].source = nodes_type;
-	  };
-
-	  return VisualizationTableNodesView;
-
-	})(VisualizationTableBaseView);
-
-	module.exports = VisualizationTableNodesView;
-
+	
 
 /***/ },
-/* 43 */
+/* 43 */,
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -42658,10 +41823,10 @@
 	}());
 	},{}]},{},[23,57,59,58,60,81,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,82,83,84,85,98,99,100,88,89,90,91,92,93,30,34,31,32,39,33,35,36,37,38])("zeroclipboard")
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45), (function() { return this; }())))
 
 /***/ },
-/* 44 */
+/* 45 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -42758,171 +41923,23 @@
 
 
 /***/ },
-/* 45 */
-/***/ function(module, exports) {
-
-	var VisualizationTableBaseView,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	VisualizationTableBaseView = (function(superClass) {
-	  var table, table_options;
-
-	  extend(VisualizationTableBaseView, superClass);
-
-	  table = null;
-
-	  table_options = null;
-
-	  function VisualizationTableBaseView(collection) {
-	    this.collection = collection;
-	    this.render = bind(this.render, this);
-	    this.onTableCreateRow = bind(this.onTableCreateRow, this);
-	    this.onTableRemoveRow = bind(this.onTableRemoveRow, this);
-	    this.onCollectionSync = bind(this.onCollectionSync, this);
-	    VisualizationTableBaseView.__super__.constructor.call(this, this.collection);
-	    this.table_options = {
-	      contextMenu: ['row_below', 'remove_row', 'undo', 'redo'],
-	      height: 360,
-	      stretchH: 'all',
-	      columnSorting: true
-	    };
-	  }
-
-	  VisualizationTableBaseView.prototype.destroy = function() {
-	    this.undelegateEvents();
-	    this.$el.removeData().unbind();
-	    this.remove();
-	    return Backbone.View.prototype.remove.call(this);
-	  };
-
-	  VisualizationTableBaseView.prototype.initialize = function() {
-	    return this.collection.once('sync', this.onCollectionSync, this);
-	  };
-
-	  VisualizationTableBaseView.prototype.onCollectionSync = function() {
-	    return this.table_options.data = this.collection.toJSON();
-	  };
-
-	  VisualizationTableBaseView.prototype.setupTable = function() {
-	    this.table_options.afterRemoveRow = this.onTableRemoveRow;
-	    this.table_options.afterCreateRow = this.onTableCreateRow;
-	    return this.table = new Handsontable(this.$el.get(0), this.table_options);
-	  };
-
-	  VisualizationTableBaseView.prototype.onTableRemoveRow = function(index, amount) {
-	    var model, results;
-	    console.log(index, amount);
-	    results = [];
-	    while (amount > 0) {
-	      model = this.collection.at(index);
-	      model.destroy();
-	      results.push(amount--);
-	    }
-	    return results;
-	  };
-
-	  VisualizationTableBaseView.prototype.onTableCreateRow = function(index, amount) {
-	    var model;
-	    console.log('onTableCreateRow');
-	    console.log(index, amount);
-	    model = this.collection.create({});
-	    return console.log(model, model.get('id'));
-	  };
-
-	  VisualizationTableBaseView.prototype.show = function() {
-	    this.$el.removeClass('hide');
-	    return this.table.render();
-	  };
-
-	  VisualizationTableBaseView.prototype.hide = function() {
-	    return this.$el.addClass('hide');
-	  };
-
-	  VisualizationTableBaseView.prototype.render = function() {
-	    return this;
-	  };
-
-	  return VisualizationTableBaseView;
-
-	})(Backbone.View);
-
-	module.exports = VisualizationTableBaseView;
-
-
-/***/ },
-/* 46 */
+/* 46 */,
+/* 47 */,
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handsontable, VisualizationTableBaseView, VisualizationTableRelationsView,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-	  hasProp = {}.hasOwnProperty;
-
-	Handsontable = __webpack_require__(43);
-
-	VisualizationTableBaseView = __webpack_require__(45);
-
-	VisualizationTableRelationsView = (function(superClass) {
-	  var nodes_type, tableColHeaders, tableColumns;
-
-	  extend(VisualizationTableRelationsView, superClass);
-
-	  nodes_type = null;
-
-	  tableColHeaders = ['', 'Source', 'Target', 'Type'];
-
-	  tableColumns = [
-	    {
-	      data: 'id',
-	      type: 'numeric'
-	    }, {
-	      data: 'source_id'
-	    }, {
-	      data: 'target_id'
-	    }, {
-	      data: 'relation_type'
-	    }
-	  ];
-
-	  function VisualizationTableRelationsView(collection) {
-	    this.collection = collection;
-	    this.onCollectionSync = bind(this.onCollectionSync, this);
-	    VisualizationTableRelationsView.__super__.constructor.call(this, this.collection);
-	    console.log('relations', this.collection);
-	    this.table_options.colHeaders = tableColHeaders;
-	    this.table_options.columns = tableColumns;
-	  }
-
-	  VisualizationTableRelationsView.prototype.onCollectionSync = function() {
-	    VisualizationTableRelationsView.__super__.onCollectionSync.call(this);
-	    return this.setupTable();
-	  };
-
-	  return VisualizationTableRelationsView;
-
-	})(VisualizationTableBaseView);
-
-	module.exports = VisualizationTableRelationsView;
-
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraphView, VisualizationTableNodesView, VisualizationTableRelationsView,
+	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraph, VisualizationTableNodes, VisualizationTableRelations,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 	NodesCollection = __webpack_require__(2);
 
 	RelationsCollection = __webpack_require__(4);
 
-	VisualizationGraphView = __webpack_require__(6);
+	VisualizationGraph = __webpack_require__(53);
 
-	VisualizationTableNodesView = __webpack_require__(42);
+	VisualizationTableNodes = __webpack_require__(54);
 
-	VisualizationTableRelationsView = __webpack_require__(46);
+	VisualizationTableRelations = __webpack_require__(55);
 
 	VisualizationEdit = (function() {
 	  VisualizationEdit.prototype.id = null;
@@ -42944,16 +41961,16 @@
 	    this.id = _id;
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
-	    this.visualizationTableNodes = new VisualizationTableNodesView({
+	    this.visualizationTableNodes = new VisualizationTableNodes({
 	      collection: this.nodes
 	    });
 	    this.visualizationTableNodes.setElement('.visualization-table-nodes');
-	    this.visualizationTableRelations = new VisualizationTableRelationsView({
+	    this.visualizationTableRelations = new VisualizationTableRelations({
 	      collection: this.relations
 	    });
 	    this.visualizationTableRelations.setElement('.visualization-table-relations');
 	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
-	    this.visualizationGraph = new VisualizationGraphView({
+	    this.visualizationGraph = new VisualizationGraph({
 	      collection: {
 	        nodes: this.nodes,
 	        relations: this.relations
@@ -43014,6 +42031,1002 @@
 	})();
 
 	module.exports = VisualizationEdit;
+
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var VisualizationGraphCanvas, d3,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	d3 = __webpack_require__(8);
+
+	VisualizationGraphCanvas = (function(superClass) {
+	  extend(VisualizationGraphCanvas, superClass);
+
+	  function VisualizationGraphCanvas() {
+	    this.onTick = bind(this.onTick, this);
+	    this.onNodeDoubleClick = bind(this.onNodeDoubleClick, this);
+	    this.onNodeClick = bind(this.onNodeClick, this);
+	    this.onNodeOut = bind(this.onNodeOut, this);
+	    this.onNodeOver = bind(this.onNodeOver, this);
+	    this.onNodeDragEnd = bind(this.onNodeDragEnd, this);
+	    this.onNodeDragStart = bind(this.onNodeDragStart, this);
+	    this.onCanvasDragEnd = bind(this.onCanvasDragEnd, this);
+	    this.onCanvasDragStart = bind(this.onCanvasDragStart, this);
+	    this.onCanvasDrag = bind(this.onCanvasDrag, this);
+	    this.toogleNodesWithoutRelation = bind(this.toogleNodesWithoutRelation, this);
+	    this.toogleLabels = bind(this.toogleLabels, this);
+	    this.removeNodeRelations = bind(this.removeNodeRelations, this);
+	    return VisualizationGraphCanvas.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphCanvas.prototype.NODES_SIZE = 8;
+
+	  VisualizationGraphCanvas.prototype.svg = null;
+
+	  VisualizationGraphCanvas.prototype.container = null;
+
+	  VisualizationGraphCanvas.prototype.color = null;
+
+	  VisualizationGraphCanvas.prototype.data = null;
+
+	  VisualizationGraphCanvas.prototype.data_nodes = [];
+
+	  VisualizationGraphCanvas.prototype.data_nodes_map = d3.map();
+
+	  VisualizationGraphCanvas.prototype.data_relations = [];
+
+	  VisualizationGraphCanvas.prototype.data_current_nodes = [];
+
+	  VisualizationGraphCanvas.prototype.data_current_relations = [];
+
+	  VisualizationGraphCanvas.prototype.nodes_cont = null;
+
+	  VisualizationGraphCanvas.prototype.relations_cont = null;
+
+	  VisualizationGraphCanvas.prototype.labels_cont = null;
+
+	  VisualizationGraphCanvas.prototype.nodes = null;
+
+	  VisualizationGraphCanvas.prototype.relations = null;
+
+	  VisualizationGraphCanvas.prototype.labels = null;
+
+	  VisualizationGraphCanvas.prototype.force = null;
+
+	  VisualizationGraphCanvas.prototype.forceDrag = null;
+
+	  VisualizationGraphCanvas.prototype.linkedByIndex = {};
+
+	  VisualizationGraphCanvas.prototype.viewport = {
+	    width: 0,
+	    height: 0,
+	    center: {
+	      x: 0,
+	      y: 0
+	    },
+	    origin: {
+	      x: 0,
+	      y: 0
+	    },
+	    x: 0,
+	    y: 0,
+	    dx: 0,
+	    dy: 0,
+	    drag: {
+	      x: 0,
+	      y: 0
+	    },
+	    scale: 1
+	  };
+
+	  VisualizationGraphCanvas.prototype.initialize = function(options) {
+	    console.log('initialize canvas');
+	    this.data = options.data;
+	    this.initializaData();
+	    this.viewport.width = this.$el.width();
+	    this.viewport.height = this.$el.height();
+	    this.viewport.center.x = this.viewport.width * 0.5;
+	    this.viewport.center.y = this.viewport.height * 0.5;
+	    this.color = d3.scale.category20();
+	    this.force = d3.layout.force().charge(-120).linkDistance(90).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
+	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
+	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
+	    this.container = this.svg.append('g');
+	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
+	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
+	    this.labels_cont = this.container.append('g').attr('class', 'labels-cont');
+	    return this.rescale();
+	  };
+
+	  VisualizationGraphCanvas.prototype.initializaData = function() {
+	    this.data.nodes.forEach((function(_this) {
+	      return function(d) {
+	        _this.data_nodes_map.set(d.id, d);
+	        _this.data_nodes.push(d);
+	        if (d.visible) {
+	          return _this.data_current_nodes.push(d);
+	        }
+	      };
+	    })(this));
+	    this.data.relations.forEach((function(_this) {
+	      return function(d) {
+	        d.source = _this.data_nodes_map.get(d.source_id);
+	        d.target = _this.data_nodes_map.get(d.target_id);
+	        _this.data_relations.push(d);
+	        if (d.source.visible && d.target.visible) {
+	          _this.data_current_relations.push(d);
+	        }
+	        return _this.linkedByIndex[d.source_id + ',' + d.target_id] = true;
+	      };
+	    })(this));
+	    console.log('current nodes', this.data_current_nodes);
+	    return console.log('current relations', this.data_current_relations);
+	  };
+
+	  VisualizationGraphCanvas.prototype.render = function() {
+	    console.log('render canvas');
+	    this.nodes = this.nodes_cont.selectAll('.node');
+	    this.relations = this.relations_cont.selectAll('.relation');
+	    this.labels = this.labels_cont.selectAll('.text');
+	    return this.updateLayout();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateLayout = function() {
+	    console.log('updateLayout');
+	    this.updateRelations();
+	    this.updateNodes();
+	    this.updateLabels();
+	    return this.updateForce();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateNodes = function() {
+	    this.nodes = this.nodes.data(this.data_current_nodes);
+	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
+	      return function(d) {
+	        return _this.color(d.node_type);
+	      };
+	    })(this));
+	    return this.nodes.exit().remove();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateRelations = function() {
+	    this.relations = this.relations.data(this.data_current_relations);
+	    this.relations.enter().append('line').attr('class', 'relation');
+	    return this.relations.exit().remove();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateLabels = function() {
+	    this.labels = this.labels.data(this.data_current_nodes);
+	    this.labels.enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
+	    this.labels.text(function(d) {
+	      return d.name;
+	    });
+	    return this.labels.exit().remove();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateForce = function() {
+	    return this.force.nodes(this.data_current_nodes).links(this.data_current_relations).start();
+	  };
+
+	  VisualizationGraphCanvas.prototype.addNodeData = function(node) {
+	    return this.data_current_nodes.push(node);
+	  };
+
+	  VisualizationGraphCanvas.prototype.removeNodeData = function(node) {
+	    return this.data_current_nodes = this.data_current_nodes.filter((function(_this) {
+	      return function(d) {
+	        return d.id !== node.id;
+	      };
+	    })(this));
+	  };
+
+	  VisualizationGraphCanvas.prototype.addRelationData = function(relation) {
+	    return this.data_current_relations.push(relation);
+	  };
+
+	  VisualizationGraphCanvas.prototype.removeRelationData = function(relation) {
+	    var index;
+	    index = this.data_current_relations.indexOf(relation);
+	    if (index >= 0) {
+	      return this.data_current_relations.splice(index, 1);
+	    }
+	  };
+
+	  VisualizationGraphCanvas.prototype.addNode = function(node) {
+	    return this.addNodeData(node);
+	  };
+
+	  VisualizationGraphCanvas.prototype.removeNode = function(node) {
+	    this.removeNodeData(node);
+	    return this.removeNodeRelations(node);
+	  };
+
+	  VisualizationGraphCanvas.prototype.removeNodeRelations = function(node) {
+	    return this.data_current_relations = this.data_current_relations.filter((function(_this) {
+	      return function(d) {
+	        return d.source.id !== node.id && d.target.id !== node.id;
+	      };
+	    })(this));
+	  };
+
+	  VisualizationGraphCanvas.prototype.addRelation = function(relation) {
+	    return this.addRelationData(relation);
+	  };
+
+	  VisualizationGraphCanvas.prototype.removeRelation = function(relation) {
+	    return this.removeRelationData(relation);
+	  };
+
+	  VisualizationGraphCanvas.prototype.showNode = function(node) {
+	    this.addNodeData(node);
+	    return this.data_relations.forEach((function(_this) {
+	      return function(relation) {
+	        if ((relation.source.id === node.id && relation.target.visible) || (relation.target.id === node.id && relation.source.visible)) {
+	          return _this.addRelationData(relation);
+	        }
+	      };
+	    })(this));
+	  };
+
+	  VisualizationGraphCanvas.prototype.hideNode = function(node) {
+	    return this.removeNode(node);
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateNodeName = function(node, value) {
+	    var index;
+	    index = this.data_nodes.indexOf(node);
+	    if (index >= 0) {
+	      this.data_nodes[index].name = value;
+	    }
+	    return this.updateLabels();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateNodeDescription = function(node, value) {
+	    var index;
+	    index = this.data_nodes.indexOf(node);
+	    if (index >= 0) {
+	      return this.data_nodes[index].description = value;
+	    }
+	  };
+
+	  VisualizationGraphCanvas.prototype.resize = function() {
+	    this.viewport.width = this.$el.width();
+	    this.viewport.height = this.$el.height();
+	    this.viewport.origin.x = (this.viewport.width * 0.5) - this.viewport.center.x;
+	    this.viewport.origin.y = (this.viewport.height * 0.5) - this.viewport.center.y;
+	    this.svg.attr('width', this.viewport.width);
+	    this.svg.attr('height', this.viewport.height);
+	    this.rescale();
+	    return this.force.size([this.viewport.width, this.viewport.height]);
+	  };
+
+	  VisualizationGraphCanvas.prototype.rescale = function() {
+	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
+	  };
+
+	  VisualizationGraphCanvas.prototype.toogleLabels = function(value) {
+	    return this.labels.classed('hide', value);
+	  };
+
+	  VisualizationGraphCanvas.prototype.toogleNodesWithoutRelation = function(value) {
+	    if (value) {
+	      this.data_current_nodes.forEach((function(_this) {
+	        return function(d) {
+	          if (!_this.hasNodeRelations(d)) {
+	            return _this.removeNode(d);
+	          }
+	        };
+	      })(this));
+	    } else {
+	      this.data_nodes.forEach((function(_this) {
+	        return function(d) {
+	          if (!_this.hasNodeRelations(d)) {
+	            return _this.addNode(d);
+	          }
+	        };
+	      })(this));
+	    }
+	    return this.updateLayout();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateForceLayoutParameter = function(param, value) {
+	    this.force.stop();
+	    if (param === 'linkDistance') {
+	      this.force.linkDistance(value);
+	    } else if (param === 'linkStrength') {
+	      this.force.linkStrength(value);
+	    } else if (param === 'friction') {
+	      this.force.friction(value);
+	    } else if (param === 'charge') {
+	      this.force.charge(value);
+	    } else if (param === 'theta') {
+	      this.force.theta(value);
+	    } else if (param === 'gravity') {
+	      this.force.gravity(value);
+	    }
+	    return this.force.start();
+	  };
+
+	  VisualizationGraphCanvas.prototype.zoomIn = function() {
+	    return console.log('zoomin');
+	  };
+
+	  VisualizationGraphCanvas.prototype.zoomOut = function() {
+	    return console.log('zoomout');
+	  };
+
+	  VisualizationGraphCanvas.prototype.toogleFullscreen = function() {
+	    return console.log('fullscreen');
+	  };
+
+	  VisualizationGraphCanvas.prototype.onCanvasDrag = function() {
+	    this.viewport.x += d3.event.dx;
+	    this.viewport.y += d3.event.dy;
+	    this.viewport.dx += d3.event.dx;
+	    this.viewport.dy += d3.event.dy;
+	    this.rescale();
+	    return d3.event.sourceEvent.stopPropagation();
+	  };
+
+	  VisualizationGraphCanvas.prototype.onCanvasDragStart = function() {
+	    return this.svg.style('cursor', 'move');
+	  };
+
+	  VisualizationGraphCanvas.prototype.onCanvasDragEnd = function() {
+	    if (this.viewport.dx === 0 && this.viewport.dy === 0) {
+	      return;
+	    }
+	    this.viewport.dx = this.viewport.dy = 0;
+	    return this.svg.style('cursor', 'default');
+	  };
+
+	  VisualizationGraphCanvas.prototype.onNodeDragStart = function(d) {
+	    d3.event.sourceEvent.stopPropagation();
+	    this.viewport.drag.x = d.x;
+	    return this.viewport.drag.y = d.y;
+	  };
+
+	  VisualizationGraphCanvas.prototype.onNodeDragEnd = function(d) {
+	    d3.event.sourceEvent.stopPropagation();
+	    if (this.viewport.drag.x === d.x && this.viewport.drag.y === d.y) {
+	      return;
+	    }
+	    return d.fixed = true;
+	  };
+
+	  VisualizationGraphCanvas.prototype.onNodeOver = function(d) {
+	    this.nodes.classed('weaken', true);
+	    this.nodes.classed('highlighted', (function(_this) {
+	      return function(o) {
+	        return _this.areNodesRelated(d, o);
+	      };
+	    })(this));
+	    this.labels.classed('weaken', true);
+	    this.labels.classed('highlighted', (function(_this) {
+	      return function(o) {
+	        return _this.areNodesRelated(d, o);
+	      };
+	    })(this));
+	    this.relations.classed('weaken', true);
+	    return this.relations.classed('highlighted', (function(_this) {
+	      return function(o) {
+	        return o.source.index === d.index || o.target.index === d.index;
+	      };
+	    })(this));
+	  };
+
+	  VisualizationGraphCanvas.prototype.onNodeOut = function(d) {
+	    this.nodes.classed('weaken', false);
+	    this.nodes.classed('highlighted', false);
+	    this.labels.classed('weaken', false);
+	    this.labels.classed('highlighted', false);
+	    this.relations.classed('weaken', false);
+	    return this.relations.classed('highlighted', false);
+	  };
+
+	  VisualizationGraphCanvas.prototype.onNodeClick = function(d) {
+	    if (d3.event.defaultPrevented) {
+	      return;
+	    }
+	    return Backbone.trigger('visualization.node.showInfo', {
+	      node: d
+	    });
+	  };
+
+	  VisualizationGraphCanvas.prototype.onNodeDoubleClick = function(d) {
+	    return d.fixed = false;
+	  };
+
+	  VisualizationGraphCanvas.prototype.onTick = function() {
+	    this.relations.attr('x1', function(d) {
+	      return d.source.x;
+	    }).attr('y1', function(d) {
+	      return d.source.y;
+	    }).attr('x2', function(d) {
+	      return d.target.x;
+	    }).attr('y2', function(d) {
+	      return d.target.y;
+	    });
+	    this.nodes.attr('transform', function(d) {
+	      return 'translate(' + d.x + ',' + d.y + ')';
+	    });
+	    return this.labels.attr('transform', function(d) {
+	      return 'translate(' + d.x + ',' + d.y + ')';
+	    });
+	  };
+
+	  VisualizationGraphCanvas.prototype.areNodesRelated = function(a, b) {
+	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
+	  };
+
+	  VisualizationGraphCanvas.prototype.hasNodeRelations = function(node) {
+	    return this.data_current_relations.some(function(d) {
+	      return d.source.id === node.id || d.target.id === node.id;
+	    });
+	  };
+
+	  VisualizationGraphCanvas.prototype.getNodeRelations = function(node) {
+	    var arr;
+	    arr = [];
+	    this.data_current_relations.forEach(function(d) {
+	      if (d.source.id === node.id || d.target.id === node.id) {
+	        return arr.push(d);
+	      }
+	    });
+	    return arr;
+	  };
+
+	  return VisualizationGraphCanvas;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraphCanvas;
+
+
+/***/ },
+/* 50 */
+/***/ function(module, exports) {
+
+	var VisualizationGraphConfiguration,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationGraphConfiguration = (function(superClass) {
+	  extend(VisualizationGraphConfiguration, superClass);
+
+	  function VisualizationGraphConfiguration() {
+	    this.onToogleNoRelations = bind(this.onToogleNoRelations, this);
+	    this.onToogleLabels = bind(this.onToogleLabels, this);
+	    this.onChangeValue = bind(this.onChangeValue, this);
+	    return VisualizationGraphConfiguration.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphConfiguration.prototype.onChangeValue = function(e) {
+	    return Backbone.trigger('visualization.config.updateParam', {
+	      name: $(e.target).attr('name'),
+	      value: $(e.target).val()
+	    });
+	  };
+
+	  VisualizationGraphConfiguration.prototype.onToogleLabels = function(e) {
+	    return Backbone.trigger('visualization.config.toogleLabels', {
+	      value: $(e.target).prop('checked')
+	    });
+	  };
+
+	  VisualizationGraphConfiguration.prototype.onToogleNoRelations = function(e) {
+	    return Backbone.trigger('visualization.config.toogleNodesWithoutRelation', {
+	      value: $(e.target).prop('checked')
+	    });
+	  };
+
+	  VisualizationGraphConfiguration.prototype.render = function() {
+	    this.$el.find('#hideLabels').change(this.onToogleLabels);
+	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
+	    this.$el.find('#linkdistante').change(this.onChangeValue);
+	    this.$el.find('#linkstrengh').change(this.onChangeValue);
+	    this.$el.find('#friction').change(this.onChangeValue);
+	    this.$el.find('#charge').change(this.onChangeValue);
+	    this.$el.find('#theta').change(this.onChangeValue);
+	    this.$el.find('#gravity').change(this.onChangeValue);
+	    return this;
+	  };
+
+	  return VisualizationGraphConfiguration;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraphConfiguration;
+
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	var VisualizationGraphNavigation,
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationGraphNavigation = (function(superClass) {
+	  extend(VisualizationGraphNavigation, superClass);
+
+	  function VisualizationGraphNavigation() {
+	    return VisualizationGraphNavigation.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraphNavigation.prototype.render = function() {
+	    this.$el.find('.zoomin').click(function() {
+	      return Backbone.trigger('visualization.navigation.zoomin');
+	    });
+	    this.$el.find('.zoomout').click(function() {
+	      return Backbone.trigger('visualization.navigation.zoomout');
+	    });
+	    this.$el.find('.fullscreen').click(function() {
+	      return Backbone.trigger('visualization.navigation.fullscreen');
+	    });
+	    return this;
+	  };
+
+	  return VisualizationGraphNavigation;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraphNavigation;
+
+
+/***/ },
+/* 52 */
+/***/ function(module, exports) {
+
+	var VisualizationTableBase,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationTableBase = (function(superClass) {
+	  var table, table_options;
+
+	  extend(VisualizationTableBase, superClass);
+
+	  table = null;
+
+	  table_options = null;
+
+	  function VisualizationTableBase(collection) {
+	    this.collection = collection;
+	    this.render = bind(this.render, this);
+	    this.onTableCreateRow = bind(this.onTableCreateRow, this);
+	    this.onTableRemoveRow = bind(this.onTableRemoveRow, this);
+	    this.onCollectionSync = bind(this.onCollectionSync, this);
+	    VisualizationTableBase.__super__.constructor.call(this, this.collection);
+	    this.table_options = {
+	      contextMenu: ['row_below', 'remove_row', 'undo', 'redo'],
+	      height: 360,
+	      stretchH: 'all',
+	      columnSorting: true
+	    };
+	  }
+
+	  VisualizationTableBase.prototype.destroy = function() {
+	    this.undelegateEvents();
+	    this.$el.removeData().unbind();
+	    this.remove();
+	    return Backbone.View.prototype.remove.call(this);
+	  };
+
+	  VisualizationTableBase.prototype.initialize = function() {
+	    return this.collection.once('sync', this.onCollectionSync, this);
+	  };
+
+	  VisualizationTableBase.prototype.onCollectionSync = function() {
+	    return this.table_options.data = this.collection.toJSON();
+	  };
+
+	  VisualizationTableBase.prototype.setupTable = function() {
+	    this.table_options.afterRemoveRow = this.onTableRemoveRow;
+	    this.table_options.afterCreateRow = this.onTableCreateRow;
+	    return this.table = new Handsontable(this.$el.get(0), this.table_options);
+	  };
+
+	  VisualizationTableBase.prototype.onTableRemoveRow = function(index, amount) {
+	    var model, results;
+	    console.log(index, amount);
+	    results = [];
+	    while (amount > 0) {
+	      model = this.collection.at(index);
+	      model.destroy();
+	      results.push(amount--);
+	    }
+	    return results;
+	  };
+
+	  VisualizationTableBase.prototype.onTableCreateRow = function(index, amount) {
+	    var model;
+	    console.log('onTableCreateRow');
+	    console.log(index, amount);
+	    model = this.collection.create({});
+	    return console.log(model, model.get('id'));
+	  };
+
+	  VisualizationTableBase.prototype.show = function() {
+	    this.$el.removeClass('hide');
+	    return this.table.render();
+	  };
+
+	  VisualizationTableBase.prototype.hide = function() {
+	    return this.$el.addClass('hide');
+	  };
+
+	  VisualizationTableBase.prototype.render = function() {
+	    return this;
+	  };
+
+	  return VisualizationTableBase;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationTableBase;
+
+
+/***/ },
+/* 53 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var VisualizationGraph, VisualizationGraphCanvas, VisualizationGraphConfiguration, VisualizationGraphInfo, VisualizationGraphNavigation,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	VisualizationGraphCanvas = __webpack_require__(49);
+
+	VisualizationGraphConfiguration = __webpack_require__(50);
+
+	VisualizationGraphNavigation = __webpack_require__(51);
+
+	VisualizationGraphInfo = __webpack_require__(11);
+
+	VisualizationGraph = (function(superClass) {
+	  extend(VisualizationGraph, superClass);
+
+	  function VisualizationGraph() {
+	    this.onCollectionChange = bind(this.onCollectionChange, this);
+	    this.onRelationsSync = bind(this.onRelationsSync, this);
+	    this.onNodesSync = bind(this.onNodesSync, this);
+	    return VisualizationGraph.__super__.constructor.apply(this, arguments);
+	  }
+
+	  VisualizationGraph.prototype.nodesSync = false;
+
+	  VisualizationGraph.prototype.relationsSync = false;
+
+	  VisualizationGraph.prototype.visualizationGraphCanvas = null;
+
+	  VisualizationGraph.prototype.visualizationGraphConfiguration = null;
+
+	  VisualizationGraph.prototype.visualizationGraphNavigation = null;
+
+	  VisualizationGraph.prototype.initialize = function() {
+	    console.log('initialize Graph', this.collection);
+	    this.collection.nodes.once('sync', this.onNodesSync, this);
+	    this.collection.relations.once('sync', this.onRelationsSync, this);
+	    $('.visualization-graph-menu-actions .configure').click(this.onShowPanelConfigure);
+	    return $('.visualization-graph-panel-configuration .close').click(this.onHidePanelConfigure);
+	  };
+
+	  VisualizationGraph.prototype.onShowPanelConfigure = function() {
+	    return $('.visualization-graph-panel-configuration').addClass('active');
+	  };
+
+	  VisualizationGraph.prototype.onHidePanelConfigure = function() {
+	    return $('.visualization-graph-panel-configuration').removeClass('active');
+	  };
+
+	  VisualizationGraph.prototype.onNodesSync = function(nodes) {
+	    this.nodesSync = true;
+	    console.log('onNodesSync');
+	    this.collection.nodes.bind('change', this.onCollectionChange, this);
+	    if (this.nodesSync && this.relationsSync) {
+	      return this.render();
+	    }
+	  };
+
+	  VisualizationGraph.prototype.onRelationsSync = function(relations) {
+	    this.relationsSync = true;
+	    console.log('onRelationsSync');
+	    this.collection.relations.bind('change', this.onCollectionChange, this);
+	    if (this.nodesSync && this.relationsSync) {
+	      return this.render();
+	    }
+	  };
+
+	  VisualizationGraph.prototype.onCollectionChange = function(e) {
+	    return console.log('Collection has changed', e);
+	  };
+
+	  VisualizationGraph.prototype.getDataFromCollection = function() {
+	    var data;
+	    data = {
+	      nodes: this.collection.nodes.models.map(function(d) {
+	        return d.attributes;
+	      }),
+	      relations: this.collection.relations.models.map(function(d) {
+	        return d.attributes;
+	      })
+	    };
+	    data.relations.forEach(function(d) {
+	      d.source = d.source_id - 1;
+	      return d.target = d.target_id - 1;
+	    });
+	    return data;
+	  };
+
+	  VisualizationGraph.prototype.render = function() {
+	    console.log('render Graph');
+	    this.visualizationGraphCanvas = new VisualizationGraphCanvas({
+	      el: this.$el,
+	      data: this.getDataFromCollection()
+	    });
+	    this.visualizationGraphCanvas.render();
+	    this.visualizationGraphConfiguration = new VisualizationGraphConfiguration;
+	    this.visualizationGraphConfiguration.setElement('.visualization-graph-panel-configuration');
+	    this.visualizationGraphConfiguration.render();
+	    this.visualizationGraphNavigation = new VisualizationGraphNavigation;
+	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
+	    this.visualizationGraphNavigation.render();
+	    this.visualizationGraphInfo = new VisualizationGraphInfo;
+	    this.visualizationGraphInfo.setElement('.visualization-graph-info');
+	    this.visualizationGraphInfo.render();
+	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
+	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
+	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
+	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
+	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
+	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
+	    Backbone.on('visualization.config.updateParam', this.onUpdateParam, this);
+	    Backbone.on('visualization.navigation.zoomin', this.onZoomIn, this);
+	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
+	    Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
+	    return this;
+	  };
+
+	  VisualizationGraph.prototype.resize = function() {
+	    if (this.visualizationGraphCanvas) {
+	      return this.visualizationGraphCanvas.resize();
+	    }
+	  };
+
+	  VisualizationGraph.prototype.onNodeShowInfo = function(e) {
+	    console.log('show info', e.node);
+	    return this.visualizationGraphInfo.show(e.node);
+	  };
+
+	  VisualizationGraph.prototype.onNodeChangeName = function(e) {
+	    return this.visualizationGraphCanvas.updateNodeName(e.node.attributes, e.value);
+	  };
+
+	  VisualizationGraph.prototype.onNodeChangeDescription = function(e) {
+	    return this.visualizationGraphCanvas.updateNodeDescription(e.node.attributes, e.value);
+	  };
+
+	  VisualizationGraph.prototype.onNodeChangeVisible = function(e) {
+	    if (e.value) {
+	      this.visualizationGraphCanvas.showNode(e.node.attributes);
+	    } else {
+	      this.visualizationGraphCanvas.hideNode(e.node.attributes);
+	    }
+	    return this.visualizationGraphCanvas.updateLayout();
+	  };
+
+	  VisualizationGraph.prototype.onToogleLabels = function(e) {
+	    return this.visualizationGraphCanvas.toogleLabels(e.value);
+	  };
+
+	  VisualizationGraph.prototype.onToogleNodesWithoutRelation = function(e) {
+	    return this.visualizationGraphCanvas.toogleNodesWithoutRelation(e.value);
+	  };
+
+	  VisualizationGraph.prototype.onUpdateParam = function(e) {
+	    return this.visualizationGraphCanvas.updateForceLayoutParameter(e.name, e.value);
+	  };
+
+	  VisualizationGraph.prototype.onZoomIn = function(e) {
+	    return this.visualizationGraphCanvas.zoomIn();
+	  };
+
+	  VisualizationGraph.prototype.onZoomOut = function(e) {
+	    return this.visualizationGraphCanvas.zoomOut();
+	  };
+
+	  VisualizationGraph.prototype.onFullscreen = function(e) {
+	    return this.visualizationGraphCanvas.toogleFullscreen();
+	  };
+
+	  return VisualizationGraph;
+
+	})(Backbone.View);
+
+	module.exports = VisualizationGraph;
+
+
+/***/ },
+/* 54 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handsontable, VisualizationTableBase, VisualizationTableNodes,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	Handsontable = __webpack_require__(44);
+
+	VisualizationTableBase = __webpack_require__(52);
+
+	VisualizationTableNodes = (function(superClass) {
+	  var nodes_type, tableColHeaders, tableColumns;
+
+	  extend(VisualizationTableNodes, superClass);
+
+	  nodes_type = null;
+
+	  tableColHeaders = ['', 'Name', 'Description', 'Type', 'Visible'];
+
+	  tableColumns = [
+	    {
+	      data: 'id',
+	      type: 'numeric'
+	    }, {
+	      data: 'name'
+	    }, {
+	      data: 'description'
+	    }, {
+	      data: 'node_type',
+	      type: 'autocomplete',
+	      strict: false
+	    }, {
+	      data: 'visible',
+	      type: 'checkbox'
+	    }
+	  ];
+
+	  function VisualizationTableNodes(collection) {
+	    this.collection = collection;
+	    this.onTableChange = bind(this.onTableChange, this);
+	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
+	    this.onCollectionSync = bind(this.onCollectionSync, this);
+	    VisualizationTableNodes.__super__.constructor.call(this, this.collection);
+	    this.table_options.colHeaders = tableColHeaders;
+	    this.table_options.columns = tableColumns;
+	  }
+
+	  VisualizationTableNodes.prototype.onCollectionSync = function() {
+	    VisualizationTableNodes.__super__.onCollectionSync.call(this);
+	    console.log(this.table_options.data);
+	    return this.getNodeTypes();
+	  };
+
+	  VisualizationTableNodes.prototype.getNodeTypes = function() {
+	    console.log('getNodeTypes');
+	    return $.ajax({
+	      url: '/api/nodes/types.json',
+	      dataType: 'json',
+	      success: this.onNodesTypesSucess
+	    });
+	  };
+
+	  VisualizationTableNodes.prototype.onNodesTypesSucess = function(response) {
+	    nodes_type = response;
+	    this.table_options.columns[3].source = nodes_type;
+	    this.table_options.afterChange = this.onTableChange;
+	    return this.setupTable();
+	  };
+
+	  VisualizationTableNodes.prototype.onTableChange = function(changes, source) {
+	    var change, i, len, results;
+	    if (source !== 'loadData') {
+	      results = [];
+	      for (i = 0, len = changes.length; i < len; i++) {
+	        change = changes[i];
+	        if (change[2] !== change[3]) {
+	          results.push(this.updateNode(change));
+	        } else {
+	          results.push(void 0);
+	        }
+	      }
+	      return results;
+	    }
+	  };
+
+	  VisualizationTableNodes.prototype.updateNode = function(change) {
+	    var key, model, obj, value;
+	    console.log('change', change);
+	    key = change[1];
+	    value = change[3];
+	    model = this.collection.at(change[0]);
+	    if (key === 'visible' || key === 'name' || key === 'description') {
+	      Backbone.trigger('visualization.node.' + key, {
+	        value: value,
+	        node: model
+	      });
+	    } else if (key === 'node_type' && !_.contains(nodes_type, value)) {
+	      this.addNodeType(value);
+	    }
+	    obj = {};
+	    obj[key] = value;
+	    return model.save(obj);
+	  };
+
+	  VisualizationTableNodes.prototype.addNodeType = function(type) {
+	    nodes_type.push(type);
+	    return this.table_options.columns[3].source = nodes_type;
+	  };
+
+	  return VisualizationTableNodes;
+
+	})(VisualizationTableBase);
+
+	module.exports = VisualizationTableNodes;
+
+
+/***/ },
+/* 55 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Handsontable, VisualizationTableBase, VisualizationTableRelations,
+	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	Handsontable = __webpack_require__(44);
+
+	VisualizationTableBase = __webpack_require__(52);
+
+	VisualizationTableRelations = (function(superClass) {
+	  var nodes_type, tableColHeaders, tableColumns;
+
+	  extend(VisualizationTableRelations, superClass);
+
+	  nodes_type = null;
+
+	  tableColHeaders = ['', 'Source', 'Target', 'Type'];
+
+	  tableColumns = [
+	    {
+	      data: 'id',
+	      type: 'numeric'
+	    }, {
+	      data: 'source_id'
+	    }, {
+	      data: 'target_id'
+	    }, {
+	      data: 'relation_type'
+	    }
+	  ];
+
+	  function VisualizationTableRelations(collection) {
+	    this.collection = collection;
+	    this.onCollectionSync = bind(this.onCollectionSync, this);
+	    VisualizationTableRelations.__super__.constructor.call(this, this.collection);
+	    console.log('relations', this.collection);
+	    this.table_options.colHeaders = tableColHeaders;
+	    this.table_options.columns = tableColumns;
+	  }
+
+	  VisualizationTableRelations.prototype.onCollectionSync = function() {
+	    VisualizationTableRelations.__super__.onCollectionSync.call(this);
+	    return this.setupTable();
+	  };
+
+	  return VisualizationTableRelations;
+
+	})(VisualizationTableBase);
+
+	module.exports = VisualizationTableRelations;
 
 
 /***/ }

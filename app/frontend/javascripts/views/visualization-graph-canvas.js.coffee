@@ -1,6 +1,6 @@
 d3 = require 'd3'
 
-class VisualizationGraphCanvasView extends Backbone.View
+class VisualizationGraphCanvas extends Backbone.View
 
   NODES_SIZE: 8
 
@@ -391,4 +391,4 @@ class VisualizationGraphCanvasView extends Backbone.View
     return arr
 
 
-module.exports = VisualizationGraphCanvasView
+module.exports = VisualizationGraphCanvas

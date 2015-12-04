@@ -1,21 +1,21 @@
 #React     = require 'react'
 #ReactDOM  = require 'react-dom'
 #VisualizationGraphD3Component = require './../views/components/visualization-graph.cjsx'
-VisualizationGraphCanvasView          = require './../views/visualization-graph-canvas-view.js'
-VisualizationGraphConfigurationView   = require './../views/visualization-graph-configuration-view.js'
-VisualizationGraphNavigationView      = require './../views/visualization-graph-navigation-view.js'
-VisualizationGraphInfo                = require './../views/visualization-graph-info.js'
+VisualizationGraphCanvas          = require './../views/visualization-graph-canvas.js'
+VisualizationGraphConfiguration   = require './../views/visualization-graph-configuration.js'
+VisualizationGraphNavigation      = require './../views/visualization-graph-navigation.js'
+VisualizationGraphInfo            = require './../views/visualization-graph-info.js'
 
-class VisualizationGraphView extends Backbone.View
+class VisualizationGraph extends Backbone.View
   
   nodesSync:      false
   relationsSync:  false
-  visualizationGraphViewCanvas:     null
+  visualizationGraphCanvas:     null
   visualizationGraphConfiguration:  null
   visualizationGraphNavigation:     null
 
   initialize: ->
-    console.log 'initialize GraphView', @collection
+    console.log 'initialize Graph', @collection
     @collection.nodes.once 'sync', @onNodesSync , @
     @collection.relations.once 'sync', @onRelationsSync , @
     $('.visualization-graph-menu-actions .configure').click @onShowPanelConfigure
@@ -55,16 +55,16 @@ class VisualizationGraphView extends Backbone.View
     return data
 
   render: ->
-    console.log 'render GraphView'
+    console.log 'render Graph'
     # Setup D3 Canvas
-    @visualizationGraphCanvas = new VisualizationGraphCanvasView {el: @$el, data: @getDataFromCollection()}
+    @visualizationGraphCanvas = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection()}
     @visualizationGraphCanvas.render()
     # Setup Configuration Panel
-    @visualizationGraphConfiguration = new VisualizationGraphConfigurationView
+    @visualizationGraphConfiguration = new VisualizationGraphConfiguration
     @visualizationGraphConfiguration.setElement '.visualization-graph-panel-configuration'
     @visualizationGraphConfiguration.render()
     # Setup Nevigation Menu
-    @visualizationGraphNavigation = new VisualizationGraphNavigationView
+    @visualizationGraphNavigation = new VisualizationGraphNavigation
     @visualizationGraphNavigation.setElement '.visualization-graph-menu-navigation'
     @visualizationGraphNavigation.render()
     # Setup Graph Info
@@ -87,7 +87,7 @@ class VisualizationGraphView extends Backbone.View
     Backbone.on 'visualization.navigation.zoomout', @onZoomOut, @
     Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
 
-    #VisualizationGraphViewCanvas
+    #VisualizationGraphCanvas
     # ReactDOM.render(
     #   React.createElement(VisualizationGraphD3Component, {collection: @collection}),
     #   @$el.get(0)
@@ -136,4 +136,4 @@ class VisualizationGraphView extends Backbone.View
     @visualizationGraphCanvas.toogleFullscreen()
 
 
-module.exports = VisualizationGraphView
+module.exports = VisualizationGraph

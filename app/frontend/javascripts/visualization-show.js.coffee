@@ -1,17 +1,17 @@
 # Imports
-NodesCollection                   = require './collections/nodes-collection.js'
-RelationsCollection               = require './collections/relations-collection.js'
-VisualizationGraphView            = require './views/visualization-graph-view.js'
-VisualizationTableNodesView       = require './views/visualization-table-nodes-view.js'
-VisualizationTableRelationsView   = require './views/visualization-table-relations-view.js'
+NodesCollection               = require './collections/nodes-collection.js'
+RelationsCollection           = require './collections/relations-collection.js'
+VisualizationGraph            = require './views/visualization-graph.js'
+VisualizationTableNodes       = require './views/visualization-table-nodes.js'
+VisualizationTableRelations   = require './views/visualization-table-relations.js'
 
 class VisualizationShow
 
   id:                               null
   nodes:                            null
-  visualizationGraphView:           null
-  visualizationTableNodesView:      null
-  visualizationTableRelationsView:  null
+  visualizationGraph:           null
+  visualizationTableNodes:      null
+  visualizationTableRelations:  null
   $tableSelector:                   null
 
   constructor: (_id) ->
@@ -20,9 +20,9 @@ class VisualizationShow
     # Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
-    # Set Graph View
-    @visualizationGraphView = new VisualizationGraphView {collection: {nodes: @nodes, relations: @relations} }
-    @visualizationGraphView.setElement '.visualization-graph-component'
+    # Set Graph 
+    @visualizationGraph = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
+    @visualizationGraph.setElement '.visualization-graph-component'
     # Setup Table Selector
     @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
 
@@ -46,8 +46,8 @@ class VisualizationShow
     #console.log 'resize!'
     windowHeight = $(window).height()
     graphHeight = windowHeight - 50 - 64 - 64
-    @visualizationGraphView.$el.height graphHeight
-    @visualizationGraphView.resize()
+    @visualizationGraph.$el.height graphHeight
+    @visualizationGraph.resize()
     # $('.visualization-table').height( windowHeight - 64 );
     #$('.footer').css 'top', graphHeight+64
 

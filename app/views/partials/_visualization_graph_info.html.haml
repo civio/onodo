@@ -1,5 +1,10 @@
 .visualization-graph-info.panel.panel-default
   .panel-heading
+    %button.btn.btn-default
+      Edit
+    %button.close{type: "button", "aria-label" => "Close"}
+      %span{"aria-hidden" => "true"}
+        &times
   .panel-body
 
 %script#visualization-graph-info-template{:type => "text/template"}
