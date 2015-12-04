@@ -1,8 +1,8 @@
 # Base Class for VisualizationTableNodes & VisualizationTableRelations
 class VisualizationTableBase extends Backbone.View
 
-  table         = null
-  table_options = null
+  table:          null
+  table_options:  null
 
   constructor: (@collection) ->
     super(@collection)

@@ -2,6 +2,8 @@ Handlebars = require 'handlebars'
 
 class VisualizationGraphInfo extends Backbone.View
 
+  el: '.visualization-graph-info'
+
   show: (node) ->
     @node = node
     @$el.addClass('active')
@@ -9,6 +11,9 @@ class VisualizationGraphInfo extends Backbone.View
 
   hide: ->
     @$el.removeClass('active')
+
+  initialize: ->
+    @render()
 
   render: ->
     # Compile the template using Handlebars

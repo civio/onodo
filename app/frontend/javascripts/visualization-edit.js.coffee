@@ -17,20 +17,16 @@ class VisualizationEdit
   constructor: (_id) ->
     console.log('setup visualization', _id);
     @id = _id
-    # Collections
+    # Setup Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
-    # Set Table Nodes
-    @visualizationTableNodes = new VisualizationTableNodes {collection: @nodes}
-    @visualizationTableNodes.setElement '.visualization-table-nodes'
-    # Set Table Relations
-    @visualizationTableRelations = new VisualizationTableRelations {collection: @relations}
-    @visualizationTableRelations.setElement '.visualization-table-relations'
+    # Setup Views
+    @visualizationTableNodes      = new VisualizationTableNodes {collection: @nodes}
+    @visualizationTableRelations  = new VisualizationTableRelations {collection: @relations}
+    @visualizationGraph           = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
     # Setup Table Selector
     @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
-    # Set Graph 
-    @visualizationGraph = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
-    @visualizationGraph.setElement '.visualization-graph-component'
+    
 
   setupAffix: ->
     $('.visualization-graph').affix

@@ -8,6 +8,7 @@ VisualizationGraphInfo            = require './../views/visualization-graph-info
 
 class VisualizationGraph extends Backbone.View
   
+  el:             '.visualization-graph-component'
   nodesSync:      false
   relationsSync:  false
   visualizationGraphCanvas:     null
@@ -56,21 +57,11 @@ class VisualizationGraph extends Backbone.View
 
   render: ->
     console.log 'render Graph'
-    # Setup D3 Canvas
-    @visualizationGraphCanvas = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection()}
-    @visualizationGraphCanvas.render()
-    # Setup Configuration Panel
-    @visualizationGraphConfiguration = new VisualizationGraphConfiguration
-    @visualizationGraphConfiguration.setElement '.visualization-graph-panel-configuration'
-    @visualizationGraphConfiguration.render()
-    # Setup Nevigation Menu
-    @visualizationGraphNavigation = new VisualizationGraphNavigation
-    @visualizationGraphNavigation.setElement '.visualization-graph-menu-navigation'
-    @visualizationGraphNavigation.render()
-    # Setup Graph Info
-    @visualizationGraphInfo = new VisualizationGraphInfo
-    @visualizationGraphInfo.setElement '.visualization-graph-info'
-    @visualizationGraphInfo.render()
+    # Setup Views
+    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection()}
+    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration
+    @visualizationGraphNavigation     = new VisualizationGraphNavigation
+    @visualizationGraphInfo           = new VisualizationGraphInfo
     # Setup Events Listeners
     # Canvas Events
     Backbone.on 'visualization.node.showInfo', @onNodeShowInfo, @
@@ -86,14 +77,6 @@ class VisualizationGraph extends Backbone.View
     Backbone.on 'visualization.navigation.zoomin', @onZoomIn, @
     Backbone.on 'visualization.navigation.zoomout', @onZoomOut, @
     Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
-
-    #VisualizationGraphCanvas
-    # ReactDOM.render(
-    #   React.createElement(VisualizationGraphD3Component, {collection: @collection}),
-    #   @$el.get(0)
-    # )
-    #ReactDOM.render React.createElement(VisualizationGraphComponent, {data: @collection.models}), @$el.get(0)
-    return this
 
   resize: ->
     if @visualizationGraphCanvas

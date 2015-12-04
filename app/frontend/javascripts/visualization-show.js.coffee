@@ -7,22 +7,21 @@ VisualizationTableRelations   = require './views/visualization-table-relations.j
 
 class VisualizationShow
 
-  id:                               null
-  nodes:                            null
+  id:                           null
+  nodes:                        null
   visualizationGraph:           null
   visualizationTableNodes:      null
   visualizationTableRelations:  null
-  $tableSelector:                   null
+  $tableSelector:               null
 
   constructor: (_id) ->
     console.log('setup visualization', _id);
     @id = _id
-    # Collections
+    # Setup Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
-    # Set Graph 
+    # Setup Views 
     @visualizationGraph = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
-    @visualizationGraph.setElement '.visualization-graph-component'
     # Setup Table Selector
     @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
 

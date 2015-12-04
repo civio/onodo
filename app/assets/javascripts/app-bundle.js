@@ -107,7 +107,6 @@
 	        relations: this.relations
 	      }
 	    });
-	    this.visualizationGraph.setElement('.visualization-graph-component');
 	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	  }
 
@@ -9799,6 +9798,8 @@
 	    return VisualizationGraphInfo.__super__.constructor.apply(this, arguments);
 	  }
 
+	  VisualizationGraphInfo.prototype.el = '.visualization-graph-info';
+
 	  VisualizationGraphInfo.prototype.show = function(node) {
 	    this.node = node;
 	    this.$el.addClass('active');
@@ -9807,6 +9808,10 @@
 
 	  VisualizationGraphInfo.prototype.hide = function() {
 	    return this.$el.removeClass('active');
+	  };
+
+	  VisualizationGraphInfo.prototype.initialize = function() {
+	    return this.render();
 	  };
 
 	  VisualizationGraphInfo.prototype.render = function() {
@@ -41964,19 +41969,16 @@
 	    this.visualizationTableNodes = new VisualizationTableNodes({
 	      collection: this.nodes
 	    });
-	    this.visualizationTableNodes.setElement('.visualization-table-nodes');
 	    this.visualizationTableRelations = new VisualizationTableRelations({
 	      collection: this.relations
 	    });
-	    this.visualizationTableRelations.setElement('.visualization-table-relations');
-	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	    this.visualizationGraph = new VisualizationGraph({
 	      collection: {
 	        nodes: this.nodes,
 	        relations: this.relations
 	      }
 	    });
-	    this.visualizationGraph.setElement('.visualization-graph-component');
+	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
 	  }
 
 	  VisualizationEdit.prototype.setupAffix = function() {
@@ -42140,7 +42142,8 @@
 	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
 	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
 	    this.labels_cont = this.container.append('g').attr('class', 'labels-cont');
-	    return this.rescale();
+	    this.rescale();
+	    return this.render();
 	  };
 
 	  VisualizationGraphCanvas.prototype.initializaData = function() {
@@ -42507,6 +42510,8 @@
 	    return VisualizationGraphConfiguration.__super__.constructor.apply(this, arguments);
 	  }
 
+	  VisualizationGraphConfiguration.prototype.el = '.visualization-graph-panel-configuration';
+
 	  VisualizationGraphConfiguration.prototype.onChangeValue = function(e) {
 	    return Backbone.trigger('visualization.config.updateParam', {
 	      name: $(e.target).attr('name'),
@@ -42524,6 +42529,10 @@
 	    return Backbone.trigger('visualization.config.toogleNodesWithoutRelation', {
 	      value: $(e.target).prop('checked')
 	    });
+	  };
+
+	  VisualizationGraphConfiguration.prototype.initialize = function() {
+	    return this.render();
 	  };
 
 	  VisualizationGraphConfiguration.prototype.render = function() {
@@ -42560,6 +42569,12 @@
 	    return VisualizationGraphNavigation.__super__.constructor.apply(this, arguments);
 	  }
 
+	  VisualizationGraphNavigation.prototype.el = '.visualization-graph-menu-navigation';
+
+	  VisualizationGraphNavigation.prototype.initialize = function() {
+	    return this.render();
+	  };
+
 	  VisualizationGraphNavigation.prototype.render = function() {
 	    this.$el.find('.zoomin').click(function() {
 	      return Backbone.trigger('visualization.navigation.zoomin');
@@ -42590,13 +42605,11 @@
 	  hasProp = {}.hasOwnProperty;
 
 	VisualizationTableBase = (function(superClass) {
-	  var table, table_options;
-
 	  extend(VisualizationTableBase, superClass);
 
-	  table = null;
+	  VisualizationTableBase.prototype.table = null;
 
-	  table_options = null;
+	  VisualizationTableBase.prototype.table_options = null;
 
 	  function VisualizationTableBase(collection) {
 	    this.collection = collection;
@@ -42701,6 +42714,8 @@
 	    return VisualizationGraph.__super__.constructor.apply(this, arguments);
 	  }
 
+	  VisualizationGraph.prototype.el = '.visualization-graph-component';
+
 	  VisualizationGraph.prototype.nodesSync = false;
 
 	  VisualizationGraph.prototype.relationsSync = false;
@@ -42772,16 +42787,9 @@
 	      el: this.$el,
 	      data: this.getDataFromCollection()
 	    });
-	    this.visualizationGraphCanvas.render();
 	    this.visualizationGraphConfiguration = new VisualizationGraphConfiguration;
-	    this.visualizationGraphConfiguration.setElement('.visualization-graph-panel-configuration');
-	    this.visualizationGraphConfiguration.render();
 	    this.visualizationGraphNavigation = new VisualizationGraphNavigation;
-	    this.visualizationGraphNavigation.setElement('.visualization-graph-menu-navigation');
-	    this.visualizationGraphNavigation.render();
 	    this.visualizationGraphInfo = new VisualizationGraphInfo;
-	    this.visualizationGraphInfo.setElement('.visualization-graph-info');
-	    this.visualizationGraphInfo.render();
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
 	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
@@ -42791,8 +42799,7 @@
 	    Backbone.on('visualization.config.updateParam', this.onUpdateParam, this);
 	    Backbone.on('visualization.navigation.zoomin', this.onZoomIn, this);
 	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
-	    Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
-	    return this;
+	    return Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
 	  };
 
 	  VisualizationGraph.prototype.resize = function() {
@@ -42868,15 +42875,15 @@
 	VisualizationTableBase = __webpack_require__(52);
 
 	VisualizationTableNodes = (function(superClass) {
-	  var nodes_type, tableColHeaders, tableColumns;
-
 	  extend(VisualizationTableNodes, superClass);
 
-	  nodes_type = null;
+	  VisualizationTableNodes.prototype.el = '.visualization-table-nodes';
 
-	  tableColHeaders = ['', 'Name', 'Description', 'Type', 'Visible'];
+	  VisualizationTableNodes.prototype.nodes_type = null;
 
-	  tableColumns = [
+	  VisualizationTableNodes.prototype.tableColHeaders = ['', 'Name', 'Description', 'Type', 'Visible'];
+
+	  VisualizationTableNodes.prototype.tableColumns = [
 	    {
 	      data: 'id',
 	      type: 'numeric'
@@ -42920,6 +42927,7 @@
 	  };
 
 	  VisualizationTableNodes.prototype.onNodesTypesSucess = function(response) {
+	    var nodes_type;
 	    nodes_type = response;
 	    this.table_options.columns[3].source = nodes_type;
 	    this.table_options.afterChange = this.onTableChange;
@@ -42987,15 +42995,15 @@
 	VisualizationTableBase = __webpack_require__(52);
 
 	VisualizationTableRelations = (function(superClass) {
-	  var nodes_type, tableColHeaders, tableColumns;
-
 	  extend(VisualizationTableRelations, superClass);
 
-	  nodes_type = null;
+	  VisualizationTableRelations.prototype.el = '.visualization-table-relations';
 
-	  tableColHeaders = ['', 'Source', 'Target', 'Type'];
+	  VisualizationTableRelations.prototype.nodes_type = null;
 
-	  tableColumns = [
+	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Target', 'Type'];
+
+	  VisualizationTableRelations.prototype.tableColumns = [
 	    {
 	      data: 'id',
 	      type: 'numeric'

@@ -3,9 +3,10 @@ VisualizationTableBase   = require './visualization-table-base.js'
 
 class VisualizationTableRelations extends VisualizationTableBase
 
-  nodes_type      = null
-  tableColHeaders = ['', 'Source', 'Target', 'Type']
-  tableColumns    = [
+  el:               '.visualization-table-relations'
+  nodes_type:       null
+  tableColHeaders:  ['', 'Source', 'Target', 'Type']
+  tableColumns:     [
     { 
       data: 'id'
       type: 'numeric' 

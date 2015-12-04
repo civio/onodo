@@ -1,5 +1,7 @@
 class VisualizationGraphConfiguration extends Backbone.View
 
+  el: '.visualization-graph-panel-configuration'
+
   onChangeValue: (e) =>
     Backbone.trigger 'visualization.config.updateParam', {name: $(e.target).attr('name'), value: $(e.target).val()}
 
@@ -8,6 +10,9 @@ class VisualizationGraphConfiguration extends Backbone.View
   
   onToogleNoRelations: (e) =>
     Backbone.trigger 'visualization.config.toogleNodesWithoutRelation', {value: $(e.target).prop('checked')}
+
+  initialize: ->
+    @render()
 
   render: -> 
     # Visualization Styles

@@ -87,6 +87,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @labels_cont    = @container.append('g').attr('class', 'labels-cont')
 
     @rescale()  # Translate svg
+    @render()
 
   initializaData: ->
 
