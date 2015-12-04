@@ -135,7 +135,7 @@ class VisualizationGraphCanvas extends Backbone.View
   updateNodes: ->
     @nodes = @nodes.data(@data_current_nodes)
     @nodes.enter().append('g')
-      #.attr('id', (d) -> return 'node-'+d.id)
+      .attr('id', (d) -> return 'node-'+d.id)
       .attr('class', 'node')
       .call(@forceDrag)
       .on('mouseover',  @onNodeOver)
@@ -151,14 +151,14 @@ class VisualizationGraphCanvas extends Backbone.View
   updateRelations: ->
     @relations = @relations.data(@data_current_relations)
     @relations.enter().append('line')
-      #.attr('id', (d) -> return 'relation-'+d.id)
+      .attr('id', (d) -> return 'relation-'+d.id)
       .attr('class', 'relation')
     @relations.exit().remove()
 
   updateLabels: ->
     @labels = @labels.data(@data_current_nodes)
     @labels.enter().append('text')
-      #.attr('id', (d,i) -> return 'label-'+d.id)
+      .attr('id', (d,i) -> return 'label-'+d.id)
       .attr('class', 'label')
       .attr('dx', @NODES_SIZE+6)
       .attr('dy', '.35em')
@@ -219,6 +219,14 @@ class VisualizationGraphCanvas extends Backbone.View
 
   hideNode: (node) ->
     @removeNode node
+
+  focusNode: (node)->
+    console.log node
+    @unfocusNode()
+    @nodes.selectAll('#node-'+node.id+' .node-circle').classed('active', true)
+
+  unfocusNode: ->
+    @nodes.selectAll('.node-circle.active').classed('active', false)
 
   updateNodeName: (node, value) ->
     index = @data_nodes.indexOf node
@@ -318,6 +326,7 @@ class VisualizationGraphCanvas extends Backbone.View
   onCanvasDragEnd: =>
     # Skip if viewport has no translation
     if @viewport.dx == 0 and @viewport.dy == 0
+      Backbone.trigger 'visualization.node.hideInfo'
       return
     # TODO! Add viewportMove action to history
     @viewport.dx = @viewport.dy = 0;

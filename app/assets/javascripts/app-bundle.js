@@ -9811,6 +9811,10 @@
 	  };
 
 	  VisualizationGraphInfo.prototype.initialize = function() {
+	    this.$el.click(function(e) {
+	      e.preventDefault();
+	      return Backbone.trigger('visualization.node.hideInfo');
+	    });
 	    return this.render();
 	  };
 
@@ -42189,7 +42193,9 @@
 
 	  VisualizationGraphCanvas.prototype.updateNodes = function() {
 	    this.nodes = this.nodes.data(this.data_current_nodes);
-	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
+	    this.nodes.enter().append('g').attr('id', function(d) {
+	      return 'node-' + d.id;
+	    }).attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
 	      return function(d) {
 	        return _this.color(d.node_type);
 	      };
@@ -42199,13 +42205,17 @@
 
 	  VisualizationGraphCanvas.prototype.updateRelations = function() {
 	    this.relations = this.relations.data(this.data_current_relations);
-	    this.relations.enter().append('line').attr('class', 'relation');
+	    this.relations.enter().append('line').attr('id', function(d) {
+	      return 'relation-' + d.id;
+	    }).attr('class', 'relation');
 	    return this.relations.exit().remove();
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateLabels = function() {
 	    this.labels = this.labels.data(this.data_current_nodes);
-	    this.labels.enter().append('text').attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
+	    this.labels.enter().append('text').attr('id', function(d, i) {
+	      return 'label-' + d.id;
+	    }).attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
 	    this.labels.text(function(d) {
 	      return d.name;
 	    });
@@ -42278,6 +42288,16 @@
 
 	  VisualizationGraphCanvas.prototype.hideNode = function(node) {
 	    return this.removeNode(node);
+	  };
+
+	  VisualizationGraphCanvas.prototype.focusNode = function(node) {
+	    console.log(node);
+	    this.unfocusNode();
+	    return this.nodes.selectAll('#node-' + node.id + ' .node-circle').classed('active', true);
+	  };
+
+	  VisualizationGraphCanvas.prototype.unfocusNode = function() {
+	    return this.nodes.selectAll('.node-circle.active').classed('active', false);
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodeName = function(node, value) {
@@ -42382,6 +42402,7 @@
 
 	  VisualizationGraphCanvas.prototype.onCanvasDragEnd = function() {
 	    if (this.viewport.dx === 0 && this.viewport.dy === 0) {
+	      Backbone.trigger('visualization.node.hideInfo');
 	      return;
 	    }
 	    this.viewport.dx = this.viewport.dy = 0;
@@ -42791,6 +42812,7 @@
 	    this.visualizationGraphNavigation = new VisualizationGraphNavigation;
 	    this.visualizationGraphInfo = new VisualizationGraphInfo;
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
+	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
 	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
 	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
 	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
@@ -42810,7 +42832,13 @@
 
 	  VisualizationGraph.prototype.onNodeShowInfo = function(e) {
 	    console.log('show info', e.node);
+	    this.visualizationGraphCanvas.focusNode(e.node);
 	    return this.visualizationGraphInfo.show(e.node);
+	  };
+
+	  VisualizationGraph.prototype.onNodeHideInfo = function(e) {
+	    this.visualizationGraphCanvas.unfocusNode();
+	    return this.visualizationGraphInfo.hide();
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeName = function(e) {

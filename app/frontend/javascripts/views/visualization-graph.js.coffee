@@ -65,6 +65,7 @@ class VisualizationGraph extends Backbone.View
     # Setup Events Listeners
     # Canvas Events
     Backbone.on 'visualization.node.showInfo', @onNodeShowInfo, @
+    Backbone.on 'visualization.node.hideInfo', @onNodeHideInfo, @
     # Table Events
     Backbone.on 'visualization.node.name', @onNodeChangeName, @
     Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
@@ -85,7 +86,12 @@ class VisualizationGraph extends Backbone.View
 
   onNodeShowInfo: (e) ->
     console.log 'show info', e.node
+    @visualizationGraphCanvas.focusNode e.node
     @visualizationGraphInfo.show e.node
+
+  onNodeHideInfo: (e) ->
+    @visualizationGraphCanvas.unfocusNode()
+    @visualizationGraphInfo.hide()
 
   onNodeChangeName: (e) ->
     @visualizationGraphCanvas.updateNodeName e.node.attributes, e.value

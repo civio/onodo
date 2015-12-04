@@ -102,6 +102,11 @@
         stroke-width: 0px;
         opacity: 1;
       }
+
+      .node-circle.active{
+        stroke: mix( $gray-light, $gray-lighter, 30% ) !important;
+        stroke-width: 4px !important;
+      }
     }
 
     .relation {
@@ -179,6 +184,7 @@
     width: 350px;
     margin: 0;
     border-radius: 0;
+    @include transition( right 0.5s ease-out );
 
     &.active{
       right: 0;

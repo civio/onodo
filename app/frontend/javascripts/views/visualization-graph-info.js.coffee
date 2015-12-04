@@ -13,6 +13,9 @@ class VisualizationGraphInfo extends Backbone.View
     @$el.removeClass('active')
 
   initialize: ->
+    @$el.click (e) ->
+      e.preventDefault()
+      Backbone.trigger 'visualization.node.hideInfo'
     @render()
 
   render: ->
