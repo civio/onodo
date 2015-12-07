@@ -4,7 +4,7 @@
 @import '_variables';
 
 body{
-  font-family: $font-family-regular;
+  font-family: $font-family-sans-serif;
   letter-spacing: 0.03em;
 }
 
@@ -15,11 +15,7 @@ h4,
 h5, 
 h6,
 .lead{
-  font-family: $font-family-light;
-}
-
-strong{
-  font-family: $font-family-bold;
+  font-weight: 300;
 }
 
 a{
@@ -52,7 +48,7 @@ a{
 }
 
 .btn-transparent{
-  font-family: $font-family-bold;
+  font-weight: bold;
   min-width: auto;
   border-color: $btn-transparent-bg;
   color: $btn-transparent-color;

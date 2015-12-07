@@ -48,7 +48,6 @@
 
 .navbar-brand{
   position: relative;
-  overflow: hidden;
   padding: 0;
   width: 109px;
   height: 51px;
@@ -95,9 +94,39 @@
 
   .well{
     margin: 0;
-  }
+    color: #fff;
+    background: $brand-primary;
+    border-radius: 0;
+    border: none;
+    padding: 2*$grid-gutter-width $grid-gutter-width;
+    font-weight: 300;
 
-  .col-sm-3:first-child{
-    border-right: 1px solid $gray-light;
+    h3{
+      color: mix( $brand-primary, white, 44% );
+      margin: 0 0 $grid-gutter-width/2;
+      font-weight: 100;
+    }
+
+    p{
+      font-size: 0.857em;
+    }
+
+    .border{
+      border-right: 1px solid mix( $brand-primary, white, 80% );
+    }
+
+    .close{
+      position: absolute;
+      top: $grid-gutter-width;
+      right: $grid-gutter-width;
+      opacity: 1;
+      text-indent: -9999px;
+      @include sprite-icon-close();
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
   }
 }

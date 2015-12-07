@@ -25,10 +25,12 @@
     h2{
       font-size: 3em;
       margin: $grid-gutter-width/2 0;
+      font-weight: 100;
     }
 
     p{
       font-size: 1em; //1.143em;
+      font-weight: 300;
     }
 
     .separator{

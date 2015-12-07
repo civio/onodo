@@ -1,33 +1,32 @@
 #contact.collapse
   .well.container-fluid
     .row
-      .col-sm-3
-        %strong Contact Us
+      .col-sm-4.border
+        %h3 Contact us
         %p If you need help or have any inquires, you can contact us using our different channels
-      .col-sm-3
-        %p
-          %a{:href => "#"}
-            %i.glyphicon.glyphicon-earphone
-            91 123 123
-        %p
-          %a{:href => "mailto:hello@onodo.org"}
-            %i.glyphicon.glyphicon-envelope
-            hello@onodo.org
-        %p
-          %a.pull-left{:href => "#"}
-          Twitter
-          %a{:href => "#"}
-          facebook
-      .col-sm-3
-        %p
-          %strong Fundación Ciudadana Civio
-          C/ Sebastián Elcano 32
-          28003 Madrid
-        %p
-          %a{:href => "#", "title" => "View in Google Maps"}
-            %i.glyphicon.glyphicon-map-marker 
-            View in Google Maps
-      .col-sm-3
-        %a.close{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
-          %span{"aria-hidden" => "true"}
-            &times;
+      .col-sm-4
+        %row
+          .col-sm-5.border
+            %p
+              %a{:href => "mailto:hello@onodo.org"}
+                hello@onodo.org
+          .col-sm-7.border
+            %p
+              %strong Fundación Ciudadana Civio
+              C/ Sebastián Elcano 32
+              28003 Madrid
+            %p
+              %a{:href => "#", "title" => "View in Google Maps"} 
+              View in Google Maps
+      .col-sm-4
+        %ul.social-links
+          %li
+            %a.twitter
+              Twitter
+          %li
+            %a.facebook
+              Facebook
+        
+    %a.close{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
+      %span{"aria-hidden" => "true"}
+        Close
