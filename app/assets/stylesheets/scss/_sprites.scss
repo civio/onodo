@@ -5,64 +5,77 @@
   background-position: $x $y;
   width: $width;
   height: $height;
-}
-
-@mixin sprite-home-icon-collaboration() {
-  @include sprite(-5px, -5px, 54px, 53px);
-}
-
-@mixin sprite-home-icon-creation() {
-  @include sprite(-69px, -5px, 108px, 60px);
-}
-
-@mixin sprite-home-icon-information() {
-  @include sprite(-187px, -5px, 42px, 42px);
-}
-
-@mixin sprite-home-icon-preview() {
-  @include sprite(-187px, -57px, 53px, 34px);
-}
-
-@mixin sprite-home-icon-share() {
-  @include sprite(-5px, -101px, 36px, 45px);
-}
-
-@mixin sprite-home-icon-story() {
-  @include sprite(-51px, -101px, 43px, 48px);
-}
-
-@mixin sprite-icon-civio-footer() {
-  @include sprite(-104px, -101px, 109px, 30px);
-}
-
-@mixin sprite-icon-civio-footer-hover() {
-  @include sprite(-104px, -141px, 109px, 30px);
-}
-
-@mixin sprite-icon-eu-footer() {
-  @include sprite(-5px, -181px, 38px, 38px);
-}
-
-@mixin sprite-icon-logo-footer() {
-  @include sprite(-53px, -181px, 88px, 40px);
-}
-
-@mixin sprite-icon-logo-footer-hover() {
-  @include sprite(-151px, -181px, 88px, 40px);
-}
-
-@mixin sprite-icon-story() {
-  @include sprite(-239px, -5px, 22px, 24px);
-}
-
-@mixin sprite-icon-visualization() {
-  @include sprite(-223px, -101px, 25px, 24px);
+  overflow: hidden;
 }
 
 @mixin sprite-logo() {
-  @include sprite(-271px, -5px, 109px, 51px);
+  @include sprite(-38px, -147px, 109px, 51px);
 }
 
 @mixin sprite-logo-hover() {
-  @include sprite(-271px, -56px, 109px, 51px);
+  @include sprite(-147px, -147px, 109px, 51px);
+}
+
+@mixin sprite-home-icon-collaboration() {
+  @include sprite(0, 0, 54px, 53px);
+}
+
+@mixin sprite-home-icon-creation() {
+  @include sprite(-54px, 0, 108px, 60px);
+}
+
+@mixin sprite-home-icon-information() {
+  @include sprite(-162px, 0, 42px, 42px);
+}
+
+@mixin sprite-home-icon-preview() {
+  @include sprite(0, -60px, 53px, 34px);
+}
+
+@mixin sprite-home-icon-share() {
+  @include sprite(-162px, -42px, 36px, 45px);
+}
+
+@mixin sprite-home-icon-story() {
+  @include sprite(-53px, -87px, 43px, 48px);
+}
+
+@mixin sprite-icon-civio-footer() {
+  @include sprite(-96px, -87px, 109px, 30px);
+}
+
+@mixin sprite-icon-civio-footer-hover() {
+  @include sprite(-96px, -117px, 109px, 30px);
+}
+
+@mixin sprite-icon-close() {
+  @include sprite(0, -117px, 30px, 30px);
+}
+
+@mixin sprite-icon-eu-footer() {
+  @include sprite(0, -147px, 38px, 38px);
+}
+
+@mixin sprite-icon-location() {
+  @include sprite(-30px, -117px, 18px, 24px);
+}
+
+@mixin sprite-icon-logo-footer() {
+  @include sprite(-204px, 0, 88px, 40px);
+}
+
+@mixin sprite-icon-logo-footer-hover() {
+  @include sprite(-204px, -40px, 88px, 40px);
+}
+
+@mixin sprite-icon-mail() {
+  @include sprite(-205px, -80px, 21px, 17px);
+}
+
+@mixin sprite-icon-story() {
+  @include sprite(-226px, -80px, 22px, 24px);
+}
+
+@mixin sprite-icon-visualization() {
+  @include sprite(-248px, -80px, 25px, 24px);
 }
