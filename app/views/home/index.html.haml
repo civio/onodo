@@ -55,9 +55,10 @@
     -#    View More
     .gallery-carousel-container.container
       .row
-        - @visualizations.each do |item|
+        - @gallery_items.each do |item|
           .col-sm-6
             = render 'partials/item_preview', :item => item
+          -# TODO!!! Add Carousel Navigation
   .brands.container
     %p.section-title 
       The are using Onodo
