@@ -57,6 +57,11 @@ a{
   border-color: $btn-transparent-bg;
   color: $btn-transparent-color;
   background: $btn-transparent-bg;
+  @include transition( color 0.3s ease-out );
+
+  &:hover{
+    color: $text-color;
+  }
 }
 
 .btn-collapse{
