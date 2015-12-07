@@ -12,9 +12,9 @@
     #navbar.navbar-collapse.collapse
       %ul.nav.navbar-nav
         %li
-          %a{:href => "/explore"} Explore
+          %a{:href => "/explore", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'explore')} Explore
         %li
-          %a{:href => "/gallery"} Gallery
+          %a{:href => "/gallery", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'gallery')} Gallery
         %li
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"} Contact
       %ul.nav.navbar-nav.navbar-right

@@ -13,6 +13,7 @@
     > li > a{
       color: $text-color;
 
+      &.active,
       &:hover{
         color: $brand-primary;
       }
