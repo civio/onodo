@@ -1,19 +1,24 @@
-.item-preview
+%div{class: 'item-preview item-'+item.class.to_s.downcase}
   .container-fluid
     .row.no-gutter
-      %div{:class => (defined? large) ? 'item-picture col-sm-8' : 'item-picture col-sm-5'}
-        %p.item-type= item.class.to_s
-      %div{:class => (defined? large) ? 'item-info col-sm-4' : 'item-info col-sm-7'}
-        -if item.class.to_s.downcase == 'visualization'
-          %a{:href => visualization_path(item), :title => item.name} 
-            %h3= item.name
-          -if item.description?
-            %p= item.description
-        -else
+      -# %div{:class => (defined? large) ? 'item-picture col-sm-8' : 'item-picture col-sm-5'}
+      -if item.class.to_s.downcase == 'story'
+        %div{:class => 'item-info col-sm-7'}
+          %img.item-picture{src: "http://lorempixel.com/250/300/"}
+        %div{:class => 'item-info col-sm-7'}
           %a{:href => story_path(item), :title => item.name} 
             %h3= item.name
-        %hr
-        %p
-          %a{href: user_path(item.author_id), title: item.author.name}
-            %i.glyphicon.glyphicon-user
-            = item.author.name
+          -# TODO!!! Add description to Styory Model
+          -#-if item.description?
+          -#  %p= item.description
+      -else
+        %div{:class => 'item-info col-sm-12'}
+          %a{:href => visualization_path(item), :title => item.name} 
+            %h3= item.name
+    .item-type-icon
+    .item-type
+      = item.class.to_s
+    .item-author
+      %a{href: user_path(item.author_id), title: item.author.name}
+        %i.glyphicon.glyphicon-user
+        = item.author.name
