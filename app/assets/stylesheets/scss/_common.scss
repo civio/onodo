@@ -1,5 +1,63 @@
 @import 'bootstrap/variables';
+@import 'bootstrap/mixins/buttons';
+@import 'bootstrap/mixins/vendor-prefixes';
 @import '_variables';
+
+body{
+  font-family: $font-family-regular;
+  letter-spacing: 0.03em;
+}
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6,
+.lead{
+  font-family: $font-family-light;
+}
+
+strong{
+  font-family: $font-family-bold;
+}
+
+a{
+  @include transition( color 0.3s ease-out );
+}
+
+// Buttons
+
+.btn{
+  min-width: 130px;
+  padding-top: 0;
+  padding-bottom: 0;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  line-height: $btn-line-height;
+  border-radius: 2px + $btn-line-height/2;
+  border-width: 2px;
+  text-transform: uppercase;
+  @include transition( background-color 0.3s ease-out );
+}
+
+.btn-primary:hover{
+  color: $btn-primary-bg;
+  background: $btn-primary-color;
+  border-color: $btn-primary-bg;
+}
+
+.btn-invert{
+  @include button-variant($btn-invert-color, $btn-invert-bg, $btn-invert-border);
+}
+
+.btn-transparent{
+  font-family: $font-family-bold;
+  min-width: auto;
+  border-color: $btn-transparent-bg;
+  color: $btn-transparent-color;
+  background: $btn-transparent-bg;
+}
 
 .btn-collapse{
   .collapsed-label{
@@ -18,8 +76,25 @@
   }
 }
 
+.separator{
+  border-color: $brand-primary;
+  border-width: 2px;
+  margin: $grid-gutter-width auto;
+}
+.separator-white{
+  border-color: #fff;
+}
+.separator-small{
+  width: 6*$grid-gutter-width;
+}
+
 .text-danger {
   color: $state-danger-text !important;
+}
+
+.container .jumbotron, 
+.container-fluid .jumbotron{
+  border-radius: 0;
 }
 
 .item-preview{

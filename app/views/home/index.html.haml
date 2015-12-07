@@ -1,12 +1,14 @@
 .container-fluid
   .row
-    .home-background
+    -#.home-background
     .jumbotron.text-center
+      .home-icon
       %h2 Relationships are complicated
       %p.lead Let's create visualizations to understand them
-      %a.btn.btn-lg.btn-primary{:href => "#", :title => "Signup"} Signup
-      %a.btn.btn-lg.btn-primary{:href => "/explore", :title => "Explore"} Explore
-      %a.btn.btn-lg.btn-primary{:href => "#", :title => "Demo"} Demo
+      %hr.separator.separator-white.separator-small
+      %a.btn.btn-primary{:href => "#", :title => "Signup"} Signup
+      %a.btn.btn-primary{:href => "/explore", :title => "Explore"} Explore
+      %a.btn.btn-primary{:href => "#", :title => "Demo"} Demo
     .text-center
       %h3 We make it easy
       .container

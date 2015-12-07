@@ -1,14 +1,63 @@
 @import 'bootstrap/variables';
+@import 'scss/sprites';
 @import '_variables';
 
-.navbar-brand h1{
-  font-size: 1em;
-  margin: 0;
+.navbar-default{
+  padding: $grid-gutter-width/2 0;
+  z-index: 92;
+
+  .navbar-nav{
+    margin-left: $grid-gutter-width/2;
+
+    > li > a{
+      color: $text-color;
+
+      &.btn{
+        padding: 0;
+        margin: 10px 15px 8px;
+        line-height: $btn-line-height;
+
+        &.btn-default{
+          color: $btn-default-color;
+        }
+        &.btn-primary{
+          color: $btn-primary-color;
+          &:hover{
+            color: $btn-primary-bg;
+          }
+        }
+        &.btn-invert{
+          color: $btn-invert-color;
+        }
+        &.btn-transparent{
+          color: $btn-transparent-color;
+        }
+      }
+    }
+  }
 }
 
-.navbar-default{
-  z-index: 92;
+.navbar-brand{
+  //display: block;
+  //width: 109px;
+  //height: 51px;
+  overflow: hidden;
+  padding: 0;
+  margin-left: 0 !important;
+  margin-right: grid-gutter-width/2;
+  //background: url(/images/logo.png) no-repeat 0 0 transparent;
+  @include sprite-logo();
+
+  &:hover{
+    background-position: 0 -51px;
+  }
+  
+  h1{
+    display: none;
+    margin: 0;
+  }
 }
+
 
 #contact{
 

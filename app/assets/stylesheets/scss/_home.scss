@@ -8,6 +8,39 @@
   background: url('http://placehold.it/1920x560') no-repeat center 0 fixed;
 }
 
+.home{
+
+  .home-icon{
+    width: 217px;
+    height: 216px;
+    margin: $grid-gutter-width auto 2*$grid-gutter-width;
+    background: url('/images/home-icon.png') no-repeat 0 0 transparent;
+  }
+
+  .jumbotron{
+    color: white;
+    background: $brand-primary;
+    padding: 2*$grid-gutter-width;
+
+    h2{
+      font-size: 3em;
+      margin: $grid-gutter-width/2 0;
+    }
+
+    p{
+      font-size: 1em; //1.143em;
+    }
+
+    .separator{
+      margin: 1.5*$grid-gutter-width auto;
+    }
+
+    .btn{
+      margin: 0 $grid-gutter-width/2;
+    }
+  }
+}
+
 #gallery-carousel{
   margin: 30px 0;
   padding: 30px 0 15px;

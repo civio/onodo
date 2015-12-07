@@ -20,9 +20,9 @@
       %ul.nav.navbar-nav.navbar-right
         -if current_user.nil?
           %li
-            = link_to "Log in", new_user_session_path
+            = link_to "Login", new_user_session_path, class: "btn btn-transparent"
           %li
-            = link_to "Sign up", new_user_registration_path
+            = link_to "Sign up", new_user_registration_path, class: "btn btn-primary"
         -else
           %li.dropdown
             %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
