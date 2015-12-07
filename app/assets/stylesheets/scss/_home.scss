@@ -1,4 +1,5 @@
 @import 'bootstrap/variables';
+@import 'scss/sprites';
 @import '_variables';
 
 .home-background{
@@ -17,10 +18,12 @@
     background: url('/images/home-icon.png') no-repeat 0 0 transparent;
   }
 
+  // Jumbotron
   .jumbotron{
     color: white;
     background: $brand-primary;
     padding: 2*$grid-gutter-width;
+    margin: 0;
 
     h2{
       font-size: 3em;
@@ -41,14 +44,95 @@
       margin: 0 $grid-gutter-width/2;
     }
   }
+
+  // Features
+  .features{
+    padding-bottom: 2*$grid-gutter-width;
+
+    &.features-great{
+      background: $gray-lightest;
+    }
+
+    h3{
+      font-size: 30px;
+      margin: 2*$grid-gutter-width auto;
+    }
+
+    .feature{
+
+      h4{
+        color: $brand-primary;
+        font-weight: normal;
+        margin: $grid-gutter-width/2 auto;
+      }
+
+      p{
+        color: $gray-dark;
+        padding: 0 $grid-gutter-width;
+      }
+
+      .feature-icon{
+        height: 60px;
+
+        span{
+          margin: 0 auto; 
+        }
+      }
+
+      .feature-icon-creation{
+        @include sprite-home-icon-creation();
+      } 
+      .feature-icon-information{
+        @include sprite-home-icon-information();
+      }
+      .feature-icon-share{
+        @include sprite-home-icon-share();
+      }
+      .feature-icon-collaboration{
+        @include sprite-home-icon-collaboration();
+      }
+      .feature-icon-preview{
+        @include sprite-home-icon-preview();
+        // Alighn view icon
+        background-position: 0 -53px;
+        height: 41px;
+      }
+      .feature-icon-story{
+        @include sprite-home-icon-story();
+      }
+    }
+  }
+
+  // Brands
+
+  .brands{
+    padding: $grid-gutter-width 0;
+
+    ul{
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    li{
+      display: inline-block;
+
+      img{
+        margin: $grid-gutter-width $grid-gutter-width/2;
+      }
+    }
+  }
 }
 
 #gallery-carousel{
-  margin: 30px 0;
-  padding: 30px 0 15px;
-  background: $jumbotron-bg;
+  margin-top: $grid-gutter-width/2;
+  padding: $grid-gutter-width 0;
+  background: $gray-lighter;
   text-align: center;
   
+  .section-title{
+    margin-bottom: 1.5*$grid-gutter-width;
+  }
+
   > strong,
   > a.btn{
     display: inline-block;

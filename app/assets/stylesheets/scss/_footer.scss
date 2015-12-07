@@ -1,6 +1,10 @@
+@import 'bootstrap/variables';
+@import '_variables';
+
 .footer{
   position: relative;
   padding: 30px 0;
   z-index: 100;
-  background: white;
+  color: #fff;
+  background: $gray-dark;
 }

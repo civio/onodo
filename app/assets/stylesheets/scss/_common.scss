@@ -24,6 +24,8 @@ a{
 
 // Buttons
 
+$btn-border-width: 2px;
+
 .btn{
   min-width: 130px;
   padding-top: 0;
@@ -31,8 +33,8 @@ a{
   font-size: 11px;
   letter-spacing: 0.05em;
   line-height: $btn-line-height;
-  border-radius: 2px + $btn-line-height/2;
-  border-width: 2px;
+  border-radius: $btn-border-width + $btn-line-height/2;
+  border-width: $btn-border-width;
   text-transform: uppercase;
   @include transition( background-color 0.3s ease-out );
 }
@@ -77,6 +79,41 @@ a{
   }
 }
 
+.btn-group-vertical .btn{
+  min-width: auto;
+}
+.btn-group-vertical > .btn:first-child:not(:last-child){
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+.btn-group-vertical > .btn:last-child:not(:first-child){
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.btn-group-vertical > .btn + .btn, 
+.btn-group-vertical > .btn + .btn-group, 
+.btn-group-vertical > .btn-group + .btn, 
+.btn-group-vertical > .btn-group + .btn-group{
+  margin-top: -$btn-border-width;
+}
+
+.text-danger {
+  color: $state-danger-text !important;
+}
+
+// Jumbotron
+
+.container .jumbotron, 
+.container-fluid .jumbotron{
+  border-radius: 0;
+}
+
+
+// Custom components
+// --------------------
+
+// Separator
+
 .separator{
   border-color: $brand-primary;
   border-width: 2px;
@@ -89,14 +126,18 @@ a{
   width: 6*$grid-gutter-width;
 }
 
-.text-danger {
-  color: $state-danger-text !important;
+// Section title
+
+.section-title{
+  font-size: 0.857em;
+  color: $gray-dark;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: $grid-gutter-width auto;
+  text-align: center; 
 }
 
-.container .jumbotron, 
-.container-fluid .jumbotron{
-  border-radius: 0;
-}
+// Item preview
 
 .item-preview{
   background: $gray-light;
