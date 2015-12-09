@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151126092606) do
+ActiveRecord::Schema.define(version: 20151209165149) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
@@ -52,8 +52,9 @@ ActiveRecord::Schema.define(version: 20151126092606) do
   create_table "stories", force: :cascade do |t|
     t.text     "name"
     t.integer  "author_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "description"
   end
 
   add_index "stories", ["author_id"], name: "index_stories_on_author_id"
