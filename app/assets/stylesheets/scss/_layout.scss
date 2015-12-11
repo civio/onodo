@@ -142,5 +142,120 @@
       font-weight: bold;
     }
   }
+
+  &.item-preview-large{
+    text-align: center;
+
+    .item-info{
+      float: none;
+      position: relative;
+      left: 25%;
+    }
+
+    .item-picture{
+      float: none;
+    }
+  }
 }
 
+
+// Pages
+
+.pages{
+
+  .page-header{
+    border: none;
+    margin: 3*$grid-gutter-width 0;
+    padding: 0;
+
+    h2{
+      font-size: 3em;
+      margin: 0 0 $grid-gutter-width/2;
+    }
+
+    .lead{
+      font-size: 1em;
+      color: mix( $gray, $gray-light, 45% );
+    }
+  }
+
+  .page-items{
+    background: $gray-lighter;
+    padding: 2*$grid-gutter-width 0;
+  }
+
+  .item-preview{
+    margin-bottom: 20px;
+  }
+
+  &.explore{
+    // Change col padding to 10px
+    .tab-content{
+      &.row{
+        margin-left: -10px;
+        margin-right: -10px;
+      }
+      .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .explore-toolbar{
+    margin-bottom: $grid-gutter-width;
+
+    // Search box styles
+    .input-group .form-control,
+    .input-group-btn > .btn{
+      border-color: $brand-primary;
+    }
+
+    .input-group .form-control{
+      padding: 0 10px;
+      font-size: 12px;
+      line-height: $btn-line-height;
+      height: auto;
+      border-width: 2px;
+      border-right: none;
+      border-top-left-radius: 2px + $btn-line-height/2;
+      border-bottom-left-radius: 2px + $btn-line-height/2;
+    }
+
+    .input-group-btn > .btn{
+      min-width: auto;
+      color: $brand-primary;
+      padding: 0 10px;
+      border-left: none;
+  
+      &:hover{
+        color: $text-color;
+        background: #fff;
+      }
+
+      .glyphicon{
+        font-size: 1.5em;
+        top: 3px;
+      }
+    }
+  }
+
+  .explore-orderby{
+    font-size: 11px;
+    line-height: 4+$btn-line-height;
+    text-transform: uppercase;
+
+    a{
+      margin-left: $grid-gutter-width/2;
+
+      &.active{
+        font-weight: bold;
+      }
+
+      &:hover{
+        color: $text-color;
+        text-decoration: none;
+      }
+    }
+  }
+}

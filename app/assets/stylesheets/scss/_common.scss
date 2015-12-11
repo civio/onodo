@@ -19,6 +19,7 @@ h6,
 }
 
 a{
+  color: $brand-primary;
   @include transition( color 0.3s ease-out );
 }
 
@@ -26,7 +27,7 @@ a{
 
 $btn-border-width: 2px;
 
-.btn{
+@mixin btn(){
   min-width: 130px;
   padding-top: 0;
   padding-bottom: 0;
@@ -37,6 +38,10 @@ $btn-border-width: 2px;
   border-width: $btn-border-width;
   text-transform: uppercase;
   @include transition( background-color 0.3s ease-out );
+}
+
+.btn{
+  @include btn();
 }
 
 .btn-primary:hover{
@@ -97,9 +102,36 @@ $btn-border-width: 2px;
   margin-top: -$btn-border-width;
 }
 
+// Nav pills
+
+.nav-pills > li{
+  > a{
+    @include btn();
+    font-weight: bold;
+    border-color: $btn-transparent-bg;
+    color: $btn-transparent-color;
+    background: $btn-transparent-bg;
+    @include transition( color 0.3s ease-out );
+
+    &:hover{
+      border-color: $btn-primary-bg;
+      background: $btn-transparent-bg;
+    }
+  }
+
+  &.active > a,
+  &:hover > a,
+  &:focus > a{
+    background: $brand-primary;
+    border-color: transparent;
+  }
+}
+
+
 .text-danger {
   color: $state-danger-text !important;
 }
+
 
 // Jumbotron
 

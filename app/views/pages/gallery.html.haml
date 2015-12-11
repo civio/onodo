@@ -1,5 +1,6 @@
-.container-fluid
-  %h2 Gallery
-  %p.lead Amazing relationship visualization & stories curated by the Onodo Team
+.container
+  .page-header
+    %h2 Gallery
+    %p.lead Amazing relationship visualization & stories curated by the Onodo Team
   - @items.each do |item|
     = render 'partials/item_preview', :item => item, :large => true

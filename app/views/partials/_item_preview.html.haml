@@ -1,4 +1,4 @@
-%div{class: 'item-preview item-'+item.class.to_s.downcase}
+%div{class: 'item-preview item-'+item.class.to_s.downcase+((defined? large) ? ' item-preview-large' : '') }
   .item-type-icon
   .item-type
     = item.class.to_s
@@ -7,9 +7,6 @@
       = item.author.name
       .item-author-picture
         %img{src: "http://lorempixel.com/60/60/"}
-  -#.container-fluid
-  -#.row.no-gutter
-    -# %div{:class => (defined? large) ? 'item-picture col-sm-8' : 'item-picture col-sm-5'}
   -if item.class.to_s.downcase == 'story'
     %img.item-picture{src: "http://lorempixel.com/250/300/"}
     .item-info
