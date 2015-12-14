@@ -4,7 +4,7 @@
     %p.lead Take a look to the visualizations & stories Onodo users are creating
 
 .explore-navbar.container
-  - if defined?(@visualizations)
+  - if defined? @visualizations
     %a.btn.btn-default.btn-transparent{ href: '/explore/stories' }
       Stories
     .btn.btn-default.btn-primary
@@ -37,7 +37,7 @@
           = paginate @items
       -else
         .text-center
-        - if defined?(@visualizations)
+        - if defined? @visualizations
           %p
             You haven't create any visualization yet
           %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}

@@ -8,16 +8,27 @@
       .item-author-picture
         %img{src: "http://lorempixel.com/60/60/"}
   -if item.class.to_s.downcase == 'story'
-    %img.item-picture{src: "http://lorempixel.com/250/300/"}
+    - if (defined? large)
+      %img.item-picture{src: "http://lorempixel.com/1140/400/"}
+    - else
+      %img.item-picture{src: "http://lorempixel.com/250/300/"}
     .item-info
-      %a{:href => story_path(item), :title => item.name} 
+      %a.item-title{:href => story_path(item), :title => item.name} 
         %h3= item.name  
-      -if item.description?
+      -if defined? large
+        %a.bnt-start-reding{:href => story_path(item), :title => "Start reading"}
+          %span
+            Start reading
+      - elsif item.description?
         %p= item.description
-      -else
+      - else  # TODO!!! Remove this content for testing
         %p
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
   -else
     .item-info
-      %a{:href => visualization_path(item), :title => item.name} 
+      %a.item-title{:href => visualization_path(item), :title => item.name} 
         %h3= item.name
+      -if defined? large
+        %a.bnt-start-reding{:href => visualization_path(item), :title => "Start reading"}
+          %span
+            Start reading
