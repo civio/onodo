@@ -2,8 +2,10 @@ class PagesController < ApplicationController
 
   # GET /explore
   def explore
-    @visualizations = Visualization.all
-    @stories = Story.all
+    @items = Visualization.all
+    #@items = @items.order("published_at DESC").includes(:photo).page(params[:page]).per(9)
+    #@stories = Story.all
+    @items = @items.page(params[:page]).per(6)
   end
 
   # GET /gallery

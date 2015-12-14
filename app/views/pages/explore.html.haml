@@ -2,4 +2,41 @@
   .page-header
     %h2 Explore
     %p.lead Take a look to the visualizations & stories Onodo users are creating
-= render 'partials/visualizations_stories_tabs', :visualizations => @visualizations, :stories => @stories
+
+.explore-navbar.container
+  %a.btn.btn-default.btn-primary
+    Visualizations
+  %a.btn.btn-default{ href: '#user-dashboard-stories' }
+    Stories
+  -# TODO!!! Add tooltips with info  to each button   
+  .explore-orderby.pull-right
+    Order by
+    %a.active{href: '#', title: 'Popularity'} Popularity
+    %a{href: '#', title: 'Most recent'} Most recent
+  .explore-search.pull-right
+    .input-group
+      %input.form-control{:type => "text"}
+      %span.input-group-btn
+        %button.btn.btn-default{:type => "button"}
+          %i.glyphicon.glyphicon-search
+
+.page-items
+  .container
+    .row
+      -unless @items.blank?
+        - @items.each do |item| 
+          .col-sm-6
+            = render 'partials/item_preview', :item => item
+        = paginate @items
+      -else
+        .text-center
+        - if visualization
+          %p
+            You haven't create any visualization yet
+          %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}
+            Start creating one
+        - else
+          %p
+            You haven't create any story yet
+          %a.btn.btn-default.btn-primary{href: new_story_path(), title: 'Start creating one'}
+            Start creating one

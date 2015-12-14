@@ -53,6 +53,9 @@ gem "rails-backbone"
 # A set of Rails responders to dry up your application. Read more: https://github.com/plataformatec/responders
 gem 'responders', '~> 2.0'
 
+# Pagination Gem
+gem 'kaminari'
+
 gem 'charlock_holmes_bundle_icu'
 
 group :development, :test do
