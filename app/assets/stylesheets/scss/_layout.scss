@@ -218,32 +218,39 @@
 .items-carousel{
   
   .carousel-nav{
-    
-  }
-
-  .carousel-nav-container{
-
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 10px;
   }
 
   .carousel-control{
-    display: block;
+    display: inline-block;
     position: static;
-    float: left;
     width: $grid-gutter-width;
     height: $grid-gutter-width;
-    background: #fff;
+    background: transparent;
     border: 2px solid $brand-primary;
     border-radius: $grid-gutter-width/2;
     opacity: 1;
   }
 
   .carousel-indicators{
-    display: inline;
+    display: inline-block;
     position: static;
-    float: left;
     margin: 0 $grid-gutter-width/2;
     width: auto;
-    outline: 1px solid $gray;
+
+    li{
+      width: 13px;
+      height: 13px;
+      margin: 8px 5px;
+      border: none;
+      background: $gray-light;
+
+      &.active{
+        background: $brand-primary;
+      }
+    }
   }
 }
 

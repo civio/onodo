@@ -54,11 +54,7 @@
     -#  %i.glyphicon.glyphicon-plus
     -#    View More
     .gallery-carousel-container.container
-      .row
-        - @gallery_items.each do |item|
-          .col-sm-6
-            = render 'partials/item_preview', :item => item
-          -# TODO!!! Add Carousel Navigation
+      = render 'partials/item_preview_carousel', :items => @gallery_items
   .brands.container
     %p.section-title 
       The are using Onodo

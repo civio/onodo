@@ -1,0 +1,25 @@
+#items-carousel.items-carousel.carousel.slide{data: {ride: 'carousel'}}
+  - carousel_items = 2.0  #6.0
+  - carousel_iterations = (items.length/carousel_items).ceil-1
+  .carousel-inner{role: 'listbox'}
+    - 0.upto(carousel_iterations) do |i|
+      %div{class: (i != 0) ? ' item' : 'item active'}
+        - 2.times do |j|
+          - carousel_index = ((i*carousel_items)+j).floor
+          - if carousel_index < items.length
+            .col-sm-6{data: {index: carousel_index}}
+              = render 'partials/item_preview', :item => items[carousel_index]
+  - if items.length > carousel_items
+    .carousel-nav
+      .carousel-nav-container
+        %a.left.carousel-control{href: "#items-carousel", role: "button", data: {slide: "prev"}}
+          %span.glyphicon.glyphicon-chevron-left{aria: {hidden: "true"}}
+          %span.sr-only
+            Previous
+        %ol.carousel-indicators
+          - 0.upto(carousel_iterations) do |i|
+            %li{class: (i != 0) ? '' : 'active', data: {target: '#items-carousel', slide: {to: i}}}
+        %a.right.carousel-control{href: "#items-carousel", role: "button", data: {slide: "next"}}
+          %span.glyphicon.glyphicon-chevron-right{aria: {hidden: "true"}}
+          %span.sr-only
+            Next
