@@ -29,8 +29,11 @@ Rails.application.routes.draw do
   resources :datasets, only: [:index]
   resources :nodes, only: [:index]
 
-  get '/explore' => 'pages#explore'
-  get '/gallery' => 'pages#gallery'
+  get '/explore'                  => 'pages#explore_stories'
+  get '/explore/visualizations/'  => 'pages#explore_visualizations'
+  get '/explore/stories/'         => 'pages#explore_stories'
+  get '/gallery'                  => 'pages#gallery'
+
 
   # API routes
   scope 'api' do

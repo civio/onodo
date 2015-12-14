@@ -4,21 +4,27 @@
     %p.lead Take a look to the visualizations & stories Onodo users are creating
 
 .explore-navbar.container
-  %a.btn.btn-default.btn-primary
-    Visualizations
-  %a.btn.btn-default{ href: '#user-dashboard-stories' }
-    Stories
-  -# TODO!!! Add tooltips with info  to each button   
-  .explore-orderby.pull-right
-    Order by
-    %a.active{href: '#', title: 'Popularity'} Popularity
-    %a{href: '#', title: 'Most recent'} Most recent
+  - if defined?(@visualizations)
+    %a.btn.btn-default.btn-transparent{ href: '/explore/stories' }
+      Stories
+    .btn.btn-default.btn-primary
+      Visualizations
+  - else
+    .btn.btn-default.btn-primary
+      Stories
+    %a.btn.btn-default.btn-transparent{ href: '/explore/visualizations' }
+      Visualizations
   .explore-search.pull-right
     .input-group
       %input.form-control{:type => "text"}
       %span.input-group-btn
         %button.btn.btn-default{:type => "button"}
           %i.glyphicon.glyphicon-search
+  -# TODO!!! Add tooltips with info  to each button   
+  .explore-orderby.pull-right
+    Order by
+    %a.active{href: '#', title: 'Popularity'} Popularity
+    %a{href: '#', title: 'Most recent'} Most recent
 
 .page-items
   .container
@@ -27,10 +33,11 @@
         - @items.each do |item| 
           .col-sm-6
             = render 'partials/item_preview', :item => item
-        = paginate @items
+        .col-sm-12.text-center
+          = paginate @items
       -else
         .text-center
-        - if visualization
+        - if defined?(@visualizations)
           %p
             You haven't create any visualization yet
           %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}

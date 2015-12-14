@@ -1,4 +1,5 @@
 @import 'bootstrap/variables';
+@import 'bootstrap/mixins/vendor-prefixes';
 @import '_variables';
 @import 'scss/sprites';
 
@@ -159,13 +160,46 @@
 }
 
 
+// Items Carousel
+.items-carousel{
+  
+  .carousel-nav{
+    
+  }
+
+  .carousel-nav-container{
+
+  }
+
+  .carousel-control{
+    display: block;
+    position: static;
+    float: left;
+    width: $grid-gutter-width;
+    height: $grid-gutter-width;
+    background: #fff;
+    border: 2px solid $brand-primary;
+    border-radius: $grid-gutter-width/2;
+    opacity: 1;
+  }
+
+  .carousel-indicators{
+    display: inline;
+    position: static;
+    float: left;
+    margin: 0 $grid-gutter-width/2;
+    width: auto;
+    outline: 1px solid $gray;
+  }
+}
+
 // Pages
 
 .pages{
 
   .page-header{
     border: none;
-    margin: 3*$grid-gutter-width 0;
+    margin: 2*$grid-gutter-width 0 3*$grid-gutter-width;
     padding: 0;
 
     h2{
@@ -188,21 +222,35 @@
     margin-bottom: 20px;
   }
 
-  &.explore{
-    // Change col padding to 10px
-    .tab-content{
-      &.row{
-        margin-left: -10px;
-        margin-right: -10px;
+  .pagination{
+    margin: 40px 0 0;
+  }
+
+  .explore-navbar{
+    // Disable active buttons
+    > .btn-primary{
+      cursor: auto;
+      border-color: $brand-primary;
+
+      &:hover{
+        color: #fff;
+        background: $brand-primary;
       }
-      .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
-        padding-left: 10px;
-        padding-right: 10px;
+    }
+    > .btn-transparent{
+      min-width: 130px;
+      @include transition( border-color 0.2s ease-out );
+      &:hover{
+        color: $brand-primary;
+        border-color: $brand-primary;
+        background: #fff;
       }
     }
   }
 
-  .explore-toolbar{
+  .explore-search{
+    width: 180px;
+    margin-left: $grid-gutter-width;
     margin-bottom: $grid-gutter-width;
 
     // Search box styles
@@ -212,7 +260,7 @@
     }
 
     .input-group .form-control{
-      padding: 0 10px;
+      padding: 0 5px 0 10px;
       font-size: 12px;
       line-height: $btn-line-height;
       height: auto;
@@ -225,7 +273,7 @@
     .input-group-btn > .btn{
       min-width: auto;
       color: $brand-primary;
-      padding: 0 10px;
+      padding: 0 10px 0 5px;
       border-left: none;
   
       &:hover{
@@ -259,3 +307,5 @@
     }
   }
 }
+
+
