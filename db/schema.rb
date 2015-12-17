@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209165149) do
+ActiveRecord::Schema.define(version: 20151217152311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,10 +27,10 @@ ActiveRecord::Schema.define(version: 20151209165149) do
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
-    t.string   "description"
+    t.string   "description",  limit: 255
     t.boolean  "visible"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "node_type"
     t.integer  "dataset_id"
     t.string   "custom_field"
@@ -83,10 +83,10 @@ ActiveRecord::Schema.define(version: 20151209165149) do
 
   create_table "visualizations", force: :cascade do |t|
     t.text     "name"
-    t.text     "description"
+    t.string   "description", limit: 255
     t.boolean  "published"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "author_id"
     t.integer  "story_id"
   end
