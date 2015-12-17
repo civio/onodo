@@ -116,13 +116,26 @@ class VisualizationsController < ApplicationController
      
       CSV.parse(utf8_encoded_content, headers: true) do |row|
         next if row.size == 0  # Skip empty lines
+    
+        # TODO!!! we suposse a format ID,Name,Family,Appareances,Actor,Url
 
-        Node.new( name:         row['name'],
-                  description:  row['description'], 
-                  node_type:    row['type'],
-                  custom_field: row['custom_field'],
+        # Get description
+        if row['Actor']
+          if row['Url']
+            description = row['Actor'] + ' ' + row['Url']
+          else
+            description = row['Actor']
+          end
+        elsif row['Url']
+          description = row['Url']
+        end
+        
+        Node.new( name:         row['Name'],
+                  description:  description,
+                  node_type:    row['Family'],
+                  custom_field: row['Appareances'],
                   visible:      row['visible'] ? row['visible'] : true,
-                  dataset:      dataset).save
+                  dataset:      dataset).save!
       end
     end
 
@@ -132,17 +145,20 @@ class VisualizationsController < ApplicationController
       detection = CharlockHolmes::EncodingDetector.detect(content)
       utf8_encoded_content = CharlockHolmes::Converter.convert content, detection[:encoding], 'UTF-8'
      
-      id_base = dataset.nodes.nil? ? 0 : dataset.nodes.first.id
-
-      puts id_base
+      # Get id base
+      id_base = dataset.nodes.nil? || dataset.nodes.first.nil? ? 1 : dataset.nodes.first.id.to_i
+      id_base -= 1
+      
 
       CSV.parse(utf8_encoded_content, headers: true) do |row|
         next if row.size == 0  # Skip empty lines
 
-        Relation.new( source:         dataset.nodes.find( id_base+row['source'].to_i-1 ),
-                      target:         dataset.nodes.find( id_base+row['target'].to_i-1 ), 
-                      relation_type:  row['type'],
-                      dataset:        dataset ).save
+        # TODO!!! we suposse a format SourceID,Source,TargetID,Target,Type
+        
+        Relation.new( source:         dataset.nodes.find( id_base+row['SourceID'].to_i ),
+                      target:         dataset.nodes.find( id_base+row['TargetID'].to_i ), 
+                      relation_type:  row['Type'],
+                      dataset:        dataset ).save!
       end
     end
 end
