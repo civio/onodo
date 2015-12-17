@@ -15,7 +15,10 @@ class ApiController < ApplicationController
   # Create a new Node
   # POST /api/nodes
   def node_create
-    render json: Node.create(node_params)
+    #puts node_params
+    node = Node.new(node_params)
+    node.save(:validate => false)
+    render json: node
   end
 
   # Update a Node attribute
@@ -78,7 +81,7 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :dataset_id) if params[:node]
     end
 
     def relation_params

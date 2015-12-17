@@ -192,6 +192,7 @@ class VisualizationGraphCanvas extends Backbone.View
       @data_current_relations.splice index, 1
 
   addNode: (node) ->
+    console.log 'addNode', node
     @addNodeData node
 
   removeNode: (node) ->

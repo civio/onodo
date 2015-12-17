@@ -17,10 +17,12 @@ class VisualizationGraph extends Backbone.View
 
   initialize: ->
     console.log 'initialize Graph', @collection
-    @collection.nodes.once 'sync', @onNodesSync , @
-    @collection.relations.once 'sync', @onRelationsSync , @
-    $('.visualization-graph-menu-actions .configure').click @onShowPanelConfigure
-    $('.visualization-graph-panel-configuration .close').click @onHidePanelConfigure
+    # Setup Colllection Events
+    @collection.nodes.once      'sync', @onNodesSync , @
+    @collection.relations.once  'sync', @onRelationsSync , @
+    # Setup Configure Panel Show/Hide
+    $('.visualization-graph-menu-actions .configure').click     @onShowPanelConfigure
+    $('.visualization-graph-panel-configuration .close').click  @onHidePanelConfigure
 
   onShowPanelConfigure: ->
     $('.visualization-graph-panel-configuration').addClass 'active'
@@ -31,9 +33,11 @@ class VisualizationGraph extends Backbone.View
   onNodesSync: (nodes) =>
     @nodesSync = true
     console.log 'onNodesSync'
-    @collection.nodes.bind 'change', @onCollectionChange, @
+    @collection.nodes.bind 'add',     @onNodesAdd, @
+    @collection.nodes.bind 'change',  @onNodesChange, @
     if @nodesSync and @relationsSync
       @render()
+  
 
   onRelationsSync: (relations) =>
     @relationsSync = true
@@ -67,23 +71,34 @@ class VisualizationGraph extends Backbone.View
     Backbone.on 'visualization.node.showInfo', @onNodeShowInfo, @
     Backbone.on 'visualization.node.hideInfo', @onNodeHideInfo, @
     # Table Events
-    Backbone.on 'visualization.node.name', @onNodeChangeName, @
+    #Backbone.on 'visualization.node.create',      @onNodeCreate, @
+    Backbone.on 'visualization.node.name',        @onNodeChangeName, @
     Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
-    Backbone.on 'visualization.node.visible', @onNodeChangeVisible, @
+    Backbone.on 'visualization.node.visible',     @onNodeChangeVisible, @
     # Subscribe Config Panel Events
-    Backbone.on 'visualization.config.toogleLabels', @onToogleLabels, @
-    Backbone.on 'visualization.config.toogleNodesWithoutRelation', @onToogleNodesWithoutRelation, @
-    Backbone.on 'visualization.config.updateParam', @onUpdateParam, @
+    Backbone.on 'visualization.config.toogleLabels',                @onToogleLabels, @
+    Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
+    Backbone.on 'visualization.config.updateParam',                 @onUpdateParam, @
     # Subscribe Navigation Events
-    Backbone.on 'visualization.navigation.zoomin', @onZoomIn, @
-    Backbone.on 'visualization.navigation.zoomout', @onZoomOut, @
-    Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
+    Backbone.on 'visualization.navigation.zoomin',      @onZoomIn, @
+    Backbone.on 'visualization.navigation.zoomout',     @onZoomOut, @
+    Backbone.on 'visualization.navigation.fullscreen',  @onFullscreen, @
 
   resize: ->
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
 
 
+  # Collections Events
+  onNodesAdd: (node) ->
+    # We need to wait until sync event to get node id
+    @collection.nodes.once 'sync', (model) =>
+      @visualizationGraphCanvas.addNode {id: model.id}
+      @visualizationGraphCanvas.updateLayout()
+      # TODO!!! Set id & visible at table nodes view
+    , @
+
+  # Canvas Events
   onNodeShowInfo: (e) ->
     console.log 'show info', e.node
     @visualizationGraphCanvas.focusNode e.node
@@ -93,6 +108,7 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphCanvas.unfocusNode()
     @visualizationGraphInfo.hide()
 
+  # Table Events
   onNodeChangeName: (e) ->
     @visualizationGraphCanvas.updateNodeName e.node.attributes, e.value
 

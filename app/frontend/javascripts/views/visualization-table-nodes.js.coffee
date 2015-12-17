@@ -29,7 +29,7 @@ class VisualizationTableNodes extends VisualizationTableBase
   ]
 
   constructor: (@collection) ->
-    super(@collection)
+    super @collection, 'node'
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @tableColumns

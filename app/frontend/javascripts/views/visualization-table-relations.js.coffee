@@ -25,8 +25,7 @@ class VisualizationTableRelations extends VisualizationTableBase
   ]
 
   constructor: (@collection) ->
-    super(@collection)
-    console.log 'relations', @collection
+    super @collection, 'relation'
 
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders

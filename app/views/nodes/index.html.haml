@@ -7,6 +7,7 @@
         %th Name
         %th Description
         %th Type
+        %th Dataset ID
         %th Created
         %th Updated
     %tbody
@@ -16,8 +17,10 @@
           %td= node.name
           %td= node.description
           %td= node.node_type
+          %td= node.dataset_id
           %td= node.created_at
           %td= node.updated_at
+
   %hr
   %h3 Relations list
   %table.table.table-striped
@@ -32,5 +35,7 @@
         %tr
           %td= relation.id
           %td= relation.source.name
-          %td= relation.target.name
-          %td= relation.relation_type
+          -if relation.target
+            %td= relation.target.name
+          -if relation.relation_type
+            %td= relation.relation_type
