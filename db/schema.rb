@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20151209165149) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at",       null: false
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 20151209165149) do
     t.integer  "visualization_id"
   end
 
-  add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id"
+  add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id", using: :btree
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -33,7 +36,7 @@ ActiveRecord::Schema.define(version: 20151209165149) do
     t.string   "custom_field"
   end
 
-  add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id"
+  add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id", using: :btree
 
   create_table "relations", force: :cascade do |t|
     t.string   "relation_type"
@@ -47,7 +50,7 @@ ActiveRecord::Schema.define(version: 20151209165149) do
     t.integer  "dataset_id"
   end
 
-  add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id"
+  add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id", using: :btree
 
   create_table "stories", force: :cascade do |t|
     t.text     "name"
@@ -57,7 +60,7 @@ ActiveRecord::Schema.define(version: 20151209165149) do
     t.string   "description"
   end
 
-  add_index "stories", ["author_id"], name: "index_stories_on_author_id"
+  add_index "stories", ["author_id"], name: "index_stories_on_author_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -75,8 +78,8 @@ ActiveRecord::Schema.define(version: 20151209165149) do
     t.string   "name",                   default: "", null: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "visualizations", force: :cascade do |t|
     t.text     "name"
@@ -88,7 +91,7 @@ ActiveRecord::Schema.define(version: 20151209165149) do
     t.integer  "story_id"
   end
 
-  add_index "visualizations", ["author_id"], name: "index_visualizations_on_author_id"
-  add_index "visualizations", ["story_id"], name: "index_visualizations_on_story_id"
+  add_index "visualizations", ["author_id"], name: "index_visualizations_on_author_id", using: :btree
+  add_index "visualizations", ["story_id"], name: "index_visualizations_on_story_id", using: :btree
 
 end
