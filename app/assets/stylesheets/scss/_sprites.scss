@@ -8,74 +8,78 @@
   overflow: hidden;
 }
 
-@mixin sprite-logo() {
-  @include sprite(-38px, -147px, 109px, 51px);
-}
-
-@mixin sprite-logo-hover() {
-  @include sprite(-147px, -147px, 109px, 51px);
-}
-
-@mixin sprite-home-icon-collaboration() {
+@mixin sprite-home-icon-collaboration(){
   @include sprite(0, 0, 54px, 53px);
 }
 
-@mixin sprite-home-icon-creation() {
+@mixin sprite-home-icon-creation(){
   @include sprite(-54px, 0, 108px, 60px);
 }
 
-@mixin sprite-home-icon-information() {
-  @include sprite(-162px, 0, 42px, 42px);
+@mixin sprite-home-icon-information(){
+  @include sprite(0, -60px, 42px, 42px);
 }
 
-@mixin sprite-home-icon-preview() {
-  @include sprite(0, -60px, 53px, 34px);
+@mixin sprite-home-icon-preview(){
+  @include sprite(-42px, -60px, 53px, 34px);
 }
 
-@mixin sprite-home-icon-share() {
-  @include sprite(-162px, -42px, 36px, 45px);
+@mixin sprite-home-icon-share(){
+  @include sprite(-162px, 0, 36px, 45px);
 }
 
-@mixin sprite-home-icon-story() {
-  @include sprite(-53px, -87px, 43px, 48px);
+@mixin sprite-home-icon-story(){
+  @include sprite(-95px, -60px, 43px, 48px);
 }
 
-@mixin sprite-icon-civio-footer() {
-  @include sprite(-96px, -87px, 109px, 30px);
+@mixin sprite-icon-civio-footer(){
+  @include sprite(0, -108px, 109px, 30px);
 }
 
-@mixin sprite-icon-civio-footer-hover() {
-  @include sprite(-96px, -117px, 109px, 30px);
+@mixin sprite-icon-close(){
+  @include sprite(-162px, -45px, 30px, 30px);
 }
 
-@mixin sprite-icon-close() {
-  @include sprite(0, -117px, 30px, 30px);
+@mixin sprite-icon-eu-footer(){
+  @include sprite(-138px, -75px, 38px, 38px);
 }
 
-@mixin sprite-icon-eu-footer() {
-  @include sprite(0, -147px, 38px, 38px);
+@mixin sprite-icon-location(){
+  @include sprite(-176px, -75px, 18px, 24px);
 }
 
-@mixin sprite-icon-location() {
-  @include sprite(-30px, -117px, 18px, 24px);
+@mixin sprite-icon-logo-footer(){
+  @include sprite(-109px, -113px, 88px, 40px);
 }
 
-@mixin sprite-icon-logo-footer() {
-  @include sprite(-204px, 0, 88px, 40px);
+@mixin sprite-icon-mail(){
+  @include sprite(0, -153px, 21px, 17px);
 }
 
-@mixin sprite-icon-logo-footer-hover() {
-  @include sprite(-204px, -40px, 88px, 40px);
+@mixin sprite-icon-settings(){
+  @include sprite(-176px, -99px, 16px, 12px);
 }
 
-@mixin sprite-icon-mail() {
-  @include sprite(-205px, -80px, 21px, 17px);
+@mixin sprite-icon-story(){
+  @include sprite(-21px, -153px, 22px, 24px);
 }
 
-@mixin sprite-icon-story() {
-  @include sprite(-226px, -80px, 22px, 24px);
+@mixin sprite-icon-visualization(){
+  @include sprite(-43px, -153px, 25px, 24px);
 }
 
-@mixin sprite-icon-visualization() {
-  @include sprite(-248px, -80px, 25px, 24px);
+@mixin sprite-logo(){
+  @include sprite(-198px, 0, 109px, 51px);
+}
+
+@mixin sprite-logo-hover(){
+  @include sprite(-194px, -51px, 109px, 51px);
+}
+
+@mixin sprite-social-icon-facebook(){
+  @include sprite(-197px, -102px, 8px, 16px);
+}
+
+@mixin sprite-social-icon-twitter(){
+  @include sprite(-205px, -102px, 16px, 14px);
 }
