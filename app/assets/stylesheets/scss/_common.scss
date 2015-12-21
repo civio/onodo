@@ -132,6 +132,106 @@ $btn-border-width: 2px;
   color: $state-danger-text !important;
 }
 
+// Dropdown
+
+.dropdown-menu{
+  padding: 0;
+  margin-top: 10px !important;
+  border: none;
+  background: transparent;
+
+  // Add dropdown top arrow
+  &:before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -4px;
+    border-style: solid;
+    border-width: 0 7px 9px 7px;
+    border-color: transparent transparent #fff transparent;
+  }
+  
+  // Align dropdown top arrow
+  &.dropdown-menu-right:before{
+    left: auto;
+    margin-left: 0;
+    right: $grid-gutter-width/2;
+  }
+  &.dropdown-menu-left:before{
+    left: $grid-gutter-width/2;
+    margin-left: 0; 
+  }
+
+  > li{
+
+    > a{
+      font-size: 0.929em;
+      font-weight: 300;
+      padding: $grid-gutter-width/2 20px;
+      background: #fff;
+      border-right: 1px solid #fff;
+      border-left: 1px solid #fff;
+      border-bottom: 1px solid $gray-light;
+
+      &:hover{
+        background: $gray-lighter;
+        border-right-color: $gray-lighter;
+        border-left-color: $gray-lighter;
+      }
+    }
+
+    &:first-child > a{
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    &:last-child > a{
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+}
+
+// Setup Dropdown with brand primary color
+.dropdown-menu-primary{
+
+  &:before{
+    border-color: transparent transparent $brand-primary transparent;
+  }
+
+  > li{
+    > a{
+      color: #fff;
+      background: $brand-primary;
+      border-right-color: $brand-primary;
+      border-left-color: $brand-primary;
+      border-bottom-color: mix( #fff, $brand-primary, 80% );
+
+      &.active{
+        background: mix( $brand-primary, #000, 90% );
+      }
+
+      &:hover,
+      &.active:hover{
+        color: $brand-primary;
+        background: #fff;
+        border-right-color: $brand-primary;
+        border-left-color: $brand-primary;
+      }
+    }
+
+    &:first-child > a{
+      border-top: 1px solid $brand-primary; 
+    }
+    &:last-child > a{
+      border-bottom-color: $brand-primary; 
+    }
+  }
+}
+
 
 // Jumbotron
 

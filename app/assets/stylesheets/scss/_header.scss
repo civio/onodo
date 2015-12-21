@@ -90,6 +90,60 @@
   }
 }
 
+.navbar-right{
+  margin-right: 0;
+  
+  $dropdown-user-picture-size: 28px;
+  $dropdown-user-picture-border: 8px;
+  $dropdown-height: $dropdown-user-picture-size + (2*$dropdown-user-picture-border);
+
+  .dropdown{
+    margin-top: 4px;
+    height: $dropdown-height;
+
+    .user-name{
+      color: $gray;
+      font-size: 0.786em;
+      text-transform: uppercase;
+      vertical-align: top;
+      line-height: $dropdown-height;
+    }
+
+    .user-picture{
+      display: inline-block;
+      width: $dropdown-height;
+      height: $dropdown-height;
+      margin-left: $dropdown-user-picture-border;
+      overflow: hidden;
+      border-radius: $dropdown-user-picture-border+($dropdown-user-picture-size/2);
+      border: $dropdown-user-picture-border solid $gray-lighter;
+
+      > img{
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    #user-dropdown{
+      float: right;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      background: #fff;
+      opacity: 1;
+
+      &:focus{
+        opacity: 0.6;
+      }
+
+      .user-dropdown-icon{
+        margin: $grid-gutter-width/2 auto;
+        text-indent: -9999px;
+        @include sprite-icon-settings();
+      }
+    }
+  }
+}
 
 #contact{
 

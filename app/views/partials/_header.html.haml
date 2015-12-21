@@ -25,15 +25,22 @@
             = link_to "Sign up", new_user_registration_path, class: "btn btn-primary"
         -else
           %li.dropdown
-            %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
-              %i.glyphicon.glyphicon-user
+            %span.user-name
               = current_user.name
-              %span.caret
-              %ul.dropdown-menu{"aria-labelledby" => "user-dropdown"}
-                %li
-                  = link_to "Dashboard", user_path(current_user)
-                %li
-                  = link_to "Settings", user_path(current_user)+'/settings'
-                %li.divider{:role => "separator"}
-                %li
-                  = link_to "Logout", destroy_user_session_path, :method => 'delete'
+            -# TODO!!! Add user picture
+            .user-picture
+              %img{src: "http://lorempixel.com/30/30/"}
+            %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button", :title => "User settings"}
+              %span.user-dropdown-icon
+                User settings
+            %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "user-dropdown"}
+              %li
+                = link_to "Dashboard", user_path(current_user)
+              %li
+                = link_to "Settings", user_path(current_user)+'/settings'
+              %li
+                = link_to "Create visualization", new_visualization_path, :class => 'active'
+              %li
+                = link_to "Create story", new_story_path, :class => 'active'
+              %li
+                = link_to "Logout", destroy_user_session_path, :method => 'delete'
