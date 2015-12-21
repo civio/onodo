@@ -1,10 +1,147 @@
 @import 'bootstrap/variables';
+@import 'bootstrap/mixins';
+@import 'scss/sprites';
 @import '_variables';
 
 .footer{
   position: relative;
-  padding: 30px 0;
+  padding: 10px+$grid-gutter-width 0 $grid-gutter-width;
   z-index: 100;
-  color: #fff;
+  color: $gray-light;
   background: $gray-dark;
+  font-weight: 300;
+
+  .logo-icon,
+  .civio-icon{
+    float: left;
+    margin: $grid-gutter-width/2 $grid-gutter-width 0 0;
+    text-indent: -9999px;
+    opacity: 0.5;
+    @include transition(opacity 0.3s ease-out);
+
+    &:hover{
+      opacity: 1;
+    }
+  }
+
+  .logo-icon{
+    @include sprite-icon-logo-footer();
+  }
+  .civio-icon{
+    margin-top: 20px;
+    @include sprite-icon-civio-footer();
+  }
+  
+  .social-icons{
+    float: left;
+    padding: 0;
+    margin: 0 0 $grid-gutter-width/2 $grid-gutter-width/2;
+  
+    li{
+      list-style: none;
+      float: left;
+      margin: 0 $grid-gutter-width/2 0 0;
+
+      a{
+        text-indent: -9999px;
+        opacity: 0.5;
+        @include transition(opacity 0.3s ease-out);
+
+        &.twitter{
+          @include sprite-social-icon-twitter();
+        }
+        &.facebook{
+          @include sprite-social-icon-facebook();
+        }
+
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  section{
+    min-height: 120px;
+
+    &.bordered{
+      border-right: 1px solid $gray;
+      border-left: 1px solid $gray;
+    }
+
+    > p{
+      font-size: 0.714em;
+
+      strong{
+        font-size: 1.200em;
+        font-weight: normal;
+      }
+    }
+
+    .eu-icon{
+      float: left;
+      margin-right: $grid-gutter-width/2;
+      @include sprite-icon-eu-footer();
+    }
+  }
+
+  ul{
+    &:first-child li{
+      margin-left: $grid-gutter-width;
+    }
+
+    li{
+      list-style: none;
+      font-size: 0.857em;
+      margin-bottom: $grid-gutter-width/2;
+
+      a:hover{
+        text-decoration: none;
+        color: $gray-light;
+      }
+    }
+  }
+
+  a{
+    color: #fff;
+    font-weight: normal;
+  }
+
+  .form-inline{
+    margin-bottom: $grid-gutter-width/2;
+
+    label{
+      font-size: 0.857em;
+      font-weight: normal;
+    }
+
+    .email{
+      border: none;
+      min-width: 160px;
+      height: 28px;
+      margin-left: 6px;
+      padding: 0 $grid-gutter-width/2;
+      border-radius: 14px;
+      color: $gray;
+      line-height: 28px;
+      font-size: 0.714em;
+    }
+
+    .btn-default{
+      font-size: 0.714em;
+      background: transparent;
+      color: #fff;
+      border-color: #fff;
+      margin-left: 6px;
+      padding: 0 $grid-gutter-width/2;
+      min-width: auto;
+      height: $grid-gutter-width;
+      line-height: -2px+$grid-gutter-width;
+
+      &:hover{
+        color: $gray-dark;
+        background: #fff;
+      }
+    }
+  }
 }
