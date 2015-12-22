@@ -9,12 +9,8 @@ Rails.application.routes.draw do
     post 'login' => 'devise/sessions#create', :as => :user_session
     delete 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
   end
-  # Add user profile page, dashboard & settings
-  resources :users, :only => [:show] do
-    collection do
-      get ':id/settings' => 'users#settings'
-    end
-  end
+  # Add user profile page & dashboard
+  resources :users, :only => [:show]
 
   resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do 
     collection do 

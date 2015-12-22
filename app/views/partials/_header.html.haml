@@ -37,7 +37,7 @@
               %li
                 = link_to "Dashboard", user_path(current_user)
               %li
-                = link_to "Settings", user_path(current_user)+'/settings'
+                = link_to "Settings", edit_user_registration_path(current_user)
               %li
                 = link_to "Create visualization", new_visualization_path, :class => 'active'
               %li
