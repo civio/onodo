@@ -7,5 +7,6 @@ class User < ActiveRecord::Base
   has_many :visualizations, foreign_key: :author_id
   has_many :stories, foreign_key: :author_id
 
+  validates :name, presence: true
   validates :terms_of_service, acceptance: true
 end
