@@ -43,6 +43,12 @@
     .btn{
       margin: 0 $grid-gutter-width/2;
     }
+    .btn-primary{
+      border-color: $btn-primary-color;
+      &:hover{
+        border-color: $btn-primary-color;
+      }
+    }
   }
 
   // Features
@@ -94,7 +100,7 @@
       .feature-icon-preview{
         @include sprite-home-icon-preview();
         // Alighn view icon
-        background-position: 0 -53px;
+        background-position: -42px -53px;
         height: 41px;
       }
       .feature-icon-story{
