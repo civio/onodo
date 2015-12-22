@@ -46,15 +46,35 @@ $btn-border-width: 2px;
 
 .btn-primary{
   border-color: $btn-primary-bg;
-  &:hover{
+  &:hover,
+  &:focus{
     color: $btn-primary-bg;
     background: $btn-primary-color;
     border-color: $btn-primary-bg;
-}
+  }
 }
 
 .btn-invert{
   @include button-variant($btn-invert-color, $btn-invert-bg, $btn-invert-border);
+  border-color: $btn-invert-border;
+  &:hover,
+  &:focus,
+  &:active:focus{
+    color: $btn-invert-bg;
+    background: $btn-invert-color;
+    border-color: $btn-invert-border;
+  }
+}
+
+.btn-danger{
+  @include button-variant($btn-danger-bg, $btn-danger-color, $btn-danger-bg);
+  border-color: $btn-danger-bg;
+  &:hover,
+  &:focus{
+    color: $btn-danger-color;
+    background: $btn-danger-bg;
+    border-color: $btn-danger-bg;
+  }
 }
 
 .btn-transparent{
@@ -65,7 +85,8 @@ $btn-border-width: 2px;
   background: $btn-transparent-bg;
   @include transition( color 0.3s ease-out );
 
-  &:hover{
+  &:hover,
+  &:focus{
     color: $text-color;
   }
 }
@@ -246,11 +267,20 @@ $btn-border-width: 2px;
 
 // Form
 
+.form-group > p{
+  color: $gray-semi-light;
+  font-size: 12px;
+}
+
 label{
   font-size: 0.857em;
   font-weight: normal;
   text-transform: uppercase;
   margin-bottom: $grid-gutter-width/2;
+
+  &.lowcase{
+    text-transform: none;
+  }
 }
 
 .radio, .checkbox{
@@ -268,20 +298,20 @@ label{
   color: $gray-semi-light;
   font-size: 12px;
   font-weight: normal;
+  @include box-shadow(none);
 
   &:focus{
     border-color: $brand-primary;
   }
 }
 
-form .actions{
-  margin-top: $grid-gutter-width;
-
-  .pull-right{
-    font-size: 12px;
-    padding: 8px 0;
-  }
+.input-group-addon{
+  font-size: 12px;
+  color: $gray-semi-light;
+  border-color: $gray-lighter;
+  background: $gray-lighter;
 }
+
 
 // Custom components
 // --------------------

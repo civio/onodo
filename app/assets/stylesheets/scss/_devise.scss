@@ -1,8 +1,7 @@
 @import 'bootstrap/variables';
 
 // Signup
-.signup,
-.login{
+.devise-page{
 
   .page-header{
     text-align: center;
@@ -21,6 +20,15 @@
     > p > a{
       font-size: 12px;
     }
+
+    .actions{
+      margin-top: $grid-gutter-width;
+
+      .devise-links{
+        font-size: 12px;
+        padding: 8px 0;
+      }
+    }
   }
 
   .form-group{
@@ -30,5 +38,4 @@
       font-style: normal;
     }
   }
-
 }
