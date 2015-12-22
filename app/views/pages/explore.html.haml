@@ -1,0 +1,11 @@
+.container
+  .page-header
+    %h2 Explore
+    %p.lead Take a look to the visualizations & stories Onodo users are creating
+
+.explore-navbar.container
+  = render 'partials/items_preview_header', :visualizations => @visualizations
+
+.page-items
+  .container
+    = render 'partials/items_preview_list', :items => @items, :visualizations => @visualizations
