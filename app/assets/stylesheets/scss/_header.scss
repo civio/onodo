@@ -159,15 +159,75 @@
     h3{
       color: mix( $brand-primary, white, 44% );
       margin: 0 0 $grid-gutter-width/2;
-      font-weight: 100;
+      font-weight: 300;
     }
 
     p{
       font-size: 0.857em;
     }
 
+    a{
+      color: mix(#fff, $brand-primary, 75%);
+      font-weight: normal;
+      &:hover{
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+
+    strong{
+      font-weight: normal;
+    }
+
     .border{
       border-right: 1px solid mix( $brand-primary, white, 80% );
+    }
+
+    .icon-email{
+      margin-top: 8px;
+      margin-bottom: $grid-gutter-width/2;
+      @include sprite-icon-mail();
+    }
+    .icon-maps{
+      margin-top: 2px;
+      margin-bottom: $grid-gutter-width/2;
+      @include sprite-icon-location();
+    }
+
+    .social-links{
+      padding: 0;
+      margin-top: 42px;
+
+      li{
+        float: left;
+        margin-right: $grid-gutter-width/2;
+
+        a{
+          display: block;
+          width: 2+$grid-gutter-width;
+          height: 2+$grid-gutter-width;
+          border-radius: 1+($grid-gutter-width/2);
+          border: 2px solid #fff;
+          text-indent: -9999px;
+          opacity: 0.5;
+          @include transition(opacity 0.3s ease-out);
+
+          &.twitter .icon{
+            margin-top: 7px;
+            margin-left: 6px;
+            @include sprite-social-icon-twitter();
+          }
+          &.facebook .icon{
+            margin-top: 6px;
+            margin-left: 10px;
+            @include sprite-social-icon-facebook();
+          }
+
+          &:hover{
+            opacity: 1;
+          }
+        }
+      }
     }
 
     .close{

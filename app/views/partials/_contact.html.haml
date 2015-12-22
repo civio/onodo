@@ -8,26 +8,30 @@
         %row
           .col-sm-5.border
             %p
+              %span.icon-email
               %a{:href => "mailto:hello@onodo.org"}
                 hello@onodo.org
           .col-sm-7.border
             %p
+              %span.icon-maps
               %strong Fundación Ciudadana Civio
               %br
               C/ Sebastián Elcano 32
               %br
               28003 Madrid
             %p
-              %a{:href => "#", "title" => "View in Google Maps"} 
-              View in Google Maps
+              %a{href: '#', title: 'View in Google Maps', target: '_blank'} 
+                View in Google Maps
       .col-sm-4
         %ul.social-links
           %li
             %a.twitter{:href => '#'}
-              Twitter
+              %span.icon
+                Twitter
           %li
             %a.facebook{:href => '#'}
-              Facebook
+              %span.icon
+                Facebook
         
     %a.close{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
       %span{"aria-hidden" => "true"}
