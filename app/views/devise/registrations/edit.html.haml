@@ -4,6 +4,17 @@
       .page-header
         %h2 Settings
         %p.lead Edit your profile settings
+      .profile-picture.media
+        .media-left
+          %img.img-circle.media-object{src: "http://placehold.it/130x130"}
+        .media-body
+          .media-heading
+            Profile avatar
+          %p
+            Your avatar photo should be about 500px wide 500px tall and under 1MB
+          %a.btn.btn-default.btn-primary{href: "#"}
+            Upload Photo
+
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
         = devise_error_messages!
         .form-group
