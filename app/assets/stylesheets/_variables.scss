@@ -5,6 +5,7 @@ $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
 $gray-dark:              #4d4d4d; // lighten($gray-base, 20%) !default;   // #333
 $gray:                   #686868; //lighten($gray-base, 33.5%) !default; // #555
+$gray-semi-light:        #909090;
 $gray-light:             #d5d5d5;  //lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           #f2f2f2;  //lighten($gray-base, 93.5%) !default; // #eee
 $gray-lightest:          #fafafa;

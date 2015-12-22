@@ -44,10 +44,13 @@ $btn-border-width: 2px;
   @include btn();
 }
 
-.btn-primary:hover{
-  color: $btn-primary-bg;
-  background: $btn-primary-color;
+.btn-primary{
   border-color: $btn-primary-bg;
+  &:hover{
+    color: $btn-primary-bg;
+    background: $btn-primary-color;
+    border-color: $btn-primary-bg;
+}
 }
 
 .btn-invert{
@@ -240,6 +243,45 @@ $btn-border-width: 2px;
   border-radius: 0;
 }
 
+
+// Form
+
+label{
+  font-size: 0.857em;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-bottom: $grid-gutter-width/2;
+}
+
+.radio, .checkbox{
+  margin-bottom: $grid-gutter-width/2;
+  margin-top: $grid-gutter-width/2;
+  
+  label{
+    text-transform: none;
+  }
+}
+
+.form-control{
+  border-color: $gray-lighter;
+  border-width: 2px;
+  color: $gray-semi-light;
+  font-size: 12px;
+  font-weight: normal;
+
+  &:focus{
+    border-color: $brand-primary;
+  }
+}
+
+form .actions{
+  margin-top: $grid-gutter-width;
+
+  .pull-right{
+    font-size: 12px;
+    padding: 8px 0;
+  }
+}
 
 // Custom components
 // --------------------

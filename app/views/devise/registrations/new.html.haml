@@ -1,8 +1,9 @@
-.container
+.signup.container
   .row
-    .col-sm-8
-      %h2 Sign up for Onodo
-      %p.lead Create your relationships visualizations & tell meaningful stories through them
+    .col-sm-6.col-sm-offset-3
+      .page-header
+        %h2 Sign Up
+        %p.lead Create your relationships visualizations & tell meaningful stories through them
       = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
         = devise_error_messages!
         .form-group
@@ -27,5 +28,5 @@
                 terms & conditions
         .actions
           = f.submit "Sign up", class: "btn btn-default btn-primary"
-    .col-sm-4
-      = render "devise/shared/links"
+          .pull-right
+            = render "devise/shared/links"
