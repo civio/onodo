@@ -81,6 +81,15 @@ $btn-border-radius-small:        $border-radius-small !default;
 // Table
 
 // Tooltip
+//** Tooltip text color
+$tooltip-color:               $gray;
+//** Tooltip background color
+$tooltip-bg:                  #e8e8e8;
+$tooltip-opacity:             1;
+//** Tooltip arrow width
+$tooltip-arrow-width:         6px;
+//** Tooltip arrow color
+$tooltip-arrow-color:         $tooltip-bg;
 
 // Styles
 

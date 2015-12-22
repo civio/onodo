@@ -19,12 +19,13 @@
       %input.form-control{:type => "text"}
       %span.input-group-btn
         %button.btn.btn-default{:type => "button"}
-          %i.glyphicon.glyphicon-search
-  -# TODO!!! Add tooltips with info  to each button   
+          %i.glyphicon.glyphicon-search  
   .explore-orderby.pull-right
     Order by
-    %a.active{href: '#', title: 'Popularity'} Popularity
-    %a{href: '#', title: 'Most recent'} Most recent
+    %a.active{href: '#', title: 'The popularity is based on the number of embeded & social shares', data: {toggle: 'tooltip', placement: 'bottom'}}
+      Popularity
+    %a{href: '#', title: 'Most recent items first', data: {toggle: 'tooltip', placement: 'bottom'}}
+      Most recent
 
 .page-items
   .container

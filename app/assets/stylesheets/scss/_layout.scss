@@ -225,7 +225,8 @@
 
   .carousel-control{
     display: inline-block;
-    position: static;
+    position: relative;
+    top: -6px;
     width: $grid-gutter-width;
     height: $grid-gutter-width;
     background: transparent;
@@ -371,6 +372,16 @@
   &.gallery{
     .item-preview{
       height: 400px;
+    }
+  }
+
+  // Explore tooltips
+  .tooltip{
+    
+    .tooltip-inner{
+      text-align: left;
+      border-radius: 5px;
+      padding: $grid-gutter-width/2;
     }
   }
 }

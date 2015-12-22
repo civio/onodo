@@ -60,6 +60,8 @@
 	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
 	    appVisualizationShow.render();
 	    return $(window).resize(appVisualizationShow.resize);
+	  } else if ($('body.pages.explore_stories').length > 0 || $('body.pages.explore_visualizations').length > 0) {
+	    return $('[data-toggle="tooltip"]').tooltip();
 	  }
 	});
 
