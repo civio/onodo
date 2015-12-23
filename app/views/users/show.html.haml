@@ -1,33 +1,39 @@
-.user-profile.container
-  .media
-    .media-left
-      %img.media-object.img-circle{src: 'http://placehold.it/64x64'}
-    .media-body
-      %h2= @user.name
-      -if defined? @user.website
-        %p
-          %a{href: @user.website, target: '_blank'}
-            = @user.website
-      -if !@user.twitter.blank? or !@user.facebook.blank?
-        %ul.user-social-networks
-          -if !@user.twitter.blank?
-            %li
-              %a.twitter{href: 'https://twitter.com/'+@user.twitter, target: '_blank'}
-                %span.icon
-                  = @user.name + ' at Twitter'
-          -if !@user.facebook.blank?
-            %li
-              %a.facebook{href: 'https://www.facebook.com/'+@user.facebook, target: '_blank'}
-                %span.icon
-                  = @user.name + ' at Facebook'
+.user-dashboard
+  .container
+    .user-info.media
+      .media-left
+        %img.media-object.img-circle{src: 'http://placehold.it/64x64'}
+      .media-body
+        %h2= @user.name
+        -if defined? @user.website
+          %p
+            %a{href: @user.website, target: '_blank'}
+              = @user.website
+        -if !@user.twitter.blank? or !@user.facebook.blank?
+          %ul.user-social-networks
+            -if !@user.twitter.blank?
+              %li
+                %a.twitter{href: 'https://twitter.com/'+@user.twitter, target: '_blank'}
+                  %span.icon
+                    = @user.name + ' at Twitter'
+            -if !@user.facebook.blank?
+              %li
+                %a.facebook{href: 'https://www.facebook.com/'+@user.facebook, target: '_blank'}
+                  %span.icon
+                    = @user.name + ' at Facebook'
 
   .explore-navbar.container
     = render 'partials/items_preview_header', :visualizations => @visualizations
 
-  .page-items
+  .dashboard-items
     .container
       .row
-        %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
-        %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
-        %a.btn.btn-default{href: user_path(@user)+'/settings'} Edit your settings
+        .col-sm-10.col-sm-offset-1
+          .user-actions.row
+            .col-sm-4.text-center
+              %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
+            .col-sm-4.text-center
+              %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
+            .col-sm-4.text-center
+              %a.btn.btn-default{href: user_path(@user)+'/settings'} Edit your settings
       = render 'partials/items_preview_list', :items => @items, :visualizations => @visualizations

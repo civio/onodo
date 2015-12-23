@@ -8,7 +8,7 @@
       .item-author-picture
         %img{src: "http://lorempixel.com/60/60/"}
   -if item.class.to_s.downcase == 'story'
-    - if (defined? large)
+    - if defined? large
       %img.item-picture{src: "http://lorempixel.com/1140/400/"}
     - else
       %img.item-picture{src: "http://lorempixel.com/250/300/"}

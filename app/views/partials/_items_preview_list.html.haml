@@ -1,14 +1,13 @@
-.row
-  -unless @items.blank?
-    - @items.each do |item| 
+.items-preview-list.row
+  -unless items.blank?
+    - items.each do |item| 
       .col-sm-6
         = render 'partials/item_preview', :item => item
-    -if defined? @paginate
       .col-sm-12.text-center
-        = paginate @items
+        = paginate items
   -else
     .text-center
-    - if defined? @visualizations
+    - if defined? visualizations
       %p
         You haven't create any visualization yet
       %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}

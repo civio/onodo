@@ -13,13 +13,13 @@
     .carousel-nav
       .carousel-nav-container
         %a.left.carousel-control{href: "#items-carousel", role: "button", data: {slide: "prev"}}
-          %span.glyphicon.glyphicon-chevron-left{aria: {hidden: "true"}}
+          %span.left-icon{aria: {hidden: "true"}}
           %span.sr-only
             Previous
         %ol.carousel-indicators
           - 0.upto(carousel_iterations) do |i|
             %li{class: (i != 0) ? '' : 'active', data: {target: '#items-carousel', slide: {to: i}}}
         %a.right.carousel-control{href: "#items-carousel", role: "button", data: {slide: "next"}}
-          %span.glyphicon.glyphicon-chevron-right{aria: {hidden: "true"}}
+          %span.right-icon{aria: {hidden: "true"}}
           %span.sr-only
             Next

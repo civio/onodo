@@ -1,22 +1,23 @@
-- if defined? @visualizations
-  %a.btn.btn-default.btn-transparent{ href: '/explore/stories' }
-    Stories
-  .btn.btn-default.btn-primary
-    Visualizations
-- else
-  .btn.btn-default.btn-primary
-    Stories
-  %a.btn.btn-default.btn-transparent{ href: '/explore/visualizations' }
-    Visualizations
-.explore-search.pull-right
-  .input-group
-    %input.form-control{:type => "text"}
-    %span.input-group-btn
-      %button.btn.btn-default{:type => "button"}
-        %i.glyphicon.glyphicon-search  
-.explore-orderby.pull-right
-  Order by
-  %a.active{href: '#', title: 'The popularity is based on the number of embeded & social shares', data: {toggle: 'tooltip', placement: 'bottom'}}
-    Popularity
-  %a{href: '#', title: 'Most recent items first', data: {toggle: 'tooltip', placement: 'bottom'}}
-    Most recent
+.items-preview-header
+  - if defined? visualizations
+    %a.btn.btn-default.btn-transparent{ href: '/explore/stories' }
+      Stories
+    .btn.btn-default.btn-primary
+      Visualizations
+  - else
+    .btn.btn-default.btn-primary
+      Stories
+    %a.btn.btn-default.btn-transparent{ href: '/explore/visualizations' }
+      Visualizations
+  .items-search.pull-right
+    .input-group
+      %input.form-control{:type => "text"}
+      %span.input-group-btn
+        %button.btn.btn-default{:type => "button"}
+          %i.glyphicon.glyphicon-search  
+  .items-orderby.pull-right
+    Order by
+    %a.active{href: '#', title: 'The popularity is based on the number of embeded & social shares', data: {toggle: 'tooltip', placement: 'bottom'}}
+      Popularity
+    %a{href: '#', title: 'Most recent items first', data: {toggle: 'tooltip', placement: 'bottom'}}
+      Most recent
