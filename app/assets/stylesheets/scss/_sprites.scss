@@ -8,78 +8,134 @@
   overflow: hidden;
 }
 
+@mixin sprite-dahsboard-icon-story(){
+  @include sprite(0, 0, 47px, 55px);
+}
+
+@mixin sprite-dahsboard-icon-user(){
+  @include sprite(-47px, 0, 49px, 50px);
+}
+
+@mixin sprite-dahsboard-icon-visualization(){
+  @include sprite(-96px, 0, 48px, 44px);
+}
+
 @mixin sprite-home-icon-collaboration(){
-  @include sprite(0, 0, 54px, 53px);
+  @include sprite(-144px, 0, 54px, 53px);
 }
 
 @mixin sprite-home-icon-creation(){
-  @include sprite(-54px, 0, 108px, 60px);
+  @include sprite(-47px, -53px, 108px, 60px);
 }
 
 @mixin sprite-home-icon-information(){
-  @include sprite(0, -60px, 42px, 42px);
+  @include sprite(-155px, -53px, 42px, 42px);
 }
 
 @mixin sprite-home-icon-preview(){
-  @include sprite(-42px, -60px, 53px, 34px);
+  @include sprite(-155px, -95px, 53px, 34px);
 }
 
 @mixin sprite-home-icon-share(){
-  @include sprite(-162px, 0, 36px, 45px);
+  @include sprite(0, -129px, 36px, 45px);
 }
 
 @mixin sprite-home-icon-story(){
-  @include sprite(-95px, -60px, 43px, 48px);
+  @include sprite(-36px, -129px, 43px, 48px);
+}
+
+@mixin sprite-icon-carousel-left(){
+  @include sprite(-198px, 0, 8px, 13px);
+}
+
+@mixin sprite-icon-carousel-left-hover(){
+  @include sprite(-206px, 0, 8px, 13px);
+}
+
+@mixin sprite-icon-carousel-right(){
+  @include sprite(-214px, 0, 8px, 13px);
+}
+
+@mixin sprite-icon-carousel-right-hover(){
+  @include sprite(-198px, -13px, 8px, 13px);
 }
 
 @mixin sprite-icon-civio-footer(){
-  @include sprite(0, -108px, 109px, 30px);
+  @include sprite(-79px, -129px, 109px, 30px);
 }
 
 @mixin sprite-icon-close(){
-  @include sprite(-162px, -45px, 30px, 30px);
+  @include sprite(-198px, -26px, 20px, 20px);
+}
+
+@mixin sprite-icon-close-white(){
+  @include sprite(0, -95px, 30px, 30px);
 }
 
 @mixin sprite-icon-eu-footer(){
-  @include sprite(-138px, -75px, 38px, 38px);
+  @include sprite(-79px, -159px, 38px, 38px);
 }
 
 @mixin sprite-icon-location(){
-  @include sprite(-176px, -75px, 18px, 24px);
+  @include sprite(-198px, -46px, 18px, 24px);
 }
 
 @mixin sprite-icon-logo-footer(){
-  @include sprite(-109px, -113px, 88px, 40px);
+  @include sprite(-117px, -159px, 88px, 40px);
 }
 
 @mixin sprite-icon-mail(){
-  @include sprite(0, -153px, 21px, 17px);
+  @include sprite(0, -70px, 21px, 17px);
+}
+
+@mixin sprite-icon-pencil(){
+  @include sprite(-21px, -70px, 20px, 20px);
+}
+
+@mixin sprite-icon-pencil-circle(){
+  @include sprite(-188px, -129px, 28px, 28px);
+}
+
+@mixin sprite-icon-plus-circle(){
+  @include sprite(-222px, 0, 29px, 29px);
+}
+
+@mixin sprite-icon-preview(){
+  @include sprite(-218px, -29px, 28px, 18px);
 }
 
 @mixin sprite-icon-settings(){
-  @include sprite(-176px, -99px, 16px, 12px);
+  @include sprite(-216px, -47px, 16px, 12px);
 }
 
 @mixin sprite-icon-story(){
-  @include sprite(-21px, -153px, 22px, 24px);
+  @include sprite(-216px, -59px, 22px, 24px);
 }
 
 @mixin sprite-icon-visualization(){
-  @include sprite(-43px, -153px, 25px, 24px);
+  @include sprite(-208px, -83px, 25px, 24px);
 }
 
 @mixin sprite-logo(){
-  @include sprite(-198px, 0, 109px, 51px);
+  @include sprite(0, -199px, 109px, 51px);
 }
 
 @mixin sprite-logo-hover(){
-  @include sprite(-194px, -51px, 109px, 51px);
+  @include sprite(-109px, -199px, 109px, 51px);
 }
 
 @mixin sprite-social-icon-facebook(){
-  @include sprite(-197px, -102px, 8px, 16px);
+  @include sprite(-238px, -47px, 8px, 16px);
+}
+
+@mixin sprite-social-icon-facebook-brand(){
+  @include sprite(-238px, -63px, 8px, 16px);
 }
 
 @mixin sprite-social-icon-twitter(){
-  @include sprite(-205px, -102px, 16px, 14px);
+  @include sprite(-233px, -83px, 16px, 14px);
+}
+
+@mixin sprite-social-icon-twitter-brand(){
+  @include sprite(-30px, -97px, 16px, 14px);
 }
