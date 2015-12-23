@@ -27,13 +27,14 @@
 
   .dashboard-items
     .container
-      .row
-        .col-sm-10.col-sm-offset-1
-          .user-actions.row
-            .col-sm-4.text-center
-              %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
-            .col-sm-4.text-center
-              %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
-            .col-sm-4.text-center
-              %a.btn.btn-default{href: user_path(@user)+'/settings'} Edit your settings
+      -if @user == current_user
+        .row
+          .col-sm-10.col-sm-offset-1
+            .user-actions.row
+              .col-sm-4.text-center
+                %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
+              .col-sm-4.text-center
+                %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
+              .col-sm-4.text-center
+                %a.btn.btn-default{href: user_path(@user)+'/settings'} Edit your settings
       = render 'partials/items_preview_list', :items => @items, :visualizations => @visualizations
