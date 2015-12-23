@@ -1,15 +1,140 @@
-.user-profile{
+@import 'bootstrap/variables';
+@import '_variables';
+@import 'scss/sprites';
 
-  .media{
-    margin: 30px 0;
+// Signup
+.devise-page{
+
+  .page-header{
+    text-align: center;
+    margin-bottom: 1.5*$grid-gutter-width;
+
+    .lead{
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
-  .media-left{
-    padding-right: 30px;
+  form{
+    margin-bottom: 3*$grid-gutter-width;
+
+    > p > a{
+      font-size: 12px;
+    }
+
+    .actions{
+      margin-top: $grid-gutter-width;
+
+      .devise-links{
+        font-size: 12px;
+        padding: 8px 0;
+      }
+    }
+  }
+
+  .form-group{
+    em{
+      font-size: 12px;
+      font-weight: 300;
+      font-style: normal;
+    }
+  }
+}
+
+.user-settings{
+  .profile-picture{
+    margin-bottom: 1.5*$grid-gutter-width;
+
+    .media-left{
+      padding-right: 1.5*$grid-gutter-width;
+    }
+  
+    .media-body{
+      font-size: 12px;
+
+      .media-heading{
+        margin: $grid-gutter-width/2 0;
+        text-transform: uppercase;
+      }
+
+      > p{
+        color: $gray-semi-light;
+        margin-right: $grid-gutter-width/2;
+        margin-bottom: $grid-gutter-width/2;
+      }
+    }
+  }
+}
+
+.user-dashboard{
+
+  .user-info{
+    margin: $grid-gutter-width 0 2*$grid-gutter-width;
+
+    .media-left{
+      padding-right: $grid-gutter-width;
+    }
+
+    .media-object{
+      border: 20px solid $gray-lighter;
+    }
+
+    .media-body > p{
+      margin-bottom: $grid-gutter-width/2;
+
+      > a{
+        color: $gray-semi-light;
+
+        &:hover{
+          color: $brand-primary;
+          text-decoration: none;
+        }
+      }
+    }
   }
 
   h2{
+    font-size: 3em;
     font-weight: 300;
-    margin: 10px 0;
+    margin: $grid-gutter-width/2 0 8px;
+  }
+
+  .user-social-networks{
+    padding: 0;
+    
+    li{
+      float: left;
+      margin-right: $grid-gutter-width/2;
+
+      a{
+        display: block;
+        width: 32px;
+        height: 32px;
+        border-radius: 16px;
+        border: 2px solid $brand-primary;
+        text-indent: -9999px;
+        
+        &.twitter .icon{
+          margin-top: 7px;
+          margin-left: 6px;
+          @include sprite-social-icon-twitter-brand();
+        }
+        &.facebook .icon{
+          margin-top: 6px;
+          margin-left: 10px;
+          @include sprite-social-icon-facebook-brand();
+        }
+      }
+     }
+  }
+
+  .user-actions{
+    margin-bottom: 2*$grid-gutter-width;
+  }
+
+  .dashboard-items{
+    background: $gray-lighter;
+    padding: 2*$grid-gutter-width 0;
   }
 }
