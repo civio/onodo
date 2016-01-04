@@ -1,5 +1,7 @@
 // Setup variables
 
+
+
 // Colors
 $gray-base:              #000 !default;
 $gray-darker:            lighten($gray-base, 13.5%) !default; // #222
@@ -9,6 +11,11 @@ $gray-semi-light:        #909090;
 $gray-light:             #d5d5d5;  //lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           #f2f2f2;  //lighten($gray-base, 93.5%) !default; // #eee
 $gray-lightest:          #fafafa;
+
+$gray-blue-dark:         #c1c4c8;
+$gray-blue:              #d3d7db;
+$gray-blue-light:        #dfe3e8;
+
 
 $brand-primary:          #227eff;
 // $brand-success:         #5cb85c !default;

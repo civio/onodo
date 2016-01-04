@@ -4,6 +4,7 @@ App.VisualizationShow = require './visualization-show.js'
 App.VisualizationEdit = require './visualization-edit.js'
 
 $(document).ready ->
+
   # /visualizations/:id/edit
   if $('body.visualizations.edit').length > 0
     appVisualizationEdit = new App.VisualizationEdit $('body').data('id')
@@ -18,3 +19,4 @@ $(document).ready ->
   else if $('body.pages.explore_stories').length > 0 || $('body.pages.explore_visualizations').length > 0
     # Activate tooltips
     $('[data-toggle="tooltip"]').tooltip()
+   

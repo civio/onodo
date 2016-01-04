@@ -23,17 +23,15 @@ class VisualizationShow
     # Setup Views 
     @visualizationGraph = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
     # Setup Table Selector
-    @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
+    $('#visualization-table-selector > li > a').click @updateTable
 
   updateTable: (e) =>
     e.preventDefault()
-    if $(e.target).hasClass('active')
+    if $(e.target).parent().hasClass('active')
       return
-    @$tableSelector
-      .filter '.active'
-      .removeClass 'active btn-primary'
-      .addClass 'btn-default'
-    $(e.target).addClass 'active btn-primary'
+    # Show tab
+    $(e.target).tab('show')
+    # Update table
     if $(e.target).attr('href') == '#nodes'
       $('.visualization-table-nodes').show()
       $('.visualization-table-relations').hide()

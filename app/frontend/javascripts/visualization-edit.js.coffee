@@ -25,7 +25,7 @@ class VisualizationEdit
     @visualizationTableRelations  = new VisualizationTableRelations {collection: @relations}
     @visualizationGraph           = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
     # Setup Table Selector
-    @$tableSelector = $('#visualization-table-selector .btn').click @updateTable
+    $('#visualization-table-selector > li > a').click @updateTable
     
 
   setupAffix: ->
@@ -35,14 +35,12 @@ class VisualizationEdit
 
   updateTable: (e) =>
     e.preventDefault()
-    if $(e.target).hasClass('active')
+    if $(e.target).parent().hasClass('active')
       return
     console.log('updateTable', e)
-    @$tableSelector
-      .filter '.active'
-      .removeClass 'active btn-primary'
-      .addClass 'btn-default'
-    $(e.target).addClass 'active btn-primary'
+    # Show tab
+    $(e.target).tab('show')
+    # Update table
     if $(e.target).attr('href') == '#nodes'
       @visualizationTableRelations.hide()
       @visualizationTableNodes.show()

@@ -109,16 +109,15 @@
 	        relations: this.relations
 	      }
 	    });
-	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
+	    $('#visualization-table-selector > li > a').click(this.updateTable);
 	  }
 
 	  VisualizationShow.prototype.updateTable = function(e) {
 	    e.preventDefault();
-	    if ($(e.target).hasClass('active')) {
+	    if ($(e.target).parent().hasClass('active')) {
 	      return;
 	    }
-	    this.$tableSelector.filter('.active').removeClass('active btn-primary').addClass('btn-default');
-	    $(e.target).addClass('active btn-primary');
+	    $(e.target).tab('show');
 	    if ($(e.target).attr('href') === '#nodes') {
 	      $('.visualization-table-nodes').show();
 	      return $('.visualization-table-relations').hide();
@@ -43021,7 +43020,7 @@
 	        relations: this.relations
 	      }
 	    });
-	    this.$tableSelector = $('#visualization-table-selector .btn').click(this.updateTable);
+	    $('#visualization-table-selector > li > a').click(this.updateTable);
 	  }
 
 	  VisualizationEdit.prototype.setupAffix = function() {
@@ -43034,12 +43033,11 @@
 
 	  VisualizationEdit.prototype.updateTable = function(e) {
 	    e.preventDefault();
-	    if ($(e.target).hasClass('active')) {
+	    if ($(e.target).parent().hasClass('active')) {
 	      return;
 	    }
 	    console.log('updateTable', e);
-	    this.$tableSelector.filter('.active').removeClass('active btn-primary').addClass('btn-default');
-	    $(e.target).addClass('active btn-primary');
+	    $(e.target).tab('show');
 	    if ($(e.target).attr('href') === '#nodes') {
 	      this.visualizationTableRelations.hide();
 	      return this.visualizationTableNodes.show();

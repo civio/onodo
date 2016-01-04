@@ -207,18 +207,71 @@
   }
 
   .visualization-table-header{
-    padding: 15px 0;
-    height: 64px;
-    background: mix( $gray-light, $gray-lighter, 40% );
+    //padding: 15px 0;
+    //height: 64px;
+    //background: mix( $gray-light, $gray-lighter, 40% );
+
+    .nav-tabs{
+      border: none;
+
+      > li{
+        margin-right: $grid-gutter-width/3;
+
+        > a{
+          font-size: 0.786em;
+          text-transform: uppercase;
+          border: 2px solid $brand-primary;
+          border-bottom: none;
+          border-radius: 6px 6px 0 0;
+          min-width: 120px;
+          text-align: center;
+          padding: 12px;
+
+          &:hover{
+            color: $brand-primary;
+            background: mix( $gray-blue-light, white, 50% );
+            @include transition( background 0.3s ease-out );
+          }
+        }
+      }
+
+      > li.active > a, 
+      > li.active > a:hover, 
+      > li.active > a:focus{
+        color: $brand-primary;
+        background: $gray-blue-light;
+        border-color: $gray-blue-light;
+      }
+    }
   }
 
-  thead{
-    background-color: $gray;
-    color: white;
+  .tab-content{
+    clear: both;
+    float: none;
+  }
 
-    th{
+  .table{
+    color: $gray;
+    font-size: 0.857em;
+
+    > thead > tr > th, 
+    > thead > tr > td, 
+    > tbody > tr > th, 
+    > tbody > tr > td, 
+    > tfoot > tr > th, 
+    > tfoot > tr > td{
+      padding: $grid-gutter-width/3;
+    }
+
+    > thead > tr > th{
+      color: $gray;
       text-transform: uppercase;
       font-weight: normal;
+      background-color: $gray-blue-light;
+      border: none;
+    }
+    > tbody{
+      font-weight: 300;
     }
   }
 }

@@ -1,27 +1,28 @@
 / data offset top: 74 (viz-graph-header) + 500 (viz-graph)
 .visualization-table.container-fluid
-  .visualization-table-header.row
-    .col-sm-4
-      .btn-toolbar
-        #visualization-table-selector.btn-group{ role: "group" }
-          %a.btn.btn-primary.active{ :href => "#nodes", type: "button" } Nodes
-          %a.btn.btn-default{ :href => "#relationships", type: "button" } Relationships
-        %button#btn-visualization-preview.btn.btn-default{ type: "button" }
-          %i.glyphicon.glyphicon-eye-open
-          Preview
-    .col-sm-8
-      .btn-toolbar.pull-right{ role: "group" }
-        %button.btn.btn-default{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
-          %i.glyphicon.glyphicon-option-horizontal
-          Add Node
-        %button.btn.btn-default{ type: "button" }
-          %i.glyphicon.glyphicon-option-vertical
-          Add Columns
-        %button.btn.btn-default{ type: "button" }
-          %i.glyphicon.glyphicon-flash
-          Network Analysis
 
-  .visualization-table-nodes
-  .visualization-table-relations.hide
+  .visualization-table-header
+    %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
+      %li.active{ role: "presentation" }
+        %a{ href: "#nodes", role: "tab", "data-toogle": "tab" } Nodes
+      %li{ role: "presentation" }
+        %a{ href: "#relations", role: "tab", "data-toogle": "tab" } Relationships
+    .btn-toolbar.pull-right{ role: "group" }
+      %button#btn-visualization-preview.btn.btn-default{ type: "button" }
+        %i.glyphicon.glyphicon-eye-open
+        Preview
+      %button.btn.btn-default{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
+        %i.glyphicon.glyphicon-option-horizontal
+        Add Node
+      %button.btn.btn-default{ type: "button" }
+        %i.glyphicon.glyphicon-option-vertical
+        Add Columns
+      %button.btn.btn-default{ type: "button" }
+        %i.glyphicon.glyphicon-flash
+        Network Analysis
+
+  .tab-content
+    #nodes.visualization-table-nodes
+    #relations.visualization-table-relations.hide
 
 /  = react_component 'Nodes', { data: @nodes }
