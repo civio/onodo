@@ -17,9 +17,5 @@ class UsersController < ApplicationController
     @items = @items.page(params[:page]).per(2)
     render :show
   end
-
-  # GET /users/:id/settings
-  def settings
-
-  end
+  
 end

@@ -29,12 +29,27 @@
     .container
       -if @user == current_user
         .row
-          .col-sm-10.col-sm-offset-1
+          .col-sm-8.col-sm-offset-2
             .user-actions.row
               .col-sm-4.text-center
-                %a.btn.btn-default.btn-primary{href: new_visualization_path} Create a Visualization
+                %a.btn-dashboard.btn-dashboard-visualization{href: new_visualization_path}
+                  .btn-dashboard-icon
+                    .btn-dashboard-icon-detail
+                    .btn-dashboard-icon-sprite
+                  .btn-dashboard-title
+                    Create New Visualization
               .col-sm-4.text-center
-                %a.btn.btn-default.btn-primary{href: new_story_path} Create a Story
+                %a.btn-dashboard.btn-dashboard-story{href: new_story_path}
+                  .btn-dashboard-icon
+                    .btn-dashboard-icon-detail
+                    .btn-dashboard-icon-sprite
+                  .btn-dashboard-title
+                    Create New Story
               .col-sm-4.text-center
-                %a.btn.btn-default{href: user_path(@user)+'/settings'} Edit your settings
+                %a.btn-dashboard.btn-dashboard-settings{href: edit_user_registration_path(@user)}
+                  .btn-dashboard-icon
+                    .btn-dashboard-icon-detail
+                    .btn-dashboard-icon-sprite
+                  .btn-dashboard-title
+                    Edit your settings
       = render 'partials/items_preview_list', :items => @items, :visualizations => @visualizations
