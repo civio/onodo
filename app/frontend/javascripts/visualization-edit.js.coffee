@@ -7,6 +7,10 @@ VisualizationTableRelations  = require './views/visualization-table-relations.js
 
 class VisualizationEdit
 
+  mainHeaderHeight:             82
+  visualizationHeaderHeight:    63
+  tableHeaderHeight:            50
+
   id:                           null
   nodes:                        null
   visualizationGraph:           null
@@ -31,7 +35,7 @@ class VisualizationEdit
   setupAffix: ->
     $('.visualization-graph').affix
       offset:
-        top: 50
+        top: @mainHeaderHeight + @visualizationHeaderHeight
 
   updateTable: (e) =>
     e.preventDefault()
@@ -48,16 +52,16 @@ class VisualizationEdit
       @visualizationTableNodes.hide()
       @visualizationTableRelations.show()
 
-
   resize: =>
     console.log 'resize!'
     windowHeight = $(window).height()
-    graphHeight = windowHeight - 50 - 64 - 64
+    graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
     @visualizationGraph.$el.height graphHeight
     @visualizationGraph.resize()
-    $('.visualization-table').css 'top', graphHeight+64
-    # $('.visualization-table').height( windowHeight - 64 );
-    $('.footer').css 'top', graphHeight+64
+    $('.visualization-table').css 'top', graphHeight + @visualizationHeaderHeight
+    # TODO!!! Resize table to windowHeight -> We also need to resize HandsOnTable height
+    #$('.visualization-table').height windowHeight
+    $('.footer').css 'top', graphHeight + @visualizationHeaderHeight
 
   render: ->
     @setupAffix()   # setup affix bootstrap

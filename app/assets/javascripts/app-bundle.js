@@ -42989,6 +42989,12 @@
 	VisualizationTableRelations = __webpack_require__(47);
 
 	VisualizationEdit = (function() {
+	  VisualizationEdit.prototype.mainHeaderHeight = 82;
+
+	  VisualizationEdit.prototype.visualizationHeaderHeight = 63;
+
+	  VisualizationEdit.prototype.tableHeaderHeight = 50;
+
 	  VisualizationEdit.prototype.id = null;
 
 	  VisualizationEdit.prototype.nodes = null;
@@ -43026,7 +43032,7 @@
 	  VisualizationEdit.prototype.setupAffix = function() {
 	    return $('.visualization-graph').affix({
 	      offset: {
-	        top: 50
+	        top: this.mainHeaderHeight + this.visualizationHeaderHeight
 	      }
 	    });
 	  };
@@ -43051,11 +43057,11 @@
 	    var graphHeight, windowHeight;
 	    console.log('resize!');
 	    windowHeight = $(window).height();
-	    graphHeight = windowHeight - 50 - 64 - 64;
+	    graphHeight = windowHeight - this.mainHeaderHeight - this.visualizationHeaderHeight - this.tableHeaderHeight;
 	    this.visualizationGraph.$el.height(graphHeight);
 	    this.visualizationGraph.resize();
-	    $('.visualization-table').css('top', graphHeight + 64);
-	    return $('.footer').css('top', graphHeight + 64);
+	    $('.visualization-table').css('top', graphHeight + this.visualizationHeaderHeight);
+	    return $('.footer').css('top', graphHeight + this.visualizationHeaderHeight);
 	  };
 
 	  VisualizationEdit.prototype.render = function() {
