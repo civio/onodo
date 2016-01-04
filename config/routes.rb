@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   
   # Add user profile page & dashboard
   resources :users, :only => [:show]
-
+  get '/users/:id/visualizations' => 'users#show'
+  get '/users/:id/stories'        => 'users#show_stories'
+  
   resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do 
     collection do 
       get ':id/edit/info' => 'visualizations#editinfo'

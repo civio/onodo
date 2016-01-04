@@ -1,13 +1,13 @@
 .items-preview-header
-  - if defined? visualizations
-    %a.btn.btn-default.btn-transparent{ href: '/explore/stories' }
+  - if visualizations
+    %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/stories' : '/users/'+params[:id]+'/stories'}" }
       Stories
     .btn.btn-default.btn-primary
       Visualizations
   - else
     .btn.btn-default.btn-primary
       Stories
-    %a.btn.btn-default.btn-transparent{ href: '/explore/visualizations' }
+    %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/visualizations' : '/users/'+params[:id]+'/visualizations'}" }
       Visualizations
   .items-search.pull-right
     .input-group

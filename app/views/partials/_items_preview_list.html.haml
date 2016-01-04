@@ -3,8 +3,8 @@
     - items.each do |item| 
       .col-sm-6
         = render 'partials/item_preview', :item => item
-      .col-sm-12.text-center
-        = paginate items
+    .col-sm-12.text-center
+      = paginate items
   -else
     .text-center
     - if defined? visualizations
