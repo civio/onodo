@@ -1,7 +1,4 @@
-.visualization-graph-menu-navigation.btn-group-vertical{role: "group"}
-  %button.btn.btn-default.zoomin{type: "button"}
-    %i.glyphicon.glyphicon-plus
-  %button.btn.btn-default.zoomout{type: "button"}
-    %i.glyphicon.glyphicon-minus
-  %button.btn.btn-default.fullscreen{type: "button"}
-    %i.glyphicon.glyphicon-fullscreen
+.visualization-graph-menu-navigation
+  %button.btn.zoomin{ type: "button", title: "Zoom In", data: {toggle: "tooltip", placement: "right"} }
+  %button.btn.zoomout{type: "button", title: "Zoom Out", data: {toggle: "tooltip", placement: "right"} }
+  %button.btn.fullscreen{type: "button", title: "Fullscreen", data: {toggle: "tooltip", placement: "right"} }

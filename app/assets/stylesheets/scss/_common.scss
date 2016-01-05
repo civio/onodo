@@ -2,6 +2,7 @@
 @import 'bootstrap/mixins/buttons';
 @import 'bootstrap/mixins/vendor-prefixes';
 @import '_variables';
+@import 'scss/sprites';
 
 body{
   font-family: $font-family-sans-serif;
@@ -348,4 +349,58 @@ label{
   font-weight: bold;
   margin: $grid-gutter-width auto;
   text-align: center; 
+}
+
+// User Label
+
+.user-label{
+
+  $user-picture-size: 28px;
+  $user-picture-border: 8px;
+
+  .user-name{
+    color: $gray;
+    font-size: 0.786em;
+    text-transform: uppercase;
+    vertical-align: top;
+    line-height:$user-picture-size + (2*$user-picture-border);
+    padding: 0 $grid-gutter-width/3;
+  }
+
+  .user-picture{
+    display: inline-block;
+    width: $user-picture-size + (2*$user-picture-border);
+    height: $user-picture-size + (2*$user-picture-border);
+    overflow: hidden;
+    border-radius: $user-picture-border + ($user-picture-size/2);
+    border: $user-picture-border solid $gray-lighter;
+
+    > img{
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+// Boton Edit Circle
+
+.btn-edit-circle{
+  float: left;
+  display: block;
+  width: $grid-gutter-width;
+  height: $grid-gutter-width;
+  border-radius: $grid-gutter-width/2;
+  margin-top: 12px;
+  margin-left: $grid-gutter-width/2;
+  background: $gray-blue-dark;
+  @include transition( background 0.3s ease-out );
+
+  .btn-edit-circle-icon{
+    margin: 6px 0 0 7px;
+    @include sprite-icon-pencil-white();
+  }
+
+  &:hover{
+    background: $brand-primary;
+  }
 }

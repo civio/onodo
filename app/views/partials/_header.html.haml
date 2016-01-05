@@ -25,11 +25,7 @@
             = link_to "Sign up", new_user_registration_path, class: "btn btn-primary"
         -else
           %li.dropdown
-            %span.user-name
-              = current_user.name
-            -# TODO!!! Add user picture
-            .user-picture
-              %img{src: "http://lorempixel.com/30/30/"}
+            = render 'partials/user_label', :user => current_user
             %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button", :title => "User settings"}
               %span.user-dropdown-icon
                 User settings

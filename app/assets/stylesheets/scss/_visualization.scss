@@ -7,7 +7,7 @@
   position: relative;
   background: $body-bg;
   padding: $grid-gutter-width/2 0 $grid-gutter-width;
-  @include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.5) );
+  //@include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.5) );
 
   h2{
     font-size: 3em;
@@ -16,27 +16,6 @@
 
   .dropdown{
     margin-top: 8px;
-  }
-
-  .btn-edit-circle{
-    float: left;
-    display: block;
-    width: $grid-gutter-width;
-    height: $grid-gutter-width;
-    border-radius: $grid-gutter-width/2;
-    margin-top: 12px;
-    margin-left: $grid-gutter-width/2;
-    background: $gray-blue-dark;
-    @include transition( background 0.3s ease-out );
-
-    .btn-edit-circle-icon{
-      margin: 6px 0 0 7px;
-      @include sprite-icon-pencil-white();
-    }
-
-    &:hover{
-      background: $brand-primary;
-    }
   }
 
   /* .visualization-status{
@@ -106,7 +85,9 @@
   .visualization-graph-component{
     width: 100%;
     height: 100%;
-    background: $gray-lighter;
+    border-top: 1px solid $gray-lighter;
+    border-bottom: 1px solid $gray-lighter;
+    //background: $gray-lighter;
    
     .node{
       cursor: pointer;
@@ -166,16 +147,49 @@
     }
   }
 
-  .visualization-graph-menu-navigation{
+  .visualization-graph-menu-navigation,
+  .visualization-graph-menu-actions{
     position: absolute;
-    left: 10px;
-    top: 10px;
+    top: $grid-gutter-width/2;
+
+    .btn{
+      min-width: auto;
+      background: transparent;
+      border: none;
+      border-radius: 0 !important;
+      margin-bottom: 12px;
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .visualization-graph-menu-navigation{
+    left: $grid-gutter-width/2;
+
+    .btn{
+      &.zoomin{
+        @include sprite-icon-zoomin();
+      }
+      &.zoomout{
+        @include sprite-icon-zoomout();
+      }
+      &.fullscreen{
+        @include sprite-icon-fullscreen();
+      }
+    }
   }
 
   .visualization-graph-menu-actions{
-    position: absolute;
-    right: 10px;
-    top: 10px;
+    right: $grid-gutter-width/2;
+
+    .btn{
+      &.search{
+        @include sprite-icon-search();
+      }
+    }
   }
 
   .visualization-graph-panel-configuration{
@@ -221,9 +235,91 @@
 }
 
 .visualization-info{
-  padding-top: 30px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid $gray-lighter;
+  padding: $grid-gutter-width 0;
+
+  strong{
+    display: block;
+    margin-bottom: $grid-gutter-width/2;
+    color: $gray;
+    font-size: 1.571em;
+    font-weight: 300;
+  }
+
+  .user-label{
+    margin-top: -7px;
+  }
+
+  .visualization-status{
+    color: $gray;
+    font-size: 0.786em;
+    text-transform: uppercase;
+    margin-top: 1px;
+    margin-right: $grid-gutter-width/2;
+    line-height: $grid-gutter-width;
+  }
+
+  .visualization-status-icon{
+    float: left;
+    width: $grid-gutter-width;
+    height: $grid-gutter-width;
+    border-radius: $grid-gutter-width/2;
+    margin-right: $grid-gutter-width/3;
+    border: 2px solid $brand-primary;
+  }
+
+  .visualization-status-icon-sprite{
+    position: relative;
+    top: 7px;
+    left: 4px;
+    @include sprite-icon-table();
+  }
+
+  .btn-collapse{
+    margin-top: 1.5*$grid-gutter-width;
+  }
+
+  .collapsed-label-icon{
+    @include sprite-icon-table();
+  }
+  .collapsible-label-icon{
+    @include sprite-icon-table();
+  }
+
+  .collapsed-label-icon,
+  .collapsible-label-icon{
+    display: inline-block;
+    position: relative;
+    margin-right: 5px;
+    top: 2px;
+  }
+}
+
+.visualization-description{
+  background: $gray-lighter;
+  padding-bottom: $grid-gutter-width;
+
+  h3{
+    float: left;
+    color: $gray;
+    font-size: 1.571em;
+    font-weight: 300;
+    margin: $grid-gutter-width 0;
+  }
+
+  .btn-edit-circle{
+    margin-top: $grid-gutter-width - 2px;
+  }
+
+  .visualization-description-content{
+    clear: both;
+    color: $gray;
+    font-size: 0.929em;
+    font-weight: 300;
+
+    strong{
+      font-weight: normal;
+    }
+  }
 }
 
 .visualization-table{
@@ -310,10 +406,15 @@
   padding-top: 30px;
   padding-bottom: 20px;
   border-bottom: 1px solid $gray-lighter;
+  background: $gray-lighter;
 
-  > .container > strong{
+  > .container > h3{
+    font-size: 0.857em;
     display: block;
-    margin-bottom: 20px;
+    margin: 0 0 $grid-gutter-width;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-align: center;
   }
 }
 

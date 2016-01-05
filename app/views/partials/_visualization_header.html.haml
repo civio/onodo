@@ -2,7 +2,7 @@
   .container-fluid
     %h2.pull-left= @visualization.name
     - if defined? edit or (defined? current_user and current_user == @visualization.author)
-      %a.btn-edit-circle{ href: edit_visualization_path(@visualization)+'/info', title: "Edit Visualization Info" }
+      %a.btn-edit-circle{ href: edit_visualization_path(@visualization)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
         .btn-edit-circle-icon
       .pull-right.dropdown
         %button#actions-dropdown.btn.btn-default.btn-primary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
