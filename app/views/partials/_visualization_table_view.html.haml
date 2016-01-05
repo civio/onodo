@@ -1,44 +1,45 @@
-#visualization-table-view.visualization-table.container-fluid.collapse
-  .title
-    %h3= @visualization.name+" data table"
-    %a.close.pull-right{:href => "#visualization-table-view", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "visualization-table-view"}
-      %span{"aria-hidden" => "true"}
-        &times;
-      
-  .visualization-table-header
-    %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
-      %li.active{ role: "presentation" }
-        %a{ href: "#nodes", role: "tab", "data-toogle": "tab" } Nodes
-      %li{ role: "presentation" }
-        %a{ href: "#relations", role: "tab", "data-toogle": "tab" } Relationships
-    %button.btn.btn-default.btn-primary.pull-right{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
-      Download
-      %i.glyphicon.glyphicon-save
+#visualization-table-view.visualization-table.collapse
+  .container
+    / .title
+    /   %h3= @visualization.name+" data table"
+    /   %a.close.pull-right{:href => "#visualization-table-view", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "visualization-table-view"}
+    /     %span{"aria-hidden" => "true"}
+    /       &times;
+        
+    .visualization-table-header
+      %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
+        %li.active{ role: "presentation" }
+          %a{ href: "#nodes", role: "tab", "data-toogle": "tab" } Nodes
+        %li{ role: "presentation" }
+          %a{ href: "#relations", role: "tab", "data-toogle": "tab" } Relationships
+      %button.btn.btn-default.btn-primary.pull-right{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
+        Download
+        %i.glyphicon.glyphicon-save
 
-  .tab-content
-    #nodes.tab-pane.active{ role: "tabpanel" }
-      %table.table
-        %thead
-          %tr
-            %th Name
-            %th Description
-            %th Type
-        %tbody
-        - @nodes.each do |node|
-          %tr
-            %td= node.name
-            %td= node.description
-            %td= node.node_type
-    #relations.tab-pane{ role: "tabpanel" }
-      %table.table
-        %thead
-          %tr
-            %th Source
-            %th Target
-            %th Type
-        %tbody
-        - @relations.each do |relation|
-          %tr
-            %td= relation.source.name
-            %td= relation.target.name
-            %td= relation.relation_type
+    .tab-content
+      #nodes.tab-pane.active{ role: "tabpanel" }
+        %table.table
+          %thead
+            %tr
+              %th Name
+              %th Description
+              %th Type
+          %tbody
+          - @nodes.each do |node|
+            %tr
+              %td= node.name
+              %td= node.description
+              %td= node.node_type
+      #relations.tab-pane{ role: "tabpanel" }
+        %table.table
+          %thead
+            %tr
+              %th Source
+              %th Target
+              %th Type
+          %tbody
+          - @relations.each do |relation|
+            %tr
+              %td= relation.source.name
+              %td= relation.target.name
+              %td= relation.relation_type

@@ -325,7 +325,7 @@
 .visualization-table{
   width: 100%;
   background: $body-bg;
-  @include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.6) );
+  //@include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.6) );
 
   &.affix{
     position: fixed;
@@ -414,16 +414,22 @@
 
 #visualization-table-view{
   position: relative;
+  background: $gray-lighter;
+  padding-top: $grid-gutter-width;
 
-  .title{
-    padding-bottom: 10px;  
-
-    .close{
-      position: absolute;
-      top: 20px;
-      right: 15px;
-    }
+  table{
+    border-bottom: 1px solid $gray-light;
   }
+
+  // .title{
+  //   padding-bottom: 10px;  
+
+  //   .close{
+  //     position: absolute;
+  //     top: 20px;
+  //     right: 15px;
+  //   }
+  // }
 }
 
 // Visualization Edit
