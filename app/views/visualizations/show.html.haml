@@ -14,11 +14,9 @@
 = render 'partials/visualization_table_view'
 
 .visualization-related-items
+  %p.section-title
+    Related visualizations & stories
   .container
-    %h3 Related visualizations & stories
-    .row
-      - @related_items.each do |item|
-        .col-sm-6
-          = render 'partials/item_preview', :item => item
+    = render 'partials/item_preview_carousel', :items => @related_items
 
 = render 'partials/visualization_share_modal'

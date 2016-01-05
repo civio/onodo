@@ -403,18 +403,12 @@
 }
 
 .visualization-related-items{
-  padding-top: 30px;
-  padding-bottom: 20px;
+  padding: $grid-gutter-width 0 1.5*$grid-gutter-width;
   border-bottom: 1px solid $gray-lighter;
   background: $gray-lighter;
 
-  > .container > h3{
-    font-size: 0.857em;
-    display: block;
-    margin: 0 0 $grid-gutter-width;
-    font-weight: normal;
-    text-transform: uppercase;
-    text-align: center;
+  .section-title{
+    margin-top: 0;
   }
 }
 
