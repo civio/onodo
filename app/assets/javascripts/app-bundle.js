@@ -42990,7 +42990,7 @@
 	VisualizationEdit = (function() {
 	  VisualizationEdit.prototype.mainHeaderHeight = 82;
 
-	  VisualizationEdit.prototype.visualizationHeaderHeight = 63;
+	  VisualizationEdit.prototype.visualizationHeaderHeight = 91;
 
 	  VisualizationEdit.prototype.tableHeaderHeight = 50;
 

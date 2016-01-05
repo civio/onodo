@@ -8,7 +8,7 @@ VisualizationTableRelations  = require './views/visualization-table-relations.js
 class VisualizationEdit
 
   mainHeaderHeight:             82
-  visualizationHeaderHeight:    63
+  visualizationHeaderHeight:    91
   tableHeaderHeight:            50
 
   id:                           null

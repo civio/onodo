@@ -370,7 +370,21 @@
     top: 74px;
   }
 
+  .visualization-table-scrollbar{
+    height: 50px;
+    color: white;
+    background: $brand-yellow;
+    text-align: center;
+
+    p{
+      font-size: 0.857em;
+      line-height: 50px;
+      text-transform: uppercase;
+    }
+  }
+
   .visualization-table-header{
+    margin-top: 20px;
     //padding: 15px 0;
     //height: 64px;
     //background: mix( $gray-light, $gray-lighter, 40% );
@@ -482,12 +496,12 @@ body.visualizations.edit{
 
   .visualization-graph{
     position: absolute;
-    top: 82px;
+    top: 91px;
     z-index: 90;
 
     &.affix{
       position: fixed;
-      top: -63px;
+      top: -91px;
     }
   }
 
