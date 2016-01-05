@@ -5,7 +5,7 @@
         %strong Created by
         %p
           %i.glyphicon.glyphicon-user
-          The Buffalo Daily
+          = @visualization.author.name
       .col-sm-4
         %strong Status
         - if @visualization.published?

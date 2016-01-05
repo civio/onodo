@@ -1,53 +1,39 @@
 .visualization-header
   .container-fluid
     %h2.pull-left= @visualization.name
-    - if defined? edit
-      - if @visualization.published?
-        %span.visualization-status.public Public
-      - else
-        %span.visualization-status.draft Draft
-
-    .pull-right.dropdown
-      %button#actions-dropdown.btn.btn-default.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
-        %i.glyphicon.glyphicon-wrench
-        Actions
-        %span.caret
-      %ul.dropdown-menu{"aria-labelledby" => "actions-dropdown"}
-        - if defined? edit and !@visualization.published?
+    - if defined? edit or (defined? current_user and current_user == @visualization.author)
+      %a.btn-edit-circle{ href: edit_visualization_path(@visualization)+'/info', title: "Edit Visualization Info" }
+        .btn-edit-circle-icon
+      .pull-right.dropdown
+        %button#actions-dropdown.btn.btn-default.btn-primary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+          Actions
+          %span.caret
+          %i.glyphicon.glyphicon-wrench
+        %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "actions-dropdown"}
+          - if defined? edit
+            %li
+              %a.active{ href: visualization_path(@visualization) } 
+                Preview visualization
+            %li
+              - if @visualization.published?
+                = link_to "Unpublish", {:controller => "visualizations", :action => "unpublish", :id => @visualization.id}, {:method => :post, :class => "active"}
+              - else
+                = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:method => :post, :class => "active"}
+            %li
+              %a.active{ href: edit_visualization_path(@visualization)+'/info' } 
+                Edit visualization info
+          - else
+            %li
+              %a.active{ href: edit_visualization_path(@visualization) }
+                Edit visualization
           %li
-            %a{href: edit_visualization_path(@visualization)+'/info'} Edit info
+            %a{href: "#"} 
+              Duplicate visualization
           %li
-            %a{href: "#"} Duplicate visualization
-          %li
-            %a{href: "#"} Preview visualization
-          %li.divider{:role => "separator"}
-          %li
-            %a.text-danger{href: "#visualization-delete-modal", data: {toggle: "modal"}} Delete
-        - elsif defined? edit and @visualization.published?
-          %li
-            %a{href: edit_visualization_path(@visualization)+'/info'} Edit info
-          %li
-            %a{href: "#"} Duplicate visualization
-          %li
-            = link_to "Make private", {:controller => "visualizations", :action => "unpublish", :id => @visualization.id}, {:method => :post}
-          %li
-            %a{href: "#"} Preview visualization
-          %li
-            %a{href: "#"} Create story
-          %li
-            %a{href: "#"} Your related stories
-          %li.divider{:role => "separator"}
-          %li
-            %a.text-danger{href: "#visualization-delete-modal", data: {toggle: "modal"}} Delete
-        - else
-          %li
-            %a{href: "#"} Create story
-          %li
-            %a{href: "#"} Duplicate visualization
-          %li
-            %a{href: edit_visualization_path(@visualization)} Edit visualization
-
-    - if defined? edit and !@visualization.published?
-      = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:class => 'btn btn-default btn-primary pull-right', :method => :post}
-
-    .clearfix
+            %a{href: "#"} 
+              Create story from visualization
+          - if defined? edit
+            %li
+              %a.text-danger{ href: "#visualization-delete-modal", data: {toggle: "modal"} }
+                Delete visualization
+      .clearfix

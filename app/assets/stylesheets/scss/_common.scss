@@ -245,6 +245,15 @@ $btn-border-width: 2px;
         border-right-color: $brand-primary;
         border-left-color: $brand-primary;
       }
+
+      &.text-danger{
+        color: white !important;
+        background: darken( $brand-danger, 5% );
+        &:hover{
+          color: darken( $brand-danger, 5% ) !important;
+          background: #fff;
+        }
+      }
     }
 
     &:first-child > a{

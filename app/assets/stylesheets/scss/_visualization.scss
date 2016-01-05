@@ -1,18 +1,45 @@
 @import 'bootstrap/variables';
 @import '_variables';
 @import 'bootstrap/mixins/vendor-prefixes';
+@import 'scss/sprites';
 
 .visualization-header{
   position: relative;
   background: $body-bg;
-  padding: 15px 0;
+  padding: $grid-gutter-width/2 0 $grid-gutter-width;
   @include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.5) );
 
   h2{
+    font-size: 3em;
     margin: 0;
   }
 
-  .visualization-status{
+  .dropdown{
+    margin-top: 8px;
+  }
+
+  .btn-edit-circle{
+    float: left;
+    display: block;
+    width: $grid-gutter-width;
+    height: $grid-gutter-width;
+    border-radius: $grid-gutter-width/2;
+    margin-top: 12px;
+    margin-left: $grid-gutter-width/2;
+    background: $gray-blue-dark;
+    @include transition( background 0.3s ease-out );
+
+    .btn-edit-circle-icon{
+      margin: 6px 0 0 7px;
+      @include sprite-icon-pencil-white();
+    }
+
+    &:hover{
+      background: $brand-primary;
+    }
+  }
+
+  /* .visualization-status{
     display: inline-block;
     margin-top: 8px;
     margin-left: 15px;
@@ -31,7 +58,7 @@
     &.public{
       background: $brand-success;
     }
-  }
+  } */
 }
 
 .visualization-graph{
@@ -41,10 +68,6 @@
   
   .visualization-header{
     z-index: 90;
-    
-    h2{
-      margin: 0;
-    }
 
     .visualization-status{
       display: inline-block;
