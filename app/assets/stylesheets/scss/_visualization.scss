@@ -320,6 +320,44 @@
       font-weight: normal;
     }
   }
+  
+  .visualization-description-buttons{
+    margin-top: 25px + (2*$grid-gutter-width);
+
+    .btn-invert{
+      position: relative;
+      width: 100%;
+      text-align: left;
+      text-indent: 30px;
+      background: transparent;
+
+      span{
+        position: absolute;
+        left: 15px;
+      }
+
+      &:hover{
+        background: $brand-primary;
+      }
+    }
+
+    .btn-icon-story{
+      top: 5px;
+      @include sprite-icon-story();
+    } 
+    .btn-icon-visualization{
+      top: 5px;
+      @include sprite-icon-visualization();
+    }        
+    .btn-icon-pencil{
+      top: 5px;
+      @include sprite-icon-pencil();
+    }
+    .btn-icon-duplicate{
+      top: 6px;
+      @include sprite-icon-duplicate();
+    }
+  }
 }
 
 .visualization-table{
