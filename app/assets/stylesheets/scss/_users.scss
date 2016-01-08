@@ -71,7 +71,7 @@
 .user-dashboard{
 
   .user-info{
-    margin: $grid-gutter-width 0 2*$grid-gutter-width;
+    margin: 1.5*$grid-gutter-width 0 2*$grid-gutter-width;
 
     .media-left{
       padding-right: $grid-gutter-width;
@@ -143,63 +143,5 @@
   .dashboard-items{
     background: $gray-lighter;
     padding: 2*$grid-gutter-width 0;
-  }
-
-  .btn-dashboard{
-
-    .btn-dashboard-icon{
-      position: relative;
-      display: block;
-      height: 128px;
-      width: 128px;
-      margin: 0 auto;
-      border-radius: 64px;
-      border: 3px solid $brand-primary;
-      background: transparent;
-      @include transition( background 0.3s ease-out );
-    }
-
-    .btn-dashboard-icon-sprite{
-      margin: 32px auto 0;
-    }
-
-    .btn-dashboard-icon-detail{
-      position: absolute;
-      top: 4px;
-      right: 0;
-      @include sprite-icon-plus-circle();
-    }
-
-    .btn-dashboard-title{
-      display: block;
-      font-size: 0.857em;
-      text-transform: uppercase;
-      padding: $grid-gutter-width/2 0;
-    }
-
-    &.btn-dashboard-story .btn-dashboard-icon-sprite{
-      @include sprite-dahsboard-icon-story();
-    }
-    &.btn-dashboard-visualization .btn-dashboard-icon-sprite{
-      margin-top: 36px;
-      @include sprite-dahsboard-icon-visualization();
-    }
-    &.btn-dashboard-settings{
-      .btn-dashboard-icon-sprite{
-        @include sprite-dahsboard-icon-user();
-      }
-      .btn-dashboard-icon-detail{
-        @include sprite-icon-pencil-circle();
-      }
-    }
-
-    &:hover{
-      color: $brand-primary;
-      text-decoration: none;
-
-      .btn-dashboard-icon{
-        background: mix($brand-primary, white, 25%);
-      }
-    }
   }
 }

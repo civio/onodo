@@ -1,0 +1,29 @@
+.story-new.container
+  .row
+    .col-sm-6.col-sm-offset-3
+      .page-header.text-center
+        %h2 Create Story
+      = form_for :story, url: stories_path , method: "post" do |f|
+        .form-group
+          = f.label :name, "Story title"
+          = f.text_field :name, class: "form-control"
+        .story-new-selector
+          %p.text-center
+            You need a visualization to create a story
+          .row
+            .col-sm-6.col-md-5.col-md-offset-1.text-center
+              %a.btn-circle-lg.btn-circle-lg-visualization{href: "#"}
+                .btn-circle-lg-icon
+                  .btn-circle-lg-icon-sprite
+                .btn-circle-lg-title
+                  Start Creating One
+              %a.btn.btn-default.btn-invert{ href: "#" }
+                Create
+            .col-sm-6.col-md-5.text-center
+              %a.btn-circle-lg.btn-circle-lg-preview{href: "#"}
+                .btn-circle-lg-icon
+                  .btn-circle-lg-icon-sprite
+                .btn-circle-lg-title
+                  Explore Visualizations
+              %a.btn.btn-default.btn-invert{ href: "#" }
+                Explore

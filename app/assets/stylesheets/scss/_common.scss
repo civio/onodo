@@ -382,6 +382,69 @@ label{
   }
 }
 
+
+.btn-circle-lg{
+
+  .btn-circle-lg-icon{
+    position: relative;
+    display: block;
+    height: 128px;
+    width: 128px;
+    margin: 0 auto;
+    border-radius: 64px;
+    border: 2px solid $brand-primary;
+    background: transparent;
+    @include transition( background 0.3s ease-out );
+  }
+
+  .btn-circle-lg-icon-sprite{
+    margin: 32px auto 0;
+  }
+
+  .btn-circle-lg-icon-detail{
+    position: absolute;
+    top: 4px;
+    right: 0;
+    @include sprite-icon-plus-circle();
+  }
+
+  .btn-circle-lg-title{
+    display: block;
+    font-size: 0.857em;
+    text-transform: uppercase;
+    padding: $grid-gutter-width/2 0;
+  }
+
+  &.btn-circle-lg-story .btn-circle-lg-icon-sprite{
+    @include sprite-dahsboard-icon-story();
+  }
+  &.btn-circle-lg-visualization .btn-circle-lg-icon-sprite{
+    margin-top: 36px;
+    @include sprite-dahsboard-icon-visualization();
+  }
+  &.btn-circle-lg-preview .btn-circle-lg-icon-sprite{
+    margin-top: 44px;
+    @include sprite-home-icon-preview();
+  }
+  &.btn-circle-lg-settings{
+    .btn-circle-lg-icon-sprite{
+      @include sprite-dahsboard-icon-user();
+    }
+    .btn-circle-lg-icon-detail{
+      @include sprite-icon-pencil-circle();
+    }
+  }
+
+  &:hover{
+    color: $brand-primary;
+    text-decoration: none;
+
+    .btn-circle-lg-icon{
+      background: mix($brand-primary, white, 25%);
+    }
+  }
+}
+
 // Boton Edit Circle
 
 .btn-edit-circle{
