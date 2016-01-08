@@ -277,6 +277,11 @@ $btn-border-width: 2px;
 
 // Form
 
+.form-default{
+  margin-top: -$grid-gutter-width;
+  margin-bottom: 3*$grid-gutter-width;
+}
+
 .form-group > p{
   color: $gray-semi-light;
   font-size: 12px;

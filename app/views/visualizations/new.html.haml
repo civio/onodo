@@ -1,9 +1,9 @@
 .visualization-new.container
   .row
+    .page-header.text-center
+      %h2 Create Visualization
     .col-sm-6.col-sm-offset-3
-      .page-header.text-center
-        %h2 Create Visualization
-      = form_for :visualization, url: visualizations_path , method: "post" do |f|
+      = form_for :visualization, url: visualizations_path , method: "post", html: {:class => 'form-default'} do |f|
         .form-group
           = f.label :name, "Visualization title"
           = f.text_field :name, class: "form-control"

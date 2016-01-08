@@ -7,8 +7,6 @@
 .devise-page{
 
   .page-header{
-    text-align: center;
-    margin-bottom: 1.5*$grid-gutter-width;
 
     .lead{
       max-width: 460px;
@@ -18,7 +16,6 @@
   }
 
   form{
-    margin-bottom: 3*$grid-gutter-width;
 
     > p > a{
       font-size: 12px;

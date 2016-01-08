@@ -1,9 +1,9 @@
 .story-new.container
   .row
+    .page-header.text-center
+      %h2 Create Story
     .col-sm-6.col-sm-offset-3
-      .page-header.text-center
-        %h2 Create Story
-      = form_for :story, url: stories_path , method: "post" do |f|
+      = form_for :story, url: stories_path , method: "post", html: {:class => 'form-default'} do |f|
         .form-group
           = f.label :name, "Story title"
           = f.text_field :name, class: "form-control"
