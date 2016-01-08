@@ -1,6 +1,7 @@
 @import 'bootstrap/variables';
 @import '_variables';
 @import 'bootstrap/mixins/vendor-prefixes';
+@import 'bootstrap/mixins/clearfix';
 @import 'scss/sprites';
 
 .visualization-header{
@@ -229,7 +230,52 @@
 
     .panel-heading{
       border-radius: 0;
+      border: none;
+      padding: $grid-gutter-width/2;
       background: $gray-blue-dark;
+      @include clearfix();
+      
+      .close{
+        border-radius: $grid-gutter-width/2;
+        text-indent: -9999px;
+        opacity: 1;
+        @include sprite-icon-close-white();
+        @include transition( background-color 0.3s ease-out );
+
+        &:hover{
+          background-color: darken( $gray-blue-dark, 15% );
+        }
+      }
+
+      .btn-primary{
+        color: white;
+        border-color: white;
+        background: transparent;
+        min-width: auto;
+        padding: 0 $grid-gutter-width/2;
+
+        .btn-icon-pencil{
+          float: left;
+          margin-top: 5px;
+          margin-right: $grid-gutter-width/3;
+          @include sprite-icon-pencil-white();
+        }
+
+        &:hover{
+          background: darken( $gray-blue-dark, 15% );
+        }
+      }
+    }
+  
+    .panel-body{
+
+      .name{
+        margin: 0 0 $grid-gutter-width/3;
+      }
+
+      .description{
+        font-size: 0.857em;
+      }
     }
   }
 }

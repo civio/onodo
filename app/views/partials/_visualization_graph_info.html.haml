@@ -1,7 +1,9 @@
 .visualization-graph-info.panel.panel-default
   .panel-heading
-    %button.btn.btn-default
-      Edit
+    - if defined? edit
+      %a.btn.btn-default.btn-primary
+        %span.btn-icon-pencil
+        Edit
     %button.close{type: "button", "aria-label" => "Close"}
       %span{"aria-hidden" => "true"}
         &times

@@ -7,13 +7,14 @@ class VisualizationGraphInfo extends Backbone.View
   show: (node) ->
     @node = node
     @$el.addClass('active')
+    @$el.find('.panel-heading > a.btn').attr('href','/nodes/'+node.id+'/edit/')
     @render()
 
   hide: ->
     @$el.removeClass('active')
 
   initialize: ->
-    @$el.click (e) ->
+    @$el.find('.close').click (e) ->
       e.preventDefault()
       Backbone.trigger 'visualization.node.hideInfo'
     @render()

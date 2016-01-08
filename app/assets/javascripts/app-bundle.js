@@ -10570,6 +10570,7 @@
 	  VisualizationGraphInfo.prototype.show = function(node) {
 	    this.node = node;
 	    this.$el.addClass('active');
+	    this.$el.find('.panel-heading > a.btn').attr('href', '/nodes/' + node.id + '/edit/');
 	    return this.render();
 	  };
 
@@ -10578,7 +10579,7 @@
 	  };
 
 	  VisualizationGraphInfo.prototype.initialize = function() {
-	    this.$el.click(function(e) {
+	    this.$el.find('.close').click(function(e) {
 	      e.preventDefault();
 	      return Backbone.trigger('visualization.node.hideInfo');
 	    });
