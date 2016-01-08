@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end 
   end 
 
-  resources :stories, :only => [:show, :edit, :new, :update, :destroy]
+  resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy]
 
   resources :datasets, only: [:index]
   resources :nodes, only: [:index]

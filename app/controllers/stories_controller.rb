@@ -7,12 +7,23 @@ class StoriesController < ApplicationController
 
   # GET /stories/new
   def new
-    @story = Story.new
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    end
+  end
+
+  # POST /stories
+  def create
+  
   end
 
   # GET /stories/:id/edit
   def edit
-    @story = Story.find(params[:id])
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    else
+      @story = Story.find(params[:id])
+    end
   end
 
   # PATCH /stories/:id/

@@ -1,0 +1,14 @@
+@import 'bootstrap/variables';
+@import '_variables';
+@import 'bootstrap/mixins/vendor-prefixes';
+@import 'scss/sprites';
+
+// Story New
+.story-new{
+  .page-header{
+    margin-bottom: 2*$grid-gutter-width;
+  }
+  .story-new-selector > p{
+    margin: 1.5*$grid-gutter-width 0;
+  }
+}
