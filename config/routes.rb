@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy]
 
   resources :datasets, only: [:index]
-  resources :nodes, only: [:index]
+  resources :nodes, only: [:index, :edit, :update]
 
   get '/explore'                  => 'pages#explore_stories'
   get '/explore/visualizations/'  => 'pages#explore_visualizations'
