@@ -9,6 +9,7 @@
           = f.text_field :name, class: "form-control"
         .form-group
           = f.label "node-input-description", "Description"
-          = f.text_area :description, rows: 5, class: "form-control"
+          = f.text_field :description, type: "hidden"
+          %trix-editor{ input: "node_description" }
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: "#"} Cancel

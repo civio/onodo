@@ -15,7 +15,9 @@
     "expose-loader": "~0.6.0",
     "imports-loader": "~0.6.3",
     "exports-loader": "~0.6.2",
-    "handlebars-loader": "~1.1.4"
+    "script-loader": "~0.6.1",
+    "handlebars-loader": "~1.1.4",
+    "trix": "~0.9.4"
   },
   "peerDependencies": {
     "d3": "*",

@@ -1,5 +1,7 @@
 window.App ||= {}
 
+App.Trix = require 'script!trix'
+
 App.VisualizationShow = require './visualization-show.js'
 App.VisualizationEdit = require './visualization-edit.js'
 
@@ -18,4 +20,7 @@ $(document).ready ->
     appVisualizationShow = new App.VisualizationShow $('body').data('id')
     appVisualizationShow.render()
     $( window ).resize appVisualizationShow.resize
-   
+  # /nodes/:id/edit
+  else if $('#wysiwig-toolbar').length > 0
+    console.log 'wysiwig'
+    

@@ -282,9 +282,11 @@ $btn-border-width: 2px;
   margin-bottom: 3*$grid-gutter-width;
 }
 
-.form-group > p{
-  color: $gray-semi-light;
-  font-size: 12px;
+.form-group{
+  > p{
+    color: $gray-semi-light;
+    font-size: 12px;
+  }
 }
 
 label{
