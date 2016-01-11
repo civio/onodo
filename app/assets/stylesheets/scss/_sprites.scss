@@ -7,6 +7,7 @@
   height: $height;
   overflow: hidden;
 }
+
 @mixin sprite-dahsboard-icon-story {
   @include sprite(0, 0, 47px, 55px);
 }
@@ -127,6 +128,10 @@
   @include sprite(-28px, -196px, 16px, 12px);
 }
 
+@mixin sprite-icon-share {
+  @include sprite(-218px, -13px, 14px, 14px);
+}
+
 @mixin sprite-icon-story {
   @include sprite(-44px, -196px, 22px, 24px);
 }
@@ -135,20 +140,24 @@
   @include sprite(-167px, -196px, 18px, 12px);
 }
 
+@mixin sprite-icon-tool {
+  @include sprite(-185px, -196px, 18px, 18px);
+}
+
 @mixin sprite-icon-visualization {
-  @include sprite(-185px, -196px, 25px, 24px);
+  @include sprite(-203px, -196px, 25px, 24px);
 }
 
 @mixin sprite-icon-zoomin {
-  @include sprite(-230px, 0, 24px, 24px);
+  @include sprite(-232px, 0, 24px, 24px);
 }
 
 @mixin sprite-icon-zoomout {
-  @include sprite(-228px, -24px, 24px, 24px);
+  @include sprite(-232px, -24px, 24px, 24px);
 }
 
 @mixin sprite-logo {
-  @include sprite(-254px, 0, 109px, 51px);
+  @include sprite(-256px, 0, 109px, 51px);
 }
 
 @mixin sprite-logo-hover {
@@ -163,10 +172,14 @@
   @include sprite(-345px, -51px, 8px, 16px);
 }
 
+@mixin sprite-social-icon-gplus {
+  @include sprite(-337px, -67px, 18px, 12px);
+}
+
 @mixin sprite-social-icon-twitter {
-  @include sprite(-337px, -67px, 16px, 14px);
+  @include sprite(-337px, -79px, 16px, 14px);
 }
 
 @mixin sprite-social-icon-twitter-brand {
-  @include sprite(-337px, -81px, 16px, 14px);
+  @include sprite(-337px, -93px, 16px, 14px);
 }
