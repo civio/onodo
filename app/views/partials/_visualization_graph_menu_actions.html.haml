@@ -1,6 +1,16 @@
-.visualization-graph-menu-actions.btn-group-vertical{role: "group"}
-  %button.btn.btn-default.search{type: "button"}
-  %button.btn.btn-default.share{type: "button", data: {target: "#visualization-share-modal", toggle: "modal"}}
-    %i.glyphicon.glyphicon-share
-  %button.btn.btn-default.configure{type: "button"}
-    %i.glyphicon.glyphicon-cog
+.visualization-graph-menu-actions
+  .btn-search
+    %span.search-icon
+    .search-input
+      .input-group
+        %input.form-control{type: "text", placeholder: "SEARCH NODE" }
+        %span.input-group-btn
+          %button.btn.btn-default{type: "button"}
+            %span.search-icon
+  %button.btn.btn-default.btn-transparent.btn-share{type: "button"}
+    %span.title
+      Share it
+    %span.icon-share
+  - if defined? edit
+    %button.btn.btn-default.configure{type: "button"}
+      %i.glyphicon.glyphicon-cog

@@ -9,12 +9,12 @@
       Stories
     %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/visualizations' : '/users/'+params[:id]+'/visualizations'}" }
       Visualizations
-  .items-search.pull-right
+  .search-input.pull-right
     .input-group
       %input.form-control{:type => "text"}
       %span.input-group-btn
         %button.btn.btn-default{:type => "button"}
-          %i.glyphicon.glyphicon-search  
+          %span.search-icon
   .items-orderby.pull-right
     Order by
     %a.active{href: '#', title: 'The popularity is based on the number of embeded & social shares', data: {toggle: 'tooltip', placement: 'bottom'}}

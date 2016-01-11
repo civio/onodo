@@ -152,6 +152,10 @@
   .visualization-graph-menu-actions{
     position: absolute;
     top: $grid-gutter-width/2;
+  }
+
+  .visualization-graph-menu-navigation{
+    left: $grid-gutter-width/2;
 
     .btn{
       min-width: auto;
@@ -164,13 +168,7 @@
       &:hover{
         opacity: 0.7;
       }
-    }
-  }
 
-  .visualization-graph-menu-navigation{
-    left: $grid-gutter-width/2;
-
-    .btn{
       &.zoomin{
         @include sprite-icon-zoomin();
       }
@@ -185,10 +183,57 @@
 
   .visualization-graph-menu-actions{
     right: $grid-gutter-width/2;
+    width: 45px;
+    
+    .btn-search{
+      position: relative;
+      padding: 8px 15px;
+      background: white;
 
-    .btn{
-      &.search{
+      > .search-icon{
+        @include clearfix;
         @include sprite-icon-search();
+      }
+
+      .search-input{
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: none;
+      }
+
+      &:hover{
+        .search-input{
+          display: block;
+        }
+      }
+    }
+
+    .btn-share{
+      float: right;
+      background-color: white;
+      @include clearfix;
+
+      .icon-share{
+        @include sprite-icon-share();
+        display: inline-block;
+        position: relative;
+        top: 2px;
+        margin-left: $grid-gutter-width/3;
+      }
+
+      .title{
+        display: none;
+      }
+
+      &:hover{
+        color: $brand-primary;
+        border-color: white;
+        background: white;
+
+        .title{
+          display: inline;
+        }
       }
     }
   }
@@ -507,6 +552,61 @@
     > tbody{
       font-weight: 300;
     }
+  }
+}
+
+// Share & Embed Panel
+#visualization-share{
+
+  h4{
+    font-size: 28px;
+    font-weight: 300;
+    margin: $grid-gutter-width 0 $grid-gutter-width/2;
+  }
+
+  .social-networks-btns{
+    width: 138px;
+    margin: $grid-gutter-width/2 auto;
+
+    li{
+      margin: 0 7px;
+
+      a{
+        border-color: white;
+
+        &.twitter .icon{
+          @include sprite-social-icon-twitter();
+        }
+        &.facebook .icon{
+          @include sprite-social-icon-facebook();
+        }
+
+        &:hover{
+          background: mix($brand-primary, white, 75%);
+        }
+      }
+    }
+  }
+
+  .form-inline{
+    text-align: center;
+
+    .form-group{
+      margin: 0 $grid-gutter-width/6;
+    }
+  }
+
+  .checkbox{
+    margin-left: 2*$grid-gutter-width;
+  }
+
+  .form-control{
+    border: none;
+  }
+
+  input[type="number"]{
+    width: 80px;
+    text-align: center;
   }
 }
 

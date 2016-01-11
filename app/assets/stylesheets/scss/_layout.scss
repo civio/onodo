@@ -294,46 +294,6 @@
     }
   }
 
-  .items-search{
-    width: 180px;
-    margin-left: $grid-gutter-width;
-    margin-bottom: $grid-gutter-width;
-
-    // Search box styles
-    .input-group .form-control,
-    .input-group-btn > .btn{
-      border-color: $brand-primary;
-    }
-
-    .input-group .form-control{
-      padding: 0 5px 0 10px;
-      font-size: 12px;
-      line-height: $btn-line-height;
-      height: auto;
-      border-width: 2px;
-      border-right: none;
-      border-top-left-radius: 2px + $btn-line-height/2;
-      border-bottom-left-radius: 2px + $btn-line-height/2;
-    }
-
-    .input-group-btn > .btn{
-      min-width: auto;
-      color: $brand-primary;
-      padding: 0 10px 0 5px;
-      border-left: none;
-  
-      &:hover{
-        color: $text-color;
-        background: #fff;
-      }
-
-      .glyphicon{
-        font-size: 1.5em;
-        top: 3px;
-      }
-    }
-  }
-
   .items-orderby{
     font-size: 11px;
     line-height: 4+$btn-line-height;

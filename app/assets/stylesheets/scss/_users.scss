@@ -100,41 +100,6 @@
     margin: $grid-gutter-width/2 0 8px;
   }
 
-  .user-social-networks{
-    padding: 0;
-    
-    li{
-      float: left;
-      margin-right: $grid-gutter-width/2;
-
-      a{
-        display: block;
-        width: 32px;
-        height: 32px;
-        border-radius: 16px;
-        border: 2px solid $brand-primary;
-        text-indent: -9999px;
-        background: transparent;
-        @include transition( background 0.3s ease-out );
-        
-        &.twitter .icon{
-          margin-top: 7px;
-          margin-left: 6px;
-          @include sprite-social-icon-twitter-brand();
-        }
-        &.facebook .icon{
-          margin-top: 6px;
-          margin-left: 10px;
-          @include sprite-social-icon-facebook-brand();
-        }
-
-        &:hover{
-          background: mix($brand-primary, white, 25%);
-        }
-      }
-     }
-  }
-
   .user-actions{
     margin-bottom: 1.5*$grid-gutter-width;
   }

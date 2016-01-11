@@ -10,7 +10,7 @@
             %a{href: @user.website, target: '_blank'}
               = @user.website
         -if !@user.twitter.blank? or !@user.facebook.blank?
-          %ul.user-social-networks
+          %ul.social-networks-btns
             -if !@user.twitter.blank?
               %li
                 %a.twitter{href: 'https://twitter.com/'+@user.twitter, target: '_blank'}
