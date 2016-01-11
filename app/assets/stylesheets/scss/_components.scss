@@ -1,0 +1,312 @@
+@import 'bootstrap/variables';
+@import 'bootstrap/mixins/buttons';
+@import 'bootstrap/mixins/vendor-prefixes';
+@import 'bootstrap/mixins/clearfix';
+@import '_variables';
+@import 'scss/sprites';
+
+
+// Boton Circle LG
+
+.btn-circle-lg{
+
+  .btn-circle-lg-icon{
+    position: relative;
+    display: block;
+    height: 128px;
+    width: 128px;
+    margin: 0 auto;
+    border-radius: 64px;
+    border: 2px solid $brand-primary;
+    background: transparent;
+    @include transition( background 0.3s ease-out );
+  }
+
+  .btn-circle-lg-icon-sprite{
+    margin: 32px auto 0;
+  }
+
+  .btn-circle-lg-icon-detail{
+    position: absolute;
+    top: 4px;
+    right: 0;
+    @include sprite-icon-plus-circle();
+  }
+
+  .btn-circle-lg-title{
+    display: block;
+    font-size: 0.857em;
+    text-transform: uppercase;
+    padding: $grid-gutter-width/2 0;
+  }
+
+  &.btn-circle-lg-story .btn-circle-lg-icon-sprite{
+    @include sprite-dahsboard-icon-story();
+  }
+  &.btn-circle-lg-visualization .btn-circle-lg-icon-sprite{
+    margin-top: 36px;
+    @include sprite-dahsboard-icon-visualization();
+  }
+  &.btn-circle-lg-preview .btn-circle-lg-icon-sprite{
+    margin-top: 44px;
+    @include sprite-home-icon-preview();
+  }
+  &.btn-circle-lg-settings{
+    .btn-circle-lg-icon-sprite{
+      @include sprite-dahsboard-icon-user();
+    }
+    .btn-circle-lg-icon-detail{
+      @include sprite-icon-pencil-circle();
+    }
+  }
+
+  &:hover{
+    color: $brand-primary;
+    text-decoration: none;
+
+    .btn-circle-lg-icon{
+      background: mix($brand-primary, white, 25%);
+    }
+  }
+}
+
+
+// Boton Edit Circle
+
+.btn-edit-circle{
+  float: left;
+  display: block;
+  width: $grid-gutter-width;
+  height: $grid-gutter-width;
+  border-radius: $grid-gutter-width/2;
+  margin-top: 12px;
+  margin-left: $grid-gutter-width/2;
+  background: $gray-blue-dark;
+  @include transition( background 0.3s ease-out );
+
+  .btn-edit-circle-icon{
+    margin: 6px 0 0 7px;
+    @include sprite-icon-pencil-white();
+  }
+
+  &:hover{
+    background: $brand-primary;
+  }
+}
+
+
+// Social Networks Btns
+
+.social-networks-btns{
+  padding: 0;
+  @include clearfix();
+  
+  li{
+    float: left;
+    margin-right: $grid-gutter-width/2;
+
+    a{
+      display: block;
+      width: 32px;
+      height: 32px;
+      border-radius: 16px;
+      border: 2px solid $brand-primary;
+      text-indent: -9999px;
+      background: transparent;
+      @include transition( background 0.3s ease-out );
+      
+      &.twitter .icon{
+        margin-top: 7px;
+        margin-left: 6px;
+        @include sprite-social-icon-twitter-brand();
+      }
+      &.facebook .icon{
+        margin-top: 6px;
+        margin-left: 10px;
+        @include sprite-social-icon-facebook-brand();
+      }
+      &.gplus .icon{
+        margin-top: 6px;
+        margin-left: 10px;
+        //@include sprite-social-icon-gplus-brand();
+      }
+
+      &:hover{
+        background: mix($brand-primary, white, 25%);
+      }
+    }
+  }
+}
+
+
+// Section title
+
+.section-title{
+  font-size: 0.857em;
+  color: $gray-dark;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: $grid-gutter-width auto;
+  text-align: center; 
+}
+
+
+// Separator
+
+.separator{
+  border-color: $brand-primary;
+  border-width: 2px;
+  margin: $grid-gutter-width auto;
+}
+.separator-white{
+  border-color: #fff;
+}
+.separator-small{
+  width: 6*$grid-gutter-width;
+}
+
+
+// User Label
+
+.user-label{
+
+  $user-picture-size: 28px;
+  $user-picture-border: 8px;
+
+  .user-name{
+    color: $gray;
+    font-size: 0.786em;
+    text-transform: uppercase;
+    vertical-align: top;
+    line-height:$user-picture-size + (2*$user-picture-border);
+    padding: 0 $grid-gutter-width/3;
+  }
+
+  .user-picture{
+    display: inline-block;
+    width: $user-picture-size + (2*$user-picture-border);
+    height: $user-picture-size + (2*$user-picture-border);
+    overflow: hidden;
+    border-radius: $user-picture-border + ($user-picture-size/2);
+    border: $user-picture-border solid $gray-lighter;
+
+    > img{
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+
+// Search Input
+
+.search-input{
+  
+  width: 180px;
+  margin-left: $grid-gutter-width;
+  margin-bottom: $grid-gutter-width;
+
+  // Search box styles
+  .input-group .form-control,
+  .input-group-btn > .btn{
+    border-color: $brand-primary;
+  }
+
+  .input-group .form-control{
+    padding: 2px 5px 0 10px;
+    font-size: 12px;
+    line-height: -2px + $btn-line-height;
+    height: auto;
+    color: $brand-primary;
+    border-width: 2px;
+    border-right: none;
+    border-top-left-radius: 2px + $btn-line-height/2;
+    border-bottom-left-radius: 2px + $btn-line-height/2;
+
+    &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    $brand-primary;
+    }
+    &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color:    $brand-primary;
+      opacity:  1;
+    }
+    &::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color:    $brand-primary;
+      opacity:  1;
+    }
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+      color:    $brand-primary;
+    }
+    &:placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+      color:    $brand-primary;
+    }
+  }
+
+  .input-group-btn{
+    top: 1px;
+
+    > .btn{
+      display: block;
+      position: relative;
+      height: 4px + $btn-line-height;
+      min-width: auto;
+      top: -1px;
+      padding: 0 10px 0 5px;
+      color: $brand-primary;
+      border-left: none;
+
+      &:hover{
+        color: $text-color;
+        background: #fff;
+      }
+
+      .search-icon{
+        @include sprite-icon-search();
+      }
+    }
+  }
+}
+
+
+// Panel Share
+
+.panel.panel-share{
+  display: none;
+  color: white;
+  background: $brand-primary;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  border: none;
+  border-radius: 0;
+  margin: 0;
+
+  &.active{
+    display: block;
+  }
+
+  .panel-heading{
+    padding: 0;
+
+    .close{
+      margin: $grid-gutter-width/2;
+      border-radius: $grid-gutter-width/2;
+      text-indent: -9999px;
+      opacity: 1;
+      @include sprite-icon-close-white();
+      @include transition( background-color 0.3s ease-out );
+
+      &:hover{
+        background-color: mix( $brand-primary, white, 75% );
+      }
+    }
+  }
+
+  .panel-body{
+    width: 360px;
+    padding: 0;
+    margin: 0 auto;
+  }
+}
