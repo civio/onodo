@@ -28,7 +28,8 @@
           - @nodes.each do |node|
             %tr
               %td= node.name
-              %td= node.description
+              - if node.description
+                %td= node.description.html_safe
               %td= node.node_type
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
