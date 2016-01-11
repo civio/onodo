@@ -20,7 +20,3 @@ $(document).ready ->
     appVisualizationShow = new App.VisualizationShow $('body').data('id')
     appVisualizationShow.render()
     $( window ).resize appVisualizationShow.resize
-  # /nodes/:id/edit
-  else if $('#wysiwig-toolbar').length > 0
-    console.log 'wysiwig'
-    

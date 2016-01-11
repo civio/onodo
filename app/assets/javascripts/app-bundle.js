@@ -63,8 +63,6 @@
 	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
 	    appVisualizationShow.render();
 	    return $(window).resize(appVisualizationShow.resize);
-	  } else if ($('#wysiwig-toolbar').length > 0) {
-	    return console.log('wysiwig');
 	  }
 	});
 

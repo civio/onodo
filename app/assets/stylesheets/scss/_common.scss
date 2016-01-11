@@ -310,7 +310,7 @@ label{
 }
 
 .form-control{
-  border-color: $gray-lighter;
+  border-color: mix( $gray-light, $gray-lighter, 50% );
   border-width: 2px;
   color: $gray-semi-light;
   font-size: 12px;

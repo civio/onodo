@@ -275,6 +275,11 @@
 
       .description{
         font-size: 0.857em;
+
+        del{
+          font-style: none;
+          text-decoration: underline;
+        }
       }
     }
   }
@@ -364,6 +369,11 @@
 
     strong{
       font-weight: normal;
+    }
+
+    del{
+      font-style: normal;
+      text-decoration: underline;
     }
   }
   

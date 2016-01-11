@@ -1,0 +1,41 @@
+@import 'bootstrap/variables';
+@import '_variables';
+
+trix-toolbar{
+
+  .block_tools,
+  .history_tools{
+    display: none;
+  }
+
+  .button_group{
+    border-color: mix( $gray-light, $gray-lighter, 50% );
+    border-radius: 4px;
+
+    button{
+      border: none;
+      &:hover{
+        background-color: $gray-lighter;
+      }
+
+      &.strike::before{
+        background-image: url(/images/icon-underline.png);    
+      }
+    }
+  }
+
+  .dialogs .dialog{
+    padding: 15px 12px 10px;
+    border: 1px solid mix( $gray-light, $gray-lighter, 50% );
+  }
+}
+
+trix-editor{
+  overflow-y: scroll;
+  min-height: 116px;
+
+  del{
+    font-style: none;
+    text-decoration: underline;
+  }
+}
