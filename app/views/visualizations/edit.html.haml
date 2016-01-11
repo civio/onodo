@@ -2,12 +2,11 @@
   = render 'partials/visualization_header', :edit => true
   .visualization-graph-container
     = render 'partials/visualization_graph_menu_navigation'
-    = render 'partials/visualization_graph_menu_actions'
+    = render 'partials/visualization_graph_menu_actions', :edit => true
     = render 'partials/visualization_graph_panel_configuration'
-    -#%img.img-responsive{:src => 'http://placehold.it/1920x820'}
+    = render 'partials/visualization_share_panel'
     .visualization-graph-component
     = render 'partials/visualization_graph_info', :edit => true
     
 = render 'partials/visualization_table_edit'
-= render 'partials/visualization_share_modal'
 = render 'partials/visualization_delete_modal'

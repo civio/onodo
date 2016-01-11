@@ -21,14 +21,26 @@ class VisualizationGraph extends Backbone.View
     @collection.nodes.once      'sync', @onNodesSync , @
     @collection.relations.once  'sync', @onRelationsSync , @
     # Setup Configure Panel Show/Hide
-    $('.visualization-graph-menu-actions .configure').click     @onShowPanelConfigure
-    $('.visualization-graph-panel-configuration .close').click  @onHidePanelConfigure
+    $('.visualization-graph-menu-actions .configure').click     @onPanelConfigureShow
+    $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
+    # Setup Share Panel Show/Hide
+    $('.visualization-graph-menu-actions .share').click         @onPanelShareShow
+    $('#visualization-share .close').click                      @onPanelShareHide
 
-  onShowPanelConfigure: ->
+  onPanelConfigureShow: ->
+    $(this).blur()
     $('.visualization-graph-panel-configuration').addClass 'active'
 
-  onHidePanelConfigure: ->
+  onPanelConfigureHide: ->
     $('.visualization-graph-panel-configuration').removeClass 'active'
+
+  onPanelShareShow: ->
+    console.log 'panel share show'
+    $('#visualization-share').addClass 'active'
+
+  onPanelShareHide: ->
+    console.log 'panel share hide'
+    $('#visualization-share').removeClass 'active'
 
   onNodesSync: (nodes) =>
     @nodesSync = true

@@ -340,16 +340,29 @@
 	    console.log('initialize Graph', this.collection);
 	    this.collection.nodes.once('sync', this.onNodesSync, this);
 	    this.collection.relations.once('sync', this.onRelationsSync, this);
-	    $('.visualization-graph-menu-actions .configure').click(this.onShowPanelConfigure);
-	    return $('.visualization-graph-panel-configuration .close').click(this.onHidePanelConfigure);
+	    $('.visualization-graph-menu-actions .configure').click(this.onPanelConfigureShow);
+	    $('.visualization-graph-panel-configuration .close').click(this.onPanelConfigureHide);
+	    $('.visualization-graph-menu-actions .share').click(this.onPanelShareShow);
+	    return $('#visualization-share .close').click(this.onPanelShareHide);
 	  };
 
-	  VisualizationGraph.prototype.onShowPanelConfigure = function() {
+	  VisualizationGraph.prototype.onPanelConfigureShow = function() {
+	    $(this).blur();
 	    return $('.visualization-graph-panel-configuration').addClass('active');
 	  };
 
-	  VisualizationGraph.prototype.onHidePanelConfigure = function() {
+	  VisualizationGraph.prototype.onPanelConfigureHide = function() {
 	    return $('.visualization-graph-panel-configuration').removeClass('active');
+	  };
+
+	  VisualizationGraph.prototype.onPanelShareShow = function() {
+	    console.log('panel share show');
+	    return $('#visualization-share').addClass('active');
+	  };
+
+	  VisualizationGraph.prototype.onPanelShareHide = function() {
+	    console.log('panel share hide');
+	    return $('#visualization-share').removeClass('active');
 	  };
 
 	  VisualizationGraph.prototype.onNodesSync = function(nodes) {
