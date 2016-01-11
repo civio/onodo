@@ -38,7 +38,7 @@
           - if defined? current_user and current_user == @visualization.author
             %a.btn-edit-circle{ href: edit_visualization_path(@visualization)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
               .btn-edit-circle-icon
-          .visualization-description-content= @visualization.description
+          .visualization-description-content= @visualization.description.html_safe
         - if defined? current_user and current_user == @visualization.author
           .visualization-description-buttons.col-md-4.col-lg-3
             %p

@@ -15,7 +15,8 @@
         %tr
           %td= node.id
           %td= node.name
-          %td= node.description
+          - if node.description
+            %td= node.description.html_safe
           %td= node.node_type
           %td= node.dataset_id
           %td= node.created_at

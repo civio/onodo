@@ -10,6 +10,7 @@
         .form-group
           = f.label "node-input-description", "Description"
           = f.text_field :description, type: "hidden"
-          %trix-editor{ input: "node_description" }
+          %trix-toolbar{ id: "wysiwig-toolbar", input: "node_description" }
+          %trix-editor{ input: "node_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: "#"} Cancel
