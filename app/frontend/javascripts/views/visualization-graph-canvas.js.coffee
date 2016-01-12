@@ -2,7 +2,7 @@ d3 = require 'd3'
 
 class VisualizationGraphCanvas extends Backbone.View
 
-  NODES_SIZE: 8
+  NODES_SIZE: 11
 
   svg:              null
   container:        null
@@ -60,7 +60,7 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # Setup force
     @force = d3.layout.force()
-      .charge(-120)
+      .charge(-150)
       .linkDistance(90)
       #.linkStrength(2)
       .size([@viewport.width, @viewport.height])
@@ -146,6 +146,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .attr('class', 'node-circle')
       .attr('r', @NODES_SIZE)
       .style('fill', (d) => return @color(d.node_type))
+      .style('stroke', (d) => return @color(d.node_type))
     @nodes.exit().remove()
 
   updateRelations: ->
@@ -160,8 +161,8 @@ class VisualizationGraphCanvas extends Backbone.View
     @labels.enter().append('text')
       .attr('id', (d,i) -> return 'label-'+d.id)
       .attr('class', 'label')
-      .attr('dx', @NODES_SIZE+6)
-      .attr('dy', '.35em')
+      .attr('dx', 0)
+      .attr('dy', @NODES_SIZE+15)
     @labels.text((d) -> return d.name)  # Enter+Update text label
     @labels.exit().remove()
 

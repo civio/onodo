@@ -532,7 +532,7 @@
 	    return VisualizationGraphCanvas.__super__.constructor.apply(this, arguments);
 	  }
 
-	  VisualizationGraphCanvas.prototype.NODES_SIZE = 8;
+	  VisualizationGraphCanvas.prototype.NODES_SIZE = 11;
 
 	  VisualizationGraphCanvas.prototype.svg = null;
 
@@ -601,7 +601,7 @@
 	    this.viewport.center.x = this.viewport.width * 0.5;
 	    this.viewport.center.y = this.viewport.height * 0.5;
 	    this.color = d3.scale.category20();
-	    this.force = d3.layout.force().charge(-120).linkDistance(90).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
+	    this.force = d3.layout.force().charge(-150).linkDistance(90).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
 	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
 	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
 	    this.container = this.svg.append('g');
@@ -661,6 +661,10 @@
 	      return function(d) {
 	        return _this.color(d.node_type);
 	      };
+	    })(this)).style('stroke', (function(_this) {
+	      return function(d) {
+	        return _this.color(d.node_type);
+	      };
 	    })(this));
 	    return this.nodes.exit().remove();
 	  };
@@ -677,7 +681,7 @@
 	    this.labels = this.labels.data(this.data_current_nodes);
 	    this.labels.enter().append('text').attr('id', function(d, i) {
 	      return 'label-' + d.id;
-	    }).attr('class', 'label').attr('dx', this.NODES_SIZE + 6).attr('dy', '.35em');
+	    }).attr('class', 'label').attr('dx', 0).attr('dy', this.NODES_SIZE + 15);
 	    this.labels.text(function(d) {
 	      return d.name;
 	    });
