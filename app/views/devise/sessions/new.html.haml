@@ -1,9 +1,9 @@
 .login.devise-page.container
   .row
+    .page-header.text-center
+      %h2 Login
+      %p.lead Create your relationships visualizations & tell meaningful stories through them
     .col-sm-6.col-sm-offset-3
-      .page-header.text-center
-        %h2 Login
-        %p.lead Create your relationships visualizations & tell meaningful stories through them
       = form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => 'form-default'}) do |f|
         .form-group
           = f.label :email

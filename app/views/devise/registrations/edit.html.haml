@@ -23,9 +23,11 @@
         .form-group
           = f.label :email
           = f.email_field :email, class: "form-control"
-        - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-          %div
-            Currently waiting confirmation for: #{resource.unconfirmed_email}
+        .form-group
+          = link_to "Change Password", edit_user_password_path, class: "btn btn-default btn-invert"
+        /- if devise_mapping.confirmable? && resource.pending_reconfirmation?
+        /  %div
+        /    Currently waiting confirmation for: #{resource.unconfirmed_email}
         / .form-group
         /   = f.label :password
         /   %em (leave blank if you don't want to change it)

@@ -1,9 +1,10 @@
-.container
+.password-new.devise-page.container
   .row
-    .col-sm-8
+    .page-header.text-center
       %h2 Did you forget your password?
       %p.lead Enter the email you registered & we will send you a link to restore it
-      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+    .col-sm-6.col-sm-offset-3
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-default' }) do |f|
         = devise_error_messages!
         .form-group
           = f.label :email
