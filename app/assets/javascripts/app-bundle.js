@@ -340,7 +340,7 @@
 	    console.log('initialize Graph', this.collection);
 	    this.collection.nodes.once('sync', this.onNodesSync, this);
 	    this.collection.relations.once('sync', this.onRelationsSync, this);
-	    $('.visualization-graph-menu-actions .configure').click(this.onPanelConfigureShow);
+	    $('.visualization-graph-menu-actions .btn-configure').click(this.onPanelConfigureShow);
 	    $('.visualization-graph-panel-configuration .close').click(this.onPanelConfigureHide);
 	    $('.visualization-graph-menu-actions .btn-share').click(this.onPanelShareShow);
 	    return $('#visualization-share .close').click(this.onPanelShareHide);
@@ -356,12 +356,10 @@
 	  };
 
 	  VisualizationGraph.prototype.onPanelShareShow = function() {
-	    console.log('panel share show');
 	    return $('#visualization-share').addClass('active');
 	  };
 
 	  VisualizationGraph.prototype.onPanelShareHide = function() {
-	    console.log('panel share hide');
 	    return $('#visualization-share').removeClass('active');
 	  };
 
