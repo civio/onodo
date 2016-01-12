@@ -98,12 +98,13 @@
         @include sprite-home-icon-collaboration();
       }
       .feature-icon-preview{
+        position: relative;
+        top: 10px;
         @include sprite-home-icon-preview();
-        // Alighn view icon
-        background-position: -42px -53px;
-        height: 41px;
       }
       .feature-icon-story{
+        position: relative;
+        top: 10px;
         @include sprite-home-icon-story();
       }
     }

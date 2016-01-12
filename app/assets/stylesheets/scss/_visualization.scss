@@ -451,11 +451,11 @@
 
     .btn-icon-story{
       top: 5px;
-      @include sprite-icon-story();
+      @include sprite-icon-story-brand();
     } 
     .btn-icon-visualization{
       top: 5px;
-      @include sprite-icon-visualization();
+      @include sprite-icon-visualization-brand();
     }        
     .btn-icon-pencil{
       top: 5px;
