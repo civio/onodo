@@ -342,7 +342,7 @@
 	    this.collection.relations.once('sync', this.onRelationsSync, this);
 	    $('.visualization-graph-menu-actions .configure').click(this.onPanelConfigureShow);
 	    $('.visualization-graph-panel-configuration .close').click(this.onPanelConfigureHide);
-	    $('.visualization-graph-menu-actions .share').click(this.onPanelShareShow);
+	    $('.visualization-graph-menu-actions .btn-share').click(this.onPanelShareShow);
 	    return $('#visualization-share .close').click(this.onPanelShareHide);
 	  };
 

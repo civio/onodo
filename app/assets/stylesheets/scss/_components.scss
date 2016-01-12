@@ -126,9 +126,9 @@
         @include sprite-social-icon-facebook-brand();
       }
       &.gplus .icon{
-        margin-top: 6px;
-        margin-left: 10px;
-        //@include sprite-social-icon-gplus-brand();
+        margin-top: 8px;
+        margin-left: 6px;
+        @include sprite-social-icon-gplus();
       }
 
       &:hover{
@@ -305,8 +305,33 @@
   }
 
   .panel-body{
-    width: 360px;
     padding: 0;
+    width: 360px;
     margin: 0 auto;
+
+    .form-inline label{
+      display: block;
+      margin: 8px auto 0;
+    }
+
+    .form-group-separator{
+      vertical-align: top;
+      padding: 6px 0;
+      font-weight: 300;
+    }
+
+    &.draft{
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 0;
+      right: 0;
+    }
+
+    .panel-body-draft-container{
+      width: 520px;
+      margin: -96px auto 0;
+      text-align: center;
+    }
   }
 }

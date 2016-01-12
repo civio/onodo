@@ -560,6 +560,7 @@
 
   h4{
     font-size: 28px;
+    line-height: 1.375em;
     font-weight: 300;
     margin: $grid-gutter-width 0 $grid-gutter-width/2;
   }
@@ -607,6 +608,11 @@
   input[type="number"]{
     width: 80px;
     text-align: center;
+  }
+
+  .btn-primary{
+    border-color: white;
+    margin: $grid-gutter-width auto;
   }
 }
 

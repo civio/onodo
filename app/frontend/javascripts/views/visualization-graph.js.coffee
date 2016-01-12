@@ -24,7 +24,7 @@ class VisualizationGraph extends Backbone.View
     $('.visualization-graph-menu-actions .configure').click     @onPanelConfigureShow
     $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
     # Setup Share Panel Show/Hide
-    $('.visualization-graph-menu-actions .share').click         @onPanelShareShow
+    $('.visualization-graph-menu-actions .btn-share').click         @onPanelShareShow
     $('#visualization-share .close').click                      @onPanelShareHide
 
   onPanelConfigureShow: ->

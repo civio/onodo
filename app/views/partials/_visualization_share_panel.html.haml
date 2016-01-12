@@ -3,47 +3,57 @@
     %button.close{type: "button", "aria-label" => "Close"}
       %span{"aria-hidden" => "true"}
         &times
-  .panel-body
-    %h4.text-center
-      Share
-    %ul.social-networks-btns
-      %li
-        %a.twitter{href: 'https://twitter.com/', target: '_blank'}
-          %span.icon
-            Twitter
-      %li
-        %a.facebook{href: 'https://www.facebook.com/', target: '_blank'}
-          %span.icon
-            Facebook
-      %li
-        %a.gplus{href: 'https://www.gplus.com/', target: '_blank'}
-          %span.icon
-            Google +
-    %h4.text-center
-      Embed this visualization
-    %p.text-center
-      Size
-      %small
-        (minimum size is 700x500 pixels)
-    %form.form-inline
+  - if @visualization.published?
+    .panel-body
+      %h4.text-center
+        Share
+      %ul.social-networks-btns
+        %li
+          %a.twitter{href: 'https://twitter.com/', target: '_blank'}
+            %span.icon
+              Twitter
+        %li
+          %a.facebook{href: 'https://www.facebook.com/', target: '_blank'}
+            %span.icon
+              Facebook
+        %li
+          %a.gplus{href: 'https://www.gplus.com/', target: '_blank'}
+            %span.icon
+              Google +
+      %h4.text-center
+        Embed this visualization
+      %p.text-center
+        Size
+        %small
+          (minimum size is 700x500 pixels)
+      %form.form-inline
+        .form-group
+          %input.form-control{ type: "number", name: "embed-width", value: 1200 }
+          %label{ for: "embed-width" }
+            Width
+        .form-group.form-group-separator
+          x
+        .form-group
+          %input.form-control{ type: "number", name: "embed-height", value: 600 }
+          %label{ for: "embed-height" }
+            Height
+      .checkbox
+        %label
+          %input{ type: "checkbox", checked: "checked" } 
+            Show controls in embed window
+      .checkbox
+        %label
+          %input{ type: "checkbox", checked: "checked" } 
+            Show title in embed window
+      %textarea.form-control{ rows: 5 }
+        <iframe src="#{request.original_url}"></iframe>
       .form-group
-        %input.form-control{ type: "number", name: "embed-width", value: 1200 }
-      .form-group
-        x
-      .form-group
-        %input.form-control{ type: "number", name: "embed-height", value: 600 }
-    .checkbox
-      %label
-        %input{ type: "checkbox", checked: "checked" } 
-          Show controls in embed window
-    .checkbox
-      %label
-        %input{ type: "checkbox", checked: "checked" } 
-          Show title in embed window
-    %textarea.form-control{ rows: 5 }
-      <iframe src="#{request.original_url}"></iframe>
-    .form-group
-      %label{ for: "" }
-        Permalink
-      %input.form-control{ type: "text", value: request.original_url }
-    
+        %label{ for: "" }
+          Permalink
+        %input.form-control{ type: "text", value: request.original_url }
+  - else
+    .panel-body.draft
+      .panel-body-draft-container
+        %h4
+          The visualization has to be public to embed or share it
+        = link_to "Publish Now", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:method => :post, :class => "btn btn-default btn-primary"}
