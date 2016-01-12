@@ -52,8 +52,8 @@ class VisualizationGraphCanvas extends Backbone.View
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
     @viewport.height    = @$el.height()
-    @viewport.center.x  = @viewport.width*0.5
-    @viewport.center.y  = @viewport.height*0.5
+    @viewport.center.x = @viewport.width*0.5
+    @viewport.center.y = @viewport.height*0.5
 
     # Setup color scale
     @color = d3.scale.category20()
@@ -250,6 +250,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @viewport.height    = @$el.height()
     @viewport.origin.x  = (@viewport.width*0.5) - @viewport.center.x
     @viewport.origin.y  = (@viewport.height*0.5) - @viewport.center.y
+
     # Update canvas
     @svg.attr   'width', @viewport.width
     @svg.attr   'height', @viewport.height
@@ -258,7 +259,10 @@ class VisualizationGraphCanvas extends Backbone.View
     @force.size [@viewport.width, @viewport.height]
 
   rescale: ->
-    @container.attr 'transform', 'translate(' + @viewport.scale*(@viewport.origin.x+@viewport.x) + ',' + @viewport.scale*(@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
+    @container.attr       'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
+    @relations_cont.attr  'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @nodes_cont.attr      'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @labels_cont.attr     'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
 
 
   # Config Methods

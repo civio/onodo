@@ -792,7 +792,10 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.rescale = function() {
-	    return this.container.attr('transform', 'translate(' + this.viewport.scale * (this.viewport.origin.x + this.viewport.x) + ',' + this.viewport.scale * (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
+	    this.container.attr('transform', 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
+	    this.relations_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
+	    this.nodes_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
+	    return this.labels_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
 	  };
 
 	  VisualizationGraphCanvas.prototype.toogleLabels = function(value) {
