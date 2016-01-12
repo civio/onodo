@@ -258,7 +258,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @force.size [@viewport.width, @viewport.height]
 
   rescale: ->
-    @container.attr 'transform', 'translate(' + (@viewport.origin.x+@viewport.x) + ',' + (@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
+    @container.attr 'transform', 'translate(' + @viewport.scale*(@viewport.origin.x+@viewport.x) + ',' + @viewport.scale*(@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
 
 
   # Config Methods
@@ -300,10 +300,12 @@ class VisualizationGraphCanvas extends Backbone.View
   # ---------------
 
   zoomIn: ->
-    console.log 'zoomin'
+    @viewport.scale *= 1.2
+    @rescale()
     
   zoomOut: ->
-    console.log 'zoomout'
+    @viewport.scale /= 1.2
+    @rescale()
 
   toogleFullscreen: ->
     console.log 'fullscreen'

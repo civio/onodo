@@ -792,7 +792,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.rescale = function() {
-	    return this.container.attr('transform', 'translate(' + (this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
+	    return this.container.attr('transform', 'translate(' + this.viewport.scale * (this.viewport.origin.x + this.viewport.x) + ',' + this.viewport.scale * (this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
 	  };
 
 	  VisualizationGraphCanvas.prototype.toogleLabels = function(value) {
@@ -839,11 +839,13 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.zoomIn = function() {
-	    return console.log('zoomin');
+	    this.viewport.scale *= 1.2;
+	    return this.rescale();
 	  };
 
 	  VisualizationGraphCanvas.prototype.zoomOut = function() {
-	    return console.log('zoomout');
+	    this.viewport.scale /= 1.2;
+	    return this.rescale();
 	  };
 
 	  VisualizationGraphCanvas.prototype.toogleFullscreen = function() {
