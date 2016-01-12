@@ -17,6 +17,13 @@
 
   .dropdown{
     margin-top: 8px;
+
+    .icon-tool{
+      float: right;
+      margin-top: 4px;
+      margin-left: 4px;
+      @include sprite-icon-tool();
+    }
   }
 
   /* .visualization-status{

@@ -7,8 +7,8 @@
       .pull-right.dropdown
         %button#actions-dropdown.btn.btn-default.btn-primary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
           Actions
-          %span.caret
-          %i.glyphicon.glyphicon-wrench
+          -#%span.caret
+          %span.icon-tool
         %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "actions-dropdown"}
           - if defined? edit
             %li
