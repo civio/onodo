@@ -63,6 +63,10 @@
 	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
 	    appVisualizationShow.render();
 	    return $(window).resize(appVisualizationShow.resize);
+	  } else if ($('body.stories.show').length > 0) {
+	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
+	    appVisualizationShow.render();
+	    return $(window).resize(appVisualizationShow.resize);
 	  }
 	});
 

@@ -15,8 +15,15 @@ $(document).ready ->
     appVisualizationEdit = new App.VisualizationEdit $('body').data('id')
     appVisualizationEdit.render()
     $( window ).resize appVisualizationEdit.resize
+
   # /visualizations/:id
   else if $('body.visualizations.show').length > 0
+    appVisualizationShow = new App.VisualizationShow $('body').data('id')
+    appVisualizationShow.render()
+    $( window ).resize appVisualizationShow.resize
+
+  # /stories/:id
+  else if $('body.stories.show').length > 0
     appVisualizationShow = new App.VisualizationShow $('body').data('id')
     appVisualizationShow.render()
     $( window ).resize appVisualizationShow.resize
