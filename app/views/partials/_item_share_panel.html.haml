@@ -3,7 +3,7 @@
     %button.close{type: "button", "aria-label" => "Close"}
       %span{"aria-hidden" => "true"}
         &times
-  - if @visualization.published?
+  - if item.published?
     .panel-body
       %h4.text-center
         Share
@@ -56,4 +56,4 @@
       .panel-body-draft-container
         %h4
           The visualization has to be public to embed or share it
-        = link_to "Publish Now", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:method => :post, :class => "btn btn-default btn-primary"}
+        = link_to "Publish Now", {:controller => "visualizations", :action => "publish", :id => item.id}, {:method => :post, :class => "btn btn-default btn-primary"}

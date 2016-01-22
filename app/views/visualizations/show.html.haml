@@ -1,19 +1,19 @@
-= render 'partials/visualization_header'
+= render 'partials/item_header', item: @visualization
 
 .visualization-graph
   .visualization-graph-container
-    = render 'partials/visualization_graph_menu_navigation'
-    = render 'partials/visualization_graph_menu_actions'
-    = render 'partials/visualization_graph_panel_configuration'
-    = render 'partials/visualization_share_panel'
+    = render 'partials/item_graph_menu_navigation'
+    = render 'partials/item_graph_menu_actions'
+    = render 'partials/item_graph_panel_configuration'
+    = render 'partials/item_share_panel', item: @visualization
     .visualization-graph-component
-    = render 'partials/visualization_graph_info'
+    = render 'partials/item_graph_info'
 
-= render 'partials/visualization_info'
+= render 'partials/item_info', item: @visualization
 
 .visualization-related-items
   %p.section-title
     Related visualizations & stories
   .container
-    = render 'partials/item_preview_carousel', :items => @related_items
+    = render 'partials/item_preview_carousel', items: @related_items
 

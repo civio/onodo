@@ -3,11 +3,11 @@
     .row
       .col-sm-4
         %strong Created by
-        = render 'partials/user_label', :user => @visualization.author, :align => 'left'
+        = render 'partials/user_label', :user => item.author, :align => 'left'
       .col-sm-4
-        - if defined? current_user and current_user == @visualization.author
+        - if defined? current_user and current_user == item.author
           %strong Status
-          - if @visualization.published?
+          - if item.published?
             .visualization-status 
               .visualization-status-icon
                 %span.visualization-status-icon-sprite
@@ -17,7 +17,7 @@
               .visualization-status-icon
                 %span.visualization-status-icon-sprite
               Draft
-            = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:method => :post, :class => "btn btn-default btn-primary"}
+            = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => item.id}, {:method => :post, :class => "btn btn-default btn-primary"}
       .col-sm-4
         %button.btn.btn-default.btn-invert.btn-collapse.collapsed.pull-right{ type: "button", "aria-controls" => "visualization-table-view", data: { toggle: "collapse", target: "#visualization-table-view" } }
           %span.collapsible-label
@@ -27,19 +27,19 @@
             %span.collapsed-label-icon
             Hide Data Table
 
-= render 'partials/visualization_table_view'
+= render 'partials/item_table_view'
 
-- if @visualization.description?
+- if item.description?
   .visualization-description
     .container
       .row
         .col-md-8.col-lg-9
           %h3 Description
-          - if defined? current_user and current_user == @visualization.author
-            %a.btn-edit-circle{ href: edit_visualization_path(@visualization)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
+          - if defined? current_user and current_user == item.author
+            %a.btn-edit-circle{ href: edit_visualization_path(item)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
               .btn-edit-circle-icon
-          .visualization-description-content= @visualization.description.html_safe
-        - if defined? current_user and current_user == @visualization.author
+          .visualization-description-content= item.description.html_safe
+        - if defined? current_user and current_user == item.author
           .visualization-description-buttons.col-md-4.col-lg-3
             %p
               %a.btn.btn-default.btn-invert{ href: new_story_path }
@@ -50,11 +50,11 @@
                 %span.btn-icon-visualization
                 Create Visualization
             %p
-              %a.btn.btn-default.btn-invert{ href: edit_visualization_path(@visualization) }
+              %a.btn.btn-default.btn-invert{ href: edit_visualization_path(item) }
                 %span.btn-icon-pencil
                 Edit Visualization
             %p
-              %a.btn.btn-default.btn-invert{ href: edit_visualization_path(@visualization)+'/info' }
+              %a.btn.btn-default.btn-invert{ href: edit_visualization_path(item)+'/info' }
                 %span.btn-icon-pencil
                 Edit Description
             %p

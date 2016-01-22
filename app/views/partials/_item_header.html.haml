@@ -1,8 +1,8 @@
 .visualization-header
   .container-fluid
-    %h2.pull-left= @visualization.name
-    - if defined? edit or (defined? current_user and current_user == @visualization.author)
-      %a.btn-edit-circle{ href: edit_visualization_path(@visualization)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
+    %h2.pull-left= item.name
+    - if defined? edit or (defined? current_user and current_user == item.author)
+      %a.btn-edit-circle{ href: edit_visualization_path(item)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
         .btn-edit-circle-icon
       .pull-right.dropdown
         %button#actions-dropdown.btn.btn-default.btn-primary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
@@ -12,19 +12,19 @@
         %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "actions-dropdown"}
           - if defined? edit
             %li
-              %a.active{ href: visualization_path(@visualization) } 
+              %a.active{ href: visualization_path(item) } 
                 Preview visualization
             %li
-              - if @visualization.published?
-                = link_to "Unpublish", {:controller => "visualizations", :action => "unpublish", :id => @visualization.id}, {:method => :post, :class => "active"}
+              - if item.published?
+                = link_to "Unpublish", {:controller => "visualizations", :action => "unpublish", :id => item.id}, {:method => :post, :class => "active"}
               - else
-                = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => @visualization.id}, {:method => :post, :class => "active"}
+                = link_to "Publish", {:controller => "visualizations", :action => "publish", :id => item.id}, {:method => :post, :class => "active"}
             %li
-              %a.active{ href: edit_visualization_path(@visualization)+'/info' } 
+              %a.active{ href: edit_visualization_path(item)+'/info' } 
                 Edit visualization info
           - else
             %li
-              %a.active{ href: edit_visualization_path(@visualization) }
+              %a.active{ href: edit_visualization_path(item) }
                 Edit visualization
           %li
             %a{href: "#"} 

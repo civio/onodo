@@ -1,12 +1,12 @@
 .visualization-graph
-  = render 'partials/visualization_header', :edit => true
+  = render 'partials/item_header', item: @visualization, edit: true
   .visualization-graph-container
-    = render 'partials/visualization_graph_menu_navigation'
-    = render 'partials/visualization_graph_menu_actions', :edit => true
-    = render 'partials/visualization_graph_panel_configuration'
-    = render 'partials/visualization_share_panel'
+    = render 'partials/item_graph_menu_navigation'
+    = render 'partials/item_graph_menu_actions', edit: true
+    = render 'partials/item_graph_panel_configuration'
+    = render 'partials/item_share_panel', item: @visualization
     .visualization-graph-component
-    = render 'partials/visualization_graph_info', :edit => true
+    = render 'partials/item_graph_info', edit: true
     
-= render 'partials/visualization_table_edit'
-= render 'partials/visualization_delete_modal'
+= render 'partials/item_table_edit'
+= render 'partials/item_delete_modal'
