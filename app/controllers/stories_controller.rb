@@ -3,6 +3,9 @@ class StoriesController < ApplicationController
   # GET /stories/:id
   def show
     @story = Story.find(params[:id])
+    @nodes = Node.where(dataset_id: @story.visualization.id)
+    @relations = Relation.where(dataset_id: @story.visualization.id)
+    @related_items = Visualization.all
   end
 
   # GET /stories/new

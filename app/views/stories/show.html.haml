@@ -1,2 +1,17 @@
-.container-fluid
-  %h2= @story.name
+= render 'partials/item_header', item: @story
+
+.visualization-graph
+  .visualization-graph-container
+    = render 'partials/item_graph_menu_navigation'
+    = render 'partials/item_graph_menu_actions'
+    = render 'partials/item_graph_panel_configuration'
+    = render 'partials/item_share_panel', item: @story
+    .visualization-graph-component
+
+= render 'partials/item_info', item: @story
+
+.visualization-related-items
+  %p.section-title
+    Related visualizations & stories
+  .container
+    = render 'partials/item_preview_carousel', items: @related_items
