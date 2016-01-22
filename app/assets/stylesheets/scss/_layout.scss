@@ -1,5 +1,6 @@
 @import 'bootstrap/variables';
 @import 'bootstrap/mixins/vendor-prefixes';
+@import 'bootstrap/mixins/gradients';
 @import '_variables';
 @import 'scss/sprites';
 
@@ -71,6 +72,27 @@
         width: 100%;
         height: auto;
       }
+    }
+  }
+
+  .item-picture{
+    .item-picture-overlay-white,
+    .item-picture-overlay-black{
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .item-picture-overlay-black{
+      background: #fff;
+      opacity: 0.18;
+    }
+
+    .item-picture-overlay-black{
+      @include gradient-vertical(#bbb, #000, 0%, 100%);
+      opacity: 0.56;
     }
   }
 
