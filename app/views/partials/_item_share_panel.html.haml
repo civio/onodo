@@ -21,10 +21,7 @@
             %span.icon
               Google +
       %h4.text-center
-        - if defined? story
-          Embed this story
-        - else
-          Embed this visualization
+        Embed this #{item.class.to_s.downcase}
       %p.text-center
         Size
         %small
@@ -57,11 +54,6 @@
   - else
     .panel-body.draft
       .panel-body-draft-container
-        - if defined? story
-          %h4
-            The story has to be public to embed or share it
-          = link_to "Publish Now", {controller: "stories", action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
-        - else
-          %h4
-            The visualization has to be public to embed or share it
-          = link_to "Publish Now", {controller: "visualizations", action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
+        %h4
+          The #{item.class.to_s.downcase} has to be public to embed or share it
+        = link_to "Publish Now", {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}

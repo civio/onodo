@@ -1,13 +1,9 @@
 .visualization-header
   .container-fluid
-    %h2.pull-left= item.name
+    %h2.pull-left= item.name 
     - if defined? edit or (defined? current_user and current_user == item.author)
-      - if defined? story
-        %a.btn-edit-circle{ href: edit_story_path(item)+'/info', title: "Edit Story Info", data: {toggle: "tooltip", placement: "right"} }
-          .btn-edit-circle-icon
-      - else
-        %a.btn-edit-circle{ href: edit_visualization_path(item)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
-          .btn-edit-circle-icon
+      %a.btn-edit-circle{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info', title: "Edit #{item.class.to_s} Info", data: {toggle: "tooltip", placement: "right"} }
+        .btn-edit-circle-icon
       .pull-right.dropdown
         %button#actions-dropdown.btn.btn-default.btn-primary.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
           Actions
@@ -16,40 +12,23 @@
         %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "actions-dropdown"}
           - if defined? edit
             %li
-              - if defined? story
-                %a.active{ href: story_path(item) } 
-                  Preview story
-              - else
-                %a.active{ href: visualization_path(item) } 
-                  Preview visualization
+              %a.active{ href: (defined? story) ? story_path(item) : visualization_path(item) } 
+                Preview #{item.class.to_s.downcase}
             %li
-              - item_controller = (defined? story) ? "stories" : "visualizations"
               - if item.published?
-                = link_to "Unpublish", {controller: item_controller, action: "unpublish", id: item.id}, {method: :post, class: "active"}
+                = link_to "Unpublish", {controller: controller.controller_name, action: "unpublish", id: item.id}, {method: :post, class: "active"}
               - else
-                = link_to "Publish", {controller: item_controller, action: "publish", id: item.id}, {method: :post, class: "active"}
+                = link_to "Publish", {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "active"}
             %li
-              - if defined? story
-                %a.active{ href: edit_story_path(item)+'/info' } 
-                  Edit story info
-              - else
-                %a.active{ href: edit_visualization_path(item)+'/info' } 
-                  Edit visualization info
+              %a.active{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info' }
+                Edit #{item.class.to_s.downcase} info
           - else
             %li
-              - if defined? story
-                %a.active{ href: edit_story_path(item) }
-                  Edit story
-              - else
-                %a.active{ href: edit_visualization_path(item) }
-                  Edit visualization
+              %a.active{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item) }
+                Edit #{item.class.to_s.downcase}
           %li
-            - if defined? story
-              %a{href: "#"} 
-                Duplicate story
-            - else
-              %a{href: "#"} 
-                Duplicate visualization
+            %a{href: "#"} 
+              Duplicate #{item.class.to_s.downcase}
           - unless defined? story
             %li
               %a{href: "#"} 
@@ -60,10 +39,6 @@
                 Edit visualization
           - if defined? edit
             %li
-              - if defined? story
-                %a.text-danger{ href: "#item-delete-modal", data: {toggle: "modal"} }
-                  Delete story
-              - else
-                %a.text-danger{ href: "#item-delete-modal", data: {toggle: "modal"} }
-                  Delete visualization
+              %a.text-danger{ href: "#item-delete-modal", data: {toggle: "modal"} }
+                Delete #{item.class.to_s.downcase}
       .clearfix
