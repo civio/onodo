@@ -103,6 +103,7 @@
       .node-circle{
         stroke-width: 0;
         stroke-opacity: 0.4;
+        @include transition( stroke-width, 0.3s, ease-out );
       }
 
       &.weaken .node-circle{
