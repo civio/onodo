@@ -29,6 +29,15 @@ class StoriesController < ApplicationController
     end
   end
 
+  # GET /stories/:id/edit/info
+  def editinfo
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    else
+      @story = Story.find(params[:id])
+    end
+  end
+
   # PATCH /stories/:id/
   def update
     @story = Story.find(params[:id])
@@ -37,5 +46,27 @@ class StoriesController < ApplicationController
   # DELETE /stories/:id/
   def destroy
     @story = Story.find(params[:id])
+  end
+
+  # POST /stories/:id/publish
+  def publish
+    @story = Story.find(params[:id])
+
+    if @story.update_attributes(:published => true)
+      redirect_to story_path( @story )
+    else
+      redirect_to edit_story_path( @story )
+    end
+  end
+  
+  # POST /stories/:id/unpublish
+  def unpublish
+    @story = Story.find(params[:id])
+
+    if @story.update_attributes(:published => false)
+      redirect_to story_path( @story )
+    else
+      redirect_to edit_story_path( @story )
+    end
   end
 end

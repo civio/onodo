@@ -23,7 +23,13 @@ Rails.application.routes.draw do
     end 
   end 
 
-  resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy]
+  resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy] do 
+    collection do 
+      get ':id/edit/info' => 'stories#editinfo'
+      post 'publish'
+      post 'unpublish'
+    end 
+  end 
 
   resources :datasets, only: [:index]
   resources :nodes, only: [:index, :edit, :update]
