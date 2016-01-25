@@ -66,7 +66,13 @@
 	  } else if ($('body.stories.show').length > 0) {
 	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
 	    appVisualizationShow.render();
-	    return $(window).resize(appVisualizationShow.resize);
+	    $(window).resize(appVisualizationShow.resize);
+	    return $('.story-cover .bnt-start-reding').click(function(e) {
+	      console.log('click on cover');
+	      e.preventDefault();
+	      $('.story-cover').fadeOut();
+	      return $('.visualization-info').fadeIn();
+	    });
 	  }
 	});
 
