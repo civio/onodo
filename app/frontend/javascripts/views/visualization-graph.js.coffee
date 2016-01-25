@@ -98,7 +98,7 @@ class VisualizationGraph extends Backbone.View
 
   resize: ->
     # update container height
-    h = if $('.visualization-graph').hasClass('fullscreen') then $(window).height() else $(window).height() - 50 - 64 - 64
+    h = if $('body').hasClass('fullscreen') then $(window).height() else $(window).height() - 50 - 64 - 64
     @$el.height h
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
@@ -153,7 +153,7 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphCanvas.zoomOut()
 
   onFullscreen: (e) ->
-    $('.visualization-graph').toggleClass('fullscreen')
+    $('body').toggleClass 'fullscreen'
     @resize()
 
 

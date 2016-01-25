@@ -434,7 +434,7 @@
 
 	  VisualizationGraph.prototype.resize = function() {
 	    var h;
-	    h = $('.visualization-graph').hasClass('fullscreen') ? $(window).height() : $(window).height() - 50 - 64 - 64;
+	    h = $('body').hasClass('fullscreen') ? $(window).height() : $(window).height() - 50 - 64 - 64;
 	    this.$el.height(h);
 	    if (this.visualizationGraphCanvas) {
 	      return this.visualizationGraphCanvas.resize();
@@ -501,7 +501,7 @@
 	  };
 
 	  VisualizationGraph.prototype.onFullscreen = function(e) {
-	    $('.visualization-graph').toggleClass('fullscreen');
+	    $('body').toggleClass('fullscreen');
 	    return this.resize();
 	  };
 
