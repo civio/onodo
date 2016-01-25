@@ -26,6 +26,8 @@ class VisualizationGraph extends Backbone.View
     # Setup Share Panel Show/Hide
     $('.visualization-graph-menu-actions .btn-share').click     @onPanelShareShow
     $('#visualization-share .close').click                      @onPanelShareHide
+    # Initial setup size
+    @resize()
 
   onPanelConfigureShow: ->
     $(this).blur()
@@ -95,6 +97,9 @@ class VisualizationGraph extends Backbone.View
     Backbone.on 'visualization.navigation.fullscreen',  @onFullscreen, @
 
   resize: ->
+    # update container height
+    h = if $('.visualization-graph').hasClass('fullscreen') then $(window).height() else $(window).height() - 50 - 64 - 64
+    @$el.height h
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
 
@@ -148,7 +153,8 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphCanvas.zoomOut()
 
   onFullscreen: (e) ->
-    @visualizationGraphCanvas.toogleFullscreen()
+    $('.visualization-graph').toggleClass('fullscreen')
+    @resize()
 
 
 module.exports = VisualizationGraph

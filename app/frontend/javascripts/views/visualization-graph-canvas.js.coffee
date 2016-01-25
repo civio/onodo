@@ -312,9 +312,6 @@ class VisualizationGraphCanvas extends Backbone.View
     @viewport.scale /= 1.2
     @rescale()
 
-  toogleFullscreen: ->
-    console.log 'fullscreen'
-
 
   # Events Methods
   # ---------------

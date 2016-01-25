@@ -52,6 +52,7 @@
 
   //display: none;
   width: 100%;
+  background: white;
   
   .visualization-header{
     z-index: 90;
@@ -80,6 +81,7 @@
 
   .visualization-graph-container{
     position: relative;
+    height: 100%;
     overflow: hidden;
     z-index: 60;
 
@@ -188,6 +190,7 @@
       }
       &.fullscreen{
         border-radius: 0;
+        margin-left: 1px;
         @include sprite-icon-fullscreen();
       }
     }
@@ -338,6 +341,19 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+
+  &.fullscreen{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+
+    .visualization-graph-menu-navigation .btn.fullscreen{
+      @include sprite-icon-fullscreen-back();
     }
   }
 }

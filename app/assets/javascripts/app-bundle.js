@@ -166,10 +166,6 @@
 	  };
 
 	  VisualizationShow.prototype.resize = function() {
-	    var graphHeight, windowHeight;
-	    windowHeight = $(window).height();
-	    graphHeight = windowHeight - 50 - 64 - 64;
-	    this.visualizationGraph.$el.height(graphHeight);
 	    return this.visualizationGraph.resize();
 	  };
 
@@ -353,7 +349,8 @@
 	    $('.visualization-graph-menu-actions .btn-configure').click(this.onPanelConfigureShow);
 	    $('.visualization-graph-panel-configuration .close').click(this.onPanelConfigureHide);
 	    $('.visualization-graph-menu-actions .btn-share').click(this.onPanelShareShow);
-	    return $('#visualization-share .close').click(this.onPanelShareHide);
+	    $('#visualization-share .close').click(this.onPanelShareHide);
+	    return this.resize();
 	  };
 
 	  VisualizationGraph.prototype.onPanelConfigureShow = function() {
@@ -436,6 +433,9 @@
 	  };
 
 	  VisualizationGraph.prototype.resize = function() {
+	    var h;
+	    h = $('.visualization-graph').hasClass('fullscreen') ? $(window).height() : $(window).height() - 50 - 64 - 64;
+	    this.$el.height(h);
 	    if (this.visualizationGraphCanvas) {
 	      return this.visualizationGraphCanvas.resize();
 	    }
@@ -501,7 +501,8 @@
 	  };
 
 	  VisualizationGraph.prototype.onFullscreen = function(e) {
-	    return this.visualizationGraphCanvas.toogleFullscreen();
+	    $('.visualization-graph').toggleClass('fullscreen');
+	    return this.resize();
 	  };
 
 	  return VisualizationGraph;
@@ -863,10 +864,6 @@
 	  VisualizationGraphCanvas.prototype.zoomOut = function() {
 	    this.viewport.scale /= 1.2;
 	    return this.rescale();
-	  };
-
-	  VisualizationGraphCanvas.prototype.toogleFullscreen = function() {
-	    return console.log('fullscreen');
 	  };
 
 	  VisualizationGraphCanvas.prototype.onCanvasDrag = function() {
@@ -10638,12 +10635,15 @@
 
 	  VisualizationGraphNavigation.prototype.render = function() {
 	    this.$el.find('.zoomin').click(function() {
+	      $(this).trigger('blur');
 	      return Backbone.trigger('visualization.navigation.zoomin');
 	    });
 	    this.$el.find('.zoomout').click(function() {
+	      $(this).trigger('blur');
 	      return Backbone.trigger('visualization.navigation.zoomout');
 	    });
 	    this.$el.find('.fullscreen').click(function() {
+	      $(this).trigger('blur');
 	      return Backbone.trigger('visualization.navigation.fullscreen');
 	    });
 	    return this;
