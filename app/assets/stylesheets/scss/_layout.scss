@@ -169,12 +169,20 @@
   }
 
   &.item-story{
+
     .item-picture{
+      float: left;
       position: relative;
       width: 50%;
-      top: 50%;
-      transform: translateY(-50%);
+      //top: 50%;
+      //transform: translateY(-50%);
+
+      > img{
+        width: 100%;
+        height: auto;
+      }
     }
+
     .item-info{
       width: 50%;
       float: right;
