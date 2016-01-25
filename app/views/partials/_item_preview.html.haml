@@ -1,7 +1,8 @@
 %div{class: 'item-preview item-'+item.class.to_s.downcase+((defined? large) ? ' item-preview-large' : '') }
   .item-type-icon
-  .item-type
-    = item.class.to_s
+  - unless defined? cover
+    .item-type
+      = item.class.to_s
   .item-author
     %a{href: user_path(item.author_id), title: item.author.name}
       = item.author.name
@@ -15,23 +16,37 @@
         %img{src: "http://lorempixel.com/1140/400/"}
       - else
         %img{src: "http://lorempixel.com/250/300/"}
-    .item-info
-      %a.item-title{:href => story_path(item), :title => item.name} 
-        %h3= item.name  
-      -if defined? large
-        %a.bnt-start-reding{:href => story_path(item), :title => "Start reading"}
-          %span
-            Start reading
-      - elsif item.description?
-        %p= item.description
-      - else  # TODO!!! Remove this content for testing
-        %p
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    .item-info-container
+      .item-info-container-inner
+        .item-info
+          - if defined? cover
+            .item-title
+              %h3= item.name  
+          - else
+            %a.item-title{:href => story_path(item), :title => item.name} 
+              %h3= item.name  
+          -if defined? large
+            - if defined? cover
+              - if item.description?
+                %p= item.description
+              - else  # TODO!!! Remove this content for testing
+              %p
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            %a.bnt-start-reding{:href => story_path(item), :title => "Start reading"}
+              %span
+                Start reading
+          - elsif item.description?
+            %p= item.description
+          - else  # TODO!!! Remove this content for testing
+            %p
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
   -else
-    .item-info
-      %a.item-title{:href => visualization_path(item), :title => item.name} 
-        %h3= item.name
-      -if defined? large
-        %a.bnt-start-reding{:href => visualization_path(item), :title => "Start reading"}
-          %span
-            Start reading
+    .item-info-container
+      .item-info-container-inner
+        .item-info
+          %a.item-title{:href => visualization_path(item), :title => item.name} 
+            %h3= item.name
+          -if defined? large
+            %a.bnt-start-reding{:href => visualization_path(item), :title => "Start reading"}
+              %span
+                Start reading

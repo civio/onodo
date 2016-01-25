@@ -9,3 +9,47 @@
     margin: 1.5*$grid-gutter-width 0;
   }
 }
+
+.story-cover{
+  position: absolute;
+  top: 82px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+
+  .item-preview{
+    border-radius: 0;
+    height: 100%;
+
+    .item-info{
+      .item-title h3{
+        font-size: 3.429em;
+        margin: 0;
+      }
+      p{
+        font-size: 1em;
+        color: white;
+      }
+    }
+
+    .item-type-icon{
+      top: auto;
+      bottom: $grid-gutter-width/2;
+    }
+
+    .item-picture {
+      height: 100%;
+
+      > img{
+        height: 100%;
+        width: auto;
+      }
+    }
+  }
+}
+
+// Hide Visualization Info at Story Cover
+.stories.show .visualization-info{
+  display: none;
+}

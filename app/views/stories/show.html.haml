@@ -1,26 +1,5 @@
 .story-cover
-  .item-preview.item-story.item-preview-large
-    .item-type-icon
-    .item-author
-      %a{href: user_path(@story.author_id), title: @story.author.name}
-        = @story.author.name
-        .item-author-picture
-          %img{src: "http://lorempixel.com/60/60/"}
-    .item-picture
-      .item-picture-overlay-white
-      .item-picture-overlay-black
-      %img{src: "http://lorempixel.com/1140/400/"}
-    .item-info
-      %a.item-title{:href => story_path(@story), :title => @story.name} 
-        %h3= @story.name  
-      %a.bnt-start-reding{:href => story_path(@story), :title => "Start reading"}
-        %span
-          Start reading
-      - if @story.description?
-        %p= @story.description
-      - else  # TODO!!! Remove this content for testing
-        %p
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  = render 'partials/item_preview', item: @story, large: true, cover: true
 
 = render 'partials/item_header', item: @story, story: true
 
