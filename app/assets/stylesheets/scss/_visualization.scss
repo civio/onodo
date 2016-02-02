@@ -108,16 +108,6 @@
         @include transition( stroke-width, 0.3s, ease-out );
       }
 
-      &.weaken .node-circle{
-        opacity: 0.5;
-      }
-
-      &.highlighted .node-circle,
-      &.highlighted.weaken .node-circle{
-        stroke-width: 0px;
-        opacity: 1;
-      }
-
       .node-circle.active{
         stroke-width: 20px !important;
       }

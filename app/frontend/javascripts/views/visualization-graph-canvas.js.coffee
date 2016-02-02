@@ -52,7 +52,10 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # Setup color scale
     #@color = d3.scale.category20()
-    @color = d3.scale.ordinal().range( @COLOR_CUALITATIVE )
+    @color            = d3.scale.ordinal().range( @COLOR_CUALITATIVE )
+    @colorInterpolate = d3.scale.linear()
+                          .domain([0,100])
+                          .interpolate(d3.interpolateRgb)
 
     # Setup Data
     @data = options.data
@@ -361,8 +364,8 @@ class VisualizationGraphCanvas extends Backbone.View
     d.fixed = true;
 
   onNodeOver: (d) =>
-    @nodes.classed 'weaken', true
-    @nodes.classed 'highlighted', (o) => return @areNodesRelated(d, o)
+    @nodes.select('circle')
+      .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
 
     @labels.classed 'weaken', true
     @labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
@@ -371,8 +374,8 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
-    @nodes.classed 'weaken', false
-    @nodes.classed 'highlighted', false
+    @nodes.select('circle')
+      .style('fill', (o) => return @color(o.node_type))
     @labels.classed 'weaken', false
     @labels.classed 'highlighted', false
     @relations.classed 'weaken', false
@@ -417,6 +420,31 @@ class VisualizationGraphCanvas extends Backbone.View
       if d.source.id == node.id || d.target.id == node.id
         arr.push d
     return arr
+
+  # mix color auxiliar function:
+  # c1 & c2 must be strings as '#XXXXXX'
+  # weight must be an integer between 0 & 100
+  mixColor: (c1, c2, weight) ->
+    # convert a decimal value to hex
+    d2h = (d) -> return d.toString(16)
+    # convert a hex value to decimal 
+    h2d = (h) -> return parseInt(h, 16)
+    # set the weight to 50%, if that argument is omitted
+    weight = if typeof(weight) != 'undefined' then weight else 50 
+    color = "#"
+    # loop through each of the 3 hex pairs—red, green, and blue
+    for i in [1..6] by 2
+      # extract the current pairs
+      v1 = h2d(c1.substr(i, 2))
+      v2 = h2d(c2.substr(i, 2))
+      # combine the current pairs from each source color, according to the specified weight
+      val = d2h(Math.floor(v2 + (v1 - v2) * (weight / 100.0)))
+      # prepend a '0' if val results in a single digit
+      while val.length < 2
+        val = '0' + val
+      # concatenate val to our new color string
+      color += val
+    return color
 
 
 module.exports = VisualizationGraphCanvas
