@@ -4,6 +4,11 @@ class VisualizationGraphCanvas extends Backbone.View
 
   NODES_SIZE: 11
 
+  COLOR_CUALITATIVE: [
+    '#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', 
+    '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'
+  ]
+
   svg:              null
   container:        null
   color:            null
@@ -45,6 +50,10 @@ class VisualizationGraphCanvas extends Backbone.View
 
     console.log 'initialize canvas'
 
+    # Setup color scale
+    #@color = d3.scale.category20()
+    @color = d3.scale.ordinal().range( @COLOR_CUALITATIVE )
+
     # Setup Data
     @data = options.data
     @initializaData()
@@ -54,9 +63,6 @@ class VisualizationGraphCanvas extends Backbone.View
     @viewport.height    = @$el.height()
     @viewport.center.x = @viewport.width*0.5
     @viewport.center.y = @viewport.height*0.5
-
-    # Setup color scale
-    @color = d3.scale.category20()
 
     # Setup force
     @force = d3.layout.force()
@@ -98,6 +104,9 @@ class VisualizationGraphCanvas extends Backbone.View
       # Add to data_current_nodes if visible
       if d.visible
         @data_current_nodes.push d
+
+    # Setup color ordinal scale domain
+    @color.domain @data_nodes.map( (d) -> d.node_type )
 
     # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
     @data.relations.forEach (d) =>

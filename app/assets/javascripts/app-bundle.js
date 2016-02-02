@@ -545,6 +545,8 @@
 
 	  VisualizationGraphCanvas.prototype.NODES_SIZE = 11;
 
+	  VisualizationGraphCanvas.prototype.COLOR_CUALITATIVE = ['#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'];
+
 	  VisualizationGraphCanvas.prototype.svg = null;
 
 	  VisualizationGraphCanvas.prototype.container = null;
@@ -605,13 +607,13 @@
 
 	  VisualizationGraphCanvas.prototype.initialize = function(options) {
 	    console.log('initialize canvas');
+	    this.color = d3.scale.ordinal().range(this.COLOR_CUALITATIVE);
 	    this.data = options.data;
 	    this.initializaData();
 	    this.viewport.width = this.$el.width();
 	    this.viewport.height = this.$el.height();
 	    this.viewport.center.x = this.viewport.width * 0.5;
 	    this.viewport.center.y = this.viewport.height * 0.5;
-	    this.color = d3.scale.category20();
 	    this.force = d3.layout.force().charge(-150).linkDistance(90).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
 	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
 	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
@@ -633,6 +635,9 @@
 	        }
 	      };
 	    })(this));
+	    this.color.domain(this.data_nodes.map(function(d) {
+	      return d.node_type;
+	    }));
 	    this.data.relations.forEach((function(_this) {
 	      return function(d) {
 	        d.source = _this.data_nodes_map.get(d.source_id);
