@@ -160,7 +160,8 @@ class VisualizationGraphCanvas extends Backbone.View
 
   updateRelations: ->
     @relations = @relations.data(@data_current_relations)
-    @relations.enter().append('line')
+    #@relations.enter().append('line')
+    @relations.enter().append('path')
       .attr('id', (d) -> return 'relation-'+d.id)
       .attr('class', 'relation')
     @relations.exit().remove()
@@ -389,10 +390,13 @@ class VisualizationGraphCanvas extends Backbone.View
 
   # Tick Function
   onTick: =>
-    @relations.attr('x1', (d) -> return d.source.x)
-        .attr('y1', (d) -> return d.source.y)
-        .attr('x2', (d) -> return d.target.x)
-        .attr('y2', (d) -> return d.target.y)
+    # Set relations path
+    @relations.attr 'd', (d) ->
+      dx = d.target.x - d.source.x
+      dy = d.target.y - d.source.y
+      dr = Math.sqrt dx*dx + dy*dy
+      return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y
+    # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')  
 

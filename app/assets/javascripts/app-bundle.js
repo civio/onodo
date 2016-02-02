@@ -687,7 +687,7 @@
 
 	  VisualizationGraphCanvas.prototype.updateRelations = function() {
 	    this.relations = this.relations.data(this.data_current_relations);
-	    this.relations.enter().append('line').attr('id', function(d) {
+	    this.relations.enter().append('path').attr('id', function(d) {
 	      return 'relation-' + d.id;
 	    }).attr('class', 'relation');
 	    return this.relations.exit().remove();
@@ -951,14 +951,12 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.onTick = function() {
-	    this.relations.attr('x1', function(d) {
-	      return d.source.x;
-	    }).attr('y1', function(d) {
-	      return d.source.y;
-	    }).attr('x2', function(d) {
-	      return d.target.x;
-	    }).attr('y2', function(d) {
-	      return d.target.y;
+	    this.relations.attr('d', function(d) {
+	      var dr, dx, dy;
+	      dx = d.target.x - d.source.x;
+	      dy = d.target.y - d.source.y;
+	      dr = Math.sqrt(dx * dx + dy * dy);
+	      return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y;
 	    });
 	    this.nodes.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
