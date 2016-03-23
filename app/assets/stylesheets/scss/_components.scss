@@ -30,7 +30,8 @@
     position: absolute;
     top: 4px;
     right: 0;
-    @include sprite-icon-plus-circle();
+    @include sprite( $main-icon-plus-circle );
+    @extend .icon-main;
   }
 
   .btn-circle-lg-title{
@@ -41,22 +42,27 @@
   }
 
   &.btn-circle-lg-story .btn-circle-lg-icon-sprite{
-    @include sprite-dahsboard-icon-story();
+    @include sprite( $main-dahsboard-icon-story );
+    @extend .icon-main;
   }
   &.btn-circle-lg-visualization .btn-circle-lg-icon-sprite{
     margin-top: 36px;
-    @include sprite-dahsboard-icon-visualization();
+    @include sprite( $main-dahsboard-icon-visualization );
+    @extend .icon-main;
   }
   &.btn-circle-lg-preview .btn-circle-lg-icon-sprite{
     margin-top: 44px;
-    @include sprite-home-icon-preview();
+    @include sprite( $home-home-icon-preview );
+    @extend .icon-main;
   }
   &.btn-circle-lg-settings{
     .btn-circle-lg-icon-sprite{
-      @include sprite-dahsboard-icon-user();
+      @include sprite( $main-dahsboard-icon-user );
+      @extend .icon-main;
     }
     .btn-circle-lg-icon-detail{
-      @include sprite-icon-pencil-circle();
+      @include sprite( $main-icon-pencil-circle );
+      @extend .icon-main;
     }
   }
 
@@ -86,7 +92,8 @@
 
   .btn-edit-circle-icon{
     margin: 6px 0 0 7px;
-    @include sprite-icon-pencil-white();
+    @include sprite( $main-icon-pencil-white );
+    @extend .icon-main;
   }
 
   &:hover{
@@ -118,17 +125,20 @@
       &.twitter .icon{
         margin-top: 7px;
         margin-left: 6px;
-        @include sprite-social-icon-twitter-brand();
+        @include sprite( $main-social-icon-twitter-brand );
+        @extend .icon-main;
       }
       &.facebook .icon{
         margin-top: 6px;
         margin-left: 10px;
-        @include sprite-social-icon-facebook-brand();
+        @include sprite( $main-social-icon-facebook-brand );
+        @extend .icon-main;
       }
       &.gplus .icon{
         margin-top: 8px;
         margin-left: 6px;
-        @include sprite-social-icon-gplus();
+        @include sprite( $main-social-icon-gplus );
+        @extend .icon-main;
       }
 
       &:hover{
@@ -261,7 +271,8 @@
       }
 
       .search-icon{
-        @include sprite-icon-search();
+        @include sprite( $main-icon-search );
+        @extend .icon-main;
       }
     }
   }
@@ -295,7 +306,8 @@
       border-radius: $grid-gutter-width/2;
       text-indent: -9999px;
       opacity: 1;
-      @include sprite-icon-close-white();
+      @include sprite( $main-icon-close-white );
+      @extend .icon-main;
       @include transition( background-color 0.3s ease-out );
 
       &:hover{

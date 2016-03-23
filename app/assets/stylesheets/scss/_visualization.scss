@@ -22,7 +22,8 @@
       float: right;
       margin-top: 4px;
       margin-left: 4px;
-      @include sprite-icon-tool();
+      @include sprite( $main-icon-tool );
+      @extend .icon-main;
     }
   }
 
@@ -174,15 +175,18 @@
       }
 
       &.zoomin{
-        @include sprite-icon-zoomin();
+        @include sprite( $main-icon-zoomin );
+        @extend .icon-main;
       }
       &.zoomout{
-        @include sprite-icon-zoomout();
+        @include sprite( $main-icon-zoomout );
+        @extend .icon-main;
       }
       &.fullscreen{
         border-radius: 0;
         margin-left: 1px;
-        @include sprite-icon-fullscreen();
+        @include sprite( $main-icon-fullscreen );
+        @extend .icon-main;
       }
     }
   }
@@ -198,7 +202,8 @@
 
       > .search-icon{
         @include clearfix;
-        @include sprite-icon-search();
+        @include sprite( $main-icon-search );
+        @extend .icon-main;
       }
 
       .search-input{
@@ -221,7 +226,8 @@
       @include clearfix;
 
       .icon-share{
-        @include sprite-icon-share();
+        @include sprite( $main-icon-share );
+        @extend .icon-main;
         display: inline-block;
         position: relative;
         top: 2px;
@@ -290,7 +296,8 @@
         border-radius: $grid-gutter-width/2;
         text-indent: -9999px;
         opacity: 1;
-        @include sprite-icon-close-white();
+        @include sprite( $main-icon-close-white );
+        @extend .icon-main;
         @include transition( background-color 0.3s ease-out );
 
         &:hover{
@@ -309,7 +316,8 @@
           float: left;
           margin-top: 5px;
           margin-right: $grid-gutter-width/3;
-          @include sprite-icon-pencil-white();
+          @include sprite( $main-icon-pencil-white );
+          @extend .icon-main;
         }
 
         &:hover{
@@ -348,7 +356,8 @@ body.fullscreen{
     z-index: 999;
 
     .visualization-graph-menu-navigation .btn.fullscreen{
-      @include sprite-icon-fullscreen-back();
+      @include sprite( $main-icon-fullscreen-back );
+      @extend .icon-main;
     }
   }
 }
@@ -397,18 +406,18 @@ body.fullscreen{
     position: relative;
     top: 7px;
     left: 4px;
-    @include sprite-icon-table();
+    @include sprite( $main-icon-table );
+    @extend .icon-main;
   }
 
   .btn-collapse{
     margin-top: 1.5*$grid-gutter-width;
   }
 
-  .collapsed-label-icon{
-    @include sprite-icon-table();
-  }
+  .collapsed-label-icon,
   .collapsible-label-icon{
-    @include sprite-icon-table();
+    @include sprite( $main-icon-table );
+    @extend .icon-main;
   }
 
   .collapsed-label-icon,
@@ -474,19 +483,23 @@ body.fullscreen{
 
     .btn-icon-story{
       top: 5px;
-      @include sprite-icon-story-brand();
+      @include sprite( $main-icon-story-brand );
+      @extend .icon-main;
     } 
     .btn-icon-visualization{
       top: 5px;
-      @include sprite-icon-visualization-brand();
+      @include sprite( $main-icon-visualization-brand );
+      @extend .icon-main;
     }        
     .btn-icon-pencil{
       top: 5px;
-      @include sprite-icon-pencil();
+      @include sprite( $main-icon-pencil );
+      @extend .icon-main;
     }
     .btn-icon-duplicate{
       top: 6px;
-      @include sprite-icon-duplicate();
+      @include sprite( $main-icon-duplicate );
+      @extend .icon-main;
     }
   }
 }
@@ -606,10 +619,12 @@ body.fullscreen{
         border-color: white;
 
         &.twitter .icon{
-          @include sprite-social-icon-twitter();
+          @include sprite( $main-social-icon-twitter );
+          @extend .icon-main;
         }
         &.facebook .icon{
-          @include sprite-social-icon-facebook();
+          @include sprite( $main-social-icon-facebook );
+          @extend .icon-main;
         }
 
         &:hover{

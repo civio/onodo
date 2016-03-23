@@ -69,7 +69,7 @@
       h4{
         color: $brand-primary;
         font-weight: normal;
-        margin: $grid-gutter-width/2 auto;
+        margin: 0 auto $grid-gutter-width/2;
       }
 
       p{
@@ -78,7 +78,6 @@
       }
 
       .feature-icon{
-        height: 60px;
 
         span{
           margin: 0 auto; 
@@ -86,26 +85,28 @@
       }
 
       .feature-icon-creation{
-        @include sprite-home-icon-creation();
+        @include sprite( $home-home-icon-creation );
+        @extend .icon-home;
       } 
       .feature-icon-information{
-        @include sprite-home-icon-information();
+        @include sprite( $home-home-icon-information );
+        @extend .icon-home;
       }
       .feature-icon-share{
-        @include sprite-home-icon-share();
+        @include sprite( $home-home-icon-share );
+        @extend .icon-home;
       }
       .feature-icon-collaboration{
-        @include sprite-home-icon-collaboration();
+        @include sprite( $home-home-icon-collaboration );
+        @extend .icon-home;
       }
       .feature-icon-preview{
-        position: relative;
-        top: 10px;
-        @include sprite-home-icon-preview();
+        @include sprite( $home-home-icon-preview );
+        @extend .icon-home;
       }
       .feature-icon-story{
-        position: relative;
-        top: 10px;
-        @include sprite-home-icon-story();
+        @include sprite( $home-home-icon-story );
+        @extend .icon-home;
       }
     }
   }

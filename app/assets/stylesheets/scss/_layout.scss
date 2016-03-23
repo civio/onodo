@@ -46,7 +46,8 @@
     &:after{
       content: "";
       margin: 12px 9px;
-      @include sprite-icon-story();
+      @include sprite( $main-icon-story );
+      @extend .icon-main;
     }
   }
 
@@ -175,7 +176,8 @@
 
     .item-type-icon{
       &:after{
-        @include sprite-icon-visualization();
+        @include sprite( $main-icon-visualization );
+        @extend .icon-main;
       }
     }
 
@@ -304,13 +306,15 @@
       position: absolute;
       top: 6px;
       left: 8px;
-      @include sprite-icon-carousel-left();
+      @include sprite( $main-icon-carousel-left );
+      @extend .icon-main;
     }
     .right-icon{
       position: absolute;
       top: 6px;
       right: 8px;
-      @include sprite-icon-carousel-right();
+      @include sprite( $main-icon-carousel-right );
+      @extend .icon-main;
     }
 
     &:hover{
