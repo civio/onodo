@@ -30,8 +30,7 @@
     position: absolute;
     top: 4px;
     right: 0;
-    @include sprite( $main-icon-plus-circle );
-    @extend .icon-main;
+    @include sprite( $icon-plus-circle );
   }
 
   .btn-circle-lg-title{
@@ -42,27 +41,23 @@
   }
 
   &.btn-circle-lg-story .btn-circle-lg-icon-sprite{
-    @include sprite( $main-dahsboard-icon-story );
-    @extend .icon-main;
+    @include sprite( $dahsboard-icon-story );
   }
   &.btn-circle-lg-visualization .btn-circle-lg-icon-sprite{
     margin-top: 36px;
-    @include sprite( $main-dahsboard-icon-visualization );
-    @extend .icon-main;
+    @include sprite( $dahsboard-icon-visualization );
   }
   &.btn-circle-lg-preview .btn-circle-lg-icon-sprite{
     margin-top: 44px;
-    @include sprite( $home-home-icon-preview );
-    @extend .icon-main;
+    //@include sprite( $home-home-icon-preview );
+    //
   }
   &.btn-circle-lg-settings{
     .btn-circle-lg-icon-sprite{
-      @include sprite( $main-dahsboard-icon-user );
-      @extend .icon-main;
+      @include sprite( $dahsboard-icon-user );
     }
     .btn-circle-lg-icon-detail{
-      @include sprite( $main-icon-pencil-circle );
-      @extend .icon-main;
+      @include sprite( $icon-pencil-circle );
     }
   }
 
@@ -92,8 +87,8 @@
 
   .btn-edit-circle-icon{
     margin: 6px 0 0 7px;
-    @include sprite( $main-icon-pencil-white );
-    @extend .icon-main;
+    @include sprite( $icon-pencil-white );
+    
   }
 
   &:hover{
@@ -125,20 +120,20 @@
       &.twitter .icon{
         margin-top: 7px;
         margin-left: 6px;
-        @include sprite( $main-social-icon-twitter-brand );
-        @extend .icon-main;
+        @include sprite( $social-icon-twitter-brand );
+        
       }
       &.facebook .icon{
         margin-top: 6px;
         margin-left: 10px;
-        @include sprite( $main-social-icon-facebook-brand );
-        @extend .icon-main;
+        @include sprite( $social-icon-facebook-brand );
+        
       }
       &.gplus .icon{
         margin-top: 8px;
         margin-left: 6px;
-        @include sprite( $main-social-icon-gplus );
-        @extend .icon-main;
+        @include sprite( $social-icon-gplus );
+        
       }
 
       &:hover{
@@ -271,8 +266,8 @@
       }
 
       .search-icon{
-        @include sprite( $main-icon-search );
-        @extend .icon-main;
+        @include sprite( $icon-search );
+        
       }
     }
   }
@@ -306,8 +301,8 @@
       border-radius: $grid-gutter-width/2;
       text-indent: -9999px;
       opacity: 1;
-      @include sprite( $main-icon-close-white );
-      @extend .icon-main;
+      @include sprite( $icon-close-white );
+      
       @include transition( background-color 0.3s ease-out );
 
       &:hover{

@@ -61,8 +61,9 @@
     top: 0;
     left: 0;
     opacity: 1;
-    @include sprite( $main-logo );
-    @extend .icon-main;
+    @include sprite( $logo );
+    //@include sprite( $logo );
+    //
     @include transition( opacity 0.3s ease-out );
   }
 
@@ -72,8 +73,8 @@
     top: 0;
     left: 0;
     opacity: 0;
-    @include sprite( $main-logo-hover );
-    @extend .icon-main;
+    @include sprite( $logo-hover );
+    
     @include transition( opacity 0.3s ease-out );
   }
 
@@ -117,8 +118,8 @@
       .user-dropdown-icon{
         margin: $grid-gutter-width/2 auto;
         text-indent: -9999px;
-        @include sprite( $main-icon-settings );
-        @extend .icon-main;
+        @include sprite( $icon-settings );
+        
       }
     }
   }
@@ -165,14 +166,14 @@
     .icon-email{
       margin-top: 8px;
       margin-bottom: $grid-gutter-width/2;
-      @include sprite( $main-icon-mail );
-      @extend .icon-main;
+      @include sprite( $icon-mail );
+      
     }
     .icon-maps{
       margin-top: 2px;
       margin-bottom: $grid-gutter-width/2;
-      @include sprite( $main-icon-location );
-      @extend .icon-main;
+      @include sprite( $icon-location );
+      
     }
 
     .social-links{
@@ -196,14 +197,14 @@
           &.twitter .icon{
             margin-top: 7px;
             margin-left: 6px;
-            @include sprite( $main-social-icon-twitter );
-            @extend .icon-main;
+            @include sprite( $social-icon-twitter );
+            
           }
           &.facebook .icon{
             margin-top: 6px;
             margin-left: 10px;
-            @include sprite( $main-social-icon-facebook );
-            @extend .icon-main;
+            @include sprite( $social-icon-facebook );
+            
           }
 
           &:hover{
@@ -219,8 +220,8 @@
       right: $grid-gutter-width;
       opacity: 1;
       text-indent: -9999px;
-      @include sprite( $main-icon-close );
-      @extend .icon-main;
+      @include sprite( $icon-close );
+      
       @include transition( opacity 0.3s ease-out );
 
       &:hover{

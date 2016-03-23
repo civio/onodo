@@ -25,13 +25,13 @@
   }
 
   .logo-icon{
-    @include sprite( $main-icon-logo-footer );
-    @extend .icon-main;
+    @include sprite( $icon-logo-footer );
+    
   }
   .civio-icon{
     margin-top: 20px;
-    @include sprite( $main-icon-civio-footer );
-    @extend .icon-main;
+    @include sprite( $icon-civio-footer );
+    
   }
   
   .social-icons{
@@ -50,12 +50,12 @@
         @include transition(opacity 0.3s ease-out);
 
         &.twitter{
-          @include sprite( $main-social-icon-twitter );
-          @extend .icon-main;
+          @include sprite( $social-icon-twitter );
+          
         }
         &.facebook{
-          @include sprite( $main-social-icon-facebook );
-          @extend .icon-main;
+          @include sprite( $social-icon-facebook );
+          
         }
 
         &:hover{
@@ -85,8 +85,8 @@
     .eu-icon{
       float: left;
       margin-right: $grid-gutter-width/2;
-      @include sprite( $main-icon-eu-footer );
-      @extend .icon-main;
+      @include sprite( $icon-eu-footer );
+      
     }
   }
 

@@ -46,8 +46,8 @@
     &:after{
       content: "";
       margin: 12px 9px;
-      @include sprite( $main-icon-story );
-      @extend .icon-main;
+      @include sprite( $icon-story );
+      
     }
   }
 
@@ -176,8 +176,8 @@
 
     .item-type-icon{
       &:after{
-        @include sprite( $main-icon-visualization );
-        @extend .icon-main;
+        @include sprite( $icon-visualization );
+        
       }
     }
 
@@ -306,15 +306,15 @@
       position: absolute;
       top: 6px;
       left: 8px;
-      @include sprite( $main-icon-carousel-left );
-      @extend .icon-main;
+      @include sprite( $icon-carousel-left );
+      
     }
     .right-icon{
       position: absolute;
       top: 6px;
       right: 8px;
-      @include sprite( $main-icon-carousel-right );
-      @extend .icon-main;
+      @include sprite( $icon-carousel-right );
+      
     }
 
     &:hover{

@@ -22,8 +22,8 @@
       float: right;
       margin-top: 4px;
       margin-left: 4px;
-      @include sprite( $main-icon-tool );
-      @extend .icon-main;
+      @include sprite( $icon-tool );
+      
     }
   }
 
@@ -175,18 +175,18 @@
       }
 
       &.zoomin{
-        @include sprite( $main-icon-zoomin );
-        @extend .icon-main;
+        @include sprite( $icon-zoomin );
+        
       }
       &.zoomout{
-        @include sprite( $main-icon-zoomout );
-        @extend .icon-main;
+        @include sprite( $icon-zoomout );
+        
       }
       &.fullscreen{
         border-radius: 0;
         margin-left: 1px;
-        @include sprite( $main-icon-fullscreen );
-        @extend .icon-main;
+        @include sprite( $icon-fullscreen );
+        
       }
     }
   }
@@ -202,8 +202,8 @@
 
       > .search-icon{
         @include clearfix;
-        @include sprite( $main-icon-search );
-        @extend .icon-main;
+        @include sprite( $icon-search );
+        
       }
 
       .search-input{
@@ -226,8 +226,8 @@
       @include clearfix;
 
       .icon-share{
-        @include sprite( $main-icon-share );
-        @extend .icon-main;
+        @include sprite( $icon-share );
+        
         display: inline-block;
         position: relative;
         top: 2px;
@@ -296,8 +296,8 @@
         border-radius: $grid-gutter-width/2;
         text-indent: -9999px;
         opacity: 1;
-        @include sprite( $main-icon-close-white );
-        @extend .icon-main;
+        @include sprite( $icon-close-white );
+        
         @include transition( background-color 0.3s ease-out );
 
         &:hover{
@@ -316,8 +316,8 @@
           float: left;
           margin-top: 5px;
           margin-right: $grid-gutter-width/3;
-          @include sprite( $main-icon-pencil-white );
-          @extend .icon-main;
+          @include sprite( $icon-pencil-white );
+          
         }
 
         &:hover{
@@ -356,8 +356,8 @@ body.fullscreen{
     z-index: 999;
 
     .visualization-graph-menu-navigation .btn.fullscreen{
-      @include sprite( $main-icon-fullscreen-back );
-      @extend .icon-main;
+      @include sprite( $icon-fullscreen-back );
+      
     }
   }
 }
@@ -406,8 +406,8 @@ body.fullscreen{
     position: relative;
     top: 7px;
     left: 4px;
-    @include sprite( $main-icon-table );
-    @extend .icon-main;
+    @include sprite( $icon-table );
+    
   }
 
   .btn-collapse{
@@ -416,8 +416,8 @@ body.fullscreen{
 
   .collapsed-label-icon,
   .collapsible-label-icon{
-    @include sprite( $main-icon-table );
-    @extend .icon-main;
+    @include sprite( $icon-table );
+    
   }
 
   .collapsed-label-icon,
@@ -483,23 +483,23 @@ body.fullscreen{
 
     .btn-icon-story{
       top: 5px;
-      @include sprite( $main-icon-story-brand );
-      @extend .icon-main;
+      @include sprite( $icon-story-brand );
+      
     } 
     .btn-icon-visualization{
       top: 5px;
-      @include sprite( $main-icon-visualization-brand );
-      @extend .icon-main;
+      @include sprite( $icon-visualization-brand );
+      
     }        
     .btn-icon-pencil{
       top: 5px;
-      @include sprite( $main-icon-pencil );
-      @extend .icon-main;
+      @include sprite( $icon-pencil );
+      
     }
     .btn-icon-duplicate{
       top: 6px;
-      @include sprite( $main-icon-duplicate );
-      @extend .icon-main;
+      @include sprite( $icon-duplicate );
+      
     }
   }
 }
@@ -619,12 +619,12 @@ body.fullscreen{
         border-color: white;
 
         &.twitter .icon{
-          @include sprite( $main-social-icon-twitter );
-          @extend .icon-main;
+          @include sprite( $social-icon-twitter );
+          
         }
         &.facebook .icon{
-          @include sprite( $main-social-icon-facebook );
-          @extend .icon-main;
+          @include sprite( $social-icon-facebook );
+          
         }
 
         &:hover{
