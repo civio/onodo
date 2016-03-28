@@ -1,5 +1,5 @@
 @import 'bootstrap/variables';
-@import 'scss/sprites';
+@import 'scss/sprites-home';
 @import '_variables';
 
 .home-background{
@@ -80,36 +80,29 @@
       .feature-icon{
 
         span{
+          display: block;
           margin: 0 auto; 
         }
       }
 
-      /*
       .feature-icon-creation{
-        @include sprite( $home-home-icon-creation );
-        @extend .icon-home;
-      } 
+        @include sprite( $home-icon-creation );
+      }
       .feature-icon-information{
-        @include sprite( $home-home-icon-information );
-        @extend .icon-home;
+        @include sprite( $home-icon-information );
       }
       .feature-icon-share{
-        @include sprite( $home-home-icon-share );
-        @extend .icon-home;
+        @include sprite( $home-icon-share );
       }
       .feature-icon-collaboration{
-        @include sprite( $home-home-icon-collaboration );
-        @extend .icon-home;
+        @include sprite( $home-icon-collaboration );
       }
       .feature-icon-preview{
-        @include sprite( $home-home-icon-preview );
-        @extend .icon-home;
+        @include sprite( $home-icon-preview );
       }
       .feature-icon-story{
-        @include sprite( $home-home-icon-story );
-        @extend .icon-home;
+        @include sprite( $home-icon-story );
       }
-      */
     }
   }
 
