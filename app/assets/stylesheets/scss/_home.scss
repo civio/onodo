@@ -81,7 +81,7 @@
 
         span{
           display: block;
-          margin: 0 auto; 
+          margin: 0 auto;
         }
       }
 
@@ -102,6 +102,28 @@
       }
       .feature-icon-story{
         @include sprite( $home-icon-story );
+      }
+
+      &:hover{
+
+        .feature-icon-creation{
+          background: url('/images/home-gif/home-icon-creation.gif') no-repeat 0 0;
+        }
+        .feature-icon-information{
+          background: url('/images/home-gif/home-icon-information.gif') no-repeat 0 0;
+        }
+        .feature-icon-share{
+          background: url('/images/home-gif/home-icon-share.gif') no-repeat 0 0;
+        }
+        .feature-icon-collaboration{
+          background: url('/images/home-gif/home-icon-collaboration.gif') no-repeat 0 0;
+        }
+        .feature-icon-preview{
+          background: url('/images/home-gif/home-icon-preview.gif') no-repeat 0 0;
+        }
+        .feature-icon-story{
+          background: url('/images/home-gif/home-icon-story.gif') no-repeat 0 0;
+        }
       }
     }
   }
