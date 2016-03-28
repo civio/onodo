@@ -110,16 +110,21 @@
       padding: 0;
       background: #fff;
       opacity: 1;
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
 
       &:focus{
         opacity: 0.6;
       }
 
       .user-dropdown-icon{
+        display: block;
         margin: $grid-gutter-width/2 auto;
         text-indent: -9999px;
         @include sprite( $icon-settings );
-        
       }
     }
   }
@@ -164,16 +169,16 @@
     }
 
     .icon-email{
+      display: block;
       margin-top: 8px;
       margin-bottom: $grid-gutter-width/2;
       @include sprite( $icon-mail );
-      
     }
     .icon-maps{
+      display: block;
       margin-top: 2px;
       margin-bottom: $grid-gutter-width/2;
       @include sprite( $icon-location );
-      
     }
 
     .social-links{
@@ -195,16 +200,16 @@
           @include transition(opacity 0.3s ease-out);
 
           &.twitter .icon{
+            display: block;
             margin-top: 7px;
             margin-left: 6px;
             @include sprite( $social-icon-twitter );
-            
           }
           &.facebook .icon{
+            display: block;
             margin-top: 6px;
             margin-left: 10px;
             @include sprite( $social-icon-facebook );
-            
           }
 
           &:hover{

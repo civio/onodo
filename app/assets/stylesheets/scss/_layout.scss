@@ -44,6 +44,7 @@
     z-index: 30;
 
     &:after{
+      display: block;
       content: "";
       margin: 12px 9px;
       @include sprite( $icon-story );

@@ -113,15 +113,18 @@
       height: 32px;
       border-radius: 16px;
       border: 2px solid $brand-primary;
-      text-indent: -9999px;
       background: transparent;
       @include transition( background 0.3s ease-out );
       
+      .icon{
+        display: block;
+        text-indent: -9999px;
+      }
+
       &.twitter .icon{
         margin-top: 7px;
         margin-left: 6px;
         @include sprite( $social-icon-twitter-brand );
-        
       }
       &.facebook .icon{
         margin-top: 6px;
@@ -266,8 +269,8 @@
       }
 
       .search-icon{
+        display: block;
         @include sprite( $icon-search );
-        
       }
     }
   }

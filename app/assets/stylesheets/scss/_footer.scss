@@ -45,6 +45,7 @@
       margin: 0 $grid-gutter-width/2 0 0;
 
       a{
+        display: block;
         text-indent: -9999px;
         opacity: 0.5;
         @include transition(opacity 0.3s ease-out);
@@ -118,6 +119,7 @@
     label{
       font-size: 0.857em;
       font-weight: normal;
+      text-transform: none;
     }
 
     .email{

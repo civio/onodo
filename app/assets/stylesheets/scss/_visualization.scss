@@ -25,6 +25,10 @@
       @include sprite( $icon-tool );
       
     }
+
+    &:hover .icon-tool{
+      @include sprite( $icon-tool-brand );
+    }
   }
 
   /* .visualization-status{
@@ -162,6 +166,7 @@
     left: $grid-gutter-width/2;
 
     .btn{
+      display: block;
       min-width: auto;
       background: transparent;
       border: none;
@@ -176,17 +181,14 @@
 
       &.zoomin{
         @include sprite( $icon-zoomin );
-        
       }
       &.zoomout{
         @include sprite( $icon-zoomout );
-        
       }
       &.fullscreen{
         border-radius: 0;
         margin-left: 1px;
         @include sprite( $icon-fullscreen );
-        
       }
     }
   }
@@ -403,11 +405,11 @@ body.fullscreen{
   }
 
   .visualization-status-icon-sprite{
+    display: block;
     position: relative;
     top: 7px;
     left: 4px;
     @include sprite( $icon-table );
-    
   }
 
   .btn-collapse{
@@ -417,7 +419,6 @@ body.fullscreen{
   .collapsed-label-icon,
   .collapsible-label-icon{
     @include sprite( $icon-table );
-    
   }
 
   .collapsed-label-icon,
