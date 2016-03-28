@@ -20,4 +20,4 @@
 node_modules/*
 
 # Ignore half-sizer droplet
-app/assets/images/sprites/half-sizer.app/Contents/*
+app/assets/images/half-sizer.app/Contents/*
