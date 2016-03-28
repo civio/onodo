@@ -18,3 +18,6 @@
 
 # Ignore node modules folder
 node_modules/*
+
+# Ignore half-sizer droplet
+app/assets/images/sprites/half-sizer.app/Contents/*
