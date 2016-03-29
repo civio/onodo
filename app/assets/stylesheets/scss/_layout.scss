@@ -305,15 +305,15 @@
 
     .left-icon{
       position: absolute;
-      top: 6px;
-      left: 8px;
+      top: 7px;
+      left: 9px;
       @include retina-sprite( $icon-carousel-left-group );
       
     }
     .right-icon{
       position: absolute;
-      top: 6px;
-      right: 8px;
+      top: 7px;
+      right: 9px;
       @include retina-sprite( $icon-carousel-right-group );
       
     }
