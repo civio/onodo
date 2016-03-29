@@ -77,11 +77,101 @@ $home-icon-story-total-width: 440px;
 $home-icon-story-total-height: 324px;
 $home-icon-story-image: '/images/sprites-home.png';
 $home-icon-story: (220px, 216px, -220px, -216px, 220px, 108px, 440px, 324px, '/images/sprites-home.png', 'home-icon-story', );
+$home-icon-collaboration-2x-name: 'home-icon-collaboration@2x';
+$home-icon-collaboration-2x-x: 0px;
+$home-icon-collaboration-2x-y: 0px;
+$home-icon-collaboration-2x-offset-x: 0px;
+$home-icon-collaboration-2x-offset-y: 0px;
+$home-icon-collaboration-2x-width: 440px;
+$home-icon-collaboration-2x-height: 216px;
+$home-icon-collaboration-2x-total-width: 880px;
+$home-icon-collaboration-2x-total-height: 648px;
+$home-icon-collaboration-2x-image: '/images/sprites-home@2x.png';
+$home-icon-collaboration-2x: (0px, 0px, 0px, 0px, 440px, 216px, 880px, 648px, '/images/sprites-home@2x.png', 'home-icon-collaboration@2x', );
+$home-icon-creation-2x-name: 'home-icon-creation@2x';
+$home-icon-creation-2x-x: 0px;
+$home-icon-creation-2x-y: 216px;
+$home-icon-creation-2x-offset-x: 0px;
+$home-icon-creation-2x-offset-y: -216px;
+$home-icon-creation-2x-width: 440px;
+$home-icon-creation-2x-height: 216px;
+$home-icon-creation-2x-total-width: 880px;
+$home-icon-creation-2x-total-height: 648px;
+$home-icon-creation-2x-image: '/images/sprites-home@2x.png';
+$home-icon-creation-2x: (0px, 216px, 0px, -216px, 440px, 216px, 880px, 648px, '/images/sprites-home@2x.png', 'home-icon-creation@2x', );
+$home-icon-information-2x-name: 'home-icon-information@2x';
+$home-icon-information-2x-x: 440px;
+$home-icon-information-2x-y: 0px;
+$home-icon-information-2x-offset-x: -440px;
+$home-icon-information-2x-offset-y: 0px;
+$home-icon-information-2x-width: 440px;
+$home-icon-information-2x-height: 216px;
+$home-icon-information-2x-total-width: 880px;
+$home-icon-information-2x-total-height: 648px;
+$home-icon-information-2x-image: '/images/sprites-home@2x.png';
+$home-icon-information-2x: (440px, 0px, -440px, 0px, 440px, 216px, 880px, 648px, '/images/sprites-home@2x.png', 'home-icon-information@2x', );
+$home-icon-preview-2x-name: 'home-icon-preview@2x';
+$home-icon-preview-2x-x: 440px;
+$home-icon-preview-2x-y: 216px;
+$home-icon-preview-2x-offset-x: -440px;
+$home-icon-preview-2x-offset-y: -216px;
+$home-icon-preview-2x-width: 440px;
+$home-icon-preview-2x-height: 216px;
+$home-icon-preview-2x-total-width: 880px;
+$home-icon-preview-2x-total-height: 648px;
+$home-icon-preview-2x-image: '/images/sprites-home@2x.png';
+$home-icon-preview-2x: (440px, 216px, -440px, -216px, 440px, 216px, 880px, 648px, '/images/sprites-home@2x.png', 'home-icon-preview@2x', );
+$home-icon-share-2x-name: 'home-icon-share@2x';
+$home-icon-share-2x-x: 0px;
+$home-icon-share-2x-y: 432px;
+$home-icon-share-2x-offset-x: 0px;
+$home-icon-share-2x-offset-y: -432px;
+$home-icon-share-2x-width: 440px;
+$home-icon-share-2x-height: 216px;
+$home-icon-share-2x-total-width: 880px;
+$home-icon-share-2x-total-height: 648px;
+$home-icon-share-2x-image: '/images/sprites-home@2x.png';
+$home-icon-share-2x: (0px, 432px, 0px, -432px, 440px, 216px, 880px, 648px, '/images/sprites-home@2x.png', 'home-icon-share@2x', );
+$home-icon-story-2x-name: 'home-icon-story@2x';
+$home-icon-story-2x-x: 440px;
+$home-icon-story-2x-y: 432px;
+$home-icon-story-2x-offset-x: -440px;
+$home-icon-story-2x-offset-y: -432px;
+$home-icon-story-2x-width: 440px;
+$home-icon-story-2x-height: 216px;
+$home-icon-story-2x-total-width: 880px;
+$home-icon-story-2x-total-height: 648px;
+$home-icon-story-2x-image: '/images/sprites-home@2x.png';
+$home-icon-story-2x: (440px, 432px, -440px, -432px, 440px, 216px, 880px, 648px, '/images/sprites-home@2x.png', 'home-icon-story@2x', );
 $spritesheet-width: 440px;
 $spritesheet-height: 324px;
 $spritesheet-image: '/images/sprites-home.png';
 $spritesheet-sprites: ($home-icon-collaboration, $home-icon-creation, $home-icon-information, $home-icon-preview, $home-icon-share, $home-icon-story, );
 $spritesheet: (440px, 324px, '/images/sprites-home.png', $spritesheet-sprites, );
+$retina-spritesheet-width: 880px;
+$retina-spritesheet-height: 648px;
+$retina-spritesheet-image: '/images/sprites-home@2x.png';
+$retina-spritesheet-sprites: ($home-icon-collaboration-2x, $home-icon-creation-2x, $home-icon-information-2x, $home-icon-preview-2x, $home-icon-share-2x, $home-icon-story-2x, );
+$retina-spritesheet: (880px, 648px, '/images/sprites-home@2x.png', $retina-spritesheet-sprites, );
+
+/*
+These "retina group" variables are mappings for the naming and pairing of normal and retina sprites.
+
+The list formatted variables are intended for mixins like `retina-sprite` and `retina-sprites`.
+*/
+$home-icon-collaboration-group-name: 'home-icon-collaboration';
+$home-icon-collaboration-group: ('home-icon-collaboration', $home-icon-collaboration, $home-icon-collaboration-2x, );
+$home-icon-creation-group-name: 'home-icon-creation';
+$home-icon-creation-group: ('home-icon-creation', $home-icon-creation, $home-icon-creation-2x, );
+$home-icon-information-group-name: 'home-icon-information';
+$home-icon-information-group: ('home-icon-information', $home-icon-information, $home-icon-information-2x, );
+$home-icon-preview-group-name: 'home-icon-preview';
+$home-icon-preview-group: ('home-icon-preview', $home-icon-preview, $home-icon-preview-2x, );
+$home-icon-share-group-name: 'home-icon-share';
+$home-icon-share-group: ('home-icon-share', $home-icon-share, $home-icon-share-2x, );
+$home-icon-story-group-name: 'home-icon-story';
+$home-icon-story-group: ('home-icon-story', $home-icon-story, $home-icon-story-2x, );
+$retina-groups: ($home-icon-collaboration-group, $home-icon-creation-group, $home-icon-information-group, $home-icon-preview-group, $home-icon-share-group, $home-icon-story-group, );
 
 /*
 The provided mixins are intended to be used with the array-like variables
@@ -136,6 +226,36 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
 }
 
 /*
+The `retina-sprite` mixin sets up rules and a media query for a sprite/retina sprite.
+  It should be used with a "retina group" variable.
+
+The media query is from CSS Tricks: https://css-tricks.com/snippets/css/retina-display-media-query/
+
+$icon-home-group: ('icon-home', $icon-home, $icon-home-2x, );
+
+.icon-home {
+  @include retina-sprite($icon-home-group);
+}
+*/
+@mixin sprite-background-size($sprite) {
+  $sprite-total-width: nth($sprite, 7);
+  $sprite-total-height: nth($sprite, 8);
+  background-size: $sprite-total-width $sprite-total-height;
+}
+
+@mixin retina-sprite($retina-group) {
+  $normal-sprite: nth($retina-group, 2);
+  $retina-sprite: nth($retina-group, 3);
+  @include sprite($normal-sprite);
+
+  @media (-webkit-min-device-pixel-ratio: 2),
+         (min-resolution: 192dpi) {
+    @include sprite-image($retina-sprite);
+    @include sprite-background-size($normal-sprite);
+  }
+}
+
+/*
 The `sprites` mixin generates identical output to the CSS template
   but can be overridden inside of SCSS
 
@@ -146,6 +266,21 @@ The `sprites` mixin generates identical output to the CSS template
     $sprite-name: nth($sprite, 10);
     .#{$sprite-name} {
       @include sprite($sprite);
+    }
+  }
+}
+
+/*
+The `retina-sprites` mixin generates a CSS rule and media query for retina groups
+  This yields the same output as CSS retina template but can be overridden in SCSS
+
+@include retina-sprites($retina-groups);
+*/
+@mixin retina-sprites($retina-groups) {
+  @each $retina-group in $retina-groups {
+    $sprite-name: nth($retina-group, 1);
+    .#{$sprite-name} {
+      @include retina-sprite($retina-group);
     }
   }
 }
