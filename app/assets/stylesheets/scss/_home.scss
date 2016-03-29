@@ -55,10 +55,6 @@
   .features{
     padding-bottom: 2*$grid-gutter-width;
 
-    &.features-great{
-      background: mix( $gray-lighter, white, 50% );
-    }
-
     h3{
       font-size: 30px;
       margin: 2*$grid-gutter-width auto;
