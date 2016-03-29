@@ -104,6 +104,33 @@
         @include sprite( $home-icon-story );
       }
 
+      // Add no-visible gif in order to preload them
+      .feature-icon > span:after{
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+      .feature-icon-creation:after{
+        background-image: url('/images/home-gif/home-icon-creation.gif');
+      }
+      .feature-icon-information:after{
+        background-image: url('/images/home-gif/home-icon-information.gif');
+      }
+      .feature-icon-share:after{
+        background-image: url('/images/home-gif/home-icon-share.gif');
+      }
+      .feature-icon-collaboration:after{
+        background-image: url('/images/home-gif/home-icon-collaboration.gif');
+      }
+      .feature-icon-preview:after{
+        background-image: url('/images/home-gif/home-icon-preview.gif');
+      }
+      .feature-icon-story:after{
+        background-image: url('/images/home-gif/home-icon-story.gif');
+      }
+
       &:hover{
 
         .feature-icon-creation{
