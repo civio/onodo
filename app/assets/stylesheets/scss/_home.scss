@@ -86,22 +86,22 @@
       }
 
       .feature-icon-creation{
-        @include sprite( $home-icon-creation );
+        @include retina-sprite( $home-icon-creation-group );
       }
       .feature-icon-information{
-        @include sprite( $home-icon-information );
+        @include retina-sprite( $home-icon-information-group );
       }
       .feature-icon-share{
-        @include sprite( $home-icon-share );
+        @include retina-sprite( $home-icon-share-group );
       }
       .feature-icon-collaboration{
-        @include sprite( $home-icon-collaboration );
+        @include retina-sprite( $home-icon-collaboration-group );
       }
       .feature-icon-preview{
-        @include sprite( $home-icon-preview );
+        @include retina-sprite( $home-icon-preview-group );
       }
       .feature-icon-story{
-        @include sprite( $home-icon-story );
+        @include retina-sprite( $home-icon-story-group );
       }
 
       // Add no-visible gif in order to preload them
