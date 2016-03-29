@@ -5,7 +5,7 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   el:               '.visualization-table-relations'
   nodes_type:       null
-  tableColHeaders:  ['', 'Source', 'Target', 'Type']
+  tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date']
   tableColumns:     [
     { 
       data: 'id'
@@ -15,12 +15,15 @@ class VisualizationTableRelations extends VisualizationTableBase
       data: 'source_id' 
     },
     { 
-      data: 'target_id' 
-    },
-    { 
       data: 'relation_type'
       #type: 'autocomplete'
       #strict: false
+    },
+    { 
+      data: 'target_id' 
+    },
+    { 
+      data: '' 
     }
   ]
 

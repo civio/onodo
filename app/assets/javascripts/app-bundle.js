@@ -15559,40 +15559,73 @@
 
 	  VisualizationTableNodes.prototype.nodes_type = null;
 
-	  VisualizationTableNodes.prototype.tableColHeaders = ['', 'Name', 'Description', 'Type', 'Visible'];
-
-	  VisualizationTableNodes.prototype.tableColumns = [
-	    {
-	      data: 'id',
-	      type: 'numeric'
-	    }, {
-	      data: 'name'
-	    }, {
-	      data: 'description'
-	    }, {
-	      data: 'node_type',
-	      type: 'autocomplete',
-	      strict: false
-	    }, {
-	      data: 'visible',
-	      type: 'checkbox'
-	    }
-	  ];
+	  VisualizationTableNodes.prototype.tableColHeaders = ['', 'Node', 'Type', 'Description', 'Visible'];
 
 	  function VisualizationTableNodes(collection) {
 	    this.collection = collection;
 	    this.onTableChange = bind(this.onTableChange, this);
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
+	    this.getTableColumns = bind(this.getTableColumns, this);
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
 	    VisualizationTableNodes.__super__.constructor.call(this, this.collection, 'node');
 	    this.table_options.colHeaders = this.tableColHeaders;
-	    this.table_options.columns = this.tableColumns;
+	    this.table_options.columns = this.getTableColumns();
 	  }
 
 	  VisualizationTableNodes.prototype.onCollectionSync = function() {
 	    VisualizationTableNodes.__super__.onCollectionSync.call(this);
 	    console.log(this.table_options.data);
 	    return this.getNodeTypes();
+	  };
+
+	  VisualizationTableNodes.prototype.getTableColumns = function() {
+	    return [
+	      {
+	        data: '',
+	        readOnly: true,
+	        renderer: (function(_this) {
+	          return function(instance, td, row, col, prop, value, cellProperties) {
+	            var link;
+	            link = document.createElement('A');
+	            link.className = 'icon-trash';
+	            link.innerHTML = link.title = 'Delete Node';
+	            Handsontable.Dom.empty(td);
+	            td.appendChild(link);
+	            Handsontable.Dom.addEvent(link, 'click', function(e) {
+	              e.preventDefault();
+	              return _this.table.alter('remove_row', row, 1);
+	            });
+	            return td;
+	          };
+	        })(this)
+	      }, {
+	        data: 'name'
+	      }, {
+	        data: 'node_type',
+	        type: 'autocomplete',
+	        strict: false
+	      }, {
+	        data: 'description'
+	      }, {
+	        data: 'visible',
+	        type: 'checkbox',
+	        renderer: (function(_this) {
+	          return function(instance, td, row, col, prop, value, cellProperties) {
+	            var link;
+	            Handsontable.renderers.CheckboxRenderer.apply(_this, arguments);
+	            link = document.createElement('A');
+	            link.className = value ? 'icon-visible active' : 'icon-visible';
+	            link.innerHTML = link.title = 'Node Visibility';
+	            td.appendChild(link);
+	            Handsontable.Dom.addEvent(link, 'click', function(e) {
+	              e.preventDefault();
+	              return _this.table.setDataAtCell(row, col, !value);
+	            });
+	            return td;
+	          };
+	        })(this)
+	      }
+	    ];
 	  };
 
 	  VisualizationTableNodes.prototype.getNodeTypes = function() {
@@ -42985,7 +43018,7 @@
 	    this.table_type = table_type;
 	    console.log('VisualizationTableBase', table_type);
 	    this.table_options = {
-	      contextMenu: ['row_below', 'remove_row', 'undo', 'redo'],
+	      contextMenu: null,
 	      height: 360,
 	      stretchH: 'all',
 	      columnSorting: true
@@ -43016,7 +43049,6 @@
 
 	  VisualizationTableBase.prototype.onTableRemoveRow = function(index, amount) {
 	    var model, results;
-	    console.log(index, amount);
 	    results = [];
 	    while (amount > 0) {
 	      model = this.collection.at(index);
@@ -43076,7 +43108,7 @@
 
 	  VisualizationTableRelations.prototype.nodes_type = null;
 
-	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Target', 'Type'];
+	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date'];
 
 	  VisualizationTableRelations.prototype.tableColumns = [
 	    {
@@ -43085,9 +43117,11 @@
 	    }, {
 	      data: 'source_id'
 	    }, {
+	      data: 'relation_type'
+	    }, {
 	      data: 'target_id'
 	    }, {
-	      data: 'relation_type'
+	      data: ''
 	    }
 	  ];
 

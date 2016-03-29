@@ -5,39 +5,67 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_type:       null
-  tableColHeaders:  ['', 'Name', 'Description', 'Type', 'Visible']
-  tableColumns:     [
-    { 
-      data: 'id'
-      type: 'numeric' 
-    },
-    { 
-      data: 'name' 
-    },
-    { 
-      data: 'description' 
-    },
-    { 
-      data: 'node_type'
-      type: 'autocomplete'
-      strict: false
-    },
-    { 
-      data: 'visible', 
-      type: 'checkbox' 
-    },
-  ]
+  tableColHeaders:  ['', 'Node', 'Type', 'Description', 'Visible']
 
   constructor: (@collection) ->
     super @collection, 'node'
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
-    @table_options.columns     = @tableColumns
+    @table_options.columns     = @getTableColumns()
 
   onCollectionSync: =>
     super()
     console.log @table_options.data
     @getNodeTypes()
+
+  # Setup Handsontable columns options
+  getTableColumns: =>
+    return [
+      { 
+        data: '',
+        readOnly: true,
+        renderer: (instance, td, row, col, prop, value, cellProperties) =>
+          # Add delete icon
+          link = document.createElement('A');
+          link.className = 'icon-trash'
+          link.innerHTML = link.title = 'Delete Node'
+          Handsontable.Dom.empty(td)
+          td.appendChild(link)
+          # Delete row on click event
+          Handsontable.Dom.addEvent link, 'click', (e) =>
+            e.preventDefault()
+            @table.alter('remove_row', row, 1 )
+          return td
+      },
+      { 
+        data: 'name' 
+      },
+      { 
+        data: 'node_type'
+        type: 'autocomplete'
+        strict: false
+      },
+      { 
+        data: 'description' 
+      },
+      { 
+        data: 'visible', 
+        type: 'checkbox',
+        renderer: (instance, td, row, col, prop, value, cellProperties) =>
+          # We keep checkbox render in order to toogle value with enter key
+          Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
+          # Add visible icon link
+          link = document.createElement('A');
+          link.className = if value then 'icon-visible active' else 'icon-visible'
+          link.innerHTML = link.title = 'Node Visibility'
+          td.appendChild(link)
+          # Toggle visibility value on click
+          Handsontable.Dom.addEvent link, 'click', (e) =>
+            e.preventDefault()
+            @table.setDataAtCell(row, col, !value)
+          return td
+      },
+    ]
 
   getNodeTypes: ->
     console.log 'getNodeTypes'
@@ -76,5 +104,6 @@ class VisualizationTableNodes extends VisualizationTableBase
   addNodeType: (type) ->
     @nodes_type.push type
     @table_options.columns[3].source = @nodes_type
+
 
 module.exports = VisualizationTableNodes

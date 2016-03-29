@@ -10,7 +10,7 @@ class VisualizationTableBase extends Backbone.View
     @table_type = table_type
     console.log 'VisualizationTableBase', table_type
     @table_options =
-      contextMenu: [ 'row_below', 'remove_row', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
+      contextMenu: null, # [ 'row_below', 'remove_row', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
       height: 360
       stretchH: 'all'
       columnSorting: true
@@ -34,7 +34,6 @@ class VisualizationTableBase extends Backbone.View
     @table = new Handsontable @$el.get(0), @table_options
 
   onTableRemoveRow: (index, amount) =>
-    console.log index, amount
     while amount > 0
       model = @collection.at index
       model.destroy()

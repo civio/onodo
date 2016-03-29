@@ -172,6 +172,7 @@
       border: none;
       border-radius: 12px;
       margin-bottom: 12px;
+      padding: 0;
       @include transition( opacity 0.3s ease-out );
       background-color: white;
 
@@ -541,7 +542,7 @@ body.fullscreen{
         margin-right: $grid-gutter-width/3;
 
         > a{
-          font-size: 0.786em;
+          font-size: 0.857em;
           text-transform: uppercase;
           border: 2px solid $brand-primary;
           border-bottom: none;
@@ -571,6 +572,40 @@ body.fullscreen{
   .tab-content{
     clear: both;
     float: none;
+  }
+
+
+  .handsontable{
+    
+    .icon-trash{
+      display: block;
+      margin-top: 6px;
+      cursor: pointer;
+      text-indent: -9999px;
+      @include retina-sprite( $icon-trash-group );
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+
+    .htCheckboxRendererInput{
+      display: none;
+    }
+
+    .icon-visible{
+      display: block;
+      margin-top: 7px;
+      cursor: pointer;
+      text-indent: -9999px;
+      opacity: 0.3;
+      @include retina-sprite( $icon-preview-group );
+
+      &.active{
+        opacity: 1;
+      }
+    }
   }
 
   .table{
