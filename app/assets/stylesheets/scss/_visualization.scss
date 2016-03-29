@@ -22,12 +22,12 @@
       float: right;
       margin-top: 4px;
       margin-left: 4px;
-      @include sprite( $icon-tool );
+      @include retina-sprite( $icon-tool-group );
       
     }
 
     &:hover .icon-tool{
-      @include sprite( $icon-tool-brand );
+      @include retina-sprite( $icon-tool-brand-group );
     }
   }
 
@@ -180,15 +180,15 @@
       }
 
       &.zoomin{
-        @include sprite( $icon-zoomin );
+        @include retina-sprite( $icon-zoomin-group );
       }
       &.zoomout{
-        @include sprite( $icon-zoomout );
+        @include retina-sprite( $icon-zoomout-group );
       }
       &.fullscreen{
         border-radius: 0;
         margin-left: 1px;
-        @include sprite( $icon-fullscreen );
+        @include retina-sprite( $icon-fullscreen-group );
       }
     }
   }
@@ -204,7 +204,7 @@
 
       > .search-icon{
         @include clearfix;
-        @include sprite( $icon-search );
+        @include retina-sprite( $icon-search-group );
         
       }
 
@@ -228,7 +228,7 @@
       @include clearfix;
 
       .icon-share{
-        @include sprite( $icon-share );
+        @include retina-sprite( $icon-share-group );
         
         display: inline-block;
         position: relative;
@@ -298,7 +298,7 @@
         border-radius: $grid-gutter-width/2;
         text-indent: -9999px;
         opacity: 1;
-        @include sprite( $icon-close-white );
+        @include retina-sprite( $icon-close-white-group );
         
         @include transition( background-color 0.3s ease-out );
 
@@ -318,7 +318,7 @@
           float: left;
           margin-top: 5px;
           margin-right: $grid-gutter-width/3;
-          @include sprite( $icon-pencil-white );
+          @include retina-sprite( $icon-pencil-white-group );
           
         }
 
@@ -358,7 +358,7 @@ body.fullscreen{
     z-index: 999;
 
     .visualization-graph-menu-navigation .btn.fullscreen{
-      @include sprite( $icon-fullscreen-back );
+      @include retina-sprite( $icon-fullscreen-back-group );
       
     }
   }
@@ -409,7 +409,7 @@ body.fullscreen{
     position: relative;
     top: 7px;
     left: 4px;
-    @include sprite( $icon-table );
+    @include retina-sprite( $icon-table-group );
   }
 
   .btn-collapse{
@@ -418,7 +418,7 @@ body.fullscreen{
 
   .collapsed-label-icon,
   .collapsible-label-icon{
-    @include sprite( $icon-table );
+    @include retina-sprite( $icon-table-group );
   }
 
   .collapsed-label-icon,
@@ -484,22 +484,22 @@ body.fullscreen{
 
     .btn-icon-story{
       top: 5px;
-      @include sprite( $icon-story-brand );
+      @include retina-sprite( $icon-story-brand-group );
       
     } 
     .btn-icon-visualization{
       top: 5px;
-      @include sprite( $icon-visualization-brand );
+      @include retina-sprite( $icon-visualization-brand-group );
       
     }        
     .btn-icon-pencil{
       top: 5px;
-      @include sprite( $icon-pencil );
+      @include retina-sprite( $icon-pencil-group );
       
     }
     .btn-icon-duplicate{
       top: 6px;
-      @include sprite( $icon-duplicate );
+      @include retina-sprite( $icon-duplicate-group );
       
     }
   }
@@ -620,11 +620,11 @@ body.fullscreen{
         border-color: white;
 
         &.twitter .icon{
-          @include sprite( $social-icon-twitter );
+          @include retina-sprite( $social-icon-twitter-group );
           
         }
         &.facebook .icon{
-          @include sprite( $social-icon-facebook );
+          @include retina-sprite( $social-icon-facebook-group );
           
         }
 

@@ -25,12 +25,12 @@
   }
 
   .logo-icon{
-    @include sprite( $icon-logo-footer );
+    @include retina-sprite( $icon-logo-footer-group );
     
   }
   .civio-icon{
     margin-top: 20px;
-    @include sprite( $icon-civio-footer );
+    @include retina-sprite( $icon-civio-footer-group );
     
   }
   
@@ -51,11 +51,11 @@
         @include transition(opacity 0.3s ease-out);
 
         &.twitter{
-          @include sprite( $social-icon-twitter );
+          @include retina-sprite( $social-icon-twitter-group );
           
         }
         &.facebook{
-          @include sprite( $social-icon-facebook );
+          @include retina-sprite( $social-icon-facebook-group );
           
         }
 
@@ -86,7 +86,7 @@
     .eu-icon{
       float: left;
       margin-right: $grid-gutter-width/2;
-      @include sprite( $icon-eu-footer );
+      @include retina-sprite( $icon-eu-footer-group );
       
     }
   }

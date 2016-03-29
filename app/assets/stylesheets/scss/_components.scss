@@ -30,7 +30,7 @@
     position: absolute;
     top: 4px;
     right: 0;
-    @include sprite( $icon-plus-circle );
+    @include retina-sprite( $icon-plus-circle-group );
   }
 
   .btn-circle-lg-title{
@@ -41,23 +41,23 @@
   }
 
   &.btn-circle-lg-story .btn-circle-lg-icon-sprite{
-    @include sprite( $dahsboard-icon-story );
+    @include retina-sprite( $dahsboard-icon-story-group );
   }
   &.btn-circle-lg-visualization .btn-circle-lg-icon-sprite{
     margin-top: 36px;
-    @include sprite( $dahsboard-icon-visualization );
+    @include retina-sprite( $dahsboard-icon-visualization-group );
   }
   &.btn-circle-lg-preview .btn-circle-lg-icon-sprite{
     margin-top: 44px;
-    //@include sprite( $home-home-icon-preview );
+    //@include retina-sprite( $home-home-icon-preview );
     //
   }
   &.btn-circle-lg-settings{
     .btn-circle-lg-icon-sprite{
-      @include sprite( $dahsboard-icon-user );
+      @include retina-sprite( $dahsboard-icon-user-group );
     }
     .btn-circle-lg-icon-detail{
-      @include sprite( $icon-pencil-circle );
+      @include retina-sprite( $icon-pencil-circle-group );
     }
   }
 
@@ -87,7 +87,7 @@
 
   .btn-edit-circle-icon{
     margin: 6px 0 0 7px;
-    @include sprite( $icon-pencil-white );
+    @include retina-sprite( $icon-pencil-white-group );
     
   }
 
@@ -124,18 +124,18 @@
       &.twitter .icon{
         margin-top: 7px;
         margin-left: 6px;
-        @include sprite( $social-icon-twitter-brand );
+        @include retina-sprite( $social-icon-twitter-brand-group );
       }
       &.facebook .icon{
         margin-top: 6px;
         margin-left: 10px;
-        @include sprite( $social-icon-facebook-brand );
+        @include retina-sprite( $social-icon-facebook-brand-group );
         
       }
       &.gplus .icon{
         margin-top: 8px;
         margin-left: 6px;
-        @include sprite( $social-icon-gplus );
+        @include retina-sprite( $social-icon-gplus-group );
         
       }
 
@@ -270,7 +270,7 @@
 
       .search-icon{
         display: block;
-        @include sprite( $icon-search );
+        @include retina-sprite( $icon-search-group );
       }
     }
   }
@@ -304,7 +304,7 @@
       border-radius: $grid-gutter-width/2;
       text-indent: -9999px;
       opacity: 1;
-      @include sprite( $icon-close-white );
+      @include retina-sprite( $icon-close-white-group );
       
       @include transition( background-color 0.3s ease-out );
 

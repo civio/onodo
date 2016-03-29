@@ -61,8 +61,8 @@
     top: 0;
     left: 0;
     opacity: 1;
-    @include sprite( $logo );
-    //@include sprite( $logo );
+    @include retina-sprite( $logo-group );
+    //@include retina-sprite( $logo );
     //
     @include transition( opacity 0.3s ease-out );
   }
@@ -73,7 +73,7 @@
     top: 0;
     left: 0;
     opacity: 0;
-    @include sprite( $logo-hover );
+    @include retina-sprite( $logo-hover-group );
     
     @include transition( opacity 0.3s ease-out );
   }
@@ -124,7 +124,7 @@
         display: block;
         margin: $grid-gutter-width/2 auto;
         text-indent: -9999px;
-        @include sprite( $icon-settings );
+        @include retina-sprite( $icon-settings-group );
       }
     }
   }
@@ -172,13 +172,13 @@
       display: block;
       margin-top: 8px;
       margin-bottom: $grid-gutter-width/2;
-      @include sprite( $icon-mail );
+      @include retina-sprite( $icon-mail-group );
     }
     .icon-maps{
       display: block;
       margin-top: 2px;
       margin-bottom: $grid-gutter-width/2;
-      @include sprite( $icon-location );
+      @include retina-sprite( $icon-location-group );
     }
 
     .social-links{
@@ -203,13 +203,13 @@
             display: block;
             margin-top: 7px;
             margin-left: 6px;
-            @include sprite( $social-icon-twitter );
+            @include retina-sprite( $social-icon-twitter-group );
           }
           &.facebook .icon{
             display: block;
             margin-top: 6px;
             margin-left: 10px;
-            @include sprite( $social-icon-facebook );
+            @include retina-sprite( $social-icon-facebook-group );
           }
 
           &:hover{
@@ -225,7 +225,7 @@
       right: $grid-gutter-width;
       opacity: 1;
       text-indent: -9999px;
-      @include sprite( $icon-close );
+      @include retina-sprite( $icon-close-group );
       
       @include transition( opacity 0.3s ease-out );
 
