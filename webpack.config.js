@@ -28,11 +28,20 @@ var config = module.exports = {
     // tell webpack which extensions to auto search when it resolves modules. With this,
     // you'll be able to do `require('./utils')` instead of `require('./utils.js')`
     extensions: ["", ".coffee", ".js"],
+    // We only need to look into `node_modules` folder
+    modulesDirectories: ["node_modules"],
     // Avoid Handebars warning require.extentions not supported
     // https://github.com/wycats/handlebars.js/issues/953
-    //alias: {
-    //  'handlebars': 'handlebars/runtime.js'
-    //}
+    alias: {
+      'handlebars': 'handlebars/runtime.js'
+    }
+  },
+  resolveLoader: {
+    // Avoid Handebars warning require.extentions not supported
+    // https://github.com/wycats/handlebars.js/issues/953
+    alias: {
+      'hbs': 'handlebars-loader'
+    }
   },
   module: {
     loaders: [
@@ -43,9 +52,13 @@ var config = module.exports = {
   // https://github.com/josephsavona/valuable/issues/9
   node: {
     fs: "empty"
-  }
-  /*,
+  },
+  /*
   plugins: [
+    new webpack.ResolverPlugin(
+      new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
+    )
+    /*
     new webpack.ProvidePlugin({
       'React': 'react/addons',
       //'react-faux-dom': 'react-d3-core/react-faux-dom', //'react-d3-core/react-faux-dom',
