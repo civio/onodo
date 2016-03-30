@@ -57,4 +57,17 @@ class VisualizationTableBase extends Backbone.View
   render: =>
     return this
 
+  rowDeleteRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # Add delete icon
+    link = document.createElement('A');
+    link.className = 'icon-trash'
+    link.innerHTML = link.title = 'Delete ' + @table_type.charAt(0).toUpperCase() + @table_type.slice(1)
+    Handsontable.Dom.empty(td)
+    td.appendChild(link)
+    # Delete row on click event
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      @table.alter('remove_row', row, 1 )
+    return td
+
 module.exports = VisualizationTableBase

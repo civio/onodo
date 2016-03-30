@@ -15,7 +15,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   onCollectionSync: =>
     super()
-    console.log @table_options.data
+    #console.log @table_options.data
     @getNodeTypes()
 
   # Setup Handsontable columns options
@@ -24,18 +24,7 @@ class VisualizationTableNodes extends VisualizationTableBase
       { 
         data: '',
         readOnly: true,
-        renderer: (instance, td, row, col, prop, value, cellProperties) =>
-          # Add delete icon
-          link = document.createElement('A');
-          link.className = 'icon-trash'
-          link.innerHTML = link.title = 'Delete Node'
-          Handsontable.Dom.empty(td)
-          td.appendChild(link)
-          # Delete row on click event
-          Handsontable.Dom.addEvent link, 'click', (e) =>
-            e.preventDefault()
-            @table.alter('remove_row', row, 1 )
-          return td
+        renderer: @rowDeleteRenderer
       },
       { 
         data: 'name' 
