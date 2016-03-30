@@ -28,7 +28,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         renderer: @rowDeleteRenderer
       },
       { 
-        data: 'source_id' 
+        data: 'source_name' 
       },
       { 
         data: 'relation_type'
@@ -36,7 +36,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         #strict: false
       },
       { 
-        data: 'target_id' 
+        data: 'target_name' 
       },
       { 
         data: '' 

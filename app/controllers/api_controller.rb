@@ -48,7 +48,7 @@ class ApiController < ApplicationController
   # Get all Relations (for a visualization)
   # GET /api/:dataset_id/relations
   def relations
-    render json: Relation.where(dataset_id: params[:dataset_id])
+    @relations = Relation.where(dataset_id: params[:dataset_id]).includes(:source,:target)
   end
 
   # Get a Relation
