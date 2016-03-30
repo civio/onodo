@@ -50,7 +50,7 @@
 
 	App.VisualizationShow = __webpack_require__(4);
 
-	App.VisualizationEdit = __webpack_require__(39);
+	App.VisualizationEdit = __webpack_require__(40);
 
 	$(document).ready(function() {
 	  var appVisualizationEdit, appVisualizationShow;
@@ -117,9 +117,9 @@
 
 	VisualizationGraph = __webpack_require__(9);
 
-	VisualizationTableNodes = __webpack_require__(34);
+	VisualizationTableNodes = __webpack_require__(35);
 
-	VisualizationTableRelations = __webpack_require__(38);
+	VisualizationTableRelations = __webpack_require__(39);
 
 	VisualizationShow = (function() {
 	  VisualizationShow.prototype.id = null;
@@ -10694,11 +10694,13 @@
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars, VisualizationGraphInfo,
+	var Handlebars, HandlebarsTemplate, VisualizationGraphInfo,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
 	Handlebars = __webpack_require__(15);
+
+	HandlebarsTemplate = __webpack_require__(34);
 
 	VisualizationGraphInfo = (function(superClass) {
 	  extend(VisualizationGraphInfo, superClass);
@@ -10729,15 +10731,12 @@
 	  };
 
 	  VisualizationGraphInfo.prototype.render = function() {
-	    var result;
-	    this.template = Handlebars.compile($('#visualization-graph-info-template').html());
 	    if (this.node) {
-	      result = this.template({
+	      this.template = HandlebarsTemplate({
 	        name: this.node.name,
 	        description: this.node.description
 	      });
-	      console.log('template', result);
-	      this.$el.find('.panel-body').html(result, this);
+	      this.$el.find('.panel-body').html(this.template, this);
 	    }
 	    return this;
 	  };
@@ -11928,14 +11927,29 @@
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var Handlebars = __webpack_require__(15);
+	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+	    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function";
+
+	  return "<h3 class=\"name\">"
+	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
+	    + "</h3>\n<div class=\"picture\"></div>\n<div class=\"description\">\n  "
+	    + ((stack1 = ((helper = (helper = helpers.description || (depth0 != null ? depth0.description : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"description","hash":{},"data":data}) : helper))) != null ? stack1 : "")
+	    + "\n</div>";
+	},"useData":true});
+
+/***/ },
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var Handsontable, VisualizationTableBase, VisualizationTableNodes,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	Handsontable = __webpack_require__(35);
+	Handsontable = __webpack_require__(36);
 
-	VisualizationTableBase = __webpack_require__(37);
+	VisualizationTableBase = __webpack_require__(38);
 
 	VisualizationTableNodes = (function(superClass) {
 	  extend(VisualizationTableNodes, superClass);
@@ -12062,7 +12076,7 @@
 
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -41420,10 +41434,10 @@
 	}());
 	},{}]},{},[23,60,62,61,63,84,85,86,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,104,105,106,107,93,94,95,96,97,98,31,35,32,33,40,34,36,37,38,39])("zeroclipboard")
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37), (function() { return this; }())))
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -41520,7 +41534,7 @@
 
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports) {
 
 	var VisualizationTableBase,
@@ -41635,7 +41649,7 @@
 
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBase, VisualizationTableRelations,
@@ -41643,9 +41657,9 @@
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
-	Handsontable = __webpack_require__(35);
+	Handsontable = __webpack_require__(36);
 
-	VisualizationTableBase = __webpack_require__(37);
+	VisualizationTableBase = __webpack_require__(38);
 
 	VisualizationTableRelations = (function(superClass) {
 	  extend(VisualizationTableRelations, superClass);
@@ -41697,7 +41711,7 @@
 
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraph, VisualizationTableNodes, VisualizationTableRelations,
@@ -41709,9 +41723,9 @@
 
 	VisualizationGraph = __webpack_require__(9);
 
-	VisualizationTableNodes = __webpack_require__(34);
+	VisualizationTableNodes = __webpack_require__(35);
 
-	VisualizationTableRelations = __webpack_require__(38);
+	VisualizationTableRelations = __webpack_require__(39);
 
 	VisualizationEdit = (function() {
 	  VisualizationEdit.prototype.mainHeaderHeight = 82;

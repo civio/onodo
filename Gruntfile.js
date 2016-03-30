@@ -1,9 +1,10 @@
-// Run task as `grunt sprite`
 module.exports = function (grunt) {
+
   // Configure grunt
   grunt.initConfig({
+
+    // Configure spritesheets
     sprite:{
-      
       sprite: {
         src: './app/assets/images/main/*.png',
         dest: './public/images/sprites.png',
@@ -31,6 +32,6 @@ module.exports = function (grunt) {
     }
   });
 
-  // Load in `grunt-spritesmith`
+  // Generate spritesheet with `grunt sprite`
   grunt.loadNpmTasks('grunt-spritesmith');
 };

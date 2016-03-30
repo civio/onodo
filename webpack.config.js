@@ -30,7 +30,7 @@ var config = module.exports = {
     extensions: ["", ".coffee", ".js"],
     // We only need to look into `node_modules` folder
     modulesDirectories: ["node_modules"],
-    // Avoid Handebars warning require.extentions not supported
+    // Avoid Handebars warning require.extentions not supported using Handebars runtime build
     // https://github.com/wycats/handlebars.js/issues/953
     alias: {
       'handlebars': 'handlebars/runtime.js'
@@ -45,13 +45,9 @@ var config = module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.coffee$/,      loader: "coffee-loader"}
+      { test: /\.coffee$/,      loader: "coffee-loader"},
+      { test: /\.handlebars$/,  loader: "handlebars-loader" }
     ]
-  },
-  // Avoid Handlebars Error about 'fs' module
-  // https://github.com/josephsavona/valuable/issues/9
-  node: {
-    fs: "empty"
   },
   /*
   plugins: [

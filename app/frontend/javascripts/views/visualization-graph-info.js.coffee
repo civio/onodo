@@ -1,4 +1,5 @@
-Handlebars = require 'handlebars'
+Handlebars            = require 'handlebars'
+HandlebarsTemplate    = require './../templates/visualization-graph-info.handlebars'
 
 class VisualizationGraphInfo extends Backbone.View
 
@@ -20,13 +21,12 @@ class VisualizationGraphInfo extends Backbone.View
     @render()
 
   render: ->
-    # Compile the template using Handlebars
-    @template = Handlebars.compile $('#visualization-graph-info-template').html()
     # Update template & render if we have node info
     if @node
-      result = @template {name: @node.name, description: @node.description}
-      console.log 'template', result
-      @$el.find('.panel-body').html result, @
+      # Compile the template using Handlebars
+      @template = HandlebarsTemplate {name: @node.name, description: @node.description}
+      #console.log 'template', @template
+      @$el.find('.panel-body').html @template, @
     return this
 
 module.exports = VisualizationGraphInfo
