@@ -292,7 +292,9 @@
 
 	  Relation.prototype.defaults = {
 	    source_id: null,
+	    source_name: null,
 	    target_id: null,
+	    target_name: null,
 	    relation_type: null
 	  };
 
@@ -15574,7 +15576,6 @@
 
 	  VisualizationTableNodes.prototype.onCollectionSync = function() {
 	    VisualizationTableNodes.__super__.onCollectionSync.call(this);
-	    console.log(this.table_options.data);
 	    return this.getNodeTypes();
 	  };
 
@@ -15583,21 +15584,7 @@
 	      {
 	        data: '',
 	        readOnly: true,
-	        renderer: (function(_this) {
-	          return function(instance, td, row, col, prop, value, cellProperties) {
-	            var link;
-	            link = document.createElement('A');
-	            link.className = 'icon-trash';
-	            link.innerHTML = link.title = 'Delete Node';
-	            Handsontable.Dom.empty(td);
-	            td.appendChild(link);
-	            Handsontable.Dom.addEvent(link, 'click', function(e) {
-	              e.preventDefault();
-	              return _this.table.alter('remove_row', row, 1);
-	            });
-	            return td;
-	          };
-	        })(this)
+	        renderer: this.rowDeleteRenderer
 	      }, {
 	        data: 'name'
 	      }, {
@@ -43010,6 +42997,7 @@
 
 	  function VisualizationTableBase(collection, table_type) {
 	    this.collection = collection;
+	    this.rowDeleteRenderer = bind(this.rowDeleteRenderer, this);
 	    this.render = bind(this.render, this);
 	    this.onTableCreateRow = bind(this.onTableCreateRow, this);
 	    this.onTableRemoveRow = bind(this.onTableRemoveRow, this);
@@ -43081,6 +43069,22 @@
 	    return this;
 	  };
 
+	  VisualizationTableBase.prototype.rowDeleteRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+	    var link;
+	    link = document.createElement('A');
+	    link.className = 'icon-trash';
+	    link.innerHTML = link.title = 'Delete ' + this.table_type.charAt(0).toUpperCase() + this.table_type.slice(1);
+	    Handsontable.Dom.empty(td);
+	    td.appendChild(link);
+	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
+	      return function(e) {
+	        e.preventDefault();
+	        return _this.table.alter('remove_row', row, 1);
+	      };
+	    })(this));
+	    return td;
+	  };
+
 	  return VisualizationTableBase;
 
 	})(Backbone.View);
@@ -43110,32 +43114,37 @@
 
 	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date'];
 
-	  VisualizationTableRelations.prototype.tableColumns = [
-	    {
-	      data: 'id',
-	      type: 'numeric'
-	    }, {
-	      data: 'source_id'
-	    }, {
-	      data: 'relation_type'
-	    }, {
-	      data: 'target_id'
-	    }, {
-	      data: ''
-	    }
-	  ];
-
 	  function VisualizationTableRelations(collection) {
 	    this.collection = collection;
+	    this.getTableColumns = bind(this.getTableColumns, this);
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
 	    VisualizationTableRelations.__super__.constructor.call(this, this.collection, 'relation');
 	    this.table_options.colHeaders = this.tableColHeaders;
-	    this.table_options.columns = this.tableColumns;
+	    this.table_options.columns = this.getTableColumns();
 	  }
 
 	  VisualizationTableRelations.prototype.onCollectionSync = function() {
 	    VisualizationTableRelations.__super__.onCollectionSync.call(this);
+	    console.log('data!', this.table_options.data);
 	    return this.setupTable();
+	  };
+
+	  VisualizationTableRelations.prototype.getTableColumns = function() {
+	    return [
+	      {
+	        data: '',
+	        readOnly: true,
+	        renderer: this.rowDeleteRenderer
+	      }, {
+	        data: 'source_id'
+	      }, {
+	        data: 'relation_type'
+	      }, {
+	        data: 'target_id'
+	      }, {
+	        data: ''
+	      }
+	    ];
 	  };
 
 	  return VisualizationTableRelations;

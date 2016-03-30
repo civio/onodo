@@ -572,8 +572,15 @@ body.fullscreen{
   .tab-content{
     clear: both;
     float: none;
-  }
+    position: relative;
+    margin-bottom: $grid-gutter-width;
 
+    .btn-toolbar{
+      position: absolute;
+      top: -1.5*$grid-gutter-width;
+      right: 0;
+    }
+  }
 
   .handsontable{
     

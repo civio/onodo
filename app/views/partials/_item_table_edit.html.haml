@@ -11,22 +11,28 @@
         %a{ href: "#nodes", role: "tab", "data-toogle": "tab" } Nodes
       %li{ role: "presentation" }
         %a{ href: "#relations", role: "tab", "data-toogle": "tab" } Relationships
-    .btn-toolbar.pull-right{ role: "group" }
-      %button#btn-visualization-preview.btn.btn-default{ type: "button" }
-        %i.glyphicon.glyphicon-eye-open
-        Preview
-      %button.btn.btn-default{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
-        %i.glyphicon.glyphicon-option-horizontal
-        Add Node
-      %button.btn.btn-default{ type: "button" }
-        %i.glyphicon.glyphicon-option-vertical
-        Add Columns
-      %button.btn.btn-default{ type: "button" }
-        %i.glyphicon.glyphicon-flash
-        Network Analysis
-
+   
   .tab-content
-    #nodes.visualization-table-nodes
-    #relations.visualization-table-relations.hide
+    #nodes.tab-pane.active{ role: "tabpanel" }
+      .btn-toolbar{ role: "group" }
+        %button.btn.btn-primary{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
+          %i.glyphicon.glyphicon-option-horizontal
+          Add Node
+        %button.btn.btn-primary{ type: "button" }
+          %i.glyphicon.glyphicon-option-vertical
+          Add Column
+        %button.btn.btn-default{ type: "button" }
+          %i.glyphicon.glyphicon-flash
+          Network Analysis
+      .visualization-table-nodes
+    #relations.tab-pane{ role: "tabpanel" }
+      .btn-toolbar{ role: "group" }
+        %button.btn.btn-primary{ type: "button", data: { toggle: "modal", target: "#relation-add-modal" } }
+          %i.glyphicon.glyphicon-option-horizontal
+          Add Relationship
+        %button.btn.btn-primary{ type: "button" }
+          %i.glyphicon.glyphicon-option-vertical
+          Add Column
+      .visualization-table-relations
 
 /  = react_component 'Nodes', { data: @nodes }

@@ -28,9 +28,8 @@ class VisualizationEdit
     @visualizationTableNodes      = new VisualizationTableNodes {collection: @nodes}
     @visualizationTableRelations  = new VisualizationTableRelations {collection: @relations}
     @visualizationGraph           = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
-    # Setup Table Selector
+    # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
-    
 
   setupAffix: ->
     $('.visualization-graph').affix
