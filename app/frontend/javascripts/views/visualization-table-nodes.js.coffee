@@ -76,14 +76,14 @@ class VisualizationTableNodes extends VisualizationTableBase
         if change[2] != change[3]
           @updateNode change
           
-  updateNode: (change) ->
+  updateNode: (change) =>
     console.log 'change', change
     key = change[1]
     value = change[3]
     model = @collection.at change[0]
     if key == 'visible' || key == 'name' || key == 'description'
       Backbone.trigger 'visualization.node.'+key, {value: value, node: model}
-    else if key == 'node_type' && !_.contains(nodes_type, value)
+    else if key == 'node_type' && !_.contains(@nodes_type, value)
       @addNodeType value
     obj = {}
     obj[ key ] = value

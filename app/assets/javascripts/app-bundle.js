@@ -11962,6 +11962,7 @@
 
 	  function VisualizationTableNodes(collection) {
 	    this.collection = collection;
+	    this.updateNode = bind(this.updateNode, this);
 	    this.onTableChange = bind(this.onTableChange, this);
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
 	    this.getTableColumns = bind(this.getTableColumns, this);
@@ -12055,7 +12056,7 @@
 	        value: value,
 	        node: model
 	      });
-	    } else if (key === 'node_type' && !_.contains(nodes_type, value)) {
+	    } else if (key === 'node_type' && !_.contains(this.nodes_type, value)) {
 	      this.addNodeType(value);
 	    }
 	    obj = {};
