@@ -23,11 +23,80 @@
       margin-top: 4px;
       margin-left: 4px;
       @include retina-sprite( $icon-tool-group );
-      
     }
 
-    &:hover .icon-tool{
-      @include retina-sprite( $icon-tool-brand-group );
+    &:hover{
+      .icon-tool{
+        @include retina-sprite( $icon-tool-brand-group );
+      }
+    }
+
+    &.open{
+      .btn{
+        color: white;
+        background: $brand-primary;
+        border-color: $brand-primary;
+      }
+      .icon-tool{
+        @include retina-sprite( $icon-tool-group );
+      }
+    }
+
+    .dropdown-menu > li > a{
+      position: relative;
+      padding-left: 50px;
+
+      > i{
+        position: absolute;
+        top: $grid-gutter-width/2;
+        left: $grid-gutter-width/2;
+      }
+
+      .icon-edit{
+        @include retina-sprite( $icon-pencil-white-group );
+      }
+      .icon-preview{
+        @include retina-sprite( $icon-preview-sm-white-group );
+      }
+      .icon-publish{
+        @include retina-sprite( $icon-publish-white-group );
+      }
+      .icon-unpublish{
+        @include retina-sprite( $icon-unpublish-white-group );
+      }
+      .icon-duplicate{
+        @include retina-sprite( $icon-duplicate-white-group );
+      }
+      .icon-story{
+        @include retina-sprite( $icon-story-white-group );
+      }
+      .icon-trash{
+        @include retina-sprite( $icon-trash-white-group );
+      }
+
+      &:hover{
+        .icon-edit{
+          @include retina-sprite( $icon-pencil-group );
+        }
+        .icon-preview{
+          @include retina-sprite( $icon-preview-sm-group );
+        }
+        .icon-publish{
+          @include retina-sprite( $icon-publish-group );
+        }
+        .icon-unpublish{
+          @include retina-sprite( $icon-unpublish-group );
+        }
+        .icon-duplicate{
+          @include retina-sprite( $icon-duplicate-group );
+        }
+        .icon-story{
+          @include retina-sprite( $icon-story-brand-group );
+        }
+        .icon-trash{
+          @include retina-sprite( $icon-trash-danger-group );
+        }
+      }
     }
   }
 

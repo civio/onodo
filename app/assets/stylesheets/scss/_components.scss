@@ -23,7 +23,7 @@
   }
 
   .btn-circle-lg-icon-sprite{
-    margin: 32px auto 0;
+    margin: 34px auto 0;
   }
 
   .btn-circle-lg-icon-detail{
@@ -41,10 +41,11 @@
   }
 
   &.btn-circle-lg-story .btn-circle-lg-icon-sprite{
+    margin-top: 38px;
     @include retina-sprite( $dahsboard-icon-story-group );
   }
   &.btn-circle-lg-visualization .btn-circle-lg-icon-sprite{
-    margin-top: 36px;
+    margin-top: 40px;
     @include retina-sprite( $dahsboard-icon-visualization-group );
   }
   &.btn-circle-lg-preview .btn-circle-lg-icon-sprite{
