@@ -8,7 +8,6 @@
     font-size: 0.857em;
     text-align: left;
     text-transform: uppercase;
-    line-height: 4*$grid-gutter-width/3;
     background: $gray-blue-light;
     border: none;
     padding: 0 0 0 $grid-gutter-width/3;
@@ -25,7 +24,6 @@
       color: $gray;
       font-size: 0.857em;
       font-weight: 300;
-      line-height: $grid-gutter-width + 2;
     }
   }
 }
@@ -47,5 +45,23 @@
 // Header Rows 
 .ht_clone_left th {
   border: none;
-  
+}
+
+.handsontable .htAutocompleteArrow{
+  color: $gray-blue;
+  width: 20px;
+}
+
+// Setup cell line-height
+.handsontable thead > tr{
+  > td, 
+  > th {
+    line-height: 32px;
+  }
+}
+.handsontable tbody > tr > td, 
+.handsontable tbody > tr > th, 
+.handsontable tfoot > tr > td, 
+.handsontable tfoot > tr > th{
+  line-height: 26px;
 }

@@ -15,7 +15,6 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   onCollectionSync: =>
     super()
-    #console.log @table_options.data
     @getNodeTypes()
 
   # Setup Handsontable columns options
@@ -30,12 +29,14 @@ class VisualizationTableNodes extends VisualizationTableBase
         data: 'name' 
       },
       { 
-        data: 'node_type'
-        type: 'autocomplete'
+        data: 'node_type',
+        type: 'autocomplete',
+        source: @nodes_type,
         strict: false
       },
       { 
-        data: 'description' 
+        data: 'description',
+        renderer: 'html'
       },
       { 
         data: 'visible', 
@@ -56,17 +57,17 @@ class VisualizationTableNodes extends VisualizationTableBase
       },
     ]
 
-  getNodeTypes: ->
-    console.log 'getNodeTypes'
+  getNodeTypes: =>
+    #console.log 'getNodeTypes'
     $.ajax {
-      url: '/api/nodes/types.json'
+      url: '/api/visualizations/'+$('body').data('id')+'/nodes/types.json'
       dataType: 'json'
       success: @onNodesTypesSucess
     }
 
   onNodesTypesSucess: (response) =>
     @nodes_type = response
-    @table_options.columns[3].source = @nodes_type
+    @setNodesTypeSource()
     @table_options.afterChange       = @onTableChange
     @setupTable()
     
@@ -92,7 +93,11 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   addNodeType: (type) ->
     @nodes_type.push type
-    @table_options.columns[3].source = @nodes_type
+    @setNodesTypeSource()
+
+  # Set 'Node Type' column source in table_options
+  setNodesTypeSource: ->
+    @table_options.columns[2].source = @nodes_type
 
 
 module.exports = VisualizationTableNodes

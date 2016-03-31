@@ -655,7 +655,7 @@ body.fullscreen{
     
     .icon-trash{
       display: block;
-      margin-top: 6px;
+      margin-top: 4px;
       cursor: pointer;
       text-indent: -9999px;
       @include retina-sprite( $icon-trash-group );
@@ -672,7 +672,7 @@ body.fullscreen{
 
     .icon-visible{
       display: block;
-      margin-top: 7px;
+      margin-top: 5px;
       cursor: pointer;
       text-indent: -9999px;
       opacity: 0.3;

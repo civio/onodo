@@ -11965,6 +11965,7 @@
 	    this.updateNode = bind(this.updateNode, this);
 	    this.onTableChange = bind(this.onTableChange, this);
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
+	    this.getNodeTypes = bind(this.getNodeTypes, this);
 	    this.getTableColumns = bind(this.getTableColumns, this);
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
 	    VisualizationTableNodes.__super__.constructor.call(this, this.collection, 'node');
@@ -11988,9 +11989,11 @@
 	      }, {
 	        data: 'node_type',
 	        type: 'autocomplete',
+	        source: this.nodes_type,
 	        strict: false
 	      }, {
-	        data: 'description'
+	        data: 'description',
+	        renderer: 'html'
 	      }, {
 	        data: 'visible',
 	        type: 'checkbox',
@@ -12014,9 +12017,8 @@
 	  };
 
 	  VisualizationTableNodes.prototype.getNodeTypes = function() {
-	    console.log('getNodeTypes');
 	    return $.ajax({
-	      url: '/api/nodes/types.json',
+	      url: '/api/visualizations/' + $('body').data('id') + '/nodes/types.json',
 	      dataType: 'json',
 	      success: this.onNodesTypesSucess
 	    });
@@ -12024,7 +12026,7 @@
 
 	  VisualizationTableNodes.prototype.onNodesTypesSucess = function(response) {
 	    this.nodes_type = response;
-	    this.table_options.columns[3].source = this.nodes_type;
+	    this.setNodesTypeSource();
 	    this.table_options.afterChange = this.onTableChange;
 	    return this.setupTable();
 	  };
@@ -12066,7 +12068,11 @@
 
 	  VisualizationTableNodes.prototype.addNodeType = function(type) {
 	    this.nodes_type.push(type);
-	    return this.table_options.columns[3].source = this.nodes_type;
+	    return this.setNodesTypeSource();
+	  };
+
+	  VisualizationTableNodes.prototype.setNodesTypeSource = function() {
+	    return this.table_options.columns[2].source = this.nodes_type;
 	  };
 
 	  return VisualizationTableNodes;

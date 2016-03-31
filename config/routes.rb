@@ -44,11 +44,11 @@ Rails.application.routes.draw do
   scope 'api' do
     scope 'visualizations' do
       get     ':dataset_id/nodes'       => 'api#nodes'
+      get     ':dataset_id/nodes/types' => 'api#node_types'
       get     ':dataset_id/relations'   => 'api#relations'
     end
     scope 'nodes' do
       post    ''        => 'api#node_create'
-      get     'types'   => 'api#node_types'
       get     ':id'     => 'api#node'
       put     ':id'     => 'api#node_update'
       delete  ':id'     => 'api#node_destroy'
