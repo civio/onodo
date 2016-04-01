@@ -71,6 +71,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     @table_options.afterChange       = @onTableChange
     @setupTable()
     
+  #!!! No de debería usar esta función. La sincronización entre tabla y canvas debe realizarse 
+  #!!! a través de `collection`, no de eventes de la tabla
   onTableChange: (changes, source) =>
     if source != 'loadData'
       for change in changes
@@ -78,14 +80,21 @@ class VisualizationTableNodes extends VisualizationTableBase
           @updateNode change
           
   updateNode: (change) =>
-    console.log 'change', change
+    console.log 'change', change, @table.getDataAtRowProp(change[0], 'id')
+    index = change[0]
     key = change[1]
     value = change[3]
-    model = @collection.at change[0]
-    if key == 'visible' || key == 'name' || key == 'description'
-      Backbone.trigger 'visualization.node.'+key, {value: value, node: model}
-    else if key == 'node_type' && !_.contains(@nodes_type, value)
+    model_id = @table.getDataAtRowProp(index, 'id')
+    #!!! no puedo recoger el model de la collections por el index de la tabla (change[0])
+    #!!! debo recoger el id del objeto de la tabla y a partir de ese id recoger el model de la collection
+    model = @collection.get model_id
+    console.log 'change model', model
+    # Add new node_type to node_types array
+    if key == 'node_type' && !_.contains(@nodes_type, value)
       @addNodeType value
+    # Update node attribute
+    #else
+      #Backbone.trigger 'visualization.node.'+key, {value: value, node: model}
     obj = {}
     obj[ key ] = value
     model.save obj

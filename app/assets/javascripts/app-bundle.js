@@ -326,7 +326,8 @@
 	  extend(VisualizationGraph, superClass);
 
 	  function VisualizationGraph() {
-	    this.onCollectionChange = bind(this.onCollectionChange, this);
+	    this.onRelationsChange = bind(this.onRelationsChange, this);
+	    this.onNodesChange = bind(this.onNodesChange, this);
 	    this.onRelationsSync = bind(this.onRelationsSync, this);
 	    this.onNodesSync = bind(this.onNodesSync, this);
 	    return VisualizationGraph.__super__.constructor.apply(this, arguments);
@@ -375,8 +376,6 @@
 	  VisualizationGraph.prototype.onNodesSync = function(nodes) {
 	    this.nodesSync = true;
 	    console.log('onNodesSync');
-	    this.collection.nodes.bind('add', this.onNodesAdd, this);
-	    this.collection.nodes.bind('change', this.onNodesChange, this);
 	    if (this.nodesSync && this.relationsSync) {
 	      return this.render();
 	    }
@@ -385,14 +384,18 @@
 	  VisualizationGraph.prototype.onRelationsSync = function(relations) {
 	    this.relationsSync = true;
 	    console.log('onRelationsSync');
-	    this.collection.relations.bind('change', this.onCollectionChange, this);
+	    this.collection.relations.bind('change', this.onRelationsChange, this);
 	    if (this.nodesSync && this.relationsSync) {
 	      return this.render();
 	    }
 	  };
 
-	  VisualizationGraph.prototype.onCollectionChange = function(e) {
-	    return console.log('Collection has changed', e);
+	  VisualizationGraph.prototype.onNodesChange = function(e, b) {
+	    return console.log('Nodes has changed', e, b, e.changed);
+	  };
+
+	  VisualizationGraph.prototype.onRelationsChange = function(e) {
+	    return console.log('Relations has changed', e);
 	  };
 
 	  VisualizationGraph.prototype.getDataFromCollection = function() {
@@ -421,11 +424,12 @@
 	    this.visualizationGraphConfiguration = new VisualizationGraphConfiguration;
 	    this.visualizationGraphNavigation = new VisualizationGraphNavigation;
 	    this.visualizationGraphInfo = new VisualizationGraphInfo;
+	    this.collection.nodes.bind('add', this.onNodesAdd, this);
+	    this.collection.nodes.bind('change:name', this.onNodeChangeName, this);
+	    this.collection.nodes.bind('change:description', this.onNodeChangeDescription, this);
+	    this.collection.nodes.bind('change:visible', this.onNodeChangeVisible, this);
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
-	    Backbone.on('visualization.node.name', this.onNodeChangeName, this);
-	    Backbone.on('visualization.node.description', this.onNodeChangeDescription, this);
-	    Backbone.on('visualization.node.visible', this.onNodeChangeVisible, this);
 	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
 	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
 	    Backbone.on('visualization.config.updateParam', this.onUpdateParam, this);
@@ -446,6 +450,7 @@
 	  VisualizationGraph.prototype.onNodesAdd = function(node) {
 	    return this.collection.nodes.once('sync', (function(_this) {
 	      return function(model) {
+	        console.log('onNodesAdd', model.id, model);
 	        _this.visualizationGraphCanvas.addNode({
 	          id: model.id
 	        });
@@ -466,18 +471,21 @@
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeName = function(e) {
-	    return this.visualizationGraphCanvas.updateNodeName(e.node.attributes, e.value);
+	    console.log('onNodeChangeName', e, e.attributes.name);
+	    return this.visualizationGraphCanvas.updateNodeName(e.attributes, e.attributes.name);
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeDescription = function(e) {
-	    return this.visualizationGraphCanvas.updateNodeDescription(e.node.attributes, e.value);
+	    console.log('onNodeChangeDescription', e, e.attributes.description);
+	    return this.visualizationGraphCanvas.updateNodeDescription(e.attributes, e.attributes.description);
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeVisible = function(e) {
-	    if (e.value) {
-	      this.visualizationGraphCanvas.showNode(e.node.attributes);
+	    console.log('--- onNodeChangeVisible', e);
+	    if (e.attributes.visible) {
+	      this.visualizationGraphCanvas.showNode(e.attributes);
 	    } else {
-	      this.visualizationGraphCanvas.hideNode(e.node.attributes);
+	      this.visualizationGraphCanvas.hideNode(e.attributes);
 	    }
 	    return this.visualizationGraphCanvas.updateLayout();
 	  };
@@ -563,9 +571,7 @@
 
 	  VisualizationGraphCanvas.prototype.data_relations = [];
 
-	  VisualizationGraphCanvas.prototype.data_current_nodes = [];
-
-	  VisualizationGraphCanvas.prototype.data_current_relations = [];
+	  VisualizationGraphCanvas.prototype.data_relations_visibles = [];
 
 	  VisualizationGraphCanvas.prototype.nodes_cont = null;
 
@@ -611,8 +617,7 @@
 	    console.log('initialize canvas');
 	    this.color = d3.scale.ordinal().range(this.COLOR_CUALITATIVE);
 	    this.colorInterpolate = d3.scale.linear().domain([0, 100]).interpolate(d3.interpolateRgb);
-	    this.data = options.data;
-	    this.initializaData();
+	    this.initializeData(options.data);
 	    this.viewport.width = this.$el.width();
 	    this.viewport.height = this.$el.height();
 	    this.viewport.center.x = this.viewport.width * 0.5;
@@ -628,32 +633,31 @@
 	    return this.render();
 	  };
 
-	  VisualizationGraphCanvas.prototype.initializaData = function() {
-	    this.data.nodes.forEach((function(_this) {
+	  VisualizationGraphCanvas.prototype.initializeData = function(data) {
+	    console.log('initializeData');
+	    data.nodes.forEach((function(_this) {
 	      return function(d) {
-	        _this.data_nodes_map.set(d.id, d);
-	        _this.data_nodes.push(d);
 	        if (d.visible) {
-	          return _this.data_current_nodes.push(d);
+	          return _this.addNodeData(d);
 	        }
 	      };
 	    })(this));
-	    this.color.domain(this.data_nodes.map(function(d) {
+	    this.color.domain(data.nodes.map(function(d) {
 	      return d.node_type;
 	    }));
-	    this.data.relations.forEach((function(_this) {
+	    data.relations.forEach((function(_this) {
 	      return function(d) {
-	        d.source = _this.data_nodes_map.get(d.source_id);
-	        d.target = _this.data_nodes_map.get(d.target_id);
+	        d.source = _this.getNodeById(d.source_id);
+	        d.target = _this.getNodeById(d.target_id);
 	        _this.data_relations.push(d);
-	        if (d.source.visible && d.target.visible) {
-	          _this.data_current_relations.push(d);
+	        if (d.source && d.target && d.source.visible && d.target.visible) {
+	          _this.data_relations_visibles.push(d);
+	          return _this.linkedByIndex[d.source_id + ',' + d.target_id] = true;
 	        }
-	        return _this.linkedByIndex[d.source_id + ',' + d.target_id] = true;
 	      };
 	    })(this));
-	    console.log('current nodes', this.data_current_nodes);
-	    return console.log('current relations', this.data_current_relations);
+	    console.log('current nodes', this.data_nodes);
+	    return console.log('current relations', this.data_relations_visibles);
 	  };
 
 	  VisualizationGraphCanvas.prototype.render = function() {
@@ -673,10 +677,8 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodes = function() {
-	    this.nodes = this.nodes.data(this.data_current_nodes);
-	    this.nodes.enter().append('g').attr('id', function(d) {
-	      return 'node-' + d.id;
-	    }).attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
+	    this.nodes = this.nodes_cont.selectAll('.node').data(this.data_nodes);
+	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.NODES_SIZE).style('fill', (function(_this) {
 	      return function(d) {
 	        return _this.color(d.node_type);
 	      };
@@ -685,11 +687,14 @@
 	        return _this.color(d.node_type);
 	      };
 	    })(this));
+	    this.nodes.attr('id', function(d) {
+	      return 'node-' + d.id;
+	    });
 	    return this.nodes.exit().remove();
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateRelations = function() {
-	    this.relations = this.relations.data(this.data_current_relations);
+	    this.relations = this.relations.data(this.data_relations_visibles);
 	    this.relations.enter().append('path').attr('id', function(d) {
 	      return 'relation-' + d.id;
 	    }).attr('class', 'relation');
@@ -697,7 +702,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateLabels = function() {
-	    this.labels = this.labels.data(this.data_current_nodes);
+	    this.labels = this.labels.data(this.data_nodes);
 	    this.labels.enter().append('text').attr('id', function(d, i) {
 	      return 'label-' + d.id;
 	    }).attr('class', 'label').attr('dx', 0).attr('dy', this.NODES_SIZE + 15);
@@ -708,15 +713,18 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateForce = function() {
-	    return this.force.nodes(this.data_current_nodes).links(this.data_current_relations).start();
+	    return this.force.nodes(this.data_nodes).links(this.data_relations_visibles).start();
 	  };
 
 	  VisualizationGraphCanvas.prototype.addNodeData = function(node) {
-	    return this.data_current_nodes.push(node);
+	    console.log('addNodeData');
+	    this.data_nodes_map.set(node.id, node);
+	    return this.data_nodes.push(node);
 	  };
 
 	  VisualizationGraphCanvas.prototype.removeNodeData = function(node) {
-	    return this.data_current_nodes = this.data_current_nodes.filter((function(_this) {
+	    this.data_nodes_map.remove(node.id);
+	    return this.data_nodes = this.data_nodes.filter((function(_this) {
 	      return function(d) {
 	        return d.id !== node.id;
 	      };
@@ -724,14 +732,30 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.addRelationData = function(relation) {
-	    return this.data_current_relations.push(relation);
+	    var index;
+	    index = this.data_relations.indexOf(relation);
+	    console.log('addRelationData', index);
+	    relation.source = this.getNodeById(relation.source_id);
+	    relation.target = this.getNodeById(relation.target_id);
+	    if (index === -1) {
+	      this.data_relations.push(relation);
+	    }
+	    if (relation.source && relation.target && relation.source.visible && relation.target.visible) {
+	      console.log('addRelationVisible');
+	      this.data_relations_visibles.push(relation);
+	      return this.linkedByIndex[relation.source_id + ',' + relation.target_id] = true;
+	    }
 	  };
 
 	  VisualizationGraphCanvas.prototype.removeRelationData = function(relation) {
 	    var index;
-	    index = this.data_current_relations.indexOf(relation);
-	    if (index >= 0) {
-	      return this.data_current_relations.splice(index, 1);
+	    index = this.data_relations.indexOf(relation);
+	    if (index !== -1) {
+	      this.data_relations.splice(index, 1);
+	    }
+	    index = this.data_relations_visible.indexOf(relation);
+	    if (index !== -1) {
+	      return this.data_relations_visible.splice(index, 1);
 	    }
 	  };
 
@@ -746,9 +770,9 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.removeNodeRelations = function(node) {
-	    return this.data_current_relations = this.data_current_relations.filter((function(_this) {
+	    return this.data_relations_visibles = this.data_relations_visibles.filter((function(_this) {
 	      return function(d) {
-	        return d.source.id !== node.id && d.target.id !== node.id;
+	        return d.source_id !== node.id && d.target_id !== node.id;
 	      };
 	    })(this));
 	  };
@@ -762,10 +786,11 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.showNode = function(node) {
+	    console.log('show node', node);
 	    this.addNodeData(node);
 	    return this.data_relations.forEach((function(_this) {
 	      return function(relation) {
-	        if ((relation.source.id === node.id && relation.target.visible) || (relation.target.id === node.id && relation.source.visible)) {
+	        if (relation.source_id === node.id || relation.target_id === node.id) {
 	          return _this.addRelationData(relation);
 	        }
 	      };
@@ -787,18 +812,19 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodeName = function(node, value) {
-	    var index;
-	    index = this.data_nodes.indexOf(node);
-	    if (index >= 0) {
-	      this.data_nodes[index].name = value;
+	    var data_node;
+	    console.log('updateNodeName', node, value);
+	    data_node = this.getNodeById(node.id);
+	    if (data_node) {
+	      data_node.name = value;
+	      return this.updateLabels();
 	    }
-	    return this.updateLabels();
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodeDescription = function(node, value) {
 	    var index;
 	    index = this.data_nodes.indexOf(node);
-	    if (index >= 0) {
+	    if (index !== 0) {
 	      return this.data_nodes[index].description = value;
 	    }
 	  };
@@ -827,7 +853,7 @@
 
 	  VisualizationGraphCanvas.prototype.toogleNodesWithoutRelation = function(value) {
 	    if (value) {
-	      this.data_current_nodes.forEach((function(_this) {
+	      this.data_nodes.forEach((function(_this) {
 	        return function(d) {
 	          if (!_this.hasNodeRelations(d)) {
 	            return _this.removeNode(d);
@@ -975,25 +1001,29 @@
 	    });
 	  };
 
-	  VisualizationGraphCanvas.prototype.areNodesRelated = function(a, b) {
-	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
-	  };
-
-	  VisualizationGraphCanvas.prototype.hasNodeRelations = function(node) {
-	    return this.data_current_relations.some(function(d) {
-	      return d.source.id === node.id || d.target.id === node.id;
-	    });
+	  VisualizationGraphCanvas.prototype.getNodeById = function(id) {
+	    return this.data_nodes_map.get(id);
 	  };
 
 	  VisualizationGraphCanvas.prototype.getNodeRelations = function(node) {
 	    var arr;
 	    arr = [];
-	    this.data_current_relations.forEach(function(d) {
-	      if (d.source.id === node.id || d.target.id === node.id) {
+	    this.data_relations_visibles.forEach(function(d) {
+	      if (d.source_id === node.id || d.target_id === node.id) {
 	        return arr.push(d);
 	      }
 	    });
 	    return arr;
+	  };
+
+	  VisualizationGraphCanvas.prototype.hasNodeRelations = function(node) {
+	    return this.data_relations_visibles.some(function(d) {
+	      return d.source_id === node.id || d.target_id === node.id;
+	    });
+	  };
+
+	  VisualizationGraphCanvas.prototype.areNodesRelated = function(a, b) {
+	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
 	  };
 
 	  VisualizationGraphCanvas.prototype.mixColor = function(c1, c2, weight) {
@@ -12048,17 +12078,15 @@
 	  };
 
 	  VisualizationTableNodes.prototype.updateNode = function(change) {
-	    var key, model, obj, value;
-	    console.log('change', change);
+	    var index, key, model, model_id, obj, value;
+	    console.log('change', change, this.table.getDataAtRowProp(change[0], 'id'));
+	    index = change[0];
 	    key = change[1];
 	    value = change[3];
-	    model = this.collection.at(change[0]);
-	    if (key === 'visible' || key === 'name' || key === 'description') {
-	      Backbone.trigger('visualization.node.' + key, {
-	        value: value,
-	        node: model
-	      });
-	    } else if (key === 'node_type' && !_.contains(this.nodes_type, value)) {
+	    model_id = this.table.getDataAtRowProp(index, 'id');
+	    model = this.collection.get(model_id);
+	    console.log('change model', model);
+	    if (key === 'node_type' && !_.contains(this.nodes_type, value)) {
 	      this.addNodeType(value);
 	    }
 	    obj = {};
@@ -41569,7 +41597,7 @@
 	    this.table_type = table_type;
 	    console.log('VisualizationTableBase', table_type);
 	    this.table_options = {
-	      contextMenu: null,
+	      contextMenu: ['row_below', 'remove_row', 'undo', 'redo'],
 	      height: 360,
 	      stretchH: 'all',
 	      columnSorting: true
@@ -41612,11 +41640,15 @@
 	  VisualizationTableBase.prototype.onTableCreateRow = function(index, amount) {
 	    var model;
 	    console.log('onTableCreateRow');
-	    console.log(index, amount);
-	    return model = this.collection.create({
+	    model = this.collection.create({
 	      dataset_id: $('body').data('id'),
-	      visible: true
+	      visible: true,
+	      wait: true
 	    });
+	    return this.collection.once('sync', function() {
+	      console.log('collection sync', index, amount, this.table.setDataAtRowProp(index, 'id', model.id));
+	      return this.table.setDataAtRowProp(index, 'visible', true);
+	    }, this);
 	  };
 
 	  VisualizationTableBase.prototype.show = function() {

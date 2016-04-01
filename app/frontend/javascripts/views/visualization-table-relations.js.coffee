@@ -6,10 +6,9 @@ class VisualizationTableRelations extends VisualizationTableBase
   el:               '.visualization-table-relations'
   nodes_type:       null
   tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date']
-
+  
   constructor: (@collection) ->
     super @collection, 'relation'
-
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @getTableColumns()

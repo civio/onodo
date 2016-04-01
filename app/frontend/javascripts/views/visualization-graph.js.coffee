@@ -45,8 +45,6 @@ class VisualizationGraph extends Backbone.View
   onNodesSync: (nodes) =>
     @nodesSync = true
     console.log 'onNodesSync'
-    @collection.nodes.bind 'add',     @onNodesAdd, @
-    @collection.nodes.bind 'change',  @onNodesChange, @
     if @nodesSync and @relationsSync
       @render()
   
@@ -54,12 +52,16 @@ class VisualizationGraph extends Backbone.View
   onRelationsSync: (relations) =>
     @relationsSync = true
     console.log 'onRelationsSync'
-    @collection.relations.bind 'change', @onCollectionChange, @
+    @collection.relations.bind 'change', @onRelationsChange, @
     if @nodesSync and @relationsSync
       @render()
 
-  onCollectionChange: (e) =>
-    console.log 'Collection has changed', e
+  onNodesChange: (e, b) =>
+    console.log 'Nodes has changed', e, b, e.changed
+    # model.hasChangedmodel('prop')
+
+  onRelationsChange: (e) =>
+    console.log 'Relations has changed', e
 
   getDataFromCollection: ->
     data =
@@ -79,14 +81,22 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphNavigation     = new VisualizationGraphNavigation
     @visualizationGraphInfo           = new VisualizationGraphInfo
     # Setup Events Listeners
+
+    # Collection Events (handle Table changes)
+    @collection.nodes.bind 'add',                 @onNodesAdd, @
+    @collection.nodes.bind 'change:name',         @onNodeChangeName, @
+    @collection.nodes.bind 'change:description',  @onNodeChangeDescription, @
+    @collection.nodes.bind 'change:visible',      @onNodeChangeVisible, @
+    #!!! We need to arr node_type changes
+    #@collection.nodes.bind 'change:node_type',   @onNodeChangeType, @
     # Canvas Events
-    Backbone.on 'visualization.node.showInfo', @onNodeShowInfo, @
-    Backbone.on 'visualization.node.hideInfo', @onNodeHideInfo, @
+    Backbone.on 'visualization.node.showInfo',    @onNodeShowInfo, @
+    Backbone.on 'visualization.node.hideInfo',    @onNodeHideInfo, @
     # Table Events
     #Backbone.on 'visualization.node.create',      @onNodeCreate, @
-    Backbone.on 'visualization.node.name',        @onNodeChangeName, @
-    Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
-    Backbone.on 'visualization.node.visible',     @onNodeChangeVisible, @
+    #Backbone.on 'visualization.node.name',        @onNodeChangeName, @
+    #Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
+    #Backbone.on 'visualization.node.visible',     @onNodeChangeVisible, @
     # Subscribe Config Panel Events
     Backbone.on 'visualization.config.toogleLabels',                @onToogleLabels, @
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
@@ -108,6 +118,7 @@ class VisualizationGraph extends Backbone.View
   onNodesAdd: (node) ->
     # We need to wait until sync event to get node id
     @collection.nodes.once 'sync', (model) =>
+      console.log 'onNodesAdd', model.id, model
       @visualizationGraphCanvas.addNode {id: model.id}
       @visualizationGraphCanvas.updateLayout()
       # TODO!!! Set id & visible at table nodes view
@@ -125,16 +136,19 @@ class VisualizationGraph extends Backbone.View
 
   # Table Events
   onNodeChangeName: (e) ->
-    @visualizationGraphCanvas.updateNodeName e.node.attributes, e.value
+    console.log 'onNodeChangeName', e, e.attributes.name
+    @visualizationGraphCanvas.updateNodeName e.attributes, e.attributes.name
 
-  onNodeChangeDescription: (e) ->  
-    @visualizationGraphCanvas.updateNodeDescription e.node.attributes, e.value
+  onNodeChangeDescription: (e) ->
+    console.log 'onNodeChangeDescription', e, e.attributes.description
+    @visualizationGraphCanvas.updateNodeDescription e.attributes, e.attributes.description
 
   onNodeChangeVisible: (e) ->
-    if e.value
-      @visualizationGraphCanvas.showNode e.node.attributes
+    console.log '--- onNodeChangeVisible', e
+    if e.attributes.visible
+      @visualizationGraphCanvas.showNode e.attributes
     else
-      @visualizationGraphCanvas.hideNode e.node.attributes
+      @visualizationGraphCanvas.hideNode e.attributes
     @visualizationGraphCanvas.updateLayout()
 
   onToogleLabels: (e) ->

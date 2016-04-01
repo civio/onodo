@@ -16,8 +16,7 @@ class VisualizationGraphCanvas extends Backbone.View
   data_nodes:       []
   data_nodes_map:   d3.map()
   data_relations:   []
-  data_current_nodes:     []
-  data_current_relations: []
+  data_relations_visibles:[]
   nodes_cont:       null
   relations_cont:   null
   labels_cont:      null
@@ -58,8 +57,7 @@ class VisualizationGraphCanvas extends Backbone.View
                           .interpolate(d3.interpolateRgb)
 
     # Setup Data
-    @data = options.data
-    @initializaData()
+    @initializeData( options.data )
 
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
@@ -98,32 +96,32 @@ class VisualizationGraphCanvas extends Backbone.View
     @rescale()  # Translate svg
     @render()
 
-  initializaData: ->
+  initializeData: (data) ->
+
+    console.log 'initializeData'
 
     # Setup Nodes
-    @data.nodes.forEach (d) =>
-      @data_nodes_map.set d.id, d
-      @data_nodes.push d
-      # Add to data_current_nodes if visible
+    data.nodes.forEach (d) =>
       if d.visible
-        @data_current_nodes.push d
+        @addNodeData d
 
     # Setup color ordinal scale domain
-    @color.domain @data_nodes.map( (d) -> d.node_type )
+    @color.domain data.nodes.map( (d) -> d.node_type )
 
     # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
-    @data.relations.forEach (d) =>
+    data.relations.forEach (d) =>
       # Set source & target as nodes objetcs instead of index number
-      d.source = @data_nodes_map.get d.source_id
-      d.target = @data_nodes_map.get d.target_id
+      d.source = @getNodeById d.source_id
+      d.target = @getNodeById d.target_id
+      # Add all relations to data_relations array
       @data_relations.push d
-      # Add to data_current_relations if both nodes are visibles
-      if d.source.visible and d.target.visible
-        @data_current_relations.push d
-      @linkedByIndex[d.source_id+','+d.target_id] = true
+      # Add relation to data_relations_visibles array if both nodes exist and are visibles
+      if d.source and d.target and d.source.visible and d.target.visible
+        @data_relations_visibles.push d
+        @linkedByIndex[d.source_id+','+d.target_id] = true
 
-    console.log 'current nodes', @data_current_nodes
-    console.log 'current relations', @data_current_relations
+    console.log 'current nodes', @data_nodes
+    console.log 'current relations', @data_relations_visibles
 
   render: ->
 
@@ -136,18 +134,22 @@ class VisualizationGraphCanvas extends Backbone.View
     @updateLayout()
 
   updateLayout: ->
-
     console.log 'updateLayout'
-
     @updateRelations()
     @updateNodes()
     @updateLabels()
     @updateForce()
 
   updateNodes: ->
-    @nodes = @nodes.data(@data_current_nodes)
+    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+
+    # DATA JOIN
+    # Join new data with old elements, if any
+    @nodes = @nodes_cont.selectAll('.node').data(@data_nodes)
+
+    # ENTER
+    # Create new elements as needed.
     @nodes.enter().append('g')
-      .attr('id', (d) -> return 'node-'+d.id)
       .attr('class', 'node')
       .call(@forceDrag)
       .on('mouseover',  @onNodeOver)
@@ -159,10 +161,19 @@ class VisualizationGraphCanvas extends Backbone.View
       .attr('r', @NODES_SIZE)
       .style('fill', (d) => return @color(d.node_type))
       .style('stroke', (d) => return @color(d.node_type))
+
+    # ENTER + UPDATE
+    # Appending to the enter selection expands the update selection to include
+    # entering elements; so, operations on the update selection after appending to
+    # the enter selection will apply to both entering and updating nodes.
+    @nodes.attr('id', (d) -> return 'node-'+d.id)
+
+    # EXIT
+    # Remove old elements as needed.
     @nodes.exit().remove()
 
   updateRelations: ->
-    @relations = @relations.data(@data_current_relations)
+    @relations = @relations.data(@data_relations_visibles)
     #@relations.enter().append('line')
     @relations.enter().append('path')
       .attr('id', (d) -> return 'relation-'+d.id)
@@ -170,7 +181,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations.exit().remove()
 
   updateLabels: ->
-    @labels = @labels.data(@data_current_nodes)
+    @labels = @labels.data(@data_nodes)
     @labels.enter().append('text')
       .attr('id', (d,i) -> return 'label-'+d.id)
       .attr('class', 'label')
@@ -181,8 +192,8 @@ class VisualizationGraphCanvas extends Backbone.View
 
   updateForce: ->
     @force
-      .nodes(@data_current_nodes)
-      .links(@data_current_relations)
+      .nodes(@data_nodes)
+      .links(@data_relations_visibles)
       .start()
 
 
@@ -190,33 +201,58 @@ class VisualizationGraphCanvas extends Backbone.View
   # --------------------------
 
   addNodeData: (node) ->
-    @data_current_nodes.push node
+    console.log 'addNodeData'
+    #console.log @data_nodes
+    @data_nodes_map.set node.id, node
+    @data_nodes.push node
+    #console.log @data_nodes
 
   removeNodeData: (node) ->
+    @data_nodes_map.remove node.id
     # We can't use Array.splice because this function could be called inside a loop over nodes & causes drop
-    @data_current_nodes = @data_current_nodes.filter (d) =>
+    @data_nodes = @data_nodes.filter (d) =>
       return d.id != node.id
   
   addRelationData: (relation) ->
-    @data_current_relations.push relation
+    # We have to add relations to @data.relations which stores all the relations
+    index = @data_relations.indexOf relation
+    console.log 'addRelationData', index
+    # Set source & target as nodes objetcs instead of index number --> !!! We need this???
+    relation.source  = @getNodeById relation.source_id
+    relation.target  = @getNodeById relation.target_id
+    # Add relations to data_relations array if not present yet
+    if index == -1
+      @data_relations.push relation
+    # Add relation to data_relations_visibles array if both nodes exist and are visibles
+    if relation.source and relation.target and relation.source.visible and relation.target.visible
+      console.log 'addRelationVisible'
+      @data_relations_visibles.push relation
+      @linkedByIndex[relation.source_id+','+relation.target_id] = true
 
+  # maybe we need to split removeVisibleRelationaData & removeRelationData
   removeRelationData: (relation) ->
-    index = @data_current_relations.indexOf relation
-    if index >= 0
-      @data_current_relations.splice index, 1
+    # remove relation from data_relations
+    index = @data_relations.indexOf relation
+    if index != -1
+      @data_relations.splice index, 1
+    # remove relation from data_relations_visibles
+    index = @data_relations_visible.indexOf relation
+    if index != -1
+      @data_relations_visible.splice index, 1
 
   addNode: (node) ->
     console.log 'addNode', node
     @addNodeData node
+    # !!! We need to check if this node has some relation
 
   removeNode: (node) ->
     @removeNodeData node
     @removeNodeRelations node
 
   removeNodeRelations: (node) =>
-    # update data_current_relations removing relations with removed node
-    @data_current_relations = @data_current_relations.filter (d) =>
-      return d.source.id != node.id and d.target.id != node.id
+    # update data_relations_visibles removing relations with removed node
+    @data_relations_visibles = @data_relations_visibles.filter (d) =>
+      return d.source_id != node.id and d.target_id != node.id
 
   addRelation: (relation) ->
     @addRelationData relation
@@ -225,12 +261,14 @@ class VisualizationGraphCanvas extends Backbone.View
     @removeRelationData relation
 
   showNode: (node) ->
-    # add node to data_current_nodes array
+    console.log 'show node', node
+    # add node to data_nodes array
     @addNodeData node
-    # check node relations (in data_relations)
+    # check node relations (in data.relations)
     @data_relations.forEach (relation) =>
-      if (relation.source.id == node.id and relation.target.visible) or (relation.target.id == node.id and relation.source.visible)
-        @addRelationData relation   # add relation to data_current_relations array
+      # if node is present in some relation we add it to data_relations and/or data_relations_visibles array
+      if relation.source_id  == node.id or relation.target_id == node.id
+        @addRelationData relation   
 
   hideNode: (node) ->
     @removeNode node
@@ -244,14 +282,15 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes.selectAll('.node-circle.active').classed('active', false)
 
   updateNodeName: (node, value) ->
-    index = @data_nodes.indexOf node
-    if index >= 0
-      @data_nodes[index].name = value
-    @updateLabels()
+    console.log 'updateNodeName', node, value
+    data_node = @getNodeById node.id
+    if data_node
+      data_node.name = value
+      @updateLabels()
 
   updateNodeDescription: (node, value) ->
     index = @data_nodes.indexOf node
-    if index >= 0
+    if index != 0
       @data_nodes[index].description = value
 
 
@@ -287,7 +326,7 @@ class VisualizationGraphCanvas extends Backbone.View
   
   toogleNodesWithoutRelation: (value) =>
     if value
-      @data_current_nodes.forEach (d) =>
+      @data_nodes.forEach (d) =>
         if !@hasNodeRelations(d)
           @removeNode d
     else
@@ -407,19 +446,22 @@ class VisualizationGraphCanvas extends Backbone.View
   # Auxiliar Methods
   # ----------------
 
-  areNodesRelated: (a, b) ->
-    return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
+  getNodeById: (id) ->
+    return @data_nodes_map.get id
   
-  hasNodeRelations: (node) ->
-    return @data_current_relations.some (d) ->
-      return d.source.id == node.id || d.target.id == node.id
-
   getNodeRelations: (node) ->
     arr = []
-    @data_current_relations.forEach (d) ->
-      if d.source.id == node.id || d.target.id == node.id
+    @data_relations_visibles.forEach (d) ->
+      if d.source_id == node.id || d.target_id == node.id
         arr.push d
     return arr
+
+  hasNodeRelations: (node) ->
+    return @data_relations_visibles.some (d) ->
+      return d.source_id == node.id || d.target_id == node.id
+
+  areNodesRelated: (a, b) ->
+    return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
   # mix color auxiliar function:
   # c1 & c2 must be strings as '#XXXXXX'

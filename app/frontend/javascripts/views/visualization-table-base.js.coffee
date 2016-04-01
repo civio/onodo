@@ -10,7 +10,8 @@ class VisualizationTableBase extends Backbone.View
     @table_type = table_type
     console.log 'VisualizationTableBase', table_type
     @table_options =
-      contextMenu: null, # [ 'row_below', 'remove_row', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
+      #minSpareRows: 1
+      contextMenu: [ 'row_below', 'remove_row', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
       height: 360
       stretchH: 'all'
       columnSorting: true
@@ -41,11 +42,23 @@ class VisualizationTableBase extends Backbone.View
      
   onTableCreateRow: (index, amount) =>
     console.log 'onTableCreateRow'
-    console.log index, amount
-    model = @collection.create {dataset_id: $('body').data('id'), visible: true}
+    # Create a new model in collection
+    # We need to set `wait = true` to wait for the server before adding the new model to the collection
+    # http://backbonejs.org/#Collection-create
+    model = @collection.create {dataset_id: $('body').data('id'), visible: true, wait: true}
+    # We wait until model is synced in server to get its id
+    @collection.once 'sync', () ->
+      console.log 'collection sync', index, amount, 
+      #model.id, model.get('id'), model.get('_id'), model.attributes, model.attributes.id
+      @table.setDataAtRowProp index, 'id', model.id
+      @table.setDataAtRowProp index, 'visible', true
+    , @
     #console.log model, model.get('id'), model.attributes.id
     #@table.setDataAtCell index, 0, model.id
+    
     #Backbone.trigger 'visualization.'+@table_type+'.create', {id: model.get('id')}
+    #console.log 'table_options_data', @table_options.data
+    #console.log 'collection', @collection
   
   show: ->
     @$el.removeClass('hide')
