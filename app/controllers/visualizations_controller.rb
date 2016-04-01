@@ -118,22 +118,20 @@ class VisualizationsController < ApplicationController
         next if row.size == 0  # Skip empty lines
     
         # TODO!!! we suposse a format ID,Name,Family,Appareances,Actor,Url
-
-        # Get description
-        if row['Actor']
-          if row['Url']
-            description = row['Actor'] + ' ' + row['Url']
-          else
-            description = row['Actor']
-          end
-        elsif row['Url']
-          description = row['Url']
-        end
+        # if row['Actor']
+        #   if row['Url']
+        #     description = row['Actor'] + ' ' + row['Url']
+        #   else
+        #     description = row['Actor']
+        #   end
+        # elsif row['Url']
+        #   description = row['Url']
+        # end
         
-        Node.new( name:         row['Name'],
-                  description:  description,
-                  node_type:    row['Family'],
-                  custom_field: row['Appareances'],
+        Node.new( name:         row['name'],
+                  description:  row['description'] ? row['description'] : '',
+                  node_type:    row['type'],
+                  custom_field: row['custom_field'] ? row['custom_field'] : '',
                   visible:      row['visible'] ? row['visible'] : true,
                   dataset:      dataset).save!
       end
@@ -153,11 +151,11 @@ class VisualizationsController < ApplicationController
       CSV.parse(utf8_encoded_content, headers: true) do |row|
         next if row.size == 0  # Skip empty lines
 
-        # TODO!!! we suposse a format SourceID,Source,TargetID,Target,Type
+        # TODO!!! we suposse a format source,source_name,target,target_name,type
         
-        Relation.new( source:         dataset.nodes.find( id_base+row['SourceID'].to_i ),
-                      target:         dataset.nodes.find( id_base+row['TargetID'].to_i ), 
-                      relation_type:  row['Type'],
+        Relation.new( source:         dataset.nodes.find( id_base+row['source'].to_i ),
+                      target:         dataset.nodes.find( id_base+row['target'].to_i ), 
+                      relation_type:  row['type'],
                       dataset:        dataset ).save!
       end
     end
