@@ -6,6 +6,12 @@ class ApiController < ApplicationController
     render json: Node.where(dataset_id: params[:dataset_id])
   end
 
+  # Get uniques & non-blank Nodes Types (for a visualization)
+  # GET /api/visualizations/:dataset_id/nodes/types
+  def nodes_types
+    render json: Node.where(dataset_id: params[:dataset_id]).select(:node_type).map(&:node_type).reject(&:blank?).uniq
+  end
+
   # Get a Node
   # GET /api/nodes/:id
   def node
@@ -37,11 +43,6 @@ class ApiController < ApplicationController
     #TODO! Add error validation
   end
 
-  # Get uniques & non-blank Nodes Types (for a visualization)
-  # GET /api/visualizations/:dataset_id/nodes/types
-  def node_types
-    render json: Node.where(dataset_id: params[:dataset_id]).select(:node_type).map(&:node_type).reject(&:blank?).uniq
-  end
 
   ###
 
@@ -49,6 +50,12 @@ class ApiController < ApplicationController
   # GET /api/visualizations/:dataset_id/relations
   def relations
     @relations = Relation.where(dataset_id: params[:dataset_id]).includes(:source,:target)
+  end
+
+  # Get uniques & non-blank Relations Types (for a visualization)
+  # GET /api/visualizations/:dataset_id/relations/types
+  def relations_types
+    render json: Relation.where(dataset_id: params[:dataset_id]).select(:relation_type).map(&:relation_type).reject(&:blank?).uniq
   end
 
   # Get a Relation
@@ -77,6 +84,7 @@ class ApiController < ApplicationController
     Relation.destroy(params[:id])
     render json: {}
   end
+
 
   private
 

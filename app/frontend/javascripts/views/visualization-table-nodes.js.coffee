@@ -4,7 +4,7 @@ VisualizationTableBase  = require './visualization-table-base.js'
 class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
-  nodes_type:       null
+  nodes_types:      null
   tableColHeaders:  ['', 'Node', 'Type', 'Description', 'Visible']
 
   constructor: (@collection) ->
@@ -15,7 +15,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   onCollectionSync: =>
     super()
-    @getNodeTypes()
+    @getNodesTypes()
 
   # Setup Handsontable columns options
   getTableColumns: =>
@@ -31,7 +31,7 @@ class VisualizationTableNodes extends VisualizationTableBase
       { 
         data: 'node_type',
         type: 'autocomplete',
-        source: @nodes_type,
+        source: @nodes_types,
         strict: false
       },
       { 
@@ -57,8 +57,8 @@ class VisualizationTableNodes extends VisualizationTableBase
       },
     ]
 
-  getNodeTypes: =>
-    #console.log 'getNodeTypes'
+  getNodesTypes: =>
+    #console.log 'getNodesTypes'
     $.ajax {
       url: '/api/visualizations/'+$('body').data('id')+'/nodes/types.json'
       dataType: 'json'
@@ -66,47 +66,34 @@ class VisualizationTableNodes extends VisualizationTableBase
     }
 
   onNodesTypesSucess: (response) =>
-    @nodes_type = response
-    @setNodesTypeSource()
-    @table_options.afterChange       = @onTableChange
+    @nodes_types = response
+    @setNodesTypesSource()
     @setupTable()
-    
-  #!!! No de debería usar esta función. La sincronización entre tabla y canvas debe realizarse 
-  #!!! a través de `collection`, no de eventes de la tabla
-  onTableChange: (changes, source) =>
-    if source != 'loadData'
-      for change in changes
-        if change[2] != change[3]
-          @updateNode change
           
-  updateNode: (change) =>
-    console.log 'change', change, @table.getDataAtRowProp(change[0], 'id')
+  # Method called from parent class `VisualizationTableBase`
+  updateModel: (change) =>
     index = change[0]
-    key = change[1]
+    key   = change[1]
     value = change[3]
+    # Get model id in order to acced to model in Collection
     model_id = @table.getDataAtRowProp(index, 'id')
-    #!!! no puedo recoger el model de la collections por el index de la tabla (change[0])
-    #!!! debo recoger el id del objeto de la tabla y a partir de ese id recoger el model de la collection
     model = @collection.get model_id
-    console.log 'change model', model
-    # Add new node_type to node_types array
-    if key == 'node_type' && !_.contains(@nodes_type, value)
-      @addNodeType value
-    # Update node attribute
-    #else
-      #Backbone.trigger 'visualization.node.'+key, {value: value, node: model}
+    console.log 'updateNode', change, model
+    # Add new node_type to nodes_types array
+    if key == 'node_type' && !_.contains(@nodes_types, value)
+      @addNodesType value
     obj = {}
     obj[ key ] = value
+    # Save model with updated attributes in order to delegate in Collection trigger 'change' events
     model.save obj
-    #console.log obj
 
-  addNodeType: (type) ->
-    @nodes_type.push type
-    @setNodesTypeSource()
+  addNodesType: (type) ->
+    @nodes_types.push type
+    @setNodesTypesSource()
 
   # Set 'Node Type' column source in table_options
-  setNodesTypeSource: ->
-    @table_options.columns[2].source = @nodes_type
+  setNodesTypesSource: ->
+    @table_options.columns[2].source = @nodes_types
 
 
 module.exports = VisualizationTableNodes

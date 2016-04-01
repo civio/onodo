@@ -30,35 +30,35 @@ class VisualizationTableBase extends Backbone.View
     @table_options.data = @collection.toJSON()
 
   setupTable: ->
-    @table_options.afterRemoveRow    = @onTableRemoveRow
     @table_options.afterCreateRow    = @onTableCreateRow
+    @table_options.afterChange       = @onTableChangeRow
+    @table_options.afterRemoveRow    = @onTableRemoveRow
     @table = new Handsontable @$el.get(0), @table_options
 
-  onTableRemoveRow: (index, amount) =>
-    while amount > 0
-      model = @collection.at index
-      model.destroy()
-      amount--
-     
-  onTableCreateRow: (index, amount) =>
-    console.log 'onTableCreateRow'
+   onTableCreateRow: (index, amount) =>
     # Create a new model in collection
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
     model = @collection.create {dataset_id: $('body').data('id'), visible: true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
-      console.log 'collection sync', index, amount, 
-      #model.id, model.get('id'), model.get('_id'), model.attributes, model.attributes.id
+      console.log 'onTableCreateRow sync', index, amount, 
       @table.setDataAtRowProp index, 'id', model.id
       @table.setDataAtRowProp index, 'visible', true
     , @
-    #console.log model, model.get('id'), model.attributes.id
-    #@table.setDataAtCell index, 0, model.id
-    
-    #Backbone.trigger 'visualization.'+@table_type+'.create', {id: model.get('id')}
-    #console.log 'table_options_data', @table_options.data
-    #console.log 'collection', @collection
+
+  onTableChangeRow: (changes, source) =>
+    if source != 'loadData'
+      for change in changes
+        if change[2] != change[3]
+          # updateModel must be defined in inherit Classes
+          @updateModel change
+
+  onTableRemoveRow: (index, amount) =>
+    while amount > 0
+      model = @collection.at index
+      model.destroy()
+      amount--
   
   show: ->
     @$el.removeClass('hide')
