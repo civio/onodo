@@ -289,9 +289,10 @@ class VisualizationGraphCanvas extends Backbone.View
       @updateLabels()
 
   updateNodeDescription: (node, value) ->
-    index = @data_nodes.indexOf node
-    if index != 0
-      @data_nodes[index].description = value
+    console.log 'updateNodeDescription', node, value
+    data_node = @getNodeById node.id
+    if data_node
+      data_node.description = value
 
 
   # Resize Methods

@@ -822,10 +822,11 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodeDescription = function(node, value) {
-	    var index;
-	    index = this.data_nodes.indexOf(node);
-	    if (index !== 0) {
-	      return this.data_nodes[index].description = value;
+	    var data_node;
+	    console.log('updateNodeDescription', node, value);
+	    data_node = this.getNodeById(node.id);
+	    if (data_node) {
+	      return data_node.description = value;
 	    }
 	  };
 
