@@ -5,8 +5,9 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   el:               '.visualization-table-relations'
   relations_types:  null
+  nodes:            null
   tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date']
-  
+
   constructor: (@collection) ->
     super @collection, 'relation'
     # Override Table Options
@@ -26,21 +27,36 @@ class VisualizationTableRelations extends VisualizationTableBase
         renderer: @rowDeleteRenderer
       },
       { 
-        data: 'source_name' 
+        data: 'source_name'
+        type: 'dropdown'
       },
       { 
         data: 'relation_type'
         type: 'autocomplete'
-        source: @relations_types,
+        source: @relations_types
         strict: false
       },
       { 
-        data: 'target_name' 
+        data: 'target_name'
+        type: 'dropdown'
       },
       { 
         data: '' 
       }
     ]
+
+  setNodes: (_nodes) ->
+    @nodes = _nodes
+    #@nodes.once 'sync', @updateNodes, @
+    @nodes.on 'update', @updateNodes, @
+    @nodes.on 'change:name', @updateNodes, @
+
+  updateNodes: ->
+    @table_options.columns[1].source = @table_options.columns[3].source = @nodes.toJSON().map((d) -> return d.name).sort()
+    console.log 'table relations nodes sync', @table_options.columns[1].source
+    # update table settings when needed
+    if @table
+      @table.updateSettings @table_options
 
   getRelationsTypes: =>
     #console.log 'getRelationsTypes'

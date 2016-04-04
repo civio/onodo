@@ -41706,6 +41706,8 @@
 
 	  VisualizationTableRelations.prototype.relations_types = null;
 
+	  VisualizationTableRelations.prototype.nodes = null;
+
 	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date'];
 
 	  function VisualizationTableRelations(collection) {
@@ -41732,18 +41734,36 @@
 	        readOnly: true,
 	        renderer: this.rowDeleteRenderer
 	      }, {
-	        data: 'source_name'
+	        data: 'source_name',
+	        type: 'dropdown'
 	      }, {
 	        data: 'relation_type',
 	        type: 'autocomplete',
 	        source: this.relations_types,
 	        strict: false
 	      }, {
-	        data: 'target_name'
+	        data: 'target_name',
+	        type: 'dropdown'
 	      }, {
 	        data: ''
 	      }
 	    ];
+	  };
+
+	  VisualizationTableRelations.prototype.setNodes = function(_nodes) {
+	    this.nodes = _nodes;
+	    this.nodes.on('update', this.updateNodes, this);
+	    return this.nodes.on('change:name', this.updateNodes, this);
+	  };
+
+	  VisualizationTableRelations.prototype.updateNodes = function() {
+	    this.table_options.columns[1].source = this.table_options.columns[3].source = this.nodes.toJSON().map(function(d) {
+	      return d.name;
+	    }).sort();
+	    console.log('table relations nodes sync', this.table_options.columns[1].source);
+	    if (this.table) {
+	      return this.table.updateSettings(this.table_options);
+	    }
 	  };
 
 	  VisualizationTableRelations.prototype.getRelationsTypes = function() {
@@ -41847,6 +41867,7 @@
 	        relations: this.relations
 	      }
 	    });
+	    this.visualizationTableRelations.setNodes(this.nodes);
 	    $('#visualization-table-selector > li > a').click(this.updateTable);
 	  }
 
