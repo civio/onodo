@@ -69,6 +69,17 @@ class VisualizationTableNodes extends VisualizationTableBase
     @nodes_types = response
     @setNodesTypesSource()
     @setupTable()
+
+  # Method called from parent class `VisualizationTableBase`
+  addModel: (index) ->
+    # We need to set `wait = true` to wait for the server before adding the new model to the collection
+    # http://backbonejs.org/#Collection-create
+    model = @collection.create {dataset_id: $('body').data('id'), wait: true}
+    # We wait until model is synced in server to get its id
+    @collection.once 'sync', () ->
+      @table.setDataAtRowProp index, 'id', model.id
+      @table.setDataAtRowProp index, 'visible', true
+    , @
           
   # Method called from parent class `VisualizationTableBase`
   updateModel: (change) =>
@@ -77,15 +88,15 @@ class VisualizationTableNodes extends VisualizationTableBase
     value = change[3]
     # Get model id in order to acced to model in Collection
     model_id = @table.getDataAtRowProp(index, 'id')
-    model = @collection.get model_id
-    console.log 'updateNode', change, model
-    # Add new node_type to nodes_types array
-    if key == 'node_type' && !_.contains(@nodes_types, value)
-      @addNodesType value
-    obj = {}
-    obj[ key ] = value
-    # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-    model.save obj
+    if model_id
+      model = @collection.get model_id
+      # Add new node_type to nodes_types array
+      if key == 'node_type' && !_.contains(@nodes_types, value)
+        @addNodesType value
+      obj = {}
+      obj[ key ] = value
+      # Save model with updated attributes in order to delegate in Collection trigger 'change' events
+      model.save obj
 
   addNodesType: (type) ->
     @nodes_types.push type

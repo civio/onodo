@@ -45,27 +45,25 @@ class VisualizationTableRelations extends VisualizationTableBase
       }
     ]
 
-  setNodes: (_nodes) ->
+  setNodes: (_nodes) =>
     @nodes = _nodes
     # Update nodes dropdown source when nodes added or removed
     @nodes.on 'update', @updateNodes, @
-    @nodes.on 'change:name', @updateNodes, @
-    #@nodes.on 'change:name', (node, value) ->
-      #console.log 'change name', value, node
+    # Update source or target names and its dropdown
+    @nodes.on 'change:name', (node, value) =>
       # Update source or target names
-      # @table_options.data.forEach (d) ->
-      #   console.log d
-      #   if d.source_id == node.id
-      #     d.source_name = value
-      #   if d.target_id == node.id
-      #     d.target_name = value
+      @table_options.data.forEach (d,i) =>
+        if d.source_id == node.id
+          @table.setDataAtRowProp i, 'source_name', value
+        if d.target_id == node.id
+          @table.setDataAtRowProp i, 'target_name', value
       # Update nodes dropdown source when nodes change its name
-      #@updateNodes
-    #, @
+      @updateNodes()
+    , @
 
-  updateNodes: ->
-    @table_options.columns[1].source = @table_options.columns[3].source = @nodes.toJSON().map((d) -> return d.name).sort()
+  updateNodes: =>
     console.log 'table relations nodes sync', @table_options.columns[1].source
+    @table_options.columns[1].source = @table_options.columns[3].source = @nodes.toJSON().map((d) -> return d.name).sort()
     # update table settings when needed
     if @table
       @table.updateSettings @table_options
@@ -83,6 +81,16 @@ class VisualizationTableRelations extends VisualizationTableBase
     @setRelationsTypesSource()
     @setupTable()
 
+  # Method called from parent class `VisualizationTableBase`
+  addModel: (index) ->
+    # We need to set `wait = true` to wait for the server before adding the new model to the collection
+    # http://backbonejs.org/#Collection-create
+    model = @collection.create {dataset_id: $('body').data('id'), wait: true}
+    # We wait until model is synced in server to get its id
+    @collection.once 'sync', () ->
+      @table.setDataAtRowProp index, 'id', model.id
+    , @
+
   # Method called from parent class `VisualizationTableBase`  
   updateModel: (change) =>
     index = change[0]
@@ -90,25 +98,24 @@ class VisualizationTableRelations extends VisualizationTableBase
     value = change[3]
     # Get model id in order to acced to model in Collection
     model_id = @table.getDataAtRowProp(index, 'id')
-    model = @collection.get model_id
-    console.log 'updateRelation', change, model
-    obj = {}
-    # Add new node_type to nodes_types array
-    if key == 'relation_type' && !_.contains(@relations_types, value)
-      @addRelationsType value
-
-    if key == 'source_name' or key == 'target_name'
-      node = @nodes.filter((d) -> return d.attributes.name == value)
-      console.log 'update source or target', value, node
-      if node
-        if key == 'source_name'
-          obj.source_id = node[0].id
-        else
-          obj.target_id = node[0].id
-    else
-      obj[ key ] = value
-    # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-    model.save obj
+    if model_id
+      model = @collection.get model_id
+      # Add new node_type to nodes_types array
+      if key == 'relation_type' && !_.contains(@relations_types, value)
+        @addRelationsType value
+      # Setup parameters to store in model
+      obj = {}
+      if key == 'source_name' or key == 'target_name'
+        node = @nodes.filter((d) -> return d.attributes.name == value)  # get node by node name
+        if node
+          if key == 'source_name'
+            obj.source_id = node[0].id
+          else
+            obj.target_id = node[0].id
+      else
+        obj[ key ] = value
+      # Save model with updated attributes in order to delegate in Collection trigger 'change' events
+      model.save obj
 
   addRelationsType: (type) ->
     @relations_types.push type

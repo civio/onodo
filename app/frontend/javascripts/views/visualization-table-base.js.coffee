@@ -36,21 +36,15 @@ class VisualizationTableBase extends Backbone.View
     @table = new Handsontable @$el.get(0), @table_options
 
   onTableCreateRow: (index, amount) =>
+    console.log 'onTableCreateRow', index, amount
     # Create a new model in collection
-    # We need to set `wait = true` to wait for the server before adding the new model to the collection
-    # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: $('body').data('id'), visible: true, wait: true}
-    # We wait until model is synced in server to get its id
-    @collection.once 'sync', () ->
-      console.log 'onTableCreateRow sync', index, amount, 
-      @table.setDataAtRowProp index, 'id', model.id
-      @table.setDataAtRowProp index, 'visible', true
-    , @
+    @addModel index
 
   onTableChangeRow: (changes, source) =>
     if source != 'loadData'
       for change in changes
         if change[2] != change[3]
+          console.log 'onTableChangeRow', changes, source
           # updateModel must be defined in inherit Classes
           @updateModel change
 

@@ -12060,20 +12060,33 @@
 	    return this.setupTable();
 	  };
 
+	  VisualizationTableNodes.prototype.addModel = function(index) {
+	    var model;
+	    model = this.collection.create({
+	      dataset_id: $('body').data('id'),
+	      wait: true
+	    });
+	    return this.collection.once('sync', function() {
+	      this.table.setDataAtRowProp(index, 'id', model.id);
+	      return this.table.setDataAtRowProp(index, 'visible', true);
+	    }, this);
+	  };
+
 	  VisualizationTableNodes.prototype.updateModel = function(change) {
 	    var index, key, model, model_id, obj, value;
 	    index = change[0];
 	    key = change[1];
 	    value = change[3];
 	    model_id = this.table.getDataAtRowProp(index, 'id');
-	    model = this.collection.get(model_id);
-	    console.log('updateNode', change, model);
-	    if (key === 'node_type' && !_.contains(this.nodes_types, value)) {
-	      this.addNodesType(value);
+	    if (model_id) {
+	      model = this.collection.get(model_id);
+	      if (key === 'node_type' && !_.contains(this.nodes_types, value)) {
+	        this.addNodesType(value);
+	      }
+	      obj = {};
+	      obj[key] = value;
+	      return model.save(obj);
 	    }
-	    obj = {};
-	    obj[key] = value;
-	    return model.save(obj);
 	  };
 
 	  VisualizationTableNodes.prototype.addNodesType = function(type) {
@@ -41611,16 +41624,8 @@
 	  };
 
 	  VisualizationTableBase.prototype.onTableCreateRow = function(index, amount) {
-	    var model;
-	    model = this.collection.create({
-	      dataset_id: $('body').data('id'),
-	      visible: true,
-	      wait: true
-	    });
-	    return this.collection.once('sync', function() {
-	      console.log('onTableCreateRow sync', index, amount, this.table.setDataAtRowProp(index, 'id', model.id));
-	      return this.table.setDataAtRowProp(index, 'visible', true);
-	    }, this);
+	    console.log('onTableCreateRow', index, amount);
+	    return this.addModel(index);
 	  };
 
 	  VisualizationTableBase.prototype.onTableChangeRow = function(changes, source) {
@@ -41630,6 +41635,7 @@
 	      for (i = 0, len = changes.length; i < len; i++) {
 	        change = changes[i];
 	        if (change[2] !== change[3]) {
+	          console.log('onTableChangeRow', changes, source);
 	          results.push(this.updateModel(change));
 	        } else {
 	          results.push(void 0);
@@ -41715,6 +41721,8 @@
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onRelationsTypesSucess = bind(this.onRelationsTypesSucess, this);
 	    this.getRelationsTypes = bind(this.getRelationsTypes, this);
+	    this.updateNodes = bind(this.updateNodes, this);
+	    this.setNodes = bind(this.setNodes, this);
 	    this.getTableColumns = bind(this.getTableColumns, this);
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
 	    VisualizationTableRelations.__super__.constructor.call(this, this.collection, 'relation');
@@ -41753,14 +41761,26 @@
 	  VisualizationTableRelations.prototype.setNodes = function(_nodes) {
 	    this.nodes = _nodes;
 	    this.nodes.on('update', this.updateNodes, this);
-	    return this.nodes.on('change:name', this.updateNodes, this);
+	    return this.nodes.on('change:name', (function(_this) {
+	      return function(node, value) {
+	        _this.table_options.data.forEach(function(d, i) {
+	          if (d.source_id === node.id) {
+	            _this.table.setDataAtRowProp(i, 'source_name', value);
+	          }
+	          if (d.target_id === node.id) {
+	            return _this.table.setDataAtRowProp(i, 'target_name', value);
+	          }
+	        });
+	        return _this.updateNodes();
+	      };
+	    })(this), this);
 	  };
 
 	  VisualizationTableRelations.prototype.updateNodes = function() {
+	    console.log('table relations nodes sync', this.table_options.columns[1].source);
 	    this.table_options.columns[1].source = this.table_options.columns[3].source = this.nodes.toJSON().map(function(d) {
 	      return d.name;
 	    }).sort();
-	    console.log('table relations nodes sync', this.table_options.columns[1].source);
 	    if (this.table) {
 	      return this.table.updateSettings(this.table_options);
 	    }
@@ -41780,34 +41800,45 @@
 	    return this.setupTable();
 	  };
 
+	  VisualizationTableRelations.prototype.addModel = function(index) {
+	    var model;
+	    model = this.collection.create({
+	      dataset_id: $('body').data('id'),
+	      wait: true
+	    });
+	    return this.collection.once('sync', function() {
+	      return this.table.setDataAtRowProp(index, 'id', model.id);
+	    }, this);
+	  };
+
 	  VisualizationTableRelations.prototype.updateModel = function(change) {
 	    var index, key, model, model_id, node, obj, value;
 	    index = change[0];
 	    key = change[1];
 	    value = change[3];
 	    model_id = this.table.getDataAtRowProp(index, 'id');
-	    model = this.collection.get(model_id);
-	    console.log('updateRelation', change, model);
-	    obj = {};
-	    if (key === 'relation_type' && !_.contains(this.relations_types, value)) {
-	      this.addRelationsType(value);
-	    }
-	    if (key === 'source_name' || key === 'target_name') {
-	      node = this.nodes.filter(function(d) {
-	        return d.attributes.name === value;
-	      });
-	      console.log('update source or target', value, node);
-	      if (node) {
-	        if (key === 'source_name') {
-	          obj.source_id = node[0].id;
-	        } else {
-	          obj.target_id = node[0].id;
-	        }
+	    if (model_id) {
+	      model = this.collection.get(model_id);
+	      if (key === 'relation_type' && !_.contains(this.relations_types, value)) {
+	        this.addRelationsType(value);
 	      }
-	    } else {
-	      obj[key] = value;
+	      obj = {};
+	      if (key === 'source_name' || key === 'target_name') {
+	        node = this.nodes.filter(function(d) {
+	          return d.attributes.name === value;
+	        });
+	        if (node) {
+	          if (key === 'source_name') {
+	            obj.source_id = node[0].id;
+	          } else {
+	            obj.target_id = node[0].id;
+	          }
+	        }
+	      } else {
+	        obj[key] = value;
+	      }
+	      return model.save(obj);
 	    }
-	    return model.save(obj);
 	  };
 
 	  VisualizationTableRelations.prototype.addRelationsType = function(type) {
