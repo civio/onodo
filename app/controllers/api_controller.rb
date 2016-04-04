@@ -67,8 +67,9 @@ class ApiController < ApplicationController
   # Create a new Relation
   # POST /api/relations
   def relation_create
-    Relation.create(relation_params)
-    render json: {}
+    relation = Relation.new(relation_params)
+    relation.save(:validate => false)
+    render json: relation
   end
 
   # Update a Relation attribute
@@ -93,7 +94,7 @@ class ApiController < ApplicationController
     end
 
     def relation_params
-      params.require(:relation).permit(:source_id, :target_id, :relation_type) if params[:relation]
+      params.require(:relation).permit(:source_id, :target_id, :relation_type, :dataset_id) if params[:relation]
     end
 
 end
