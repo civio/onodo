@@ -230,15 +230,21 @@ class VisualizationGraphCanvas extends Backbone.View
       @linkedByIndex[relation.source_id+','+relation.target_id] = true
 
   # maybe we need to split removeVisibleRelationaData & removeRelationData
-  removeRelationData: (relation) ->
+  removeRelationData: (relation) =>
     # remove relation from data_relations
+    console.log 'remove relation from data_relations', @data_relations
     index = @data_relations.indexOf relation
+    console.log 'index', index
     if index != -1
       @data_relations.splice index, 1
+    @removeVisibleRelationData relation
+
+  removeVisibleRelationData: (relation) =>
+    console.log 'remove relation from data_relations_visibles', @data_relations_visibles
     # remove relation from data_relations_visibles
-    index = @data_relations_visible.indexOf relation
+    index = @data_relations_visibles.indexOf relation
     if index != -1
-      @data_relations_visible.splice index, 1
+      @data_relations_visibles.splice index, 1
 
   addNode: (node) ->
     console.log 'addNode', node
@@ -255,9 +261,11 @@ class VisualizationGraphCanvas extends Backbone.View
       return d.source_id != node.id and d.target_id != node.id
 
   addRelation: (relation) ->
+    console.log 'addRelation', relation
     @addRelationData relation
 
   removeRelation: (relation) ->
+    console.log 'removeRelation', relation
     @removeRelationData relation
 
   showNode: (node) ->

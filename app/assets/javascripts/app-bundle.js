@@ -326,8 +326,6 @@
 	  extend(VisualizationGraph, superClass);
 
 	  function VisualizationGraph() {
-	    this.onRelationsChange = bind(this.onRelationsChange, this);
-	    this.onNodesChange = bind(this.onNodesChange, this);
 	    this.onRelationsSync = bind(this.onRelationsSync, this);
 	    this.onNodesSync = bind(this.onNodesSync, this);
 	    return VisualizationGraph.__super__.constructor.apply(this, arguments);
@@ -384,18 +382,9 @@
 	  VisualizationGraph.prototype.onRelationsSync = function(relations) {
 	    this.relationsSync = true;
 	    console.log('onRelationsSync');
-	    this.collection.relations.bind('change', this.onRelationsChange, this);
 	    if (this.nodesSync && this.relationsSync) {
 	      return this.render();
 	    }
-	  };
-
-	  VisualizationGraph.prototype.onNodesChange = function(e, b) {
-	    return console.log('Nodes has changed', e, b, e.changed);
-	  };
-
-	  VisualizationGraph.prototype.onRelationsChange = function(e) {
-	    return console.log('Relations has changed', e);
 	  };
 
 	  VisualizationGraph.prototype.getDataFromCollection = function() {
@@ -428,6 +417,9 @@
 	    this.collection.nodes.bind('change:name', this.onNodeChangeName, this);
 	    this.collection.nodes.bind('change:description', this.onNodeChangeDescription, this);
 	    this.collection.nodes.bind('change:visible', this.onNodeChangeVisible, this);
+	    this.collection.nodes.bind('remove', this.onNodesRemove, this);
+	    this.collection.relations.bind('change', this.onRelationsChange, this);
+	    this.collection.relations.bind('remove', this.onRelationsRemove, this);
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
 	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
@@ -459,6 +451,46 @@
 	    })(this), this);
 	  };
 
+	  VisualizationGraph.prototype.onNodeChangeName = function(node) {
+	    console.log('onNodeChangeName', node.attributes.name);
+	    return this.visualizationGraphCanvas.updateNodeName(node.attributes, node.attributes.name);
+	  };
+
+	  VisualizationGraph.prototype.onNodeChangeDescription = function(node) {
+	    console.log('onNodeChangeDescription', node.attributes.description);
+	    return this.visualizationGraphCanvas.updateNodeDescription(node.attributes, node.attributes.description);
+	  };
+
+	  VisualizationGraph.prototype.onNodeChangeVisible = function(node) {
+	    console.log('onNodeChangeVisibe', node);
+	    if (e.attributes.visible) {
+	      this.visualizationGraphCanvas.showNode(node.attributes);
+	    } else {
+	      this.visualizationGraphCanvas.hideNode(node.attributes);
+	    }
+	    return this.visualizationGraphCanvas.updateLayout();
+	  };
+
+	  VisualizationGraph.prototype.onNodesRemove = function(node) {
+	    console.log('onNodesRemove', node.attributes.name);
+	    this.visualizationGraphCanvas.removeNode(node.attributes);
+	    return this.visualizationGraphCanvas.updateLayout();
+	  };
+
+	  VisualizationGraph.prototype.onRelationsChange = function(relation) {
+	    console.log('onRelationsChange', relation);
+	    if (relation.attributes.source_id && relation.attributes.target_id) {
+	      this.visualizationGraphCanvas.removeVisibleRelationData(relation.attributes);
+	      this.visualizationGraphCanvas.addRelation(relation.attributes);
+	      return this.visualizationGraphCanvas.updateLayout();
+	    }
+	  };
+
+	  VisualizationGraph.prototype.onRelationsRemove = function(relation) {
+	    this.visualizationGraphCanvas.removeRelation(relation.attributes);
+	    return this.visualizationGraphCanvas.updateLayout();
+	  };
+
 	  VisualizationGraph.prototype.onNodeShowInfo = function(e) {
 	    console.log('show info', e.node);
 	    this.visualizationGraphCanvas.focusNode(e.node);
@@ -468,26 +500,6 @@
 	  VisualizationGraph.prototype.onNodeHideInfo = function(e) {
 	    this.visualizationGraphCanvas.unfocusNode();
 	    return this.visualizationGraphInfo.hide();
-	  };
-
-	  VisualizationGraph.prototype.onNodeChangeName = function(e) {
-	    console.log('onNodeChangeName', e, e.attributes.name);
-	    return this.visualizationGraphCanvas.updateNodeName(e.attributes, e.attributes.name);
-	  };
-
-	  VisualizationGraph.prototype.onNodeChangeDescription = function(e) {
-	    console.log('onNodeChangeDescription', e, e.attributes.description);
-	    return this.visualizationGraphCanvas.updateNodeDescription(e.attributes, e.attributes.description);
-	  };
-
-	  VisualizationGraph.prototype.onNodeChangeVisible = function(e) {
-	    console.log('--- onNodeChangeVisible', e);
-	    if (e.attributes.visible) {
-	      this.visualizationGraphCanvas.showNode(e.attributes);
-	    } else {
-	      this.visualizationGraphCanvas.hideNode(e.attributes);
-	    }
-	    return this.visualizationGraphCanvas.updateLayout();
 	  };
 
 	  VisualizationGraph.prototype.onToogleLabels = function(e) {
@@ -550,6 +562,8 @@
 	    this.toogleNodesWithoutRelation = bind(this.toogleNodesWithoutRelation, this);
 	    this.toogleLabels = bind(this.toogleLabels, this);
 	    this.removeNodeRelations = bind(this.removeNodeRelations, this);
+	    this.removeVisibleRelationData = bind(this.removeVisibleRelationData, this);
+	    this.removeRelationData = bind(this.removeRelationData, this);
 	    return VisualizationGraphCanvas.__super__.constructor.apply(this, arguments);
 	  }
 
@@ -749,13 +763,21 @@
 
 	  VisualizationGraphCanvas.prototype.removeRelationData = function(relation) {
 	    var index;
+	    console.log('remove relation from data_relations', this.data_relations);
 	    index = this.data_relations.indexOf(relation);
+	    console.log('index', index);
 	    if (index !== -1) {
 	      this.data_relations.splice(index, 1);
 	    }
-	    index = this.data_relations_visible.indexOf(relation);
+	    return this.removeVisibleRelationData(relation);
+	  };
+
+	  VisualizationGraphCanvas.prototype.removeVisibleRelationData = function(relation) {
+	    var index;
+	    console.log('remove relation from data_relations_visibles', this.data_relations_visibles);
+	    index = this.data_relations_visibles.indexOf(relation);
 	    if (index !== -1) {
-	      return this.data_relations_visible.splice(index, 1);
+	      return this.data_relations_visibles.splice(index, 1);
 	    }
 	  };
 
@@ -778,10 +800,12 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.addRelation = function(relation) {
+	    console.log('addRelation', relation);
 	    return this.addRelationData(relation);
 	  };
 
 	  VisualizationGraphCanvas.prototype.removeRelation = function(relation) {
+	    console.log('removeRelation', relation);
 	    return this.removeRelationData(relation);
 	  };
 
