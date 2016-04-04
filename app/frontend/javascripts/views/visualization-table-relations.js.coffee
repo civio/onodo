@@ -47,9 +47,21 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   setNodes: (_nodes) ->
     @nodes = _nodes
-    #@nodes.once 'sync', @updateNodes, @
+    # Update nodes dropdown source when nodes added or removed
     @nodes.on 'update', @updateNodes, @
     @nodes.on 'change:name', @updateNodes, @
+    #@nodes.on 'change:name', (node, value) ->
+      #console.log 'change name', value, node
+      # Update source or target names
+      # @table_options.data.forEach (d) ->
+      #   console.log d
+      #   if d.source_id == node.id
+      #     d.source_name = value
+      #   if d.target_id == node.id
+      #     d.target_name = value
+      # Update nodes dropdown source when nodes change its name
+      #@updateNodes
+    #, @
 
   updateNodes: ->
     @table_options.columns[1].source = @table_options.columns[3].source = @nodes.toJSON().map((d) -> return d.name).sort()
@@ -80,11 +92,21 @@ class VisualizationTableRelations extends VisualizationTableBase
     model_id = @table.getDataAtRowProp(index, 'id')
     model = @collection.get model_id
     console.log 'updateRelation', change, model
+    obj = {}
     # Add new node_type to nodes_types array
     if key == 'relation_type' && !_.contains(@relations_types, value)
       @addRelationsType value
-    obj = {}
-    obj[ key ] = value
+
+    if key == 'source_name' or key == 'target_name'
+      node = @nodes.filter((d) -> return d.attributes.name == value)
+      console.log 'update source or target', value, node
+      if node
+        if key == 'source_name'
+          obj.source_id = node[0].id
+        else
+          obj.target_id = node[0].id
+    else
+      obj[ key ] = value
     # Save model with updated attributes in order to delegate in Collection trigger 'change' events
     model.save obj
 

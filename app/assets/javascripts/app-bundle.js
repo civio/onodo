@@ -292,8 +292,8 @@
 
 	  Relation.prototype.defaults = {
 	    source_id: null,
-	    source_name: null,
 	    target_id: null,
+	    source_name: null,
 	    target_name: null,
 	    relation_type: null
 	  };
@@ -41781,18 +41781,32 @@
 	  };
 
 	  VisualizationTableRelations.prototype.updateModel = function(change) {
-	    var index, key, model, model_id, obj, value;
+	    var index, key, model, model_id, node, obj, value;
 	    index = change[0];
 	    key = change[1];
 	    value = change[3];
 	    model_id = this.table.getDataAtRowProp(index, 'id');
 	    model = this.collection.get(model_id);
 	    console.log('updateRelation', change, model);
+	    obj = {};
 	    if (key === 'relation_type' && !_.contains(this.relations_types, value)) {
 	      this.addRelationsType(value);
 	    }
-	    obj = {};
-	    obj[key] = value;
+	    if (key === 'source_name' || key === 'target_name') {
+	      node = this.nodes.filter(function(d) {
+	        return d.attributes.name === value;
+	      });
+	      console.log('update source or target', value, node);
+	      if (node) {
+	        if (key === 'source_name') {
+	          obj.source_id = node[0].id;
+	        } else {
+	          obj.target_id = node[0].id;
+	        }
+	      }
+	    } else {
+	      obj[key] = value;
+	    }
 	    return model.save(obj);
 	  };
 

@@ -21,8 +21,8 @@ class VisualizationTableNodes extends VisualizationTableBase
   getTableColumns: =>
     return [
       { 
-        data: '',
-        readOnly: true,
+        data: ''
+        readOnly: true
         renderer: @rowDeleteRenderer
       },
       { 
@@ -30,17 +30,17 @@ class VisualizationTableNodes extends VisualizationTableBase
       },
       { 
         data: 'node_type',
-        type: 'autocomplete',
-        source: @nodes_types,
+        type: 'autocomplete'
+        source: @nodes_types
         strict: false
       },
       { 
-        data: 'description',
+        data: 'description'
         renderer: 'html'
       },
       { 
-        data: 'visible', 
-        type: 'checkbox',
+        data: 'visible' 
+        type: 'checkbox'
         renderer: (instance, td, row, col, prop, value, cellProperties) =>
           # We keep checkbox render in order to toogle value with enter key
           Handsontable.renderers.CheckboxRenderer.apply(this, arguments)

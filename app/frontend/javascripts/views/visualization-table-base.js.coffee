@@ -35,7 +35,7 @@ class VisualizationTableBase extends Backbone.View
     @table_options.afterRemoveRow    = @onTableRemoveRow
     @table = new Handsontable @$el.get(0), @table_options
 
-   onTableCreateRow: (index, amount) =>
+  onTableCreateRow: (index, amount) =>
     # Create a new model in collection
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
