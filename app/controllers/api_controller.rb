@@ -3,7 +3,7 @@ class ApiController < ApplicationController
   # Get all Nodes (for a visualization)
   # GET /api/visualizations/:dataset_id/nodes
   def nodes
-    render json: Node.where(dataset_id: params[:dataset_id])
+    render json: Node.where(dataset_id: params[:dataset_id]).order(:name)
   end
 
   # Get uniques & non-blank Nodes Types (for a visualization)
