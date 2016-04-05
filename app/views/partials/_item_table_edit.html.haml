@@ -16,22 +16,17 @@
     #nodes.tab-pane.active{ role: "tabpanel" }
       .btn-toolbar{ role: "group" }
         %button.btn.btn-primary{ type: "button", data: { toggle: "modal", target: "#node-add-modal" } }
-          %i.glyphicon.glyphicon-option-horizontal
           Add Node
         %button.btn.btn-primary{ type: "button" }
-          %i.glyphicon.glyphicon-option-vertical
           Add Column
-        %button.btn.btn-default{ type: "button" }
-          %i.glyphicon.glyphicon-flash
+        %button.btn.btn-primary.btn-invert{ type: "button" }
           Network Analysis
       .visualization-table-nodes
     #relations.tab-pane{ role: "tabpanel" }
       .btn-toolbar{ role: "group" }
         %button.btn.btn-primary{ type: "button", data: { toggle: "modal", target: "#relation-add-modal" } }
-          %i.glyphicon.glyphicon-option-horizontal
           Add Relationship
         %button.btn.btn-primary{ type: "button" }
-          %i.glyphicon.glyphicon-option-vertical
           Add Column
       .visualization-table-relations
 

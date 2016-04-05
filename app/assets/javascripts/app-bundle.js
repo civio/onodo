@@ -12011,7 +12011,7 @@
 
 	  VisualizationTableNodes.prototype.nodes_types = null;
 
-	  VisualizationTableNodes.prototype.tableColHeaders = ['', 'Node', 'Type', 'Description', 'Visible'];
+	  VisualizationTableNodes.prototype.tableColHeaders = ['', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
 	  function VisualizationTableNodes(collection) {
 	    this.collection = collection;
@@ -12064,6 +12064,9 @@
 	            return td;
 	          };
 	        })(this)
+	      }, {
+	        data: '',
+	        readOnly: true
 	      }
 	    ];
 	  };
@@ -41747,7 +41750,7 @@
 
 	  VisualizationTableRelations.prototype.nodes = null;
 
-	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date'];
+	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
 	  function VisualizationTableRelations(collection) {
 	    this.collection = collection;
@@ -41787,6 +41790,9 @@
 	        type: 'dropdown'
 	      }, {
 	        data: ''
+	      }, {
+	        data: '',
+	        readOnly: true
 	      }
 	    ];
 	  };

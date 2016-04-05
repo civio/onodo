@@ -6,7 +6,7 @@ class VisualizationTableRelations extends VisualizationTableBase
   el:               '.visualization-table-relations'
   relations_types:  null
   nodes:            null
-  tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date']
+  tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
 
   constructor: (@collection) ->
     super @collection, 'relation'
@@ -42,6 +42,10 @@ class VisualizationTableRelations extends VisualizationTableBase
       },
       { 
         data: '' 
+      },
+      { 
+        data: ''
+        readOnly: true
       }
     ]
 

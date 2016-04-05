@@ -5,7 +5,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_types:      null
-  tableColHeaders:  ['', 'Node', 'Type', 'Description', 'Visible']
+  tableColHeaders:  ['', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
 
   constructor: (@collection) ->
     super @collection, 'node'
@@ -55,6 +55,10 @@ class VisualizationTableNodes extends VisualizationTableBase
             @table.setDataAtCell(row, col, !value)
           return td
       },
+      { 
+        data: ''
+        readOnly: true
+      }
     ]
 
   getNodesTypes: =>
