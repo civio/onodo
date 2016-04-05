@@ -69,13 +69,25 @@ $btn-border-width: 2px;
 }
 
 .btn-danger{
-  @include button-variant($btn-danger-bg, $btn-danger-color, $btn-danger-bg);
-  border-color: $btn-danger-bg;
-  &:hover,
-  &:focus{
-    color: $btn-danger-color;
-    background: $btn-danger-bg;
+  @include button-variant($btn-danger-color, $btn-danger-bg, $btn-danger-color);
     border-color: $btn-danger-bg;
+    &:hover,
+    &:focus,
+    &:active:focus{
+      color: $btn-danger-bg;
+      background: $btn-danger-color;
+      border-color: $btn-danger-bg;
+  }
+
+  &.btn-invert{
+    @include button-variant($btn-danger-bg, $btn-danger-color, $btn-danger-bg);
+    border-color: $btn-danger-bg;
+    &:hover,
+    &:focus{
+      color: $btn-danger-color;
+      background: $btn-danger-bg;
+      border-color: $btn-danger-bg;
+    }
   }
 }
 
@@ -328,4 +340,53 @@ label{
   color: $gray-semi-light;
   border-color: $gray-lighter;
   background: $gray-lighter;
+}
+
+
+// Modal
+
+.modal{
+  .close{
+    display: block;
+    opacity: 1;
+    margin-top: 2px;
+    @include retina-sprite( $icon-close-group );
+    @include transition( opacity 0.3s ease-out );
+
+    &:hover{
+      opacity: 0.7;
+    }
+  }
+
+  &.delete-modal{
+    .modal-header{
+      border: none;
+    }
+    .modal-title{
+      color: $brand-primary
+    }
+    .modal-body{
+      color: $gray;
+      padding-top: 0;
+      padding-bottom: $grid-gutter-width/2;
+      font-weight: 300;
+
+      strong{
+        color: $text-color;
+        font-weight: normal;
+      }
+    }
+    .modal-footer{
+      padding-top: 0;
+      border: none;
+
+      .btn{
+        display: block;
+      }
+      .btn-danger{
+        float: left;
+        margin-right: $grid-gutter-width/3;
+      }
+    }
+  }
 }

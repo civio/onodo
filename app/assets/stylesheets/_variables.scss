@@ -24,13 +24,16 @@ $brand-yellow:           #ffd822;
 // $brand-warning:         #f0ad4e !default;
 $brand-danger:           #ff4e63;
 
-$body-bg:               #fff !default;
+$btn-danger-bg:          $brand-danger;
+$btn-danger-border:      $brand-danger;
 
-$text-color:            #222 !default;
+$body-bg:                #fff !default;
 
-$link-color:            $brand-primary !default;
-$link-hover-color:      darken($link-color, 15%) !default;
-$link-hover-decoration: underline !default;
+$text-color:             #222 !default;
+
+$link-color:             $brand-primary !default;
+$link-hover-color:       darken($link-color, 15%) !default;
+$link-hover-decoration:  underline !default;
 
 // Tipography
 $font-family-sans-serif:   'Montserrat', Helvetica, Arial, sans-serif;
@@ -108,3 +111,19 @@ $jumbotron-padding:              30px !default;
 $jumbotron-color:                inherit !default;
 // $jumbotron-font-size:            ceil(($font-size-base * 1.5)) !default;
 // $jumbotron-heading-font-size:    ceil(($font-size-base * 4.5)) !default;
+
+// Modal
+
+//** Padding applied to the modal body
+$modal-inner-padding:         20px;
+
+//** Padding applied to the modal title
+$modal-title-padding:         20px;
+
+//** Modal content border color
+$modal-content-border-color:                   transparent;
+//** Modal content border color **for IE8**
+$modal-content-fallback-border-color:          transparent;
+
+//** Modal backdrop opacity
+$modal-backdrop-opacity:      .4;
