@@ -78,7 +78,16 @@ class VisualizationTableBase extends Backbone.View
     # Delete row on click event
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
-      @table.alter('remove_row', row, 1 )
+      $modal = $('#delete-'+@table_type+'-modal')
+      # Add click event handler on confirmation btn to delete current row
+      $modal.find('.btn-danger').on 'click', (e) =>
+        $modal.modal 'hide'
+        @table.alter('remove_row', row, 1 )
+      # Show confirmation modal
+      $modal.modal 'show'
+      # Remove on click event when hide modal
+      $modal.on 'hidden.bs.modal', (e) ->
+        $modal.find('btn-danger').off 'click'
     return td
 
 module.exports = VisualizationTableBase

@@ -41702,8 +41702,17 @@
 	    td.appendChild(link);
 	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
 	      return function(e) {
+	        var $modal;
 	        e.preventDefault();
-	        return _this.table.alter('remove_row', row, 1);
+	        $modal = $('#delete-' + _this.table_type + '-modal');
+	        $modal.find('.btn-danger').on('click', function(e) {
+	          $modal.modal('hide');
+	          return _this.table.alter('remove_row', row, 1);
+	        });
+	        $modal.modal('show');
+	        return $modal.on('hidden.bs.modal', function(e) {
+	          return $modal.find('btn-danger').off('click');
+	        });
 	      };
 	    })(this));
 	    return td;
