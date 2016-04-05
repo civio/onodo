@@ -114,7 +114,7 @@ class VisualizationGraph extends Backbone.View
     # We need to wait until sync event to get node id
     @collection.nodes.once 'sync', (model) =>
       console.log 'onNodesAdd', model.id, model
-      @visualizationGraphCanvas.addNode {id: model.id}
+      @visualizationGraphCanvas.addNode model.attributes
       @visualizationGraphCanvas.updateLayout()
     , @
 

@@ -443,9 +443,7 @@
 	    return this.collection.nodes.once('sync', (function(_this) {
 	      return function(model) {
 	        console.log('onNodesAdd', model.id, model);
-	        _this.visualizationGraphCanvas.addNode({
-	          id: model.id
-	        });
+	        _this.visualizationGraphCanvas.addNode(model.attributes);
 	        return _this.visualizationGraphCanvas.updateLayout();
 	      };
 	    })(this), this);
@@ -731,7 +729,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.addNodeData = function(node) {
-	    console.log('addNodeData');
+	    console.log('addNodeData', node.id, node);
 	    this.data_nodes_map.set(node.id, node);
 	    return this.data_nodes.push(node);
 	  };

@@ -201,11 +201,10 @@ class VisualizationGraphCanvas extends Backbone.View
   # --------------------------
 
   addNodeData: (node) ->
-    console.log 'addNodeData'
-    #console.log @data_nodes
+    # check if node is present in @data_nodes
+    console.log 'addNodeData', node.id, node
     @data_nodes_map.set node.id, node
     @data_nodes.push node
-    #console.log @data_nodes
 
   removeNodeData: (node) ->
     @data_nodes_map.remove node.id
