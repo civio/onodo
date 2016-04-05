@@ -11,7 +11,7 @@ class VisualizationTableBase extends Backbone.View
     console.log 'VisualizationTableBase', table_type
     @table_options =
       #minSpareRows: 1
-      contextMenu: [ 'row_below', 'remove_row', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
+      contextMenu: [ 'row_above', 'row_below', 'undo', 'redo' ] #[ 'row_above', 'row_below', 'remove_row', 'undo', 'redo' ]
       height: 360
       stretchH: 'all'
       columnSorting: true
@@ -32,7 +32,7 @@ class VisualizationTableBase extends Backbone.View
   setupTable: ->
     @table_options.afterCreateRow    = @onTableCreateRow
     @table_options.afterChange       = @onTableChangeRow
-    @table_options.afterRemoveRow    = @onTableRemoveRow
+    @table_options.beforeRemoveRow   = @onTableRemoveRow  # important to listen before remove to avoid index problems
     @table = new Handsontable @$el.get(0), @table_options
 
   onTableCreateRow: (index, amount) =>
@@ -49,10 +49,11 @@ class VisualizationTableBase extends Backbone.View
           @updateModel change
 
   onTableRemoveRow: (index, amount) =>
-    while amount > 0
-      model = @collection.at index
+    # we need to get model id from row in order to remove the right model
+    model_id = @getIdAtRow index
+    model = @collection.get model_id
+    if model  
       model.destroy()
-      amount--
   
   show: ->
     @$el.removeClass('hide')
@@ -63,6 +64,9 @@ class VisualizationTableBase extends Backbone.View
 
   render: =>
     return this
+
+  getIdAtRow: (index) ->
+    return @table.getDataAtRowProp(index, 'id')
 
   rowDeleteRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # Add delete icon

@@ -128,7 +128,7 @@ class VisualizationGraph extends Backbone.View
 
   onNodeChangeVisible: (node) ->
     console.log 'onNodeChangeVisibe', node
-    if e.attributes.visible
+    if node.attributes.visible
       @visualizationGraphCanvas.showNode node.attributes
     else
       @visualizationGraphCanvas.hideNode node.attributes

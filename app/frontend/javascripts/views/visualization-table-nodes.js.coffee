@@ -87,7 +87,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     key   = change[1]
     value = change[3]
     # Get model id in order to acced to model in Collection
-    model_id = @table.getDataAtRowProp(index, 'id')
+    model_id = @getIdAtRow index
     if model_id
       model = @collection.get model_id
       # Add new node_type to nodes_types array

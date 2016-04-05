@@ -463,7 +463,7 @@
 
 	  VisualizationGraph.prototype.onNodeChangeVisible = function(node) {
 	    console.log('onNodeChangeVisibe', node);
-	    if (e.attributes.visible) {
+	    if (node.attributes.visible) {
 	      this.visualizationGraphCanvas.showNode(node.attributes);
 	    } else {
 	      this.visualizationGraphCanvas.hideNode(node.attributes);
@@ -12101,7 +12101,7 @@
 	    index = change[0];
 	    key = change[1];
 	    value = change[3];
-	    model_id = this.table.getDataAtRowProp(index, 'id');
+	    model_id = this.getIdAtRow(index);
 	    if (model_id) {
 	      model = this.collection.get(model_id);
 	      if (key === 'node_type' && !_.contains(this.nodes_types, value)) {
@@ -41617,7 +41617,7 @@
 	    this.table_type = table_type;
 	    console.log('VisualizationTableBase', table_type);
 	    this.table_options = {
-	      contextMenu: ['row_below', 'remove_row', 'undo', 'redo'],
+	      contextMenu: ['row_above', 'row_below', 'undo', 'redo'],
 	      height: 360,
 	      stretchH: 'all',
 	      columnSorting: true
@@ -41643,7 +41643,7 @@
 	  VisualizationTableBase.prototype.setupTable = function() {
 	    this.table_options.afterCreateRow = this.onTableCreateRow;
 	    this.table_options.afterChange = this.onTableChangeRow;
-	    this.table_options.afterRemoveRow = this.onTableRemoveRow;
+	    this.table_options.beforeRemoveRow = this.onTableRemoveRow;
 	    return this.table = new Handsontable(this.$el.get(0), this.table_options);
 	  };
 
@@ -41670,14 +41670,12 @@
 	  };
 
 	  VisualizationTableBase.prototype.onTableRemoveRow = function(index, amount) {
-	    var model, results;
-	    results = [];
-	    while (amount > 0) {
-	      model = this.collection.at(index);
-	      model.destroy();
-	      results.push(amount--);
+	    var model, model_id;
+	    model_id = this.getIdAtRow(index);
+	    model = this.collection.get(model_id);
+	    if (model) {
+	      return model.destroy();
 	    }
-	    return results;
 	  };
 
 	  VisualizationTableBase.prototype.show = function() {
@@ -41691,6 +41689,10 @@
 
 	  VisualizationTableBase.prototype.render = function() {
 	    return this;
+	  };
+
+	  VisualizationTableBase.prototype.getIdAtRow = function(index) {
+	    return this.table.getDataAtRowProp(index, 'id');
 	  };
 
 	  VisualizationTableBase.prototype.rowDeleteRenderer = function(instance, td, row, col, prop, value, cellProperties) {
