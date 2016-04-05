@@ -60,6 +60,7 @@ class VisualizationTableRelations extends VisualizationTableBase
       # Update nodes dropdown source when nodes change its name
       @updateNodes()
     , @
+    @nodes.on 'remove', @removeRelationsWithNode, @
 
   updateNodes: =>
     console.log 'table relations nodes sync', @table_options.columns[1].source
@@ -124,5 +125,12 @@ class VisualizationTableRelations extends VisualizationTableBase
   # Set 'Node Type' column source in table_options
   setRelationsTypesSource: ->
     @table_options.columns[2].source = @relations_types
+
+  removeRelationsWithNode: (node) ->
+    # descending loop though all relations
+    for relation, i in @table_options.data by -1
+      # if relation contains removed node in source or target we remove that relation
+      if relation.source_id == node.id or relation.target_id == node.id
+        @table.alter('remove_row', i, 1 )  
 
 module.exports = VisualizationTableRelations

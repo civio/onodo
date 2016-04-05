@@ -41794,7 +41794,7 @@
 	  VisualizationTableRelations.prototype.setNodes = function(_nodes) {
 	    this.nodes = _nodes;
 	    this.nodes.on('update', this.updateNodes, this);
-	    return this.nodes.on('change:name', (function(_this) {
+	    this.nodes.on('change:name', (function(_this) {
 	      return function(node, value) {
 	        _this.table_options.data.forEach(function(d, i) {
 	          if (d.source_id === node.id) {
@@ -41807,6 +41807,7 @@
 	        return _this.updateNodes();
 	      };
 	    })(this), this);
+	    return this.nodes.on('remove', this.removeRelationsWithNode, this);
 	  };
 
 	  VisualizationTableRelations.prototype.updateNodes = function() {
@@ -41881,6 +41882,21 @@
 
 	  VisualizationTableRelations.prototype.setRelationsTypesSource = function() {
 	    return this.table_options.columns[2].source = this.relations_types;
+	  };
+
+	  VisualizationTableRelations.prototype.removeRelationsWithNode = function(node) {
+	    var i, j, ref, relation, results;
+	    ref = this.table_options.data;
+	    results = [];
+	    for (i = j = ref.length - 1; j >= 0; i = j += -1) {
+	      relation = ref[i];
+	      if (relation.source_id === node.id || relation.target_id === node.id) {
+	        results.push(this.table.alter('remove_row', i, 1));
+	      } else {
+	        results.push(void 0);
+	      }
+	    }
+	    return results;
 	  };
 
 	  return VisualizationTableRelations;
