@@ -12104,13 +12104,20 @@
 	  VisualizationTableNodes.prototype.onNodesTypesSucess = function(response) {
 	    this.nodes_types = response;
 	    this.setNodesTypesSource();
-	    return this.setupTable();
+	    this.setupTable();
+	    return $('#visualization-add-node-btn').click((function(_this) {
+	      return function(e) {
+	        e.preventDefault();
+	        return _this.addRow();
+	      };
+	    })(this));
 	  };
 
 	  VisualizationTableNodes.prototype.addModel = function(index) {
 	    var model;
 	    model = this.collection.create({
 	      dataset_id: $('body').data('id'),
+	      'visible': true,
 	      wait: true
 	    });
 	    return this.collection.once('sync', function() {
@@ -41714,6 +41721,10 @@
 	    return this;
 	  };
 
+	  VisualizationTableBase.prototype.addRow = function() {
+	    return this.table.alter('insert_row', 0, 1);
+	  };
+
 	  VisualizationTableBase.prototype.getIdAtRow = function(index) {
 	    return this.table.getDataAtRowProp(index, 'id');
 	  };
@@ -41859,7 +41870,13 @@
 	  VisualizationTableRelations.prototype.onRelationsTypesSucess = function(response) {
 	    this.relations_types = response;
 	    this.setRelationsTypesSource();
-	    return this.setupTable();
+	    this.setupTable();
+	    return $('#visualization-add-relation-btn').click((function(_this) {
+	      return function(e) {
+	        e.preventDefault();
+	        return _this.addRow();
+	      };
+	    })(this));
 	  };
 
 	  VisualizationTableRelations.prototype.addModel = function(index) {

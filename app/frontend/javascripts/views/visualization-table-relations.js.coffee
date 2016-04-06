@@ -85,6 +85,10 @@ class VisualizationTableRelations extends VisualizationTableBase
     @relations_types = response
     @setRelationsTypesSource()
     @setupTable()
+    # Add Relation Btn Handler
+    $('#visualization-add-relation-btn').click (e) =>
+      e.preventDefault()
+      @addRow()
 
   # Method called from parent class `VisualizationTableBase`
   addModel: (index) ->

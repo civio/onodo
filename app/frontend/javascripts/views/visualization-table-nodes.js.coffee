@@ -73,12 +73,16 @@ class VisualizationTableNodes extends VisualizationTableBase
     @nodes_types = response
     @setNodesTypesSource()
     @setupTable()
+    # Add Node Btn Handler
+    $('#visualization-add-node-btn').click (e) =>
+      e.preventDefault()
+      @addRow()
 
   # Method called from parent class `VisualizationTableBase`
   addModel: (index) ->
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: $('body').data('id'), wait: true}
+    model = @collection.create {dataset_id: $('body').data('id'), 'visible': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', model.id

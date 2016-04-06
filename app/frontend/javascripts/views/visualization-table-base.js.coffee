@@ -65,6 +65,9 @@ class VisualizationTableBase extends Backbone.View
   render: =>
     return this
 
+  addRow: ->
+    @table.alter('insert_row', 0, 1 )
+
   getIdAtRow: (index) ->
     return @table.getDataAtRowProp(index, 'id')
 
