@@ -6,5 +6,6 @@ class Relation extends Backbone.Model
     source_name:   null
     target_name:   null
     relation_type: null
+    direction:     true
 
 module.exports = Relation
