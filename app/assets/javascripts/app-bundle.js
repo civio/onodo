@@ -12037,6 +12037,8 @@
 
 	  function VisualizationTableNodes(collection) {
 	    this.collection = collection;
+	    this.rowVisibleRenderer = bind(this.rowVisibleRenderer, this);
+	    this.rowDescriptionRenderer = bind(this.rowDescriptionRenderer, this);
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
 	    this.getNodesTypes = bind(this.getNodesTypes, this);
@@ -12067,25 +12069,12 @@
 	        strict: false
 	      }, {
 	        data: 'description',
-	        renderer: 'html'
+	        readOnly: true,
+	        renderer: this.rowDescriptionRenderer
 	      }, {
 	        data: 'visible',
 	        type: 'checkbox',
-	        renderer: (function(_this) {
-	          return function(instance, td, row, col, prop, value, cellProperties) {
-	            var link;
-	            Handsontable.renderers.CheckboxRenderer.apply(_this, arguments);
-	            link = document.createElement('A');
-	            link.className = value ? 'icon-visible active' : 'icon-visible';
-	            link.innerHTML = link.title = 'Node Visibility';
-	            td.appendChild(link);
-	            Handsontable.Dom.addEvent(link, 'click', function(e) {
-	              e.preventDefault();
-	              return _this.table.setDataAtCell(row, col, !value);
-	            });
-	            return td;
-	          };
-	        })(this)
+	        renderer: this.rowVisibleRenderer
 	      }, {
 	        data: '',
 	        readOnly: true
@@ -12150,6 +12139,47 @@
 
 	  VisualizationTableNodes.prototype.setNodesTypesSource = function() {
 	    return this.table_options.columns[2].source = this.nodes_types;
+	  };
+
+	  VisualizationTableNodes.prototype.rowDescriptionRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+	    var link;
+	    link = document.createElement('A');
+	    link.className = value ? 'icon-table' : 'icon-plus';
+	    link.innerHTML = link.title = 'Edit Description';
+	    Handsontable.Dom.empty(td);
+	    td.appendChild(link);
+	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
+	      return function(e) {
+	        var $modal;
+	        e.preventDefault();
+	        $modal = $('#table-description-modal');
+	        $modal.find('.modal-body').load('/nodes/' + _this.getIdAtRow(row) + '/edit/description/', function() {
+	          return $modal.find('.form-default').on('submit', function(e) {
+	            e.preventDefault();
+	            _this.table.setDataAtRowProp(row, 'description', $modal.find('#node_description').val());
+	            return $modal.modal('hide');
+	          });
+	        });
+	        return $modal.modal('show');
+	      };
+	    })(this));
+	    return td;
+	  };
+
+	  VisualizationTableNodes.prototype.rowVisibleRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+	    var link;
+	    Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
+	    link = document.createElement('A');
+	    link.className = value ? 'icon-visible active' : 'icon-visible';
+	    link.innerHTML = link.title = 'Node Visibility';
+	    td.appendChild(link);
+	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
+	      return function(e) {
+	        e.preventDefault();
+	        return _this.table.setDataAtCell(row, col, !value);
+	      };
+	    })(this));
+	    return td;
 	  };
 
 	  return VisualizationTableNodes;
@@ -41647,7 +41677,7 @@
 	    this.table_type = table_type;
 	    console.log('VisualizationTableBase', table_type);
 	    this.table_options = {
-	      contextMenu: ['row_above', 'row_below', 'undo', 'redo'],
+	      contextMenu: null,
 	      height: 360,
 	      stretchH: 'all',
 	      columnSorting: true
@@ -41745,10 +41775,10 @@
 	          $modal.modal('hide');
 	          return _this.table.alter('remove_row', row, 1);
 	        });
-	        $modal.modal('show');
-	        return $modal.on('hidden.bs.modal', function(e) {
+	        $modal.on('hidden.bs.modal', function(e) {
 	          return $modal.find('btn-danger').off('click');
 	        });
+	        return $modal.modal('show');
 	      };
 	    })(this));
 	    return td;

@@ -11,7 +11,7 @@ class VisualizationTableBase extends Backbone.View
     console.log 'VisualizationTableBase', table_type
     @table_options =
       #minSpareRows: 1
-      contextMenu: [ 'row_above', 'row_below', 'undo', 'redo' ]
+      contextMenu: null #[ 'row_above', 'row_below', 'undo', 'redo' ]
       height: 360
       stretchH: 'all'
       columnSorting: true
@@ -86,11 +86,11 @@ class VisualizationTableBase extends Backbone.View
       $modal.find('.btn-danger').on 'click', (e) =>
         $modal.modal 'hide'
         @table.alter('remove_row', row, 1 )
-      # Show confirmation modal
-      $modal.modal 'show'
       # Remove on click event when hide modal
       $modal.on 'hidden.bs.modal', (e) ->
         $modal.find('btn-danger').off 'click'
+      # Show confirmation modal
+      $modal.modal 'show'
     return td
 
 module.exports = VisualizationTableBase

@@ -652,6 +652,14 @@ body.fullscreen{
   }
 
   .handsontable{
+
+    .add-custom-column{
+      float: right;
+      display: block;
+      margin-top: $grid-gutter-width/6;
+      margin-right: $grid-gutter-width/3;
+      @include retina-sprite( $icon-plus-circle-nofill-group );
+    }
     
     .icon-trash{
       display: block;
@@ -659,6 +667,33 @@ body.fullscreen{
       cursor: pointer;
       text-indent: -9999px;
       @include retina-sprite( $icon-trash-group );
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+
+    .icon-plus{
+      display: block;
+      margin-top: 2px;
+      cursor: pointer;
+      text-indent: -9999px;
+      opacity: 0.5;
+      @include retina-sprite( $icon-plus-circle-nofill-group );
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+
+    .icon-table{
+      display: block;
+      margin-top: 2px;
+      text-indent: -9999px;
+      cursor: pointer;
+      @include retina-sprite( $icon-table-circle-group );
       @include transition( opacity 0.3s ease-out );
 
       &:hover{

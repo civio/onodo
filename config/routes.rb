@@ -31,8 +31,13 @@ Rails.application.routes.draw do
     end 
   end 
 
-  resources :datasets, only: [:index]
-  resources :nodes, only: [:index, :edit, :update]
+  resources :datasets, :only => [:index]
+
+  resources :nodes, :only => [:index, :edit, :update] do
+    collection do 
+      get ':id/edit/description'  => 'nodes#edit_description'
+    end 
+  end
 
   get '/explore'                  => 'pages#explore_stories'
   get '/explore/visualizations/'  => 'pages#explore_visualizations'

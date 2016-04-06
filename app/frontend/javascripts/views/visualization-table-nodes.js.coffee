@@ -36,24 +36,15 @@ class VisualizationTableNodes extends VisualizationTableBase
       },
       { 
         data: 'description'
-        renderer: 'html'
+        readOnly: true
+        renderer: @rowDescriptionRenderer
+        #data: 'description'
+        #renderer: 'html'
       },
       { 
         data: 'visible' 
         type: 'checkbox'
-        renderer: (instance, td, row, col, prop, value, cellProperties) =>
-          # We keep checkbox render in order to toogle value with enter key
-          Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
-          # Add visible icon link
-          link = document.createElement('A');
-          link.className = if value then 'icon-visible active' else 'icon-visible'
-          link.innerHTML = link.title = 'Node Visibility'
-          td.appendChild(link)
-          # Toggle visibility value on click
-          Handsontable.Dom.addEvent link, 'click', (e) =>
-            e.preventDefault()
-            @table.setDataAtCell(row, col, !value)
-          return td
+        renderer: @rowVisibleRenderer
       },
       { 
         data: ''
@@ -114,5 +105,40 @@ class VisualizationTableNodes extends VisualizationTableBase
   setNodesTypesSource: ->
     @table_options.columns[2].source = @nodes_types
 
+  rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # Add delete icon
+    link = document.createElement('A');
+    link.className = if value then 'icon-table' else 'icon-plus'
+    link.innerHTML = link.title = 'Edit Description'
+    Handsontable.Dom.empty(td)
+    td.appendChild(link)
+    # Add description modal on click event
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      $modal = $('#table-description-modal')
+      # Load description edit form via ajax in modal
+      $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(row)+'/edit/description/', () =>
+        # Add on submit handler to save new description via model
+        $modal.find('.form-default').on 'submit', (e) =>
+          e.preventDefault()
+          @table.setDataAtRowProp row, 'description', $modal.find('#node_description').val()
+          $modal.modal 'hide'
+      # Show modal
+      $modal.modal 'show'
+    return td
+
+  rowVisibleRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # We keep checkbox render in order to toogle value with enter key
+    Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
+    # Add visible icon link
+    link = document.createElement('A');
+    link.className = if value then 'icon-visible active' else 'icon-visible'
+    link.innerHTML = link.title = 'Node Visibility'
+    td.appendChild(link)
+    # Toggle visibility value on click
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      @table.setDataAtCell(row, col, !value)
+    return td
 
 module.exports = VisualizationTableNodes

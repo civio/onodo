@@ -348,6 +348,10 @@ label{
 .modal{
   .close{
     display: block;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 90;
     opacity: 1;
     margin-top: 2px;
     @include retina-sprite( $icon-close-group );
@@ -358,35 +362,55 @@ label{
     }
   }
 
-  &.delete-modal{
+  &.delete-modal,
+  &.table-edit-modal{
     .modal-header{
       border: none;
     }
-    .modal-title{
-      color: $brand-primary
-    }
     .modal-body{
       color: $gray;
-      padding-top: 0;
-      padding-bottom: $grid-gutter-width/2;
       font-weight: 300;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .modal-footer{
+      border: none;
+      text-align: left;
+      .btn{
+        display: block;
+        &:first-child{
+          float: left;
+          margin-right: $grid-gutter-width/3;
+        }
+      }
+    }
+  }
 
+  &.delete-modal{
+    
+    .modal-title{
+      color: $brand-primary;
+    }
+    .modal-body{
       strong{
         color: $text-color;
         font-weight: normal;
       }
     }
-    .modal-footer{
-      padding-top: 0;
-      border: none;
+  }
 
-      .btn{
-        display: block;
-      }
-      .btn-danger{
-        float: left;
-        margin-right: $grid-gutter-width/3;
+  &.table-edit-modal{
+    .modal-title{
+      color: $gray;
+      font-size: 1em;
+      text-transform: uppercase;
+    }
+    .modal-body{
+      .form-default{
+        margin-top: -20px;
+        margin-bottom: 20px;
       }
     }
   }
+
 }

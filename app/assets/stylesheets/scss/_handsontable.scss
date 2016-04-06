@@ -1,16 +1,7 @@
 @import 'bootstrap/variables';
-@import 'scss/sprites';
 @import '_variables';
 
 .handsontable{
-
-  .add-custom-column{
-    float: right;
-    display: block;
-    margin-top: $grid-gutter-width/6;
-    margin-right: $grid-gutter-width/3;
-    @include retina-sprite( $icon-plus-circle-nofill-group );
-  }
 
   thead th{
     color: $gray;
