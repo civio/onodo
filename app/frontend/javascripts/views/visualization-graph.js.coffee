@@ -121,10 +121,12 @@ class VisualizationGraph extends Backbone.View
   onNodeChangeName: (node) ->
     console.log 'onNodeChangeName', node.attributes.name
     @visualizationGraphCanvas.updateNodeName node.attributes, node.attributes.name
+    @updateGraphInfoNode node
 
   onNodeChangeDescription: (node) ->
     console.log 'onNodeChangeDescription', node.attributes.description
     @visualizationGraphCanvas.updateNodeDescription node.attributes, node.attributes.description
+    @updateGraphInfoNode node
 
   onNodeChangeVisible: (node) ->
     console.log 'onNodeChangeVisibe', node
@@ -132,12 +134,18 @@ class VisualizationGraph extends Backbone.View
       @visualizationGraphCanvas.showNode node.attributes
     else
       @visualizationGraphCanvas.hideNode node.attributes
+      # Hide Panel Info if visible for current node
+      if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
+        @visualizationGraphInfo.hide()
     @visualizationGraphCanvas.updateLayout()
 
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name
     @visualizationGraphCanvas.removeNode node.attributes
     @visualizationGraphCanvas.updateLayout()
+    # Hide Panel Info if visible for current node
+    if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
+      @visualizationGraphInfo.hide()
 
   onRelationsChange: (relation) ->
     console.log 'onRelationsChange', relation
@@ -183,6 +191,12 @@ class VisualizationGraph extends Backbone.View
   onFullscreen: (e) ->
     $('body').toggleClass 'fullscreen'
     @resize()
+
+
+  updateGraphInfoNode: (node) ->
+    if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
+      @visualizationGraphInfo.node = node
+      @visualizationGraphInfo.render()
 
 
 module.exports = VisualizationGraph

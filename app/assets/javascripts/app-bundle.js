@@ -451,12 +451,14 @@
 
 	  VisualizationGraph.prototype.onNodeChangeName = function(node) {
 	    console.log('onNodeChangeName', node.attributes.name);
-	    return this.visualizationGraphCanvas.updateNodeName(node.attributes, node.attributes.name);
+	    this.visualizationGraphCanvas.updateNodeName(node.attributes, node.attributes.name);
+	    return this.updateGraphInfoNode(node);
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeDescription = function(node) {
 	    console.log('onNodeChangeDescription', node.attributes.description);
-	    return this.visualizationGraphCanvas.updateNodeDescription(node.attributes, node.attributes.description);
+	    this.visualizationGraphCanvas.updateNodeDescription(node.attributes, node.attributes.description);
+	    return this.updateGraphInfoNode(node);
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeVisible = function(node) {
@@ -465,6 +467,9 @@
 	      this.visualizationGraphCanvas.showNode(node.attributes);
 	    } else {
 	      this.visualizationGraphCanvas.hideNode(node.attributes);
+	      if (this.visualizationGraphInfo.isVisible() && this.visualizationGraphInfo.node.id === node.id) {
+	        this.visualizationGraphInfo.hide();
+	      }
 	    }
 	    return this.visualizationGraphCanvas.updateLayout();
 	  };
@@ -472,7 +477,10 @@
 	  VisualizationGraph.prototype.onNodesRemove = function(node) {
 	    console.log('onNodesRemove', node.attributes.name);
 	    this.visualizationGraphCanvas.removeNode(node.attributes);
-	    return this.visualizationGraphCanvas.updateLayout();
+	    this.visualizationGraphCanvas.updateLayout();
+	    if (this.visualizationGraphInfo.isVisible() && this.visualizationGraphInfo.node.id === node.id) {
+	      return this.visualizationGraphInfo.hide();
+	    }
 	  };
 
 	  VisualizationGraph.prototype.onRelationsChange = function(relation) {
@@ -523,6 +531,13 @@
 	  VisualizationGraph.prototype.onFullscreen = function(e) {
 	    $('body').toggleClass('fullscreen');
 	    return this.resize();
+	  };
+
+	  VisualizationGraph.prototype.updateGraphInfoNode = function(node) {
+	    if (this.visualizationGraphInfo.isVisible() && this.visualizationGraphInfo.node.id === node.id) {
+	      this.visualizationGraphInfo.node = node;
+	      return this.visualizationGraphInfo.render();
+	    }
 	  };
 
 	  return VisualizationGraph;
@@ -785,6 +800,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.removeNode = function(node) {
+	    this.nodes.selectAll('#node-' + node.id + ' .node-circle').classed('active', false);
 	    this.removeNodeData(node);
 	    return this.removeNodeRelations(node);
 	  };
@@ -10747,9 +10763,11 @@
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars, HandlebarsTemplate, VisualizationGraphInfo,
+	var Handlebars, HandlebarsTemplate, Node, VisualizationGraphInfo,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
+
+	Node = __webpack_require__(6);
 
 	Handlebars = __webpack_require__(15);
 
@@ -10765,7 +10783,7 @@
 	  VisualizationGraphInfo.prototype.el = '.visualization-graph-info';
 
 	  VisualizationGraphInfo.prototype.show = function(node) {
-	    this.node = node;
+	    this.node = new Node(node);
 	    this.$el.addClass('active');
 	    this.$el.find('.panel-heading > a.btn').attr('href', '/nodes/' + node.id + '/edit/');
 	    return this.render();
@@ -10773,6 +10791,10 @@
 
 	  VisualizationGraphInfo.prototype.hide = function() {
 	    return this.$el.removeClass('active');
+	  };
+
+	  VisualizationGraphInfo.prototype.isVisible = function() {
+	    return this.$el.hasClass('active');
 	  };
 
 	  VisualizationGraphInfo.prototype.initialize = function() {
@@ -10786,8 +10808,8 @@
 	  VisualizationGraphInfo.prototype.render = function() {
 	    if (this.node) {
 	      this.template = HandlebarsTemplate({
-	        name: this.node.name,
-	        description: this.node.description
+	        name: this.node.attributes.name,
+	        description: this.node.attributes.description
 	      });
 	      this.$el.find('.panel-body').html(this.template, this);
 	    }
