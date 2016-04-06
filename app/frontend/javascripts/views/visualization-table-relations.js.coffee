@@ -85,6 +85,8 @@ class VisualizationTableRelations extends VisualizationTableBase
     @relations_types = response
     @setRelationsTypesSource()
     @setupTable()
+    # Add on beforeKeyDown handler to change key ENTER behavior
+    @table.addHook 'beforeKeyDown', @onBeforeKeyDown
     # Add Relation Btn Handler
     $('#visualization-add-relation-btn').click (e) =>
       e.preventDefault()
@@ -139,6 +141,17 @@ class VisualizationTableRelations extends VisualizationTableBase
     for relation, i in @table_options.data by -1
       # if relation contains removed node in source or target we remove that relation
       if relation.source_id == node.id or relation.target_id == node.id
-        @table.alter('remove_row', i, 1 )  
+        @table.alter('remove_row', i, 1 )
+
+  onBeforeKeyDown: (e) =>
+    selected = @table.getSelected()
+    console.log 'onBeforeKeyDown', e.keyCode, selected
+    # ENTER or SPACE keys
+    if e.keyCode == 13 or e.keyCode == 32
+      # In Delete column (0) launch delete modal
+      if selected[1] == 0 and selected[3] == 0
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @showDeleteModal selected[0]
 
 module.exports = VisualizationTableRelations

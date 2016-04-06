@@ -397,6 +397,10 @@ label{
         font-weight: normal;
       }
     }
+    .btn-danger{
+      float: left;
+      margin-right: $grid-gutter-width/3;
+    }
   }
 
   &.table-edit-modal{

@@ -41851,6 +41851,7 @@
 
 	  function VisualizationTableRelations(collection) {
 	    this.collection = collection;
+	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onRelationsTypesSucess = bind(this.onRelationsTypesSucess, this);
 	    this.getRelationsTypes = bind(this.getRelationsTypes, this);
@@ -41935,6 +41936,7 @@
 	    this.relations_types = response;
 	    this.setRelationsTypesSource();
 	    this.setupTable();
+	    this.table.addHook('beforeKeyDown', this.onBeforeKeyDown);
 	    return $('#visualization-add-relation-btn').click((function(_this) {
 	      return function(e) {
 	        e.preventDefault();
@@ -42006,6 +42008,19 @@
 	      }
 	    }
 	    return results;
+	  };
+
+	  VisualizationTableRelations.prototype.onBeforeKeyDown = function(e) {
+	    var selected;
+	    selected = this.table.getSelected();
+	    console.log('onBeforeKeyDown', e.keyCode, selected);
+	    if (e.keyCode === 13 || e.keyCode === 32) {
+	      if (selected[1] === 0 && selected[3] === 0) {
+	        e.stopImmediatePropagation();
+	        e.preventDefault();
+	        return this.showDeleteModal(selected[0]);
+	      }
+	    }
 	  };
 
 	  return VisualizationTableRelations;

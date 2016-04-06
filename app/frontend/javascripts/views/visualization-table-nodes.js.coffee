@@ -111,14 +111,14 @@ class VisualizationTableNodes extends VisualizationTableBase
     selected = @table.getSelected()
     console.log 'onBeforeKeyDown', e.keyCode, selected
     # ENTER or SPACE keys
-    if (e.keyCode == 13 or e.keyCode == 32)
+    if e.keyCode == 13 or e.keyCode == 32
       # In Delete column (0) launch delete modal
-      if (selected[1] == 0 and selected[3] == 0)
+      if selected[1] == 0 and selected[3] == 0
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDeleteModal selected[0]
       # In Description column (3) launch description modal
-      else if (selected[1] == 3 and selected[3] == 3)
+      else if selected[1] == 3 and selected[3] == 3
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDescriptionModal selected[0]
