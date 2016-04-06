@@ -717,6 +717,20 @@ body.fullscreen{
         opacity: 1;
       }
     }
+
+    .icon-direction{
+      display: block;
+      margin-top: 2px;
+      cursor: pointer;
+      text-indent: -9999px;
+      opacity: 0.3;
+      @include retina-sprite( $icon-no-direction-group );
+
+      &.active{
+        opacity: 1;
+        @include retina-sprite( $icon-direction-group );
+      }
+    }
   }
 
   .table{

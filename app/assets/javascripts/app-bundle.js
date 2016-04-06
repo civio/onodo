@@ -295,7 +295,8 @@
 	    target_id: null,
 	    source_name: null,
 	    target_name: null,
-	    relation_type: null
+	    relation_type: null,
+	    direction: true
 	  };
 
 	  return Relation;
@@ -41847,10 +41848,11 @@
 
 	  VisualizationTableRelations.prototype.nodes = null;
 
-	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
+	  VisualizationTableRelations.prototype.tableColHeaders = ['', 'Source', 'Relationship', 'Target', 'Date', 'Direction', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
 	  function VisualizationTableRelations(collection) {
 	    this.collection = collection;
+	    this.rowDirectionRenderer = bind(this.rowDirectionRenderer, this);
 	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onRelationsTypesSucess = bind(this.onRelationsTypesSucess, this);
@@ -41888,6 +41890,9 @@
 	        type: 'dropdown'
 	      }, {
 	        data: ''
+	      }, {
+	        data: 'direction',
+	        renderer: this.rowDirectionRenderer
 	      }, {
 	        data: '',
 	        readOnly: true
@@ -42021,6 +42026,22 @@
 	        return this.showDeleteModal(selected[0]);
 	      }
 	    }
+	  };
+
+	  VisualizationTableRelations.prototype.rowDirectionRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+	    var link;
+	    Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
+	    link = document.createElement('A');
+	    link.className = value ? 'icon-direction active' : 'icon-direction';
+	    link.innerHTML = link.title = 'Relationship Direction';
+	    td.appendChild(link);
+	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
+	      return function(e) {
+	        e.preventDefault();
+	        return instance.setDataAtCell(row, col, !value);
+	      };
+	    })(this));
+	    return td;
 	  };
 
 	  return VisualizationTableRelations;

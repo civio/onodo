@@ -6,7 +6,7 @@ class VisualizationTableRelations extends VisualizationTableBase
   el:               '.visualization-table-relations'
   relations_types:  null
   nodes:            null
-  tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date', 'Direction', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
 
   constructor: (@collection) ->
     super @collection, 'relation'
@@ -42,6 +42,10 @@ class VisualizationTableRelations extends VisualizationTableBase
       },
       { 
         data: '' 
+      },
+      { 
+        data: 'direction'
+        renderer: @rowDirectionRenderer
       },
       { 
         data: ''
@@ -153,5 +157,20 @@ class VisualizationTableRelations extends VisualizationTableBase
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDeleteModal selected[0]
+
+  # Custom Renderer for direction cells
+  rowDirectionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # We keep checkbox render in order to toogle value with enter key
+    Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
+    # Add visible icon link
+    link = document.createElement('A');
+    link.className = if value then 'icon-direction active' else 'icon-direction'
+    link.innerHTML = link.title = 'Relationship Direction'
+    td.appendChild(link)
+    # Toggle visibility value on click
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      instance.setDataAtCell(row, col, !value)
+    return td
 
 module.exports = VisualizationTableRelations
