@@ -12039,6 +12039,8 @@
 	    this.collection = collection;
 	    this.rowVisibleRenderer = bind(this.rowVisibleRenderer, this);
 	    this.rowDescriptionRenderer = bind(this.rowDescriptionRenderer, this);
+	    this.showDescriptionModal = bind(this.showDescriptionModal, this);
+	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
 	    this.getNodesTypes = bind(this.getNodesTypes, this);
@@ -12094,6 +12096,7 @@
 	    this.nodes_types = response;
 	    this.setNodesTypesSource();
 	    this.setupTable();
+	    this.table.addHook('beforeKeyDown', this.onBeforeKeyDown);
 	    return $('#visualization-add-node-btn').click((function(_this) {
 	      return function(e) {
 	        e.preventDefault();
@@ -12141,6 +12144,39 @@
 	    return this.table_options.columns[2].source = this.nodes_types;
 	  };
 
+	  VisualizationTableNodes.prototype.onBeforeKeyDown = function(e) {
+	    var selected;
+	    selected = this.table.getSelected();
+	    console.log('onBeforeKeyDown', e.keyCode, selected);
+	    if (e.keyCode === 13 || e.keyCode === 32) {
+	      if (selected[1] === 0 && selected[3] === 0) {
+	        e.stopImmediatePropagation();
+	        e.preventDefault();
+	        return this.showDeleteModal(selected[0]);
+	      } else if (selected[1] === 3 && selected[3] === 3) {
+	        e.stopImmediatePropagation();
+	        e.preventDefault();
+	        return this.showDescriptionModal(selected[0]);
+	      }
+	    }
+	  };
+
+	  VisualizationTableNodes.prototype.showDescriptionModal = function(index) {
+	    var $modal;
+	    console.log('showDescriptionModal', index);
+	    $modal = $('#table-description-modal');
+	    $modal.find('.modal-body').load('/nodes/' + this.getIdAtRow(index) + '/edit/description/', (function(_this) {
+	      return function() {
+	        return $modal.find('.form-default').on('submit', function(e) {
+	          e.preventDefault();
+	          instance.setDataAtRowProp(index, 'description', $modal.find('#node_description').val());
+	          return $modal.modal('hide');
+	        });
+	      };
+	    })(this));
+	    return $modal.modal('show');
+	  };
+
 	  VisualizationTableNodes.prototype.rowDescriptionRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    link = document.createElement('A');
@@ -12150,17 +12186,8 @@
 	    td.appendChild(link);
 	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
 	      return function(e) {
-	        var $modal;
 	        e.preventDefault();
-	        $modal = $('#table-description-modal');
-	        $modal.find('.modal-body').load('/nodes/' + _this.getIdAtRow(row) + '/edit/description/', function() {
-	          return $modal.find('.form-default').on('submit', function(e) {
-	            e.preventDefault();
-	            _this.table.setDataAtRowProp(row, 'description', $modal.find('#node_description').val());
-	            return $modal.modal('hide');
-	          });
-	        });
-	        return $modal.modal('show');
+	        return _this.showDescriptionModal(row);
 	      };
 	    })(this));
 	    return td;
@@ -12176,7 +12203,7 @@
 	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
 	      return function(e) {
 	        e.preventDefault();
-	        return _this.table.setDataAtCell(row, col, !value);
+	        return instance.setDataAtCell(row, col, !value);
 	      };
 	    })(this));
 	    return td;
@@ -41668,6 +41695,7 @@
 	  function VisualizationTableBase(collection, table_type) {
 	    this.collection = collection;
 	    this.rowDeleteRenderer = bind(this.rowDeleteRenderer, this);
+	    this.showDeleteModal = bind(this.showDeleteModal, this);
 	    this.render = bind(this.render, this);
 	    this.onTableRemoveRow = bind(this.onTableRemoveRow, this);
 	    this.onTableChangeRow = bind(this.onTableChangeRow, this);
@@ -41759,6 +41787,21 @@
 	    return this.table.getDataAtRowProp(index, 'id');
 	  };
 
+	  VisualizationTableBase.prototype.showDeleteModal = function(index) {
+	    var $modal;
+	    $modal = $('#delete-' + this.table_type + '-modal');
+	    $modal.find('.btn-danger').on('click', (function(_this) {
+	      return function(e) {
+	        $modal.modal('hide');
+	        return _this.table.alter('remove_row', index, 1);
+	      };
+	    })(this));
+	    $modal.on('hidden.bs.modal', function(e) {
+	      return $modal.find('btn-danger').off('click');
+	    });
+	    return $modal.modal('show');
+	  };
+
 	  VisualizationTableBase.prototype.rowDeleteRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    link = document.createElement('A');
@@ -41768,17 +41811,8 @@
 	    td.appendChild(link);
 	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
 	      return function(e) {
-	        var $modal;
 	        e.preventDefault();
-	        $modal = $('#delete-' + _this.table_type + '-modal');
-	        $modal.find('.btn-danger').on('click', function(e) {
-	          $modal.modal('hide');
-	          return _this.table.alter('remove_row', row, 1);
-	        });
-	        $modal.on('hidden.bs.modal', function(e) {
-	          return $modal.find('btn-danger').off('click');
-	        });
-	        return $modal.modal('show');
+	        return _this.showDeleteModal(row);
 	      };
 	    })(this));
 	    return td;

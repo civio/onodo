@@ -64,6 +64,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     @nodes_types = response
     @setNodesTypesSource()
     @setupTable()
+    # Add on beforeKeyDown handler to change key ENTER behavior
+    @table.addHook 'beforeKeyDown', @onBeforeKeyDown
     # Add Node Btn Handler
     $('#visualization-add-node-btn').click (e) =>
       e.preventDefault()
@@ -105,6 +107,37 @@ class VisualizationTableNodes extends VisualizationTableBase
   setNodesTypesSource: ->
     @table_options.columns[2].source = @nodes_types
 
+  onBeforeKeyDown: (e) =>
+    selected = @table.getSelected()
+    console.log 'onBeforeKeyDown', e.keyCode, selected
+    # ENTER or SPACE keys
+    if (e.keyCode == 13 or e.keyCode == 32)
+      # In Delete column (0) launch delete modal
+      if (selected[1] == 0 and selected[3] == 0)
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @showDeleteModal selected[0]
+      # In Description column (3) launch description modal
+      else if (selected[1] == 3 and selected[3] == 3)
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @showDescriptionModal selected[0]
+
+  # Function to show modal with description edit form
+  showDescriptionModal: (index) =>
+    console.log 'showDescriptionModal', index
+    $modal = $('#table-description-modal')
+    # Load description edit form via ajax in modal
+    $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(index)+'/edit/description/', () =>
+      # Add on submit handler to save new description via model
+      $modal.find('.form-default').on 'submit', (e) =>
+        e.preventDefault()
+        instance.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
+        $modal.modal 'hide'
+    # Show modal
+    $modal.modal 'show'
+
+  # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # Add delete icon
     link = document.createElement('A');
@@ -112,21 +145,13 @@ class VisualizationTableNodes extends VisualizationTableBase
     link.innerHTML = link.title = 'Edit Description'
     Handsontable.Dom.empty(td)
     td.appendChild(link)
-    # Add description modal on click event
+    # Add description modal on click event or keydown (enter or space)
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
-      $modal = $('#table-description-modal')
-      # Load description edit form via ajax in modal
-      $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(row)+'/edit/description/', () =>
-        # Add on submit handler to save new description via model
-        $modal.find('.form-default').on 'submit', (e) =>
-          e.preventDefault()
-          @table.setDataAtRowProp row, 'description', $modal.find('#node_description').val()
-          $modal.modal 'hide'
-      # Show modal
-      $modal.modal 'show'
+      @showDescriptionModal row
     return td
 
+  # Custom Renderer for visible cells
   rowVisibleRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # We keep checkbox render in order to toogle value with enter key
     Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
@@ -138,7 +163,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     # Toggle visibility value on click
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
-      @table.setDataAtCell(row, col, !value)
+      instance.setDataAtCell(row, col, !value)
     return td
 
 module.exports = VisualizationTableNodes

@@ -71,6 +71,20 @@ class VisualizationTableBase extends Backbone.View
   getIdAtRow: (index) ->
     return @table.getDataAtRowProp(index, 'id')
 
+  # Function to show delete modal
+  showDeleteModal: (index) =>
+    $modal = $('#delete-'+@table_type+'-modal')
+    # Add click event handler on confirmation btn to delete current row
+    $modal.find('.btn-danger').on 'click', (e) =>
+      $modal.modal 'hide'
+      @table.alter('remove_row', index, 1 )
+    # Remove on click event when hide modal
+    $modal.on 'hidden.bs.modal', (e) ->
+      $modal.find('btn-danger').off 'click'
+    # Show confirmation modal
+    $modal.modal 'show'
+
+  # Custom Renderer for delete cells
   rowDeleteRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # Add delete icon
     link = document.createElement('A');
@@ -81,16 +95,7 @@ class VisualizationTableBase extends Backbone.View
     # Delete row on click event
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
-      $modal = $('#delete-'+@table_type+'-modal')
-      # Add click event handler on confirmation btn to delete current row
-      $modal.find('.btn-danger').on 'click', (e) =>
-        $modal.modal 'hide'
-        @table.alter('remove_row', row, 1 )
-      # Remove on click event when hide modal
-      $modal.on 'hidden.bs.modal', (e) ->
-        $modal.find('btn-danger').off 'click'
-      # Show confirmation modal
-      $modal.modal 'show'
+      @showDeleteModal row
     return td
 
 module.exports = VisualizationTableBase

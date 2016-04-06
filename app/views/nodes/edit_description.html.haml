@@ -3,7 +3,7 @@
     = f.label "node-input-description", "Edit Description"
     = f.text_field :description, type: "hidden"
     %trix-toolbar{ id: "wysiwig-toolbar", input: "node_description" }
-    %trix-editor{ input: "node_description", toolbar: "wysiwig-toolbar", class: "form-control" }
+    %trix-editor{ input: "node_description", toolbar: "wysiwig-toolbar", class: "form-control", autofocus: true }
   = f.submit "Save", class: "btn btn-primary"
   %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
     Cancel
