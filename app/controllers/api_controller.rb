@@ -94,7 +94,7 @@ class ApiController < ApplicationController
     end
 
     def relation_params
-      params.require(:relation).permit(:source_id, :target_id, :relation_type, :dataset_id) if params[:relation]
+      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :dataset_id) if params[:relation]
     end
 
 end
