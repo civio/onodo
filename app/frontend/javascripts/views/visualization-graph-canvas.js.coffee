@@ -318,19 +318,6 @@ class VisualizationGraphCanvas extends Backbone.View
   unfocusNode: ->
     @nodes.selectAll('.node-circle.active').classed('active', false)
 
-  updateNodeName: (node, value) ->
-    console.log 'updateNodeName', node, value
-    data_node = @getNodeById node.id
-    if data_node
-      data_node.name = value
-      @updateLabels()
-
-  updateNodeDescription: (node, value) ->
-    console.log 'updateNodeDescription', node, value
-    data_node = @getNodeById node.id
-    if data_node
-      data_node.description = value
-
 
   # Resize Methods
   # ---------------
