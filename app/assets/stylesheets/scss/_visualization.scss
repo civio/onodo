@@ -199,7 +199,7 @@
 
       &.highlighted,
       &.highlighted.weaken{
-        stroke-width: 2px;
+        //stroke-width: 2px;
         opacity: 1;
       }
     }
@@ -219,9 +219,15 @@
       &.highlighted.weaken,
       &.highlighted.hide{
         display: inline !important;
-        fill: $text-color;
+        fill: $gray-darker;
         opacity: 1;
       }
+    }
+
+    #arrow{
+      fill: white;
+      stroke: $gray-semi-light;
+      stroke-width: 1.5px;
     }
   }
 

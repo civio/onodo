@@ -68,7 +68,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # Setup force
     @force = d3.layout.force()
       .charge(-150)
-      .linkDistance(90)
+      .linkDistance(100)
       #.linkStrength(2)
       .size([@viewport.width, @viewport.height])
       .on('tick', @onTick)
@@ -86,6 +86,19 @@ class VisualizationGraphCanvas extends Backbone.View
           .on('drag',       @onCanvasDrag)
           .on('dragstart',  @onCanvasDragStart)
           .on('dragend',    @onCanvasDragEnd))
+
+    # Define Arrow Marker
+    @svg.append('svg:defs')
+      .append('svg:marker')
+        .attr('id', 'arrow')
+        .attr('viewBox', '0 -5 10 10')  # "0 -5 15 10")
+        .attr('refX', 23)
+        .attr("refY", -1)
+        .attr('markerWidth', 5) # 5
+        .attr('markerHeight', 5) # 5
+        .attr('orient', 'auto')
+      .append('svg:path')
+        .attr('d', 'M0,-5L7,0L0,5')
 
     # Setup containers
     @container      = @svg.append('g')
@@ -178,6 +191,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations.enter().append('path')
       .attr('id', (d) -> return 'relation-'+d.id)
       .attr('class', 'relation')
+      .attr('marker-end', (d) -> return 'url(#arrow)')
     @relations.exit().remove()
 
   updateLabels: ->
