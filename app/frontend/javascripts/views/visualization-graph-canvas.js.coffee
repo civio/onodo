@@ -186,12 +186,26 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes.exit().remove()
 
   updateRelations: ->
-    @relations = @relations.data(@data_relations_visibles)
-    #@relations.enter().append('line')
+    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+
+    # DATA JOIN
+    # Join new data with old elements, if any
+    @relations = @relations_cont.selectAll('.relation').data(@data_relations_visibles)
+
+    # ENTER
+    # Create new elements as needed.
     @relations.enter().append('path')
-      .attr('id', (d) -> return 'relation-'+d.id)
       .attr('class', 'relation')
-      .attr('marker-end', (d) -> return 'url(#arrow)')
+
+    # ENTER + UPDATE
+    # Appending to the enter selection expands the update selection to include
+    # entering elements; so, operations on the update selection after appending to
+    # the enter selection will apply to both entering and updating nodes.
+    @relations.attr('id', (d) -> return 'relation-'+d.id)
+      .attr('marker-end', (d) -> return if d.direction then 'url(#arrow)' else '')
+
+    # EXIT
+    # Remove old elements as needed.
     @relations.exit().remove()
 
   updateLabels: ->
