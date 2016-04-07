@@ -82,9 +82,12 @@ class VisualizationGraph extends Backbone.View
     #!!! We need to arr node_type changes
     #@collection.nodes.bind 'change:node_type',   @onNodeChangeType, @
     #@collection.relations.bind 'add',             @onRelationsChange, @
-    @collection.relations.bind 'change:source_id',  @onRelationsChange, @
-    @collection.relations.bind 'change:target_id',  @onRelationsChange, @
-    @collection.relations.bind 'remove',            @onRelationsRemove, @
+    @collection.relations.bind 'change:source_id',      @onRelationsChangeNode, @
+    @collection.relations.bind 'change:target_id',      @onRelationsChangeNode, @
+    # By now we don't apply any visual style based on relation_type
+    #@collection.relations.bind 'change:relation_type',  @onRelationsChangeAttribute, @
+    @collection.relations.bind 'change:direction',      @onRelationsChangeAttribute, @
+    @collection.relations.bind 'remove',                @onRelationsRemove, @
     # Subscribe Canvas Events
     Backbone.on 'visualization.node.showInfo',    @onNodeShowInfo, @
     Backbone.on 'visualization.node.hideInfo',    @onNodeHideInfo, @
@@ -121,12 +124,14 @@ class VisualizationGraph extends Backbone.View
 
   onNodeChangeName: (node) ->
     console.log 'onNodeChangeName', node.attributes.name
-    @visualizationGraphCanvas.updateNodeName node.attributes, node.attributes.name
+    # Update nodes labels
+    @visualizationGraphCanvas.updateLabels()
+    # Update Panel Info name
     @updateGraphInfoNode node
 
   onNodeChangeDescription: (node) ->
     console.log 'onNodeChangeDescription', node.attributes.description
-    @visualizationGraphCanvas.updateNodeDescription node.attributes, node.attributes.description
+    # Update Panel Info description
     @updateGraphInfoNode node
 
   onNodeChangeVisible: (node) ->
@@ -148,7 +153,7 @@ class VisualizationGraph extends Backbone.View
     if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
       @visualizationGraphInfo.hide()
 
-  onRelationsChange: (relation) ->
+  onRelationsChangeNode: (relation) ->
     console.log 'onRelationsChange', relation
     # check if we have both source_id and target_id
     if relation.attributes.source_id and relation.attributes.target_id
@@ -157,6 +162,9 @@ class VisualizationGraph extends Backbone.View
       # Add relation
       @visualizationGraphCanvas.addRelation relation.attributes
       @visualizationGraphCanvas.updateLayout()
+
+  onRelationsChangeAttribute: (relation) ->
+    @visualizationGraphCanvas.updateRelations()
 
   onRelationsRemove: (relation) ->
     @visualizationGraphCanvas.removeRelation relation.attributes
