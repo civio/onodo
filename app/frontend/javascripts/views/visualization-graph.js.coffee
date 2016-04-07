@@ -82,8 +82,9 @@ class VisualizationGraph extends Backbone.View
     #!!! We need to arr node_type changes
     #@collection.nodes.bind 'change:node_type',   @onNodeChangeType, @
     #@collection.relations.bind 'add',             @onRelationsChange, @
-    @collection.relations.bind 'change',          @onRelationsChange, @
-    @collection.relations.bind 'remove',          @onRelationsRemove, @
+    @collection.relations.bind 'change:source_id',  @onRelationsChange, @
+    @collection.relations.bind 'change:target_id',  @onRelationsChange, @
+    @collection.relations.bind 'remove',            @onRelationsRemove, @
     # Subscribe Canvas Events
     Backbone.on 'visualization.node.showInfo',    @onNodeShowInfo, @
     Backbone.on 'visualization.node.hideInfo',    @onNodeHideInfo, @
