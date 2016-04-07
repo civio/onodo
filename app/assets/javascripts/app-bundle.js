@@ -454,7 +454,7 @@
 
 	  VisualizationGraph.prototype.onNodeChangeName = function(node) {
 	    console.log('onNodeChangeName', node.attributes.name);
-	    this.visualizationGraphCanvas.updateLabels();
+	    this.visualizationGraphCanvas.updateNodesLabels();
 	    return this.updateGraphInfoNode(node);
 	  };
 
@@ -608,15 +608,19 @@
 
 	  VisualizationGraphCanvas.prototype.nodes_cont = null;
 
+	  VisualizationGraphCanvas.prototype.nodes_labels_cont = null;
+
 	  VisualizationGraphCanvas.prototype.relations_cont = null;
 
-	  VisualizationGraphCanvas.prototype.labels_cont = null;
+	  VisualizationGraphCanvas.prototype.relations_labels_cont = null;
 
 	  VisualizationGraphCanvas.prototype.nodes = null;
 
+	  VisualizationGraphCanvas.prototype.nodes_labels = null;
+
 	  VisualizationGraphCanvas.prototype.relations = null;
 
-	  VisualizationGraphCanvas.prototype.labels = null;
+	  VisualizationGraphCanvas.prototype.relations_labels = null;
 
 	  VisualizationGraphCanvas.prototype.force = null;
 
@@ -662,9 +666,9 @@
 	    this.container = this.svg.append('g');
 	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
 	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
-	    this.labels_cont = this.container.append('g').attr('class', 'labels-cont');
+	    this.nodes_labels_cont = this.container.append('g').attr('class', 'nodes-labels-cont');
 	    this.rescale();
-	    return this.render();
+	    return this.updateLayout();
 	  };
 
 	  VisualizationGraphCanvas.prototype.initializeData = function(data) {
@@ -694,19 +698,11 @@
 	    return console.log('current relations', this.data_relations_visibles);
 	  };
 
-	  VisualizationGraphCanvas.prototype.render = function() {
-	    console.log('render canvas');
-	    this.nodes = this.nodes_cont.selectAll('.node');
-	    this.relations = this.relations_cont.selectAll('.relation');
-	    this.labels = this.labels_cont.selectAll('.text');
-	    return this.updateLayout();
-	  };
-
 	  VisualizationGraphCanvas.prototype.updateLayout = function() {
 	    console.log('updateLayout');
 	    this.updateRelations();
 	    this.updateNodes();
-	    this.updateLabels();
+	    this.updateNodesLabels();
 	    return this.updateForce();
 	  };
 
@@ -742,15 +738,15 @@
 	    return this.relations.exit().remove();
 	  };
 
-	  VisualizationGraphCanvas.prototype.updateLabels = function() {
-	    this.labels = this.labels.data(this.data_nodes);
-	    this.labels.enter().append('text').attr('id', function(d, i) {
-	      return 'label-' + d.id;
-	    }).attr('class', 'label').attr('dx', 0).attr('dy', this.NODES_SIZE + 15);
-	    this.labels.text(function(d) {
+	  VisualizationGraphCanvas.prototype.updateNodesLabels = function() {
+	    this.nodes_labels = this.nodes_labels_cont.selectAll('.node-label').data(this.data_nodes);
+	    this.nodes_labels.enter().append('text').attr('id', function(d, i) {
+	      return 'node-label-' + d.id;
+	    }).attr('class', 'node-label').attr('dx', 0).attr('dy', this.NODES_SIZE + 15);
+	    this.nodes_labels.text(function(d) {
 	      return d.name;
 	    });
-	    return this.labels.exit().remove();
+	    return this.nodes_labels.exit().remove();
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateForce = function() {
@@ -878,11 +874,11 @@
 	    this.container.attr('transform', 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
 	    this.relations_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
 	    this.nodes_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
-	    return this.labels_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
+	    return this.nodes_labels_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
 	  };
 
 	  VisualizationGraphCanvas.prototype.toogleLabels = function(value) {
-	    return this.labels.classed('hide', value);
+	    return this.nodes_labels.classed('hide', value);
 	  };
 
 	  VisualizationGraphCanvas.prototype.toogleNodesWithoutRelation = function(value) {
@@ -980,8 +976,8 @@
 	        }
 	      };
 	    })(this));
-	    this.labels.classed('weaken', true);
-	    this.labels.classed('highlighted', (function(_this) {
+	    this.nodes_labels.classed('weaken', true);
+	    this.nodes_labels.classed('highlighted', (function(_this) {
 	      return function(o) {
 	        return _this.areNodesRelated(d, o);
 	      };
@@ -1000,8 +996,8 @@
 	        return _this.color(o.node_type);
 	      };
 	    })(this));
-	    this.labels.classed('weaken', false);
-	    this.labels.classed('highlighted', false);
+	    this.nodes_labels.classed('weaken', false);
+	    this.nodes_labels.classed('highlighted', false);
 	    this.relations.classed('weaken', false);
 	    return this.relations.classed('highlighted', false);
 	  };
@@ -1030,7 +1026,7 @@
 	    this.nodes.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
 	    });
-	    return this.labels.attr('transform', function(d) {
+	    return this.nodes_labels.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
 	    });
 	  };

@@ -125,7 +125,7 @@ class VisualizationGraph extends Backbone.View
   onNodeChangeName: (node) ->
     console.log 'onNodeChangeName', node.attributes.name
     # Update nodes labels
-    @visualizationGraphCanvas.updateLabels()
+    @visualizationGraphCanvas.updateNodesLabels()
     # Update Panel Info name
     @updateGraphInfoNode node
 
