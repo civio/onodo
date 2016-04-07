@@ -103,10 +103,11 @@ class VisualizationGraphCanvas extends Backbone.View
         .attr('d', 'M0,-5L7,0L0,5')
 
     # Setup containers
-    @container          = @svg.append('g')
-    @relations_cont     = @container.append('g').attr('class', 'relations-cont')
-    @nodes_cont         = @container.append('g').attr('class', 'nodes-cont')
-    @nodes_labels_cont  = @container.append('g').attr('class', 'nodes-labels-cont')
+    @container            = @svg.append('g')
+    @relations_cont       = @container.append('g').attr('class', 'relations-cont')
+    @relations_labels_cont= @container.append('g').attr('class', 'relations-labels-cont')
+    @nodes_cont           = @container.append('g').attr('class', 'nodes-cont')
+    @nodes_labels_cont    = @container.append('g').attr('class', 'nodes-labels-cont')
     
     @rescale()  # Translate svg
     @updateLayout()
@@ -141,6 +142,7 @@ class VisualizationGraphCanvas extends Backbone.View
   updateLayout: ->
     console.log 'updateLayout'
     @updateRelations()
+    @updateRelationLabels()
     @updateNodes()
     @updateNodesLabels()
     @updateForce()
@@ -224,6 +226,31 @@ class VisualizationGraphCanvas extends Backbone.View
     # EXIT
     # Remove old elements as needed.
     @nodes_labels.exit().remove()
+
+  updateRelationLabels: ->
+    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+
+    # DATA JOIN
+    # Join new data with old elements, if any
+    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
+
+    # ENTER
+    # Create new elements as needed.
+    @relations_labels.enter().append('text')
+      .attr('id', (d,i) -> return 'relation-label-'+d.id)
+      .attr('class', 'relation-label')
+      .attr('dx', 0)
+      .attr('dy', 0)
+
+    # ENTER + UPDATE
+    # Appending to the enter selection expands the update selection to include
+    # entering elements; so, operations on the update selection after appending to
+    # the enter selection will apply to both entering and updating nodes.
+    @relations_labels.text((d) -> return d.relation_type)
+
+    # EXIT
+    # Remove old elements as needed.
+    @relations_labels.exit().remove()
 
   updateForce: ->
     @force
@@ -344,10 +371,11 @@ class VisualizationGraphCanvas extends Backbone.View
     @force.size [@viewport.width, @viewport.height]
 
   rescale: ->
-    @container.attr           'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
-    @relations_cont.attr      'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @nodes_cont.attr          'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @nodes_labels_cont.attr   'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @container.attr             'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
+    @relations_cont.attr        'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @relations_labels_cont.attr 'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @nodes_cont.attr            'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @nodes_labels_cont.attr     'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
 
 
   # Config Methods
@@ -437,12 +465,14 @@ class VisualizationGraphCanvas extends Backbone.View
   onNodeOver: (d) =>
     @nodes.select('circle')
       .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
-
+    # highlight related nodes labels
     @nodes_labels.classed 'weaken', true
     @nodes_labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
-
+    # highlight node relations
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+    # highlight node relation labels
+    @relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
     @nodes.select('circle')
@@ -451,6 +481,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
+    @relations_labels.classed 'highlighted', false
 
   onNodeClick: (d) =>
     # Avoid trigger click on dragEnd
@@ -470,10 +501,11 @@ class VisualizationGraphCanvas extends Backbone.View
       dy = d.target.y - d.source.y
       dr = Math.sqrt dx*dx + dy*dy
       return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y
+    # Set relations labels position
+    @relations_labels.attr('transform', (d) -> return 'translate(' + 0.5*(d.target.x+d.source.x) + ',' + 0.5*(d.target.y+d.source.y) + ')')
     # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
-    @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')  
-
+    @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
   
   # Auxiliar Methods
   # ----------------

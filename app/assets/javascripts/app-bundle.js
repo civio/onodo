@@ -665,6 +665,7 @@
 	    this.svg.append('svg:defs').append('svg:marker').attr('id', 'arrow').attr('viewBox', '0 -5 10 10').attr('refX', 23).attr("refY", -1).attr('markerWidth', 5).attr('markerHeight', 5).attr('orient', 'auto').append('svg:path').attr('d', 'M0,-5L7,0L0,5');
 	    this.container = this.svg.append('g');
 	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
+	    this.relations_labels_cont = this.container.append('g').attr('class', 'relations-labels-cont');
 	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
 	    this.nodes_labels_cont = this.container.append('g').attr('class', 'nodes-labels-cont');
 	    this.rescale();
@@ -701,6 +702,7 @@
 	  VisualizationGraphCanvas.prototype.updateLayout = function() {
 	    console.log('updateLayout');
 	    this.updateRelations();
+	    this.updateRelationLabels();
 	    this.updateNodes();
 	    this.updateNodesLabels();
 	    return this.updateForce();
@@ -747,6 +749,17 @@
 	      return d.name;
 	    });
 	    return this.nodes_labels.exit().remove();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateRelationLabels = function() {
+	    this.relations_labels = this.relations_labels_cont.selectAll('.relation-label').data(this.data_relations_visibles);
+	    this.relations_labels.enter().append('text').attr('id', function(d, i) {
+	      return 'relation-label-' + d.id;
+	    }).attr('class', 'relation-label').attr('dx', 0).attr('dy', 0);
+	    this.relations_labels.text(function(d) {
+	      return d.relation_type;
+	    });
+	    return this.relations_labels.exit().remove();
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateForce = function() {
@@ -873,6 +886,7 @@
 	  VisualizationGraphCanvas.prototype.rescale = function() {
 	    this.container.attr('transform', 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
 	    this.relations_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
+	    this.relations_labels_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
 	    this.nodes_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
 	    return this.nodes_labels_cont.attr('transform', 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')');
 	  };
@@ -983,7 +997,12 @@
 	      };
 	    })(this));
 	    this.relations.classed('weaken', true);
-	    return this.relations.classed('highlighted', (function(_this) {
+	    this.relations.classed('highlighted', (function(_this) {
+	      return function(o) {
+	        return o.source.index === d.index || o.target.index === d.index;
+	      };
+	    })(this));
+	    return this.relations_labels.classed('highlighted', (function(_this) {
 	      return function(o) {
 	        return o.source.index === d.index || o.target.index === d.index;
 	      };
@@ -999,7 +1018,8 @@
 	    this.nodes_labels.classed('weaken', false);
 	    this.nodes_labels.classed('highlighted', false);
 	    this.relations.classed('weaken', false);
-	    return this.relations.classed('highlighted', false);
+	    this.relations.classed('highlighted', false);
+	    return this.relations_labels.classed('highlighted', false);
 	  };
 
 	  VisualizationGraphCanvas.prototype.onNodeClick = function(d) {
@@ -1022,6 +1042,9 @@
 	      dy = d.target.y - d.source.y;
 	      dr = Math.sqrt(dx * dx + dy * dy);
 	      return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y;
+	    });
+	    this.relations_labels.attr('transform', function(d) {
+	      return 'translate(' + 0.5 * (d.target.x + d.source.x) + ',' + 0.5 * (d.target.y + d.source.y) + ')';
 	    });
 	    this.nodes.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
