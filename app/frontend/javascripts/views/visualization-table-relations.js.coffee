@@ -129,6 +129,7 @@ class VisualizationTableRelations extends VisualizationTableBase
             obj.target_id = node[0].id
       else
         obj[ key ] = value
+      console.log 'updateModel', obj, model
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
       model.save obj
 
@@ -149,7 +150,6 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   onBeforeKeyDown: (e) =>
     selected = @table.getSelected()
-    console.log 'onBeforeKeyDown', e.keyCode, selected
     # ENTER or SPACE keys
     if e.keyCode == 13 or e.keyCode == 32
       # In Delete column (0) launch delete modal

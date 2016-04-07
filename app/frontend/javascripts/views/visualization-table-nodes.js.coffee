@@ -109,7 +109,6 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   onBeforeKeyDown: (e) =>
     selected = @table.getSelected()
-    console.log 'onBeforeKeyDown', e.keyCode, selected
     # ENTER or SPACE keys
     if e.keyCode == 13 or e.keyCode == 32
       # In Delete column (0) launch delete modal
@@ -132,7 +131,7 @@ class VisualizationTableNodes extends VisualizationTableBase
       # Add on submit handler to save new description via model
       $modal.find('.form-default').on 'submit', (e) =>
         e.preventDefault()
-        instance.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
+        @table.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
         $modal.modal 'hide'
     # Show modal
     $modal.modal 'show'

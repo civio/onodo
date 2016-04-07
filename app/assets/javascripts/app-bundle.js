@@ -419,7 +419,9 @@
 	    this.collection.nodes.bind('change:description', this.onNodeChangeDescription, this);
 	    this.collection.nodes.bind('change:visible', this.onNodeChangeVisible, this);
 	    this.collection.nodes.bind('remove', this.onNodesRemove, this);
-	    this.collection.relations.bind('change', this.onRelationsChange, this);
+	    this.collection.relations.bind('change:source_id', this.onRelationsChangeNode, this);
+	    this.collection.relations.bind('change:target_id', this.onRelationsChangeNode, this);
+	    this.collection.relations.bind('change:direction', this.onRelationsChangeAttribute, this);
 	    this.collection.relations.bind('remove', this.onRelationsRemove, this);
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
@@ -452,13 +454,12 @@
 
 	  VisualizationGraph.prototype.onNodeChangeName = function(node) {
 	    console.log('onNodeChangeName', node.attributes.name);
-	    this.visualizationGraphCanvas.updateNodeName(node.attributes, node.attributes.name);
+	    this.visualizationGraphCanvas.updateLabels();
 	    return this.updateGraphInfoNode(node);
 	  };
 
 	  VisualizationGraph.prototype.onNodeChangeDescription = function(node) {
 	    console.log('onNodeChangeDescription', node.attributes.description);
-	    this.visualizationGraphCanvas.updateNodeDescription(node.attributes, node.attributes.description);
 	    return this.updateGraphInfoNode(node);
 	  };
 
@@ -484,13 +485,17 @@
 	    }
 	  };
 
-	  VisualizationGraph.prototype.onRelationsChange = function(relation) {
+	  VisualizationGraph.prototype.onRelationsChangeNode = function(relation) {
 	    console.log('onRelationsChange', relation);
 	    if (relation.attributes.source_id && relation.attributes.target_id) {
 	      this.visualizationGraphCanvas.removeVisibleRelationData(relation.attributes);
 	      this.visualizationGraphCanvas.addRelation(relation.attributes);
 	      return this.visualizationGraphCanvas.updateLayout();
 	    }
+	  };
+
+	  VisualizationGraph.prototype.onRelationsChangeAttribute = function(relation) {
+	    return this.visualizationGraphCanvas.updateRelations();
 	  };
 
 	  VisualizationGraph.prototype.onRelationsRemove = function(relation) {
@@ -723,11 +728,16 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateRelations = function() {
-	    this.relations = this.relations.data(this.data_relations_visibles);
-	    this.relations.enter().append('path').attr('id', function(d) {
+	    this.relations = this.relations_cont.selectAll('.relation').data(this.data_relations_visibles);
+	    this.relations.enter().append('path').attr('class', 'relation');
+	    this.relations.attr('id', function(d) {
 	      return 'relation-' + d.id;
-	    }).attr('class', 'relation').attr('marker-end', function(d) {
-	      return 'url(#arrow)';
+	    }).attr('marker-end', function(d) {
+	      if (d.direction) {
+	        return 'url(#arrow)';
+	      } else {
+	        return '';
+	      }
 	    });
 	    return this.relations.exit().remove();
 	  };
@@ -851,25 +861,6 @@
 
 	  VisualizationGraphCanvas.prototype.unfocusNode = function() {
 	    return this.nodes.selectAll('.node-circle.active').classed('active', false);
-	  };
-
-	  VisualizationGraphCanvas.prototype.updateNodeName = function(node, value) {
-	    var data_node;
-	    console.log('updateNodeName', node, value);
-	    data_node = this.getNodeById(node.id);
-	    if (data_node) {
-	      data_node.name = value;
-	      return this.updateLabels();
-	    }
-	  };
-
-	  VisualizationGraphCanvas.prototype.updateNodeDescription = function(node, value) {
-	    var data_node;
-	    console.log('updateNodeDescription', node, value);
-	    data_node = this.getNodeById(node.id);
-	    if (data_node) {
-	      return data_node.description = value;
-	    }
 	  };
 
 	  VisualizationGraphCanvas.prototype.resize = function() {
@@ -12151,7 +12142,6 @@
 	  VisualizationTableNodes.prototype.onBeforeKeyDown = function(e) {
 	    var selected;
 	    selected = this.table.getSelected();
-	    console.log('onBeforeKeyDown', e.keyCode, selected);
 	    if (e.keyCode === 13 || e.keyCode === 32) {
 	      if (selected[1] === 0 && selected[3] === 0) {
 	        e.stopImmediatePropagation();
@@ -12173,7 +12163,7 @@
 	      return function() {
 	        return $modal.find('.form-default').on('submit', function(e) {
 	          e.preventDefault();
-	          instance.setDataAtRowProp(index, 'description', $modal.find('#node_description').val());
+	          _this.table.setDataAtRowProp(index, 'description', $modal.find('#node_description').val());
 	          return $modal.modal('hide');
 	        });
 	      };
@@ -41990,6 +41980,7 @@
 	      } else {
 	        obj[key] = value;
 	      }
+	      console.log('updateModel', obj, model);
 	      return model.save(obj);
 	    }
 	  };
@@ -42021,7 +42012,6 @@
 	  VisualizationTableRelations.prototype.onBeforeKeyDown = function(e) {
 	    var selected;
 	    selected = this.table.getSelected();
-	    console.log('onBeforeKeyDown', e.keyCode, selected);
 	    if (e.keyCode === 13 || e.keyCode === 32) {
 	      if (selected[1] === 0 && selected[3] === 0) {
 	        e.stopImmediatePropagation();
