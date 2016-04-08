@@ -70,7 +70,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # Setup force
     @force = d3.layout.force()
       .charge(-150)
-      .linkDistance(100)
+      .linkDistance(150)
       #.linkStrength(2)
       .size([@viewport.width, @viewport.height])
       .on('tick', @onTick)
@@ -379,12 +379,12 @@ class VisualizationGraphCanvas extends Backbone.View
     @force.size [@viewport.width, @viewport.height]
 
   rescale: ->
+    translateStr = 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
     @container.attr             'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
-    @relations_cont.attr        'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @relations_labels_cont.attr 'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @nodes_cont.attr            'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @nodes_labels_cont.attr     'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-
+    @relations_cont.attr        'transform', translateStr
+    @relations_labels_cont.attr 'transform', translateStr
+    @nodes_cont.attr            'transform', translateStr
+    @nodes_labels_cont.attr     'transform', translateStr
 
   # Config Methods
   # ---------------
@@ -480,7 +480,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
     # highlight node relation labels
-    @relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+    @relations_labels.selectAll('.relation-label').classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
     @nodes.select('circle')
@@ -489,7 +489,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
-    @relations_labels.classed 'highlighted', false
+    @relations_labels.selectAll('.relation-label').classed 'highlighted', false
 
   onNodeClick: (d) =>
     # Avoid trigger click on dragEnd
@@ -507,8 +507,15 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations.attr 'd', (d) ->
       dx = d.target.x - d.source.x
       dy = d.target.y - d.source.y
-      dr = Math.sqrt dx*dx + dy*dy
-      return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y
+      # Calculate distance between source & target positions
+      dist = Math.sqrt dx*dx + dy*dy
+      # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
+      angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
+      if angle >= 0
+        path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y
+      else
+        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.source.x + ' ' + d.source.y
+      return path
     # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
