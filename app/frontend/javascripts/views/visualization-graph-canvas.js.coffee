@@ -93,14 +93,14 @@ class VisualizationGraphCanvas extends Backbone.View
     @svg.append('svg:defs')
       .append('svg:marker')
         .attr('id', 'arrow')
-        .attr('viewBox', '0 -5 10 10')  # "0 -5 15 10")
+        .attr('viewBox', '-8 -10 8 20')
         .attr('refX', 23)
         .attr("refY", -1)
-        .attr('markerWidth', 5) # 5
-        .attr('markerHeight', 5) # 5
+        .attr('markerWidth', 10)
+        .attr('markerHeight', 10)
         .attr('orient', 'auto')
       .append('svg:path')
-        .attr('d', 'M0,-5L7,0L0,5')
+        .attr('d', 'M -8 -10 L 0 0 L -8 10')
 
     # Setup containers
     @container            = @svg.append('g')
@@ -142,7 +142,7 @@ class VisualizationGraphCanvas extends Backbone.View
   updateLayout: ->
     console.log 'updateLayout'
     @updateRelations()
-    @updateRelationLabels()
+    @updateRelationsLabels()
     @updateNodes()
     @updateNodesLabels()
     @updateForce()
@@ -227,7 +227,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # Remove old elements as needed.
     @nodes_labels.exit().remove()
 
-  updateRelationLabels: ->
+  updateRelationsLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
