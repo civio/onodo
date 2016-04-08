@@ -179,7 +179,7 @@
       .node-circle{
         stroke-width: 0;
         stroke-opacity: 0.4;
-        @include transition( stroke-width, 0.3s, ease-out );
+        @include transition( stroke-width, 0.4s, ease-out );
       }
 
       .node-circle.active{
@@ -190,25 +190,27 @@
     .relation {
       fill: none;
       stroke: $gray-semi-light;
-      stroke-width: 1.5px;
-      stroke-dasharray: 2, 2;
+      stroke-width: 1px;
+      stroke-dasharray: 4, 2;
 
       &.weaken{
-        opacity: 0.4;
+        opacity: 0.5;
       }
 
       &.highlighted,
       &.highlighted.weaken{
         //stroke-width: 2px;
         opacity: 1;
+        stroke-dasharray: none;
       }
     }
 
     .node-label{
-      text-shadow: 0px 1px 0 $gray-lighter;
-      fill: $gray;
+      text-shadow: 0px 1px 0 white;
+      fill: $gray-dark;
       font-size: 0.857em;
-      font-weight: 400;
+      font-weight: 300;
+      letter-spacing: 0;
       text-anchor: middle;
 
       &.weaken{
@@ -229,6 +231,7 @@
       font-size: 0.786em;
       font-weight: 300;
       text-shadow: 0px 1px 0 white;
+      letter-spacing: 0;
       opacity: 0;
       @include transition( opacity, 0.3s, ease-out );
 
