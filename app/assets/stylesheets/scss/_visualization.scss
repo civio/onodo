@@ -228,7 +228,6 @@
       fill: $gray-semi-light;
       font-size: 0.786em;
       font-weight: 300;
-      text-anchor: middle;
       text-shadow: 0px 1px 0 white;
       opacity: 0;
       @include transition( opacity, 0.3s, ease-out );

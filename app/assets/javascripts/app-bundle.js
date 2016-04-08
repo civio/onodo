@@ -752,11 +752,13 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateRelationLabels = function() {
-	    this.relations_labels = this.relations_labels_cont.selectAll('.relation-label').data(this.data_relations_visibles);
-	    this.relations_labels.enter().append('text').attr('id', function(d, i) {
+	    this.relations_labels = this.relations_labels_cont.selectAll('.relation-label-g').data(this.data_relations_visibles);
+	    this.relations_labels.enter().append('g').attr('class', 'relation-label-g').append('text').attr('id', function(d) {
 	      return 'relation-label-' + d.id;
-	    }).attr('class', 'relation-label').attr('dx', 0).attr('dy', 0);
-	    this.relations_labels.text(function(d) {
+	    }).attr('class', 'relation-label').attr('x', 0).attr('dy', -4).append('textPath').attr('xlink:href', function(d) {
+	      return '#relation-' + d.id;
+	    }).style('text-anchor', 'middle').attr('startOffset', '50%');
+	    this.relations_labels.selectAll('textPath').text(function(d) {
 	      return d.relation_type;
 	    });
 	    return this.relations_labels.exit().remove();
@@ -1042,9 +1044,6 @@
 	      dy = d.target.y - d.source.y;
 	      dr = Math.sqrt(dx * dx + dy * dy);
 	      return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y;
-	    });
-	    this.relations_labels.attr('transform', function(d) {
-	      return 'translate(' + 0.5 * (d.target.x + d.source.x) + ',' + 0.5 * (d.target.y + d.source.y) + ')';
 	    });
 	    this.nodes.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';

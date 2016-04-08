@@ -232,21 +232,29 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # DATA JOIN
     # Join new data with old elements, if any
-    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
+    @relations_labels = @relations_labels_cont.selectAll('.relation-label-g').data(@data_relations_visibles)
 
     # ENTER
     # Create new elements as needed.
-    @relations_labels.enter().append('text')
-      .attr('id', (d,i) -> return 'relation-label-'+d.id)
-      .attr('class', 'relation-label')
-      .attr('dx', 0)
-      .attr('dy', 0)
+    @relations_labels.enter()
+      .append('g')
+        .attr('class', 'relation-label-g')
+        .append('text')
+          .attr('id', (d) -> return 'relation-label-'+d.id)
+          .attr('class', 'relation-label')
+          .attr('x', 0)
+          .attr('dy', -4)
+        .append('textPath')
+          .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
+          .style('text-anchor', 'middle')
+          .attr('startOffset', '50%') 
+          #.text((d) -> return d.relation_type)
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include
     # entering elements; so, operations on the update selection after appending to
     # the enter selection will apply to both entering and updating nodes.
-    @relations_labels.text((d) -> return d.relation_type)
+    @relations_labels.selectAll('textPath').text((d) -> return d.relation_type)
 
     # EXIT
     # Remove old elements as needed.
@@ -501,8 +509,6 @@ class VisualizationGraphCanvas extends Backbone.View
       dy = d.target.y - d.source.y
       dr = Math.sqrt dx*dx + dy*dy
       return 'M' + d.source.x + ',' + d.source.y + 'A' + dr + ',' + dr + ' 0 0,1 ' + d.target.x + ',' + d.target.y
-    # Set relations labels position
-    @relations_labels.attr('transform', (d) -> return 'translate(' + 0.5*(d.target.x+d.source.x) + ',' + 0.5*(d.target.y+d.source.y) + ')')
     # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
