@@ -89,10 +89,12 @@ class VisualizationGraphCanvas extends Backbone.View
           .on('dragstart',  @onCanvasDragStart)
           .on('dragend',    @onCanvasDragEnd))
 
-    # Define Arrow Marker
-    @svg.append('svg:defs')
-      .append('svg:marker')
-        .attr('id', 'arrow')
+    # Define Arrow Markers
+    defs = @svg.append('svg:defs')
+    # Setup arrow end
+    defs.append('svg:marker')
+        .attr('id', 'arrow-end')
+        .attr('class', 'arrow-marker')
         .attr('viewBox', '-8 -10 8 20')
         .attr('refX', 23)
         .attr("refY", -1)
@@ -101,6 +103,18 @@ class VisualizationGraphCanvas extends Backbone.View
         .attr('orient', 'auto')
       .append('svg:path')
         .attr('d', 'M -8 -10 L 0 0 L -8 10')
+    # Setup arrow start
+    defs.append('svg:marker')
+        .attr('id', 'arrow-start')
+        .attr('class', 'arrow-marker')
+        .attr('viewBox', '0 -10 8 20')
+        .attr('refX', -23)
+        .attr("refY", -1)
+        .attr('markerWidth', 10)
+        .attr('markerHeight', 10)
+        .attr('orient', 'auto')
+      .append('svg:path')
+        .attr('d', 'M 8 -10 L 0 0 L 8 10')
 
     # Setup containers
     @container            = @svg.append('g')
@@ -511,11 +525,26 @@ class VisualizationGraphCanvas extends Backbone.View
       dist = Math.sqrt dx*dx + dy*dy
       # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
       angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
+      # Define arc sweep-flag (which defines concave or convex) based on angle parameter
       if angle >= 0
         path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y
       else
-        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.source.x + ' ' + d.source.y
+        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y
       return path
+    @relations.attr 'marker-end', (d) ->
+      unless d.direction
+        return ''
+      dx = d.target.x - d.source.x
+      dy = d.target.y - d.source.y
+      angle = Math.atan2(dx,dy)
+      return if angle >= 0 then 'url(#arrow-end)' else ''
+    @relations.attr 'marker-start', (d) ->
+      unless d.direction
+        return ''
+      dx = d.target.x - d.source.x
+      dy = d.target.y - d.source.y
+      angle = Math.atan2(dx,dy)
+      return if angle < 0 then 'url(#arrow-start)' else ''
     # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')

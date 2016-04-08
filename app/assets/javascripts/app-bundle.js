@@ -657,6 +657,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.initialize = function(options) {
+	    var defs;
 	    console.log('initialize canvas');
 	    this.color = d3.scale.ordinal().range(this.COLOR_CUALITATIVE);
 	    this.colorInterpolate = d3.scale.linear().domain([0, 100]).interpolate(d3.interpolateRgb);
@@ -668,7 +669,9 @@
 	    this.force = d3.layout.force().charge(-150).linkDistance(150).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
 	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
 	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
-	    this.svg.append('svg:defs').append('svg:marker').attr('id', 'arrow').attr('viewBox', '-8 -10 8 20').attr('refX', 23).attr("refY", -1).attr('markerWidth', 10).attr('markerHeight', 10).attr('orient', 'auto').append('svg:path').attr('d', 'M -8 -10 L 0 0 L -8 10');
+	    defs = this.svg.append('svg:defs');
+	    defs.append('svg:marker').attr('id', 'arrow-end').attr('class', 'arrow-marker').attr('viewBox', '-8 -10 8 20').attr('refX', 23).attr("refY", -1).attr('markerWidth', 10).attr('markerHeight', 10).attr('orient', 'auto').append('svg:path').attr('d', 'M -8 -10 L 0 0 L -8 10');
+	    defs.append('svg:marker').attr('id', 'arrow-start').attr('class', 'arrow-marker').attr('viewBox', '0 -10 8 20').attr('refX', -23).attr("refY", -1).attr('markerWidth', 10).attr('markerHeight', 10).attr('orient', 'auto').append('svg:path').attr('d', 'M 8 -10 L 0 0 L 8 10');
 	    this.container = this.svg.append('g');
 	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
 	    this.relations_labels_cont = this.container.append('g').attr('class', 'relations-labels-cont');
@@ -1055,9 +1058,37 @@
 	      if (angle >= 0) {
 	        path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y;
 	      } else {
-	        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.source.x + ' ' + d.source.y;
+	        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y;
 	      }
 	      return path;
+	    });
+	    this.relations.attr('marker-end', function(d) {
+	      var angle, dx, dy;
+	      if (!d.direction) {
+	        return '';
+	      }
+	      dx = d.target.x - d.source.x;
+	      dy = d.target.y - d.source.y;
+	      angle = Math.atan2(dx, dy);
+	      if (angle >= 0) {
+	        return 'url(#arrow-end)';
+	      } else {
+	        return '';
+	      }
+	    });
+	    this.relations.attr('marker-start', function(d) {
+	      var angle, dx, dy;
+	      if (!d.direction) {
+	        return '';
+	      }
+	      dx = d.target.x - d.source.x;
+	      dy = d.target.y - d.source.y;
+	      angle = Math.atan2(dx, dy);
+	      if (angle < 0) {
+	        return 'url(#arrow-start)';
+	      } else {
+	        return '';
+	      }
 	    });
 	    this.nodes.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
