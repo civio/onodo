@@ -84,9 +84,8 @@ class VisualizationGraph extends Backbone.View
     #@collection.relations.bind 'add',             @onRelationsChange, @
     @collection.relations.bind 'change:source_id',      @onRelationsChangeNode, @
     @collection.relations.bind 'change:target_id',      @onRelationsChangeNode, @
-    # By now we don't apply any visual style based on relation_type
-    #@collection.relations.bind 'change:relation_type',  @onRelationsChangeAttribute, @
-    @collection.relations.bind 'change:direction',      @onRelationsChangeAttribute, @
+    @collection.relations.bind 'change:relation_type',  @onRelationsChangeType, @
+    @collection.relations.bind 'change:direction',      @onRelationsChangeDirection, @
     @collection.relations.bind 'remove',                @onRelationsRemove, @
     # Subscribe Canvas Events
     Backbone.on 'visualization.node.showInfo',    @onNodeShowInfo, @
@@ -163,7 +162,11 @@ class VisualizationGraph extends Backbone.View
       @visualizationGraphCanvas.addRelation relation.attributes
       @visualizationGraphCanvas.updateLayout()
 
-  onRelationsChangeAttribute: (relation) ->
+  onRelationsChangeType: (relation) ->
+    console.log 'onRelationsChangeType', relation
+    @visualizationGraphCanvas.updateRelationsLabels()
+
+  onRelationsChangeDirection: (relation) ->
     @visualizationGraphCanvas.updateRelations()
 
   onRelationsRemove: (relation) ->

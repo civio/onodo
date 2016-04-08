@@ -421,7 +421,8 @@
 	    this.collection.nodes.bind('remove', this.onNodesRemove, this);
 	    this.collection.relations.bind('change:source_id', this.onRelationsChangeNode, this);
 	    this.collection.relations.bind('change:target_id', this.onRelationsChangeNode, this);
-	    this.collection.relations.bind('change:direction', this.onRelationsChangeAttribute, this);
+	    this.collection.relations.bind('change:relation_type', this.onRelationsChangeType, this);
+	    this.collection.relations.bind('change:direction', this.onRelationsChangeDirection, this);
 	    this.collection.relations.bind('remove', this.onRelationsRemove, this);
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
@@ -494,7 +495,12 @@
 	    }
 	  };
 
-	  VisualizationGraph.prototype.onRelationsChangeAttribute = function(relation) {
+	  VisualizationGraph.prototype.onRelationsChangeType = function(relation) {
+	    console.log('onRelationsChangeType', relation);
+	    return this.visualizationGraphCanvas.updateRelationsLabels();
+	  };
+
+	  VisualizationGraph.prototype.onRelationsChangeDirection = function(relation) {
 	    return this.visualizationGraphCanvas.updateRelations();
 	  };
 
@@ -662,7 +668,7 @@
 	    this.force = d3.layout.force().charge(-150).linkDistance(150).size([this.viewport.width, this.viewport.height]).on('tick', this.onTick);
 	    this.forceDrag = this.force.drag().on('dragstart', this.onNodeDragStart).on('dragend', this.onNodeDragEnd);
 	    this.svg = d3.select(this.$el.get(0)).append('svg:svg').attr('width', this.viewport.width).attr('height', this.viewport.height).call(d3.behavior.drag().on('drag', this.onCanvasDrag).on('dragstart', this.onCanvasDragStart).on('dragend', this.onCanvasDragEnd));
-	    this.svg.append('svg:defs').append('svg:marker').attr('id', 'arrow').attr('viewBox', '0 -5 10 10').attr('refX', 23).attr("refY", -1).attr('markerWidth', 5).attr('markerHeight', 5).attr('orient', 'auto').append('svg:path').attr('d', 'M0,-5L7,0L0,5');
+	    this.svg.append('svg:defs').append('svg:marker').attr('id', 'arrow').attr('viewBox', '-8 -10 8 20').attr('refX', 23).attr("refY", -1).attr('markerWidth', 10).attr('markerHeight', 10).attr('orient', 'auto').append('svg:path').attr('d', 'M -8 -10 L 0 0 L -8 10');
 	    this.container = this.svg.append('g');
 	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
 	    this.relations_labels_cont = this.container.append('g').attr('class', 'relations-labels-cont');
@@ -702,7 +708,7 @@
 	  VisualizationGraphCanvas.prototype.updateLayout = function() {
 	    console.log('updateLayout');
 	    this.updateRelations();
-	    this.updateRelationLabels();
+	    this.updateRelationsLabels();
 	    this.updateNodes();
 	    this.updateNodesLabels();
 	    return this.updateForce();
@@ -751,7 +757,7 @@
 	    return this.nodes_labels.exit().remove();
 	  };
 
-	  VisualizationGraphCanvas.prototype.updateRelationLabels = function() {
+	  VisualizationGraphCanvas.prototype.updateRelationsLabels = function() {
 	    this.relations_labels = this.relations_labels_cont.selectAll('.relation-label-g').data(this.data_relations_visibles);
 	    this.relations_labels.enter().append('g').attr('class', 'relation-label-g').append('text').attr('id', function(d) {
 	      return 'relation-label-' + d.id;
