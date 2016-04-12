@@ -295,9 +295,9 @@
       background: white;
 
       > .search-icon{
+        display: block;
         @include clearfix;
         @include retina-sprite( $icon-search-group );
-        
       }
 
       .search-input{
@@ -305,6 +305,10 @@
         right: 0;
         top: 0;
         display: none;
+
+        .input-group .form-control{
+          font-size: 0.786em;
+        }
       }
 
       &:hover{
@@ -314,33 +318,47 @@
       }
     }
 
-    .btn-share{
+    .btn-share,
+    .btn-configure{
       float: right;
       background-color: white;
       @include clearfix;
 
-      .icon-share{
-        @include retina-sprite( $icon-share-group );
-        
-        display: inline-block;
-        position: relative;
-        top: 2px;
-        margin-left: $grid-gutter-width/3;
-      }
-
       .title{
         display: none;
+        position: relative;
+        top: -1px;
+        font-weight: normal;
       }
 
-      &:hover{
+      &:hover,
+      &:focus{
         color: $brand-primary;
         border-color: white;
         background: white;
-
-        .title{
-          display: inline;
-        }
       }
+
+      &:hover .title{
+        display: inline;
+      }
+    }
+
+    .btn-share .icon-share{
+      @include retina-sprite( $icon-share-group );
+      display: inline-block;
+      position: relative;
+      top: 2px;
+      right: -1px;
+      margin-left: $grid-gutter-width/3;
+    }
+
+    .btn-configure .icon-configure{
+      @include retina-sprite( $icon-configuration-group );
+      display: inline-block;
+      position: relative;
+      top: 2px;
+      right: 2px;
+      margin-left: $grid-gutter-width/3;
     }
   }
 

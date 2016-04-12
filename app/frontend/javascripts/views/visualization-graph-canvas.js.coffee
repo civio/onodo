@@ -402,7 +402,6 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes_labels_cont.attr     'transform', translateStr
 
   setOffset: (offset) ->
-    console.log 'set offset', offset
     @viewport.offsety = if offset < 0 then 0 else offset
     @rescale()
 

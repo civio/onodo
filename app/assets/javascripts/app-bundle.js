@@ -910,7 +910,6 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.setOffset = function(offset) {
-	    console.log('set offset', offset);
 	    this.viewport.offsety = offset < 0 ? 0 : offset;
 	    return this.rescale();
 	  };
