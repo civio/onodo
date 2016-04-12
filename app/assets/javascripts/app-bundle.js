@@ -10767,6 +10767,8 @@
 	  };
 
 	  VisualizationGraphConfiguration.prototype.render = function() {
+	    var sliders;
+	    sliders = this.$el.find('.slider').slider();
 	    this.$el.find('#hideLabels').change(this.onToogleLabels);
 	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
 	    this.$el.find('#linkdistante').change(this.onChangeValue);

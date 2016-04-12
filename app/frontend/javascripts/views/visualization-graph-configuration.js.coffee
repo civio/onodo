@@ -15,6 +15,8 @@ class VisualizationGraphConfiguration extends Backbone.View
     @render()
 
   render: -> 
+    # Setup sliders
+    sliders = @$el.find('.slider').slider()
     # Visualization Styles
     @$el.find('#hideLabels').change @onToogleLabels
     @$el.find('#hideNoRelations').change @onToogleNoRelations
@@ -24,7 +26,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#friction').change @onChangeValue
     @$el.find('#charge').change @onChangeValue
     @$el.find('#theta').change @onChangeValue
-    @$el.find('#gravity').change @onChangeValue 
+    @$el.find('#gravity').change @onChangeValue
     return this
 
 module.exports = VisualizationGraphConfiguration

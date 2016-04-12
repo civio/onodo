@@ -22,22 +22,28 @@
             = check_box_tag :hideNoRelations
             Hide nodes without relations
       #advanced.tab-pane.fade{ role: "tabpanel" }
-        %p
-          linkDistance
-        %input#linkdistante{name: "linkDistance", type: "range", min: "10", max: "200", value: "60"}
-        %p
-          linkStrength
-        %input#linkstrengh{name: "linkStrength", type: "range", min: "0", max: "1", value: "1", step: "0.01"}
-        %p
-          friction
-        %input#friction{name: "friction", type: "range", min: "0", max: "1", value: "0.9", step: "0.01"}
-        %p
-          charge
-        %input#charge{name: "charge", type: "range", min: "-200", max: "200", value: "-150"}
-        %p
-          theta
-        %input#theta{name: "theta", type: "range", min: "0", max: "1", value: "0.8", step: "0.01"}
-        %p
-          gravity
-        %input#gravity{name: "gravity", type: "range", min: "0", max: "1", value: "0.1", step: "0.01"}
+        .form-group
+          %label{ for: "linkdistante"}
+            Link Distance
+          %input#linkdistante.form-control.slider{name: "linkDistance", type: "text", "data-slider-min": "10", "data-slider-max": "200", "data-slider-value": "60"}
+        .form-group
+          %label{ for: "linkstrengh"}
+            Link Strength
+          %input#linkstrengh.form-control.slider{name: "linkStrength", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "1", "data-slider-step": "0.01"}
+        .form-group
+          %label{ for: "friction"}
+            Friction
+          %input#friction.form-control.slider{name: "friction", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "0.9", "data-slider-step": "0.01"}
+        .form-group
+          %label{ for: "charge"}
+            Charge
+          %input#charge.form-control.slider{name: "charge", type: "text", "data-slider-min": "-200", "data-slider-max": "200", "data-slider-value": "-150"}
+        .form-group
+          %label{ for: "theta"}
+            Theta
+          %input#theta.form-control.slider{name: "theta", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "0.8", "data-slider-step": "0.01"}
+        .form-group
+          %label{ for: "gravity"}
+            Gravity
+          %input#gravity.form-control.slider{name: "gravity", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "0.1", "data-slider-step": "0.01"}
 
