@@ -32,10 +32,16 @@ var config = module.exports = {
     modulesDirectories: ["node_modules"],
     // Avoid Handebars warning require.extentions not supported using Handebars runtime build
     // https://github.com/wycats/handlebars.js/issues/953
+    /*
     alias: {
       'handlebars': 'handlebars/runtime.js'
     }
+    */
   },
+  node: {
+    fs: "empty"
+  },
+  /*
   resolveLoader: {
     // Avoid Handebars warning require.extentions not supported
     // https://github.com/wycats/handlebars.js/issues/953
@@ -43,6 +49,7 @@ var config = module.exports = {
       'hbs': 'handlebars-loader'
     }
   },
+  */
   module: {
     loaders: [
       { test: /\.coffee$/,      loader: "coffee-loader"},
