@@ -70,10 +70,19 @@
       margin-left: 8px;
       border-radius: $item-author-picture-size/2;
       overflow: hidden;
+      @include transition( opacity 0.3s ease-out );
 
       > img{
         width: 100%;
         height: auto;
+      }
+    }
+
+    a:hover{
+      text-decoration: none;
+
+      .item-author-picture{
+        opacity: 0.7;
       }
     }
   }
@@ -151,8 +160,12 @@
         text-align: center;
         vertical-align: middle;
       }
+    }
 
-      &:hover{
+    .item-title:hover{
+      text-decoration: none;
+
+      .bnt-start-reding{
         color: $brand-primary;
         background: #fff;
         //background: rgba(255,255,255,0.7);
