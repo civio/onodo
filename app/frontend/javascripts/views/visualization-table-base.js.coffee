@@ -1,9 +1,11 @@
 # Base Class for VisualizationTableNodes & VisualizationTableRelations
 class VisualizationTableBase extends Backbone.View
 
-  table:          null
-  table_type:     null
-  table_options:  null
+  table:            null
+  table_type:       null
+  table_options:    null
+  table_height:     null
+  table_offset_top: null
 
   constructor: (@collection, table_type) ->
     super(@collection)
@@ -34,6 +36,7 @@ class VisualizationTableBase extends Backbone.View
     @table_options.afterChange       = @onTableChangeRow
     @table_options.beforeRemoveRow   = @onTableRemoveRow  # important to listen before remove to avoid index problems
     @table = new Handsontable @$el.get(0), @table_options
+    @resize()
 
   onTableCreateRow: (index, amount) =>
     console.log 'onTableCreateRow', index, amount
@@ -57,10 +60,20 @@ class VisualizationTableBase extends Backbone.View
   
   show: ->
     @$el.removeClass('hide')
+    @resize()
     @table.render()
 
   hide: ->
     @$el.addClass('hide')
+
+  setSize: (tableHeight, tableOffsetTop) =>
+    @table_height     = tableHeight
+    @table_offset_top = tableOffsetTop
+    @resize()
+
+  resize: =>
+    console.log 'resize table'
+    @$el.height @table_height - (@$el.offset().top - @table_offset_top)
 
   render: =>
     return this

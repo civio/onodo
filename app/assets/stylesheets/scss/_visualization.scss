@@ -618,6 +618,10 @@ body.fullscreen{
       line-height: 42px;
       text-transform: uppercase;
     }
+
+    a{
+      color: white;
+    }
   }
 
   .visualization-table-header{
@@ -902,7 +906,11 @@ body.visualizations.edit{
 
   .visualization-table{
     position: relative;
-    //top: -50px; // 550px;
+    overflow: hidden;
     z-index: 99;
+  }
+
+  .footer{
+    display: none;
   }
 }

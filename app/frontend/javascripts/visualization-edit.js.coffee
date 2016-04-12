@@ -9,11 +9,12 @@ class VisualizationEdit
 
   mainHeaderHeight:             82
   visualizationHeaderHeight:    91
-  tableHeaderHeight:            50
+  tableHeaderHeight:            44
 
   id:                           null
   nodes:                        null
   visualizationGraph:           null
+  visualizationTable:           null
   visualizationTableNodes:      null
   visualizationTableRelations:  null
   $tableSelector:               null
@@ -32,6 +33,11 @@ class VisualizationEdit
     @visualizationTableRelations.setNodes @nodes
     # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
+    # Setup visualization table
+    @visualizationTable = $('.visualization-table')
+    $('.visualization-table-scrollbar a').click (e) ->
+      e.preventDefault()
+      $('html, body').animate { scrollTop: $(document).height() }, 1000
 
   setupAffix: ->
     $('.visualization-graph').affix
@@ -57,12 +63,14 @@ class VisualizationEdit
     console.log 'resize!'
     windowHeight = $(window).height()
     graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
+    tableHeight = (windowHeight*0.5) + @tableHeaderHeight
     @visualizationGraph.$el.height graphHeight
     @visualizationGraph.resize()
-    $('.visualization-table').css 'top', graphHeight + @visualizationHeaderHeight
-    # TODO!!! Resize table to windowHeight -> We also need to resize HandsOnTable height
-    #$('.visualization-table').height windowHeight
-    $('.footer').css 'top', graphHeight + @visualizationHeaderHeight
+    @visualizationTable.css 'top', graphHeight + @visualizationHeaderHeight
+    @visualizationTable.height tableHeight
+    @visualizationTableNodes.setSize tableHeight, @visualizationTable.offset().top
+    @visualizationTableRelations.setSize tableHeight, @visualizationTable.offset().top
+    #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
 
   render: ->
     @setupAffix()   # setup affix bootstrap
