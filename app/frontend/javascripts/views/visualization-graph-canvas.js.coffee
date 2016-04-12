@@ -42,6 +42,7 @@ class VisualizationGraphCanvas extends Backbone.View
     y: 0
     dx: 0
     dy: 0
+    offsety: 0
     drag:
       x: 0
       y: 0
@@ -394,11 +395,17 @@ class VisualizationGraphCanvas extends Backbone.View
 
   rescale: ->
     translateStr = 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @container.attr             'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y) + ')scale(' + @viewport.scale + ')'
+    @container.attr             'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
     @relations_cont.attr        'transform', translateStr
     @relations_labels_cont.attr 'transform', translateStr
     @nodes_cont.attr            'transform', translateStr
     @nodes_labels_cont.attr     'transform', translateStr
+
+  setOffset: (offset) ->
+    console.log 'set offset', offset
+    @viewport.offsety = if offset < 0 then 0 else offset
+    @rescale()
+
 
   # Config Methods
   # ---------------

@@ -111,6 +111,8 @@ class VisualizationGraph extends Backbone.View
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
 
+  setOffset: (offset) ->
+    @visualizationGraphCanvas.setOffset offset
 
   # Collections Events
   onNodesAdd: (node) ->

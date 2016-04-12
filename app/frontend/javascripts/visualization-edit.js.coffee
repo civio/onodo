@@ -7,7 +7,7 @@ VisualizationTableRelations  = require './views/visualization-table-relations.js
 
 class VisualizationEdit
 
-  mainHeaderHeight:             82
+  mainHeaderHeight:             84
   visualizationHeaderHeight:    91
   tableHeaderHeight:            44
 
@@ -35,9 +35,12 @@ class VisualizationEdit
     $('#visualization-table-selector > li > a').click @updateTable
     # Setup visualization table
     @visualizationTable = $('.visualization-table')
+    # Setup scrollbar link
     $('.visualization-table-scrollbar a').click (e) ->
       e.preventDefault()
       $('html, body').animate { scrollTop: $(document).height() }, 1000
+    # Setup scroll handler
+    $(window).scroll @onScroll
 
   setupAffix: ->
     $('.visualization-graph').affix
@@ -71,6 +74,9 @@ class VisualizationEdit
     @visualizationTableNodes.setSize tableHeight, @visualizationTable.offset().top
     @visualizationTableRelations.setSize tableHeight, @visualizationTable.offset().top
     #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
+
+  onScroll: =>
+    @visualizationGraph.setOffset $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
 
   render: ->
     @setupAffix()   # setup affix bootstrap

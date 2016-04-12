@@ -443,6 +443,10 @@
 	    }
 	  };
 
+	  VisualizationGraph.prototype.setOffset = function(offset) {
+	    return this.visualizationGraphCanvas.setOffset(offset);
+	  };
+
 	  VisualizationGraph.prototype.onNodesAdd = function(node) {
 	    return this.collection.nodes.once('sync', (function(_this) {
 	      return function(model) {
@@ -649,6 +653,7 @@
 	    y: 0,
 	    dx: 0,
 	    dy: 0,
+	    offsety: 0,
 	    drag: {
 	      x: 0,
 	      y: 0
@@ -897,11 +902,17 @@
 	  VisualizationGraphCanvas.prototype.rescale = function() {
 	    var translateStr;
 	    translateStr = 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')';
-	    this.container.attr('transform', 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y) + ')scale(' + this.viewport.scale + ')');
+	    this.container.attr('transform', 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y - this.viewport.offsety) + ')scale(' + this.viewport.scale + ')');
 	    this.relations_cont.attr('transform', translateStr);
 	    this.relations_labels_cont.attr('transform', translateStr);
 	    this.nodes_cont.attr('transform', translateStr);
 	    return this.nodes_labels_cont.attr('transform', translateStr);
+	  };
+
+	  VisualizationGraphCanvas.prototype.setOffset = function(offset) {
+	    console.log('set offset', offset);
+	    this.viewport.offsety = offset < 0 ? 0 : offset;
+	    return this.rescale();
 	  };
 
 	  VisualizationGraphCanvas.prototype.toogleLabels = function(value) {
@@ -45655,10 +45666,12 @@
 	    var model;
 	    model = this.collection.create({
 	      dataset_id: $('body').data('id'),
+	      'direction': true,
 	      wait: true
 	    });
 	    return this.collection.once('sync', function() {
-	      return this.table.setDataAtRowProp(index, 'id', model.id);
+	      this.table.setDataAtRowProp(index, 'id', model.id);
+	      return this.table.setDataAtRowProp(index, 'direction', true);
 	    }, this);
 	  };
 
@@ -45770,7 +45783,7 @@
 	VisualizationTableRelations = __webpack_require__(52);
 
 	VisualizationEdit = (function() {
-	  VisualizationEdit.prototype.mainHeaderHeight = 82;
+	  VisualizationEdit.prototype.mainHeaderHeight = 84;
 
 	  VisualizationEdit.prototype.visualizationHeaderHeight = 91;
 
@@ -45791,6 +45804,7 @@
 	  VisualizationEdit.prototype.$tableSelector = null;
 
 	  function VisualizationEdit(_id) {
+	    this.onScroll = bind(this.onScroll, this);
 	    this.resize = bind(this.resize, this);
 	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
@@ -45818,6 +45832,7 @@
 	        scrollTop: $(document).height()
 	      }, 1000);
 	    });
+	    $(window).scroll(this.onScroll);
 	  }
 
 	  VisualizationEdit.prototype.setupAffix = function() {
@@ -45856,6 +45871,10 @@
 	    this.visualizationTable.height(tableHeight);
 	    this.visualizationTableNodes.setSize(tableHeight, this.visualizationTable.offset().top);
 	    return this.visualizationTableRelations.setSize(tableHeight, this.visualizationTable.offset().top);
+	  };
+
+	  VisualizationEdit.prototype.onScroll = function() {
+	    return this.visualizationGraph.setOffset($(window).scrollTop() - this.mainHeaderHeight - this.visualizationHeaderHeight);
 	  };
 
 	  VisualizationEdit.prototype.render = function() {
