@@ -6,7 +6,7 @@
       = form_for :visualization, url: visualizations_path , method: "post", html: {:class => 'form-default'} do |f|
         .form-group
           = f.label :name, "Visualization title"
-          = f.text_field :name, class: "form-control"
+          = f.text_field :name, class: "form-control", :required => true
         .form-group
           = f.label :nodes, "Upload Nodes CSV File"
           = f.file_field :nodes, accept: '.csv', :class => "form-control"
@@ -14,3 +14,27 @@
           = f.label :relations, "Upload Relations CSV File"
           = f.file_field :relations, accept: '.csv', :class => "form-control"
         = f.submit "Create", class: "btn btn-default btn-primary"
+      %a.btn-circle-lg.btn-circle-lg-table{ href: '#' }
+        .btn-circle-lg-icon
+          .btn-circle-lg-icon-sprite
+        .btn-circle-lg-title
+          Begin with an empty table
+        .btn.btn-primary.btn-invert
+          Create
+      %hr
+      %a.btn-circle-lg.btn-circle-lg-xls{ href: '#' }
+        .btn-circle-lg-icon
+          .btn-circle-lg-icon-sprite
+        .btn-circle-lg-title
+          Drag & drop your XLS file
+        .btn.btn-primary.btn-invert
+          Browse
+      .template-advice
+        %p
+          Don't know how to create the XLS file?
+          %a{ href: '#' }
+            Use our template
+        %a.btn.btn-primary.btn-invert{ href: '#' }
+          Download
+        %a.btn.btn-primary.btn-invert{ href: '#' }
+          Tutorial

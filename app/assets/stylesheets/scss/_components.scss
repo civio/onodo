@@ -62,6 +62,18 @@
     }
   }
 
+  &.btn-circle-lg-table .btn-circle-lg-icon-sprite{
+    margin-top: 40px;
+    @include retina-sprite( $icon-empty-table-group );
+  }
+  &.btn-circle-lg-xls .btn-circle-lg-icon-sprite{
+    margin-top: 36px;
+    @include retina-sprite( $icon-xls-file-group );
+  }
+  &.btn-circle-lg-xls .btn-circle-lg-icon{
+    border-style: dashed;
+  }
+
   &:hover{
     color: $brand-primary;
     text-decoration: none;

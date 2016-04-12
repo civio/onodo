@@ -914,3 +914,26 @@ body.visualizations.edit{
     display: none;
   }
 }
+
+// Visualization New
+.visualization-new{
+  margin-bottom: 2*$grid-gutter-width;
+
+  > .row > .col-sm-6{
+    text-align: center;
+  }
+
+  .btn-circle-lg .btn{
+    margin: $grid-gutter-width/2 0;
+  }
+
+  .template-advice{
+    p{
+      font-size: 0.875em;
+      margin: $grid-gutter-width/2 0 $grid-gutter-width;
+    }
+    .btn{
+      margin: 0 $grid-gutter-width/4;
+    }
+  }
+}
