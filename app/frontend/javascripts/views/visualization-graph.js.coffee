@@ -30,7 +30,7 @@ class VisualizationGraph extends Backbone.View
     @resize()
 
   onPanelConfigureShow: ->
-    $(this).blur()
+    $('html, body').animate { scrollTop: 0 }, 600
     $('.visualization-graph-panel-configuration').addClass 'active'
 
   onPanelConfigureHide: ->

@@ -1,35 +1,43 @@
 .visualization-graph-panel-configuration.panel.panel-default
   .panel-heading
-    %h4 Configuration
+    %h4 Settings
     %button.close{type: "button", "aria-label" => "Close"}
-      %span{"aria-hidden" => "true"}
-        &times
   .panel-body
-    -# Attributes drom https://github.com/mbostock/d3/wiki/Force-Layout
-    .checkbox
-      %label{ :for => "hideLabels" }
-        = check_box_tag :hideLabels
-        Hide labels
-    .checkbox
-      %label{ :for => "hideNoRelations" }
-        = check_box_tag :hideNoRelations
-        Hide nodes without relations
-    %p
-      linkDistance
-    %input#linkdistante{name: "linkDistance", type: "range", min: "10", max: "200", value: "60"}
-    %p
-      linkStrength
-    %input#linkstrengh{name: "linkStrength", type: "range", min: "0", max: "1", value: "1", step: "0.01"}
-    %p
-      friction
-    %input#friction{name: "friction", type: "range", min: "0", max: "1", value: "0.9", step: "0.01"}
-    %p
-      charge
-    %input#charge{name: "charge", type: "range", min: "-200", max: "200", value: "-150"}
-    %p
-      theta
-    %input#theta{name: "theta", type: "range", min: "0", max: "1", value: "0.8", step: "0.01"}
-    %p
-      gravity
-    %input#gravity{name: "gravity", type: "range", min: "0", max: "1", value: "0.1", step: "0.01"}
+    %ul#visualization-graph-panel-configuration-tabs.nav.nav-tabs{ role: "tablist" }
+      %li.active{ role: "presentation" }
+        %a#basic-tab{ href: "#basic", role: "tab", "data-toggle": "tab" }
+          Basic
+      %li{ role: "presentation" }
+        %a#advanced-tab{ href: "#advanced", role: "tab", "data-toggle": "tab" }
+          Advanced
+    #visualization-graph-panel-configuration-tab-content.tab-content
+      #basic.tab-pane.fade.in.active{ role: "tabpanel" }
+        -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
+        .checkbox
+          %label{ :for => "hideLabels" }
+            = check_box_tag :hideLabels
+            Hide labels
+        .checkbox
+          %label{ :for => "hideNoRelations" }
+            = check_box_tag :hideNoRelations
+            Hide nodes without relations
+      #advanced.tab-pane.fade{ role: "tabpanel" }
+        %p
+          linkDistance
+        %input#linkdistante{name: "linkDistance", type: "range", min: "10", max: "200", value: "60"}
+        %p
+          linkStrength
+        %input#linkstrengh{name: "linkStrength", type: "range", min: "0", max: "1", value: "1", step: "0.01"}
+        %p
+          friction
+        %input#friction{name: "friction", type: "range", min: "0", max: "1", value: "0.9", step: "0.01"}
+        %p
+          charge
+        %input#charge{name: "charge", type: "range", min: "-200", max: "200", value: "-150"}
+        %p
+          theta
+        %input#theta{name: "theta", type: "range", min: "0", max: "1", value: "0.8", step: "0.01"}
+        %p
+          gravity
+        %input#gravity{name: "gravity", type: "range", min: "0", max: "1", value: "0.1", step: "0.01"}
 

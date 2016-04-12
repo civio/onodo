@@ -44,6 +44,10 @@ $btn-border-width: 2px;
 
 .btn{
   @include btn();
+}
+
+button,
+.btn{
   &:focus, 
   &.active:focus,
   &:active:focus{ 

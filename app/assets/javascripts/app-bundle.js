@@ -356,7 +356,9 @@
 	  };
 
 	  VisualizationGraph.prototype.onPanelConfigureShow = function() {
-	    $(this).blur();
+	    $('html, body').animate({
+	      scrollTop: 0
+	    }, 600);
 	    return $('.visualization-graph-panel-configuration').addClass('active');
 	  };
 
