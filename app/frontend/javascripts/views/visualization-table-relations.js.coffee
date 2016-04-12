@@ -100,10 +100,11 @@ class VisualizationTableRelations extends VisualizationTableBase
   addModel: (index) ->
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: $('body').data('id'), wait: true}
+    model = @collection.create {dataset_id: $('body').data('id'), 'direction': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', model.id
+      @table.setDataAtRowProp index, 'direction', true
     , @
 
   # Method called from parent class `VisualizationTableBase`  
