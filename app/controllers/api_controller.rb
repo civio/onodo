@@ -43,7 +43,6 @@ class ApiController < ApplicationController
     #TODO! Add error validation
   end
 
-
   ###
 
   # Get all Relations (for a visualization)
@@ -86,6 +85,21 @@ class ApiController < ApplicationController
     render json: {}
   end
 
+  ###
+
+  # Get a Visualization
+  # GET /api/visualizations/:dataset_id/
+  def visualization
+    render json: Visualization.find(params[:dataset_id])
+  end
+
+  # Update a Visualization
+  # PUT /api/visualizations/:dataset_id/
+  def visualization_update
+    Visualization.update(params[:dataset_id], visualization_params)
+    render json: {}
+  end
+
 
   private
 
@@ -95,6 +109,10 @@ class ApiController < ApplicationController
 
     def relation_params
       params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :dataset_id) if params[:relation]
+    end
+
+    def visualization_params
+      params.require(:visualization).permit(:parameters) if params[:visualization]
     end
 
 end
