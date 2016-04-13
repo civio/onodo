@@ -45,6 +45,8 @@
     }
     .btn-primary{
       border-color: $btn-primary-color;
+      min-width: 180px;
+      
       &:hover{
         border-color: $btn-primary-color;
       }
