@@ -264,6 +264,8 @@
       border-radius: 12px;
       margin-bottom: 12px;
       padding: 0;
+      overflow: hidden;
+      min-width: 0;
       @include transition( opacity 0.3s ease-out );
       background-color: white;
 
@@ -322,6 +324,7 @@
     .btn-configure{
       float: right;
       background-color: white;
+      min-width: 0;
       @include clearfix;
 
       .title{
@@ -978,6 +981,10 @@ body.visualizations.edit{
 
   > .row > .col-sm-6{
     text-align: center;
+  }
+
+  .form-group{
+    text-align: left;
   }
 
   .btn-circle-lg .btn{

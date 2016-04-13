@@ -135,8 +135,8 @@
       }
 
       &.twitter .icon{
-        margin-top: 7px;
-        margin-left: 6px;
+        margin-top: 8px;
+        margin-left: 7px;
         @include retina-sprite( $social-icon-twitter-brand-group );
       }
       &.facebook .icon{
@@ -270,7 +270,7 @@
       display: block;
       position: relative;
       height: 4px + $btn-line-height;
-      min-width: auto;
+      min-width: 0;
       top: -1px;
       padding: 0 10px 0 5px;
       color: $brand-primary;
