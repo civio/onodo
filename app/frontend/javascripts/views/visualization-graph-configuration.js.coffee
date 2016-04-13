@@ -2,14 +2,17 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   el: '.visualization-graph-panel-configuration'
 
-  onChangeValue: (e) =>
-    Backbone.trigger 'visualization.config.updateParam', {name: $(e.target).attr('name'), value: $(e.target).val()}
+  onChangeValue: (e) ->
+    Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: $(e.target).attr('name'), value: $(e.target).val()}
 
-  onToogleLabels: (e) =>
+  onToogleLabels: (e) ->
     Backbone.trigger 'visualization.config.toogleLabels', {value: $(e.target).prop('checked')}
   
-  onToogleNoRelations: (e) =>
+  onToogleNoRelations: (e) ->
     Backbone.trigger 'visualization.config.toogleNodesWithoutRelation', {value: $(e.target).prop('checked')}
+
+  onChangeRelationsCurvature: (e) ->
+    Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: $(e.target).val()}
 
   initialize: ->
     @render()
@@ -20,6 +23,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     # Visualization Styles
     @$el.find('#hideLabels').change @onToogleLabels
     @$el.find('#hideNoRelations').change @onToogleNoRelations
+    @$el.find('#curvature').change @onChangeRelationsCurvature
     # Force Layout Parameters
     @$el.find('#linkdistante').change @onChangeValue
     @$el.find('#linkstrengh').change @onChangeValue

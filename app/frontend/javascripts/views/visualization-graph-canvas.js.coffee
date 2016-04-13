@@ -4,6 +4,8 @@ class VisualizationGraphCanvas extends Backbone.View
 
   NODES_SIZE: 11
 
+  RELATIONS_CURVATURE: 1
+
   COLOR_CUALITATIVE: [
     '#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', 
     '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'
@@ -424,6 +426,10 @@ class VisualizationGraphCanvas extends Backbone.View
           @addNode d
     @updateLayout()
 
+  updateRelationsCurvature: (value) ->
+    @RELATIONS_CURVATURE = value
+    @onTick()
+
   updateForceLayoutParameter: (param, value) ->
     @force.stop()
     if param == 'linkDistance'
@@ -524,11 +530,12 @@ class VisualizationGraphCanvas extends Backbone.View
   # Tick Function
   onTick: =>
     # Set relations path
-    @relations.attr 'd', (d) ->
+    @relations.attr 'd', (d) =>
       dx = d.target.x - d.source.x
       dy = d.target.y - d.source.y
       # Calculate distance between source & target positions
-      dist = Math.sqrt dx*dx + dy*dy
+      dist = @RELATIONS_CURVATURE * Math.sqrt dx*dx + dy*dy
+      #console.log 'dist', dist
       # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
       angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
       # Define arc sweep-flag (which defines concave or convex) based on angle parameter

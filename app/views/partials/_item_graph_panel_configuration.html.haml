@@ -21,6 +21,10 @@
           %label{ :for => "hideNoRelations" }
             = check_box_tag :hideNoRelations
             Hide nodes without relations
+        .form-group
+          %label{ for: "curvature"}
+            Curvature
+          %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-value": "1", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
       #advanced.tab-pane.fade{ role: "tabpanel" }
         .form-group
           %label{ for: "linkdistante"}

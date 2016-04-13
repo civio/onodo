@@ -430,7 +430,8 @@
 	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
 	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
 	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
-	    Backbone.on('visualization.config.updateParam', this.onUpdateParam, this);
+	    Backbone.on('visualization.config.updateRelationsCurvature', this.onUpdateRelationsCurvature, this);
+	    Backbone.on('visualization.config.updateForceLayoutParam', this.onUpdateForceLayoutParam, this);
 	    Backbone.on('visualization.navigation.zoomin', this.onZoomIn, this);
 	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
 	    return Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
@@ -534,7 +535,11 @@
 	    return this.visualizationGraphCanvas.toogleNodesWithoutRelation(e.value);
 	  };
 
-	  VisualizationGraph.prototype.onUpdateParam = function(e) {
+	  VisualizationGraph.prototype.onUpdateRelationsCurvature = function(e) {
+	    return this.visualizationGraphCanvas.updateRelationsCurvature(e.value);
+	  };
+
+	  VisualizationGraph.prototype.onUpdateForceLayoutParam = function(e) {
 	    return this.visualizationGraphCanvas.updateForceLayoutParameter(e.name, e.value);
 	  };
 
@@ -599,6 +604,8 @@
 	  }
 
 	  VisualizationGraphCanvas.prototype.NODES_SIZE = 11;
+
+	  VisualizationGraphCanvas.prototype.RELATIONS_CURVATURE = 1;
 
 	  VisualizationGraphCanvas.prototype.COLOR_CUALITATIVE = ['#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'];
 
@@ -941,6 +948,11 @@
 	    return this.updateLayout();
 	  };
 
+	  VisualizationGraphCanvas.prototype.updateRelationsCurvature = function(value) {
+	    this.RELATIONS_CURVATURE = value;
+	    return this.onTick();
+	  };
+
 	  VisualizationGraphCanvas.prototype.updateForceLayoutParameter = function(param, value) {
 	    this.force.stop();
 	    if (param === 'linkDistance') {
@@ -1061,19 +1073,21 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.onTick = function() {
-	    this.relations.attr('d', function(d) {
-	      var angle, dist, dx, dy, path;
-	      dx = d.target.x - d.source.x;
-	      dy = d.target.y - d.source.y;
-	      dist = Math.sqrt(dx * dx + dy * dy);
-	      angle = Math.atan2(dx, dy);
-	      if (angle >= 0) {
-	        path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y;
-	      } else {
-	        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y;
-	      }
-	      return path;
-	    });
+	    this.relations.attr('d', (function(_this) {
+	      return function(d) {
+	        var angle, dist, dx, dy, path;
+	        dx = d.target.x - d.source.x;
+	        dy = d.target.y - d.source.y;
+	        dist = _this.RELATIONS_CURVATURE * Math.sqrt(dx * dx + dy * dy);
+	        angle = Math.atan2(dx, dy);
+	        if (angle >= 0) {
+	          path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y;
+	        } else {
+	          path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y;
+	        }
+	        return path;
+	      };
+	    })(this));
 	    this.relations.attr('marker-end', function(d) {
 	      var angle, dx, dy;
 	      if (!d.direction) {
@@ -10727,7 +10741,6 @@
 /***/ function(module, exports) {
 
 	var VisualizationGraphConfiguration,
-	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
 
@@ -10735,16 +10748,13 @@
 	  extend(VisualizationGraphConfiguration, superClass);
 
 	  function VisualizationGraphConfiguration() {
-	    this.onToogleNoRelations = bind(this.onToogleNoRelations, this);
-	    this.onToogleLabels = bind(this.onToogleLabels, this);
-	    this.onChangeValue = bind(this.onChangeValue, this);
 	    return VisualizationGraphConfiguration.__super__.constructor.apply(this, arguments);
 	  }
 
 	  VisualizationGraphConfiguration.prototype.el = '.visualization-graph-panel-configuration';
 
 	  VisualizationGraphConfiguration.prototype.onChangeValue = function(e) {
-	    return Backbone.trigger('visualization.config.updateParam', {
+	    return Backbone.trigger('visualization.config.updateForceLayoutParam', {
 	      name: $(e.target).attr('name'),
 	      value: $(e.target).val()
 	    });
@@ -10762,6 +10772,12 @@
 	    });
 	  };
 
+	  VisualizationGraphConfiguration.prototype.onChangeRelationsCurvature = function(e) {
+	    return Backbone.trigger('visualization.config.updateRelationsCurvature', {
+	      value: $(e.target).val()
+	    });
+	  };
+
 	  VisualizationGraphConfiguration.prototype.initialize = function() {
 	    return this.render();
 	  };
@@ -10771,6 +10787,7 @@
 	    sliders = this.$el.find('.slider').slider();
 	    this.$el.find('#hideLabels').change(this.onToogleLabels);
 	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
+	    this.$el.find('#curvature').change(this.onChangeRelationsCurvature);
 	    this.$el.find('#linkdistante').change(this.onChangeValue);
 	    this.$el.find('#linkstrengh').change(this.onChangeValue);
 	    this.$el.find('#friction').change(this.onChangeValue);
