@@ -420,6 +420,11 @@
 
     .tab-content > .tab-pane{
       padding-top: $grid-gutter-width/2;
+
+      label{
+        display: block;
+        margin-bottom: $grid-gutter-width/6;
+      }
     }
   }
 

@@ -358,3 +358,30 @@
     }
   }
 }
+
+// Slider
+
+.slider{
+  &.slider-horizontal{
+    width: 100%;
+
+    .slider-track{
+      height: 7px;
+    }
+    .slider-handle{
+      margin-top: -6px;
+    }
+  }
+  .slider-handle{
+    width: 18px;
+    height: 18px;
+    background: $brand-primary;
+  }
+  .slider-selection{
+    background: mix( $brand-primary, $gray-lighter, 70% );
+    border-radius: 0;
+  }
+  .slider-track{
+    border-radius: 0;
+  }
+}
