@@ -8,16 +8,18 @@ VisualizationGraphInfo            = require './../views/visualization-graph-info
 
 class VisualizationGraph extends Backbone.View
   
-  el:             '.visualization-graph-component'
-  nodesSync:      false
-  relationsSync:  false
-  visualizationGraphCanvas:     null
+  el:                               '.visualization-graph-component'
+  visualizationSync:                false
+  nodesSync:                        false
+  relationsSync:                    false
+  visualizationGraphCanvas:         null
   visualizationGraphConfiguration:  null
   visualizationGraphNavigation:     null
 
   initialize: ->
     console.log 'initialize Graph', @collection
-    # Setup Colllection Events
+    # Setup Model & Colllection Events
+    @model.once                 'sync', @onVisualizationSync , @
     @collection.nodes.once      'sync', @onNodesSync , @
     @collection.relations.once  'sync', @onRelationsSync , @
     # Setup Configure Panel Show/Hide
@@ -42,16 +44,22 @@ class VisualizationGraph extends Backbone.View
   onPanelShareHide: ->
     $('#visualization-share').removeClass 'active'
 
+  onVisualizationSync: (visualization) ->
+    @visualizationSync = true
+    console.log 'onVisualizationSync'
+    if @visualizationSync and @nodesSync and @relationsSync
+      @render()
+
   onNodesSync: (nodes) =>
     @nodesSync = true
     console.log 'onNodesSync'
-    if @nodesSync and @relationsSync
+    if @visualizationSync and @nodesSync and @relationsSync
       @render()
 
   onRelationsSync: (relations) =>
     @relationsSync = true
     console.log 'onRelationsSync'
-    if @nodesSync and @relationsSync
+    if @visualizationSync and @nodesSync and @relationsSync
       @render()
 
   getDataFromCollection: ->
@@ -68,7 +76,7 @@ class VisualizationGraph extends Backbone.View
     console.log 'render Graph'
     # Setup Views
     @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection()}
-    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration
+    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration {model: @model}
     @visualizationGraphNavigation     = new VisualizationGraphNavigation
     @visualizationGraphInfo           = new VisualizationGraphInfo
     # Setup Events Listeners

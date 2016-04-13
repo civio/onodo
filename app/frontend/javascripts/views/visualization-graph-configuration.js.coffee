@@ -14,12 +14,18 @@ class VisualizationGraphConfiguration extends Backbone.View
   onChangeRelationsCurvature: (e) ->
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: $(e.target).val()}
 
+  onUpdateVisualizationParemeters: (e) ->
+      console.log 'onUpdateVisualizationParemeters'
+
   initialize: ->
     @render()
 
   render: -> 
+    console.log 'configuration model', @model
     # Setup sliders
-    sliders = @$el.find('.slider').slider()
+    $sliders = @$el.find('.slider')
+    $sliders.slider()
+    $sliders.on 'slideStop', @onUpdateVisualizationParemeters
     # Visualization Styles
     @$el.find('#hideLabels').change @onToogleLabels
     @$el.find('#hideNoRelations').change @onToogleNoRelations

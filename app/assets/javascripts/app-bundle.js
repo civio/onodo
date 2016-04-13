@@ -334,6 +334,8 @@
 
 	  VisualizationGraph.prototype.el = '.visualization-graph-component';
 
+	  VisualizationGraph.prototype.visualizationSync = false;
+
 	  VisualizationGraph.prototype.nodesSync = false;
 
 	  VisualizationGraph.prototype.relationsSync = false;
@@ -346,6 +348,7 @@
 
 	  VisualizationGraph.prototype.initialize = function() {
 	    console.log('initialize Graph', this.collection);
+	    this.model.once('sync', this.onVisualizationSync, this);
 	    this.collection.nodes.once('sync', this.onNodesSync, this);
 	    this.collection.relations.once('sync', this.onRelationsSync, this);
 	    $('.visualization-graph-menu-actions .btn-configure').click(this.onPanelConfigureShow);
@@ -374,10 +377,18 @@
 	    return $('#visualization-share').removeClass('active');
 	  };
 
+	  VisualizationGraph.prototype.onVisualizationSync = function(visualization) {
+	    this.visualizationSync = true;
+	    console.log('onVisualizationSync');
+	    if (this.visualizationSync && this.nodesSync && this.relationsSync) {
+	      return this.render();
+	    }
+	  };
+
 	  VisualizationGraph.prototype.onNodesSync = function(nodes) {
 	    this.nodesSync = true;
 	    console.log('onNodesSync');
-	    if (this.nodesSync && this.relationsSync) {
+	    if (this.visualizationSync && this.nodesSync && this.relationsSync) {
 	      return this.render();
 	    }
 	  };
@@ -385,7 +396,7 @@
 	  VisualizationGraph.prototype.onRelationsSync = function(relations) {
 	    this.relationsSync = true;
 	    console.log('onRelationsSync');
-	    if (this.nodesSync && this.relationsSync) {
+	    if (this.visualizationSync && this.nodesSync && this.relationsSync) {
 	      return this.render();
 	    }
 	  };
@@ -413,7 +424,9 @@
 	      el: this.$el,
 	      data: this.getDataFromCollection()
 	    });
-	    this.visualizationGraphConfiguration = new VisualizationGraphConfiguration;
+	    this.visualizationGraphConfiguration = new VisualizationGraphConfiguration({
+	      model: this.model
+	    });
 	    this.visualizationGraphNavigation = new VisualizationGraphNavigation;
 	    this.visualizationGraphInfo = new VisualizationGraphInfo;
 	    this.collection.nodes.bind('add', this.onNodesAdd, this);
@@ -10778,13 +10791,20 @@
 	    });
 	  };
 
+	  VisualizationGraphConfiguration.prototype.onUpdateVisualizationParemeters = function(e) {
+	    return console.log('onUpdateVisualizationParemeters');
+	  };
+
 	  VisualizationGraphConfiguration.prototype.initialize = function() {
 	    return this.render();
 	  };
 
 	  VisualizationGraphConfiguration.prototype.render = function() {
-	    var sliders;
-	    sliders = this.$el.find('.slider').slider();
+	    var $sliders;
+	    console.log('configuration model', this.model);
+	    $sliders = this.$el.find('.slider');
+	    $sliders.slider();
+	    $sliders.on('slideStop', this.onUpdateVisualizationParemeters);
 	    this.$el.find('#hideLabels').change(this.onToogleLabels);
 	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
 	    this.$el.find('#curvature').change(this.onChangeRelationsCurvature);
@@ -45789,8 +45809,10 @@
 /* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraph, VisualizationTableNodes, VisualizationTableRelations,
+	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraph, VisualizationModel, VisualizationTableNodes, VisualizationTableRelations,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+	VisualizationModel = __webpack_require__(54);
 
 	NodesCollection = __webpack_require__(5);
 
@@ -45807,7 +45829,7 @@
 
 	  VisualizationEdit.prototype.visualizationHeaderHeight = 91;
 
-	  VisualizationEdit.prototype.tableHeaderHeight = 44;
+	  VisualizationEdit.prototype.tableHeaderHeight = 42;
 
 	  VisualizationEdit.prototype.id = null;
 
@@ -45829,6 +45851,7 @@
 	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
 	    this.id = _id;
+	    this.visualization = new VisualizationModel();
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
 	    this.visualizationTableNodes = new VisualizationTableNodes({
@@ -45838,6 +45861,7 @@
 	      collection: this.relations
 	    });
 	    this.visualizationGraph = new VisualizationGraph({
+	      model: this.visualization,
 	      collection: {
 	        nodes: this.nodes,
 	        relations: this.relations
@@ -45900,6 +45924,9 @@
 	  VisualizationEdit.prototype.render = function() {
 	    this.setupAffix();
 	    this.resize();
+	    this.visualization.fetch({
+	      url: '/api/visualizations/' + this.id
+	    });
 	    this.nodes.fetch({
 	      url: '/api/visualizations/' + this.id + '/nodes/'
 	    });
@@ -45913,6 +45940,34 @@
 	})();
 
 	module.exports = VisualizationEdit;
+
+
+/***/ },
+/* 54 */
+/***/ function(module, exports) {
+
+	var Visualization,
+	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+	  hasProp = {}.hasOwnProperty;
+
+	Visualization = (function(superClass) {
+	  extend(Visualization, superClass);
+
+	  function Visualization() {
+	    return Visualization.__super__.constructor.apply(this, arguments);
+	  }
+
+	  Visualization.prototype.paramRoot = 'visualization';
+
+	  Visualization.prototype.defaults = {
+	    parameters: null
+	  };
+
+	  return Visualization;
+
+	})(Backbone.Model);
+
+	module.exports = Visualization;
 
 
 /***/ }

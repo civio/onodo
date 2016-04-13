@@ -1,4 +1,5 @@
 # Imports
+VisualizationModel           = require './models/visualization.js'
 NodesCollection              = require './collections/nodes-collection.js'
 RelationsCollection          = require './collections/relations-collection.js'
 VisualizationGraph           = require './views/visualization-graph.js'
@@ -9,7 +10,7 @@ class VisualizationEdit
 
   mainHeaderHeight:             84
   visualizationHeaderHeight:    91
-  tableHeaderHeight:            44
+  tableHeaderHeight:            42
 
   id:                           null
   nodes:                        null
@@ -22,13 +23,15 @@ class VisualizationEdit
   constructor: (_id) ->
     console.log('setup visualization', _id);
     @id = _id
+    # Setup Visualization Model
+    @visualization = new VisualizationModel()
     # Setup Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
     # Setup Views
     @visualizationTableNodes      = new VisualizationTableNodes {collection: @nodes}
     @visualizationTableRelations  = new VisualizationTableRelations {collection: @relations}
-    @visualizationGraph           = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
+    @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
     # Attach nodes to VisualizationTableRelations
     @visualizationTableRelations.setNodes @nodes
     # Setup Table Tab Selector
@@ -81,7 +84,8 @@ class VisualizationEdit
   render: ->
     @setupAffix()   # setup affix bootstrap
     @resize()       # force resize
-    # fetch collections
+    # fetch model & collections
+    @visualization.fetch {url: '/api/visualizations/'+@id}
     @nodes.fetch {url: '/api/visualizations/'+@id+'/nodes/'}
     @relations.fetch {url: '/api/visualizations/'+@id+'/relations/'}
 
