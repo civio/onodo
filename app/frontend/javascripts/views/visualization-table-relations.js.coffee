@@ -6,7 +6,15 @@ class VisualizationTableRelations extends VisualizationTableBase
   el:               '.visualization-table-relations'
   relations_types:  null
   nodes:            null
-  tableColHeaders:  ['', 'Source', 'Relationship', 'Target', 'Date', 'Direction', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  tableColHeaders:  ['', '', 'Source', 'Relationship', 'Target', 'Date', 'Direction', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  duplicate:        null
+  columns:          {
+    'delete'    : 0,
+    'duplicate' : 1,
+    'source'    : 2,
+    'type'      : 3,
+    'target'    : 4
+  }
 
   constructor: (@collection) ->
     super @collection, 'relation'
@@ -25,6 +33,11 @@ class VisualizationTableRelations extends VisualizationTableBase
         data: '',
         readOnly: true,
         renderer: @rowDeleteRenderer
+      },
+      { 
+        data: '',
+        readOnly: true,
+        renderer: @rowDuplicateRenderer
       },
       { 
         data: 'source_name'
@@ -71,8 +84,8 @@ class VisualizationTableRelations extends VisualizationTableBase
     @nodes.on 'remove', @removeRelationsWithNode, @
 
   updateNodes: =>
-    console.log 'table relations nodes sync', @table_options.columns[1].source
-    @table_options.columns[1].source = @table_options.columns[3].source = @nodes.toJSON().map((d) -> return d.name).sort()
+    console.log 'table relations nodes sync', @table_options.columns[ @columns.source ].source
+    @table_options.columns[ @columns.source ].source = @table_options.columns[ @columns.target ].source = @nodes.toJSON().map((d) -> return d.name).sort()
     # update table settings when needed
     if @table
       @table.updateSettings @table_options
@@ -96,15 +109,39 @@ class VisualizationTableRelations extends VisualizationTableBase
       e.preventDefault()
       @addRow()
 
+  # Duplicate row
+  duplicateRow: (row) ->  
+    # store duplicate model in duplicate variable in order to add row values when model sync in addModel
+    model_id = @getIdAtRow row
+    model = @collection.get(model_id)
+    @duplicate = model
+    # add new row after current one
+    @table.alter('insert_row', row+1, 1 )
+    console.log 'duplicate row', row, model
+
+
   # Method called from parent class `VisualizationTableBase`
   addModel: (index) ->
+    console.log 'addModel', index
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
     model = @collection.create {dataset_id: $('body').data('id'), 'direction': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', model.id
-      @table.setDataAtRowProp index, 'direction', true
+      # set duplicated values
+      if @duplicate
+        if @duplicate.attributes.source_name
+          @table.setDataAtRowProp index, 'source_name', @duplicate.attributes.source_name
+        if @duplicate.attributes.target_name
+          @table.setDataAtRowProp index, 'target_name', @duplicate.attributes.target_name
+        if @duplicate.attributes.relation_type
+          @table.setDataAtRowProp index, 'relation_type', @duplicate.attributes.relation_type
+        @table.setDataAtRowProp index, 'direction', @duplicate.attributes.direction
+        console.log 'now set duplicate values'
+        @duplicate = null
+      else
+        @table.setDataAtRowProp index, 'direction', true
     , @
 
   # Method called from parent class `VisualizationTableBase`  
@@ -123,11 +160,14 @@ class VisualizationTableRelations extends VisualizationTableBase
       obj = {}
       if key == 'source_name' or key == 'target_name'
         node = @nodes.filter((d) -> return d.attributes.name == value)  # get node by node name
-        if node
+        console.log 'updateModel', node
+        if node.length > 0
           if key == 'source_name'
             obj.source_id = node[0].id
+            obj.source_name = node[0].attributes.name
           else
             obj.target_id = node[0].id
+            obj.target_name = node[0].attributes.name
       else
         obj[ key ] = value
       console.log 'updateModel', obj, model
@@ -140,7 +180,7 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   # Set 'Node Type' column source in table_options
   setRelationsTypesSource: ->
-    @table_options.columns[2].source = @relations_types
+    @table_options.columns[ @columns.type ].source = @relations_types
 
   removeRelationsWithNode: (node) ->
     # descending loop though all relations
@@ -154,10 +194,30 @@ class VisualizationTableRelations extends VisualizationTableBase
     # ENTER or SPACE keys
     if e.keyCode == 13 or e.keyCode == 32
       # In Delete column (0) launch delete modal
-      if selected[1] == 0 and selected[3] == 0
+      if selected[1] == @columns.delete and selected[3] == @columns.delete
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDeleteModal selected[0]
+      # In Duplicate column (0) launch delete modal
+      if selected[1] == @columns.duplicate and selected[3] == @columns.duplicate
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @duplicateRow selected[0]
+
+   # Custom Renderer for duplicate cells
+  rowDuplicateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # Add duplicate icon
+    link = document.createElement('A')
+    link.className = 'icon-duplicate'
+    link.innerHTML = link.title = 'Duplicate ' + @table_type.charAt(0).toUpperCase() + @table_type.slice(1)
+    Handsontable.Dom.empty(td)
+    td.appendChild(link)
+    # Duplicate row on click event
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      #console.log 'rowDuplicateRenderer', instance, td, row, col, prop, value, cellProperties
+      @duplicateRow row
+    return td
 
   # Custom Renderer for direction cells
   rowDirectionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

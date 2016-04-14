@@ -765,6 +765,19 @@ body.fullscreen{
       }
     }
 
+    .icon-duplicate{
+      display: block;
+      margin-top: 4px;
+      cursor: pointer;
+      text-indent: -9999px;
+      @include retina-sprite( $icon-duplicate-group );
+      @include transition( opacity 0.3s ease-out );
+
+      &:hover{
+        opacity: 0.7;
+      }
+    }
+
     .icon-plus{
       display: block;
       margin-top: 2px;
