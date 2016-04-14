@@ -48,13 +48,18 @@ class ApiController < ApplicationController
   # Get all Relations (for a visualization)
   # GET /api/visualizations/:dataset_id/relations
   def relations
-    @relations = Relation.where(dataset_id: params[:dataset_id]).includes(:source,:target)
+    @relations = Relation.where(dataset_id: params[:dataset_id])
+                         .includes(:source,:target)
+                         .order("nodes.name")
   end
 
   # Get uniques & non-blank Relations Types (for a visualization)
   # GET /api/visualizations/:dataset_id/relations/types
   def relations_types
-    render json: Relation.where(dataset_id: params[:dataset_id]).select(:relation_type).map(&:relation_type).reject(&:blank?).uniq
+    render json: Relation.where(dataset_id: params[:dataset_id])
+                        .select(:relation_type)
+                        .map(&:relation_type)
+                        .reject(&:blank?).uniq
   end
 
   # Get a Relation
@@ -108,7 +113,7 @@ class ApiController < ApplicationController
     end
 
     def relation_params
-      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :dataset_id) if params[:relation]
+      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :dataset_id) if params[:relation]
     end
 
     def visualization_params
