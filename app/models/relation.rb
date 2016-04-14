@@ -10,6 +10,4 @@ class Relation < ActiveRecord::Base
               class_name: Node, 
               inverse_of: :relations_as_target, 
               touch: true
-
-  validates :source, :target, presence: true
 end
