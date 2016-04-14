@@ -54,7 +54,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         type: 'dropdown'
       },
       { 
-        data: '' 
+        data: 'at' 
       },
       { 
         data: 'direction'
@@ -168,6 +168,9 @@ class VisualizationTableRelations extends VisualizationTableBase
           else
             obj.target_id = node[0].id
             obj.target_name = node[0].attributes.name
+      # By now we store dates as 'at' date
+      else if key == 'date'
+        obj.at = value
       else
         obj[ key ] = value
       console.log 'updateModel', obj, model

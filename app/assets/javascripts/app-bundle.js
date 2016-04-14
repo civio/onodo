@@ -45658,7 +45658,7 @@
 	        data: 'target_name',
 	        type: 'dropdown'
 	      }, {
-	        data: ''
+	        data: 'at'
 	      }, {
 	        data: 'direction',
 	        renderer: this.rowDirectionRenderer
@@ -45783,6 +45783,8 @@
 	            obj.target_name = node[0].attributes.name;
 	          }
 	        }
+	      } else if (key === 'date') {
+	        obj.at = value;
 	      } else {
 	        obj[key] = value;
 	      }
