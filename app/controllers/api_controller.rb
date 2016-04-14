@@ -60,7 +60,7 @@ class ApiController < ApplicationController
   # Get a Relation
   # GET /api/relations/:id
   def relation
-    render json: Relation.find(params[:id])
+    @relation = Relation.find(params[:id])
   end
 
   # Create a new Relation
