@@ -10,4 +10,16 @@ class Relation < ActiveRecord::Base
               class_name: Node, 
               inverse_of: :relations_as_target, 
               touch: true
+
+  # Override `at` getter & setter
+  def at=(at)
+    write_attribute(:at, Date.strptime(at, '%Y'))
+  end
+
+  def at
+    if !read_attribute(:at).nil?
+      read_attribute(:at).strftime('%Y')
+    end
+  end
+
 end
