@@ -213,6 +213,15 @@
       letter-spacing: 0;
       text-anchor: middle;
 
+      tspan{
+        opacity: 0;
+      
+        &.first-line,
+        &.ellipsis{
+          opacity: 1;
+        }
+      }
+
       &.weaken{
         opacity: 0;
       }
@@ -223,6 +232,14 @@
         display: inline !important;
         fill: $gray-darker;
         opacity: 1;
+
+        tspan{
+          opacity: 1;
+
+          &.ellipsis{
+            opacity: 0;
+          }
+        }
       }
     }
 

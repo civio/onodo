@@ -238,7 +238,9 @@ class VisualizationGraphCanvas extends Backbone.View
     # Appending to the enter selection expands the update selection to include
     # entering elements; so, operations on the update selection after appending to
     # the enter selection will apply to both entering and updating nodes.
-    @nodes_labels.text((d) -> return d.name)
+    @nodes_labels.text (d) -> return d.name #@formatNodesLabels
+
+    @nodes_labels.call @formatNodesLabels
 
     # EXIT
     # Remove old elements as needed.
@@ -582,6 +584,43 @@ class VisualizationGraphCanvas extends Backbone.View
   areNodesRelated: (a, b) ->
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
+  formatNodesLabels: (nodes) ->
+    console.log 'formatNodesLabels', nodes
+
+    nodes.each () ->
+      node = d3.select(this)
+      console.log node.text()
+      words = node.text().split(/\s+/).reverse()
+      line = []
+      i = 0
+      dy = parseFloat node.attr('dy')
+      tspan = node.text(null).append('tspan')
+        .attr('class', 'first-line')
+        .attr('x', 0)
+        .attr('dx', 5)
+        .attr('dy', dy)
+      while word = words.pop()
+        line.push word
+        tspan.text line.join(' ')
+        if tspan.node().getComputedTextLength() > 100
+          line.pop()
+          tspan.text line.join(' ')
+          line = [word]
+          # if firs tspan, we add ellipsis
+          if i == 0
+            node.append('tspan')
+              .attr('class', 'ellipsis')
+              .attr('dx', 2)
+              .text('...')
+          tspan = node.append('tspan')
+            .attr('x', 0)
+            .attr('dy', 13)
+            .text(word)
+          i++
+      # reset dx if label is not multiline
+      if i == 0
+        tspan.attr('dx', 0)
+  
   # mix color auxiliar function:
   # c1 & c2 must be strings as '#XXXXXX'
   # weight must be an integer between 0 & 100
