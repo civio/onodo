@@ -232,7 +232,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .attr('id', (d,i) -> return 'node-label-'+d.id)
       .attr('class', 'node-label')
       .attr('dx', 0)
-      .attr('dy', @NODES_SIZE+15)
+      .attr('dy', @NODES_SIZE+13)
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include

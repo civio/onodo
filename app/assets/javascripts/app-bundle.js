@@ -789,7 +789,7 @@
 	    this.nodes_labels = this.nodes_labels_cont.selectAll('.node-label').data(this.data_nodes);
 	    this.nodes_labels.enter().append('text').attr('id', function(d, i) {
 	      return 'node-label-' + d.id;
-	    }).attr('class', 'node-label').attr('dx', 0).attr('dy', this.NODES_SIZE + 15);
+	    }).attr('class', 'node-label').attr('dx', 0).attr('dy', this.NODES_SIZE + 13);
 	    this.nodes_labels.text(function(d) {
 	      return d.name;
 	    });

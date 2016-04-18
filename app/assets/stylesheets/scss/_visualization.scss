@@ -243,6 +243,11 @@
       }
     }
 
+    .relations-labels-cont,
+    .nodes-labels-cont{
+      pointer-events: none; // Allow mouse events in underlaying layers like nodes
+    }
+
     .relation-label{
       fill: $gray-semi-light;
       font-size: 0.786em;
