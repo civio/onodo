@@ -1,4 +1,5 @@
 # Imports
+VisualizationModel            = require './models/visualization.js'
 NodesCollection               = require './collections/nodes-collection.js'
 RelationsCollection           = require './collections/relations-collection.js'
 VisualizationGraph            = require './views/visualization-graph.js'
@@ -17,11 +18,13 @@ class VisualizationShow
   constructor: (_id) ->
     console.log('setup visualization', _id);
     @id = _id
+    # Setup Visualization Model
+    @visualization = new VisualizationModel()
     # Setup Collections
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
     # Setup Views 
-    @visualizationGraph = new VisualizationGraph {collection: {nodes: @nodes, relations: @relations} }
+    @visualizationGraph = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
     # Setup Table Selector
     $('#visualization-table-selector > li > a').click @updateTable
 
@@ -48,6 +51,7 @@ class VisualizationShow
   render: ->
     @resize()       # force resize
     # fetch collections
+    @visualization.fetch {url: '/api/visualizations/'+@id}
     @nodes.fetch {url: '/api/visualizations/'+@id+'/nodes/'}
     @relations.fetch {url: '/api/visualizations/'+@id+'/relations/'}
 
