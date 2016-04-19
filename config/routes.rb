@@ -48,12 +48,12 @@ Rails.application.routes.draw do
   # API routes
   scope 'api' do
     scope 'visualizations' do
-      get     ':dataset_id'                 => 'api#visualization'
-      put     ':dataset_id'                 => 'api#visualization_update'
-      get     ':dataset_id/nodes'           => 'api#nodes'
-      get     ':dataset_id/nodes/types'     => 'api#nodes_types'
-      get     ':dataset_id/relations'       => 'api#relations'
-      get     ':dataset_id/relations/types' => 'api#relations_types'
+      get     ':visualization_id'                 => 'api#visualization'
+      put     ':visualization_id'                 => 'api#visualization_update'
+      get     ':visualization_id/nodes'           => 'api#nodes'
+      get     ':visualization_id/nodes/types'     => 'api#nodes_types'
+      get     ':visualization_id/relations'       => 'api#relations'
+      get     ':visualization_id/relations/types' => 'api#relations_types'
     end
     scope 'nodes' do
       post    ''        => 'api#node_create'

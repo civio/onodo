@@ -1,15 +1,17 @@
 class ApiController < ApplicationController
 
   # Get all Nodes (for a visualization)
-  # GET /api/visualizations/:dataset_id/nodes
+  # GET /api/visualizations/:visualization_id/nodes
   def nodes
-    render json: Node.where(dataset_id: params[:dataset_id]).order(:name)
+    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: Node.where(dataset_id: dataset.id).order(:name)
   end
 
   # Get uniques & non-blank Nodes Types (for a visualization)
-  # GET /api/visualizations/:dataset_id/nodes/types
+  # GET /api/visualizations/:visualization_id/nodes/types
   def nodes_types
-    render json: Node.where(dataset_id: params[:dataset_id]).select(:node_type).map(&:node_type).reject(&:blank?).uniq
+    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: Node.where(dataset_id: dataset.id).select(:node_type).map(&:node_type).reject(&:blank?).uniq
   end
 
   # Get a Node
@@ -46,17 +48,19 @@ class ApiController < ApplicationController
   ###
 
   # Get all Relations (for a visualization)
-  # GET /api/visualizations/:dataset_id/relations
+  # GET /api/visualizations/:visualization_id/relations
   def relations
-    @relations = Relation.where(dataset_id: params[:dataset_id])
+    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    @relations = Relation.where(dataset_id: dataset.id)
                          .includes(:source,:target)
                          .order("nodes.name")
   end
 
   # Get uniques & non-blank Relations Types (for a visualization)
-  # GET /api/visualizations/:dataset_id/relations/types
+  # GET /api/visualizations/:visualization_id/relations/types
   def relations_types
-    render json: Relation.where(dataset_id: params[:dataset_id])
+    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: Relation.where(dataset_id: dataset)
                         .select(:relation_type)
                         .map(&:relation_type)
                         .reject(&:blank?).uniq
@@ -93,15 +97,15 @@ class ApiController < ApplicationController
   ###
 
   # Get a Visualization
-  # GET /api/visualizations/:dataset_id/
+  # GET /api/visualizations/:visualization_id/
   def visualization
-    render json: Visualization.find(params[:dataset_id])
+    render json: Visualization.find(params[:visualization_id])
   end
 
   # Update a Visualization
-  # PUT /api/visualizations/:dataset_id/
+  # PUT /api/visualizations/:visualization_id/
   def visualization_update
-    Visualization.update(params[:dataset_id], visualization_params)
+    Visualization.update(params[:visualization_id], visualization_params)
     render json: {}
   end
 
@@ -109,11 +113,11 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :dataset_id) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :visualization_id) if params[:node]
     end
 
     def relation_params
-      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :dataset_id) if params[:relation]
+      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :visualization_id) if params[:relation]
     end
 
     def visualization_params
