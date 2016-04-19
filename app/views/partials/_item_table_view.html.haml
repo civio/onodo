@@ -21,26 +21,34 @@
         %table.table
           %thead
             %tr
-              %th Name
-              %th Description
+              %th Node
               %th Type
+              %th Description
+              %th Visible
           %tbody
           - @nodes.each do |node|
             %tr
               %td= node.name
+              %td= node.node_type
               - if node.description
                 %td= node.description.html_safe
-              %td= node.node_type
+              - else
+                %td
+              %td
+                %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
+                  Node Visibility
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
           %thead
             %tr
               %th Source
+              %th Relationship
               %th Target
-              %th Type
+              %th Date
           %tbody
           - @relations.each do |relation|
             %tr
               %td= relation.source.name
-              %td= relation.target.name
               %td= relation.relation_type
+              %td= relation.target.name
+              %td= relation.at

@@ -5,10 +5,12 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/:id
   def show
-    @visualization = Visualization.find(params[:id])
-    @nodes = Node.where(dataset_id: params[:id])
-    @relations = Relation.where(dataset_id: params[:id])
-    @related_items = Visualization.all
+    @visualization  = Visualization.find(params[:id])
+    @nodes          = Node.where(dataset_id: params[:id]).order(:name)
+    @relations      = Relation.where(dataset_id: params[:id])
+                        .includes(:source,:target)
+                        .order("nodes.name")
+    @related_items  = Visualization.all
   end
 
   # GET /visualizations/new

@@ -965,6 +965,18 @@ body.fullscreen{
 
   table{
     border-bottom: 1px solid $gray-light;
+    background: white;
+  }
+
+  .icon-visible{
+    display: block;
+    text-indent: -9999px;
+    opacity: 0.3;
+    @include retina-sprite( $icon-preview-group );
+
+    &.active{
+      opacity: 1;
+    }
   }
 
   // .title{
