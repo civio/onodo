@@ -1,5 +1,6 @@
 require 'charlock_holmes'
 require 'csv'
+require 'axlsx'
 
 class VisualizationsController < ApplicationController
 
@@ -11,6 +12,26 @@ class VisualizationsController < ApplicationController
                         .includes(:source,:target)
                         .order("nodes.name")
     @related_items  = Visualization.all
+    respond_to do |format|
+      format.html
+      format.xlsx do
+        p = Axlsx::Package.new
+        wb = p.workbook
+        wb.add_worksheet(name: "Nodes") do |sheet|
+          sheet.add_row ["name", "type", "description", "visible", "custom_field"]
+          @nodes.each do |node|
+            sheet.add_row [node.name, node.node_type, node.description,  node.visible, node.custom_field]
+          end
+        end
+        wb.add_worksheet(name: "Relations") do |sheet|
+          sheet.add_row ["source", "source_name", "target", "target_name", "type", "date"]
+          @relations.each do |relation|
+            sheet.add_row [relation.source.id, relation.source.name, relation.target.id, relation.target.name, relation.relation_type, relation.at]
+          end
+        end
+        send_data p.to_stream.read, type: "application/xlsx", filename: @visualization.name+".xlsx"
+      end
+    end
   end
 
   # GET /visualizations/new
