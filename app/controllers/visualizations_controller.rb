@@ -35,9 +35,9 @@ class VisualizationsController < ApplicationController
         end
         # setup relations sheet
         wb.add_worksheet(name: "relations") do |sheet|
-          sheet.add_row ["source", "source_name", "target", "target_name", "type", "date"]
+          sheet.add_row ["source", "source_name", "target", "target_name", "type", "date", "direction"]
           @relations.each do |relation|
-            sheet.add_row [relation.source.id.to_i-first_id, relation.source.name, relation.target.id-first_id, relation.target.name, relation.relation_type, relation.at]
+            sheet.add_row [relation.source.id.to_i-first_id, relation.source.name, relation.target.id-first_id, relation.target.name, relation.relation_type, relation.at, relation.direction ? 1 : 0]
           end
         end
         send_data p.to_stream.read, type: "application/xlsx", filename: @visualization.name+".xlsx"
@@ -189,6 +189,7 @@ class VisualizationsController < ApplicationController
                       target:         dataset.nodes.find( id_base+row['target'].to_i ), 
                       relation_type:  row['type'],
                       at:             row['date'],
+                      direction:      row['direction'] ? row['direction'] : true,
                       dataset:        dataset ).save!
       end
 
