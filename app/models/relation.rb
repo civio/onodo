@@ -13,7 +13,9 @@ class Relation < ActiveRecord::Base
 
   # Override `at` getter & setter
   def at=(at)
-    write_attribute(:at, Date.strptime(at, '%Y'))
+    if at
+      write_attribute(:at, Date.strptime(at, '%Y'))
+    end
   end
 
   def at

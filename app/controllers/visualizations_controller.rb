@@ -7,26 +7,37 @@ class VisualizationsController < ApplicationController
   # GET /visualizations/:id
   def show
     @visualization  = Visualization.find(params[:id])
-    @nodes          = Node.where(dataset_id: params[:id]).order(:name)
-    @relations      = Relation.where(dataset_id: params[:id])
-                        .includes(:source,:target)
-                        .order("nodes.name")
-    @related_items  = Visualization.all
+    dataset         = Dataset.find_by(visualization_id: params[:id])
+    @nodes          = Node.where(dataset_id: dataset.id)
+    @relations      = Relation.where(dataset_id: dataset.id)
+    
     respond_to do |format|
-      format.html
+      format.html do
+        # reorder nodes & relations
+        @nodes          = @nodes.order(:name)
+        @relations      = @relations.includes(:source,:target).order("nodes.name")
+        # !!!TODO -> we get all visualization for related_items; needs improvement
+        @related_items  = Visualization.all
+      end
       format.xlsx do
         p = Axlsx::Package.new
         wb = p.workbook
-        wb.add_worksheet(name: "Nodes") do |sheet|
-          sheet.add_row ["name", "type", "description", "visible", "custom_field"]
+        @nodes = @nodes.order(:id)
+        # get nodes lowest id
+        first_id        = @nodes.first.id - 1
+        puts first_id
+        # setup nodes sheet
+        wb.add_worksheet(name: "nodes") do |sheet|
+          sheet.add_row ["id", "name", "type", "description", "visible", "custom_field"]
           @nodes.each do |node|
-            sheet.add_row [node.name, node.node_type, node.description,  node.visible, node.custom_field]
+            sheet.add_row [node.id.to_i-first_id, node.name, node.node_type, node.description, node.visible ? 1 : 0, node.custom_field]
           end
         end
-        wb.add_worksheet(name: "Relations") do |sheet|
+        # setup relations sheet
+        wb.add_worksheet(name: "relations") do |sheet|
           sheet.add_row ["source", "source_name", "target", "target_name", "type", "date"]
           @relations.each do |relation|
-            sheet.add_row [relation.source.id, relation.source.name, relation.target.id, relation.target.name, relation.relation_type, relation.at]
+            sheet.add_row [relation.source.id.to_i-first_id, relation.source.name, relation.target.id-first_id, relation.target.name, relation.relation_type, relation.at]
           end
         end
         send_data p.to_stream.read, type: "application/xlsx", filename: @visualization.name+".xlsx"
@@ -140,7 +151,7 @@ class VisualizationsController < ApplicationController
       CSV.parse(utf8_encoded_content, headers: true) do |row|
         next if row.size == 0  # Skip empty lines
     
-        # TODO!!! we suposse a format ID,Name,Family,Appareances,Actor,Url
+        
         # if row['Actor']
         #   if row['Url']
         #     description = row['Actor'] + ' ' + row['Url']
@@ -151,6 +162,7 @@ class VisualizationsController < ApplicationController
         #   description = row['Url']
         # end
         
+        # TODO!!! we suposse a format id,name,type,description,visible,custom_field
         Node.new( name:         row['name'],
                   description:  row['description'] ? row['description'] : '',
                   node_type:    row['type'],
@@ -167,19 +179,20 @@ class VisualizationsController < ApplicationController
       utf8_encoded_content = CharlockHolmes::Converter.convert content, detection[:encoding], 'UTF-8'
      
       # Get id base
-      id_base = dataset.nodes.nil? || dataset.nodes.first.nil? ? 1 : dataset.nodes.first.id.to_i
-      id_base -= 1
-      
+      id_base = dataset.nodes.nil? || dataset.nodes.first.nil? ? 0 : dataset.nodes.first.id.to_i-1
 
       CSV.parse(utf8_encoded_content, headers: true) do |row|
         next if row.size == 0  # Skip empty lines
 
-        # TODO!!! we suposse a format source,source_name,target,target_name,type
-        
+        # TODO!!! we suposse a format source,source_name,target,target_name,type,date
         Relation.new( source:         dataset.nodes.find( id_base+row['source'].to_i ),
                       target:         dataset.nodes.find( id_base+row['target'].to_i ), 
                       relation_type:  row['type'],
+                      at:             row['date'],
                       dataset:        dataset ).save!
       end
+
+      puts '----- id_base'
+      puts id_base
     end
 end
