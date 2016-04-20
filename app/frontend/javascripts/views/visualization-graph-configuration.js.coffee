@@ -4,7 +4,7 @@ class VisualizationGraphConfiguration extends Backbone.View
   parameters: null
   parametersDefault: {
     relationsCurvature: 1
-    linkDistance:       60
+    linkDistance:       100
     linkStrength:       1
     friction:           0.9
     charge:             -150

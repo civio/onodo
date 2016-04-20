@@ -4,8 +4,6 @@ class VisualizationGraphCanvas extends Backbone.View
 
   NODES_SIZE: 11
 
-  RELATIONS_CURVATURE: 1
-
   COLOR_CUALITATIVE: [
     '#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', 
     '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'
@@ -30,6 +28,7 @@ class VisualizationGraphCanvas extends Backbone.View
   force:                  null
   forceDrag:              null
   linkedByIndex:          {}
+  parameters:             null
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -52,7 +51,9 @@ class VisualizationGraphCanvas extends Backbone.View
 
   initialize: (options) ->
 
-    console.log 'initialize canvas'
+    @parameters = options.parameters;
+
+    console.log 'initialize canvas', @parameters
 
     # Setup color scale
     #@color = d3.scale.category20()
@@ -72,9 +73,12 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # Setup force
     @force = d3.layout.force()
-      .charge(-150)
-      .linkDistance(150)
-      #.linkStrength(2)
+      .linkDistance(@parameters.linkDistance)
+      .linkStrength(@parameters.linkStrength)
+      .friction(@parameters.friction)
+      .charge(@parameters.charge)
+      .theta(@parameters.theta)
+      .gravity(@parameters.gravity)
       .size([@viewport.width, @viewport.height])
       .on('tick', @onTick)
 
@@ -238,8 +242,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # Appending to the enter selection expands the update selection to include
     # entering elements; so, operations on the update selection after appending to
     # the enter selection will apply to both entering and updating nodes.
-    @nodes_labels.text (d) -> return d.name #@formatNodesLabels
-
+    @nodes_labels.text (d) -> return d.name
     @nodes_labels.call @formatNodesLabels
 
     # EXIT
@@ -429,7 +432,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @updateLayout()
 
   updateRelationsCurvature: (value) ->
-    @RELATIONS_CURVATURE = value
+    @parameters.relationsCurvature = value
     @onTick()
 
   updateForceLayoutParameter: (param, value) ->
@@ -536,7 +539,7 @@ class VisualizationGraphCanvas extends Backbone.View
       dx = d.target.x - d.source.x
       dy = d.target.y - d.source.y
       # Calculate distance between source & target positions
-      dist = @RELATIONS_CURVATURE * Math.sqrt dx*dx + dy*dy
+      dist = @parameters.relationsCurvature * Math.sqrt dx*dx + dy*dy
       #console.log 'dist', dist
       # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
       angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
@@ -585,11 +588,8 @@ class VisualizationGraphCanvas extends Backbone.View
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
   formatNodesLabels: (nodes) ->
-    console.log 'formatNodesLabels', nodes
-
     nodes.each () ->
       node = d3.select(this)
-      console.log node.text()
       words = node.text().split(/\s+/).reverse()
       line = []
       i = 0

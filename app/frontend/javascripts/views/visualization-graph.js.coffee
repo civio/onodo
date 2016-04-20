@@ -75,8 +75,8 @@ class VisualizationGraph extends Backbone.View
   render: ->
     console.log 'render Graph'
     # Setup Views
-    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection()}
     @visualizationGraphConfiguration  = new VisualizationGraphConfiguration {model: @model}
+    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(), parameters: @visualizationGraphConfiguration.parameters}
     @visualizationGraphNavigation     = new VisualizationGraphNavigation
     @visualizationGraphInfo           = new VisualizationGraphInfo
     # Setup Events Listeners
