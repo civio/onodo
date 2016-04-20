@@ -5,27 +5,43 @@
   .panel-body
     %ul#visualization-graph-panel-configuration-tabs.nav.nav-tabs{ role: "tablist" }
       %li.active{ role: "presentation" }
-        %a#basic-tab{ href: "#basic", role: "tab", "data-toggle": "tab" }
-          Basic
+        %a#nodes-tab{ href: "#nodes", role: "tab", "data-toggle": "tab" }
+          Nodes
+      %li{ role: "presentation" }
+        %a#relations-tab{ href: "#relations", role: "tab", "data-toggle": "tab" }
+          Relations
       %li{ role: "presentation" }
         %a#advanced-tab{ href: "#advanced", role: "tab", "data-toggle": "tab" }
           Advanced
     #visualization-graph-panel-configuration-tab-content.tab-content
-      #basic.tab-pane.fade.in.active{ role: "tabpanel" }
-        -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
+      #nodes.tab-pane.fade.in.active{ role: "tabpanel" }
+        .form-group
+          %label
+            Nodes Size
+          %select#nodes-size.form-control
+            %option{ value: 6 }
+              Small
+            %option{ value: 11 }
+              Medium
+            %option{ value: 14 }
+              Large
+            %option{ value: 18 }
+              Extra Large
         .checkbox
           %label{ :for => "hideLabels" }
             = check_box_tag :hideLabels
-            Hide labels
+            Hide Node Labels
         .checkbox
           %label{ :for => "hideNoRelations" }
             = check_box_tag :hideNoRelations
-            Hide nodes without relations
+            Hide Nodes without relations
+      #relations.tab-pane.fade{ role: "tabpanel" }
         .form-group
           %label{ for: "curvature"}
-            Curvature
+            Relations curvature
           %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
       #advanced.tab-pane.fade{ role: "tabpanel" }
+        -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
         .form-group
           %label{ for: "linkdistante"}
             Link Distance

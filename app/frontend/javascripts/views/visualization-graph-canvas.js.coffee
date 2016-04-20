@@ -2,8 +2,6 @@ d3 = require 'd3'
 
 class VisualizationGraphCanvas extends Backbone.View
 
-  NODES_SIZE: 11
-
   COLOR_CUALITATIVE: [
     '#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', 
     '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'
@@ -186,7 +184,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .on('dblclick',   @onNodeDoubleClick)
     .append('circle')
       .attr('class', 'node-circle')
-      .attr('r', @NODES_SIZE)
+      .attr('r', @parameters.nodesSize)
       .style('fill', (d) => return @color(d.node_type))
       .style('stroke', (d) => return @color(d.node_type))
 
@@ -236,7 +234,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .attr('id', (d,i) -> return 'node-label-'+d.id)
       .attr('class', 'node-label')
       .attr('dx', 0)
-      .attr('dy', @NODES_SIZE+13)
+      .attr('dy', parseInt(@parameters.nodesSize)+13)
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include
@@ -416,6 +414,12 @@ class VisualizationGraphCanvas extends Backbone.View
   # Config Methods
   # ---------------
 
+  updateNodesSize: (value) =>
+    console.log 'updateNodesSize', value
+    @parameters.nodesSize = value
+    @nodes.selectAll('.node-circle').attr('r', @parameters.nodesSize)
+    @nodes_labels.selectAll('.first-line').attr('dy', parseInt(@parameters.nodesSize)+13)
+
   toogleLabels: (value) =>
     @nodes_labels.classed 'hide', value
   
@@ -589,6 +593,7 @@ class VisualizationGraphCanvas extends Backbone.View
 
   formatNodesLabels: (nodes) ->
     nodes.each () ->
+      #console.log 'formatNodesLabels 2', @parameters.nodesSize
       node = d3.select(this)
       words = node.text().split(/\s+/).reverse()
       line = []

@@ -392,7 +392,7 @@
     top: 0;
     bottom: 0;
     right: -400px;
-    width: 360px;
+    width: 400px;
     border-radius: 0;
     z-index: 100;
     @include transition( right 0.5s ease-out );
@@ -416,7 +416,7 @@
     .nav-tabs{
 
       > li{
-        width: 50%;
+        width: 33.33%;
         text-transform: uppercase;
         text-align: center;
 

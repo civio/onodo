@@ -3,6 +3,7 @@ class VisualizationGraphConfiguration extends Backbone.View
   el: '.visualization-graph-panel-configuration'
   parameters: null
   parametersDefault: {
+    nodesSize:          11
     relationsCurvature: 1
     linkDistance:       100
     linkStrength:       1
@@ -17,6 +18,11 @@ class VisualizationGraphConfiguration extends Backbone.View
     value = $(e.target).val()
     @parameters[ key ] = value
     Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: key, value: value}
+
+  onChangeNodesSize: (e) =>
+    @parameters.nodesSize = $(e.target).val()
+    Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
+    @updateParameters()
 
   onToogleLabels: (e) =>
     @parameters.hideLabels = $(e.target).prop('checked')
@@ -52,6 +58,8 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   setupParameters: ->
     @parameters = @parameters || {}
+    # setup parameters
+    @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
     @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
     @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
     @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
@@ -59,6 +67,9 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.charge              = @parameters.charge || @parametersDefault.charge
     @parameters.theta               = @parameters.theta || @parametersDefault.theta
     @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
+    # setup nodes-size selector
+    @$el.find('#nodes-size').val @parameters.nodesSize
+    # setup sliders
     @setupSlidersValues()
 
   updateParameters: ->
@@ -87,6 +98,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     # Setup parameters
     @setupParameters()
     # Visualization Styles
+    @$el.find('#nodes-size').change @onChangeNodesSize
     @$el.find('#hideLabels').change @onToogleLabels
     @$el.find('#hideNoRelations').change @onToogleNoRelations
     @$el.find('#curvature').change @onChangeRelationsCurvature
@@ -97,6 +109,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#charge').change @onChangeValue
     @$el.find('#theta').change @onChangeValue
     @$el.find('#gravity').change @onChangeValue
+
     # Handle reset defaults
     @$el.find('#reset-defaults').click @onResetDefaults
     return this
