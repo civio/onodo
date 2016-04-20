@@ -24,30 +24,32 @@
         .form-group
           %label{ for: "curvature"}
             Curvature
-          %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-value": "1", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
+          %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
       #advanced.tab-pane.fade{ role: "tabpanel" }
         .form-group
           %label{ for: "linkdistante"}
             Link Distance
-          %input#linkdistance.form-control.slider{name: "linkDistance", type: "text", "data-slider-min": "10", "data-slider-max": "200", "data-slider-value": "60"}
+          %input#linkdistance.form-control.slider{name: "linkDistance", type: "text", "data-slider-min": "10", "data-slider-max": "200"}
         .form-group
           %label{ for: "linkstrengh"}
             Link Strength
-          %input#linkstrength.form-control.slider{name: "linkStrength", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "1", "data-slider-step": "0.01"}
+          %input#linkstrength.form-control.slider{name: "linkStrength", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-step": "0.01"}
         .form-group
           %label{ for: "friction"}
             Friction
-          %input#friction.form-control.slider{name: "friction", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "0.9", "data-slider-step": "0.01"}
+          %input#friction.form-control.slider{name: "friction", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-step": "0.01"}
         .form-group
           %label{ for: "charge"}
             Charge
-          %input#charge.form-control.slider{name: "charge", type: "text", "data-slider-min": "-200", "data-slider-max": "200", "data-slider-value": "-150"}
+          %input#charge.form-control.slider{name: "charge", type: "text", "data-slider-min": "-200", "data-slider-max": "200"}
         .form-group
           %label{ for: "theta"}
             Theta
-          %input#theta.form-control.slider{name: "theta", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "0.8", "data-slider-step": "0.01"}
+          %input#theta.form-control.slider{name: "theta", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-step": "0.01"}
         .form-group
           %label{ for: "gravity"}
             Gravity
-          %input#gravity.form-control.slider{name: "gravity", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-value": "0.1", "data-slider-step": "0.01"}
+          %input#gravity.form-control.slider{name: "gravity", type: "text", "data-slider-min": "0", "data-slider-max": "1", "data-slider-step": "0.01"}
+        %button#reset-defaults.btn.tbn-sm.btn-primary.btn-invert
+          Reset defaults
 

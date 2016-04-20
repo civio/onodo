@@ -2,6 +2,15 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   el: '.visualization-graph-panel-configuration'
   parameters: null
+  parametersDefault: {
+    relationsCurvature: 1
+    linkDistance:       60
+    linkStrength:       1
+    friction:           0.9
+    charge:             -150
+    theta:              0.8
+    gravity:            0.1
+  }
 
   onChangeValue: (e) =>
     key = $(e.target).attr('name')
@@ -24,33 +33,45 @@ class VisualizationGraphConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
 
   onUpdateVisualizationParemeters: (e) =>
-      console.log 'onUpdateVisualizationParemeters'
-      # we update parameters from bootstrap-slider only when slideStop event is triggeres
-      # in order to avoid redundancy
-      @updateParameters()
+    # we update parameters from bootstrap-slider only when slideStop event is triggeres
+    # in order to avoid redundancy
+    @updateParameters()
+
+  onResetDefaults: (e) =>
+    e.preventDefault()
+    $(e.target).blur()
+    # we only reset force layout params
+    @parameters.linkDistance        = @parametersDefault.linkDistance
+    @parameters.linkStrength        = @parametersDefault.linkStrength
+    @parameters.friction            = @parametersDefault.friction
+    @parameters.charge              = @parametersDefault.charge
+    @parameters.theta               = @parametersDefault.theta
+    @parameters.gravity             = @parametersDefault.gravity
+    @setupSlidersValues()
+    @updateParameters()
 
   setupParameters: ->
-    if @parameters == null
-      @parameters = {}
-
-    if @parameters.relationsCurvature
-      @$el.find('#curvature').slider('setValue', parseFloat @parameters.relationsCurvature)
-    if @parameters.linkDistance
-      @$el.find('#linkdistance').slider('setValue', parseFloat @parameters.linkDistance)
-    if @parameters.linkStrength
-      @$el.find('#linkstrength').slider('setValue', parseFloat @parameters.linkStrength)
-    if @parameters.friction
-      @$el.find('#friction').slider('setValue', parseFloat @parameters.friction)
-    if @parameters.charge
-      @$el.find('#charge').slider('setValue', parseFloat @parameters.charge)
-    if @parameters.theta
-      @$el.find('#theta').slider('setValue', parseFloat @parameters.theta)
-    if @parameters.gravity
-      @$el.find('#gravity').slider('setValue', parseFloat @parameters.gravity)
+    @parameters = @parameters || {}
+    @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
+    @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
+    @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
+    @parameters.friction            = @parameters.friction || @parametersDefault.friction
+    @parameters.charge              = @parameters.charge || @parametersDefault.charge
+    @parameters.theta               = @parameters.theta || @parametersDefault.theta
+    @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
+    @setupSlidersValues()
 
   updateParameters: ->
-    console.log 'updateParameters', JSON.stringify @parameters
     @model.save { parameters: JSON.stringify @parameters }
+
+  setupSlidersValues: ->
+    @$el.find('#curvature').slider    'setValue', parseFloat @parameters.relationsCurvature
+    @$el.find('#linkdistance').slider 'setValue', parseFloat @parameters.linkDistance
+    @$el.find('#linkstrength').slider 'setValue', parseFloat @parameters.linkStrength
+    @$el.find('#friction').slider     'setValue', parseFloat @parameters.friction
+    @$el.find('#charge').slider       'setValue', parseFloat @parameters.charge
+    @$el.find('#theta').slider        'setValue', parseFloat @parameters.theta
+    @$el.find('#gravity').slider      'setValue', parseFloat @parameters.gravity
 
   initialize: ->
     @render()
@@ -76,6 +97,8 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#charge').change @onChangeValue
     @$el.find('#theta').change @onChangeValue
     @$el.find('#gravity').change @onChangeValue
+    # Handle reset defaults
+    @$el.find('#reset-defaults').click @onResetDefaults
     return this
 
 module.exports = VisualizationGraphConfiguration
