@@ -643,6 +643,9 @@
 	  extend(VisualizationGraphCanvas, superClass);
 
 	  function VisualizationGraphCanvas() {
+	    this.setNodesRelationsSize = bind(this.setNodesRelationsSize, this);
+	    this.getNodeSize = bind(this.getNodeSize, this);
+	    this.getNodeLabelYPos = bind(this.getNodeLabelYPos, this);
 	    this.onTick = bind(this.onTick, this);
 	    this.onNodeDoubleClick = bind(this.onNodeDoubleClick, this);
 	    this.onNodeClick = bind(this.onNodeClick, this);
@@ -704,6 +707,8 @@
 
 	  VisualizationGraphCanvas.prototype.parameters = null;
 
+	  VisualizationGraphCanvas.prototype.nodes_relations_size = null;
+
 	  VisualizationGraphCanvas.prototype.viewport = {
 	    width: 0,
 	    height: 0,
@@ -746,6 +751,9 @@
 	    refY = Math.round(Math.sqrt(this.parameters.nodesSize));
 	    defs.append('svg:marker').attr('id', 'arrow-end').attr('class', 'arrow-marker').attr('viewBox', '-8 -10 8 20').attr('refX', refX).attr("refY", -refY).attr('markerWidth', 10).attr('markerHeight', 10).attr('orient', 'auto').append('svg:path').attr('d', 'M -8 -10 L 0 0 L -8 10');
 	    defs.append('svg:marker').attr('id', 'arrow-start').attr('class', 'arrow-marker').attr('viewBox', '0 -10 8 20').attr('refX', -refX).attr('refY', refY).attr('markerWidth', 10).attr('markerHeight', 10).attr('orient', 'auto').append('svg:path').attr('d', 'M 8 -10 L 0 0 L 8 10');
+	    if (this.parameters.nodesSize === 1) {
+	      this.setNodesRelationsSize();
+	    }
 	    this.container = this.svg.append('g');
 	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
 	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
@@ -793,7 +801,7 @@
 
 	  VisualizationGraphCanvas.prototype.updateNodes = function() {
 	    this.nodes = this.nodes_cont.selectAll('.node').data(this.data_nodes);
-	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.parameters.nodesSize).style('fill', (function(_this) {
+	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.getNodeSize).style('fill', (function(_this) {
 	      return function(d) {
 	        return _this.color(d.node_type);
 	      };
@@ -827,7 +835,7 @@
 	    this.nodes_labels = this.nodes_labels_cont.selectAll('.node-label').data(this.data_nodes);
 	    this.nodes_labels.enter().append('text').attr('id', function(d, i) {
 	      return 'node-label-' + d.id;
-	    }).attr('class', 'node-label').attr('dx', 0).attr('dy', parseInt(this.parameters.nodesSize) + 13);
+	    }).attr('class', 'node-label').attr('dx', 0).attr('dy', this.getNodeLabelYPos);
 	    this.nodes_labels.text(function(d) {
 	      return d.name;
 	    });
@@ -949,7 +957,6 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.focusNode = function(node) {
-	    console.log(node);
 	    this.unfocusNode();
 	    return this.nodes.selectAll('#node-' + node.id + ' .node-circle').classed('active', true);
 	  };
@@ -987,9 +994,12 @@
 	  VisualizationGraphCanvas.prototype.updateNodesSize = function(value) {
 	    var refX, refY;
 	    console.log('updateNodesSize', value);
-	    this.parameters.nodesSize = value;
-	    this.nodes.selectAll('.node-circle').attr('r', this.parameters.nodesSize);
-	    this.nodes_labels.selectAll('.first-line').attr('dy', parseInt(this.parameters.nodesSize) + 13);
+	    this.parameters.nodesSize = parseInt(value);
+	    if (this.parameters.nodesSize === 1) {
+	      this.setNodesRelationsSize();
+	    }
+	    this.nodes.selectAll('.node-circle').attr('r', this.getNodeSize);
+	    this.nodes_labels.selectAll('.first-line').attr('dy', this.getNodeLabelYPos);
 	    refX = 1 + (2 * this.parameters.nodesSize);
 	    refY = Math.round(Math.sqrt(this.parameters.nodesSize));
 	    this.svg.select('#arrow-end').attr('refX', refX).attr('refY', -refY);
@@ -1220,6 +1230,39 @@
 
 	  VisualizationGraphCanvas.prototype.areNodesRelated = function(a, b) {
 	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
+	  };
+
+	  VisualizationGraphCanvas.prototype.getNodeLabelYPos = function(d) {
+	    return parseInt(this.svg.select('#node-' + d.id).select('.node-circle').attr('r')) + 13;
+	  };
+
+	  VisualizationGraphCanvas.prototype.getNodeSize = function(d) {
+	    var size;
+	    if (this.parameters.nodesSize === 1) {
+	      size = 5 + 15 * (this.nodes_relations_size[d.id] / this.data_relations_visibles.max);
+	    } else {
+	      size = this.parameters.nodesSize;
+	    }
+	    return size;
+	  };
+
+	  VisualizationGraphCanvas.prototype.setNodesRelationsSize = function() {
+	    this.nodes_relations_size = {};
+	    this.data_nodes.forEach((function(_this) {
+	      return function(d) {
+	        return _this.nodes_relations_size[d.id] = 0;
+	      };
+	    })(this));
+	    this.data_relations_visibles.forEach((function(_this) {
+	      return function(d) {
+	        _this.nodes_relations_size[d.source_id] += 1;
+	        return _this.nodes_relations_size[d.target_id] += 1;
+	      };
+	    })(this));
+	    this.data_relations_visibles.max = d3.max(d3.entries(this.nodes_relations_size), function(d) {
+	      return d.value;
+	    });
+	    return console.log('setNodesRelationsSize', this.nodes_relations_size);
 	  };
 
 	  VisualizationGraphCanvas.prototype.formatNodesLabels = function(nodes) {

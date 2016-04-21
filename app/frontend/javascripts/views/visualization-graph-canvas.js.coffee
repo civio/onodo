@@ -27,6 +27,7 @@ class VisualizationGraphCanvas extends Backbone.View
   forceDrag:              null
   linkedByIndex:          {}
   parameters:             null
+  nodes_relations_size:   null
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -124,6 +125,10 @@ class VisualizationGraphCanvas extends Backbone.View
       .append('svg:path')
         .attr('d', 'M 8 -10 L 0 0 L 8 10')
 
+    # if nodesSize = 1, set nodes size based on its number of relations
+    if @parameters.nodesSize == 1
+      @setNodesRelationsSize()  # initialize nodes_relations_size array
+
     # Setup containers
     @container            = @svg.append('g')
     @relations_cont       = @container.append('g').attr('class', 'relations-cont')
@@ -187,7 +192,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .on('dblclick',   @onNodeDoubleClick)
     .append('circle')
       .attr('class', 'node-circle')
-      .attr('r', @parameters.nodesSize)
+      .attr('r', @getNodeSize)
       .style('fill', (d) => return @color(d.node_type))
       .style('stroke', (d) => return @color(d.node_type))
 
@@ -237,7 +242,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .attr('id', (d,i) -> return 'node-label-'+d.id)
       .attr('class', 'node-label')
       .attr('dx', 0)
-      .attr('dy', parseInt(@parameters.nodesSize)+13)
+      .attr('dy', @getNodeLabelYPos)
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include
@@ -376,7 +381,6 @@ class VisualizationGraphCanvas extends Backbone.View
     @removeNode node
 
   focusNode: (node)->
-    console.log node
     @unfocusNode()
     @nodes.selectAll('#node-'+node.id+' .node-circle').classed('active', true)
 
@@ -419,11 +423,14 @@ class VisualizationGraphCanvas extends Backbone.View
 
   updateNodesSize: (value) =>
     console.log 'updateNodesSize', value
-    @parameters.nodesSize = value
+    @parameters.nodesSize = parseInt(value)
+    # if nodesSize = 1, set nodes size based on its number of relations
+    if @parameters.nodesSize == 1
+      @setNodesRelationsSize()
     # update nodes radius
-    @nodes.selectAll('.node-circle').attr('r', @parameters.nodesSize)
+    @nodes.selectAll('.node-circle').attr('r', @getNodeSize)
     # update nodes labels position
-    @nodes_labels.selectAll('.first-line').attr('dy', parseInt(@parameters.nodesSize)+13)
+    @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
     # update relations arrows position
     refX = 1+(2*@parameters.nodesSize)
     refY = Math.round(Math.sqrt(@parameters.nodesSize))
@@ -585,6 +592,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
   
+
   # Auxiliar Methods
   # ----------------
 
@@ -604,6 +612,29 @@ class VisualizationGraphCanvas extends Backbone.View
 
   areNodesRelated: (a, b) ->
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
+
+  getNodeLabelYPos: (d) =>
+    return parseInt(@svg.select('#node-'+d.id).select('.node-circle').attr('r'))+13
+
+  getNodeSize: (d) =>
+    # if nodesSize = 1, set size based on node relations
+    if @parameters.nodesSize == 1
+      size = 5+15*(@nodes_relations_size[d.id]/@data_relations_visibles.max)
+    else
+      size = @parameters.nodesSize
+    return size
+
+  setNodesRelationsSize: =>
+    @nodes_relations_size = {}
+    # initialize nodes_relations_size object with all nodes with zero value
+    @data_nodes.forEach (d) =>
+      @nodes_relations_size[d.id] = 0
+    # increment each node value which has a relation
+    @data_relations_visibles.forEach (d) =>
+      @nodes_relations_size[d.source_id] += 1
+      @nodes_relations_size[d.target_id] += 1
+    @data_relations_visibles.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
+    console.log 'setNodesRelationsSize', @nodes_relations_size
 
   formatNodesLabels: (nodes) ->
     nodes.each () ->
