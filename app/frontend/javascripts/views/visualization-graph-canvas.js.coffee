@@ -96,13 +96,16 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # Define Arrow Markers
     defs = @svg.append('svg:defs')
+    # setup arrows position based on nodes size
+    refX = 1+(2*@parameters.nodesSize)
+    refY = Math.round(Math.sqrt(@parameters.nodesSize))
     # Setup arrow end
     defs.append('svg:marker')
         .attr('id', 'arrow-end')
         .attr('class', 'arrow-marker')
         .attr('viewBox', '-8 -10 8 20')
-        .attr('refX', 23)
-        .attr("refY", -1)
+        .attr('refX', refX)
+        .attr("refY", -refY)
         .attr('markerWidth', 10)
         .attr('markerHeight', 10)
         .attr('orient', 'auto')
@@ -113,8 +116,8 @@ class VisualizationGraphCanvas extends Backbone.View
         .attr('id', 'arrow-start')
         .attr('class', 'arrow-marker')
         .attr('viewBox', '0 -10 8 20')
-        .attr('refX', -23)
-        .attr("refY", -1)
+        .attr('refX', -refX)
+        .attr('refY', refY)
         .attr('markerWidth', 10)
         .attr('markerHeight', 10)
         .attr('orient', 'auto')
@@ -417,8 +420,19 @@ class VisualizationGraphCanvas extends Backbone.View
   updateNodesSize: (value) =>
     console.log 'updateNodesSize', value
     @parameters.nodesSize = value
+    # update nodes radius
     @nodes.selectAll('.node-circle').attr('r', @parameters.nodesSize)
+    # update nodes labels position
     @nodes_labels.selectAll('.first-line').attr('dy', parseInt(@parameters.nodesSize)+13)
+    # update relations arrows position
+    refX = 1+(2*@parameters.nodesSize)
+    refY = Math.round(Math.sqrt(@parameters.nodesSize))
+    @svg.select('#arrow-end')
+      .attr('refX', refX)
+      .attr('refY', -refY)
+    @svg.select('#arrow-start')
+      .attr('refX', -refX)
+      .attr('refY', refY)
 
   toogleLabels: (value) =>
     @nodes_labels.classed 'hide', value
