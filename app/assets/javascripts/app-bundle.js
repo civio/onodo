@@ -16059,7 +16059,7 @@
 
 	  VisualizationTableNodes.prototype.nodes_types = null;
 
-	  VisualizationTableNodes.prototype.tableColHeaders = ['', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
+	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
 	  function VisualizationTableNodes(collection) {
 	    this.collection = collection;
@@ -16088,6 +16088,10 @@
 	        data: '',
 	        readOnly: true,
 	        renderer: this.rowDeleteRenderer
+	      }, {
+	        data: '',
+	        readOnly: true,
+	        renderer: this.rowDuplicateRenderer
 	      }, {
 	        data: 'name'
 	      }, {
@@ -16140,7 +16144,22 @@
 	    });
 	    return this.collection.once('sync', function() {
 	      this.table.setDataAtRowProp(index, 'id', model.id);
-	      return this.table.setDataAtRowProp(index, 'visible', true);
+	      if (this.duplicate) {
+	        if (this.duplicate.attributes.name) {
+	          this.table.setDataAtRowProp(index, 'name', this.duplicate.attributes.name);
+	        }
+	        if (this.duplicate.attributes.node_type) {
+	          this.table.setDataAtRowProp(index, 'node_type', this.duplicate.attributes.node_type);
+	        }
+	        if (this.duplicate.attributes.description) {
+	          this.table.setDataAtRowProp(index, 'description', this.duplicate.attributes.description);
+	        }
+	        this.table.setDataAtRowProp(index, 'visible', this.duplicate.attributes.visible);
+	        console.log('now set duplicate values');
+	        return this.duplicate = null;
+	      } else {
+	        return this.table.setDataAtRowProp(index, 'visible', true);
+	      }
 	    }, this);
 	  };
 
@@ -45724,6 +45743,7 @@
 	  function VisualizationTableBase(collection, table_type) {
 	    this.collection = collection;
 	    this.rowDeleteRenderer = bind(this.rowDeleteRenderer, this);
+	    this.rowDuplicateRenderer = bind(this.rowDuplicateRenderer, this);
 	    this.showDeleteModal = bind(this.showDeleteModal, this);
 	    this.render = bind(this.render, this);
 	    this.resize = bind(this.resize, this);
@@ -45827,6 +45847,15 @@
 	    return this.table.alter('insert_row', 0, 1);
 	  };
 
+	  VisualizationTableBase.prototype.duplicateRow = function(row) {
+	    var model, model_id;
+	    model_id = this.getIdAtRow(row);
+	    model = this.collection.get(model_id);
+	    this.duplicate = model;
+	    this.table.alter('insert_row', row + 1, 1);
+	    return console.log('duplicate row', row, model);
+	  };
+
 	  VisualizationTableBase.prototype.getIdAtRow = function(index) {
 	    return this.table.getDataAtRowProp(index, 'id');
 	  };
@@ -45844,6 +45873,22 @@
 	      return $modal.find('btn-danger').off('click');
 	    });
 	    return $modal.modal('show');
+	  };
+
+	  VisualizationTableBase.prototype.rowDuplicateRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+	    var link;
+	    link = document.createElement('A');
+	    link.className = 'icon-duplicate';
+	    link.innerHTML = link.title = 'Duplicate ' + this.table_type.charAt(0).toUpperCase() + this.table_type.slice(1);
+	    Handsontable.Dom.empty(td);
+	    td.appendChild(link);
+	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
+	      return function(e) {
+	        e.preventDefault();
+	        return _this.duplicateRow(row);
+	      };
+	    })(this));
+	    return td;
 	  };
 
 	  VisualizationTableBase.prototype.rowDeleteRenderer = function(instance, td, row, col, prop, value, cellProperties) {
@@ -45906,7 +45951,6 @@
 	  function VisualizationTableRelations(collection) {
 	    this.collection = collection;
 	    this.rowDirectionRenderer = bind(this.rowDirectionRenderer, this);
-	    this.rowDuplicateRenderer = bind(this.rowDuplicateRenderer, this);
 	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onRelationsTypesSucess = bind(this.onRelationsTypesSucess, this);
@@ -46006,15 +46050,6 @@
 	        return _this.addRow();
 	      };
 	    })(this));
-	  };
-
-	  VisualizationTableRelations.prototype.duplicateRow = function(row) {
-	    var model, model_id;
-	    model_id = this.getIdAtRow(row);
-	    model = this.collection.get(model_id);
-	    this.duplicate = model;
-	    this.table.alter('insert_row', row + 1, 1);
-	    return console.log('duplicate row', row, model);
 	  };
 
 	  VisualizationTableRelations.prototype.addModel = function(index) {
@@ -46121,22 +46156,6 @@
 	        return this.duplicateRow(selected[0]);
 	      }
 	    }
-	  };
-
-	  VisualizationTableRelations.prototype.rowDuplicateRenderer = function(instance, td, row, col, prop, value, cellProperties) {
-	    var link;
-	    link = document.createElement('A');
-	    link.className = 'icon-duplicate';
-	    link.innerHTML = link.title = 'Duplicate ' + this.table_type.charAt(0).toUpperCase() + this.table_type.slice(1);
-	    Handsontable.Dom.empty(td);
-	    td.appendChild(link);
-	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
-	      return function(e) {
-	        e.preventDefault();
-	        return _this.duplicateRow(row);
-	      };
-	    })(this));
-	    return td;
 	  };
 
 	  VisualizationTableRelations.prototype.rowDirectionRenderer = function(instance, td, row, col, prop, value, cellProperties) {

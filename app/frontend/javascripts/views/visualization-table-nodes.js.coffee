@@ -5,7 +5,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_types:      null
-  tableColHeaders:  ['', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
 
   constructor: (@collection) ->
     super @collection, 'node'
@@ -24,6 +24,11 @@ class VisualizationTableNodes extends VisualizationTableBase
         data: ''
         readOnly: true
         renderer: @rowDeleteRenderer
+      },
+      { 
+        data: '',
+        readOnly: true,
+        renderer: @rowDuplicateRenderer
       },
       { 
         data: 'name' 
@@ -79,7 +84,19 @@ class VisualizationTableNodes extends VisualizationTableBase
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', model.id
-      @table.setDataAtRowProp index, 'visible', true
+      # set duplicated values
+      if @duplicate
+        if @duplicate.attributes.name
+          @table.setDataAtRowProp index, 'name', @duplicate.attributes.name
+        if @duplicate.attributes.node_type
+          @table.setDataAtRowProp index, 'node_type', @duplicate.attributes.node_type
+        if @duplicate.attributes.description
+          @table.setDataAtRowProp index, 'description', @duplicate.attributes.description
+        @table.setDataAtRowProp index, 'visible', @duplicate.attributes.visible
+        console.log 'now set duplicate values'
+        @duplicate = null
+      else
+        @table.setDataAtRowProp index, 'visible', true
     , @
           
   # Method called from parent class `VisualizationTableBase`

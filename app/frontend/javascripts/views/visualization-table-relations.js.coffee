@@ -109,17 +109,6 @@ class VisualizationTableRelations extends VisualizationTableBase
       e.preventDefault()
       @addRow()
 
-  # Duplicate row
-  duplicateRow: (row) ->  
-    # store duplicate model in duplicate variable in order to add row values when model sync in addModel
-    model_id = @getIdAtRow row
-    model = @collection.get(model_id)
-    @duplicate = model
-    # add new row after current one
-    @table.alter('insert_row', row+1, 1 )
-    console.log 'duplicate row', row, model
-
-
   # Method called from parent class `VisualizationTableBase`
   addModel: (index) ->
     console.log 'addModel', index
@@ -206,21 +195,6 @@ class VisualizationTableRelations extends VisualizationTableBase
         e.stopImmediatePropagation()
         e.preventDefault()
         @duplicateRow selected[0]
-
-   # Custom Renderer for duplicate cells
-  rowDuplicateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
-    # Add duplicate icon
-    link = document.createElement('A')
-    link.className = 'icon-duplicate'
-    link.innerHTML = link.title = 'Duplicate ' + @table_type.charAt(0).toUpperCase() + @table_type.slice(1)
-    Handsontable.Dom.empty(td)
-    td.appendChild(link)
-    # Duplicate row on click event
-    Handsontable.Dom.addEvent link, 'click', (e) =>
-      e.preventDefault()
-      #console.log 'rowDuplicateRenderer', instance, td, row, col, prop, value, cellProperties
-      @duplicateRow row
-    return td
 
   # Custom Renderer for direction cells
   rowDirectionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

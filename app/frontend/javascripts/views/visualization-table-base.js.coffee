@@ -81,6 +81,16 @@ class VisualizationTableBase extends Backbone.View
   addRow: ->
     @table.alter('insert_row', 0, 1 )
 
+  # Duplicate row
+  duplicateRow: (row) ->  
+    # store duplicate model in duplicate variable in order to add row values when model sync in addModel
+    model_id = @getIdAtRow row
+    model = @collection.get(model_id)
+    @duplicate = model
+    # add new row after current one
+    @table.alter('insert_row', row+1, 1 )
+    console.log 'duplicate row', row, model
+
   getIdAtRow: (index) ->
     return @table.getDataAtRowProp(index, 'id')
 
@@ -96,6 +106,20 @@ class VisualizationTableBase extends Backbone.View
       $modal.find('btn-danger').off 'click'
     # Show confirmation modal
     $modal.modal 'show'
+
+  # Custom Renderer for duplicate cells
+  rowDuplicateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # Add duplicate icon
+    link = document.createElement('A')
+    link.className = 'icon-duplicate'
+    link.innerHTML = link.title = 'Duplicate ' + @table_type.charAt(0).toUpperCase() + @table_type.slice(1)
+    Handsontable.Dom.empty(td)
+    td.appendChild(link)
+    # Duplicate row on click event
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      @duplicateRow row
+    return td
 
   # Custom Renderer for delete cells
   rowDeleteRenderer: (instance, td, row, col, prop, value, cellProperties) =>
