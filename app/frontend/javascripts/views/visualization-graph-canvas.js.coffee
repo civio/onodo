@@ -97,33 +97,30 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # Define Arrow Markers
     defs = @svg.append('svg:defs')
-    # setup arrows position based on nodes size
-    refX = 1+(2*@parameters.nodesSize)
-    refY = Math.round(Math.sqrt(@parameters.nodesSize))
     # Setup arrow end
     defs.append('svg:marker')
         .attr('id', 'arrow-end')
         .attr('class', 'arrow-marker')
         .attr('viewBox', '-8 -10 8 20')
-        .attr('refX', refX)
-        .attr("refY", -refY)
+        .attr('refX', 2)
+        .attr("refY", 0)
         .attr('markerWidth', 10)
         .attr('markerHeight', 10)
         .attr('orient', 'auto')
       .append('svg:path')
-        .attr('d', 'M -8 -10 L 0 0 L -8 10')
+        .attr('d', 'M -10 -8 L 0 0 L -10 8')
     # Setup arrow start
     defs.append('svg:marker')
         .attr('id', 'arrow-start')
         .attr('class', 'arrow-marker')
         .attr('viewBox', '0 -10 8 20')
-        .attr('refX', -refX)
-        .attr('refY', refY)
+        .attr('refX', -2)
+        .attr('refY', 0)
         .attr('markerWidth', 10)
         .attr('markerHeight', 10)
         .attr('orient', 'auto')
       .append('svg:path')
-        .attr('d', 'M 8 -10 L 0 0 L 8 10')
+        .attr('d', 'M 10 -8 L 0 0 L 10 8')
 
     # if nodesSize = 1, set nodes size based on its number of relations
     if @parameters.nodesSize == 1
@@ -432,14 +429,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # update nodes labels position
     @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
     # update relations arrows position
-    refX = 1+(2*@parameters.nodesSize)
-    refY = Math.round(Math.sqrt(@parameters.nodesSize))
-    @svg.select('#arrow-end')
-      .attr('refX', refX)
-      .attr('refY', -refY)
-    @svg.select('#arrow-start')
-      .attr('refX', -refX)
-      .attr('refY', refY)
+    @relations.attr 'd', @drawRelationPath
 
   toogleLabels: (value) =>
     @nodes_labels.classed 'hide', value
@@ -560,38 +550,55 @@ class VisualizationGraphCanvas extends Backbone.View
   # Tick Function
   onTick: =>
     # Set relations path
-    @relations.attr 'd', (d) =>
-      dx = d.target.x - d.source.x
-      dy = d.target.y - d.source.y
-      # Calculate distance between source & target positions
-      dist = @parameters.relationsCurvature * Math.sqrt dx*dx + dy*dy
-      #console.log 'dist', dist
-      # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
-      angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
-      # Define arc sweep-flag (which defines concave or convex) based on angle parameter
-      if angle >= 0
-        path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y
-      else
-        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y
-      return path
+    @relations.attr 'd', @drawRelationPath # (d) =>   # we need to 
+    # Set relations arrow markers
     @relations.attr 'marker-end', (d) ->
-      unless d.direction
-        return ''
-      dx = d.target.x - d.source.x
-      dy = d.target.y - d.source.y
-      angle = Math.atan2(dx,dy)
-      return if angle >= 0 then 'url(#arrow-end)' else ''
+      return if d.direction and d.angle >= 0 then 'url(#arrow-end)' else ''
     @relations.attr 'marker-start', (d) ->
-      unless d.direction
-        return ''
-      dx = d.target.x - d.source.x
-      dy = d.target.y - d.source.y
-      angle = Math.atan2(dx,dy)
-      return if angle < 0 then 'url(#arrow-start)' else ''
+      return if d.direction and d.angle < 0 then 'url(#arrow-start)' else ''
     # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
   
+  drawRelationPath: (d) =>
+    # vector auxiliar methods from https://stackoverflow.com/questions/13165913/draw-an-arrow-between-two-circles
+    length  = ({x,y}) -> Math.sqrt(x*x + y*y)
+    sum     = ({x:x1,y:y1}, {x:x2,y:y2}) -> {x:x1+x2, y:y1+y2}
+    diff    = ({x:x1,y:y1}, {x:x2,y:y2}) -> {x:x1-x2, y:y1-y2}
+    prod    = ({x,y}, scalar) -> {x:x*scalar, y:y*scalar}
+    div     = ({x,y}, scalar) -> {x:x/scalar, y:y/scalar}
+    unit    = (vector) -> div(vector, length(vector))
+    scale   = (vector, scalar) -> prod(unit(vector), scalar)
+    free    = ([coord1, coord2]) -> diff(coord2, coord1)
+
+    dx = d.target.x - d.source.x
+    dy = d.target.y - d.source.y
+    dist = @parameters.relationsCurvature * Math.sqrt dx*dx + dy*dy  # Calculate distance between source & target positions
+
+    # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
+    d.angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
+
+    # if relation has direction we use vector math to draw its path to the border of target circle
+    if d.direction
+      v1 = scale(free([d.source, d.target]), @getNodeSize(d.source))
+      v2 = scale(free([d.source, d.target]), @getNodeSize(d.target))
+      p1 = sum(d.source, v1)
+      p2 = diff(d.target, v2)
+      
+      # Define arc sweep-flag (which defines concave or convex) based on angle parameter
+      if d.angle >= 0
+        path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + p2.x + ' ' + p2.y
+      else
+        path = 'M ' + p2.x + ' ' + p2.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y
+    # if relation has no direction we draw path from center to center
+    else    
+      # Define arc sweep-flag (which defines concave or convex) based on angle parameter
+      if d.angle >= 0
+        path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + d.target.x + ' ' + d.target.y
+      else
+        path = 'M ' + d.target.x + ' ' + d.target.y + ' A ' + dist + ' ' + dist + ' 0 0 0 ' + d.source.x + ' ' + d.source.y
+      
+    return path
 
   # Auxiliar Methods
   # ----------------
@@ -634,7 +641,7 @@ class VisualizationGraphCanvas extends Backbone.View
       @nodes_relations_size[d.source_id] += 1
       @nodes_relations_size[d.target_id] += 1
     @data_relations_visibles.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
-    console.log 'setNodesRelationsSize', @nodes_relations_size
+    console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
 
   formatNodesLabels: (nodes) ->
     nodes.each () ->
