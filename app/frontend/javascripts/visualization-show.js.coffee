@@ -28,19 +28,15 @@ class VisualizationShow
     # Setup Table Selector
     $('#visualization-table-selector > li > a').click @updateTable
 
-  updateTable: (e) =>
+  updateTable: (e) ->
     e.preventDefault()
     if $(e.target).parent().hasClass('active')
       return
     # Show tab
     $(e.target).tab('show')
     # Update table
-    if $(e.target).attr('href') == '#nodes'
-      $('.visualization-table-nodes').show()
-      $('.visualization-table-relations').hide()
-    else
-      $('.visualization-table-nodes').hide()
-      $('.visualization-table-relations').show()
+    $('#visualization-table-view .tab-pane.active').removeClass('active');
+    $('#visualization-table-view '+$(e.target).attr('href')).addClass('active')
 
   resize: =>
     #console.log 'resize!'

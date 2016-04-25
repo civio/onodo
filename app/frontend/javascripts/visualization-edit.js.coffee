@@ -54,10 +54,11 @@ class VisualizationEdit
     e.preventDefault()
     if $(e.target).parent().hasClass('active')
       return
-    console.log('updateTable', e)
     # Show tab
     $(e.target).tab('show')
     # Update table
+    $('.visualization-table .tab-pane.active').removeClass('active');
+    $('.visualization-table '+$(e.target).attr('href')).addClass('active')
     if $(e.target).attr('href') == '#nodes'
       @visualizationTableRelations.hide()
       @visualizationTableNodes.show()

@@ -138,7 +138,6 @@
 
 	  function VisualizationShow(_id) {
 	    this.resize = bind(this.resize, this);
-	    this.updateTable = bind(this.updateTable, this);
 	    console.log('setup visualization', _id);
 	    this.id = _id;
 	    this.visualization = new VisualizationModel();
@@ -160,13 +159,8 @@
 	      return;
 	    }
 	    $(e.target).tab('show');
-	    if ($(e.target).attr('href') === '#nodes') {
-	      $('.visualization-table-nodes').show();
-	      return $('.visualization-table-relations').hide();
-	    } else {
-	      $('.visualization-table-nodes').hide();
-	      return $('.visualization-table-relations').show();
-	    }
+	    $('#visualization-table-view .tab-pane.active').removeClass('active');
+	    return $('#visualization-table-view ' + $(e.target).attr('href')).addClass('active');
 	  };
 
 	  VisualizationShow.prototype.resize = function() {
@@ -46255,8 +46249,9 @@
 	    if ($(e.target).parent().hasClass('active')) {
 	      return;
 	    }
-	    console.log('updateTable', e);
 	    $(e.target).tab('show');
+	    $('.visualization-table .tab-pane.active').removeClass('active');
+	    $('.visualization-table ' + $(e.target).attr('href')).addClass('active');
 	    if ($(e.target).attr('href') === '#nodes') {
 	      this.visualizationTableRelations.hide();
 	      return this.visualizationTableNodes.show();
