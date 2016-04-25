@@ -5,6 +5,7 @@ class VisualizationGraphConfiguration extends Backbone.View
   parametersDefault: {
     nodesSize:          11
     relationsCurvature: 1
+    relationsLineStyle: 0
     linkDistance:       100
     linkStrength:       1
     friction:           0.9
@@ -38,6 +39,11 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.relationsCurvature = $(e.target).val()
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
 
+  onChangeRelationsLineStyle: (e) =>
+    @parameters.relationsLineStyle = parseInt $(e.target).val()
+    Backbone.trigger 'visualization.config.updateRelationsLineStyle', {value: @parameters.relationsLineStyle}
+    @updateParameters()
+
   onUpdateVisualizationParemeters: (e) =>
     # we update parameters from bootstrap-slider only when slideStop event is triggeres
     # in order to avoid redundancy
@@ -61,14 +67,16 @@ class VisualizationGraphConfiguration extends Backbone.View
     # setup parameters
     @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
     @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
+    @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
     @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
     @parameters.friction            = @parameters.friction || @parametersDefault.friction
     @parameters.charge              = @parameters.charge || @parametersDefault.charge
     @parameters.theta               = @parameters.theta || @parametersDefault.theta
     @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
-    # setup nodes-size selector
+    # setup nodes-size & relations-line-style selectors
     @$el.find('#nodes-size').val @parameters.nodesSize
+    @$el.find('#relations-line-style').val @parameters.relationsLineStyle
     # setup sliders
     @setupSlidersValues()
 
@@ -102,6 +110,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#hideLabels').change @onToogleLabels
     @$el.find('#hideNoRelations').change @onToogleNoRelations
     @$el.find('#curvature').change @onChangeRelationsCurvature
+    @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
     # Force Layout Parameters
     @$el.find('#linkdistance').change @onChangeValue
     @$el.find('#linkstrength').change @onChangeValue

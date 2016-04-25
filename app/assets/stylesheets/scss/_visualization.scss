@@ -177,6 +177,7 @@
       cursor: pointer;
 
       .node-circle{
+        //opacity: 0.4;
         stroke-width: 0;
         stroke-opacity: 0.4;
         @include transition( stroke-width, 0.4s, ease-out );
@@ -189,20 +190,30 @@
 
     .relation {
       fill: none;
-      stroke: $gray-semi-light;
+      stroke: lighten( $gray-semi-light, 10% );
       stroke-width: 1px;
-      stroke-dasharray: 4, 2;
+      opacity: 0.9;
 
       &.weaken{
-        opacity: 0.5;
+        opacity: 0.4;
       }
 
       &.highlighted,
       &.highlighted.weaken{
-        //stroke-width: 2px;
         opacity: 1;
         stroke-dasharray: none;
       }
+    }
+    
+    .relations-cont.line-dashed .relation{
+      stroke: $gray-semi-light;
+      stroke-linecap: square;
+      stroke-dasharray: 3, 3;
+    }
+    .relations-cont.line-dotted .relation{
+      stroke: $gray;
+      stroke-linecap: round;
+      stroke-dasharray: 0, 3;
     }
 
     .node-label{

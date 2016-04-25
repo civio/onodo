@@ -128,7 +128,7 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # Setup containers
     @container            = @svg.append('g')
-    @relations_cont       = @container.append('g').attr('class', 'relations-cont')
+    @relations_cont       = @container.append('g').attr('class', 'relations-cont '+@getRelationsLineStyle(@parameters.relationsLineStyle))
     @nodes_cont           = @container.append('g').attr('class', 'nodes-cont')
     @relations_labels_cont= @container.append('g').attr('class', 'relations-labels-cont')
     @nodes_labels_cont    = @container.append('g').attr('class', 'nodes-labels-cont')
@@ -449,6 +449,16 @@ class VisualizationGraphCanvas extends Backbone.View
   updateRelationsCurvature: (value) ->
     @parameters.relationsCurvature = value
     @onTick()
+
+  updateRelationsLineStyle: (value) ->
+    @relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
+
+  getRelationsLineStyle: (value) ->
+    lineStyle = switch
+      when value == 0 then 'line-solid'
+      when value == 1 then 'line-dashed'
+      else 'line-dotted' 
+    return lineStyle
 
   updateForceLayoutParameter: (param, value) ->
     @force.stop()

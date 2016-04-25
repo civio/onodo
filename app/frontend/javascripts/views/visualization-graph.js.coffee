@@ -108,6 +108,7 @@ class VisualizationGraph extends Backbone.View
     Backbone.on 'visualization.config.toogleLabels',                @onToogleLabels, @
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
+    Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
     # Subscribe Navigation Events
     Backbone.on 'visualization.navigation.zoomin',      @onZoomIn, @
@@ -208,6 +209,9 @@ class VisualizationGraph extends Backbone.View
 
   onUpdateRelationsCurvature: (e) ->
     @visualizationGraphCanvas.updateRelationsCurvature e.value
+
+  onUpdateRelationsLineStyle: (e) ->
+    @visualizationGraphCanvas.updateRelationsLineStyle e.value
 
   onUpdateForceLayoutParam: (e) ->
     @visualizationGraphCanvas.updateForceLayoutParameter e.name, e.value

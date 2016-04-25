@@ -42,6 +42,16 @@
           %label{ for: "curvature"}
             Relations curvature
           %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
+        .form-group
+          %label
+            Relations line style
+          %select#relations-line-style.form-control
+            %option{ value: 0 }
+              Solid
+            %option{ value: 1 }
+              Dashed
+            %option{ value: 2 }
+              Dotted
       #advanced.tab-pane.fade{ role: "tabpanel" }
         -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
         .form-group

@@ -483,6 +483,7 @@
 	    Backbone.on('visualization.config.toogleLabels', this.onToogleLabels, this);
 	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
 	    Backbone.on('visualization.config.updateRelationsCurvature', this.onUpdateRelationsCurvature, this);
+	    Backbone.on('visualization.config.updateRelationsLineStyle', this.onUpdateRelationsLineStyle, this);
 	    Backbone.on('visualization.config.updateForceLayoutParam', this.onUpdateForceLayoutParam, this);
 	    Backbone.on('visualization.navigation.zoomin', this.onZoomIn, this);
 	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
@@ -595,6 +596,10 @@
 
 	  VisualizationGraph.prototype.onUpdateRelationsCurvature = function(e) {
 	    return this.visualizationGraphCanvas.updateRelationsCurvature(e.value);
+	  };
+
+	  VisualizationGraph.prototype.onUpdateRelationsLineStyle = function(e) {
+	    return this.visualizationGraphCanvas.updateRelationsLineStyle(e.value);
 	  };
 
 	  VisualizationGraph.prototype.onUpdateForceLayoutParam = function(e) {
@@ -754,7 +759,7 @@
 	      this.setNodesRelationsSize();
 	    }
 	    this.container = this.svg.append('g');
-	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont');
+	    this.relations_cont = this.container.append('g').attr('class', 'relations-cont ' + this.getRelationsLineStyle(this.parameters.relationsLineStyle));
 	    this.nodes_cont = this.container.append('g').attr('class', 'nodes-cont');
 	    this.relations_labels_cont = this.container.append('g').attr('class', 'relations-labels-cont');
 	    this.nodes_labels_cont = this.container.append('g').attr('class', 'nodes-labels-cont');
@@ -1029,6 +1034,25 @@
 	  VisualizationGraphCanvas.prototype.updateRelationsCurvature = function(value) {
 	    this.parameters.relationsCurvature = value;
 	    return this.onTick();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateRelationsLineStyle = function(value) {
+	    return this.relations_cont.attr('class', 'relations-cont ' + this.getRelationsLineStyle(value));
+	  };
+
+	  VisualizationGraphCanvas.prototype.getRelationsLineStyle = function(value) {
+	    var lineStyle;
+	    lineStyle = (function() {
+	      switch (false) {
+	        case value !== 0:
+	          return 'line-solid';
+	        case value !== 1:
+	          return 'line-dashed';
+	        default:
+	          return 'line-dotted';
+	      }
+	    })();
+	    return lineStyle;
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateForceLayoutParameter = function(param, value) {
@@ -10939,6 +10963,7 @@
 	  function VisualizationGraphConfiguration() {
 	    this.onResetDefaults = bind(this.onResetDefaults, this);
 	    this.onUpdateVisualizationParemeters = bind(this.onUpdateVisualizationParemeters, this);
+	    this.onChangeRelationsLineStyle = bind(this.onChangeRelationsLineStyle, this);
 	    this.onChangeRelationsCurvature = bind(this.onChangeRelationsCurvature, this);
 	    this.onToogleNoRelations = bind(this.onToogleNoRelations, this);
 	    this.onToogleLabels = bind(this.onToogleLabels, this);
@@ -10954,6 +10979,7 @@
 	  VisualizationGraphConfiguration.prototype.parametersDefault = {
 	    nodesSize: 11,
 	    relationsCurvature: 1,
+	    relationsLineStyle: 0,
 	    linkDistance: 100,
 	    linkStrength: 1,
 	    friction: 0.9,
@@ -11004,6 +11030,14 @@
 	    });
 	  };
 
+	  VisualizationGraphConfiguration.prototype.onChangeRelationsLineStyle = function(e) {
+	    this.parameters.relationsLineStyle = parseInt($(e.target).val());
+	    Backbone.trigger('visualization.config.updateRelationsLineStyle', {
+	      value: this.parameters.relationsLineStyle
+	    });
+	    return this.updateParameters();
+	  };
+
 	  VisualizationGraphConfiguration.prototype.onUpdateVisualizationParemeters = function(e) {
 	    return this.updateParameters();
 	  };
@@ -11025,6 +11059,7 @@
 	    this.parameters = this.parameters || {};
 	    this.parameters.nodesSize = this.parameters.nodesSize || this.parametersDefault.nodesSize;
 	    this.parameters.relationsCurvature = this.parameters.relationsCurvature || this.parametersDefault.relationsCurvature;
+	    this.parameters.relationsLineStyle = this.parameters.relationsLineStyle || this.parametersDefault.relationsLineStyle;
 	    this.parameters.linkDistance = this.parameters.linkDistance || this.parametersDefault.linkDistance;
 	    this.parameters.linkStrength = this.parameters.linkStrength || this.parametersDefault.linkStrength;
 	    this.parameters.friction = this.parameters.friction || this.parametersDefault.friction;
@@ -11032,6 +11067,7 @@
 	    this.parameters.theta = this.parameters.theta || this.parametersDefault.theta;
 	    this.parameters.gravity = this.parameters.gravity || this.parametersDefault.gravity;
 	    this.$el.find('#nodes-size').val(this.parameters.nodesSize);
+	    this.$el.find('#relations-line-style').val(this.parameters.relationsLineStyle);
 	    return this.setupSlidersValues();
 	  };
 
@@ -11067,6 +11103,7 @@
 	    this.$el.find('#hideLabels').change(this.onToogleLabels);
 	    this.$el.find('#hideNoRelations').change(this.onToogleNoRelations);
 	    this.$el.find('#curvature').change(this.onChangeRelationsCurvature);
+	    this.$el.find('#relations-line-style').change(this.onChangeRelationsLineStyle);
 	    this.$el.find('#linkdistance').change(this.onChangeValue);
 	    this.$el.find('#linkstrength').change(this.onChangeValue);
 	    this.$el.find('#friction').change(this.onChangeValue);
