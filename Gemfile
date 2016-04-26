@@ -62,6 +62,9 @@ gem 'charlock_holmes_bundle_icu'
 # Xlsx generation. Read more: https://github.com/randym/axlsx
 gem 'axlsx'
 
+# Uploaders
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+
 # Serve assets in Heroku and handle logging
 gem 'rails_12factor', group: :production
 
