@@ -9,7 +9,7 @@ class VisualizationsController < ApplicationController
     @visualization  = Visualization.find(params[:id])
     dataset         = Dataset.find_by(visualization_id: params[:id])
     @nodes          = Node.where(dataset_id: dataset.id)
-    @relations      = Relation.where(dataset_id: dataset.id)
+    @relations      = Relation.where(dataset_id: dataset.id).includes(:source, :target).order("nodes.name", "targets_relations.name")
     
     respond_to do |format|
       format.html do

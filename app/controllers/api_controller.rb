@@ -52,8 +52,8 @@ class ApiController < ApplicationController
   def relations
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
     @relations = Relation.where(dataset_id: dataset.id)
-                         .includes(:source,:target)
-                         .order("nodes.name")
+                         .includes(:source, :target)
+                         .order("nodes.name", "targets_relations.name")
   end
 
   # Get uniques & non-blank Relations Types (for a visualization)
