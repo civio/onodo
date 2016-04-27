@@ -16061,7 +16061,8 @@
 
 	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
-	  function VisualizationTableNodes(collection) {
+	  function VisualizationTableNodes(model1, collection) {
+	    this.model = model1;
 	    this.collection = collection;
 	    this.rowVisibleRenderer = bind(this.rowVisibleRenderer, this);
 	    this.rowDescriptionRenderer = bind(this.rowDescriptionRenderer, this);
@@ -16071,14 +16072,14 @@
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
 	    this.getNodesTypes = bind(this.getNodesTypes, this);
 	    this.getTableColumns = bind(this.getTableColumns, this);
-	    this.onCollectionSync = bind(this.onCollectionSync, this);
-	    VisualizationTableNodes.__super__.constructor.call(this, this.collection, 'node');
+	    this.onSync = bind(this.onSync, this);
+	    VisualizationTableNodes.__super__.constructor.call(this, this.model, this.collection, 'node');
 	    this.table_options.colHeaders = this.tableColHeaders;
 	    this.table_options.columns = this.getTableColumns();
 	  }
 
-	  VisualizationTableNodes.prototype.onCollectionSync = function() {
-	    VisualizationTableNodes.__super__.onCollectionSync.call(this);
+	  VisualizationTableNodes.prototype.onSync = function() {
+	    console.log('onSync', this.model);
 	    return this.getNodesTypes();
 	  };
 
@@ -16138,7 +16139,7 @@
 	  VisualizationTableNodes.prototype.addModel = function(index) {
 	    var model;
 	    model = this.collection.create({
-	      dataset_id: $('body').data('id'),
+	      dataset_id: this.model.get('dataset_id'),
 	      'visible': true,
 	      wait: true
 	    });
@@ -45740,7 +45741,12 @@
 
 	  VisualizationTableBase.prototype.table_offset_top = null;
 
-	  function VisualizationTableBase(collection, table_type) {
+	  VisualizationTableBase.prototype.visualizationSync = false;
+
+	  VisualizationTableBase.prototype.collectionSync = false;
+
+	  function VisualizationTableBase(model1, collection, table_type) {
+	    this.model = model1;
 	    this.collection = collection;
 	    this.rowDeleteRenderer = bind(this.rowDeleteRenderer, this);
 	    this.rowDuplicateRenderer = bind(this.rowDuplicateRenderer, this);
@@ -45751,8 +45757,9 @@
 	    this.onTableRemoveRow = bind(this.onTableRemoveRow, this);
 	    this.onTableChangeRow = bind(this.onTableChangeRow, this);
 	    this.onTableCreateRow = bind(this.onTableCreateRow, this);
+	    this.onSync = bind(this.onSync, this);
 	    this.onCollectionSync = bind(this.onCollectionSync, this);
-	    VisualizationTableBase.__super__.constructor.call(this, this.collection);
+	    VisualizationTableBase.__super__.constructor.call(this, this.model, this.collection);
 	    this.table_type = table_type;
 	    console.log('VisualizationTableBase', table_type);
 	    this.table_options = {
@@ -45771,12 +45778,29 @@
 	  };
 
 	  VisualizationTableBase.prototype.initialize = function(obj) {
-	    console.log(obj);
+	    this.model.once('sync', this.onVisualizationSync, this);
 	    return this.collection.once('sync', this.onCollectionSync, this);
 	  };
 
+	  VisualizationTableBase.prototype.onVisualizationSync = function() {
+	    this.visualizationSync = true;
+	    console.log('onVisualizationSync');
+	    if (this.visualizationSync && this.collectionSync) {
+	      return this.onSync();
+	    }
+	  };
+
 	  VisualizationTableBase.prototype.onCollectionSync = function() {
-	    return this.table_options.data = this.collection.toJSON();
+	    this.collectionSync = true;
+	    console.log('onCollectionSync');
+	    this.table_options.data = this.collection.toJSON();
+	    if (this.visualizationSync && this.collectionSync) {
+	      return this.onSync();
+	    }
+	  };
+
+	  VisualizationTableBase.prototype.onSync = function() {
+	    return this;
 	  };
 
 	  VisualizationTableBase.prototype.setupTable = function() {
@@ -45948,7 +45972,8 @@
 	    'target': 4
 	  };
 
-	  function VisualizationTableRelations(collection) {
+	  function VisualizationTableRelations(model1, collection) {
+	    this.model = model1;
 	    this.collection = collection;
 	    this.rowDirectionRenderer = bind(this.rowDirectionRenderer, this);
 	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
@@ -45958,14 +45983,13 @@
 	    this.updateNodes = bind(this.updateNodes, this);
 	    this.setNodes = bind(this.setNodes, this);
 	    this.getTableColumns = bind(this.getTableColumns, this);
-	    this.onCollectionSync = bind(this.onCollectionSync, this);
-	    VisualizationTableRelations.__super__.constructor.call(this, this.collection, 'relation');
+	    this.onSync = bind(this.onSync, this);
+	    VisualizationTableRelations.__super__.constructor.call(this, this.model, this.collection, 'relation');
 	    this.table_options.colHeaders = this.tableColHeaders;
 	    this.table_options.columns = this.getTableColumns();
 	  }
 
-	  VisualizationTableRelations.prototype.onCollectionSync = function() {
-	    VisualizationTableRelations.__super__.onCollectionSync.call(this);
+	  VisualizationTableRelations.prototype.onSync = function() {
 	    return this.getRelationsTypes();
 	  };
 
@@ -46056,7 +46080,7 @@
 	    var model;
 	    console.log('addModel', index);
 	    model = this.collection.create({
-	      dataset_id: $('body').data('id'),
+	      dataset_id: this.model.get('dataset_id'),
 	      'direction': true,
 	      wait: true
 	    });
@@ -46231,9 +46255,11 @@
 	    this.nodes = new NodesCollection();
 	    this.relations = new RelationsCollection();
 	    this.visualizationTableNodes = new VisualizationTableNodes({
+	      model: this.visualization,
 	      collection: this.nodes
 	    });
 	    this.visualizationTableRelations = new VisualizationTableRelations({
+	      model: this.visualization,
 	      collection: this.relations
 	    });
 	    this.visualizationGraph = new VisualizationGraph({

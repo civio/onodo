@@ -6,9 +6,11 @@ class VisualizationTableBase extends Backbone.View
   table_options:    null
   table_height:     null
   table_offset_top: null
+  visualizationSync:false
+  collectionSync:   false
 
-  constructor: (@collection, table_type) ->
-    super(@collection)
+  constructor: (@model, @collection, table_type) ->
+    super(@model, @collection)
     @table_type = table_type
     console.log 'VisualizationTableBase', table_type
     @table_options =
@@ -25,11 +27,24 @@ class VisualizationTableBase extends Backbone.View
     Backbone.View.prototype.remove.call(@)
 
   initialize: (obj) ->
-    console.log obj
+    @model.once      'sync', @onVisualizationSync , @
     @collection.once 'sync', @onCollectionSync , @
 
+  onVisualizationSync: () ->
+    @visualizationSync = true
+    console.log 'onVisualizationSync'
+    if @visualizationSync and @collectionSync
+      @onSync()
+
   onCollectionSync: =>
+    @collectionSync = true
+    console.log 'onCollectionSync'
     @table_options.data = @collection.toJSON()
+    if @visualizationSync and @collectionSync
+      @onSync()
+
+  onSync: =>
+    return this
 
   setupTable: ->
     @table_options.afterCreateRow    = @onTableCreateRow

@@ -7,14 +7,14 @@ class VisualizationTableNodes extends VisualizationTableBase
   nodes_types:      null
   tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
 
-  constructor: (@collection) ->
-    super @collection, 'node'
+  constructor: (@model, @collection) ->
+    super @model, @collection, 'node'
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @getTableColumns()
 
-  onCollectionSync: =>
-    super()
+  onSync: =>
+    console.log 'onSync', @model
     @getNodesTypes()
 
   # Setup Handsontable columns options
@@ -80,7 +80,7 @@ class VisualizationTableNodes extends VisualizationTableBase
   addModel: (index) ->
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: $('body').data('id'), 'visible': true, wait: true}
+    model = @collection.create {dataset_id: @model.get('dataset_id'), 'visible': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', model.id

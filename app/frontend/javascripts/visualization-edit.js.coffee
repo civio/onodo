@@ -29,8 +29,8 @@ class VisualizationEdit
     @nodes      = new NodesCollection()
     @relations  = new RelationsCollection()
     # Setup Views
-    @visualizationTableNodes      = new VisualizationTableNodes {collection: @nodes}
-    @visualizationTableRelations  = new VisualizationTableRelations {collection: @relations}
+    @visualizationTableNodes      = new VisualizationTableNodes {model: @visualization, collection: @nodes}
+    @visualizationTableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
     @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
     # Attach nodes to VisualizationTableRelations
     @visualizationTableRelations.setNodes @nodes

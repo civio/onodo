@@ -16,14 +16,13 @@ class VisualizationTableRelations extends VisualizationTableBase
     'target'    : 4
   }
 
-  constructor: (@collection) ->
-    super @collection, 'relation'
+  constructor: (@model, @collection) ->
+    super @model, @collection, 'relation'
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @getTableColumns()
 
-  onCollectionSync: =>
-    super()
+  onSync: =>
     @getRelationsTypes()
 
   # Setup Handsontable columns options
@@ -114,7 +113,7 @@ class VisualizationTableRelations extends VisualizationTableBase
     console.log 'addModel', index
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: $('body').data('id'), 'direction': true, wait: true}
+    model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', model.id
