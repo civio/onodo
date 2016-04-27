@@ -184,13 +184,13 @@ class VisualizationTableRelations extends VisualizationTableBase
     selected = @table.getSelected()
     # ENTER or SPACE keys
     if e.keyCode == 13 or e.keyCode == 32
-      # In Delete column (0) launch delete modal
+      # In Delete column launch delete modal
       if selected[1] == @columns.delete and selected[3] == @columns.delete
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDeleteModal selected[0]
-      # In Duplicate column (0) launch delete modal
-      if selected[1] == @columns.duplicate and selected[3] == @columns.duplicate
+      # In Duplicate column add duplicated row
+      else if selected[1] == @columns.duplicate and selected[3] == @columns.duplicate
         e.stopImmediatePropagation()
         e.preventDefault()
         @duplicateRow selected[0]

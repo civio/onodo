@@ -16061,12 +16061,23 @@
 
 	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
+	  VisualizationTableNodes.prototype.columns = {
+	    'delete': 0,
+	    'duplicate': 1,
+	    'node': 2,
+	    'type': 3,
+	    'description': 4,
+	    'visible': 5,
+	    'image': 6
+	  };
+
 	  function VisualizationTableNodes(model1, collection) {
 	    this.model = model1;
 	    this.collection = collection;
 	    this.rowImageRenderer = bind(this.rowImageRenderer, this);
 	    this.rowVisibleRenderer = bind(this.rowVisibleRenderer, this);
 	    this.rowDescriptionRenderer = bind(this.rowDescriptionRenderer, this);
+	    this.showImageModal = bind(this.showImageModal, this);
 	    this.showDescriptionModal = bind(this.showDescriptionModal, this);
 	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
 	    this.updateModel = bind(this.updateModel, this);
@@ -16192,21 +16203,29 @@
 	  };
 
 	  VisualizationTableNodes.prototype.setNodesTypesSource = function() {
-	    return this.table_options.columns[2].source = this.nodes_types;
+	    return this.table_options.columns[this.columns.type].source = this.nodes_types;
 	  };
 
 	  VisualizationTableNodes.prototype.onBeforeKeyDown = function(e) {
 	    var selected;
 	    selected = this.table.getSelected();
 	    if (e.keyCode === 13 || e.keyCode === 32) {
-	      if (selected[1] === 0 && selected[3] === 0) {
+	      if (selected[1] === this.columns["delete"] && selected[3] === this.columns["delete"]) {
 	        e.stopImmediatePropagation();
 	        e.preventDefault();
 	        return this.showDeleteModal(selected[0]);
-	      } else if (selected[1] === 3 && selected[3] === 3) {
+	      } else if (selected[1] === this.columns.duplicate && selected[3] === this.columns.duplicate) {
+	        e.stopImmediatePropagation();
+	        e.preventDefault();
+	        return this.duplicateRow(selected[0]);
+	      } else if (selected[1] === this.columns.description && selected[3] === this.columns.description) {
 	        e.stopImmediatePropagation();
 	        e.preventDefault();
 	        return this.showDescriptionModal(selected[0]);
+	      } else if (selected[1] === this.columns.image && selected[3] === this.columns.image) {
+	        e.stopImmediatePropagation();
+	        e.preventDefault();
+	        return this.showImageModal(selected[0]);
 	      }
 	    }
 	  };
@@ -16224,6 +16243,13 @@
 	        });
 	      };
 	    })(this));
+	    return $modal.modal('show');
+	  };
+
+	  VisualizationTableNodes.prototype.showImageModal = function(index) {
+	    var $modal;
+	    console.log('showImageModal', index);
+	    $modal = $('#table-image-modal');
 	    return $modal.modal('show');
 	  };
 
@@ -16268,7 +16294,8 @@
 	    td.appendChild(link);
 	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
 	      return function(e) {
-	        return e.preventDefault();
+	        e.preventDefault();
+	        return _this.showImageModal(row);
 	      };
 	    })(this));
 	    return td;
@@ -46192,9 +46219,8 @@
 	      if (selected[1] === this.columns["delete"] && selected[3] === this.columns["delete"]) {
 	        e.stopImmediatePropagation();
 	        e.preventDefault();
-	        this.showDeleteModal(selected[0]);
-	      }
-	      if (selected[1] === this.columns.duplicate && selected[3] === this.columns.duplicate) {
+	        return this.showDeleteModal(selected[0]);
+	      } else if (selected[1] === this.columns.duplicate && selected[3] === this.columns.duplicate) {
 	        e.stopImmediatePropagation();
 	        e.preventDefault();
 	        return this.duplicateRow(selected[0]);

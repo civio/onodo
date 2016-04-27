@@ -6,6 +6,15 @@ class VisualizationTableNodes extends VisualizationTableBase
   el:               '.visualization-table-nodes'
   nodes_types:      null
   tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  columns:          {
+    'delete'      : 0
+    'duplicate'   : 1
+    'node'        : 2
+    'type'        : 3
+    'description' : 4
+    'visible'     : 5
+    'image'       : 6
+  }
 
   constructor: (@model, @collection) ->
     super @model, @collection, 'node'
@@ -127,22 +136,32 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Set 'Node Type' column source in table_options
   setNodesTypesSource: ->
-    @table_options.columns[2].source = @nodes_types
+    @table_options.columns[ @columns.type ].source = @nodes_types
 
   onBeforeKeyDown: (e) =>
     selected = @table.getSelected()
     # ENTER or SPACE keys
     if e.keyCode == 13 or e.keyCode == 32
-      # In Delete column (0) launch delete modal
-      if selected[1] == 0 and selected[3] == 0
+      # In Delete column launch delete modal
+      if selected[1] == @columns.delete and selected[3] == @columns.delete
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDeleteModal selected[0]
-      # In Description column (3) launch description modal
-      else if selected[1] == 3 and selected[3] == 3
+      # In Duplicate column add duplicated row
+      else if selected[1] == @columns.duplicate and selected[3] == @columns.duplicate
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @duplicateRow selected[0]
+      # In Description column launch description modal
+      else if selected[1] == @columns.description and selected[3] == @columns.description
         e.stopImmediatePropagation()
         e.preventDefault()
         @showDescriptionModal selected[0]
+      # In Image column launch image modal
+      else if selected[1] == @columns.image and selected[3] == @columns.image
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @showImageModal selected[0]
 
   # Function to show modal with description edit form
   showDescriptionModal: (index) =>
@@ -155,6 +174,14 @@ class VisualizationTableNodes extends VisualizationTableBase
         e.preventDefault()
         @table.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
         $modal.modal 'hide'
+    # Show modal
+    $modal.modal 'show'
+
+  # Function to show modal with image edition
+  showImageModal: (index) =>
+    console.log 'showImageModal', index
+    $modal = $('#table-image-modal')
+
     # Show modal
     $modal.modal 'show'
 
@@ -199,7 +226,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     # Show image modal on click
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
-      #instance.setDataAtCell(row, col, !value)
+      @showImageModal row
     return td
 
 module.exports = VisualizationTableNodes
