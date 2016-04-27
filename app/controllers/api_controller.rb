@@ -113,11 +113,11 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :visualization_id) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :visualization_id, :dataset_id) if params[:node]
     end
 
     def relation_params
-      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :visualization_id) if params[:relation]
+      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :visualization_id, :dataset_id) if params[:relation]
     end
 
     def visualization_params
