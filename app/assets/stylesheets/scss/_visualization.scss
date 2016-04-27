@@ -777,6 +777,14 @@ body.fullscreen{
 
   .handsontable{
 
+    @mixin handsontable-icon($icon, $margin-top: 0px) {
+      display: block;
+      margin-top: $margin-top;
+      cursor: pointer;
+      text-indent: -9999px;
+      @include retina-sprite( $icon );
+    }
+
     .add-custom-column{
       float: right;
       display: block;
@@ -784,13 +792,9 @@ body.fullscreen{
       margin-right: $grid-gutter-width/3;
       @include retina-sprite( $icon-plus-circle-nofill-group );
     }
-    
+      
     .icon-trash{
-      display: block;
-      margin-top: 4px;
-      cursor: pointer;
-      text-indent: -9999px;
-      @include retina-sprite( $icon-trash-group );
+      @include handsontable-icon( $icon-trash-group, 4px );
       @include transition( opacity 0.3s ease-out );
 
       &:hover{
@@ -799,11 +803,7 @@ body.fullscreen{
     }
 
     .icon-duplicate{
-      display: block;
-      margin-top: 4px;
-      cursor: pointer;
-      text-indent: -9999px;
-      @include retina-sprite( $icon-duplicate-group );
+      @include handsontable-icon( $icon-duplicate-group, 4px );
       @include transition( opacity 0.3s ease-out );
 
       &:hover{
@@ -812,12 +812,8 @@ body.fullscreen{
     }
 
     .icon-plus{
-      display: block;
-      margin-top: 2px;
-      cursor: pointer;
-      text-indent: -9999px;
+      @include handsontable-icon( $icon-plus-circle-nofill-group, 2px );
       opacity: 0.5;
-      @include retina-sprite( $icon-plus-circle-nofill-group );
       @include transition( opacity 0.3s ease-out );
 
       &:hover{
@@ -826,11 +822,7 @@ body.fullscreen{
     }
 
     .icon-table{
-      display: block;
-      margin-top: 2px;
-      text-indent: -9999px;
-      cursor: pointer;
-      @include retina-sprite( $icon-table-circle-group );
+      @include handsontable-icon( $icon-table-circle-group, 2px );
       @include transition( opacity 0.3s ease-out );
 
       &:hover{
@@ -838,15 +830,8 @@ body.fullscreen{
       }
     }
 
-    .htCheckboxRendererInput{
-      display: none;
-    }
-
     .icon-visible{
-      display: block;
-      margin-top: 5px;
-      cursor: pointer;
-      text-indent: -9999px;
+      @include handsontable-icon( $icon-preview-group, 5px );
       opacity: 0.3;
       @include retina-sprite( $icon-preview-group );
 
@@ -856,17 +841,26 @@ body.fullscreen{
     }
 
     .icon-direction{
-      display: block;
-      margin-top: 2px;
-      cursor: pointer;
-      text-indent: -9999px;
+      @include handsontable-icon( $icon-no-direction-group, 2px );
       opacity: 0.3;
-      @include retina-sprite( $icon-no-direction-group );
 
       &.active{
         opacity: 1;
         @include retina-sprite( $icon-direction-group );
       }
+    }
+
+    .icon-image{
+      @include handsontable-icon( $icon-image-group, 2px );
+      opacity: 0.3;
+
+      &.active{
+        opacity: 1;
+      }
+    }
+
+    .htCheckboxRendererInput{
+      display: none;
     }
   }
 

@@ -5,7 +5,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_types:      null
-  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
 
   constructor: (@model, @collection) ->
     super @model, @collection, 'node'
@@ -50,6 +50,11 @@ class VisualizationTableNodes extends VisualizationTableBase
         data: 'visible' 
         type: 'checkbox'
         renderer: @rowVisibleRenderer
+      },
+      {
+        data: ''
+        readOnly: true
+        renderer: @rowImageRenderer
       },
       { 
         data: ''
@@ -156,7 +161,7 @@ class VisualizationTableNodes extends VisualizationTableBase
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # Add delete icon
-    link = document.createElement('A');
+    link = document.createElement('A')
     link.className = if value then 'icon-table' else 'icon-plus'
     link.innerHTML = link.title = 'Edit Description'
     Handsontable.Dom.empty(td)
@@ -172,7 +177,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     # We keep checkbox render in order to toogle value with enter key
     Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
     # Add visible icon link
-    link = document.createElement('A');
+    link = document.createElement('A')
     link.className = if value then 'icon-visible active' else 'icon-visible'
     link.innerHTML = link.title = 'Node Visibility'
     td.appendChild(link)
@@ -180,6 +185,21 @@ class VisualizationTableNodes extends VisualizationTableBase
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
       instance.setDataAtCell(row, col, !value)
+    return td
+
+  # Custom Renderer for image cells
+  rowImageRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # We keep checkbox render in order to toogle value with enter key
+    Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
+    # Add visible icon link
+    link = document.createElement('A')
+    link.className = if value then 'icon-image active' else 'icon-image'
+    link.innerHTML = link.title = 'Node Image'
+    td.appendChild(link)
+    # Show image modal on click
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      #instance.setDataAtCell(row, col, !value)
     return td
 
 module.exports = VisualizationTableNodes

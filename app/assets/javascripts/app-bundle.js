@@ -16059,11 +16059,12 @@
 
 	  VisualizationTableNodes.prototype.nodes_types = null;
 
-	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
+	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
 
 	  function VisualizationTableNodes(model1, collection) {
 	    this.model = model1;
 	    this.collection = collection;
+	    this.rowImageRenderer = bind(this.rowImageRenderer, this);
 	    this.rowVisibleRenderer = bind(this.rowVisibleRenderer, this);
 	    this.rowDescriptionRenderer = bind(this.rowDescriptionRenderer, this);
 	    this.showDescriptionModal = bind(this.showDescriptionModal, this);
@@ -16108,6 +16109,10 @@
 	        data: 'visible',
 	        type: 'checkbox',
 	        renderer: this.rowVisibleRenderer
+	      }, {
+	        data: '',
+	        readOnly: true,
+	        renderer: this.rowImageRenderer
 	      }, {
 	        data: '',
 	        readOnly: true
@@ -16249,6 +16254,21 @@
 	      return function(e) {
 	        e.preventDefault();
 	        return instance.setDataAtCell(row, col, !value);
+	      };
+	    })(this));
+	    return td;
+	  };
+
+	  VisualizationTableNodes.prototype.rowImageRenderer = function(instance, td, row, col, prop, value, cellProperties) {
+	    var link;
+	    Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
+	    link = document.createElement('A');
+	    link.className = value ? 'icon-image active' : 'icon-image';
+	    link.innerHTML = link.title = 'Node Image';
+	    td.appendChild(link);
+	    Handsontable.Dom.addEvent(link, 'click', (function(_this) {
+	      return function(e) {
+	        return e.preventDefault();
 	      };
 	    })(this));
 	    return td;
