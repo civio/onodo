@@ -2,7 +2,7 @@
   - if defined? align and align == 'left'
     -# TODO!!! Add user picture default
     .user-picture
-      %img{ src: (defined? user.picture) ? user.picture : "http://lorempixel.com/30/30/" }
+      %img{ src: user.avatar_url(:small)}
     %span.user-name
       = user.name
   - else
@@ -10,4 +10,4 @@
       = user.name
     -# TODO!!! Add user picture default
     .user-picture
-      %img{ src: (defined? user.picture) ? user.picture : "http://lorempixel.com/30/30/" }
+      %img{ src: user.avatar_url(:small) }

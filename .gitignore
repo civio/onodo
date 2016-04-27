@@ -23,7 +23,10 @@
 node_modules/*
 
 # Ignore half-sizer droplet
-app/assets/images/half-sizer.app/Contents/*
+/app/assets/images/half-sizer.app/Contents/*
 
 # Ignore compiled assets
-public/assets
+/public/assets
+
+#Ignore file uploads
+/public/uploads

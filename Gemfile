@@ -64,6 +64,7 @@ gem 'axlsx'
 
 # Uploaders
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'mini_magick'
 
 # Serve assets in Heroku and handle logging
 gem 'rails_12factor', group: :production

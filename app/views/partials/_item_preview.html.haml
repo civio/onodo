@@ -7,7 +7,7 @@
     %a{href: user_path(item.author_id), title: item.author.name}
       = item.author.name
       .item-author-picture
-        %img{src: "http://lorempixel.com/60/60/"}
+        %img{src: item.author.avatar_url(:big)}
   -if item.class.to_s.downcase == 'story'
     .item-picture
       .item-picture-overlay-white
