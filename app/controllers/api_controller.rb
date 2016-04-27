@@ -99,7 +99,9 @@ class ApiController < ApplicationController
   # Get a Visualization
   # GET /api/visualizations/:visualization_id/
   def visualization
-    render json: Visualization.find(params[:visualization_id])
+    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    @dataset_id = dataset.id
+    @visualization = Visualization.find(params[:visualization_id])
   end
 
   # Update a Visualization
