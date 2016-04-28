@@ -2,7 +2,7 @@
   .container
     .user-info.media
       .media-left
-        %img.media-object.img-circle{src: 'http://placehold.it/64x64'}
+        %img.media-object.img-circle{src: @user.avatar_url(:big)}
       .media-body
         %h2= @user.name
         -if defined? @user.website
