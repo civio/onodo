@@ -995,6 +995,68 @@ body.fullscreen{
   // }
 }
 
+#visualization-graph-panel-configuration-tab-content{
+
+  .configuration-label{
+    font-size: 0.875em;
+    text-transform: uppercase;
+    padding-top: 20px;
+    margin-bottom: 0;
+   
+    &.configuration-switch-label{
+      padding-top: 5px;
+    }
+  }
+
+  hr{
+    margin-top: $grid-gutter-width/2;
+    margin-bottom: $grid-gutter-width/2;
+  }
+
+  #nodes-size{
+
+    a{
+      display: inline-block;
+      background: mix( $gray, $gray-light, 50% );
+      margin: 0 2px;
+      cursor: pointer;
+
+      &:hover{
+        opacity: 0.75;
+      }
+
+      &.active{
+        background: $brand-primary;
+
+        &:hover{
+          opacity: 1;
+        }
+      }
+
+      &.size-s{
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
+      }
+      &.size-m{
+        width: 22px;
+        height: 22px;
+        border-radius: 11px;
+      }
+      &.size-l{
+        width: 28px;
+        height: 28px;
+        border-radius: 14px;
+      }
+      &.size-xl{
+        width: 36px;
+        height: 36px;
+        border-radius: 18px;
+      }
+    }
+  }
+}
+
 // Visualization Edit
 body.visualizations.show{
   .visualization-table-relations{

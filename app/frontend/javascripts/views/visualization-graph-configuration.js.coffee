@@ -1,9 +1,12 @@
+BootstrapSwitch = require 'bootstrap-switch'
+
 class VisualizationGraphConfiguration extends Backbone.View
 
   el: '.visualization-graph-panel-configuration'
   parameters: null
   parametersDefault: {
     nodesSize:          11
+    showNodesLabel:     1
     relationsCurvature: 1
     relationsLineStyle: 0
     linkDistance:       100
@@ -25,14 +28,10 @@ class VisualizationGraphConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
     @updateParameters()
 
-  onToogleLabels: (e) =>
-    @parameters.hideLabels = $(e.target).prop('checked')
-    Backbone.trigger 'visualization.config.toogleLabels', {value: @parameters.hideLabels}
-    @updateParameters()
-  
-  onToogleNoRelations: (e) =>
-    @parameters.hideNoRelations = $(e.target).prop('checked')
-    Backbone.trigger 'visualization.config.toogleNodesWithoutRelation', {value: @parameters.hideNoRelations}
+  onToogleNodesLabel: (e, state) =>
+    @parameters.showNodesLabel = state
+    console.log 'onToogleNodesLabel', @parameters.showNodesLabel
+    Backbone.trigger 'visualization.config.toogleNodesLabel', {value: @parameters.showNodesLabel}
     @updateParameters()
 
   onChangeRelationsCurvature: (e) =>
@@ -66,6 +65,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters = @parameters || {}
     # setup parameters
     @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
+    @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
     @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
     @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
@@ -74,6 +74,8 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.charge              = @parameters.charge || @parametersDefault.charge
     @parameters.theta               = @parameters.theta || @parametersDefault.theta
     @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
+    # Setup switches
+    @$el.find('#showNodesLabel').bootstrapSwitch 'state', @parameters.showNodesLabel
     # setup nodes-size & relations-line-style selectors
     @$el.find('#nodes-size').val @parameters.nodesSize
     @$el.find('#relations-line-style').val @parameters.relationsLineStyle
@@ -97,18 +99,22 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   render: ->
     # Get parameters from model as JSON
-    @parameters = JSON.parse @model.attributes.parameters
-    console.log 'configuration model', @parameters
+    @parameters = $.parseJSON @model.get('parameters')
+    console.log 'configuration model', @model.get('parameters'), @parameters
+    # Setup switches
+    @$el.find('#showNodesLabel').bootstrapSwitch()
     # Setup sliders
     $sliders = @$el.find('.slider')
     $sliders.slider()
     $sliders.on 'slideStop', @onUpdateVisualizationParemeters
     # Setup parameters
     @setupParameters()
+
+    console.log 'configuration model stup', @parameters
+
     # Visualization Styles
     @$el.find('#nodes-size').change @onChangeNodesSize
-    @$el.find('#hideLabels').change @onToogleLabels
-    @$el.find('#hideNoRelations').change @onToogleNoRelations
+    @$el.find('#showNodesLabel').on 'switchChange.bootstrapSwitch', @onToogleNodesLabel
     @$el.find('#curvature').change @onChangeRelationsCurvature
     @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
     # Force Layout Parameters

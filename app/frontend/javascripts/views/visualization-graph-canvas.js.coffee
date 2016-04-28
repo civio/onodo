@@ -233,11 +233,13 @@ class VisualizationGraphCanvas extends Backbone.View
     # Join new data with old elements, if any
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
 
+    console.log 'updateNodesLabels', @parameters.showNodesLabel
+
     # ENTER
     # Create new elements as needed.
     @nodes_labels.enter().append('text')
       .attr('id', (d,i) -> return 'node-label-'+d.id)
-      .attr('class', 'node-label')
+      .attr('class', if @parameters.showNodesLabel then 'node-label' else 'node-label hide')
       .attr('dx', 0)
       .attr('dy', @getNodeLabelYPos)
 
@@ -431,8 +433,8 @@ class VisualizationGraphCanvas extends Backbone.View
     # update relations arrows position
     @relations.attr 'd', @drawRelationPath
 
-  toogleLabels: (value) =>
-    @nodes_labels.classed 'hide', value
+  toogleNodesLabels: (value) =>
+    @nodes_labels.classed 'hide', !value
   
   toogleNodesWithoutRelation: (value) =>
     if value
