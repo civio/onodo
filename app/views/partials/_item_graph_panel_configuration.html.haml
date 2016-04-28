@@ -15,42 +15,55 @@
           Advanced
     #visualization-graph-panel-configuration-tab-content.tab-content
       #nodes.tab-pane.fade.in.active{ role: "tabpanel" }
-        .form-group
-          %label
-            Nodes Color
-          %select#nodes-color.form-control
-            %option{ value: 0 }
-              Small
-            %option{ value: 1 }
-              Medium
-            %option{ value: 2 }
-              Large
-            %option{ value: 3 }
-              Extra Large
+        .row
+          .col-sm-6
+            %p.configuration-label
+              Nodes Color
+          .col-sm-6.text-right
+            / %select#nodes-color.selectpicker.form-control
+            /   %option{ value: 0, 'data-content': "<span class='s-node'></span> Small" }
+            /     Small
+            /   %option{ value: 1, 'data-content': "<span class='m-node'></span> Medium" }
+            /     Medium
+            /   %option{ value: 2, 'data-content': "<span class='l-node'></span> Large" }
+            /     Large
+            /   %option{ value: 3, 'data-content': "<span class='xl-node'></span> Extra Large" }
+            /     Extra Large
+            .dropdown
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                Dropdown
+                %span.caret
+              %ul.dropdown-menu
+                %li
+                  Small
+                %li
+                  Medium
+                %li
+                  Large
+                %li
+                  Extra Large
         %hr
-        .row#nodes-size
+        .row
           .col-sm-6
             %p.configuration-label
               Nodes Size
+          / .col-sm-6.text-right
+          /   %a.size-s{ href: "#", title: "Small" }
+          /   %a.size-m.active{ href: "#", title: "Medium" }
+          /   %a.size-l{ href: "#", title: "Large" }
+          /   %a.size-xl{ href: "#", title: "Extra large" }
           .col-sm-6.text-right
-            %a.size-s{ href: "#", title: "Small" }
-            %a.size-m.active{ href: "#", title: "Medium" }
-            %a.size-l{ href: "#", title: "Large" }
-            %a.size-xl{ href: "#", title: "Extra large" }
-        / .form-group
-        /   %label
-        /     Nodes Size
-        /   %select#nodes-size.form-control
-        /     %option{ value: 6 }
-        /       Small
-        /     %option{ value: 11 }
-        /       Medium
-        /     %option{ value: 14 }
-        /       Large
-        /     %option{ value: 18 }
-        /       Extra Large
-        /     %option{ value: 1 }
-        /       Based on number of relations
+            %select#nodes-size.form-control
+              %option{ value: 6 }
+                Small
+              %option{ value: 11 }
+                Medium
+              %option{ value: 14 }
+                Large
+              %option{ value: 18 }
+                Extra Large
+              %option{ value: 1 }
+                Based on number of relations
         %hr
         .row
           .col-sm-6
