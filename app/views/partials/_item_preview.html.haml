@@ -7,7 +7,7 @@
     %a{href: user_path(item.author_id), title: item.author.name}
       = item.author.name
       .item-author-picture
-        %img{src: item.author.avatar_url(:big)}
+        %img{src: item.author.avatar_url(:medium)}
   -if item.class.to_s.downcase == 'story'
     .item-picture
       .item-picture-overlay-white
