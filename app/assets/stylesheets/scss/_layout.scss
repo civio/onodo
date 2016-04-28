@@ -20,7 +20,7 @@
 
   .item-type{
     position: absolute;
-    left: $grid-gutter-width/2;
+    left: 2*$grid-gutter-width/3;
     bottom: $grid-gutter-width/2;
     color: white;
     background: $brand-primary;
@@ -35,7 +35,7 @@
   .item-type-icon{
     $item-type-icon-size: 42px;
     position: absolute;
-    left: $grid-gutter-width/2;
+    left: 2*$grid-gutter-width/3;
     top: $grid-gutter-width/2;
     width: $item-type-icon-size;
     height: $item-type-icon-size;
@@ -48,14 +48,13 @@
       content: "";
       margin: 12px 9px;
       @include retina-sprite( $icon-story-group );
-      
     }
   }
 
   .item-author{
     $item-author-picture-size: 44px;
     position: absolute;
-    right: $grid-gutter-width/2;
+    right: 2*$grid-gutter-width/3;
     bottom: $grid-gutter-width/2;
     font-size: 0.786em;
     line-height: $item-author-picture-size - 2;
@@ -185,14 +184,13 @@
     }
 
     .item-type{
-      left: $grid-gutter-width;
       padding: 0;
     }
 
     .item-type-icon{
       &:after{
+        margin-left: 0;
         @include retina-sprite( $icon-visualization-group );
-        
       }
     }
 
