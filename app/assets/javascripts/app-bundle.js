@@ -10963,7 +10963,7 @@
 	    this.onChangeRelationsLineStyle = bind(this.onChangeRelationsLineStyle, this);
 	    this.onChangeRelationsCurvature = bind(this.onChangeRelationsCurvature, this);
 	    this.onToogleNodesLabel = bind(this.onToogleNodesLabel, this);
-	    this.onChangeNodesSize = bind(this.onChangeNodesSize, this);
+	    this.onChangeNodesColor = bind(this.onChangeNodesColor, this);
 	    this.onChangeValue = bind(this.onChangeValue, this);
 	    return VisualizationGraphConfiguration.__super__.constructor.apply(this, arguments);
 	  }
@@ -10973,6 +10973,7 @@
 	  VisualizationGraphConfiguration.prototype.parameters = null;
 
 	  VisualizationGraphConfiguration.prototype.parametersDefault = {
+	    nodesColor: 0,
 	    nodesSize: 11,
 	    showNodesLabel: 1,
 	    relationsCurvature: 1,
@@ -10996,6 +10997,15 @@
 	    });
 	  };
 
+	  VisualizationGraphConfiguration.prototype.onChangeNodesColor = function(e) {
+	    this.parameters.nodesColor = parseInt($(e.target).find('.active').data('value'));
+	    console.log('onChangeNodesSize', this.parameters.nodesColor);
+	    Backbone.trigger('visualization.config.updateNodesColor', {
+	      value: this.parameters.nodesColor
+	    });
+	    return this.updateParameters();
+	  };
+
 	  VisualizationGraphConfiguration.prototype.onChangeNodesSize = function(e) {
 	    this.parameters.nodesSize = parseInt($(e.target).find('.active').data('value'));
 	    console.log('onChangeNodesSize', this.parameters.nodesSize);
@@ -11003,10 +11013,6 @@
 	      value: this.parameters.nodesSize
 	    });
 	    return this.updateParameters();
-	  };
-
-	  VisualizationGraphConfiguration.prototype.onChangeNodesColor = function(e) {
-	    return console.log('onChangeNodesColor', $(this).find('.active').data('value'));
 	  };
 
 	  VisualizationGraphConfiguration.prototype.onToogleNodesLabel = function(e, state) {
@@ -11052,6 +11058,7 @@
 
 	  VisualizationGraphConfiguration.prototype.setupParameters = function() {
 	    this.parameters = this.parameters || {};
+	    this.parameters.nodesColor = this.parameters.nodesColor || this.parametersDefault.nodesColor;
 	    this.parameters.nodesSize = this.parameters.nodesSize || this.parametersDefault.nodesSize;
 	    this.parameters.showNodesLabel = typeof this.parameters.showNodesLabel !== 'undefined' ? this.parameters.showNodesLabel : this.parametersDefault.showNodesLabel;
 	    this.parameters.relationsCurvature = this.parameters.relationsCurvature || this.parametersDefault.relationsCurvature;
@@ -11063,6 +11070,7 @@
 	    this.parameters.theta = this.parameters.theta || this.parametersDefault.theta;
 	    this.parameters.gravity = this.parameters.gravity || this.parametersDefault.gravity;
 	    this.$el.find('#showNodesLabel').bootstrapSwitch('state', this.parameters.showNodesLabel);
+	    this.$el.find('#nodes-color .dropdown-menu li[data-value="' + this.parameters.nodesColor + '"]').trigger('click');
 	    this.$el.find('#nodes-size .dropdown-menu li[data-value="' + this.parameters.nodesSize + '"]').trigger('click');
 	    this.$el.find('#relations-line-style').val(this.parameters.relationsLineStyle);
 	    return this.setupSlidersValues();
@@ -11114,7 +11122,6 @@
 	  };
 
 	  VisualizationGraphConfiguration.prototype.onDropboxSelectChange = function(e) {
-	    console.log('onDropboxSelectChange', $(this).find('p').html());
 	    $(this).parent().find('.active').removeClass('active');
 	    $(this).addClass('active');
 	    $(this).parent().parent().find('.dropdown-toggle .text').html($(this).find('p').html());

@@ -1022,26 +1022,26 @@ body.fullscreen{
       &:before{
         content: "";
         position: absolute;
-        top: 2px;
+        top: 4px;
         left: 4px;
         display: inline-block;
-        width: 35px;
-        height: 36px;
+        width: 30px;
+        height: 30px;
         overflow: hidden;
         background: url('/images/nodes-size-sprite.png') no-repeat 0 0 transparent;
       }
 
       &.size-m:before{
-        background-position: 0 -36px;
+        background-position: 0 -30px;
       }
       &.size-l:before{
-        background-position: 0 -2*36px;
+        background-position: 0 -2*30px;
       }
       &.size-xl:before{
-        background-position: 0 -3*36px;
+        background-position: 0 -3*30px;
       }
       &.size-relations:before{
-        background-position: 0 -4*36px;
+        background-position: 0 -4*30px;
       }
     }
   }

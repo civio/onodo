@@ -20,36 +20,20 @@
             %p.configuration-label
               Nodes Color
           .col-sm-7.text-right
-            / %select#nodes-color.selectpicker.form-control
-            /   %option{ value: 0, 'data-content': "<span class='s-node'></span> Small" }
-            /     Small
-            /   %option{ value: 1, 'data-content': "<span class='m-node'></span> Medium" }
-            /     Medium
-            /   %option{ value: 2, 'data-content': "<span class='l-node'></span> Large" }
-            /     Large
-            /   %option{ value: 3, 'data-content': "<span class='xl-node'></span> Extra Large" }
-            /     Extra Large
             #nodes-color.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
                 %span.text
-                  Dropdown
                 %span.caret
               %ul.dropdown-menu
-                %li.size-s{ 'data-value': 6 }
+                %li.size-s{ 'data-value': 0 }
                   %p
-                    Small
-                %li.size-m{ 'data-value': 11 }
+                    Solid
+                %li.size-m{ 'data-value': 1 }
                   %p
-                    Medium
-                %li.size-l{ 'data-value': 14 }
+                    Qualitative
+                %li.size-l{ 'data-value': 2 }
                   %p
-                    Large
-                %li.size-xl{ 'data-value': 18 }
-                  %p
-                    Extra Large
-                %li.size-relations{ 'data-value': 1 }
-                  %p
-                    Based on number of relations
+                    Quantitative
         %hr
         .row
           .col-sm-5
@@ -59,7 +43,6 @@
             #nodes-size.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
                 %span.text
-                  Dropdown
                 %span.caret
               %ul.dropdown-menu
                 %li.size-s{ 'data-value': 6 }
@@ -89,16 +72,18 @@
           %label{ for: "curvature"}
             Relations curvature
           %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
-        .form-group
-          %label
-            Relations line style
-          %select#relations-line-style.form-control
-            %option{ value: 0 }
-              Solid
-            %option{ value: 1 }
-              Dashed
-            %option{ value: 2 }
-              Dotted
+        .row
+          .col-sm-6
+            %p.configuration-label
+              Relations line style
+          .col-sm-6.text-right
+            %select#relations-line-style.form-control
+              %option{ value: 0 }
+                Solid
+              %option{ value: 1 }
+                Dashed
+              %option{ value: 2 }
+                Dotted
       #advanced.tab-pane.fade{ role: "tabpanel" }
         -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
         .form-group
