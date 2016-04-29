@@ -16,10 +16,10 @@
     #visualization-graph-panel-configuration-tab-content.tab-content
       #nodes.tab-pane.fade.in.active{ role: "tabpanel" }
         .row
-          .col-sm-6
+          .col-sm-5
             %p.configuration-label
               Nodes Color
-          .col-sm-6.text-right
+          .col-sm-7.text-right
             / %select#nodes-color.selectpicker.form-control
             /   %option{ value: 0, 'data-content': "<span class='s-node'></span> Small" }
             /     Small
@@ -29,47 +29,60 @@
             /     Large
             /   %option{ value: 3, 'data-content': "<span class='xl-node'></span> Extra Large" }
             /     Extra Large
-            .dropdown
+            #nodes-color.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
-                Dropdown
+                %span.text
+                  Dropdown
                 %span.caret
               %ul.dropdown-menu
-                %li
-                  Small
-                %li
-                  Medium
-                %li
-                  Large
-                %li
-                  Extra Large
+                %li.size-s{ 'data-value': 6 }
+                  %p
+                    Small
+                %li.size-m{ 'data-value': 11 }
+                  %p
+                    Medium
+                %li.size-l{ 'data-value': 14 }
+                  %p
+                    Large
+                %li.size-xl{ 'data-value': 18 }
+                  %p
+                    Extra Large
+                %li.size-relations{ 'data-value': 1 }
+                  %p
+                    Based on number of relations
         %hr
         .row
-          .col-sm-6
+          .col-sm-5
             %p.configuration-label
               Nodes Size
-          / .col-sm-6.text-right
-          /   %a.size-s{ href: "#", title: "Small" }
-          /   %a.size-m.active{ href: "#", title: "Medium" }
-          /   %a.size-l{ href: "#", title: "Large" }
-          /   %a.size-xl{ href: "#", title: "Extra large" }
-          .col-sm-6.text-right
-            %select#nodes-size.form-control
-              %option{ value: 6 }
-                Small
-              %option{ value: 11 }
-                Medium
-              %option{ value: 14 }
-                Large
-              %option{ value: 18 }
-                Extra Large
-              %option{ value: 1 }
-                Based on number of relations
+          .col-sm-7.text-right
+            #nodes-size.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                  Dropdown
+                %span.caret
+              %ul.dropdown-menu
+                %li.size-s{ 'data-value': 6 }
+                  %p
+                    Small
+                %li.size-m{ 'data-value': 11 }
+                  %p
+                    Medium
+                %li.size-l{ 'data-value': 14 }
+                  %p
+                    Large
+                %li.size-xl{ 'data-value': 18 }
+                  %p
+                    Extra Large
+                %li.size-relations{ 'data-value': 1 }
+                  %p
+                    Based on number of relations
         %hr
         .row
-          .col-sm-6
+          .col-sm-5
             %p.configuration-label.configuration-switch-label
               Show Nodes Label
-          .col-sm-6.text-right
+          .col-sm-7.text-right
             = check_box_tag :showNodesLabel, 1, false, data: { "size" => "small" }
       #relations.tab-pane.fade{ role: "tabpanel" }
         .form-group

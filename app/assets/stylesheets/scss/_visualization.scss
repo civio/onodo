@@ -1015,43 +1015,33 @@ body.fullscreen{
 
   #nodes-size{
 
-    a{
-      display: inline-block;
-      background: mix( $gray, $gray-light, 50% );
-      margin: 0 2px;
-      cursor: pointer;
+    li{
+      padding-left: 45px;
+      height: 40px;
 
-      &:hover{
-        opacity: 0.75;
-      }
-
-      &.active{
-        background: $brand-primary;
-
-        &:hover{
-          opacity: 1;
-        }
-      }
-
-      &.size-s{
-        width: 12px;
-        height: 12px;
-        border-radius: 6px;
-      }
-      &.size-m{
-        width: 22px;
-        height: 22px;
-        border-radius: 11px;
-      }
-      &.size-l{
-        width: 28px;
-        height: 28px;
-        border-radius: 14px;
-      }
-      &.size-xl{
-        width: 36px;
+      &:before{
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 4px;
+        display: inline-block;
+        width: 35px;
         height: 36px;
-        border-radius: 18px;
+        overflow: hidden;
+        background: url('/images/nodes-size-sprite.png') no-repeat 0 0 transparent;
+      }
+
+      &.size-m:before{
+        background-position: 0 -36px;
+      }
+      &.size-l:before{
+        background-position: 0 -2*36px;
+      }
+      &.size-xl:before{
+        background-position: 0 -3*36px;
+      }
+      &.size-relations:before{
+        background-position: 0 -4*36px;
       }
     }
   }

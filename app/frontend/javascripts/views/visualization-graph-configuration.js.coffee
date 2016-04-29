@@ -24,9 +24,13 @@ class VisualizationGraphConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: key, value: value}
 
   onChangeNodesSize: (e) =>
-    @parameters.nodesSize = $(e.target).val()
+    @parameters.nodesSize = parseInt $(e.target).find('.active').data('value')
+    console.log 'onChangeNodesSize', @parameters.nodesSize
     Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
     @updateParameters()
+
+  onChangeNodesColor: (e) ->
+    console.log 'onChangeNodesColor', $(this).find('.active').data('value')
 
   onToogleNodesLabel: (e, state) =>
     @parameters.showNodesLabel = state
@@ -76,8 +80,11 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
     # Setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch 'state', @parameters.showNodesLabel
-    # setup nodes-size & relations-line-style selectors
-    @$el.find('#nodes-size').val @parameters.nodesSize
+    # setup nodes-size 
+    #@$el.find('#nodes-size').val @parameters.nodesSize
+    @$el.find('#nodes-size .dropdown-menu li[data-value="' + @parameters.nodesSize + '"]').trigger 'click'
+    
+    # setup relations-line-style selectors
     @$el.find('#relations-line-style').val @parameters.relationsLineStyle
     # setup sliders
     @setupSlidersValues()
@@ -103,6 +110,8 @@ class VisualizationGraphConfiguration extends Backbone.View
     console.log 'configuration model', @model.get('parameters'), @parameters
     # Setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch()
+    # Setup dropbox selects
+    @$el.find('.dropdown-select .dropdown-menu li').click @onDropboxSelectChange
     # Setup sliders
     $sliders = @$el.find('.slider')
     $sliders.slider()
@@ -110,9 +119,8 @@ class VisualizationGraphConfiguration extends Backbone.View
     # Setup parameters
     @setupParameters()
 
-    console.log 'configuration model stup', @parameters
-
     # Visualization Styles
+    @$el.find('#nodes-color').change @onChangeNodesColor
     @$el.find('#nodes-size').change @onChangeNodesSize
     @$el.find('#showNodesLabel').on 'switchChange.bootstrapSwitch', @onToogleNodesLabel
     @$el.find('#curvature').change @onChangeRelationsCurvature
@@ -128,5 +136,12 @@ class VisualizationGraphConfiguration extends Backbone.View
     # Handle reset defaults
     @$el.find('#reset-defaults').click @onResetDefaults
     return this
+
+  onDropboxSelectChange: (e) ->
+    console.log 'onDropboxSelectChange', $(this).find('p').html()
+    $(this).parent().find('.active').removeClass 'active'
+    $(this).addClass 'active'
+    $(this).parent().parent().find('.dropdown-toggle .text').html $(this).find('p').html()
+    $(this).parent().parent().trigger 'change'
 
 module.exports = VisualizationGraphConfiguration
