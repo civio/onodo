@@ -42,7 +42,7 @@ describe AvatarUploader do
   end
 
   it 'scales down to be exactly 128 by 128 pixels' do
-    expect(uploader.small).to have_dimensions(128, 128)
+    expect(uploader).to have_dimensions(128, 128)
   end
 
   it "makes the image readable only to the owner and not executable" do
