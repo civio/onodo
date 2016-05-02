@@ -1013,6 +1013,63 @@ body.fullscreen{
     margin-bottom: $grid-gutter-width/2;
   }
 
+  #nodes-color{
+
+    .color-solid p{
+      cursor: auto;
+      display: block;
+    }
+
+    .color-solid-selector{
+      padding: 0;
+      width: 100%;
+      margin: $grid-gutter-width/3 0 0;
+      display: block;
+
+      li{
+        display: inline-block;
+        list-style: none;
+        width: 2*$grid-gutter-width/3;
+        height: 2 + 2*$grid-gutter-width/3;
+        border: none;
+        cursor: pointer;
+
+        &.color-1{
+          background: #ef9387;
+        }
+        &.color-2{
+          background: #fccf80;
+        }
+        &.color-3{
+          background: #fee378;
+        }
+        &.color-4{
+          background: #d9d070;
+        }
+        &.color-5{
+          background: #82a389;
+        }
+        &.color-6{
+          background: #89b5df;
+        }
+        &.color-7{
+          background: #c6a1bc;
+        }
+        &.color-8{
+          background: #f1b6ae;
+        }
+
+        &.active{
+          outline: 2px solid $gray;
+        }
+
+        &:hover{
+          outline: 1px solid white;
+        }
+      }
+    }
+  }
+
   #nodes-size{
 
     li{

@@ -10963,6 +10963,7 @@
 	    this.onChangeRelationsLineStyle = bind(this.onChangeRelationsLineStyle, this);
 	    this.onChangeRelationsCurvature = bind(this.onChangeRelationsCurvature, this);
 	    this.onToogleNodesLabel = bind(this.onToogleNodesLabel, this);
+	    this.onChangeNodesSize = bind(this.onChangeNodesSize, this);
 	    this.onChangeNodesColor = bind(this.onChangeNodesColor, this);
 	    this.onChangeValue = bind(this.onChangeValue, this);
 	    return VisualizationGraphConfiguration.__super__.constructor.apply(this, arguments);
@@ -10999,7 +11000,7 @@
 
 	  VisualizationGraphConfiguration.prototype.onChangeNodesColor = function(e) {
 	    this.parameters.nodesColor = parseInt($(e.target).find('.active').data('value'));
-	    console.log('onChangeNodesSize', this.parameters.nodesColor);
+	    console.log('onChangeNodesColor', this.parameters.nodesColor);
 	    Backbone.trigger('visualization.config.updateNodesColor', {
 	      value: this.parameters.nodesColor
 	    });
@@ -11122,9 +11123,16 @@
 	  };
 
 	  VisualizationGraphConfiguration.prototype.onDropboxSelectChange = function(e) {
-	    $(this).parent().find('.active').removeClass('active');
+	    if ($(this).data('value') === void 0) {
+	      return;
+	    }
+	    console.log('onDropboxSelectChange', $(this), $(this).parent().find('.active').removeClass('active'));
 	    $(this).addClass('active');
-	    $(this).parent().parent().find('.dropdown-toggle .text').html($(this).find('p').html());
+	    if ($(this).hasClass('color')) {
+	      $(this).parent().parent().parent().parent().find('.dropdown-toggle .text').html($(this).parent().parent().find('p').html());
+	    } else {
+	      $(this).parent().parent().find('.dropdown-toggle .text').html($(this).find('p').html());
+	    }
 	    return $(this).parent().parent().trigger('change');
 	  };
 

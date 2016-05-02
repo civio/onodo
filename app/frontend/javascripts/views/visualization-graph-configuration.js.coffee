@@ -26,11 +26,11 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   onChangeNodesColor: (e) =>
     @parameters.nodesColor = parseInt $(e.target).find('.active').data('value')
-    console.log 'onChangeNodesSize', @parameters.nodesColor
+    console.log 'onChangeNodesColor', @parameters.nodesColor
     Backbone.trigger 'visualization.config.updateNodesColor', {value: @parameters.nodesColor}
     @updateParameters()
 
-  onChangeNodesSize: (e) ->
+  onChangeNodesSize: (e) =>
     @parameters.nodesSize = parseInt $(e.target).find('.active').data('value')
     console.log 'onChangeNodesSize', @parameters.nodesSize
     Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
@@ -142,12 +142,17 @@ class VisualizationGraphConfiguration extends Backbone.View
     return this
 
   onDropboxSelectChange: (e) ->
+    if $(this).data('value') == undefined 
+      return
+    console.log 'onDropboxSelectChange', $(this),
     # clear active element
     $(this).parent().find('.active').removeClass 'active'
-    # update clicked element as active
     $(this).addClass 'active'
     # add clicked element as dropdown-select label
-    $(this).parent().parent().find('.dropdown-toggle .text').html $(this).find('p').html()
+    if $(this).hasClass 'color'
+      $(this).parent().parent().parent().parent().find('.dropdown-toggle .text').html $(this).parent().parent().find('p').html()
+    else
+      $(this).parent().parent().find('.dropdown-toggle .text').html $(this).find('p').html()
     # trigger change event on dropdown-select
     $(this).parent().parent().trigger 'change'
 
