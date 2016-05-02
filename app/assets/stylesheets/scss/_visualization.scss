@@ -1068,6 +1068,19 @@ body.fullscreen{
         }
       }
     }
+
+    .color-qualitative,
+    .color-quantitative{
+      background-repeat: no-repeat;
+      background-position: 8px 28px;
+      padding-bottom: 36px;
+    }
+    .color-qualitative{
+      background-image: url('/images/color-scale-qualitative.png');
+    }
+    .color-quantitative{
+      background-image: url('/images/color-scale-quantitative.png');
+    }
   }
 
   #nodes-size{
