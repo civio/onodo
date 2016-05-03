@@ -2,10 +2,33 @@ d3 = require 'd3'
 
 class VisualizationGraphCanvas extends Backbone.View
 
-  COLOR_CUALITATIVE: [
-    '#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', 
-    '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'
-  ]
+  COLORS: {
+    'solid-1': '#ef9387'
+    'solid-2': '#fccf80'
+    'solid-3': '#fee378'
+    'solid-4': '#d9d070'
+    'solid-5': '#82a389'
+    'solid-6': '#87948f'
+    'solid-7': '#89b5df'
+    'solid-8': '#aebedf'
+    'solid-9': '#c6a1bc'
+    'solid-10': '#f1b6ae'
+    'solid-11': '#a8a6a0'
+    'solid-12': '#e0deda'
+    'quantitative-1': '#382759'
+    'quantitative-2': '#31458f'
+    'quantitative-3': '#2b64c5'
+    'quantitative-4': '#2482fb'
+    'quantitative-5': '#6d9ebb'
+    'quantitative-6': '#b5ba7c'
+    'quantitative-7': '#fed63c'
+    'quantitative-8': '#fedf69'
+    'quantitative-9': '#ffe795'
+    'quantitative-10': '#fff0c2'
+  }
+
+  COLOR_QUALITATIVE:  null
+  COLOR_QUANTITATIVE: null
 
   svg:                    null
   container:              null
@@ -50,16 +73,43 @@ class VisualizationGraphCanvas extends Backbone.View
 
   initialize: (options) ->
 
-    @parameters = options.parameters;
+    console.log @COLORS
+
+    @COLOR_QUALITATIVE = [
+      @COLORS['solid-1']
+      @COLORS['solid-2']
+      @COLORS['solid-3']
+      @COLORS['solid-4']
+      @COLORS['solid-5']
+      @COLORS['solid-6']
+      @COLORS['solid-7']
+      @COLORS['solid-8']
+      @COLORS['solid-9']
+      @COLORS['solid-10']
+      @COLORS['solid-11']
+      @COLORS['solid-12']
+    ]
+
+    @COLOR_QUANTITATIVE = [
+      @COLORS['quantitative-1']
+      @COLORS['quantitative-2']
+      @COLORS['quantitative-3']
+      @COLORS['quantitative-4']
+      @COLORS['quantitative-5']
+      @COLORS['quantitative-6']
+      @COLORS['quantitative-7']
+      @COLORS['quantitative-8']
+      @COLORS['quantitative-9']
+      @COLORS['quantitative-10']
+    ]
+
+    @parameters = options.parameters
 
     console.log 'initialize canvas', @parameters
 
     # Setup color scale
-    #@color = d3.scale.category20()
-    @color            = d3.scale.ordinal().range( @COLOR_CUALITATIVE )
-    @colorInterpolate = d3.scale.linear()
-                          .domain([0,100])
-                          .interpolate(d3.interpolateRgb)
+    @colorQualitativeScale  = d3.scale.ordinal().range( @COLOR_QUALITATIVE )
+    @colorQuantitativeScale = d3.scale.ordinal().range( @COLOR_QUANTITATIVE )
 
     # Setup Data
     @initializeData( options.data )
@@ -146,7 +196,8 @@ class VisualizationGraphCanvas extends Backbone.View
         @addNodeData d
 
     # Setup color ordinal scale domain
-    @color.domain data.nodes.map( (d) -> d.node_type )
+    @colorQualitativeScale.domain data.nodes.map( (d) -> d.node_type )
+    @colorQuantitativeScale.domain data.nodes.map( (d) -> d.node_type )
 
     # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
     data.relations.forEach (d) =>
@@ -190,14 +241,16 @@ class VisualizationGraphCanvas extends Backbone.View
     .append('circle')
       .attr('class', 'node-circle')
       .attr('r', @getNodeSize)
-      .style('fill', (d) => return @color(d.node_type))
-      .style('stroke', (d) => return @color(d.node_type))
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include
     # entering elements; so, operations on the update selection after appending to
     # the enter selection will apply to both entering and updating nodes.
     @nodes.attr('id', (d) -> return 'node-'+d.id)
+    # set nodes color based on parameters.nodesColor value
+    @nodes.selectAll('.node-circle')
+      .style('fill', @setNodesColor)
+      .style('stroke', @setNodesColor)
 
     # EXIT
     # Remove old elements as needed.
@@ -386,6 +439,16 @@ class VisualizationGraphCanvas extends Backbone.View
   unfocusNode: ->
     @nodes.selectAll('.node-circle.active').classed('active', false)
 
+  setNodesColor: (d) =>
+    if @parameters.nodesColor == 'qualitative'
+      color = @colorQualitativeScale d.node_type  
+    else if @parameters.nodesColor == 'quantitative'
+      color = @colorQuantitativeScale d.node_type
+    else
+      color = @COLORS[@parameters.nodesColor]
+    console.log 'set nodes color', @parameters.nodesColor, color
+    return color
+
 
   # Resize Methods
   # ---------------
@@ -419,6 +482,13 @@ class VisualizationGraphCanvas extends Backbone.View
 
   # Config Methods
   # ---------------
+
+  updateNodesColor: (value) =>
+    console.log 'updateNodesColor', value
+    @parameters.nodesColor = value
+    @nodes.selectAll('.node-circle')
+      .style('fill', @setNodesColor)
+      .style('stroke', @setNodesColor)
 
   updateNodesSize: (value) =>
     console.log 'updateNodesSize', value
@@ -529,8 +599,9 @@ class VisualizationGraphCanvas extends Backbone.View
     d.fixed = true;
 
   onNodeOver: (d) =>
-    @nodes.select('circle')
-      .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
+    #@nodes.select('circle')
+    #  .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
+    #
     # highlight related nodes labels
     @nodes_labels.classed 'weaken', true
     @nodes_labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
@@ -541,8 +612,9 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations_labels.selectAll('.relation-label').classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
-    @nodes.select('circle')
-      .style('fill', (o) => return @color(o.node_type))
+    #@nodes.select('circle')
+    #  .style('fill', (o) => return @color(o.node_type))
+    #
     @nodes_labels.classed 'weaken', false
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false

@@ -5,7 +5,7 @@ class VisualizationGraphConfiguration extends Backbone.View
   el: '.visualization-graph-panel-configuration'
   parameters: null
   parametersDefault: {
-    nodesColor:         0
+    nodesColor:         'solid-1'
     nodesSize:          11
     showNodesLabel:     1
     relationsCurvature: 1
@@ -25,7 +25,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: key, value: value}
 
   onChangeNodesColor: (e) =>
-    @parameters.nodesColor = parseInt $(e.target).find('.active').data('value')
+    @parameters.nodesColor = $(e.target).find('.active').data('value')
     console.log 'onChangeNodesColor', @parameters.nodesColor
     Backbone.trigger 'visualization.config.updateNodesColor', {value: @parameters.nodesColor}
     @updateParameters()

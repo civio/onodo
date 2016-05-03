@@ -104,6 +104,7 @@ class VisualizationGraph extends Backbone.View
     #Backbone.on 'visualization.node.description', @onNodeChangeDescription, @
     #Backbone.on 'visualization.node.visible',     @onNodeChangeVisible, @
     # Subscribe Config Panel Events
+    Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesSize',             @onUpdateNodesSize, @
     Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabels, @
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
@@ -198,6 +199,9 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphInfo.hide()
 
   # Config Panel Events
+  onUpdateNodesColor: (e) ->
+    @visualizationGraphCanvas.updateNodesColor e.value
+
   onUpdateNodesSize: (e) ->
     @visualizationGraphCanvas.updateNodesSize e.value
 

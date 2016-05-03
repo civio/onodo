@@ -4,6 +4,21 @@
 @import 'bootstrap/mixins/clearfix';
 @import 'scss/sprites';
 
+// Define nodes colors
+$node-color-1: #ef9387;
+$node-color-2: #fccf80;
+$node-color-3: #fee378;
+$node-color-4: #d9d070;
+$node-color-5: #82a389;
+$node-color-6: #87948f;
+$node-color-7: #89b5df;
+$node-color-8: #aebedf;
+$node-color-9: #c6a1bc;
+$node-color-10: #f1b6ae;
+$node-color-11: #a8a6a0;
+$node-color-12: #e0deda;
+
+
 .visualization-header{
   position: relative;
   background: $body-bg;
@@ -1035,28 +1050,28 @@ body.fullscreen{
         cursor: pointer;
 
         &.color-1{
-          background: #ef9387;
+          background: $node-color-1;
         }
         &.color-2{
-          background: #fccf80;
+          background: $node-color-2;
         }
         &.color-3{
-          background: #fee378;
+          background: $node-color-3;
         }
         &.color-4{
-          background: #d9d070;
+          background: $node-color-4;
         }
         &.color-5{
-          background: #82a389;
+          background: $node-color-5;
         }
         &.color-6{
-          background: #89b5df;
+          background: $node-color-7;
         }
         &.color-7{
-          background: #c6a1bc;
+          background: $node-color-9;
         }
         &.color-8{
-          background: #f1b6ae;
+          background: $node-color-10;
         }
 
         &.active{

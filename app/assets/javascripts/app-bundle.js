@@ -473,6 +473,7 @@
 	    this.collection.relations.bind('remove', this.onRelationsRemove, this);
 	    Backbone.on('visualization.node.showInfo', this.onNodeShowInfo, this);
 	    Backbone.on('visualization.node.hideInfo', this.onNodeHideInfo, this);
+	    Backbone.on('visualization.config.updateNodesColor', this.onUpdateNodesColor, this);
 	    Backbone.on('visualization.config.updateNodesSize', this.onUpdateNodesSize, this);
 	    Backbone.on('visualization.config.toogleNodesLabel', this.onToogleNodesLabels, this);
 	    Backbone.on('visualization.config.toogleNodesWithoutRelation', this.onToogleNodesWithoutRelation, this);
@@ -576,6 +577,10 @@
 	    return this.visualizationGraphInfo.hide();
 	  };
 
+	  VisualizationGraph.prototype.onUpdateNodesColor = function(e) {
+	    return this.visualizationGraphCanvas.updateNodesColor(e.value);
+	  };
+
 	  VisualizationGraph.prototype.onUpdateNodesSize = function(e) {
 	    return this.visualizationGraphCanvas.updateNodesSize(e.value);
 	  };
@@ -659,13 +664,42 @@
 	    this.toogleNodesWithoutRelation = bind(this.toogleNodesWithoutRelation, this);
 	    this.toogleNodesLabels = bind(this.toogleNodesLabels, this);
 	    this.updateNodesSize = bind(this.updateNodesSize, this);
+	    this.updateNodesColor = bind(this.updateNodesColor, this);
+	    this.setNodesColor = bind(this.setNodesColor, this);
 	    this.removeNodeRelations = bind(this.removeNodeRelations, this);
 	    this.removeVisibleRelationData = bind(this.removeVisibleRelationData, this);
 	    this.removeRelationData = bind(this.removeRelationData, this);
 	    return VisualizationGraphCanvas.__super__.constructor.apply(this, arguments);
 	  }
 
-	  VisualizationGraphCanvas.prototype.COLOR_CUALITATIVE = ['#ef9387', '#fccf80', '#fee378', '#d9d070', '#82a389', '#87948f', '#89b5df', '#aebedf', '#c6a1bc', '#f1b6ae', '#a8a6a0', '#e0deda'];
+	  VisualizationGraphCanvas.prototype.COLORS = {
+	    'solid-1': '#ef9387',
+	    'solid-2': '#fccf80',
+	    'solid-3': '#fee378',
+	    'solid-4': '#d9d070',
+	    'solid-5': '#82a389',
+	    'solid-6': '#87948f',
+	    'solid-7': '#89b5df',
+	    'solid-8': '#aebedf',
+	    'solid-9': '#c6a1bc',
+	    'solid-10': '#f1b6ae',
+	    'solid-11': '#a8a6a0',
+	    'solid-12': '#e0deda',
+	    'quantitative-1': '#382759',
+	    'quantitative-2': '#31458f',
+	    'quantitative-3': '#2b64c5',
+	    'quantitative-4': '#2482fb',
+	    'quantitative-5': '#6d9ebb',
+	    'quantitative-6': '#b5ba7c',
+	    'quantitative-7': '#fed63c',
+	    'quantitative-8': '#fedf69',
+	    'quantitative-9': '#ffe795',
+	    'quantitative-10': '#fff0c2'
+	  };
+
+	  VisualizationGraphCanvas.prototype.COLOR_QUALITATIVE = null;
+
+	  VisualizationGraphCanvas.prototype.COLOR_QUANTITATIVE = null;
 
 	  VisualizationGraphCanvas.prototype.svg = null;
 
@@ -734,10 +768,13 @@
 
 	  VisualizationGraphCanvas.prototype.initialize = function(options) {
 	    var defs;
+	    console.log(this.COLORS);
+	    this.COLOR_QUALITATIVE = [this.COLORS['solid-1'], this.COLORS['solid-2'], this.COLORS['solid-3'], this.COLORS['solid-4'], this.COLORS['solid-5'], this.COLORS['solid-6'], this.COLORS['solid-7'], this.COLORS['solid-8'], this.COLORS['solid-9'], this.COLORS['solid-10'], this.COLORS['solid-11'], this.COLORS['solid-12']];
+	    this.COLOR_QUANTITATIVE = [this.COLORS['quantitative-1'], this.COLORS['quantitative-2'], this.COLORS['quantitative-3'], this.COLORS['quantitative-4'], this.COLORS['quantitative-5'], this.COLORS['quantitative-6'], this.COLORS['quantitative-7'], this.COLORS['quantitative-8'], this.COLORS['quantitative-9'], this.COLORS['quantitative-10']];
 	    this.parameters = options.parameters;
 	    console.log('initialize canvas', this.parameters);
-	    this.color = d3.scale.ordinal().range(this.COLOR_CUALITATIVE);
-	    this.colorInterpolate = d3.scale.linear().domain([0, 100]).interpolate(d3.interpolateRgb);
+	    this.colorQualitativeScale = d3.scale.ordinal().range(this.COLOR_QUALITATIVE);
+	    this.colorQuantitativeScale = d3.scale.ordinal().range(this.COLOR_QUANTITATIVE);
 	    this.initializeData(options.data);
 	    this.viewport.width = this.$el.width();
 	    this.viewport.height = this.$el.height();
@@ -770,7 +807,10 @@
 	        }
 	      };
 	    })(this));
-	    this.color.domain(data.nodes.map(function(d) {
+	    this.colorQualitativeScale.domain(data.nodes.map(function(d) {
+	      return d.node_type;
+	    }));
+	    this.colorQuantitativeScale.domain(data.nodes.map(function(d) {
 	      return d.node_type;
 	    }));
 	    data.relations.forEach((function(_this) {
@@ -799,18 +839,11 @@
 
 	  VisualizationGraphCanvas.prototype.updateNodes = function() {
 	    this.nodes = this.nodes_cont.selectAll('.node').data(this.data_nodes);
-	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.getNodeSize).style('fill', (function(_this) {
-	      return function(d) {
-	        return _this.color(d.node_type);
-	      };
-	    })(this)).style('stroke', (function(_this) {
-	      return function(d) {
-	        return _this.color(d.node_type);
-	      };
-	    })(this));
+	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle').attr('r', this.getNodeSize);
 	    this.nodes.attr('id', function(d) {
 	      return 'node-' + d.id;
 	    });
+	    this.nodes.selectAll('.node-circle').style('fill', this.setNodesColor).style('stroke', this.setNodesColor);
 	    return this.nodes.exit().remove();
 	  };
 
@@ -964,6 +997,19 @@
 	    return this.nodes.selectAll('.node-circle.active').classed('active', false);
 	  };
 
+	  VisualizationGraphCanvas.prototype.setNodesColor = function(d) {
+	    var color;
+	    if (this.parameters.nodesColor === 'qualitative') {
+	      color = this.colorQualitativeScale(d.node_type);
+	    } else if (this.parameters.nodesColor === 'quantitative') {
+	      color = this.colorQuantitativeScale(d.node_type);
+	    } else {
+	      color = this.COLORS[this.parameters.nodesColor];
+	    }
+	    console.log('set nodes color', this.parameters.nodesColor, color);
+	    return color;
+	  };
+
 	  VisualizationGraphCanvas.prototype.resize = function() {
 	    this.viewport.width = this.$el.width();
 	    this.viewport.height = this.$el.height();
@@ -988,6 +1034,12 @@
 	  VisualizationGraphCanvas.prototype.setOffset = function(offset) {
 	    this.viewport.offsety = offset < 0 ? 0 : offset;
 	    return this.rescale();
+	  };
+
+	  VisualizationGraphCanvas.prototype.updateNodesColor = function(value) {
+	    console.log('updateNodesColor', value);
+	    this.parameters.nodesColor = value;
+	    return this.nodes.selectAll('.node-circle').style('fill', this.setNodesColor).style('stroke', this.setNodesColor);
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodesSize = function(value) {
@@ -1115,15 +1167,6 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.onNodeOver = function(d) {
-	    this.nodes.select('circle').style('fill', (function(_this) {
-	      return function(o) {
-	        if (_this.areNodesRelated(d, o)) {
-	          return _this.color(o.node_type);
-	        } else {
-	          return _this.mixColor(_this.color(o.node_type), '#ffffff');
-	        }
-	      };
-	    })(this));
 	    this.nodes_labels.classed('weaken', true);
 	    this.nodes_labels.classed('highlighted', (function(_this) {
 	      return function(o) {
@@ -1144,11 +1187,6 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.onNodeOut = function(d) {
-	    this.nodes.select('circle').style('fill', (function(_this) {
-	      return function(o) {
-	        return _this.color(o.node_type);
-	      };
-	    })(this));
 	    this.nodes_labels.classed('weaken', false);
 	    this.nodes_labels.classed('highlighted', false);
 	    this.relations.classed('weaken', false);
@@ -10974,7 +11012,7 @@
 	  VisualizationGraphConfiguration.prototype.parameters = null;
 
 	  VisualizationGraphConfiguration.prototype.parametersDefault = {
-	    nodesColor: 0,
+	    nodesColor: 'solid-1',
 	    nodesSize: 11,
 	    showNodesLabel: 1,
 	    relationsCurvature: 1,
@@ -10999,7 +11037,7 @@
 	  };
 
 	  VisualizationGraphConfiguration.prototype.onChangeNodesColor = function(e) {
-	    this.parameters.nodesColor = parseInt($(e.target).find('.active').data('value'));
+	    this.parameters.nodesColor = $(e.target).find('.active').data('value');
 	    console.log('onChangeNodesColor', this.parameters.nodesColor);
 	    Backbone.trigger('visualization.config.updateNodesColor', {
 	      value: this.parameters.nodesColor
