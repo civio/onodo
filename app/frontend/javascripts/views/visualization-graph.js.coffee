@@ -31,12 +31,14 @@ class VisualizationGraph extends Backbone.View
     # Initial setup size
     @resize()
 
-  onPanelConfigureShow: ->
+  onPanelConfigureShow: =>
     $('html, body').animate { scrollTop: 0 }, 600
-    $('.visualization-graph-panel-configuration').addClass 'active'
+    @visualizationGraphConfiguration.$el.addClass 'active'
+    @visualizationGraphCanvas.setOffsetX 200 # half the width of Panel Configuration
 
-  onPanelConfigureHide: ->
-    $('.visualization-graph-panel-configuration').removeClass 'active'
+  onPanelConfigureHide: =>
+    @visualizationGraphConfiguration.$el.removeClass 'active'
+    @visualizationGraphCanvas.setOffsetX 0
 
   onPanelShareShow: ->
     $('#visualization-share').addClass 'active'
@@ -123,9 +125,9 @@ class VisualizationGraph extends Backbone.View
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.resize()
 
-  setOffset: (offset) ->
+  setOffsetY: (offset) ->
     if @visualizationGraphCanvas
-      @visualizationGraphCanvas.setOffset offset
+      @visualizationGraphCanvas.setOffsetY offset
 
   # Collections Events
   onNodesAdd: (node) ->

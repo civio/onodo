@@ -80,7 +80,7 @@ class VisualizationEdit
     #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
 
   onScroll: =>
-    @visualizationGraph.setOffset $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
+    @visualizationGraph.setOffsetY $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
 
   render: ->
     @setupAffix()   # setup affix bootstrap

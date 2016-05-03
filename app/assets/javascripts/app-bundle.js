@@ -360,6 +360,8 @@
 	  function VisualizationGraph() {
 	    this.onRelationsSync = bind(this.onRelationsSync, this);
 	    this.onNodesSync = bind(this.onNodesSync, this);
+	    this.onPanelConfigureHide = bind(this.onPanelConfigureHide, this);
+	    this.onPanelConfigureShow = bind(this.onPanelConfigureShow, this);
 	    return VisualizationGraph.__super__.constructor.apply(this, arguments);
 	  }
 
@@ -393,11 +395,13 @@
 	    $('html, body').animate({
 	      scrollTop: 0
 	    }, 600);
-	    return $('.visualization-graph-panel-configuration').addClass('active');
+	    this.visualizationGraphConfiguration.$el.addClass('active');
+	    return this.visualizationGraphCanvas.setOffsetX(200);
 	  };
 
 	  VisualizationGraph.prototype.onPanelConfigureHide = function() {
-	    return $('.visualization-graph-panel-configuration').removeClass('active');
+	    this.visualizationGraphConfiguration.$el.removeClass('active');
+	    return this.visualizationGraphCanvas.setOffsetX(0);
 	  };
 
 	  VisualizationGraph.prototype.onPanelShareShow = function() {
@@ -494,9 +498,9 @@
 	    }
 	  };
 
-	  VisualizationGraph.prototype.setOffset = function(offset) {
+	  VisualizationGraph.prototype.setOffsetY = function(offset) {
 	    if (this.visualizationGraphCanvas) {
-	      return this.visualizationGraphCanvas.setOffset(offset);
+	      return this.visualizationGraphCanvas.setOffsetY(offset);
 	    }
 	  };
 
@@ -758,6 +762,7 @@
 	    y: 0,
 	    dx: 0,
 	    dy: 0,
+	    offsetx: 0,
 	    offsety: 0,
 	    drag: {
 	      x: 0,
@@ -768,7 +773,6 @@
 
 	  VisualizationGraphCanvas.prototype.initialize = function(options) {
 	    var defs;
-	    console.log(this.COLORS);
 	    this.COLOR_QUALITATIVE = [this.COLORS['solid-1'], this.COLORS['solid-2'], this.COLORS['solid-3'], this.COLORS['solid-4'], this.COLORS['solid-5'], this.COLORS['solid-6'], this.COLORS['solid-7'], this.COLORS['solid-8'], this.COLORS['solid-9'], this.COLORS['solid-10'], this.COLORS['solid-11'], this.COLORS['solid-12']];
 	    this.COLOR_QUANTITATIVE = [this.COLORS['quantitative-1'], this.COLORS['quantitative-2'], this.COLORS['quantitative-3'], this.COLORS['quantitative-4'], this.COLORS['quantitative-5'], this.COLORS['quantitative-6'], this.COLORS['quantitative-7'], this.COLORS['quantitative-8'], this.COLORS['quantitative-9'], this.COLORS['quantitative-10']];
 	    this.parameters = options.parameters;
@@ -1006,7 +1010,6 @@
 	    } else {
 	      color = this.COLORS[this.parameters.nodesColor];
 	    }
-	    console.log('set nodes color', this.parameters.nodesColor, color);
 	    return color;
 	  };
 
@@ -1023,21 +1026,29 @@
 
 	  VisualizationGraphCanvas.prototype.rescale = function() {
 	    var translateStr;
+	    this.container.attr('transform', this.getContainerTransform());
 	    translateStr = 'translate(' + (-this.viewport.center.x) + ',' + (-this.viewport.center.y) + ')';
-	    this.container.attr('transform', 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y - this.viewport.offsety) + ')scale(' + this.viewport.scale + ')');
 	    this.relations_cont.attr('transform', translateStr);
 	    this.relations_labels_cont.attr('transform', translateStr);
 	    this.nodes_cont.attr('transform', translateStr);
 	    return this.nodes_labels_cont.attr('transform', translateStr);
 	  };
 
-	  VisualizationGraphCanvas.prototype.setOffset = function(offset) {
+	  VisualizationGraphCanvas.prototype.setOffsetX = function(offset) {
+	    this.viewport.offsetx = offset < 0 ? 0 : offset;
+	    return this.container.transition().duration(400).ease('ease-out').attr('transform', this.getContainerTransform());
+	  };
+
+	  VisualizationGraphCanvas.prototype.setOffsetY = function(offset) {
 	    this.viewport.offsety = offset < 0 ? 0 : offset;
-	    return this.rescale();
+	    return this.container.attr('transform', this.getContainerTransform());
+	  };
+
+	  VisualizationGraphCanvas.prototype.getContainerTransform = function() {
+	    return 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x - this.viewport.offsetx) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y - this.viewport.offsety) + ')scale(' + this.viewport.scale + ')';
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodesColor = function(value) {
-	    console.log('updateNodesColor', value);
 	    this.parameters.nodesColor = value;
 	    return this.nodes.selectAll('.node-circle').style('fill', this.setNodesColor).style('stroke', this.setNodesColor);
 	  };
@@ -16945,7 +16956,7 @@
 	      this.table.setDataAtRowProp(index, 'id', model.id);
 	      if (this.duplicate) {
 	        if (this.duplicate.attributes.name) {
-	          this.table.setDataAtRowProp(index, 'name', this.duplicate.attributes.name);
+	          this.table.setDataAtRowProp(index, 'name', this.duplicate.attributes.name + ' (1)');
 	        }
 	        if (this.duplicate.attributes.node_type) {
 	          this.table.setDataAtRowProp(index, 'node_type', this.duplicate.attributes.node_type);
@@ -47149,7 +47160,7 @@
 	  };
 
 	  VisualizationEdit.prototype.onScroll = function() {
-	    return this.visualizationGraph.setOffset($(window).scrollTop() - this.mainHeaderHeight - this.visualizationHeaderHeight);
+	    return this.visualizationGraph.setOffsetY($(window).scrollTop() - this.mainHeaderHeight - this.visualizationHeaderHeight);
 	  };
 
 	  VisualizationEdit.prototype.render = function() {

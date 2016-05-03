@@ -65,6 +65,7 @@ class VisualizationGraphCanvas extends Backbone.View
     y: 0
     dx: 0
     dy: 0
+    offsetx: 0
     offsety: 0
     drag:
       x: 0
@@ -73,8 +74,7 @@ class VisualizationGraphCanvas extends Backbone.View
 
   initialize: (options) ->
 
-    console.log @COLORS
-
+    # setup colors scales
     @COLOR_QUALITATIVE = [
       @COLORS['solid-1']
       @COLORS['solid-2']
@@ -89,7 +89,6 @@ class VisualizationGraphCanvas extends Backbone.View
       @COLORS['solid-11']
       @COLORS['solid-12']
     ]
-
     @COLOR_QUANTITATIVE = [
       @COLORS['quantitative-1']
       @COLORS['quantitative-2']
@@ -446,7 +445,6 @@ class VisualizationGraphCanvas extends Backbone.View
       color = @colorQuantitativeScale d.node_type
     else
       color = @COLORS[@parameters.nodesColor]
-    console.log 'set nodes color', @parameters.nodesColor, color
     return color
 
 
@@ -468,23 +466,32 @@ class VisualizationGraphCanvas extends Backbone.View
     @force.size [@viewport.width, @viewport.height]
 
   rescale: ->
+    @container.attr 'transform', @getContainerTransform()
     translateStr = 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @container.attr             'transform', 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
     @relations_cont.attr        'transform', translateStr
     @relations_labels_cont.attr 'transform', translateStr
     @nodes_cont.attr            'transform', translateStr
     @nodes_labels_cont.attr     'transform', translateStr
+ 
+  setOffsetX: (offset) ->
+    @viewport.offsetx = if offset < 0 then 0 else offset
+    @container.transition()
+      .duration(400)
+      .ease('ease-out')
+      .attr('transform', @getContainerTransform())
 
-  setOffset: (offset) ->
+  setOffsetY: (offset) ->
     @viewport.offsety = if offset < 0 then 0 else offset
-    @rescale()
+    @container.attr 'transform', @getContainerTransform()
+
+   getContainerTransform: ->
+    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
 
 
   # Config Methods
   # ---------------
 
   updateNodesColor: (value) =>
-    console.log 'updateNodesColor', value
     @parameters.nodesColor = value
     @nodes.selectAll('.node-circle')
       .style('fill', @setNodesColor)
