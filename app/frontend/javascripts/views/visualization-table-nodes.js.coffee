@@ -101,7 +101,7 @@ class VisualizationTableNodes extends VisualizationTableBase
       # set duplicated values
       if @duplicate
         if @duplicate.attributes.name
-          @table.setDataAtRowProp index, 'name', @duplicate.attributes.name
+          @table.setDataAtRowProp index, 'name', @duplicate.attributes.name+' (1)'
         if @duplicate.attributes.node_type
           @table.setDataAtRowProp index, 'node_type', @duplicate.attributes.node_type
         if @duplicate.attributes.description
