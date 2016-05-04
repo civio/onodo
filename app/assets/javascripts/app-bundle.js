@@ -1350,7 +1350,7 @@
 	  VisualizationGraphCanvas.prototype.getNodeSize = function(d) {
 	    var size;
 	    if (this.parameters.nodesSize === 1) {
-	      size = 5 + 15 * (this.nodes_relations_size[d.id] / this.data_relations_visibles.max);
+	      size = this.nodes_relations_size[d.id] ? 5 + 15 * (this.nodes_relations_size[d.id] / this.data_relations_visibles.max) : 5;
 	    } else {
 	      size = this.parameters.nodesSize;
 	    }

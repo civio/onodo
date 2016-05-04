@@ -717,7 +717,7 @@ class VisualizationGraphCanvas extends Backbone.View
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
     if @parameters.nodesSize == 1
-      size = 5+15*(@nodes_relations_size[d.id]/@data_relations_visibles.max)
+      size = if @nodes_relations_size[d.id] then 5+15*(@nodes_relations_size[d.id]/@data_relations_visibles.max) else 5
     else
       size = @parameters.nodesSize
     return size
