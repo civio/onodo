@@ -3,7 +3,8 @@ class Node extends Backbone.Model
   defaults:
     name:         null
     description:  null
-    visible:      false
+    visible:      true
     node_type:    null
+    image:        null
 
 module.exports = Node

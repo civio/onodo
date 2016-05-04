@@ -63,7 +63,7 @@ class VisualizationTableNodes extends VisualizationTableBase
         renderer: @rowVisibleRenderer
       },
       {
-        data: ''
+        data: 'image'
         readOnly: true
         renderer: @rowImageRenderer
       },
@@ -120,7 +120,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     index = change[0]
     key   = change[1]
     value = change[3]
-    # Get model id in order to acced to model in Collection
+    # Get model id in order to access to model in Collection
     model_id = @getIdAtRow index
     if model_id
       model = @collection.get model_id
@@ -206,7 +206,14 @@ class VisualizationTableNodes extends VisualizationTableBase
   showImageModal: (index) =>
     console.log 'showImageModal', index
     $modal = $('#table-image-modal')
-
+    # Load description edit form via ajax in modal
+    $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(index)+'/edit/image/', () =>
+      # Add on submit handler to save new description via model
+      $modal.find('#uploadTarget').on 'load', (e) =>
+        e.preventDefault()
+        image = $.parseJSON($(e.target).contents().text()).image
+        @table.setDataAtRowProp index, 'image', image
+        $modal.modal 'hide'
     # Show modal
     $modal.modal 'show'
 
@@ -243,12 +250,13 @@ class VisualizationTableNodes extends VisualizationTableBase
   rowImageRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # We keep checkbox render in order to toogle value with enter key
     Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
-    # Add visible icon link
+    # Add image icon link
     link = document.createElement('A')
-    link.className = if value then 'icon-image active' else 'icon-image'
+    link.className = if value.url then 'icon-image active' else 'icon-image'
     link.innerHTML = link.title = 'Node Image'
+    Handsontable.Dom.empty(td)
     td.appendChild(link)
-    # Show image modal on click
+    # Add image modal on click event or keydown (enter or space)
     Handsontable.Dom.addEvent link, 'click', (e) =>
       e.preventDefault()
       @showImageModal row
