@@ -275,7 +275,8 @@ class VisualizationGraphCanvas extends Backbone.View
     # entering elements; so, operations on the update selection after appending to
     # the enter selection will apply to both entering and updating nodes.
     @relations.attr('id', (d) -> return 'relation-'+d.id)
-      .attr('marker-end', (d) -> return if d.direction then 'url(#arrow)' else '')
+      .attr('marker-end', @getRelationMarkerEnd)
+      .attr('marker-start', @getRelationMarkerStart)
 
     # EXIT
     # Remove old elements as needed.
@@ -639,13 +640,11 @@ class VisualizationGraphCanvas extends Backbone.View
 
   # Tick Function
   onTick: =>
-    # Set relations path
-    @relations.attr 'd', @drawRelationPath # (d) =>   # we need to 
-    # Set relations arrow markers
-    @relations.attr 'marker-end', (d) ->
-      return if d.direction and d.angle >= 0 then 'url(#arrow-end)' else ''
-    @relations.attr 'marker-start', (d) ->
-      return if d.direction and d.angle < 0 then 'url(#arrow-start)' else ''
+    # Set relations path & arrow markers
+    @relations
+      .attr('d', @drawRelationPath)
+      .attr('marker-end', @getRelationMarkerEnd)
+      .attr('marker-start', @getRelationMarkerStart)
     # Set nodes & labels position
     @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
     @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
@@ -691,6 +690,7 @@ class VisualizationGraphCanvas extends Backbone.View
       
     return path
 
+
   # Auxiliar Methods
   # ----------------
 
@@ -730,6 +730,12 @@ class VisualizationGraphCanvas extends Backbone.View
     else
       size = @parameters.nodesSize
     return size
+
+  getRelationMarkerEnd: (d) -> 
+    return if d.direction and d.angle >= 0 then 'url(#arrow-end)' else ''
+  
+  getRelationMarkerStart: (d) -> 
+    return if d.direction and d.angle < 0 then 'url(#arrow-start)' else ''
 
   setNodesRelationsSize: =>
     @nodes_relations_size = {}

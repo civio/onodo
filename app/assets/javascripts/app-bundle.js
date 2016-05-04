@@ -855,13 +855,7 @@
 	    this.relations.enter().append('path').attr('class', 'relation');
 	    this.relations.attr('id', function(d) {
 	      return 'relation-' + d.id;
-	    }).attr('marker-end', function(d) {
-	      if (d.direction) {
-	        return 'url(#arrow)';
-	      } else {
-	        return '';
-	      }
-	    });
+	    }).attr('marker-end', this.getRelationMarkerEnd).attr('marker-start', this.getRelationMarkerStart);
 	    return this.relations.exit().remove();
 	  };
 
@@ -1211,21 +1205,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.onTick = function() {
-	    this.relations.attr('d', this.drawRelationPath);
-	    this.relations.attr('marker-end', function(d) {
-	      if (d.direction && d.angle >= 0) {
-	        return 'url(#arrow-end)';
-	      } else {
-	        return '';
-	      }
-	    });
-	    this.relations.attr('marker-start', function(d) {
-	      if (d.direction && d.angle < 0) {
-	        return 'url(#arrow-start)';
-	      } else {
-	        return '';
-	      }
-	    });
+	    this.relations.attr('d', this.drawRelationPath).attr('marker-end', this.getRelationMarkerEnd).attr('marker-start', this.getRelationMarkerStart);
 	    this.nodes.attr('transform', function(d) {
 	      return 'translate(' + d.x + ',' + d.y + ')';
 	    });
@@ -1357,6 +1337,22 @@
 	      size = this.parameters.nodesSize;
 	    }
 	    return size;
+	  };
+
+	  VisualizationGraphCanvas.prototype.getRelationMarkerEnd = function(d) {
+	    if (d.direction && d.angle >= 0) {
+	      return 'url(#arrow-end)';
+	    } else {
+	      return '';
+	    }
+	  };
+
+	  VisualizationGraphCanvas.prototype.getRelationMarkerStart = function(d) {
+	    if (d.direction && d.angle < 0) {
+	      return 'url(#arrow-start)';
+	    } else {
+	      return '';
+	    }
 	  };
 
 	  VisualizationGraphCanvas.prototype.setNodesRelationsSize = function() {
@@ -16959,16 +16955,16 @@
 	    return this.collection.once('sync', function() {
 	      this.table.setDataAtRowProp(index, 'id', model.id);
 	      if (this.duplicate) {
-	        if (this.duplicate.attributes.name) {
-	          this.table.setDataAtRowProp(index, 'name', this.duplicate.attributes.name + ' (1)');
+	        if (this.duplicate.get('name')) {
+	          this.table.setDataAtRowProp(index, 'name', this.duplicate.get('name') + ' (1)');
 	        }
-	        if (this.duplicate.attributes.node_type) {
-	          this.table.setDataAtRowProp(index, 'node_type', this.duplicate.attributes.node_type);
+	        if (this.duplicate.get('node_type')) {
+	          this.table.setDataAtRowProp(index, 'node_type', this.duplicate.get('node_type'));
 	        }
-	        if (this.duplicate.attributes.description) {
-	          this.table.setDataAtRowProp(index, 'description', this.duplicate.attributes.description);
+	        if (this.duplicate.get('description')) {
+	          this.table.setDataAtRowProp(index, 'description', this.duplicate.get('description'));
 	        }
-	        this.table.setDataAtRowProp(index, 'visible', this.duplicate.attributes.visible);
+	        this.table.setDataAtRowProp(index, 'visible', this.duplicate.get('visible'));
 	        console.log('now set duplicate values');
 	        return this.duplicate = null;
 	      } else {
@@ -46952,16 +46948,16 @@
 	    return this.collection.once('sync', function() {
 	      this.table.setDataAtRowProp(index, 'id', model.id);
 	      if (this.duplicate) {
-	        if (this.duplicate.attributes.source_name) {
-	          this.table.setDataAtRowProp(index, 'source_name', this.duplicate.attributes.source_name);
+	        if (this.duplicate.get('source_name')) {
+	          this.table.setDataAtRowProp(index, 'source_name', this.duplicate.get('source_name'));
 	        }
-	        if (this.duplicate.attributes.target_name) {
-	          this.table.setDataAtRowProp(index, 'target_name', this.duplicate.attributes.target_name);
+	        if (this.duplicate.get('target_name')) {
+	          this.table.setDataAtRowProp(index, 'target_name', this.duplicate.get('target_name'));
 	        }
-	        if (this.duplicate.attributes.relation_type) {
-	          this.table.setDataAtRowProp(index, 'relation_type', this.duplicate.attributes.relation_type);
+	        if (this.duplicate.get('relation_type')) {
+	          this.table.setDataAtRowProp(index, 'relation_type', this.duplicate.get('relation_type'));
 	        }
-	        this.table.setDataAtRowProp(index, 'direction', this.duplicate.attributes.direction);
+	        this.table.setDataAtRowProp(index, 'direction', this.duplicate.get('direction'));
 	        console.log('now set duplicate values');
 	        return this.duplicate = null;
 	      } else {
@@ -46984,16 +46980,16 @@
 	      obj = {};
 	      if (key === 'source_name' || key === 'target_name') {
 	        node = this.nodes.filter(function(d) {
-	          return d.attributes.name === value;
+	          return d.get('name') === value;
 	        });
 	        console.log('updateModel', node);
 	        if (node.length > 0) {
 	          if (key === 'source_name') {
 	            obj.source_id = node[0].id;
-	            obj.source_name = node[0].attributes.name;
+	            obj.source_name = node[0].get('name');
 	          } else {
 	            obj.target_id = node[0].id;
-	            obj.target_name = node[0].attributes.name;
+	            obj.target_name = node[0].get('name');
 	          }
 	        }
 	      } else if (key === 'date') {

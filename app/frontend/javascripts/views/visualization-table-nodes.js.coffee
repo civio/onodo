@@ -102,13 +102,13 @@ class VisualizationTableNodes extends VisualizationTableBase
       @table.setDataAtRowProp index, 'id', model.id
       # set duplicated values
       if @duplicate
-        if @duplicate.attributes.name
-          @table.setDataAtRowProp index, 'name', @duplicate.attributes.name+' (1)'
-        if @duplicate.attributes.node_type
-          @table.setDataAtRowProp index, 'node_type', @duplicate.attributes.node_type
-        if @duplicate.attributes.description
-          @table.setDataAtRowProp index, 'description', @duplicate.attributes.description
-        @table.setDataAtRowProp index, 'visible', @duplicate.attributes.visible
+        if @duplicate.get('name')
+          @table.setDataAtRowProp index, 'name', @duplicate.get('name')+' (1)'
+        if @duplicate.get('node_type')
+          @table.setDataAtRowProp index, 'node_type', @duplicate.get('node_type')
+        if @duplicate.get('description')
+          @table.setDataAtRowProp index, 'description', @duplicate.get('description')
+        @table.setDataAtRowProp index, 'visible', @duplicate.get('visible')
         console.log 'now set duplicate values'
         @duplicate = null
       else

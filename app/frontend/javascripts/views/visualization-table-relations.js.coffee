@@ -119,13 +119,13 @@ class VisualizationTableRelations extends VisualizationTableBase
       @table.setDataAtRowProp index, 'id', model.id
       # set duplicated values
       if @duplicate
-        if @duplicate.attributes.source_name
-          @table.setDataAtRowProp index, 'source_name', @duplicate.attributes.source_name
-        if @duplicate.attributes.target_name
-          @table.setDataAtRowProp index, 'target_name', @duplicate.attributes.target_name
-        if @duplicate.attributes.relation_type
-          @table.setDataAtRowProp index, 'relation_type', @duplicate.attributes.relation_type
-        @table.setDataAtRowProp index, 'direction', @duplicate.attributes.direction
+        if @duplicate.get('source_name')
+          @table.setDataAtRowProp index, 'source_name', @duplicate.get('source_name')
+        if @duplicate.get('target_name')
+          @table.setDataAtRowProp index, 'target_name', @duplicate.get('target_name')
+        if @duplicate.get('relation_type')
+          @table.setDataAtRowProp index, 'relation_type', @duplicate.get('relation_type')
+        @table.setDataAtRowProp index, 'direction', @duplicate.get('direction')
         console.log 'now set duplicate values'
         @duplicate = null
       else
@@ -147,15 +147,15 @@ class VisualizationTableRelations extends VisualizationTableBase
       # Setup parameters to store in model
       obj = {}
       if key == 'source_name' or key == 'target_name'
-        node = @nodes.filter((d) -> return d.attributes.name == value)  # get node by node name
+        node = @nodes.filter((d) -> return d.get('name') == value)  # get node by node name
         console.log 'updateModel', node
         if node.length > 0
           if key == 'source_name'
             obj.source_id = node[0].id
-            obj.source_name = node[0].attributes.name
+            obj.source_name = node[0].get('name')
           else
             obj.target_id = node[0].id
-            obj.target_name = node[0].attributes.name
+            obj.target_name = node[0].get('name')
       # By now we store dates as 'at' date
       else if key == 'date'
         obj.at = value
