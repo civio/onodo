@@ -17,6 +17,7 @@ var config = module.exports = {
     path: path.join(__dirname, 'app', 'assets', 'javascripts'),
     // the filename of the compiled bundle, e.g. app/assets/javascripts/bundle.js
     filename: "[name]-bundle.js",
+    sourceMapFilename: "[name]-bundle.js.map",
     // if the webpack code-splitting feature is enabled, this is the path it'll use to download bundles
     publicPath: "/assets",
     // Make 'virtual’ source files appear under the domain > assets directory in the Sources tab of Chrome Inspector 

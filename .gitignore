@@ -19,6 +19,9 @@
 !/log/.keep
 /tmp
 
+# Ignore source maps
+*.map
+
 # Ignore node modules folder
 node_modules/*
 
