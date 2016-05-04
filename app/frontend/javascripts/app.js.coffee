@@ -28,8 +28,7 @@ $(document).ready ->
     appVisualizationShow.render()
     $( window ).resize appVisualizationShow.resize
     # Setup 'Start reading' button interaction
-    $('.story-cover .bnt-start-reding').click (e) ->
-      console.log 'click on cover'
+    $('.story-cover .btn-start-reading').click (e) ->
       e.preventDefault()
       $('.story-cover').fadeOut()
       $('.visualization-info').fadeIn()

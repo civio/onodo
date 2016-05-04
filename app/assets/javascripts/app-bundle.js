@@ -67,8 +67,7 @@
 	    appVisualizationShow = new App.VisualizationShow($('body').data('id'));
 	    appVisualizationShow.render();
 	    $(window).resize(appVisualizationShow.resize);
-	    return $('.story-cover .bnt-start-reding').click(function(e) {
-	      console.log('click on cover');
+	    return $('.story-cover .btn-start-reading').click(function(e) {
 	      e.preventDefault();
 	      $('.story-cover').fadeOut();
 	      return $('.visualization-info').fadeIn();

@@ -22,6 +22,10 @@
     border-radius: 0;
     height: 100%;
 
+    .item-info-container-inner{
+      max-width: 560px;
+    }
+
     .item-info{
       .item-title h3{
         font-size: 3.429em;

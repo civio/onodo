@@ -136,7 +136,7 @@
       font-weight: normal;
     }
 
-    .bnt-start-reding{
+    .btn-start-reading{
       display: table;
       //position: absolute;
       //top: 50%;
@@ -153,6 +153,7 @@
       line-height: 1.375em;
       text-align: center;
       text-transform: uppercase;
+      cursor: pointer;
       @include transition( background 0.3s ease-out );
 
       span{
@@ -160,17 +161,19 @@
         text-align: center;
         vertical-align: middle;
       }
+
+      &:hover{
+        color: $brand-primary;
+        background: #fff;
+        text-decoration: none;
+      }
     }
 
     .item-title:hover{
       text-decoration: none;
 
-      .bnt-start-reding{
-        color: $brand-primary;
-        background: #fff;
-        //background: rgba(255,255,255,0.7);
-        border-color: $brand-primary;
-        text-decoration: none;
+      .btn-start-reading{
+        @extend .btn-start-reading:hover;
       }
     }
   }

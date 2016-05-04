@@ -21,18 +21,21 @@
         .item-info
           - if defined? cover
             .item-title
-              %h3= item.name  
+              %h3= item.name
           - else
             %a.item-title{:href => story_path(item), :title => item.name} 
               %h3= item.name
               -if defined? large
-                .bnt-start-reding
+                .btn-start-reading
                   %span
                     Start reading
           -if defined? large
             - if defined? cover
               - if item.description?
                 %p= item.description
+              .btn-start-reading
+                %span
+                  Start reading
           - elsif item.description?
             %p= item.description
   -else
@@ -42,6 +45,6 @@
           %a.item-title{:href => visualization_path(item), :title => item.name} 
             %h3= item.name
             -if defined? large
-              .bnt-start-reding
+              .btn-start-reading
                 %span
                   Start reading
