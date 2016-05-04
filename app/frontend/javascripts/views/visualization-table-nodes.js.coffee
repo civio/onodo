@@ -5,7 +5,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_types:      null
-  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
+  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" href="#" data-toggle="modal" data-target="#table-add-column-modal" title="Add Custom Column"></a>']
   columns:          {
     'delete'      : 0
     'duplicate'   : 1
@@ -21,6 +21,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @getTableColumns()
+    @$el.find('.add-custom-column').click @onShowAddCustomColumnModal
+    $('#add-custom-column-form').submit   @onAddCustomColumn
 
   onSync: =>
     console.log 'onSync', @model
@@ -137,6 +139,29 @@ class VisualizationTableNodes extends VisualizationTableBase
   # Set 'Node Type' column source in table_options
   setNodesTypesSource: ->
     @table_options.columns[ @columns.type ].source = @nodes_types
+
+  # Show Add Custom Column Modal handler
+  onShowAddCustomColumnModal: (e) ->
+    e.preventDefault()
+    
+  # Show Add Custom Column Modal handler
+  onAddCustomColumn: (e) =>
+    e.preventDefault()
+    # get column name from form input text
+    column_name = $(e.target).find('#add-custom-column-name').val()
+    # get penultimate position in tableColHeaders array
+    index = @tableColHeaders.length-1
+    # insert column name at penultimate position in tableColHeaders array
+    @tableColHeaders.splice index, 0, column_name
+    @table_options.colHeaders = @tableColHeaders
+    # insert new column data at penultimate position in columns array
+    @table_options.columns.splice index, 0, { data: column_name.replace(/\s+/g, '-').toLowerCase() } 
+    console.log 'onAddCustomColumn', e.target, @table_options
+    # update table options
+    if @table
+      @table.updateSettings @table_options
+    # hide modal
+    $('#table-add-column-modal').modal 'hide'
 
   onBeforeKeyDown: (e) =>
     selected = @table.getSelected()

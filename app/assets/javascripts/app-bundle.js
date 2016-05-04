@@ -16852,7 +16852,7 @@
 
 	  VisualizationTableNodes.prototype.nodes_types = null;
 
-	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
+	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" href="#" data-toggle="modal" data-target="#table-add-column-modal" title="Add Custom Column"></a>'];
 
 	  VisualizationTableNodes.prototype.columns = {
 	    'delete': 0,
@@ -16873,6 +16873,7 @@
 	    this.showImageModal = bind(this.showImageModal, this);
 	    this.showDescriptionModal = bind(this.showDescriptionModal, this);
 	    this.onBeforeKeyDown = bind(this.onBeforeKeyDown, this);
+	    this.onAddCustomColumn = bind(this.onAddCustomColumn, this);
 	    this.updateModel = bind(this.updateModel, this);
 	    this.onNodesTypesSucess = bind(this.onNodesTypesSucess, this);
 	    this.getNodesTypes = bind(this.getNodesTypes, this);
@@ -16881,6 +16882,8 @@
 	    VisualizationTableNodes.__super__.constructor.call(this, this.model, this.collection, 'node');
 	    this.table_options.colHeaders = this.tableColHeaders;
 	    this.table_options.columns = this.getTableColumns();
+	    this.$el.find('.add-custom-column').click(this.onShowAddCustomColumnModal);
+	    $('#add-custom-column-form').submit(this.onAddCustomColumn);
 	  }
 
 	  VisualizationTableNodes.prototype.onSync = function() {
@@ -16997,6 +17000,27 @@
 
 	  VisualizationTableNodes.prototype.setNodesTypesSource = function() {
 	    return this.table_options.columns[this.columns.type].source = this.nodes_types;
+	  };
+
+	  VisualizationTableNodes.prototype.onShowAddCustomColumnModal = function(e) {
+	    return e.preventDefault();
+	  };
+
+	  VisualizationTableNodes.prototype.onAddCustomColumn = function(e) {
+	    var column_name, index;
+	    e.preventDefault();
+	    column_name = $(e.target).find('#add-custom-column-name').val();
+	    index = this.tableColHeaders.length - 1;
+	    this.tableColHeaders.splice(index, 0, column_name);
+	    this.table_options.colHeaders = this.tableColHeaders;
+	    this.table_options.columns.splice(index, 0, {
+	      data: column_name.replace(/\s+/g, '-').toLowerCase()
+	    });
+	    console.log('onAddCustomColumn', e.target, this.table_options);
+	    if (this.table) {
+	      this.table.updateSettings(this.table_options);
+	    }
+	    return $('#table-add-column-modal').modal('hide');
 	  };
 
 	  VisualizationTableNodes.prototype.onBeforeKeyDown = function(e) {

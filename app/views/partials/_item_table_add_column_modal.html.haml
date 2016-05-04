@@ -1,0 +1,16 @@
+#table-add-column-modal.table-edit-modal.modal.fade{ tabindex: "-1", role: "dialog"}
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %h4.modal-title
+          Add Custom Column To Nodes Table
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+      .modal-body
+        %form#add-custom-column-form
+          .form-group
+            %label
+              Custom Column Name
+            %input#add-custom-column-name.form-control{type: "text"}
+          %button.btn.btn-primary{ type: "submit" }
+            Add Column
+
