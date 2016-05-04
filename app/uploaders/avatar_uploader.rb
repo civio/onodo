@@ -6,9 +6,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
   permissions 0600
   # storage :fog
 
-  process :resize_to_fit => [128, 128]
+  version :huge do
+    process :resize_to_fill => [128, 128]
+  end
 
-  version :big do
+  version :big, :from_version => :huge do
     process :resize_to_fill => [64, 64]
   end
 

@@ -17,32 +17,28 @@ describe AvatarUploader do
     uploader.remove!
   end
 
-  context 'the big thumb version' do
+  context "the huge version" do
+    it "scales down to be exactly 128 by 128 pixels" do
+      expect(uploader.huge).to have_dimensions(128, 128)
+    end
+  end
+
+  context "the big version" do
     it "scales down to be exactly 64 by 64 pixels" do
-      processor = uploader.big.processors.first
-      expect(processor[1]).to eq([64, 64])
-      #expect(uploader.big).to have_dimensions(64, 64)
+      expect(uploader.big).to have_dimensions(64, 64)
     end
   end
 
-  context 'the medium thumb version' do
+  context "the medium thumb version" do
     it "scales down to be exactly 44 by 44 pixels" do
-      processor = uploader.medium.processors.first
-      expect(processor[1]).to eq([44, 44])
-      #expect(uploader.small).to have_dimensions(44, 44)
+      expect(uploader.medium).to have_dimensions(44, 44)
     end
   end
 
-  context 'the small thumb version' do
+  context "the small thumb version" do
     it "scales down to be exactly 30 by 30 pixels" do
-      processor = uploader.small.processors.first
-      expect(processor[1]).to eq([30, 30])
-      #expect(uploader.small).to have_dimensions(30, 30)
+      expect(uploader.small).to have_dimensions(30, 30)
     end
-  end
-
-  it 'scales down to be exactly 128 by 128 pixels' do
-    expect(uploader).to have_dimensions(128, 128)
   end
 
   it "makes the image readable only to the owner and not executable" do
