@@ -285,8 +285,6 @@ class VisualizationGraphCanvas extends Backbone.View
     # Join new data with old elements, if any
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
 
-    console.log 'updateNodesLabels', @parameters.showNodesLabel
-
     # ENTER
     # Create new elements as needed.
     @nodes_labels.enter().append('text')
@@ -351,7 +349,7 @@ class VisualizationGraphCanvas extends Backbone.View
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes
-    console.log 'addNodeData', node.id, node
+    #console.log 'addNodeData', node.id, node
     @data_nodes_map.set node.id, node
     @data_nodes.push node
 
@@ -671,11 +669,12 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # if relation has direction we use vector math to draw its path to the border of target circle
     if d.direction
-      v1 = scale(free([d.source, d.target]), @getNodeSize(d.source))
+      # we don't use p1
+      #v1 = scale(free([d.source, d.target]), @getNodeSize(d.source))
+      #p1 = sum(d.source, v1)
       v2 = scale(free([d.source, d.target]), @getNodeSize(d.target))
-      p1 = sum(d.source, v1)
       p2 = diff(d.target, v2)
-      
+     
       # Define arc sweep-flag (which defines concave or convex) based on angle parameter
       if d.angle >= 0
         path = 'M ' + d.source.x + ' ' + d.source.y + ' A ' + dist + ' ' + dist + ' 0 0 1 ' + p2.x + ' ' + p2.y
@@ -717,7 +716,7 @@ class VisualizationGraphCanvas extends Backbone.View
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
     if @parameters.nodesSize == 1
-      size = if @nodes_relations_size[d.id] then 5+15*(@nodes_relations_size[d.id]/@data_relations_visibles.max) else 5
+      size = if @nodes_relations_size[d.id] then 5+15*(@nodes_relations_size[d.id]/@nodes_relations_size.max) else 5
     else
       size = @parameters.nodesSize
     return size
@@ -731,8 +730,8 @@ class VisualizationGraphCanvas extends Backbone.View
     @data_relations_visibles.forEach (d) =>
       @nodes_relations_size[d.source_id] += 1
       @nodes_relations_size[d.target_id] += 1
-    @data_relations_visibles.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
-    console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
+    @nodes_relations_size.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
+    #console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
 
   formatNodesLabels: (nodes) ->
     nodes.each () ->
