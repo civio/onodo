@@ -5,6 +5,8 @@ class Node < ActiveRecord::Base
 
   validates :name, presence: true
 
+  mount_uploader :image, ImageUploader
+
   # Returns all the relations a node is involved in.
   #   This is cleaner than prefetching relations_as_source, adding to relations_as_source...
   def relations

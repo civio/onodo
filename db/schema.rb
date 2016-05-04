@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429122213) do
+ActiveRecord::Schema.define(version: 20160429154712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160429122213) do
     t.string   "node_type"
     t.integer  "dataset_id"
     t.string   "custom_field"
+    t.string   "image"
   end
 
   add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id", using: :btree
