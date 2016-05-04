@@ -7,9 +7,10 @@ Onodo
 
 * Ruby 2.2.3
 * Rails 4.2
-* React.js
-* Backbone
-* Webpack for js management
+* Backbone.js
+* D3.js
+* Handsontable
+* Webpack
 * PostgreSQL
 
 ### Installation instructions
