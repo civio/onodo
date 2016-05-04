@@ -230,24 +230,19 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     # Create new elements as needed.
-    @nodes.enter().append('g')
+    @nodes.enter().append('circle')
       .attr('class', 'node')
       .call(@forceDrag)
       .on('mouseover',  @onNodeOver)
       .on('mouseout',   @onNodeOut)
       .on('click',      @onNodeClick)
       .on('dblclick',   @onNodeDoubleClick)
-    .append('circle')
-      .attr('class', 'node-circle')
-      #.attr('r', @getNodeSize)
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include
     # entering elements; so, operations on the update selection after appending to
     # the enter selection will apply to both entering and updating nodes.
     @nodes.attr('id', (d) -> return 'node-'+d.id)
-    
-    @nodes.selectAll('.node-circle')
       # update node size
       .attr('r', @getNodeSize)
       # set nodes color based on parameters.nodesColor value
@@ -404,7 +399,7 @@ class VisualizationGraphCanvas extends Backbone.View
   removeNode: (node) ->
     console.log 'removeNode', node
     # unfocus node to remove
-    @nodes.selectAll('#node-'+node.id+' .node-circle').classed('active', false)
+    @nodes.selectAll('#node-'+node.id).classed('active', false)
     @removeNodeData node
     @removeNodeRelations node
 
@@ -442,10 +437,10 @@ class VisualizationGraphCanvas extends Backbone.View
 
   focusNode: (node)->
     @unfocusNode()
-    @nodes.selectAll('#node-'+node.id+' .node-circle').classed('active', true)
+    @nodes_cont.selectAll('#node-'+node.id).classed('active', true)
 
   unfocusNode: ->
-    @nodes.selectAll('.node-circle.active').classed('active', false)
+    @nodes_cont.selectAll('.active').classed('active', false)
 
 
   # Resize Methods
@@ -493,7 +488,7 @@ class VisualizationGraphCanvas extends Backbone.View
 
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
-    @nodes.selectAll('.node-circle')
+    @nodes
       .style('fill', @getNodeColor)
       .style('stroke', @getNodeColor)
 
@@ -504,7 +499,7 @@ class VisualizationGraphCanvas extends Backbone.View
     if @parameters.nodesSize == 1
       @setNodesRelationsSize()
     # update nodes radius
-    @nodes.selectAll('.node-circle').attr('r', @getNodeSize)
+    @nodes.attr('r', @getNodeSize)
     # update nodes labels position
     @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
     # update relations arrows position
@@ -712,7 +707,7 @@ class VisualizationGraphCanvas extends Backbone.View
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
   getNodeLabelYPos: (d) =>
-    return parseInt(@svg.select('#node-'+d.id).select('.node-circle').attr('r'))+13
+    return parseInt(@svg.select('#node-'+d.id).attr('r'))+13
 
   getNodeColor: (d) =>
     if @parameters.nodesColor == 'qualitative'

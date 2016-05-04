@@ -842,11 +842,10 @@
 
 	  VisualizationGraphCanvas.prototype.updateNodes = function() {
 	    this.nodes = this.nodes_cont.selectAll('.node').data(this.data_nodes);
-	    this.nodes.enter().append('g').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick).append('circle').attr('class', 'node-circle');
+	    this.nodes.enter().append('circle').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick);
 	    this.nodes.attr('id', function(d) {
 	      return 'node-' + d.id;
-	    });
-	    this.nodes.selectAll('.node-circle').attr('r', this.getNodeSize).style('fill', this.getNodeColor).style('stroke', this.getNodeColor);
+	    }).attr('r', this.getNodeSize).style('fill', this.getNodeColor).style('stroke', this.getNodeColor);
 	    return this.nodes.exit().remove();
 	  };
 
@@ -945,7 +944,7 @@
 
 	  VisualizationGraphCanvas.prototype.removeNode = function(node) {
 	    console.log('removeNode', node);
-	    this.nodes.selectAll('#node-' + node.id + ' .node-circle').classed('active', false);
+	    this.nodes.selectAll('#node-' + node.id).classed('active', false);
 	    this.removeNodeData(node);
 	    return this.removeNodeRelations(node);
 	  };
@@ -992,11 +991,11 @@
 
 	  VisualizationGraphCanvas.prototype.focusNode = function(node) {
 	    this.unfocusNode();
-	    return this.nodes.selectAll('#node-' + node.id + ' .node-circle').classed('active', true);
+	    return this.nodes_cont.selectAll('#node-' + node.id).classed('active', true);
 	  };
 
 	  VisualizationGraphCanvas.prototype.unfocusNode = function() {
-	    return this.nodes.selectAll('.node-circle.active').classed('active', false);
+	    return this.nodes_cont.selectAll('.active').classed('active', false);
 	  };
 
 	  VisualizationGraphCanvas.prototype.resize = function() {
@@ -1036,7 +1035,7 @@
 
 	  VisualizationGraphCanvas.prototype.updateNodesColor = function(value) {
 	    this.parameters.nodesColor = value;
-	    return this.nodes.selectAll('.node-circle').style('fill', this.getNodeColor).style('stroke', this.getNodeColor);
+	    return this.nodes.style('fill', this.getNodeColor).style('stroke', this.getNodeColor);
 	  };
 
 	  VisualizationGraphCanvas.prototype.updateNodesSize = function(value) {
@@ -1045,7 +1044,7 @@
 	    if (this.parameters.nodesSize === 1) {
 	      this.setNodesRelationsSize();
 	    }
-	    this.nodes.selectAll('.node-circle').attr('r', this.getNodeSize);
+	    this.nodes.attr('r', this.getNodeSize);
 	    this.nodes_labels.selectAll('.first-line').attr('dy', this.getNodeLabelYPos);
 	    return this.relations.attr('d', this.drawRelationPath);
 	  };
@@ -1314,7 +1313,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.getNodeLabelYPos = function(d) {
-	    return parseInt(this.svg.select('#node-' + d.id).select('.node-circle').attr('r')) + 13;
+	    return parseInt(this.svg.select('#node-' + d.id).attr('r')) + 13;
 	  };
 
 	  VisualizationGraphCanvas.prototype.getNodeColor = function(d) {

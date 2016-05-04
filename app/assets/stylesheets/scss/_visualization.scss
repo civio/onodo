@@ -190,15 +190,12 @@ $node-color-12: #e0deda;
    
     .node{
       cursor: pointer;
-
-      .node-circle{
-        //opacity: 0.4;
-        stroke-width: 0;
-        stroke-opacity: 0.4;
-        @include transition( stroke-width, 0.4s, ease-out );
-      }
-
-      .node-circle.active{
+      //opacity: 0.4;
+      stroke-width: 0;
+      stroke-opacity: 0.4;
+      @include transition( stroke-width, 0.4s, ease-out );
+     
+      &.active{
         stroke-width: 20px !important;
       }
     }
