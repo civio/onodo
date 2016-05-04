@@ -401,6 +401,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # !!! We need to check if this node has some relation
 
   removeNode: (node) ->
+    console.log 'removeNode', node
     # unfocus node to remove
     @nodes.selectAll('#node-'+node.id+' .node-circle').classed('active', false)
     @removeNodeData node

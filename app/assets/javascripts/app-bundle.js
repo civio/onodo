@@ -950,6 +950,7 @@
 	  };
 
 	  VisualizationGraphCanvas.prototype.removeNode = function(node) {
+	    console.log('removeNode', node);
 	    this.nodes.selectAll('#node-' + node.id + ' .node-circle').classed('active', false);
 	    this.removeNodeData(node);
 	    return this.removeNodeRelations(node);
@@ -46672,12 +46673,11 @@
 	    this.table_options.afterChange = this.onTableChangeRow;
 	    this.table_options.beforeRemoveRow = this.onTableRemoveRow;
 	    this.table = new Handsontable(this.$el.get(0), this.table_options);
-	    console.log('setupTable', this.table_options);
 	    return this.resize();
 	  };
 
 	  VisualizationTableBase.prototype.onTableCreateRow = function(index, amount) {
-	    console.log('onTableCreateRow', index, amount);
+	    console.log('onTableCreateRow', this.table_type, index, amount);
 	    return this.addModel(index);
 	  };
 
@@ -46688,7 +46688,7 @@
 	      for (i = 0, len = changes.length; i < len; i++) {
 	        change = changes[i];
 	        if (change[2] !== change[3]) {
-	          console.log('onTableChangeRow', changes, source);
+	          console.log('onTableChangeRow', this.table_type, changes, source);
 	          results.push(this.updateModel(change));
 	        } else {
 	          results.push(void 0);
@@ -46700,7 +46700,7 @@
 
 	  VisualizationTableBase.prototype.onTableRemoveRow = function(index, amount) {
 	    var model, model_id;
-	    console.log('onTableRemoveRow', index, amount);
+	    console.log('onTableRemoveRow', this.table_type, index, amount);
 	    model_id = this.getIdAtRow(index);
 	    model = this.collection.get(model_id);
 	    if (model) {
@@ -46760,7 +46760,7 @@
 	      };
 	    })(this));
 	    $modal.on('hidden.bs.modal', function(e) {
-	      return $modal.find('btn-danger').off('click');
+	      return $modal.find('.btn-danger').off('click');
 	    });
 	    return $modal.modal('show');
 	  };
@@ -46912,7 +46912,6 @@
 	  };
 
 	  VisualizationTableRelations.prototype.updateNodes = function() {
-	    console.log('table relations nodes sync', this.table_options.columns[this.columns.source].source);
 	    this.table_options.columns[this.columns.source].source = this.table_options.columns[this.columns.target].source = this.nodes.toJSON().map(function(d) {
 	      return d.name;
 	    }).sort();

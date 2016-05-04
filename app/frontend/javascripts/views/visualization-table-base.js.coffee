@@ -54,7 +54,7 @@ class VisualizationTableBase extends Backbone.View
     @resize()
 
   onTableCreateRow: (index, amount) =>
-    console.log 'onTableCreateRow', index, amount
+    console.log 'onTableCreateRow', @table_type, index, amount
     # Create a new model in collection
     @addModel index
 
@@ -62,12 +62,13 @@ class VisualizationTableBase extends Backbone.View
     if source != 'loadData'
       for change in changes
         if change[2] != change[3]
-          console.log 'onTableChangeRow', changes, source
+          console.log 'onTableChangeRow', @table_type, changes, source
           # updateModel must be defined in inherit Classes
           @updateModel change
 
   onTableRemoveRow: (index, amount) =>
     # we need to get model id from row in order to remove the right model
+    console.log 'onTableRemoveRow', @table_type, index, amount
     model_id = @getIdAtRow index
     model = @collection.get model_id
     if model  
@@ -118,7 +119,7 @@ class VisualizationTableBase extends Backbone.View
       @table.alter('remove_row', index, 1 )
     # Remove on click event when hide modal
     $modal.on 'hidden.bs.modal', (e) ->
-      $modal.find('btn-danger').off 'click'
+      $modal.find('.btn-danger').off 'click'
     # Show confirmation modal
     $modal.modal 'show'
 

@@ -83,8 +83,8 @@ class VisualizationTableRelations extends VisualizationTableBase
     @nodes.on 'remove', @removeRelationsWithNode, @
 
   updateNodes: =>
-    console.log 'table relations nodes sync', @table_options.columns[ @columns.source ].source
     @table_options.columns[ @columns.source ].source = @table_options.columns[ @columns.target ].source = @nodes.toJSON().map((d) -> return d.name).sort()
+    #console.log 'table relations nodes sync', @table_options.columns[ @columns.source ].source
     # update table settings when needed
     if @table
       @table.updateSettings @table_options
