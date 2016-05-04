@@ -131,6 +131,9 @@
 }
 
 #contact{
+  // Avoid absolute elements to place over contact panel 
+  position: relative;
+  z-index: 100;
 
   .well{
     margin: 0;
