@@ -8,8 +8,71 @@
   .story-new-selector > p{
     margin: 1.5*$grid-gutter-width 0;
   }
+
+  .form-default{
+    margin-bottom: 0;
+  }
 }
 
+.story-select-visualization-list{
+  background: $gray-lighter;
+  padding: $grid-gutter-width/2 0;
+
+  .visualization-item{
+    display: block;
+    background: $gray-lighter;
+    border-bottom: 1px solid $gray-light;
+    padding: 2*$grid-gutter-width/3 $grid-gutter-width/3;
+    @include transition( background 0.3s ease-out );
+
+    &:last-child{
+      border-bottom: none;
+    }
+
+    .item-type-icon,
+    .item-info{
+      display: inline-block;
+    }
+
+    .item-type-icon{
+      position: relative;
+      top: 3px;
+      margin-right: $grid-gutter-width/3;
+      @include retina-sprite( $icon-visualization-brand-group );
+    }
+
+    .item-info h3{
+      color: $gray-dark;
+      font-size: 0.857em;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    .btn-invert{
+      margin-top: -4px;
+      background: transparent;
+    }
+
+    &:hover{
+      background: white;
+      text-decoration: none;
+
+      .btn-invert{
+        display: block;
+        color: white;
+        background: $brand-primary;
+      }
+    }
+  }
+
+  .pagination{
+    margin-top: $grid-gutter-width;
+  }
+}
+
+
+// Story Cover
 .story-cover{
   position: absolute;
   top: 82px;

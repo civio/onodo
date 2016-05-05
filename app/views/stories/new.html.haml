@@ -9,21 +9,41 @@
           = f.text_field :name, class: "form-control"
         .story-new-selector
           %p.text-center
-            You need a visualization to create a story
-          .row
-            .col-sm-6.col-md-5.col-md-offset-1.text-center
-              %a.btn-circle-lg.btn-circle-lg-visualization{href: "#"}
-                .btn-circle-lg-icon
-                  .btn-circle-lg-icon-sprite
-                .btn-circle-lg-title
-                  Start Creating One
-              %a.btn.btn-default.btn-invert{ href: "#" }
-                Create
-            .col-sm-6.col-md-5.text-center
-              %a.btn-circle-lg.btn-circle-lg-preview{href: "#"}
-                .btn-circle-lg-icon
-                  .btn-circle-lg-icon-sprite
-                .btn-circle-lg-title
-                  Explore Visualizations
-              %a.btn.btn-default.btn-invert{ href: "#" }
-                Explore
+            Create a story from one of your visualizations
+  // We have to show search input, but we hide it by now             
+  / .row
+  /   = render 'partials/items_preview_header', :visualizations => @visualizations, :hide_selector => true
+
+.story-select-visualization-list
+  .container
+    -unless @visualizations.blank?
+      .row
+        - @visualizations.each do |visualization| 
+          %a.visualization-item{ href: visualization.id, title: visualization.name }
+            .item-type-icon
+            .item-info
+              %h3= visualization.name
+            .btn.btn-primary.btn-invert.pull-right
+              Create Story
+      .text-center
+        = paginate @visualizations
+    -else
+      .text-center
+        %p
+          You haven't create any visualization yet
+        %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}
+          Start creating one
+
+// Hide extra options by now
+/ .container
+/   .row
+/     .col-sm-6.text-center
+/       %p
+/         Although the most natural way is creating a story from one of your visualizations, you can also create a story from scratch
+/       %a.btn.btn-default.btn-invert{ href: new_story_path, title: 'Create' }
+/         Create
+/     .col-sm-6.text-center
+/       %p
+/         Create a story with visualizations others have created
+/       %a.btn.btn-default.btn-invert{ href: '/explore', title: 'Explore visualizations' }
+/         Explore visualizations

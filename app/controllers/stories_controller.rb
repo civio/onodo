@@ -13,6 +13,8 @@ class StoriesController < ApplicationController
     if current_user.nil?
       redirect_to new_user_session_path()
     end
+    @visualizations = Visualization.where(author_id: current_user.id)
+    @visualizations = @visualizations.page(params[:page]).per(6)
   end
 
   # POST /stories

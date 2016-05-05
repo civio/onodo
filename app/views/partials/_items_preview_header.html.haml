@@ -1,14 +1,15 @@
 .items-preview-header
-  - if visualizations
-    %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/stories' : '/users/'+params[:id]+'/stories'}" }
-      Stories
-    .btn.btn-default.btn-primary
-      Visualizations
-  - else
-    .btn.btn-default.btn-primary
-      Stories
-    %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/visualizations' : '/users/'+params[:id]+'/visualizations'}" }
-      Visualizations
+  - unless defined? hide_selector
+    - if visualizations
+      %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/stories' : '/users/'+params[:id]+'/stories'}" }
+        Stories
+      .btn.btn-default.btn-primary
+        Visualizations
+    - else
+      .btn.btn-default.btn-primary
+        Stories
+      %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/visualizations' : '/users/'+params[:id]+'/visualizations'}" }
+        Visualizations  
   .search-input.pull-right
     .input-group
       %input.form-control{:type => "text"}
