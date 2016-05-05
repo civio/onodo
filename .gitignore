@@ -23,7 +23,8 @@
 *.map
 app-bundle.js
 
-# Ignore node modules folder
+# Ignore node modules folder and nvm version
+.nvmrc
 node_modules/*
 
 # Ignore half-sizer droplet
