@@ -4,14 +4,14 @@ class PagesController < ApplicationController
   def explore_visualizations
     @items = Visualization.all
     #@items = @items.order("published_at DESC").includes(:photo).page(params[:page]).per(9)
-    @items = @items.page(params[:page]).per(2)
+    @items = @items.page(params[:page]).per(6)
     @visualizations = true
     render :explore
   end
 
   def explore_stories
     @items = Story.all
-    @items = @items.page(params[:page]).per(2)
+    @items = @items.page(params[:page]).per(6)
     render :explore
   end
 
