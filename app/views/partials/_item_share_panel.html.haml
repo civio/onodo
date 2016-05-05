@@ -9,15 +9,15 @@
         Share
       %ul.social-networks-btns
         %li
-          %a.twitter{href: 'https://twitter.com/', target: '_blank'}
+          %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+' - made with Onodo'+'&url='+request.original_url, title: 'Share your Visualization in Twitter', target: '_blank'}
             %span.icon
               Twitter
         %li
-          %a.facebook{href: 'https://www.facebook.com/', target: '_blank'}
+          %a.facebook{href: 'https://www.facebook.com/dialog/share?app_id=&display=popup&href='+request.original_url+'&redirect_uri='+request.original_url, title: 'Share your Visualization in Facebook', target: '_blank'}
             %span.icon
               Facebook
         %li
-          %a.gplus{href: 'https://www.gplus.com/', target: '_blank'}
+          %a.gplus{href: 'https://plus.google.com/share?url='+request.original_url, title: 'Share your Visualization in Google +', target: '_blank'}
             %span.icon
               Google +
       %h4.text-center
