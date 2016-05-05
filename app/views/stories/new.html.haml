@@ -3,10 +3,11 @@
     .page-header.text-center
       %h2 Create Story
     .col-sm-6.col-sm-offset-3
-      = form_for :story, url: stories_path , method: "post", html: {:class => 'form-default'} do |f|
+      = form_for :story, url: stories_path , method: "post", html: {:id => 'form-story-new', :class => 'form-default'} do |f|
         .form-group
           = f.label :name, "Story title"
           = f.text_field :name, class: "form-control"
+          = f.hidden_field :visualization 
         .story-new-selector
           %p.text-center
             Create a story from one of your visualizations

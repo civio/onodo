@@ -13,13 +13,22 @@ class StoriesController < ApplicationController
     if current_user.nil?
       redirect_to new_user_session_path()
     end
-    @visualizations = Visualization.where(author_id: current_user.id)
-    @visualizations = @visualizations.page(params[:page]).per(6)
+    @visualizations = Visualization.where(author_id: current_user.id).page(params[:page]).per(8)
   end
 
   # POST /stories
   def create
-  
+    story_params              = {}
+    story_params[:name]       = params[:story][:name]
+    story_params[:author_id]  = current_user.id
+    @story  = Story.new( story_params )
+    #@story.visualization = Visualization.where(id: params[:story][:visualization])
+
+    if @story.save
+      redirect_to story_path( @story ), :notice => "Your story was created!"
+    else
+      render "new"
+    end
   end
 
   # GET /stories/:id/edit
