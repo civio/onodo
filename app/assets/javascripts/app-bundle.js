@@ -1,57 +1,60 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-
+/******/
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-
+/******/
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-
+/******/
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-
-
+/******/
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-
+/******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-
+/******/
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "/assets";
-
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/*!************************************************!*\
+  !*** ./app/frontend/javascripts/app.js.coffee ***!
+  \************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	window.App || (window.App = {});
-
-	App.Trix = __webpack_require__(1);
-
-	App.VisualizationShow = __webpack_require__(4);
-
-	App.VisualizationEdit = __webpack_require__(55);
-
+	
+	App.Trix = __webpack_require__(/*! script!trix */ 1);
+	
+	App.VisualizationShow = __webpack_require__(/*! ./visualization-show.js */ 4);
+	
+	App.VisualizationEdit = __webpack_require__(/*! ./visualization-edit.js */ 55);
+	
 	$(document).ready(function() {
 	  var appVisualizationEdit, appVisualizationShow;
 	  $('[data-toggle="tooltip"]').tooltip();
@@ -78,12 +81,18 @@
 
 /***/ },
 /* 1 */
+/*!***********************************************!*\
+  !*** ./~/script-loader!./~/trix/dist/trix.js ***!
+  \***********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2)(__webpack_require__(3))
+	__webpack_require__(/*! !./~/script-loader/addScript.js */ 2)(__webpack_require__(/*! !./~/script-loader/~/raw-loader!./~/trix/dist/trix.js */ 3)+"\n\n// SCRIPT-LOADER FOOTER\n//# sourceURL=script:///Users/rauldiazpoblete/Documents/www/Onodo/www/node_modules/trix/dist/trix.js")
 
 /***/ },
 /* 2 */
+/*!**************************************!*\
+  !*** ./~/script-loader/addScript.js ***!
+  \**************************************/
 /***/ function(module, exports) {
 
 	/*
@@ -99,42 +108,48 @@
 
 /***/ },
 /* 3 */
+/*!************************************************************!*\
+  !*** ./~/script-loader/~/raw-loader!./~/trix/dist/trix.js ***!
+  \************************************************************/
 /***/ function(module, exports) {
 
 	module.exports = "/*\nTrix 0.9.4\nCopyright © 2015 Basecamp, LLC\nhttp://trix-editor.org/\n */\n(function(){}).call(this),function(){var t;null==window.Set&&(window.Set=t=function(){function t(){this.clear()}return t.prototype.clear=function(){return this.values=[]},t.prototype.has=function(t){return-1!==this.values.indexOf(t)},t.prototype.add=function(t){return this.has(t)||this.values.push(t),this},t.prototype[\"delete\"]=function(t){var e;return-1===(e=this.values.indexOf(t))?!1:(this.values.splice(e,1),!0)},t.prototype.forEach=function(){var t;return(t=this.values).forEach.apply(t,arguments)},t}())}.call(this),/*\nhttps://github.com/taylorhakes/promise-polyfill\nCopyright (c) 2014 Taylor Hakes\nCopyright (c) 2014 Forbes Lindesay\n*/\nfunction(t){function e(t,e){return function(){t.apply(e,arguments)}}function n(t){if(\"object\"!=typeof this)throw new TypeError(\"Promises must be constructed via new\");if(\"function\"!=typeof t)throw new TypeError(\"not a function\");this._state=null,this._value=null,this._deferreds=[],u(t,e(o,this),e(r,this))}function i(t){var e=this;return null===this._state?void this._deferreds.push(t):void c(function(){var n=e._state?t.onFulfilled:t.onRejected;if(null===n)return void(e._state?t.resolve:t.reject)(e._value);var i;try{i=n(e._value)}catch(o){return void t.reject(o)}t.resolve(i)})}function o(t){try{if(t===this)throw new TypeError(\"A promise cannot be resolved with itself.\");if(t&&(\"object\"==typeof t||\"function\"==typeof t)){var n=t.then;if(\"function\"==typeof n)return void u(e(n,t),e(o,this),e(r,this))}this._state=!0,this._value=t,s.call(this)}catch(i){r.call(this,i)}}function r(t){this._state=!1,this._value=t,s.call(this)}function s(){for(var t=0,e=this._deferreds.length;e>t;t++)i.call(this,this._deferreds[t]);this._deferreds=null}function a(t,e,n,i){this.onFulfilled=\"function\"==typeof t?t:null,this.onRejected=\"function\"==typeof e?e:null,this.resolve=n,this.reject=i}function u(t,e,n){var i=!1;try{t(function(t){i||(i=!0,e(t))},function(t){i||(i=!0,n(t))})}catch(o){if(i)return;i=!0,n(o)}}var c=\"function\"==typeof setImmediate&&setImmediate||function(t){setTimeout(t,1)},l=Array.isArray||function(t){return\"[object Array]\"===Object.prototype.toString.call(t)};n.prototype[\"catch\"]=function(t){return this.then(null,t)},n.prototype.then=function(t,e){var o=this;return new n(function(n,r){i.call(o,new a(t,e,n,r))})},n.all=function(){var t=Array.prototype.slice.call(1===arguments.length&&l(arguments[0])?arguments[0]:arguments);return new n(function(e,n){function i(r,s){try{if(s&&(\"object\"==typeof s||\"function\"==typeof s)){var a=s.then;if(\"function\"==typeof a)return void a.call(s,function(t){i(r,t)},n)}t[r]=s,0===--o&&e(t)}catch(u){n(u)}}if(0===t.length)return e([]);for(var o=t.length,r=0;r<t.length;r++)i(r,t[r])})},n.resolve=function(t){return t&&\"object\"==typeof t&&t.constructor===n?t:new n(function(e){e(t)})},n.reject=function(t){return new n(function(e,n){n(t)})},n.race=function(t){return new n(function(e,n){for(var i=0,o=t.length;o>i;i++)t[i].then(e,n)})},n._setImmediateFn=function(t){c=t},\"undefined\"!=typeof module&&module.exports?module.exports=n:t.Promise||(t.Promise=n)}(this),/**\n * @license\n * Copyright (c) 2014 The Polymer Project Authors. All rights reserved.\n * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt\n * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt\n * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt\n * Code distributed by Google as part of the polymer project is also\n * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt\n */\n\"undefined\"==typeof WeakMap&&!function(){var t=Object.defineProperty,e=Date.now()%1e9,n=function(){this.name=\"__st\"+(1e9*Math.random()>>>0)+(e++ +\"__\")};n.prototype={set:function(e,n){var i=e[this.name];return i&&i[0]===e?i[1]=n:t(e,this.name,{value:[e,n],writable:!0}),this},get:function(t){var e;return(e=t[this.name])&&e[0]===t?e[1]:void 0},\"delete\":function(t){var e=t[this.name];return e&&e[0]===t?(e[0]=e[1]=void 0,!0):!1},has:function(t){var e=t[this.name];return e?e[0]===t:!1}},window.WeakMap=n}(),function(t){function e(t){A.push(t),b||(b=!0,g(i))}function n(t){return window.ShadowDOMPolyfill&&window.ShadowDOMPolyfill.wrapIfNeeded(t)||t}function i(){b=!1;var t=A;A=[],t.sort(function(t,e){return t.uid_-e.uid_});var e=!1;t.forEach(function(t){var n=t.takeRecords();o(t),n.length&&(t.callback_(n,t),e=!0)}),e&&i()}function o(t){t.nodes_.forEach(function(e){var n=m.get(e);n&&n.forEach(function(e){e.observer===t&&e.removeTransientObservers()})})}function r(t,e){for(var n=t;n;n=n.parentNode){var i=m.get(n);if(i)for(var o=0;o<i.length;o++){var r=i[o],s=r.options;if(n===t||s.subtree){var a=e(s);a&&r.enqueue(a)}}}}function s(t){this.callback_=t,this.nodes_=[],this.records_=[],this.uid_=++x}function a(t,e){this.type=t,this.target=e,this.addedNodes=[],this.removedNodes=[],this.previousSibling=null,this.nextSibling=null,this.attributeName=null,this.attributeNamespace=null,this.oldValue=null}function u(t){var e=new a(t.type,t.target);return e.addedNodes=t.addedNodes.slice(),e.removedNodes=t.removedNodes.slice(),e.previousSibling=t.previousSibling,e.nextSibling=t.nextSibling,e.attributeName=t.attributeName,e.attributeNamespace=t.attributeNamespace,e.oldValue=t.oldValue,e}function c(t,e){return T=new a(t,e)}function l(t){return C?C:(C=u(T),C.oldValue=t,C)}function h(){T=C=void 0}function p(t){return t===C||t===T}function d(t,e){return t===e?t:C&&p(t)?C:null}function f(t,e,n){this.observer=t,this.target=e,this.options=n,this.transientObservedNodes=[]}var g,m=new WeakMap;if(/Trident|Edge/.test(navigator.userAgent))g=setTimeout;else if(window.setImmediate)g=window.setImmediate;else{var y=[],v=String(Math.random());window.addEventListener(\"message\",function(t){if(t.data===v){var e=y;y=[],e.forEach(function(t){t()})}}),g=function(t){y.push(t),window.postMessage(v,\"*\")}}var b=!1,A=[],x=0;s.prototype={observe:function(t,e){if(t=n(t),!e.childList&&!e.attributes&&!e.characterData||e.attributeOldValue&&!e.attributes||e.attributeFilter&&e.attributeFilter.length&&!e.attributes||e.characterDataOldValue&&!e.characterData)throw new SyntaxError;var i=m.get(t);i||m.set(t,i=[]);for(var o,r=0;r<i.length;r++)if(i[r].observer===this){o=i[r],o.removeListeners(),o.options=e;break}o||(o=new f(this,t,e),i.push(o),this.nodes_.push(t)),o.addListeners()},disconnect:function(){this.nodes_.forEach(function(t){for(var e=m.get(t),n=0;n<e.length;n++){var i=e[n];if(i.observer===this){i.removeListeners(),e.splice(n,1);break}}},this),this.records_=[]},takeRecords:function(){var t=this.records_;return this.records_=[],t}};var T,C;f.prototype={enqueue:function(t){var n=this.observer.records_,i=n.length;if(n.length>0){var o=n[i-1],r=d(o,t);if(r)return void(n[i-1]=r)}else e(this.observer);n[i]=t},addListeners:function(){this.addListeners_(this.target)},addListeners_:function(t){var e=this.options;e.attributes&&t.addEventListener(\"DOMAttrModified\",this,!0),e.characterData&&t.addEventListener(\"DOMCharacterDataModified\",this,!0),e.childList&&t.addEventListener(\"DOMNodeInserted\",this,!0),(e.childList||e.subtree)&&t.addEventListener(\"DOMNodeRemoved\",this,!0)},removeListeners:function(){this.removeListeners_(this.target)},removeListeners_:function(t){var e=this.options;e.attributes&&t.removeEventListener(\"DOMAttrModified\",this,!0),e.characterData&&t.removeEventListener(\"DOMCharacterDataModified\",this,!0),e.childList&&t.removeEventListener(\"DOMNodeInserted\",this,!0),(e.childList||e.subtree)&&t.removeEventListener(\"DOMNodeRemoved\",this,!0)},addTransientObserver:function(t){if(t!==this.target){this.addListeners_(t),this.transientObservedNodes.push(t);var e=m.get(t);e||m.set(t,e=[]),e.push(this)}},removeTransientObservers:function(){var t=this.transientObservedNodes;this.transientObservedNodes=[],t.forEach(function(t){this.removeListeners_(t);for(var e=m.get(t),n=0;n<e.length;n++)if(e[n]===this){e.splice(n,1);break}},this)},handleEvent:function(t){switch(t.stopImmediatePropagation(),t.type){case\"DOMAttrModified\":var e=t.attrName,n=t.relatedNode.namespaceURI,i=t.target,o=new c(\"attributes\",i);o.attributeName=e,o.attributeNamespace=n;var s=t.attrChange===MutationEvent.ADDITION?null:t.prevValue;r(i,function(t){return!t.attributes||t.attributeFilter&&t.attributeFilter.length&&-1===t.attributeFilter.indexOf(e)&&-1===t.attributeFilter.indexOf(n)?void 0:t.attributeOldValue?l(s):o});break;case\"DOMCharacterDataModified\":var i=t.target,o=c(\"characterData\",i),s=t.prevValue;r(i,function(t){return t.characterData?t.characterDataOldValue?l(s):o:void 0});break;case\"DOMNodeRemoved\":this.addTransientObserver(t.target);case\"DOMNodeInserted\":var a,u,p=t.target;\"DOMNodeInserted\"===t.type?(a=[p],u=[]):(a=[],u=[p]);var d=p.previousSibling,f=p.nextSibling,o=c(\"childList\",t.target.parentNode);o.addedNodes=a,o.removedNodes=u,o.previousSibling=d,o.nextSibling=f,r(t.relatedNode,function(t){return t.childList?o:void 0})}h()}},t.JsMutationObserver=s,t.MutationObserver||(t.MutationObserver=s)}(self),window.CustomElements=window.CustomElements||{flags:{}},function(t){var e=t.flags,n=[],i=function(t){n.push(t)},o=function(){n.forEach(function(e){e(t)})};t.addModule=i,t.initializeModules=o,t.hasNative=Boolean(document.registerElement),t.isIE=/Trident/.test(navigator.userAgent),t.useNative=!e.register&&t.hasNative&&!window.ShadowDOMPolyfill&&(!window.HTMLImports||window.HTMLImports.useNative)}(window.CustomElements),window.CustomElements.addModule(function(t){function e(t,e){n(t,function(t){return e(t)?!0:void i(t,e)}),i(t,e)}function n(t,e,i){var o=t.firstElementChild;if(!o)for(o=t.firstChild;o&&o.nodeType!==Node.ELEMENT_NODE;)o=o.nextSibling;for(;o;)e(o,i)!==!0&&n(o,e,i),o=o.nextElementSibling;return null}function i(t,n){for(var i=t.shadowRoot;i;)e(i,n),i=i.olderShadowRoot}function o(t,e){r(t,e,[])}function r(t,e,n){if(t=window.wrap(t),!(n.indexOf(t)>=0)){n.push(t);for(var i,o=t.querySelectorAll(\"link[rel=\"+s+\"]\"),a=0,u=o.length;u>a&&(i=o[a]);a++)i.import&&r(i.import,e,n);e(t)}}var s=window.HTMLImports?window.HTMLImports.IMPORT_LINK_TYPE:\"none\";t.forDocumentTree=o,t.forSubtree=e}),window.CustomElements.addModule(function(t){function e(t,e){return n(t,e)||i(t,e)}function n(e,n){return t.upgrade(e,n)?!0:void(n&&s(e))}function i(t,e){b(t,function(t){return n(t,e)?!0:void 0})}function o(t){C.push(t),T||(T=!0,setTimeout(r))}function r(){T=!1;for(var t,e=C,n=0,i=e.length;i>n&&(t=e[n]);n++)t();C=[]}function s(t){x?o(function(){a(t)}):a(t)}function a(t){t.__upgraded__&&!t.__attached&&(t.__attached=!0,t.attachedCallback&&t.attachedCallback())}function u(t){c(t),b(t,function(t){c(t)})}function c(t){x?o(function(){l(t)}):l(t)}function l(t){t.__upgraded__&&t.__attached&&(t.__attached=!1,t.detachedCallback&&t.detachedCallback())}function h(t){for(var e=t,n=window.wrap(document);e;){if(e==n)return!0;e=e.parentNode||e.nodeType===Node.DOCUMENT_FRAGMENT_NODE&&e.host}}function p(t){if(t.shadowRoot&&!t.shadowRoot.__watched){v.dom&&console.log(\"watching shadow-root for: \",t.localName);for(var e=t.shadowRoot;e;)g(e),e=e.olderShadowRoot}}function d(t,n){if(v.dom){var i=n[0];if(i&&\"childList\"===i.type&&i.addedNodes&&i.addedNodes){for(var o=i.addedNodes[0];o&&o!==document&&!o.host;)o=o.parentNode;var r=o&&(o.URL||o._URL||o.host&&o.host.localName)||\"\";r=r.split(\"/?\").shift().split(\"/\").pop()}console.group(\"mutations (%d) [%s]\",n.length,r||\"\")}var s=h(t);n.forEach(function(t){\"childList\"===t.type&&(w(t.addedNodes,function(t){t.localName&&e(t,s)}),w(t.removedNodes,function(t){t.localName&&u(t)}))}),v.dom&&console.groupEnd()}function f(t){for(t=window.wrap(t),t||(t=window.wrap(document));t.parentNode;)t=t.parentNode;var e=t.__observer;e&&(d(t,e.takeRecords()),r())}function g(t){if(!t.__observer){var e=new MutationObserver(d.bind(this,t));e.observe(t,{childList:!0,subtree:!0}),t.__observer=e}}function m(t){t=window.wrap(t),v.dom&&console.group(\"upgradeDocument: \",t.baseURI.split(\"/\").pop());var n=t===window.wrap(document);e(t,n),g(t),v.dom&&console.groupEnd()}function y(t){A(t,m)}var v=t.flags,b=t.forSubtree,A=t.forDocumentTree,x=!window.MutationObserver||window.MutationObserver===window.JsMutationObserver;t.hasPolyfillMutations=x;var T=!1,C=[],w=Array.prototype.forEach.call.bind(Array.prototype.forEach),E=Element.prototype.createShadowRoot;E&&(Element.prototype.createShadowRoot=function(){var t=E.call(this);return window.CustomElements.watchShadow(this),t}),t.watchShadow=p,t.upgradeDocumentTree=y,t.upgradeDocument=m,t.upgradeSubtree=i,t.upgradeAll=e,t.attached=s,t.takeRecords=f}),window.CustomElements.addModule(function(t){function e(e,i){if(!e.__upgraded__&&e.nodeType===Node.ELEMENT_NODE){var o=e.getAttribute(\"is\"),r=t.getRegisteredDefinition(e.localName)||t.getRegisteredDefinition(o);if(r&&(o&&r.tag==e.localName||!o&&!r.extends))return n(e,r,i)}}function n(e,n,o){return s.upgrade&&console.group(\"upgrade:\",e.localName),n.is&&e.setAttribute(\"is\",n.is),i(e,n),e.__upgraded__=!0,r(e),o&&t.attached(e),t.upgradeSubtree(e,o),s.upgrade&&console.groupEnd(),e}function i(t,e){Object.__proto__?t.__proto__=e.prototype:(o(t,e.prototype,e.native),t.__proto__=e.prototype)}function o(t,e,n){for(var i={},o=e;o!==n&&o!==HTMLElement.prototype;){for(var r,s=Object.getOwnPropertyNames(o),a=0;r=s[a];a++)i[r]||(Object.defineProperty(t,r,Object.getOwnPropertyDescriptor(o,r)),i[r]=1);o=Object.getPrototypeOf(o)}}function r(t){t.createdCallback&&t.createdCallback()}var s=t.flags;t.upgrade=e,t.upgradeWithDefinition=n,t.implementPrototype=i}),window.CustomElements.addModule(function(t){function e(e,i){var u=i||{};if(!e)throw new Error(\"document.registerElement: first argument `name` must not be empty\");if(e.indexOf(\"-\")<0)throw new Error(\"document.registerElement: first argument ('name') must contain a dash ('-'). Argument provided was '\"+String(e)+\"'.\");if(o(e))throw new Error(\"Failed to execute 'registerElement' on 'Document': Registration failed for type '\"+String(e)+\"'. The type name is invalid.\");if(c(e))throw new Error(\"DuplicateDefinitionError: a type with name '\"+String(e)+\"' is already registered\");return u.prototype||(u.prototype=Object.create(HTMLElement.prototype)),u.__name=e.toLowerCase(),u.lifecycle=u.lifecycle||{},u.ancestry=r(u.extends),s(u),a(u),n(u.prototype),l(u.__name,u),u.ctor=h(u),u.ctor.prototype=u.prototype,u.prototype.constructor=u.ctor,t.ready&&y(document),u.ctor}function n(t){if(!t.setAttribute._polyfilled){var e=t.setAttribute;t.setAttribute=function(t,n){i.call(this,t,n,e)};var n=t.removeAttribute;t.removeAttribute=function(t){i.call(this,t,null,n)},t.setAttribute._polyfilled=!0}}function i(t,e,n){t=t.toLowerCase();var i=this.getAttribute(t);n.apply(this,arguments);var o=this.getAttribute(t);this.attributeChangedCallback&&o!==i&&this.attributeChangedCallback(t,i,o)}function o(t){for(var e=0;e<T.length;e++)if(t===T[e])return!0}function r(t){var e=c(t);return e?r(e.extends).concat([e]):[]}function s(t){for(var e,n=t.extends,i=0;e=t.ancestry[i];i++)n=e.is&&e.tag;t.tag=n||t.__name,n&&(t.is=t.__name)}function a(t){if(!Object.__proto__){var e=HTMLElement.prototype;if(t.is){var n=document.createElement(t.tag);e=Object.getPrototypeOf(n)}for(var i,o=t.prototype,r=!1;o;)o==e&&(r=!0),i=Object.getPrototypeOf(o),i&&(o.__proto__=i),o=i;r||console.warn(t.tag+\" prototype not found in prototype chain for \"+t.is),t.native=e}}function u(t){return b(E(t.tag),t)}function c(t){return t?C[t.toLowerCase()]:void 0}function l(t,e){C[t]=e}function h(t){return function(){return u(t)}}function p(t,e,n){return t===w?d(e,n):S(t,e)}function d(t,e){t&&(t=t.toLowerCase()),e&&(e=e.toLowerCase());var n=c(e||t);if(n){if(t==n.tag&&e==n.is)return new n.ctor;if(!e&&!n.is)return new n.ctor}var i;return e?(i=d(t),i.setAttribute(\"is\",e),i):(i=E(t),t.indexOf(\"-\")>=0&&A(i,HTMLElement),i)}function f(t,e){var n=t[e];t[e]=function(){var t=n.apply(this,arguments);return v(t),t}}var g,m=t.isIE,y=t.upgradeDocumentTree,v=t.upgradeAll,b=t.upgradeWithDefinition,A=t.implementPrototype,x=t.useNative,T=[\"annotation-xml\",\"color-profile\",\"font-face\",\"font-face-src\",\"font-face-uri\",\"font-face-format\",\"font-face-name\",\"missing-glyph\"],C={},w=\"http://www.w3.org/1999/xhtml\",E=document.createElement.bind(document),S=document.createElementNS.bind(document);g=Object.__proto__||x?function(t,e){return t instanceof e}:function(t,e){if(t instanceof e)return!0;for(var n=t;n;){if(n===e.prototype)return!0;n=n.__proto__}return!1},f(Node.prototype,\"cloneNode\"),f(document,\"importNode\"),m&&!function(){var t=document.importNode;document.importNode=function(){var e=t.apply(document,arguments);if(e.nodeType==e.DOCUMENT_FRAGMENT_NODE){var n=document.createDocumentFragment();return n.appendChild(e),n}return e}}(),document.registerElement=e,document.createElement=d,document.createElementNS=p,t.registry=C,t.instanceof=g,t.reservedTagList=T,t.getRegisteredDefinition=c,document.register=document.registerElement}),function(t){function e(){s(window.wrap(document)),window.CustomElements.ready=!0;var t=window.requestAnimationFrame||function(t){setTimeout(t,16)};t(function(){setTimeout(function(){window.CustomElements.readyTime=Date.now(),window.HTMLImports&&(window.CustomElements.elapsed=window.CustomElements.readyTime-window.HTMLImports.readyTime),document.dispatchEvent(new CustomEvent(\"WebComponentsReady\",{bubbles:!0}))})})}var n=t.useNative,i=t.initializeModules,o=t.isIE;if(n){var r=function(){};t.watchShadow=r,t.upgrade=r,t.upgradeAll=r,t.upgradeDocumentTree=r,t.upgradeSubtree=r,t.takeRecords=r,t.instanceof=function(t,e){return t instanceof e}}else i();var s=t.upgradeDocumentTree,a=t.upgradeDocument;if(window.wrap||(window.ShadowDOMPolyfill?(window.wrap=window.ShadowDOMPolyfill.wrapIfNeeded,window.unwrap=window.ShadowDOMPolyfill.unwrapIfNeeded):window.wrap=window.unwrap=function(t){return t}),window.HTMLImports&&(window.HTMLImports.__importsParsingHook=function(t){t.import&&a(wrap(t.import))}),(!window.CustomEvent||o&&\"function\"!=typeof window.CustomEvent)&&(window.CustomEvent=function(t,e){e=e||{};var n=document.createEvent(\"CustomEvent\");return n.initCustomEvent(t,Boolean(e.bubbles),Boolean(e.cancelable),e.detail),n.preventDefault=function(){Object.defineProperty(this,\"defaultPrevented\",{get:function(){return!0}})},n},window.CustomEvent.prototype=window.Event.prototype),\"complete\"===document.readyState||t.flags.eager)e();else if(\"interactive\"!==document.readyState||window.attachEvent||window.HTMLImports&&!window.HTMLImports.ready){var u=window.HTMLImports&&!window.HTMLImports.ready?\"HTMLImportsLoaded\":\"DOMContentLoaded\";window.addEventListener(u,e)}else e()}(window.CustomElements),function(){}.call(this),function(){this.Trix={VERSION:\"0.9.4\",ZERO_WIDTH_SPACE:\"\\ufeff\",NON_BREAKING_SPACE:\"\\xa0\",OBJECT_REPLACEMENT_CHARACTER:\"\\ufffc\",config:{}}}.call(this),function(){Trix.BasicObject=function(){function t(){}var e,n,i;return t.proxyMethod=function(t){var i,o,r,s,a;return r=n(t),i=r.name,s=r.toMethod,a=r.toProperty,o=r.optional,this.prototype[i]=function(){var t,n;return t=null!=s?o?\"function\"==typeof this[s]?this[s]():void 0:this[s]():null!=a?this[a]:void 0,o?(n=null!=t?t[i]:void 0,null!=n?e.call(n,t,arguments):void 0):(n=t[i],e.call(n,t,arguments))}},n=function(t){var e,n;if(!(n=t.match(i)))throw new Error(\"can't parse @proxyMethod expression: \"+t);return e={name:n[4]},null!=n[2]?e.toMethod=n[1]:e.toProperty=n[1],null!=n[3]&&(e.optional=!0),e},e=Function.prototype.apply,i=/^(.+?)(\\(\\))?(\\?)?\\.(.+?)$/,t}()}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Object=function(e){function n(){this.id=++i}var i;return t(n,e),i=0,n.fromJSONString=function(t){return this.fromJSON(JSON.parse(t))},n.prototype.hasSameConstructorAs=function(t){return this.constructor===(null!=t?t.constructor:void 0)},n.prototype.isEqualTo=function(t){return this===t},n.prototype.inspect=function(){var t,e,n;return t=function(){var t,i,o;i=null!=(t=this.contentsForInspection())?t:{},o=[];for(e in i)n=i[e],o.push(e+\"=\"+n);return o}.call(this),\"#<\"+this.constructor.name+\":\"+this.id+(t.length?\" \"+t.join(\", \"):\"\")+\">\"},n.prototype.contentsForInspection=function(){},n.prototype.toJSONString=function(){return JSON.stringify(this)},n.prototype.toUTF16String=function(){return Trix.UTF16String.box(this)},n.prototype.getCacheKey=function(){return this.id.toString()},n}(Trix.BasicObject)}.call(this),function(){Trix.extend=function(t){var e,n;for(e in t)n=t[e],this[e]=n;return this}}.call(this),function(){var t,e;Trix.extend({defer:function(t){return setTimeout(t,1)},memoize:function(t){var n;return n=e++,function(){var e;return null==this.memos&&(this.memos={}),null!=(e=this.memos)[n]?e[n]:e[n]=t.apply(this,arguments)}}}),e=0,t=function(t){var e,n;return null!=(e=null!=(n=null!=t&&\"function\"==typeof t.inspect?t.inspect():void 0)?n:function(){try{return JSON.stringify(t)}catch(e){}}())?e:t}}.call(this),function(){var t,e;Trix.extend({normalizeSpaces:function(t){return t.replace(RegExp(\"\"+Trix.ZERO_WIDTH_SPACE,\"g\"),\"\").replace(RegExp(\"\"+Trix.NON_BREAKING_SPACE,\"g\"),\" \")},summarizeStringChange:function(t,n){var i,o,r,s;return t=Trix.UTF16String.box(t),n=Trix.UTF16String.box(n),n.length<t.length?(o=e(t,n),s=o[0],i=o[1]):(r=e(n,t),i=r[0],s=r[1]),{added:i,removed:s}}}),e=function(e,n){var i,o,r,s,a;return e.isEqualTo(n)?[\"\",\"\"]:(o=t(e,n),s=o.utf16String.length,r=s?(a=o.offset,o,i=e.codepoints.slice(0,a).concat(e.codepoints.slice(a+s)),t(n,Trix.UTF16String.fromCodepoints(i))):t(n,e),[o.utf16String.toString(),r.utf16String.toString()])},t=function(t,e){var n,i,o;for(n=0,i=t.length,o=e.length;i>n&&t.charAt(n).isEqualTo(e.charAt(n));)n++;for(;i>n+1&&t.charAt(i-1).isEqualTo(e.charAt(o-1));)i--,o--;return{utf16String:t.slice(n,i),offset:n}}}.call(this),function(){Trix.extend({copyObject:function(t){var e,n,i;null==t&&(t={}),n={};for(e in t)i=t[e],n[e]=i;return n},objectsAreEqual:function(t,e){var n,i;if(null==t&&(t={}),null==e&&(e={}),Object.keys(t).length!==Object.keys(e).length)return!1;for(n in t)if(i=t[n],i!==e[n])return!1;return!0}})}.call(this),function(){Trix.extend({arraysAreEqual:function(t,e){var n,i,o,r;if(null==t&&(t=[]),null==e&&(e=[]),t.length!==e.length)return!1;for(i=n=0,o=t.length;o>n;i=++n)if(r=t[i],r!==e[i])return!1;return!0},summarizeArrayChange:function(t,e){var n,i,o,r,s,a,u,c,l,h,p;for(null==t&&(t=[]),null==e&&(e=[]),n=[],h=[],o=new Set,r=0,u=t.length;u>r;r++)p=t[r],o.add(p);for(i=new Set,s=0,c=e.length;c>s;s++)p=e[s],i.add(p),o.has(p)||n.push(p);for(a=0,l=t.length;l>a;a++)p=t[a],i.has(p)||h.push(p);return{added:n,removed:h}}})}.call(this),function(){var t,e,n,i,o;t=document.documentElement,e=null!=(n=null!=(i=null!=(o=t.matchesSelector)?o:t.webkitMatchesSelector)?i:t.msMatchesSelector)?n:t.mozMatchesSelector,Trix.extend({handleEvent:function(e,n){var i,o,r,s,a,u,c,l,h,p,d,f;return l=null!=n?n:{},u=l.onElement,a=l.matchingSelector,f=l.withCallback,s=l.inPhase,c=l.preventDefault,p=l.times,o=null!=u?u:t,h=a,i=f,d=\"capturing\"===s,r=function(t){var e;return null!=p&&0===--p&&r.destroy(),e=Trix.findClosestElementFromNode(t.target,{matchingSelector:h}),null!=e&&(null!=f&&f.call(e,t,e),c)?t.preventDefault():void 0},r.destroy=function(){return o.removeEventListener(e,r,d)},o.addEventListener(e,r,d),r},handleEventOnce:function(t,e){return null==e&&(e={}),e.times=1,Trix.handleEvent(t,e)},triggerEvent:function(e,n){var i,o,r,s,a,u,c;return c=null!=n?n:{},u=c.onElement,o=c.bubbles,r=c.cancelable,i=c.attributes,s=null!=u?u:t,o=o!==!1,r=r!==!1,a=document.createEvent(\"Events\"),a.initEvent(e,o,r),null!=i&&Trix.extend.call(a,i),s.dispatchEvent(a)},elementMatchesSelector:function(t,n){return 1===(null!=t?t.nodeType:void 0)?e.call(t,n):void 0},findClosestElementFromNode:function(t,e){var n;for(n=(null!=e?e:{}).matchingSelector;null!=t&&t.nodeType!==Node.ELEMENT_NODE;)t=t.parentNode;if(null==n)return t;for(;t;){if(Trix.elementMatchesSelector(t,n))return t;t=t.parentNode}},findInnerElement:function(t){for(;null!=t?t.firstElementChild:void 0;)t=t.firstElementChild;return t},innerElementIsActive:function(t){return document.activeElement!==t&&Trix.elementContainsNode(t,document.activeElement)},elementContainsNode:function(t,e){if(t&&e)for(;e;){if(e===t)return!0;e=e.parentNode}},findNodeFromContainerAndOffset:function(t,e){var n;if(t)return t.nodeType===Node.TEXT_NODE?t:0===e?null!=(n=t.firstChild)?n:t:t.childNodes.item(e-1)},findElementFromContainerAndOffset:function(t,e){var n;return n=Trix.findNodeFromContainerAndOffset(t,e),Trix.findClosestElementFromNode(n)},findChildIndexOfNode:function(t){var e;if(null!=t?t.parentNode:void 0){for(e=0;t=t.previousSibling;)e++;return e}},measureElement:function(t){return{width:t.offsetWidth,height:t.offsetHeight}},walkTree:function(t,e){var n,i,o,r,s;return o=null!=e?e:{},i=o.onlyNodesOfType,r=o.usingFilter,n=o.expandEntityReferences,s=function(){switch(i){case\"element\":return NodeFilter.SHOW_ELEMENT;case\"text\":return NodeFilter.SHOW_TEXT;case\"comment\":return NodeFilter.SHOW_COMMENT;default:return NodeFilter.SHOW_ALL}}(),document.createTreeWalker(t,s,null!=r?r:null,n===!0)},tagName:function(t){var e;return null!=t&&null!=(e=t.tagName)?e.toLowerCase():void 0},makeElement:function(t,e){var n,i,o,r,s,a,u,c,l,h;if(null==e&&(e={}),\"object\"==typeof t?(e=t,t=e.tagName):e={attributes:e},i=document.createElement(t),null!=e.editable&&(null==e.attributes&&(e.attributes={}),e.attributes.contenteditable=e.editable),e.attributes){a=e.attributes;for(r in a)h=a[r],i.setAttribute(r,h)}if(e.style){u=e.style;for(r in u)h=u[r],i.style[r]=h}if(e.data){c=e.data;for(r in c)h=c[r],i.dataset[r]=h}if(e.className)for(l=e.className.split(\" \"),o=0,s=l.length;s>o;o++)n=l[o],i.classList.add(n);return e.textContent&&(i.textContent=e.textContent),i},cloneFragment:function(t){var e,n,i,o,r;for(e=document.createDocumentFragment(),r=t.childNodes,n=0,i=r.length;i>n;n++)o=r[n],e.appendChild(o.cloneNode(!0));return e},makeFragment:function(t){var e,n,i;for(null==t&&(t=\"\"),e=document.createElement(\"div\"),e.innerHTML=t,n=document.createDocumentFragment();i=e.firstChild;)n.appendChild(i);return n},nodeIsBlockContainer:function(t){return Trix.nodeIsBlockStartComment(null!=t?t.firstChild:void 0)},nodeIsBlockStartComment:function(t){return Trix.nodeIsCommentNode(t)&&\"block\"===(null!=t?t.data:void 0)},nodeIsCommentNode:function(t){return(null!=t?t.nodeType:void 0)===Node.COMMENT_NODE},nodeIsCursorTarget:function(t){return t?Trix.nodeIsTextNode(t)?t.data===Trix.ZERO_WIDTH_SPACE:Trix.nodeIsCursorTarget(t.firstChild):void 0},nodeIsAttachmentElement:function(t){return Trix.elementMatchesSelector(t,Trix.AttachmentView.attachmentSelector)},nodeIsEmptyTextNode:function(t){return Trix.nodeIsTextNode(t)&&\"\"===(null!=t?t.data:void 0)},nodeIsTextNode:function(t){return(null!=t?t.nodeType:void 0)===Node.TEXT_NODE}})}.call(this),function(){var t,e,n,i,o;t=Trix.copyObject,i=Trix.objectsAreEqual,Trix.extend({normalizeRange:n=function(t){var n;if(null!=t)return Array.isArray(t)||(t=[t,t]),[e(t[0]),e(null!=(n=t[1])?n:t[0])]},rangeIsCollapsed:function(t){var e,i,r;if(null!=t)return i=n(t),r=i[0],e=i[1],o(r,e)},rangesAreEqual:function(t,e){var i,r,s,a,u,c;if(null!=t&&null!=e)return s=n(t),r=s[0],i=s[1],a=n(e),c=a[0],u=a[1],o(r,c)&&o(i,u)}}),e=function(e){return\"number\"==typeof e?e:t(e)},o=function(t,e){return\"number\"==typeof t?t===e:i(t,e)}}.call(this),function(){var t,e,n,i;t={extendsTagName:\"div\",css:\"%t { display: block; }\"},Trix.registerElement=function(e,o){var r,s,a,u,c,l,h;return null==o&&(o={}),e=e.toLowerCase(),c=i(o),u=null!=(h=c.extendsTagName)?h:t.extendsTagName,delete c.extendsTagName,s=c.defaultCSS,delete c.defaultCSS,null!=s&&u===t.extendsTagName?s+=\"\\n\"+t.css:s=t.css,n(s,e),a=Object.getPrototypeOf(document.createElement(u)),a.__super__=a,l=Object.create(a,c),r=document.registerElement(e,{prototype:l}),Object.defineProperty(l,\"constructor\",{value:r}),r},n=function(t,n){var i;return i=e(n),i.textContent=t.replace(/%t/g,n)},e=function(t){var e;return e=document.createElement(\"style\"),e.setAttribute(\"type\",\"text/css\"),e.setAttribute(\"data-tag-name\",t.toLowerCase()),document.head.insertBefore(e,document.head.firstChild),e},i=function(t){var e,n,i;n={};for(e in t)i=t[e],n[e]=\"function\"==typeof i?{value:i}:i;return n}}.call(this),function(){Trix.extend({getDOMSelection:function(){var t;return t=window.getSelection(),t.rangeCount>0?t:void 0},getDOMRange:function(){var t;return null!=(t=Trix.getDOMSelection())?t.getRangeAt(0):void 0},setDOMRange:function(t){var e;return e=window.getSelection(),e.removeAllRanges(),e.addRange(t),Trix.selectionChangeObserver.update()}})}.call(this),function(){}.call(this),function(){var t,e=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;t=Trix.arraysAreEqual,Trix.Hash=function(n){function i(t){null==t&&(t={}),this.values=r(t),i.__super__.constructor.apply(this,arguments)}var o,r,s,a,u;return e(i,n),i.fromCommonAttributesOfObjects=function(t){var e,n,i,r,s,a;if(null==t&&(t=[]),!t.length)return new this;for(e=o(t[0]),i=e.getKeys(),a=t.slice(1),n=0,r=a.length;r>n;n++)s=a[n],i=e.getKeysCommonToHash(o(s)),e=e.slice(i);return e},i.box=function(t){return o(t)},i.prototype.add=function(t,e){return this.merge(a(t,e))},i.prototype.remove=function(t){return new Trix.Hash(r(this.values,t))},i.prototype.get=function(t){return this.values[t]},i.prototype.has=function(t){return t in this.values},i.prototype.merge=function(t){return new Trix.Hash(s(this.values,u(t)))},i.prototype.slice=function(t){var e,n,i,o;for(o={},e=0,i=t.length;i>e;e++)n=t[e],this.has(n)&&(o[n]=this.values[n]);return new Trix.Hash(o)},i.prototype.getKeys=function(){return Object.keys(this.values)},i.prototype.getKeysCommonToHash=function(t){var e,n,i,r,s;for(t=o(t),r=this.getKeys(),s=[],e=0,i=r.length;i>e;e++)n=r[e],this.values[n]===t.values[n]&&s.push(n);return s},i.prototype.isEqualTo=function(e){return t(this.toArray(),o(e).toArray())},i.prototype.isEmpty=function(){return 0===this.getKeys().length},i.prototype.toArray=function(){var t,e,n;return(null!=this.array?this.array:this.array=function(){var i;e=[],i=this.values;for(t in i)n=i[t],e.push(t,n);return e}.call(this)).slice(0)},i.prototype.toObject=function(){return r(this.values)},i.prototype.toJSON=function(){return this.toObject()},i.prototype.contentsForInspection=function(){return{values:JSON.stringify(this.values)}},a=function(t,e){var n;return n={},n[t]=e,n},s=function(t,e){var n,i,o;i=r(t);for(n in e)o=e[n],i[n]=o;return i},r=function(t,e){var n,i,o,r,s;for(r={},s=Object.keys(t).sort(),n=0,o=s.length;o>n;n++)i=s[n],i!==e&&(r[i]=t[i]);return r},o=function(t){return t instanceof Trix.Hash?t:new Trix.Hash(t)},u=function(t){return t instanceof Trix.Hash?t.values:t},i}(Trix.Object)}.call(this),function(){Trix.ObjectGroup=function(){function t(t,e){var n,i;this.objects=null!=t?t:[],i=e.depth,n=e.asTree,n&&(this.depth=i,this.objects=this.constructor.groupObjects(this.objects,{asTree:n,depth:this.depth+1}))}return t.groupObjects=function(t,e){var n,i,o,r,s,a,u,c,l;for(null==t&&(t=[]),l=null!=e?e:{},o=l.depth,n=l.asTree,n&&null==o&&(o=0),c=[],s=0,a=t.length;a>s;s++){if(u=t[s],r){if((\"function\"==typeof u.canBeGrouped?u.canBeGrouped(o):void 0)&&(\"function\"==typeof(i=r[r.length-1]).canBeGroupedWith?i.canBeGroupedWith(u,o):void 0)){r.push(u);continue}c.push(new this(r,{depth:o,asTree:n})),r=null}(\"function\"==typeof u.canBeGrouped?u.canBeGrouped(o):void 0)?r=[u]:c.push(u)}return r&&c.push(new this(r,{depth:o,asTree:n})),c},t.prototype.getObjects=function(){return this.objects},t.prototype.getDepth=function(){return this.depth},t.prototype.getCacheKey=function(){var t,e,n,i,o;for(e=[\"objectGroup\"],o=this.getObjects(),t=0,n=o.length;n>t;t++)i=o[t],e.push(i.getCacheKey());return e.join(\"/\")},t}()}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.ObjectMap=function(e){function n(t){var e,n,i,o,r;for(null==t&&(t=[]),this.objects={},i=0,o=t.length;o>i;i++)r=t[i],n=JSON.stringify(r),null==(e=this.objects)[n]&&(e[n]=r)}return t(n,e),n.prototype.find=function(t){var e;return e=JSON.stringify(t),this.objects[e]},n}(Trix.BasicObject)}.call(this),function(){Trix.ElementStore=function(){function t(t){this.reset(t)}var e;return t.prototype.add=function(t){var n;return n=e(t),this.elements[n]=t},t.prototype.remove=function(t){var n,i;return n=e(t),(i=this.elements[n])?(delete this.elements[n],i):void 0},t.prototype.reset=function(t){var e,n,i;for(null==t&&(t=[]),this.elements={},n=0,i=t.length;i>n;n++)e=t[n],this.add(e);return t},e=function(t){return t.dataset.trixStoreKey},t}()}.call(this),function(){}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Operation=function(e){function n(){return n.__super__.constructor.apply(this,arguments)}return t(n,e),n.prototype.isPerforming=function(){return this.performing===!0},n.prototype.hasPerformed=function(){return this.performed===!0},n.prototype.hasSucceeded=function(){return this.performed&&this.succeeded},n.prototype.hasFailed=function(){return this.performed&&!this.succeeded},n.prototype.getPromise=function(){return null!=this.promise?this.promise:this.promise=new Promise(function(t){return function(e,n){return t.performing=!0,t.perform(function(i,o){return t.succeeded=i,t.performing=!1,t.performed=!0,t.succeeded?e(o):n(o)})}}(this))},n.prototype.perform=function(t){return t(!1)},n.prototype.release=function(){var t;return null!=(t=this.promise)&&\"function\"==typeof t.cancel&&t.cancel(),this.promise=null,this.performing=null,this.performed=null,this.succeeded=null},n.proxyMethod(\"getPromise().then\"),n.proxyMethod(\"getPromise().catch\"),n}(Trix.BasicObject)}.call(this),function(){var t,e,n,i,o,r=function(t,e){function n(){this.constructor=t}for(var i in e)s.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},s={}.hasOwnProperty;Trix.UTF16String=function(t){function e(t,e){this.ucs2String=t,this.codepoints=e,this.length=this.codepoints.length,this.ucs2Length=this.ucs2String.length}return r(e,t),e.box=function(t){return null==t&&(t=\"\"),t instanceof this?t:this.fromUCS2String(null!=t?t.toString():void 0)},e.fromUCS2String=function(t){return new this(t,i(t))},e.fromCodepoints=function(t){return new this(o(t),t)},e.prototype.offsetToUCS2Offset=function(t){return o(this.codepoints.slice(0,Math.max(0,t))).length},e.prototype.offsetFromUCS2Offset=function(t){return i(this.ucs2String.slice(0,Math.max(0,t))).length},e.prototype.slice=function(){var t;return this.constructor.fromCodepoints((t=this.codepoints).slice.apply(t,arguments))},e.prototype.charAt=function(t){return this.slice(t,t+1)},e.prototype.isEqualTo=function(t){return this.constructor.box(t).ucs2String===this.ucs2String},e.prototype.toJSON=function(){return this.ucs2String},e.prototype.getCacheKey=function(){return this.ucs2String},e.prototype.toString=function(){return this.ucs2String},e}(Trix.BasicObject),t=1===(\"function\"==typeof Array.from?Array.from(\"\\ud83d\\udc7c\").length:void 0),e=null!=(\"function\"==typeof\" \".codePointAt?\" \".codePointAt(0):void 0),n=\" \\ud83d\\udc7c\"===(\"function\"==typeof String.fromCodePoint?String.fromCodePoint(32,128124):void 0),i=t&&e?function(t){return Array.from(t).map(function(t){return t.codePointAt(0)})}:function(t){var e,n,i,o,r;for(o=[],e=0,i=t.length;i>e;)r=t.charCodeAt(e++),r>=55296&&56319>=r&&i>e&&(n=t.charCodeAt(e++),56320===(64512&n)?r=((1023&r)<<10)+(1023&n)+65536:e--),o.push(r);return o},o=n?function(t){return String.fromCodePoint.apply(String,t)}:function(t){var e,n,i;return e=function(){var e,o,r;for(r=[],e=0,o=t.length;o>e;e++)i=t[e],n=\"\",i>65535&&(i-=65536,n+=String.fromCharCode(i>>>10&1023|55296),i=56320|1023&i),r.push(n+String.fromCharCode(i));return r}(),e.join(\"\")}}.call(this),function(){}.call(this),function(){}.call(this),function(){Trix.config.lang={bold:\"Bold\",bullets:\"Bullets\",\"byte\":\"Byte\",bytes:\"Bytes\",captionPlaceholder:\"Type a caption here\\u2026\",code:\"Code\",editCaption:\"Edit caption\",indent:\"Increase Level\",italic:\"Italic\",link:\"Link\",numbers:\"Numbers\",outdent:\"Decrease Level\",quote:\"Quote\",redo:\"Redo\",remove:\"Remove\",strike:\"Strikethrough\",undo:\"Undo\",unlink:\"Unlink\",urlPlaceholder:\"Enter a URL\\u2026\",GB:\"GB\",KB:\"KB\",MB:\"MB\",PB:\"PB\",TB:\"TB\"}\n}.call(this),function(){Trix.config.css={classNames:{attachment:{container:\"attachment\",typePrefix:\"attachment-\",caption:\"caption\",captionEdited:\"caption-edited\",captionEditor:\"caption-editor\",editingCaption:\"caption-editing\",progressBar:\"progress\",removeButton:\"remove\",size:\"size\"}}}}.call(this),function(){var t;Trix.config.blockAttributes=t={\"default\":{tagName:\"div\",parse:!1},quote:{tagName:\"blockquote\",nestable:!0},code:{tagName:\"pre\",text:{plaintext:!0}},bulletList:{tagName:\"ul\",parse:!1},bullet:{tagName:\"li\",listAttribute:\"bulletList\",test:function(e){return Trix.tagName(e.parentNode)===t[this.listAttribute].tagName}},numberList:{tagName:\"ol\",parse:!1},number:{tagName:\"li\",listAttribute:\"numberList\",test:function(e){return Trix.tagName(e.parentNode)===t[this.listAttribute].tagName}}}}.call(this),function(){var t,e;t=Trix.config.lang,e=[t.bytes,t.KB,t.MB,t.GB,t.TB,t.PB],Trix.config.fileSize={prefix:\"IEC\",precision:2,formatter:function(n){var i,o,r,s,a;switch(n){case 0:return\"0 \"+t.bytes;case 1:return\"1 \"+t.byte;default:return i=function(){switch(this.prefix){case\"SI\":return 1e3;case\"IEC\":return 1024}}.call(this),o=Math.floor(Math.log(n)/Math.log(i)),r=n/Math.pow(i,o),s=r.toFixed(this.precision),a=s.replace(/0*$/,\"\").replace(/\\.$/,\"\"),a+\" \"+e[o]}}}}.call(this),function(){Trix.config.textAttributes={bold:{tagName:\"strong\",inheritable:!0,parser:function(t){var e;return e=window.getComputedStyle(t),\"bold\"===e.fontWeight||e.fontWeight>=700}},italic:{tagName:\"em\",inheritable:!0,parser:function(t){var e;return e=window.getComputedStyle(t),\"italic\"===e.fontStyle}},href:{groupTagName:\"a\",parser:function(t){var e,n,i;return e=Trix.AttachmentView.attachmentSelector,i=\"a:not(\"+e+\")\",(n=Trix.findClosestElementFromNode(t,{matchingSelector:i}))?n.getAttribute(\"href\"):void 0}},strike:{tagName:\"del\",inheritable:!0},frozen:{style:{backgroundColor:\"highlight\"}}}}.call(this),function(){var t,e,n,i,o;o=\"[data-trix-serialize=false]\",i=[\"contenteditable\",\"data-trix-id\",\"data-trix-store-key\",\"data-trix-mutable\"],e=\"data-trix-serialized-attributes\",n=\"[\"+e+\"]\",t=new RegExp(\"<!--block-->\",\"g\"),Trix.extend({serializers:{\"application/json\":function(t){var e;if(t instanceof Trix.Document)e=t;else{if(!(t instanceof HTMLElement))throw new Error(\"unserializable object\");e=Trix.Document.fromHTML(t.innerHTML)}return e.toSerializableDocument().toJSONString()},\"text/html\":function(r){var s,a,u,c,l,h,p,d,f,g,m,y,v,b,A,x,T;if(r instanceof Trix.Document)c=Trix.DocumentView.render(r);else{if(!(r instanceof HTMLElement))throw new Error(\"unserializable object\");c=r.cloneNode(!0)}for(b=c.querySelectorAll(o),l=0,f=b.length;f>l;l++)u=b[l],u.parentNode.removeChild(u);for(h=0,g=i.length;g>h;h++)for(s=i[h],A=c.querySelectorAll(\"[\"+s+\"]\"),p=0,m=A.length;m>p;p++)u=A[p],u.removeAttribute(s);for(x=c.querySelectorAll(n),d=0,y=x.length;y>d;d++){u=x[d];try{a=JSON.parse(u.getAttribute(e)),u.removeAttribute(e);for(v in a)T=a[v],u.setAttribute(v,T)}catch(C){}}return c.innerHTML.replace(t,\"\")}},deserializers:{\"application/json\":function(t){return Trix.Document.fromJSONString(t)},\"text/html\":function(t){return Trix.Document.fromHTML(t)}},serializeToContentType:function(t,e){var n;if(n=Trix.serializers[e])return n(t);throw new Error(\"unknown content type: \"+e)},deserializeFromContentType:function(t,e){var n;if(n=Trix.deserializers[e])return n(t);throw new Error(\"unknown content type: \"+e)}})}.call(this),function(){var t,e;e=Trix.makeFragment,t=Trix.config.lang,Trix.config.toolbar={content:e('<div class=\"button_groups\">\\n  <span class=\"button_group text_tools\">\\n    <button type=\"button\" class=\"bold\" data-attribute=\"bold\" data-key=\"b\" title=\"'+t.bold+'\">'+t.bold+'</button>\\n    <button type=\"button\" class=\"italic\" data-attribute=\"italic\" data-key=\"i\" title=\"'+t.italic+'\">'+t.italic+'</button>\\n    <button type=\"button\" class=\"strike\" data-attribute=\"strike\" title=\"'+t.strike+'\">'+t.strike+'</button>\\n    <button type=\"button\" class=\"link\" data-attribute=\"href\" data-action=\"link\" data-key=\"k\" title=\"'+t.link+'\">'+t.link+'</button>\\n  </span>\\n\\n  <span class=\"button_group block_tools\">\\n    <button type=\"button\" class=\"quote\" data-attribute=\"quote\" title=\"'+t.quote+'\">'+t.quote+'</button>\\n    <button type=\"button\" class=\"code\" data-attribute=\"code\" title=\"'+t.code+'\">'+t.code+'</button>\\n    <button type=\"button\" class=\"list bullets\" data-attribute=\"bullet\" title=\"'+t.bullets+'\">'+t.bullets+'</button>\\n    <button type=\"button\" class=\"list numbers\" data-attribute=\"number\" title=\"'+t.numbers+'\">'+t.numbers+'</button>\\n    <button type=\"button\" class=\"block-level decrease\" data-action=\"decreaseBlockLevel\" title=\"'+t.outdent+'\">'+t.outdent+'</button>\\n    <button type=\"button\" class=\"block-level increase\" data-action=\"increaseBlockLevel\" title=\"'+t.indent+'\">'+t.indent+'</button>\\n  </span>\\n\\n  <span class=\"button_group history_tools\">\\n    <button type=\"button\" class=\"undo\" data-action=\"undo\" data-key=\"z\" title=\"'+t.undo+'\">'+t.undo+'</button>\\n    <button type=\"button\" class=\"redo\" data-action=\"redo\" data-key=\"shift+z\" title=\"'+t.redo+'\">'+t.redo+'</button>\\n  </span>\\n</div>\\n\\n<div class=\"dialogs\">\\n  <div class=\"dialog link_dialog\" data-attribute=\"href\" data-dialog=\"href\">\\n    <div class=\"link_url_fields\">\\n      <input type=\"url\" required name=\"href\" placeholder=\"'+t.urlPlaceholder+'\">\\n      <div class=\"button_group\">\\n        <input type=\"button\" value=\"'+t.link+'\" data-method=\"setAttribute\">\\n        <input type=\"button\" value=\"'+t.unlink+'\" data-method=\"removeAttribute\">\\n      </div>\\n    </div>\\n  </div>\\n</div>')}}.call(this),function(){Trix.config.undoInterval=5e3}.call(this),function(){var t,e,n;e=Trix.makeElement,t=Trix.defer,n={cursorPoint:e({tagName:\"span\",data:{trixSelection:!0,trixMutable:!0,trixSerialize:!1}}),cursorTarget:e({tagName:\"span\",textContent:Trix.ZERO_WIDTH_SPACE,data:{trixSelection:!0,trixCursorTarget:!0,trixSerialize:!1}})},Trix.extend({selectionElements:{selector:\"[data-trix-selection]\",cssText:\"font-size: 0 !important;\\npadding: 0 !important;\\nmargin: 0 !important;\\nborder: none !important;\",create:function(t){return n[t].cloneNode(!0)},remove:function(e){var n;return n=e.parentElement,n.dataset.trixMutable=!0,n.removeChild(e),t(function(){return delete n.dataset.trixMutable})}}})}.call(this),function(){}.call(this),function(){var t;t=Trix.cloneFragment,Trix.registerElement(\"trix-toolbar\",{defaultCSS:\"%t {\\n  white-space: collapse;\\n}\\n\\n%t .dialog {\\n  display: none;\\n}\\n\\n%t .dialog.active {\\n  display: block;\\n}\\n\\n%t .dialog input.validate:invalid {\\n  background-color: #ffdddd;\\n}\\n\\n%t[native] {\\n  display: none;\\n}\",createdCallback:function(){return\"\"===this.innerHTML?this.appendChild(t(Trix.config.toolbar.content)):void 0}})}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty,n=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};Trix.ObjectView=function(e){function i(t,e){this.object=t,this.options=null!=e?e:{},this.childViews=[],this.rootView=this}return t(i,e),i.prototype.getNodes=function(){var t,e,n,i,o;for(null==this.nodes&&(this.nodes=this.createNodes()),i=this.nodes,o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.cloneNode(!0));return o},i.prototype.invalidate=function(){var t;return this.nodes=null,null!=(t=this.parentView)?t.invalidate():void 0},i.prototype.invalidateViewForObject=function(t){var e;return null!=(e=this.findViewForObject(t))?e.invalidate():void 0},i.prototype.findOrCreateCachedChildView=function(t,e){var n;return(n=this.getCachedViewForObject(e))?this.recordChildView(n):(n=this.createChildView.apply(this,arguments),this.cacheViewForObject(n,e)),n},i.prototype.createChildView=function(t,e,n){var i;return null==n&&(n={}),e instanceof Trix.ObjectGroup&&(n.viewClass=t,t=Trix.ObjectGroupView),i=new t(e,n),this.recordChildView(i)},i.prototype.recordChildView=function(t){return t.parentView=this,t.rootView=this.rootView,this.childViews.push(t),t},i.prototype.getAllChildViews=function(){var t,e,n,i,o;for(o=[],i=this.childViews,e=0,n=i.length;n>e;e++)t=i[e],o.push(t),o=o.concat(t.getAllChildViews());return o},i.prototype.findElement=function(){return this.findElementForObject(this.object)},i.prototype.findElementForObject=function(t){var e;return(e=null!=t?t.id:void 0)?this.rootView.element.querySelector(\"[data-trix-id='\"+e+\"']\"):void 0},i.prototype.findViewForObject=function(t){var e,n,i,o;for(i=this.getAllChildViews(),e=0,n=i.length;n>e;e++)if(o=i[e],o.object===t)return o},i.prototype.getViewCache=function(){return this.rootView!==this?this.rootView.getViewCache():this.isViewCachingEnabled()?null!=this.viewCache?this.viewCache:this.viewCache={}:void 0},i.prototype.isViewCachingEnabled=function(){return this.shouldCacheViews!==!1},i.prototype.enableViewCaching=function(){return this.shouldCacheViews=!0},i.prototype.disableViewCaching=function(){return this.shouldCacheViews=!1},i.prototype.getCachedViewForObject=function(t){var e;return null!=(e=this.getViewCache())?e[t.getCacheKey()]:void 0},i.prototype.cacheViewForObject=function(t,e){var n;return null!=(n=this.getViewCache())?n[e.getCacheKey()]=t:void 0},i.prototype.garbageCollectCachedViews=function(){var t,e,i,o,r,s;if(t=this.getViewCache()){s=this.getAllChildViews().concat(this),i=function(){var t,e,n;for(n=[],t=0,e=s.length;e>t;t++)r=s[t],n.push(r.object.getCacheKey());return n}(),o=[];for(e in t)n.call(i,e)<0&&o.push(delete t[e]);return o}},i}(Trix.BasicObject)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.ObjectGroupView=function(e){function n(){n.__super__.constructor.apply(this,arguments),this.objectGroup=this.object,this.viewClass=this.options.viewClass,delete this.options.viewClass}return t(n,e),n.prototype.getChildViews=function(){var t,e,n,i;if(!this.childViews.length)for(i=this.objectGroup.getObjects(),t=0,e=i.length;e>t;t++)n=i[t],this.findOrCreateCachedChildView(this.viewClass,n,this.options);return this.childViews},n.prototype.createNodes=function(){var t,e,n,i,o,r,s,a,u;for(t=this.createContainerElement(),s=this.getChildViews(),e=0,i=s.length;i>e;e++)for(u=s[e],a=u.getNodes(),n=0,o=a.length;o>n;n++)r=a[n],t.appendChild(r);return[t]},n.prototype.createContainerElement=function(t){return null==t&&(t=this.objectGroup.getDepth()),this.getChildViews()[0].createContainerElement(t)},n}(Trix.ObjectView)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Controller=function(e){function n(){return n.__super__.constructor.apply(this,arguments)}return t(n,e),n}(Trix.BasicObject)}.call(this),function(){var t,e,n,i,o,r=function(t,e){return function(){return t.apply(e,arguments)}},s=function(t,e){function n(){this.constructor=t}for(var i in e)a.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},a={}.hasOwnProperty,u=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=Trix.defer,e=Trix.findClosestElementFromNode,n=Trix.nodeIsEmptyTextNode,i=Trix.normalizeSpaces,o=Trix.summarizeStringChange,Trix.MutationObserver=function(t){function a(t){this.element=t,this.didMutate=r(this.didMutate,this),this.observer=new window.MutationObserver(this.didMutate),this.start()}var c,l,h;return s(a,t),c=\"data-trix-mutable\",l=\"[\"+c+\"]\",h={attributes:!0,childList:!0,characterData:!0,characterDataOldValue:!0,subtree:!0},a.prototype.start=function(){return this.reset(),this.observer.observe(this.element,h)},a.prototype.stop=function(){return this.observer.disconnect()},a.prototype.didMutate=function(t){var e,n;return(e=this.mutations).push.apply(e,this.findSignificantMutations(t)),this.mutations.length?(null!=(n=this.delegate)&&\"function\"==typeof n.elementDidMutate&&n.elementDidMutate(this.getMutationSummary()),this.reset()):void 0},a.prototype.reset=function(){return this.mutations=[]},a.prototype.findSignificantMutations=function(t){var e,n,i,o;for(o=[],e=0,n=t.length;n>e;e++)i=t[e],this.mutationIsSignificant(i)&&o.push(i);return o},a.prototype.mutationIsSignificant=function(t){var e,n,i,o;for(o=this.nodesModifiedByMutation(t),e=0,n=o.length;n>e;e++)if(i=o[e],this.nodeIsSignificant(i))return!0;return!1},a.prototype.nodeIsSignificant=function(t){return null!=t&&t!==this.element&&!this.nodeIsMutable(t)&&!n(t)},a.prototype.nodeIsMutable=function(t){return e(t,{matchingSelector:l})},a.prototype.nodesModifiedByMutation=function(t){var e;switch(e=[],t.type){case\"attributes\":t.attributeName!==c&&e.push(t.target);break;case\"characterData\":e.push(t.target.parentNode),e.push(t.target);break;case\"childList\":e.push.apply(e,t.addedNodes),e.push.apply(e,t.removedNodes)}return e},a.prototype.getMutationSummary=function(){return this.getTextMutationSummary()},a.prototype.getTextMutationSummary=function(){var t,e,n,i,o,r,s,a,c,l,h;for(a=this.getTextChangesFromCharacterData(),n=a.additions,o=a.deletions,h=this.getTextChangesFromTextNodes(),c=h.additions,r=0,s=c.length;s>r;r++)e=c[r],u.call(n,e)<0&&n.push(e);return o.push.apply(o,h.deletions),l={},(t=n.join(\"\"))&&(l.textAdded=t),(i=o.join(\"\"))&&(l.textDeleted=i),l},a.prototype.getMutationsByType=function(t){var e,n,i,o,r;for(o=this.mutations,r=[],e=0,n=o.length;n>e;e++)i=o[e],i.type===t&&r.push(i);return r},a.prototype.getTextChangesFromTextNodes=function(){var t,e,n,o,r,s,a,u,c,l,h,p,d,f;for(l=[],h=[],p=this.getMutationsByType(\"childList\"),t=0,r=p.length;r>t;t++){for(u=p[t],d=u.removedNodes,n=0,s=d.length;s>n;n++)c=d[n],c.nodeType===Node.TEXT_NODE&&h.push(c);for(f=u.addedNodes,o=0,a=f.length;a>o;o++)c=f[o],c.nodeType===Node.TEXT_NODE&&l.push(c)}return{additions:function(){var t,n,o,r;for(r=[],e=t=0,n=l.length;n>t;e=++t)c=l[e],c.data!==(null!=(o=h[e])?o.data:void 0)&&r.push(i(c.data));return r}(),deletions:function(){var t,n,o,r;for(r=[],e=t=0,n=h.length;n>t;e=++t)c=h[e],c.data!==(null!=(o=l[e])?o.data:void 0)&&r.push(i(c.data));return r}()}},a.prototype.getTextChangesFromCharacterData=function(){var t,e,n,r,s,a,u,c;return e=this.getMutationsByType(\"characterData\"),e.length&&(c=e[0],n=e[e.length-1],s=i(c.oldValue),r=i(n.target.data),a=o(s,r),t=a.added,u=a.removed),{additions:t?[t]:[],deletions:u?[u]:[]}},a}(Trix.BasicObject)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.FileVerificationOperation=function(e){function n(t){this.file=t}return t(n,e),n.prototype.perform=function(t){var e;return e=new FileReader,e.onerror=function(){return t(!1)},e.onload=function(n){return function(){e.onerror=null;try{e.abort()}catch(i){}return t(!0,n.file)}}(this),e.readAsArrayBuffer(this.file)},n}(Trix.Operation)}.call(this),function(){var t,e,n,i,o,r,s,a,u,c,l,h,p,d,f,g=function(t,e){function n(){this.constructor=t}for(var i in e)m.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},m={}.hasOwnProperty,y=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};r=Trix.handleEvent,i=Trix.findClosestElementFromNode,o=Trix.findElementFromContainerAndOffset,e=Trix.defer,l=Trix.makeElement,s=Trix.innerElementIsActive,d=Trix.summarizeStringChange,h=Trix.objectsAreEqual,Trix.InputController=function(e){function i(t){var e;this.element=t,this.resetInputSummary(),this.mutationObserver=new Trix.MutationObserver(this.element),this.mutationObserver.delegate=this;for(e in this.events)r(e,{onElement:this.element,withCallback:this.handlerFor(e),inPhase:\"capturing\"})}var o;return g(i,e),o=0,i.keyNames={8:\"backspace\",9:\"tab\",13:\"return\",37:\"left\",39:\"right\",46:\"delete\",68:\"d\",72:\"h\",79:\"o\"},i.prototype.handlerFor=function(t){return function(e){return function(n){return e.handleInput(function(){return s(this.element)?void 0:(this.eventName=t,this.events[t].call(this,n))})}}(this)},i.prototype.setInputSummary=function(t){var e,n;null==t&&(t={}),this.inputSummary.eventName=this.eventName;for(e in t)n=t[e],this.inputSummary[e]=n;return this.inputSummary},i.prototype.resetInputSummary=function(){return this.inputSummary={}},i.prototype.editorWillSyncDocumentView=function(){return this.mutationObserver.stop()},i.prototype.editorDidSyncDocumentView=function(){return this.mutationObserver.start()},i.prototype.requestRender=function(){var t;return null!=(t=this.delegate)&&\"function\"==typeof t.inputControllerDidRequestRender?t.inputControllerDidRequestRender():void 0},i.prototype.elementDidMutate=function(t){return this.inputSummary.composing?void 0:this.handleInput(function(){var e;return this.mutationIsExpected(t)||null!=(e=this.responder)&&e.replaceHTML(this.element.innerHTML),this.resetInputSummary(),this.requestRender(),Trix.selectionChangeObserver.reset()})},i.prototype.mutationIsExpected=function(t){var e,n;return this.inputSummary?null!=this.inputSummary.preferDocument?this.inputSummary.preferDocument:(e=t.textAdded!==this.inputSummary.textAdded,n=null!=t.textDeleted&&!this.inputSummary.didDelete,!(e||n)):void 0},i.prototype.attachFiles=function(t){var e,n;return n=function(){var n,i,o;for(o=[],n=0,i=t.length;i>n;n++)e=t[n],o.push(new Trix.FileVerificationOperation(e));return o}(),Promise.all(n).then(function(t){return function(n){return t.handleInput(function(){var t,i,o,r;for(null!=(o=this.delegate)&&o.inputControllerWillAttachFiles(),t=0,i=n.length;i>t;t++)e=n[t],null!=(r=this.responder)&&r.insertFile(e);return this.requestRender()})}}(this))},i.prototype.events={keydown:function(t){var e,n,i,o,r,s,u,c,l;if(this.inputSummary.composing||this.resetInputSummary(),o=this.constructor.keyNames[t.keyCode]){for(n=this.keys,c=[\"ctrl\",\"alt\",\"shift\",\"meta\"],i=0,s=c.length;s>i;i++)u=c[i],t[u+\"Key\"]&&(\"ctrl\"===u&&(u=\"control\"),n=null!=n?n[u]:void 0);null!=(null!=n?n[o]:void 0)&&(this.setInputSummary({keyName:o}),Trix.selectionChangeObserver.reset(),n[o].call(this,t))}return a(t)&&(e=String.fromCharCode(t.keyCode).toLowerCase())&&(r=function(){var e,n,i,o;for(i=[\"alt\",\"shift\"],o=[],e=0,n=i.length;n>e;e++)u=i[e],t[u+\"Key\"]&&o.push(u);return o}(),r.push(e),null!=(l=this.delegate)?l.inputControllerDidReceiveKeyboardCommand(r):void 0)?t.preventDefault():void 0},keypress:function(t){var e,n,i;if(null==this.inputSummary.eventName&&(!t.metaKey&&!t.ctrlKey||t.altKey)&&!c(t)&&!u(t))return null===t.which?e=String.fromCharCode(t.keyCode):0!==t.which&&0!==t.charCode&&(e=String.fromCharCode(t.charCode)),null!=e?(null!=(n=this.delegate)&&n.inputControllerWillPerformTyping(),null!=(i=this.responder)&&i.insertString(e),this.setInputSummary({textAdded:e,didDelete:this.selectionIsExpanded()})):void 0},dragenter:function(t){return t.preventDefault()},dragstart:function(t){var e,n,i;return i=t.target,this.serializeSelectionToDataTransfer(t.dataTransfer),this.draggedRange=null!=(e=this.responder)?e.getSelectedRange():void 0,null!=(n=this.delegate)&&\"function\"==typeof n.inputControllerDidStartDrag?n.inputControllerDidStartDrag():void 0},dragover:function(t){var e,n;return!this.draggedRange&&!this.canAcceptDataTransfer(t.dataTransfer)||(t.preventDefault(),e={x:t.clientX,y:t.clientY},h(e,this.draggingPoint))?void 0:(this.draggingPoint=e,null!=(n=this.delegate)&&\"function\"==typeof n.inputControllerDidReceiveDragOverPoint?n.inputControllerDidReceiveDragOverPoint(this.draggingPoint):void 0)},dragend:function(){var t;return null!=(t=this.delegate)&&\"function\"==typeof t.inputControllerDidCancelDrag&&t.inputControllerDidCancelDrag(),this.draggedRange=null,this.draggingPoint=null},drop:function(t){var e,n,i,o,r,s,a,u,c;return t.preventDefault(),i=null!=(r=t.dataTransfer)?r.files:void 0,o={x:t.clientX,y:t.clientY},null!=(s=this.responder)&&s.setLocationRangeFromPointRange(o),(null!=i?i.length:void 0)?this.attachFiles(i):this.draggedRange?(null!=(a=this.delegate)&&a.inputControllerWillMoveText(),null!=(u=this.responder)&&u.moveTextFromRange(this.draggedRange),this.draggedRange=null,this.requestRender()):(n=t.dataTransfer.getData(\"application/x-trix-document\"))&&(e=Trix.Document.fromJSONString(n),null!=(c=this.responder)&&c.insertDocument(e),this.requestRender()),this.draggedRange=null,this.draggingPoint=null},cut:function(t){var e;return this.serializeSelectionToDataTransfer(t.clipboardData)&&t.preventDefault(),null!=(e=this.delegate)&&e.inputControllerWillCutText(),this.deleteInDirection(\"backward\"),t.defaultPrevented?this.requestRender():void 0},copy:function(t){return this.serializeSelectionToDataTransfer(t.clipboardData)?t.preventDefault():void 0},paste:function(t){var e,i,r,s,a,u,c,l,h,d,f,g,m,v,b,A,x,T;return s=null!=(u=t.clipboardData)?u:t.testClipboardData,null!=s?(a={paste:s},p(t)?void this.getPastedHTMLUsingHiddenElement(function(t){return function(e){var n,i,o;return a.html=e,null!=(n=t.delegate)&&n.inputControllerWillPasteText(a),null!=(i=t.responder)&&i.insertHTML(e),t.requestRender(),null!=(o=t.delegate)?o.inputControllerDidPaste(a):void 0}}(this)):((r=s.getData(\"text/html\"))?(a.html=r,null!=(c=this.delegate)&&c.inputControllerWillPasteText(a),null!=(d=this.responder)&&d.insertHTML(r),this.requestRender(),null!=(f=this.delegate)&&f.inputControllerDidPaste(a)):(T=s.getData(\"text/plain\"))?(a.string=T,this.setInputSummary({textAdded:T,didDelete:this.selectionIsExpanded()}),null!=(g=this.delegate)&&g.inputControllerWillPasteText(a),null!=(m=this.responder)&&m.insertString(T),this.requestRender(),null!=(v=this.delegate)&&v.inputControllerDidPaste(a)):y.call(s.types,\"Files\")>=0&&(i=null!=(b=s.items)&&null!=(A=b[0])&&\"function\"==typeof A.getAsFile?A.getAsFile():void 0)&&(!i.name&&(e=n(i))&&(i.name=\"pasted-file-\"+ ++o+\".\"+e),a.file=i,null!=(x=this.delegate)&&x.inputControllerWillAttachFiles(),null!=(l=this.responder)&&l.insertFile(i),this.requestRender(),null!=(h=this.delegate)&&h.inputControllerDidPaste(a)),t.preventDefault())):void 0},compositionstart:function(t){var e,n,i,o;return\"keypress\"===this.inputSummary.eventName&&this.inputSummary.textAdded&&null!=(n=this.responder)&&n.deleteInDirection(\"left\"),this.selectionIsExpanded()||(null!=(i=this.responder)&&i.insertPlaceholder(),this.requestRender()),e=null!=(o=this.responder)?o.getSelectedRange():void 0,this.setInputSummary({compositionRange:e,compositionStart:t.data,composing:!0})},compositionupdate:function(t){var e,n,i;return(e=null!=(n=this.responder)?n.selectPlaceholder():void 0)&&(this.setInputSummary({compositionRange:e}),null!=(i=this.responder)&&i.forgetPlaceholder()),this.setInputSummary({compositionUpdate:t.data})},compositionend:function(t){var e,n,i,o,r,s,a;return i=this.inputSummary,n=i.compositionStart,e=i.compositionRange,null!=n&&null!=e&&(null!=(o=this.delegate)&&o.inputControllerWillPerformTyping(),null!=(r=this.responder)&&r.setSelectedRange(e),null!=(s=this.responder)&&s.insertString(t.data),this.setInputSummary({preferDocument:!0})),null!=(a=this.responder)&&a.forgetPlaceholder(),this.setInputSummary({composing:!1})},input:function(t){return t.stopPropagation()}},i.prototype.keys={backspace:function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection(\"backward\",t)},\"delete\":function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection(\"forward\",t)},\"return\":function(){var t,e;return this.setInputSummary({preferDocument:!0}),null!=(t=this.delegate)&&t.inputControllerWillPerformTyping(),null!=(e=this.responder)?e.insertLineBreak():void 0},tab:function(t){var e,n;return(null!=(e=this.responder)?e.canIncreaseBlockAttributeLevel():void 0)?(null!=(n=this.responder)&&n.increaseBlockAttributeLevel(),this.requestRender(),t.preventDefault()):void 0},left:function(t){var e;return this.selectionIsInCursorTarget()?(t.preventDefault(),null!=(e=this.responder)?e.moveCursorInDirection(\"backward\"):void 0):void 0},right:function(t){var e;return this.selectionIsInCursorTarget()?(t.preventDefault(),null!=(e=this.responder)?e.moveCursorInDirection(\"forward\"):void 0):void 0},control:{d:function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection(\"forward\",t)},h:function(t){var e;return null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),this.deleteInDirection(\"backward\",t)},o:function(t){var e,n;return t.preventDefault(),null!=(e=this.delegate)&&e.inputControllerWillPerformTyping(),null!=(n=this.responder)&&n.insertString(\"\\n\",{updatePosition:!1}),this.requestRender()}},shift:{\"return\":function(){var t,e;return null!=(t=this.delegate)&&t.inputControllerWillPerformTyping(),null!=(e=this.responder)?e.insertString(\"\\n\"):void 0},tab:function(t){var e,n;return(null!=(e=this.responder)?e.canDecreaseBlockAttributeLevel():void 0)?(null!=(n=this.responder)&&n.decreaseBlockAttributeLevel(),this.requestRender(),t.preventDefault()):void 0},left:function(t){return this.selectionIsInCursorTarget()?(t.preventDefault(),this.expandSelectionInDirection(\"backward\")):void 0},right:function(t){return this.selectionIsInCursorTarget()?(t.preventDefault(),this.expandSelectionInDirection(\"forward\")):void 0}},alt:{backspace:function(){var t;return this.setInputSummary({preferDocument:!1}),null!=(t=this.delegate)?t.inputControllerWillPerformTyping():void 0}},meta:{backspace:function(){var t;return this.setInputSummary({preferDocument:!1}),null!=(t=this.delegate)?t.inputControllerWillPerformTyping():void 0}}},i.prototype.handleInput=function(t){var e,n;try{return null!=(e=this.delegate)&&e.inputControllerWillHandleInput(),t.call(this)}finally{null!=(n=this.delegate)&&n.inputControllerDidHandleInput()}},i.prototype.deleteInDirection=function(t,e){var n;return(null!=(n=this.responder)?n.deleteInDirection(t):void 0)!==!1?this.setInputSummary({didDelete:!0}):e?(e.preventDefault(),this.requestRender()):void 0},i.prototype.serializeSelectionToDataTransfer=function(e){var n,i;if(t(e))return n=null!=(i=this.responder)?i.getSelectedDocument().toSerializableDocument():void 0,e.setData(\"application/x-trix-document\",JSON.stringify(n)),e.setData(\"text/html\",Trix.DocumentView.render(n).innerHTML),e.setData(\"text/plain\",n.toString().replace(/\\n$/,\"\")),!0},i.prototype.canAcceptDataTransfer=function(t){var e,n,i,o,r,s;for(s={},o=null!=(i=null!=t?t.types:void 0)?i:[],e=0,n=o.length;n>e;e++)r=o[e],s[r]=!0;return s.Files||s[\"application/x-trix-document\"]||s[\"text/html\"]||s[\"text/plain\"]},i.prototype.getPastedHTMLUsingHiddenElement=function(t){var e,n,i,o;return i=null!=(n=this.responder)?n.getSelectedRange():void 0,o={position:\"absolute\",left:window.pageXOffset+\"px\",top:window.pageYOffset+\"px\",opacity:0},e=l({style:o,tagName:\"div\",editable:!0}),document.body.appendChild(e),e.focus(),requestAnimationFrame(function(n){return function(){var o,r;return o=e.innerHTML,document.body.removeChild(e),null!=(r=n.responder)&&r.setSelectedRange(i),t(o)}}(this))},i.proxyMethod(\"responder?.expandSelectionInDirection\"),i.proxyMethod(\"responder?.selectionIsInCursorTarget\"),i.proxyMethod(\"responder?.selectionIsExpanded\"),i}(Trix.BasicObject),n=function(t){var e,n;return null!=(e=t.type)&&null!=(n=e.match(/\\/(\\w+)$/))?n[1]:void 0},c=function(t){return t.metaKey&&t.altKey&&!t.shiftKey&&94===t.keyCode},u=function(t){return t.metaKey&&t.altKey&&t.shiftKey&&9674===t.keyCode},a=function(t){return/Mac|^iP/.test(navigator.platform)?t.metaKey:t.ctrlKey},p=function(t){var e,n;return(n=null!=(e=t.clipboardData)?e.types:void 0)?y.call(n,\"text/html\")<0&&(y.call(n,\"com.apple.webarchive\")>=0||y.call(n,\"com.apple.flat-rtfd\")>=0):void 0},f={\"application/x-trix-feature-detection\":\"test\"},t=function(t){var e,n;if(null!=(null!=t?t.setData:void 0)){for(e in f)if(n=f[e],t.setData(e,n),t.getData(e)!==n)return;return!0}}}.call(this),function(){var t,e,n,i,o,r,s=function(t,e){return function(){return t.apply(e,arguments)}},a=function(t,e){function n(){this.constructor=t}for(var i in e)u.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},u={}.hasOwnProperty;e=Trix.handleEvent,o=Trix.makeElement,r=Trix.tagName,n=Trix.InputController.keyNames,i=Trix.config.lang,t=Trix.config.css.classNames,Trix.AttachmentEditorController=function(u){function c(t,e,n){this.attachmentPiece=t,this.element=e,this.container=n,this.uninstall=s(this.uninstall,this),this.didKeyDownCaption=s(this.didKeyDownCaption,this),this.didChangeCaption=s(this.didChangeCaption,this),this.didClickCaption=s(this.didClickCaption,this),this.didClickRemoveButton=s(this.didClickRemoveButton,this),this.attachment=this.attachmentPiece.attachment,\"a\"===r(this.element)&&(this.element=this.element.firstChild),this.install()}var l;return a(c,u),l=function(t){return function(){var e;return e=t.apply(this,arguments),e[\"do\"](),null==this.undos&&(this.undos=[]),this.undos.push(e.undo)}},c.prototype.install=function(){return this.makeElementMutable(),this.attachment.isPreviewable()&&this.makeCaptionEditable(),this.addRemoveButton()},c.prototype.makeElementMutable=l(function(){return{\"do\":function(t){return function(){return t.element.dataset.trixMutable=!0}}(this),undo:function(t){return function(){return delete t.element.dataset.trixMutable}}(this)}}),c.prototype.makeCaptionEditable=l(function(){var t,n;return t=this.element.querySelector(\"figcaption\"),n=null,{\"do\":function(i){return function(){return n=e(\"click\",{onElement:t,withCallback:i.didClickCaption,inPhase:\"capturing\"})}}(this),undo:function(){return function(){return n.destroy()}}(this)}}),c.prototype.addRemoveButton=l(function(){var n;return n=o({tagName:\"a\",textContent:i.remove,className:t.attachment.removeButton,attributes:{href:\"#\",title:i.remove}}),e(\"click\",{onElement:n,withCallback:this.didClickRemoveButton}),{\"do\":function(t){return function(){return t.element.appendChild(n)}}(this),undo:function(t){return function(){return t.element.removeChild(n)}}(this)}}),c.prototype.editCaption=l(function(){var n,r,s,a,u;return a=o({tagName:\"textarea\",className:t.attachment.captionEditor,attributes:{placeholder:i.captionPlaceholder}}),a.value=this.attachmentPiece.getCaption(),u=a.cloneNode(),u.classList.add(\"trix-autoresize-clone\"),n=function(){return u.value=a.value,a.style.height=u.scrollHeight+\"px\"},e(\"input\",{onElement:a,withCallback:n}),e(\"keydown\",{onElement:a,withCallback:this.didKeyDownCaption}),e(\"change\",{onElement:a,withCallback:this.didChangeCaption}),e(\"blur\",{onElement:a,withCallback:this.uninstall}),s=this.element.querySelector(\"figcaption\"),r=s.cloneNode(),{\"do\":function(){return s.style.display=\"none\",r.appendChild(a),r.appendChild(u),r.classList.add(t.attachment.editingCaption),s.parentElement.insertBefore(r,s),n(),a.focus()},undo:function(){return r.parentNode.removeChild(r),s.style.display=null}}}),c.prototype.didClickRemoveButton=function(t){var e;return t.preventDefault(),t.stopPropagation(),null!=(e=this.delegate)?e.attachmentEditorDidRequestRemovalOfAttachment(this.attachment):void 0},c.prototype.didClickCaption=function(t){return t.preventDefault(),this.editCaption()},c.prototype.didChangeCaption=function(t){var e,n,i;return e=t.target.value.replace(/\\s/g,\" \").trim(),e?null!=(n=this.delegate)&&\"function\"==typeof n.attachmentEditorDidRequestUpdatingAttributesForAttachment?n.attachmentEditorDidRequestUpdatingAttributesForAttachment({caption:e},this.attachment):void 0:null!=(i=this.delegate)&&\"function\"==typeof i.attachmentEditorDidRequestRemovingAttributeForAttachment?i.attachmentEditorDidRequestRemovingAttributeForAttachment(\"caption\",this.attachment):void 0},c.prototype.didKeyDownCaption=function(t){var e;return\"return\"===n[t.keyCode]?(t.preventDefault(),this.didChangeCaption(t),null!=(e=this.delegate)&&\"function\"==typeof e.attachmentEditorDidRequestDeselectingAttachment?e.attachmentEditorDidRequestDeselectingAttachment(this.attachment):void 0):void 0},c.prototype.uninstall=function(){for(var t,e;e=this.undos.pop();)e();return null!=(t=this.delegate)?t.didUninstallAttachmentEditor(this):void 0},c}(Trix.BasicObject)}.call(this),function(){var t,e,n,i,o=function(t,e){function n(){this.constructor=t}for(var i in e)r.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty;n=Trix.makeElement,i=Trix.selectionElements,t=Trix.config.css.classNames,Trix.AttachmentView=function(r){function s(){s.__super__.constructor.apply(this,arguments),this.attachment=this.object,this.attachment.uploadProgressDelegate=this,this.attachmentPiece=this.options.piece\n}return o(s,r),s.attachmentSelector=\"[data-trix-attachment]\",s.prototype.createContentNodes=function(){return[]},s.prototype.createNodes=function(){var e,o,r,s,a,u,c,l,h,p,d;if(s=n({tagName:\"figure\",className:this.getClassName()}),this.attachment.hasContent())s.innerHTML=this.attachment.getContent();else for(p=this.createContentNodes(),u=0,l=p.length;l>u;u++)h=p[u],s.appendChild(h);s.appendChild(this.createCaptionElement()),o={trixAttachment:JSON.stringify(this.attachment),trixContentType:this.attachment.getContentType(),trixId:this.attachment.id},e=this.attachmentPiece.getAttributesForAttachment(),e.isEmpty()||(o.trixAttributes=JSON.stringify(e)),this.attachment.isPending()&&(this.progressElement=n({tagName:\"progress\",attributes:{\"class\":t.attachment.progressBar,value:this.attachment.getUploadProgress(),max:100},data:{trixMutable:!0,trixStoreKey:this.attachment.getCacheKey(\"progressElement\")}}),s.appendChild(this.progressElement),o.trixSerialize=!1),(a=this.getHref())?(r=n(\"a\",{href:a}),r.appendChild(s)):r=s;for(c in o)d=o[c],r.dataset[c]=d;return r.setAttribute(\"contenteditable\",!1),[i.create(\"cursorTarget\"),r,i.create(\"cursorTarget\")]},s.prototype.createCaptionElement=function(){var e,i,o,r,s;return i=n({tagName:\"figcaption\",className:t.attachment.caption}),(e=this.attachmentPiece.getCaption())?(i.classList.add(t.attachment.captionEdited),i.textContent=e):(o=this.attachment.getFilename())&&(i.textContent=o,(r=this.attachment.getFormattedFilesize())&&(i.appendChild(document.createTextNode(\" \")),s=n({tagName:\"span\",className:t.attachment.size,textContent:r}),i.appendChild(s))),i},s.prototype.getClassName=function(){var e,n;return n=[t.attachment.container,\"\"+t.attachment.typePrefix+this.attachment.getType()],(e=this.attachment.getExtension())&&n.push(e),n.join(\" \")},s.prototype.getHref=function(){return e(this.attachment.getContent(),\"a\")?void 0:this.attachment.getHref()},s.prototype.findProgressElement=function(){var t;return null!=(t=this.findElement())?t.querySelector(\"progress\"):void 0},s.prototype.attachmentDidChangeUploadProgress=function(){var t,e;return e=this.attachment.getUploadProgress(),null!=(t=this.findProgressElement())?t.value=e:void 0},s}(Trix.ObjectView),e=function(t,e){var i;return i=n(\"div\"),i.innerHTML=null!=t?t:\"\",i.querySelector(e)}}.call(this),function(){var t,e,n,i=function(t,e){function n(){this.constructor=t}for(var i in e)o.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},o={}.hasOwnProperty;t=Trix.defer,e=Trix.makeElement,n=Trix.measureElement,Trix.PreviewableAttachmentView=function(t){function n(){n.__super__.constructor.apply(this,arguments),this.attachment.previewDelegate=this}return i(n,t),n.prototype.createContentNodes=function(){return this.image=e({tagName:\"img\",attributes:{src:\"\"},data:{trixMutable:!0,trixStoreKey:this.attachment.getCacheKey(\"imageElement\")}}),this.refresh(this.image),[this.image]},n.prototype.refresh=function(t){var e;return null==t&&(t=null!=(e=this.findElement())?e.querySelector(\"img\"):void 0),t?this.updateAttributesForImage(t):void 0},n.prototype.updateAttributesForImage=function(t){var e,n,i,o,r;return o=this.attachment.getURL(),n=this.attachment.getPreloadedURL(),t.src=n||o,n===o?t.removeAttribute(\"data-trix-serialized-attributes\"):(i=JSON.stringify({src:o}),t.setAttribute(\"data-trix-serialized-attributes\",i)),r=this.attachment.getWidth(),e=this.attachment.getHeight(),null!=r&&(t.width=r),null!=e?t.height=e:void 0},n.prototype.attachmentDidPreload=function(){return this.refresh(this.image),this.refresh()},n}(Trix.AttachmentView)}.call(this),function(){var t,e,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;e=Trix.makeElement,t=Trix.findInnerElement,Trix.PieceView=function(i){function o(){o.__super__.constructor.apply(this,arguments),this.piece=this.object,this.attributes=this.piece.getAttributes(),this.textConfig=this.options.textConfig,this.piece.attachment?this.attachment=this.piece.attachment:this.string=this.piece.toString()}var r;return n(o,i),o.prototype.createNodes=function(){var e,n,i,o,r,s;if(s=this.attachment?this.createAttachmentNodes():this.createStringNodes(),e=this.createElement()){for(i=t(e),n=0,o=s.length;o>n;n++)r=s[n],i.appendChild(r);s=[e]}return s},o.prototype.createAttachmentNodes=function(){var t,e;return t=this.attachment.isPreviewable()?Trix.PreviewableAttachmentView:Trix.AttachmentView,e=this.createChildView(t,this.piece.attachment,{piece:this.piece}),e.getNodes()},o.prototype.createStringNodes=function(){var t,n,i,o,s,a,u,c,l,h;if(null!=(c=this.textConfig)?c.plaintext:void 0)return[document.createTextNode(this.string)];for(u=[],l=this.string.split(\"\\n\"),i=n=0,o=l.length;o>n;i=++n)h=l[i],i>0&&(t=e(\"br\"),u.push(t)),(s=h.length)&&(a=document.createTextNode(r(h)),u.push(a));return u},o.prototype.createElement=function(){var t,n,i,o,r,s,a,u;for(o in this.attributes)if((t=Trix.config.textAttributes[o])&&(t.tagName&&(r=e(t.tagName),i?(i.appendChild(r),i=r):n=i=r),t.style))if(a){s=t.style;for(o in s)u=s[o],a[o]=u}else a=t.style;if(a){null==n&&(n=e(\"span\"));for(o in a)u=a[o],n.style[o]=u}return n},o.prototype.createContainerElement=function(){var t,n,i,o,r;o=this.attributes;for(i in o)if(r=o[i],(n=Trix.config.textAttributes[i])&&n.groupTagName)return t={},t[i]=r,e(n.groupTagName,t)},r=function(t){var e;return e=Trix.NON_BREAKING_SPACE,t.replace(/\\ $/,e).replace(/(\\S)\\ {3}(\\S)/g,\"$1 \"+e+\" $2\").replace(/\\ {2}/g,e+\" \").replace(/\\ {2}/g,\" \"+e).replace(/^\\ /,e)},o}(Trix.ObjectView)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.TextView=function(e){function n(){n.__super__.constructor.apply(this,arguments),this.text=this.object,this.textConfig=this.options.textConfig}return t(n,e),n.prototype.createNodes=function(){var t,e,n,i,o,r,s,a;for(n=[],s=function(){var t,e,n,i;for(n=this.text.getPieces(),i=[],t=0,e=n.length;e>t;t++)r=n[t],r.hasAttribute(\"blockBreak\")||i.push(r);return i}.call(this),o=Trix.ObjectGroup.groupObjects(s),t=0,e=o.length;e>t;t++)i=o[t],a=this.findOrCreateCachedChildView(Trix.PieceView,i,{textConfig:this.textConfig}),n.push.apply(n,a.getNodes());return n},n}(Trix.ObjectView)}.call(this),function(){var t,e=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;t=Trix.makeElement,Trix.BlockView=function(n){function i(){i.__super__.constructor.apply(this,arguments),this.block=this.object,this.attributes=this.block.getAttributes()}return e(i,n),i.prototype.createNodes=function(){var e,n,i,o,r,s,a,u,c;if(e=document.createComment(\"block\"),s=[e],this.block.isEmpty()?s.push(t(\"br\")):(u=null!=(a=Trix.config.blockAttributes[this.block.getLastAttribute()])?a.text:void 0,c=this.findOrCreateCachedChildView(Trix.TextView,this.block.text,{textConfig:u}),s.push.apply(s,c.getNodes()),this.shouldAddExtraNewlineElement()&&s.push(t(\"br\"))),this.attributes.length)return s;for(n=t(Trix.config.blockAttributes[\"default\"].tagName),i=0,o=s.length;o>i;i++)r=s[i],n.appendChild(r);return[n]},i.prototype.createContainerElement=function(e){var n,i;return n=this.attributes[e],i=Trix.config.blockAttributes[n],t(i.tagName)},i.prototype.shouldAddExtraNewlineElement=function(){return/\\n\\n$/.test(this.block.toString())},i}(Trix.ObjectView)}.call(this),function(){var t,e,n=function(t,e){function n(){this.constructor=t}for(var o in e)i.call(e,o)&&(t[o]=e[o]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},i={}.hasOwnProperty;t=Trix.defer,e=Trix.makeElement,Trix.DocumentView=function(i){function o(){o.__super__.constructor.apply(this,arguments),this.element=this.options.element,this.elementStore=new Trix.ElementStore,this.setDocument(this.object)}var r,s,a;return n(o,i),o.render=function(t){var n,i;return n=e(\"div\"),i=new this(t,{element:n}),i.render(),i.sync(),n},o.prototype.setDocument=function(t){return t.isEqualTo(this.document)?void 0:this.document=this.object=t},o.prototype.render=function(){var t,n,i,o,r,s,a;if(this.childViews=[],this.shadowElement=e(\"div\"),!this.document.isEmpty()){for(r=Trix.ObjectGroup.groupObjects(this.document.getBlocks(),{asTree:!0}),s=[],t=0,n=r.length;n>t;t++)o=r[t],a=this.findOrCreateCachedChildView(Trix.BlockView,o),s.push(function(){var t,e,n,o;for(n=a.getNodes(),o=[],t=0,e=n.length;e>t;t++)i=n[t],o.push(this.shadowElement.appendChild(i));return o}.call(this));return s}},o.prototype.isSynced=function(){return r(this.shadowElement,this.element)},o.prototype.sync=function(){var t;for(t=this.createDocumentFragmentForSync();this.element.lastChild;)this.element.removeChild(this.element.lastChild);return this.element.appendChild(t),this.didSync()},o.prototype.didSync=function(){return this.elementStore.reset(s(this.element)),t(function(t){return function(){return t.garbageCollectCachedViews()}}(this))},o.prototype.createDocumentFragmentForSync=function(){var t,e,n,i,o,r,a,u,c,l;for(e=document.createDocumentFragment(),u=this.shadowElement.childNodes,n=0,o=u.length;o>n;n++)a=u[n],e.appendChild(a.cloneNode(!0));for(c=s(e),i=0,r=c.length;r>i;i++)t=c[i],(l=this.elementStore.remove(t))&&t.parentNode.replaceChild(l,t);return e},s=function(t){return t.querySelectorAll(\"[data-trix-store-key]\")},r=function(t,e){return a(t.innerHTML)===a(e.innerHTML)},a=function(t){return t.replace(/&nbsp;/g,\" \")},o}(Trix.ObjectView)}.call(this),function(){var t,e,n,i,o,r,s=function(t,e){return function(){return t.apply(e,arguments)}},a=function(t,e){function n(){this.constructor=t}for(var i in e)u.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},u={}.hasOwnProperty;i=Trix.handleEvent,r=Trix.tagName,n=Trix.findClosestElementFromNode,o=Trix.innerElementIsActive,e=Trix.defer,t=Trix.AttachmentView.attachmentSelector,Trix.CompositionController=function(n){function r(e,n){this.element=e,this.composition=n,this.didClickAttachment=s(this.didClickAttachment,this),this.didBlur=s(this.didBlur,this),this.didFocus=s(this.didFocus,this),this.documentView=new Trix.DocumentView(this.composition.document,{element:this.element}),i(\"focus\",{onElement:this.element,withCallback:this.didFocus}),i(\"blur\",{onElement:this.element,withCallback:this.didBlur}),i(\"click\",{onElement:this.element,matchingSelector:\"a[contenteditable=false]\",preventDefault:!0}),i(\"mousedown\",{onElement:this.element,matchingSelector:t,withCallback:this.didClickAttachment}),i(\"click\",{onElement:this.element,matchingSelector:\"a\"+t,preventDefault:!0})}return a(r,n),r.prototype.didFocus=function(){var t;return this.focused?void 0:(this.focused=!0,null!=(t=this.delegate)&&\"function\"==typeof t.compositionControllerDidFocus?t.compositionControllerDidFocus():void 0)},r.prototype.didBlur=function(){return e(function(t){return function(){var e;return o(t.element)?void 0:(t.focused=null,null!=(e=t.delegate)&&\"function\"==typeof e.compositionControllerDidBlur?e.compositionControllerDidBlur():void 0)}}(this))},r.prototype.didClickAttachment=function(t,e){var n,i;return n=this.findAttachmentForElement(e),null!=(i=this.delegate)&&\"function\"==typeof i.compositionControllerDidSelectAttachment?i.compositionControllerDidSelectAttachment(n):void 0},r.prototype.render=function(){var t,e,n;return this.revision!==this.composition.revision&&(this.documentView.setDocument(this.composition.document),this.documentView.render(),this.revision=this.composition.revision),this.documentView.isSynced()||(null!=(t=this.delegate)&&\"function\"==typeof t.compositionControllerWillSyncDocumentView&&t.compositionControllerWillSyncDocumentView(),this.documentView.sync(),this.reinstallAttachmentEditor(),null!=(e=this.delegate)&&\"function\"==typeof e.compositionControllerDidSyncDocumentView&&e.compositionControllerDidSyncDocumentView()),null!=(n=this.delegate)&&\"function\"==typeof n.compositionControllerDidRender?n.compositionControllerDidRender():void 0},r.prototype.rerenderViewForObject=function(t){return this.documentView.invalidateViewForObject(t),this.render()},r.prototype.isViewCachingEnabled=function(){return this.documentView.isViewCachingEnabled()},r.prototype.enableViewCaching=function(){return this.documentView.enableViewCaching()},r.prototype.disableViewCaching=function(){return this.documentView.disableViewCaching()},r.prototype.refreshViewCache=function(){return this.documentView.garbageCollectCachedViews()},r.prototype.installAttachmentEditorForAttachment=function(t){var e,n,i;if((null!=(i=this.attachmentEditor)?i.attachment:void 0)!==t&&(n=this.documentView.findElementForObject(t)))return this.uninstallAttachmentEditor(),e=this.composition.document.getAttachmentPieceForAttachment(t),this.attachmentEditor=new Trix.AttachmentEditorController(e,n,this.element),this.attachmentEditor.delegate=this},r.prototype.uninstallAttachmentEditor=function(){var t;return null!=(t=this.attachmentEditor)?t.uninstall():void 0},r.prototype.reinstallAttachmentEditor=function(){var t;return this.attachmentEditor?(t=this.attachmentEditor.attachment,this.uninstallAttachmentEditor(),this.installAttachmentEditorForAttachment(t)):void 0},r.prototype.editAttachmentCaption=function(){var t;return null!=(t=this.attachmentEditor)?t.editCaption():void 0},r.prototype.didUninstallAttachmentEditor=function(){return this.attachmentEditor=null,this.render()},r.prototype.attachmentEditorDidRequestUpdatingAttributesForAttachment=function(t,e){var n;return null!=(n=this.delegate)&&\"function\"==typeof n.compositionControllerWillUpdateAttachment&&n.compositionControllerWillUpdateAttachment(e),this.composition.updateAttributesForAttachment(t,e)},r.prototype.attachmentEditorDidRequestRemovingAttributeForAttachment=function(t,e){var n;return null!=(n=this.delegate)&&\"function\"==typeof n.compositionControllerWillUpdateAttachment&&n.compositionControllerWillUpdateAttachment(e),this.composition.removeAttributeForAttachment(t,e)},r.prototype.attachmentEditorDidRequestRemovalOfAttachment=function(t){var e;return null!=(e=this.delegate)&&\"function\"==typeof e.compositionControllerDidRequestRemovalOfAttachment?e.compositionControllerDidRequestRemovalOfAttachment(t):void 0},r.prototype.attachmentEditorDidRequestDeselectingAttachment=function(t){var e;return null!=(e=this.delegate)&&\"function\"==typeof e.compositionControllerDidRequestDeselectingAttachment?e.compositionControllerDidRequestDeselectingAttachment(t):void 0},r.prototype.findAttachmentForElement=function(t){return this.composition.document.getAttachmentById(parseInt(t.dataset.trixId,10))},r}(Trix.BasicObject)}.call(this),function(){var t,e,n,i=function(t,e){return function(){return t.apply(e,arguments)}},o=function(t,e){function n(){this.constructor=t}for(var i in e)r.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},r={}.hasOwnProperty;e=Trix.handleEvent,n=Trix.triggerEvent,t=Trix.findClosestElementFromNode,Trix.ToolbarController=function(r){function s(t){this.element=t,this.didKeyDownDialogInput=i(this.didKeyDownDialogInput,this),this.didClickDialogButton=i(this.didClickDialogButton,this),this.didClickAttributeButton=i(this.didClickAttributeButton,this),this.didClickActionButton=i(this.didClickActionButton,this),this.attributes={},this.actions={},this.resetDialogInputs(),e(\"mousedown\",{onElement:this.element,matchingSelector:a,withCallback:this.didClickActionButton}),e(\"mousedown\",{onElement:this.element,matchingSelector:c,withCallback:this.didClickAttributeButton}),e(\"click\",{onElement:this.element,matchingSelector:y,preventDefault:!0}),e(\"click\",{onElement:this.element,matchingSelector:l,withCallback:this.didClickDialogButton}),e(\"keydown\",{onElement:this.element,matchingSelector:h,withCallback:this.didKeyDownDialogInput})}var a,u,c,l,h,p,d,f,g,m,y;return o(s,r),a=\"button[data-action]\",c=\"button[data-attribute]\",y=[a,c].join(\", \"),p=\".dialog[data-dialog]\",u=p+\".active\",l=p+\" input[data-method]\",h=p+\" input[type=text], \"+p+\" input[type=url]\",s.prototype.didClickActionButton=function(t,e){var n,i,o;return null!=(i=this.delegate)&&i.toolbarDidClickButton(),t.preventDefault(),n=d(e),this.getDialog(n)?this.toggleDialog(n):null!=(o=this.delegate)?o.toolbarDidInvokeAction(n):void 0},s.prototype.didClickAttributeButton=function(t,e){var n,i,o;return null!=(i=this.delegate)&&i.toolbarDidClickButton(),t.preventDefault(),n=f(e),this.getDialog(n)?this.toggleDialog(n):null!=(o=this.delegate)&&o.toolbarDidToggleAttribute(n),this.refreshAttributeButtons()},s.prototype.didClickDialogButton=function(e,n){var i,o;return i=t(n,{matchingSelector:p}),o=n.getAttribute(\"data-method\"),this[o].call(this,i)},s.prototype.didKeyDownDialogInput=function(t,e){var n,i;return 13===t.keyCode&&(t.preventDefault(),n=e.getAttribute(\"name\"),i=this.getDialog(n),this.setAttribute(i)),27===t.keyCode?(t.preventDefault(),this.hideDialog()):void 0},s.prototype.updateActions=function(t){return this.actions=t,this.refreshActionButtons()},s.prototype.refreshActionButtons=function(){return this.eachActionButton(function(t){return function(e,n){return e.disabled=t.actions[n]===!1}}(this))},s.prototype.eachActionButton=function(t){var e,n,i,o,r;for(o=this.element.querySelectorAll(a),r=[],n=0,i=o.length;i>n;n++)e=o[n],r.push(t(e,d(e)));return r},s.prototype.updateAttributes=function(t){return this.attributes=t,this.refreshAttributeButtons()},s.prototype.refreshAttributeButtons=function(){return this.eachAttributeButton(function(t){return function(e,n){return t.attributes[n]||t.dialogIsVisible(n)?e.classList.add(\"active\"):e.classList.remove(\"active\")}}(this))},s.prototype.eachAttributeButton=function(t){var e,n,i,o,r;for(o=this.element.querySelectorAll(c),r=[],n=0,i=o.length;i>n;n++)e=o[n],r.push(t(e,f(e)));return r},s.prototype.applyKeyboardCommand=function(t){var e,i,o,r,s,a,u;for(s=JSON.stringify(t.sort()),u=this.element.querySelectorAll(\"[data-key]\"),r=0,a=u.length;a>r;r++)if(e=u[r],o=e.getAttribute(\"data-key\").split(\"+\"),i=JSON.stringify(o.sort()),i===s)return n(\"mousedown\",{onElement:e}),!0;return!1},s.prototype.dialogIsVisible=function(t){var e;return(e=this.getDialog(t))?e.classList.contains(\"active\"):void 0},s.prototype.toggleDialog=function(t){return this.dialogIsVisible(t)?this.hideDialog():this.showDialog(t)},s.prototype.showDialog=function(t){var e,n,i,o,r,s;return this.hideDialog(),null!=(o=this.delegate)&&o.toolbarWillShowDialog(),n=this.getDialog(t),n.classList.add(\"active\"),(e=f(n))&&(i=m(n,t))&&(i.removeAttribute(\"disabled\"),i.value=null!=(r=this.attributes[e])?r:\"\",i.select()),null!=(s=this.delegate)?s.toolbarDidShowDialog(t):void 0},s.prototype.setAttribute=function(t){var e,n,i;return e=f(t),n=m(t,e),n.willValidate&&!n.checkValidity()?(n.classList.add(\"validate\"),n.focus()):(null!=(i=this.delegate)&&i.toolbarDidUpdateAttribute(e,n.value),this.hideDialog())},s.prototype.removeAttribute=function(t){var e,n;return e=f(t),null!=(n=this.delegate)&&n.toolbarDidRemoveAttribute(e),this.hideDialog()},s.prototype.hideDialog=function(){var t,e;return(t=this.element.querySelector(u))?(t.classList.remove(\"active\"),this.resetDialogInputs(),null!=(e=this.delegate)?e.toolbarDidHideDialog(g(t)):void 0):void 0},s.prototype.resetDialogInputs=function(){var t,e,n,i,o;for(i=this.element.querySelectorAll(h),o=[],t=0,n=i.length;n>t;t++)e=i[t],e.setAttribute(\"disabled\",\"disabled\"),o.push(e.classList.remove(\"validate\"));return o},s.prototype.getDialog=function(t){return this.element.querySelector(\".dialog[data-dialog=\"+t+\"]\")},m=function(t,e){return null==e&&(e=f(t)),t.querySelector(\"input[name='\"+e+\"']\")},d=function(t){return t.getAttribute(\"data-action\")},f=function(t){return t.getAttribute(\"data-attribute\")},g=function(t){return t.getAttribute(\"data-dialog\")},s}(Trix.BasicObject)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.ImagePreloadOperation=function(e){function n(t){this.url=t}return t(n,e),n.prototype.perform=function(t){var e;return e=new Image,e.onload=function(n){return function(){return e.width=n.width=e.naturalWidth,e.height=n.height=e.naturalHeight,t(!0,e)}}(this),e.onerror=function(){return t(!1)},e.src=this.url},n}(Trix.Operation)}.call(this),function(){var t=function(t,e){return function(){return t.apply(e,arguments)}},e=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty;Trix.Attachment=function(n){function i(e){null==e&&(e={}),this.releaseFile=t(this.releaseFile,this),i.__super__.constructor.apply(this,arguments),this.attributes=Trix.Hash.box(e),this.didChangeAttributes()}return e(i,n),i.previewablePattern=/^image(\\/(gif|png|jpe?g)|$)/,i.attachmentForFile=function(t){var e,n;return n=this.attributesForFile(t),e=new this(n),e.setFile(t),e},i.attributesForFile=function(t){return new Trix.Hash({filename:t.name,filesize:t.size,contentType:t.type})},i.fromJSON=function(t){return new this(t)},i.prototype.getAttribute=function(t){return this.attributes.get(t)},i.prototype.hasAttribute=function(t){return this.attributes.has(t)},i.prototype.getAttributes=function(){return this.attributes.toObject()},i.prototype.setAttributes=function(t){var e,n;return null==t&&(t={}),e=this.attributes.merge(t),this.attributes.isEqualTo(e)?void 0:(this.attributes=e,this.didChangeAttributes(),null!=(n=this.delegate)&&\"function\"==typeof n.attachmentDidChangeAttributes?n.attachmentDidChangeAttributes(this):void 0)},i.prototype.didChangeAttributes=function(){return this.isPreviewable()?this.preloadURL():void 0},i.prototype.isPending=function(){return null!=this.file&&!(this.getURL()||this.getHref())},i.prototype.isPreviewable=function(){return this.attributes.has(\"previewable\")?this.attributes.get(\"previewable\"):this.constructor.previewablePattern.test(this.getContentType())},i.prototype.getType=function(){return this.hasContent()?\"content\":this.isPreviewable()?\"preview\":\"file\"},i.prototype.getURL=function(){return this.attributes.get(\"url\")},i.prototype.getHref=function(){return this.attributes.get(\"href\")},i.prototype.getFilename=function(){var t;return null!=(t=this.attributes.get(\"filename\"))?t:\"\"},i.prototype.getFilesize=function(){return this.attributes.get(\"filesize\")},i.prototype.getFormattedFilesize=function(){var t;return t=this.attributes.get(\"filesize\"),\"number\"==typeof t?Trix.config.fileSize.formatter(t):\"\"},i.prototype.getExtension=function(){var t;return null!=(t=this.getFilename().match(/\\.(\\w+)$/))?t[1].toLowerCase():void 0},i.prototype.getContentType=function(){return this.attributes.get(\"contentType\")},i.prototype.hasContent=function(){return this.attributes.has(\"content\")},i.prototype.getContent=function(){return this.attributes.get(\"content\")},i.prototype.getWidth=function(){return this.attributes.get(\"width\")},i.prototype.getHeight=function(){return this.attributes.get(\"height\")},i.prototype.getFile=function(){return this.file},i.prototype.setFile=function(t){return this.file=t,this.isPreviewable()?this.preloadFile():void 0},i.prototype.releaseFile=function(){return this.releasePreloadedFile(),this.file=null},i.prototype.getUploadProgress=function(){var t;return null!=(t=this.uploadProgress)?t:0},i.prototype.setUploadProgress=function(t){var e;return this.uploadProgress!==t?(this.uploadProgress=t,null!=(e=this.uploadProgressDelegate)&&\"function\"==typeof e.attachmentDidChangeUploadProgress?e.attachmentDidChangeUploadProgress(this):void 0):void 0},i.prototype.toJSON=function(){return this.getAttributes()},i.prototype.getCacheKey=function(t){var e;return e=[i.__super__.getCacheKey.apply(this,arguments),this.attributes.getCacheKey(),this.getPreloadedURL()],t&&e.unshift(t),e.join(\"/\")},i.prototype.getPreloadedURL=function(){return this.preloadedURL},i.prototype.preloadURL=function(){return this.preload(this.getURL(),this.releaseFile)},i.prototype.preloadFile=function(){return this.file?(this.fileObjectURL=URL.createObjectURL(this.file),this.preload(this.fileObjectURL)):void 0},i.prototype.releasePreloadedFile=function(){return this.fileObjectURL?(URL.revokeObjectURL(this.fileObjectURL),this.fileObjectURL=null):void 0},i.prototype.preload=function(t,e){var n;return t&&t!==this.preloadedURL?(null==this.preloadedURL&&(this.preloadedURL=t),n=new Trix.ImagePreloadOperation(t),n.then(function(n){return function(i){var o,r,s;return s=i.width,o=i.height,n.preloadedURL=t,n.setAttributes({width:s,height:o}),null!=(r=n.previewDelegate)&&\"function\"==typeof r.attachmentDidPreload&&r.attachmentDidPreload(),\"function\"==typeof e?e():void 0}}(this))):void 0},i}(Trix.Object)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Piece=function(e){function n(t,e){null==e&&(e={}),n.__super__.constructor.apply(this,arguments),this.attributes=Trix.Hash.box(e)}return t(n,e),n.types={},n.registerType=function(t,e){return e.type=t,this.types[t]=e},n.fromJSON=function(t){var e;return(e=this.types[t.type])?e.fromJSON(t):void 0},n.prototype.copyWithAttributes=function(t){return new this.constructor(this.getValue(),t)},n.prototype.copyWithAdditionalAttributes=function(t){return this.copyWithAttributes(this.attributes.merge(t))},n.prototype.copyWithoutAttribute=function(t){return this.copyWithAttributes(this.attributes.remove(t))},n.prototype.copy=function(){return this.copyWithAttributes(this.attributes)},n.prototype.getAttribute=function(t){return this.attributes.get(t)},n.prototype.getAttributesHash=function(){return this.attributes},n.prototype.getAttributes=function(){return this.attributes.toObject()},n.prototype.getCommonAttributes=function(){var t,e,n;return(n=pieceList.getPieceAtIndex(0))?(t=n.attributes,e=t.getKeys(),pieceList.eachPiece(function(n){return e=t.getKeysCommonToHash(n.attributes),t=t.slice(e)}),t.toObject()):{}},n.prototype.hasAttribute=function(t){return this.attributes.has(t)},n.prototype.hasSameStringValueAsPiece=function(t){return null!=t&&this.toString()===t.toString()},n.prototype.hasSameAttributesAsPiece=function(t){return null!=t&&(this.attributes===t.attributes||this.attributes.isEqualTo(t.attributes))},n.prototype.isBlockBreak=function(){return!1},n.prototype.isEqualTo=function(t){return n.__super__.isEqualTo.apply(this,arguments)||this.hasSameConstructorAs(t)&&this.hasSameStringValueAsPiece(t)&&this.hasSameAttributesAsPiece(t)},n.prototype.isEmpty=function(){return 0===this.length},n.prototype.isSerializable=function(){return!0},n.prototype.toJSON=function(){return{type:this.constructor.type,attributes:this.getAttributes()}},n.prototype.contentsForInspection=function(){return{type:this.constructor.type,attributes:this.attributes.inspect()}},n.prototype.canBeGrouped=function(){return this.hasAttribute(\"href\")},n.prototype.canBeGroupedWith=function(t){return this.getAttribute(\"href\")===t.getAttribute(\"href\")},n.prototype.getLength=function(){return this.length},n.prototype.canBeConsolidatedWith=function(){return!1},n}(Trix.Object)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Piece.registerType(\"attachment\",Trix.AttachmentPiece=function(e){function n(t){this.attachment=t,n.__super__.constructor.apply(this,arguments),this.length=1,this.ensureAttachmentExclusivelyHasAttribute(\"href\")}return t(n,e),n.fromJSON=function(t){return new this(Trix.Attachment.fromJSON(t.attachment),t.attributes)},n.prototype.ensureAttachmentExclusivelyHasAttribute=function(t){return this.hasAttribute(t)&&this.attachment.hasAttribute(t)?this.attributes=this.attributes.remove(t):void 0},n.prototype.getValue=function(){return this.attachment},n.prototype.isSerializable=function(){return!this.attachment.isPending()},n.prototype.getCaption=function(){var t;return null!=(t=this.attributes.get(\"caption\"))?t:\"\"},n.prototype.getAttributesForAttachment=function(){return this.attributes.slice([\"caption\"])},n.prototype.canBeGrouped=function(){return n.__super__.canBeGrouped.apply(this,arguments)&&!this.attachment.hasAttribute(\"href\")},n.prototype.isEqualTo=function(t){var e;return n.__super__.isEqualTo.apply(this,arguments)&&this.attachment.id===(null!=t&&null!=(e=t.attachment)?e.id:void 0)},n.prototype.toString=function(){return Trix.OBJECT_REPLACEMENT_CHARACTER},n.prototype.toJSON=function(){var t;return t=n.__super__.toJSON.apply(this,arguments),t.attachment=this.attachment,t},n.prototype.getCacheKey=function(){return[n.__super__.getCacheKey.apply(this,arguments),this.attachment.getCacheKey()].join(\"/\")},n.prototype.toConsole=function(){return JSON.stringify(this.toString())},n}(Trix.Piece))}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Piece.registerType(\"string\",Trix.StringPiece=function(e){function n(t){n.__super__.constructor.apply(this,arguments),this.string=t,this.length=this.string.length}return t(n,e),n.fromJSON=function(t){return new this(t.string,t.attributes)},n.prototype.getValue=function(){return this.string},n.prototype.toString=function(){return this.string.toString()},n.prototype.isBlockBreak=function(){return\"\\n\"===this.toString()&&this.getAttribute(\"blockBreak\")===!0},n.prototype.toJSON=function(){var t;return t=n.__super__.toJSON.apply(this,arguments),t.string=this.string,t},n.prototype.canBeConsolidatedWith=function(t){return null!=t&&this.hasSameConstructorAs(t)&&this.hasSameAttributesAsPiece(t)},n.prototype.consolidateWith=function(t){return new this.constructor(this.toString()+t.toString(),this.attributes)},n.prototype.splitAtOffset=function(t){var e,n;return 0===t?(e=null,n=this):t===this.length?(e=this,n=null):(e=new this.constructor(this.string.slice(0,t),this.attributes),n=new this.constructor(this.string.slice(t),this.attributes)),[e,n]},n.prototype.toConsole=function(){var t;return t=this.string,t.length>15&&(t=t.slice(0,14)+\"\\u2026\"),JSON.stringify(t.toString())},n}(Trix.Piece))}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty,n=[].slice;Trix.SplittableList=function(e){function i(t){null==t&&(t=[]),i.__super__.constructor.apply(this,arguments),this.objects=t.slice(0),this.length=this.objects.length}var o,r,s;return t(i,e),i.box=function(t){return t instanceof this?t:new this(t)},i.prototype.eachObject=function(t){var e,n,i,o,r,s;for(r=this.objects,s=[],n=e=0,i=r.length;i>e;n=++e)o=r[n],s.push(t(o,n));return s},i.prototype.insertObjectAtIndex=function(t,e){var n;return n=this.objects.slice(0),n.splice(e,0,t),new this.constructor(n)},i.prototype.insertSplittableListAtIndex=function(t,e){var i;return i=this.objects.slice(0),i.splice.apply(i,[e,0].concat(n.call(t.objects))),new this.constructor(i)},i.prototype.insertSplittableListAtPosition=function(t,e){var n,i,o;return o=this.splitObjectAtPosition(e),i=o[0],n=o[1],new this.constructor(i).insertSplittableListAtIndex(t,n)},i.prototype.editObjectAtIndex=function(t,e){return this.replaceObjectAtIndex(e(this.objects[t]),t)},i.prototype.replaceObjectAtIndex=function(t,e){var n;return n=this.objects.slice(0),n.splice(e,1,t),new this.constructor(n)},i.prototype.removeObjectAtIndex=function(t){var e;return e=this.objects.slice(0),e.splice(t,1),new this.constructor(e)},i.prototype.getObjectAtIndex=function(t){return this.objects[t]},i.prototype.getSplittableListInRange=function(t){var e,n,i,o;return i=this.splitObjectsAtRange(t),n=i[0],e=i[1],o=i[2],new this.constructor(n.slice(e,o+1))},i.prototype.selectSplittableList=function(t){var e,n;return n=function(){var n,i,o,r;for(o=this.objects,r=[],n=0,i=o.length;i>n;n++)e=o[n],t(e)&&r.push(e);return r}.call(this),new this.constructor(n)},i.prototype.removeObjectsInRange=function(t){var e,n,i,o;return i=this.splitObjectsAtRange(t),n=i[0],e=i[1],o=i[2],n.splice(e,o-e+1),new this.constructor(n)},i.prototype.transformObjectsInRange=function(t,e){var n,i,o,r,s,a,u;return s=this.splitObjectsAtRange(t),r=s[0],i=s[1],a=s[2],u=function(){var t,s,u;for(u=[],n=t=0,s=r.length;s>t;n=++t)o=r[n],u.push(n>=i&&a>=n?e(o):o);\nreturn u}(),new this.constructor(u)},i.prototype.splitObjectsAtRange=function(t){var e,n,i,r,a,u;return r=this.splitObjectAtPosition(s(t)),n=r[0],e=r[1],i=r[2],a=new this.constructor(n).splitObjectAtPosition(o(t)+i),n=a[0],u=a[1],[n,e,u-1]},i.prototype.getObjectAtPosition=function(t){var e,n,i;return i=this.findIndexAndOffsetAtPosition(t),e=i.index,n=i.offset,this.objects[e]},i.prototype.splitObjectAtPosition=function(t){var e,n,i,o,r,s,a,u,c,l;return s=this.findIndexAndOffsetAtPosition(t),e=s.index,r=s.offset,o=this.objects.slice(0),null!=e?0===r?(c=e,l=0):(i=this.getObjectAtIndex(e),a=i.splitAtOffset(r),n=a[0],u=a[1],o.splice(e,1,n,u),c=e+1,l=n.getLength()-r):(c=o.length,l=0),[o,c,l]},i.prototype.consolidate=function(){var t,e,n,i,o,r;for(i=[],o=this.objects[0],r=this.objects.slice(1),t=0,e=r.length;e>t;t++)n=r[t],(\"function\"==typeof o.canBeConsolidatedWith?o.canBeConsolidatedWith(n):void 0)?o=o.consolidateWith(n):(i.push(o),o=n);return null!=o&&i.push(o),new this.constructor(i)},i.prototype.consolidateFromIndexToIndex=function(t,e){var i,o,r;return o=this.objects.slice(0),r=o.slice(t,e+1),i=new this.constructor(r).consolidate().toArray(),o.splice.apply(o,[t,r.length].concat(n.call(i))),new this.constructor(o)},i.prototype.findIndexAndOffsetAtPosition=function(t){var e,n,i,o,r,s,a;for(e=0,a=this.objects,i=n=0,o=a.length;o>n;i=++n){if(s=a[i],r=e+s.getLength(),t>=e&&r>t)return{index:i,offset:t-e};e=r}return{index:null,offset:null}},i.prototype.findPositionAtIndexAndOffset=function(t,e){var n,i,o,r,s,a;for(s=0,a=this.objects,n=i=0,o=a.length;o>i;n=++i)if(r=a[n],t>n)s+=r.getLength();else if(n===t){s+=e;break}return s},i.prototype.getEndPosition=function(){var t,e;return null!=this.endPosition?this.endPosition:this.endPosition=function(){var n,i,o;for(e=0,o=this.objects,n=0,i=o.length;i>n;n++)t=o[n],e+=t.getLength();return e}.call(this)},i.prototype.toString=function(){return this.objects.join(\"\")},i.prototype.toArray=function(){return this.objects.slice(0)},i.prototype.toJSON=function(){return this.toArray()},i.prototype.isEqualTo=function(t){return i.__super__.isEqualTo.apply(this,arguments)||r(this.objects,null!=t?t.objects:void 0)},r=function(t,e){var n,i,o,r,s;if(null==e&&(e=[]),t.length!==e.length)return!1;for(s=!0,i=n=0,o=t.length;o>n;i=++n)r=t[i],s&&!r.isEqualTo(e[i])&&(s=!1);return s},i.prototype.contentsForInspection=function(){var t;return{objects:\"[\"+function(){var e,n,i,o;for(i=this.objects,o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(t.inspect());return o}.call(this).join(\", \")+\"]\"}},s=function(t){return t[0]},o=function(t){return t[1]},i}(Trix.Object)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.Text=function(e){function n(t){var e;null==t&&(t=[]),n.__super__.constructor.apply(this,arguments),this.pieceList=new Trix.SplittableList(function(){var n,i,o;for(o=[],n=0,i=t.length;i>n;n++)e=t[n],e.isEmpty()||o.push(e);return o}())}return t(n,e),n.textForAttachmentWithAttributes=function(t,e){var n;return n=new Trix.AttachmentPiece(t,e),new this([n])},n.textForStringWithAttributes=function(t,e){var n;return n=new Trix.StringPiece(t,e),new this([n])},n.fromJSON=function(t){var e,n;return n=function(){var n,i,o;for(o=[],n=0,i=t.length;i>n;n++)e=t[n],o.push(Trix.Piece.fromJSON(e));return o}(),new this(n)},n.prototype.copy=function(){return this.copyWithPieceList(this.pieceList)},n.prototype.copyWithPieceList=function(t){return new this.constructor(t.consolidate().toArray())},n.prototype.copyUsingObjectMap=function(t){var e,n;return n=function(){var n,i,o,r,s;for(o=this.getPieces(),s=[],n=0,i=o.length;i>n;n++)e=o[n],s.push(null!=(r=t.find(e))?r:e);return s}.call(this),new this.constructor(n)},n.prototype.appendText=function(t){return this.insertTextAtPosition(t,this.getLength())},n.prototype.insertTextAtPosition=function(t,e){return this.copyWithPieceList(this.pieceList.insertSplittableListAtPosition(t.pieceList,e))},n.prototype.removeTextAtRange=function(t){return this.copyWithPieceList(this.pieceList.removeObjectsInRange(t))},n.prototype.replaceTextAtRange=function(t,e){return this.removeTextAtRange(e).insertTextAtPosition(t,e[0])},n.prototype.moveTextFromRangeToPosition=function(t,e){var n,i;if(!(t[0]<=e&&e<=t[1]))return i=this.getTextAtRange(t),n=i.getLength(),t[0]<e&&(e-=n),this.removeTextAtRange(t).insertTextAtPosition(i,e)},n.prototype.addAttributeAtRange=function(t,e,n){var i;return i={},i[t]=e,this.addAttributesAtRange(i,n)},n.prototype.addAttributesAtRange=function(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,function(e){return e.copyWithAdditionalAttributes(t)}))},n.prototype.removeAttributeAtRange=function(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,function(e){return e.copyWithoutAttribute(t)}))},n.prototype.setAttributesAtRange=function(t,e){return this.copyWithPieceList(this.pieceList.transformObjectsInRange(e,function(e){return e.copyWithAttributes(t)}))},n.prototype.getAttributesAtPosition=function(t){var e,n;return null!=(e=null!=(n=this.pieceList.getObjectAtPosition(t))?n.getAttributes():void 0)?e:{}},n.prototype.getCommonAttributes=function(){var t,e;return t=function(){var t,n,i,o;for(i=this.pieceList.toArray(),o=[],t=0,n=i.length;n>t;t++)e=i[t],o.push(e.getAttributes());return o}.call(this),Trix.Hash.fromCommonAttributesOfObjects(t).toObject()},n.prototype.getCommonAttributesAtRange=function(t){var e;return null!=(e=this.getTextAtRange(t).getCommonAttributes())?e:{}},n.prototype.getExpandedRangeForAttributeAtOffset=function(t,e){var n,i,o;for(n=o=e,i=this.getLength();n>0&&this.getCommonAttributesAtRange([n-1,o])[t];)n--;for(;i>o&&this.getCommonAttributesAtRange([e,o+1])[t];)o++;return[n,o]},n.prototype.getTextAtRange=function(t){return this.copyWithPieceList(this.pieceList.getSplittableListInRange(t))},n.prototype.getStringAtRange=function(t){return this.pieceList.getSplittableListInRange(t).toString()},n.prototype.startsWithString=function(t){return this.getStringAtRange([0,t.length])===t},n.prototype.endsWithString=function(t){var e;return e=this.getLength(),this.getStringAtRange([e-t.length,e])===t},n.prototype.getAttachmentPieces=function(){var t,e,n,i,o;for(i=this.pieceList.toArray(),o=[],t=0,e=i.length;e>t;t++)n=i[t],null!=n.attachment&&o.push(n);return o},n.prototype.getAttachments=function(){var t,e,n,i,o;for(i=this.getAttachmentPieces(),o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.attachment);return o},n.prototype.getAttachmentAndPositionById=function(t){var e,n,i,o,r,s;for(o=0,r=this.pieceList.toArray(),e=0,n=r.length;n>e;e++){if(i=r[e],(null!=(s=i.attachment)?s.id:void 0)===t)return{attachment:i.attachment,position:o};o+=i.length}return{attachment:null,position:null}},n.prototype.getAttachmentById=function(t){var e,n,i;return i=this.getAttachmentAndPositionById(t),e=i.attachment,n=i.position,e},n.prototype.getRangeOfAttachment=function(t){var e,n;return n=this.getAttachmentAndPositionById(t.id),t=n.attachment,e=n.position,null!=t?[e,e+1]:void 0},n.prototype.updateAttributesForAttachment=function(t,e){var n;return(n=this.getRangeOfAttachment(e))?this.addAttributesAtRange(t,n):this},n.prototype.getLength=function(){return this.pieceList.getEndPosition()},n.prototype.isEmpty=function(){return 0===this.getLength()},n.prototype.isEqualTo=function(t){var e;return n.__super__.isEqualTo.apply(this,arguments)||(null!=t&&null!=(e=t.pieceList)?e.isEqualTo(this.pieceList):void 0)},n.prototype.isBlockBreak=function(){return 1===this.getLength()&&this.pieceList.getObjectAtIndex(0).isBlockBreak()},n.prototype.eachPiece=function(t){return this.pieceList.eachObject(t)},n.prototype.getPieces=function(){return this.pieceList.toArray()},n.prototype.getPieceAtPosition=function(t){return this.pieceList.getObjectAtPosition(t)},n.prototype.contentsForInspection=function(){return{pieceList:this.pieceList.inspect()}},n.prototype.toSerializableText=function(){var t;return t=this.pieceList.selectSplittableList(function(t){return t.isSerializable()}),this.copyWithPieceList(t)},n.prototype.toString=function(){return this.pieceList.toString()},n.prototype.toJSON=function(){return this.pieceList.toJSON()},n.prototype.toConsole=function(){var t;return JSON.stringify(function(){var e,n,i,o;for(i=this.pieceList.toArray(),o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(JSON.parse(t.toConsole()));return o}.call(this))},n}(Trix.Object)}.call(this),function(){var t,e=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty,i=[].slice;t=Trix.arraysAreEqual,Trix.Block=function(n){function o(t,e){null==t&&(t=new Trix.Text),null==e&&(e=[]),o.__super__.constructor.apply(this,arguments),this.text=s(t),this.attributes=e}var r,s,a,u,c,l,h,p;return e(o,n),o.fromJSON=function(t){var e;return e=Trix.Text.fromJSON(t.text),new this(e,t.attributes)},o.prototype.isEmpty=function(){return this.text.isBlockBreak()},o.prototype.isEqualTo=function(e){return o.__super__.isEqualTo.apply(this,arguments)||this.text.isEqualTo(null!=e?e.text:void 0)&&t(this.attributes,null!=e?e.attributes:void 0)},o.prototype.copyWithText=function(t){return new this.constructor(t,this.attributes)},o.prototype.copyWithoutText=function(){return this.copyWithText(null)},o.prototype.copyWithAttributes=function(t){return new this.constructor(this.text,t)},o.prototype.copyUsingObjectMap=function(t){var e;return this.copyWithText((e=t.find(this.text))?e:this.text.copyUsingObjectMap(t))},o.prototype.addAttribute=function(t){var e,n;return n=Trix.config.blockAttributes[t].listAttribute,e=this.attributes.concat(n?[n,t]:[t]),this.copyWithAttributes(e)},o.prototype.removeAttribute=function(t){var e,n;return n=Trix.config.blockAttributes[t].listAttribute,e=c(this.attributes,t),null!=n&&(e=c(e,n)),this.copyWithAttributes(e)},o.prototype.removeLastAttribute=function(){return this.removeAttribute(this.getLastAttribute())},o.prototype.getLastAttribute=function(){return u(this.attributes)},o.prototype.getAttributes=function(){return this.attributes.slice(0)},o.prototype.getAttributeLevel=function(){return this.attributes.length},o.prototype.getAttributeAtLevel=function(t){return this.attributes[t-1]},o.prototype.hasAttributes=function(){return this.getAttributeLevel()>0},o.prototype.getConfig=function(t){var e,n;if((e=this.getLastAttribute())&&(n=Trix.config.blockAttributes[e]))return t?n[t]:n},o.prototype.isListItem=function(){return null!=this.getConfig(\"listAttribute\")},o.prototype.findLineBreakInDirectionFromPosition=function(t,e){var n,i;return i=this.toString(),n=function(){switch(t){case\"forward\":return i.indexOf(\"\\n\",e);case\"backward\":return i.slice(0,e).lastIndexOf(\"\\n\")}}(),-1!==n?n:void 0},o.prototype.contentsForInspection=function(){return{text:this.text.inspect(),attributes:this.attributes}},o.prototype.toString=function(){return this.text.toString()},o.prototype.toJSON=function(){return{text:this.text,attributes:this.attributes}},o.prototype.getLength=function(){return this.text.getLength()},o.prototype.canBeConsolidatedWith=function(t){return!this.hasAttributes()&&!t.hasAttributes()},o.prototype.consolidateWith=function(t){var e,n;return e=Trix.Text.textForStringWithAttributes(\"\\n\"),n=this.getTextWithoutBlockBreak().appendText(e),this.copyWithText(n.appendText(t.text))},o.prototype.splitAtOffset=function(t){var e,n;return 0===t?(e=null,n=this):t===this.getLength()?(e=this,n=null):(e=this.copyWithText(this.text.getTextAtRange([0,t])),n=this.copyWithText(this.text.getTextAtRange([t,this.getLength()]))),[e,n]},o.prototype.toString=function(){return this.text.toString()},o.prototype.getBlockBreakPosition=function(){return this.text.getLength()-1},o.prototype.getTextWithoutBlockBreak=function(){return l(this.text)?this.text.getTextAtRange([0,this.getBlockBreakPosition()]):this.text.copy()},o.prototype.canBeGrouped=function(t){return this.attributes[t]},o.prototype.canBeGroupedWith=function(t,e){var n,i,o,r;return n=this.attributes,i=t.getAttributes(),n[e]===i[e]?\"bullet\"!==(o=n[e])&&\"number\"!==o||\"bulletList\"===(r=i[e+1])||\"numberList\"===r?!0:!1:void 0},s=function(t){return t=p(t),t=r(t)},p=function(t){var e,n,o,r,s,a;return r=!1,a=t.getPieces(),n=2<=a.length?i.call(a,0,e=a.length-1):(e=0,[]),o=a[e++],null==o?t:(n=function(){var t,e,i;for(i=[],t=0,e=n.length;e>t;t++)s=n[t],s.isBlockBreak()?(r=!0,i.push(h(s))):i.push(s);return i}(),r?new Trix.Text(i.call(n).concat([o])):t)},a=Trix.Text.textForStringWithAttributes(\"\\n\",{blockBreak:!0}),r=function(t){return l(t)?t:t.appendText(a)},l=function(t){var e,n;return n=t.getLength(),0===n?!1:(e=t.getTextAtRange([n-1,n]),e.isBlockBreak())},h=function(t){return t.copyWithoutAttribute(\"blockBreak\")},c=function(t,e){return u(t)===e?t.slice(0,-1):t},u=function(t){return t.slice(-1)[0]},o}(Trix.Object)}.call(this),function(){var t,e,n,i,o,r,s,a,u=function(t,e){function n(){this.constructor=t}for(var i in e)c.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},c={}.hasOwnProperty,l=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1},h=[].slice;t=Trix.arraysAreEqual,r=Trix.normalizeSpaces,i=Trix.makeElement,s=Trix.tagName,a=Trix.walkTree,n=Trix.findClosestElementFromNode,e=Trix.elementContainsNode,o=Trix.nodeIsAttachmentElement,Trix.HTMLParser=function(c){function p(t,e){this.html=t,this.referenceElement=(null!=e?e:{}).referenceElement,this.blocks=[],this.blockElements=[],this.processedElements=[]}var d,f,g,m,y,v,b,A,x,T;return u(p,c),d=\"style href src width height class\".split(\" \"),p.parse=function(t,e){var n;return n=new this(t,e),n.parse(),n},p.prototype.getDocument=function(){return Trix.Document.fromJSON(this.blocks)},p.prototype.parse=function(){var t,e;try{for(this.createHiddenContainer(),t=T(this.html),this.containerElement.innerHTML=t,e=a(this.containerElement,{usingFilter:v});e.nextNode();)this.processNode(e.currentNode);return this.translateBlockElementMarginsToNewlines()}finally{this.removeHiddenContainer()}},v=function(t){return\"style\"===s(t)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},p.prototype.createHiddenContainer=function(){return this.referenceElement?(this.containerElement=this.referenceElement.cloneNode(!1),this.containerElement.removeAttribute(\"id\"),this.containerElement.setAttribute(\"data-trix-internal\",\"\"),this.containerElement.style.display=\"none\",this.referenceElement.parentNode.insertBefore(this.containerElement,this.referenceElement.nextSibling)):(this.containerElement=i({tagName:\"div\",style:{display:\"none\"}}),document.body.appendChild(this.containerElement))},p.prototype.removeHiddenContainer=function(){return this.containerElement.parentNode.removeChild(this.containerElement)},p.prototype.processNode=function(t){switch(t.nodeType){case Node.TEXT_NODE:return this.processTextNode(t);case Node.ELEMENT_NODE:return this.appendBlockForElement(t),this.processElement(t)}},p.prototype.appendBlockForElement=function(n){var i,o;if(this.isBlockElement(n)&&!this.isBlockElement(n.firstChild)){if(i=this.getBlockAttributes(n),!e(this.currentBlockElement,n)||!t(i,this.currentBlock.attributes))return this.currentBlock=this.appendBlockForAttributesWithElement(i,n),this.currentBlockElement=n}else if(this.currentBlockElement&&!e(this.currentBlockElement,n)&&!this.isBlockElement(n))return(o=this.findParentBlockElement(n))?this.appendBlockForElement(o):(this.currentBlock=this.appendEmptyBlock(),this.currentBlockElement=null)},p.prototype.findParentBlockElement=function(t){var e;for(e=t.parentElement;e&&e!==this.containerElement;){if(this.isBlockElement(e)&&l.call(this.blockElements,e)>=0)return e;e=e.parentElement}return null},p.prototype.isExtraBR=function(t){return\"br\"===s(t)&&this.isBlockElement(t.parentNode)&&t.parentNode.lastChild===t},p.prototype.isBlockElement=function(t){var e;if((null!=t?t.nodeType:void 0)===Node.ELEMENT_NODE&&!n(t,{matchingSelector:\"td\"}))return e=s(t),l.call(this.getBlockTagNames(),e)>=0||\"block\"===window.getComputedStyle(t).display},p.prototype.getBlockTagNames=function(){var t,e;return null!=this.blockTagNames?this.blockTagNames:this.blockTagNames=function(){var n,i;n=Trix.config.blockAttributes,i=[];for(t in n)e=n[t],i.push(e.tagName);return i}()},p.prototype.processTextNode=function(t){var e;return(e=r(t.data))?this.appendStringWithAttributes(e,this.getTextAttributes(t.parentNode)):void 0},p.prototype.processElement=function(t){var e,n,i,r,a;if(o(t))return e=g(t),Object.keys(e).length&&(r=this.getTextAttributes(t),this.appendAttachmentWithAttributes(e,r),t.innerHTML=\"\"),this.processedElements.push(t);switch(s(t)){case\"br\":return this.isExtraBR(t)||this.isBlockElement(t.nextSibling)||this.appendStringWithAttributes(\"\\n\",this.getTextAttributes(t)),this.processedElements.push(t);case\"img\":e={url:t.getAttribute(\"src\"),contentType:\"image\"},i=y(t);for(n in i)a=i[n],e[n]=a;return this.appendAttachmentWithAttributes(e,this.getTextAttributes(t)),this.processedElements.push(t);case\"tr\":if(t.parentNode.firstChild!==t)return this.appendStringWithAttributes(\"\\n\");break;case\"td\":if(t.parentNode.firstChild!==t)return this.appendStringWithAttributes(\" | \")}},p.prototype.appendBlockForAttributesWithElement=function(t,e){var n;return this.blockElements.push(e),n=f(t),this.blocks.push(n),n},p.prototype.appendEmptyBlock=function(){return this.appendBlockForAttributesWithElement([],null)},p.prototype.appendStringWithAttributes=function(t,e){return this.appendPiece(A(t,e))},p.prototype.appendAttachmentWithAttributes=function(t,e){return this.appendPiece(b(t,e))},p.prototype.appendPiece=function(t){return 0===this.blocks.length&&this.appendEmptyBlock(),this.blocks[this.blocks.length-1].text.push(t)},p.prototype.appendStringToTextAtIndex=function(t,e){var n,i;return i=this.blocks[e].text,n=i[i.length-1],\"string\"===(null!=n?n.type:void 0)?n.string+=t:i.push(A(t))},p.prototype.prependStringToTextAtIndex=function(t,e){var n,i;return i=this.blocks[e].text,n=i[0],\"string\"===(null!=n?n.type:void 0)?n.string=t+n.string:i.unshift(A(t))},p.prototype.getTextAttributes=function(t){var e,n,i,r,a,u,c,l;n={},u=Trix.config.textAttributes;for(e in u)i=u[e],i.parser?(l=i.parser(t))&&(n[e]=l):i.tagName&&s(t)===i.tagName&&(n[e]=!0);if(o(t)&&(r=t.dataset.trixAttributes)){c=JSON.parse(r);for(a in c)l=c[a],n[a]=l}return n},p.prototype.getBlockAttributes=function(t){var e,n,i,o;for(n=[];t&&t!==this.containerElement;){o=Trix.config.blockAttributes;for(e in o)i=o[e],i.parse!==!1&&s(t)===i.tagName&&((\"function\"==typeof i.test?i.test(t):void 0)||!i.test)&&(n.push(e),i.listAttribute&&n.push(i.listAttribute));t=t.parentNode}return n.reverse()},p.prototype.getMarginOfBlockElementAtIndex=function(t){var e,n;return!(e=this.blockElements[t])||(n=s(e),l.call(this.getBlockTagNames(),n)>=0||l.call(this.processedElements,e)>=0)?void 0:m(e)},p.prototype.getMarginOfDefaultBlockElement=function(){var t;return t=i(Trix.config.blockAttributes[\"default\"].tagName),this.containerElement.appendChild(t),m(t)},p.prototype.translateBlockElementMarginsToNewlines=function(){var t,e,n,i,o,r,s,a;for(e=this.getMarginOfDefaultBlockElement(),s=this.blocks,a=[],i=n=0,o=s.length;o>n;i=++n)t=s[i],(r=this.getMarginOfBlockElementAtIndex(i))&&(r.top>2*e.top&&this.prependStringToTextAtIndex(\"\\n\",i),a.push(r.bottom>2*e.bottom?this.appendStringToTextAtIndex(\"\\n\",i):void 0));return a},A=function(t,e){var n;return null==e&&(e={}),n=\"string\",{string:t,attributes:e,type:n}},b=function(t,e){var n;return null==e&&(e={}),n=\"attachment\",{attachment:t,attributes:e,type:n}},f=function(t){var e;return null==t&&(t={}),e=[],{text:e,attributes:t}},g=function(t){return JSON.parse(t.dataset.trixAttachment)},T=function(t){var e,n,i,o,r,s,u,c,p,f,g,m,y,v,b,A,T;for(t=x(t),n=document.implementation.createHTMLDocument(\"\"),n.documentElement.innerHTML=t,e=n.body,o=n.head,v=o.querySelectorAll(\"style\"),r=0,c=v.length;c>r;r++)A=v[r],e.appendChild(A);for(y=[],T=a(e);T.nextNode();)switch(m=T.currentNode,m.nodeType){case Node.ELEMENT_NODE:for(i=m,b=h.call(i.attributes),s=0,p=b.length;p>s;s++)g=b[s].name,l.call(d,g)>=0||0===g.indexOf(\"data-trix\")||i.removeAttribute(g);break;case Node.COMMENT_NODE:y.push(m);break;case Node.TEXT_NODE:m.data.match(/^\\s*$/)&&m.parentNode===e&&y.push(m)}for(u=0,f=y.length;f>u;u++)m=y[u],m.parentNode.removeChild(m);return e.innerHTML},x=function(t){return t.replace(/>\\n+</g,\"><\").replace(/>\\ +</g,\"> <\")},m=function(t){var e;return e=window.getComputedStyle(t),\"block\"===e.display?{top:parseInt(e.marginTop),bottom:parseInt(e.marginBottom)}:void 0},y=function(t){var e,n,i;return i=t.getAttribute(\"width\"),n=t.getAttribute(\"height\"),e={},i&&(e.width=parseInt(i,10)),n&&(e.height=parseInt(n,10)),e},p}(Trix.BasicObject)}.call(this),function(){var t,e,n,i=function(t,e){function n(){this.constructor=t}for(var i in e)o.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},o={}.hasOwnProperty,r=[].slice,s=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};t=Trix.arraysAreEqual,e=Trix.normalizeRange,n=Trix.rangeIsCollapsed,Trix.Document=function(o){function a(t){null==t&&(t=[]),a.__super__.constructor.apply(this,arguments),0===t.length&&(t=[new Trix.Block]),this.blockList=Trix.SplittableList.box(t)}var u;return i(a,o),a.fromJSON=function(t){var e,n;return n=function(){var n,i,o;for(o=[],n=0,i=t.length;i>n;n++)e=t[n],o.push(Trix.Block.fromJSON(e));return o}(),new this(n)},a.fromHTML=function(t,e){return Trix.HTMLParser.parse(t,e).getDocument()},a.fromString=function(t,e){var n;return n=Trix.Text.textForStringWithAttributes(t,e),new this([new Trix.Block(n)])},a.prototype.isEmpty=function(){var t;return 1===this.blockList.length&&(t=this.getBlockAtIndex(0),t.isEmpty()&&!t.hasAttributes())},a.prototype.copy=function(t){var e;return null==t&&(t={}),e=t.consolidateBlocks?this.blockList.consolidate().toArray():this.blockList.toArray(),new this.constructor(e)},a.prototype.copyUsingObjectsFromDocument=function(t){var e;return e=new Trix.ObjectMap(t.getObjects()),this.copyUsingObjectMap(e)},a.prototype.copyUsingObjectMap=function(t){var e,n,i;return n=function(){var n,o,r,s;for(r=this.getBlocks(),s=[],n=0,o=r.length;o>n;n++)e=r[n],s.push((i=t.find(e))?i:e.copyUsingObjectMap(t));return s}.call(this),new this.constructor(n)},a.prototype.copyWithBaseBlockAttributes=function(t){var e,n,i;return null==t&&(t=[]),i=function(){var i,o,r,s;for(r=this.getBlocks(),s=[],i=0,o=r.length;o>i;i++)n=r[i],e=t.concat(n.getAttributes()),s.push(n.copyWithAttributes(e));return s}.call(this),new this.constructor(i)},a.prototype.insertDocumentAtRange=function(t,i){var o,r,s,a,u,c,l;return r=t.blockList,u=(i=e(i))[0],c=this.locationFromPosition(u),s=c.index,a=c.offset,l=this,o=this.getBlockAtPosition(u),n(i)&&o.isEmpty()&&!o.hasAttributes()?l=new this.constructor(l.blockList.removeObjectAtIndex(s)):o.getBlockBreakPosition()===a&&u++,l=l.removeTextAtRange(i),new this.constructor(l.blockList.insertSplittableListAtPosition(r,u))},a.prototype.mergeDocumentAtRange=function(n,i){var o,r,s,a,u,c,l,h,p,d,f,g;return f=(i=e(i))[0],d=this.locationFromPosition(f),r=this.getBlockAtIndex(d.index).getAttributes(),o=n.getBaseBlockAttributes(),g=r.slice(-o.length),t(o,g)?(l=r.slice(0,-o.length),c=n.copyWithBaseBlockAttributes(l)):c=n.copy({consolidateBlocks:!0}).copyWithBaseBlockAttributes(r),s=c.getBlockCount(),a=c.getBlockAtIndex(0),t(r,a.getAttributes())?(u=a.getTextWithoutBlockBreak(),p=this.insertTextAtRange(u,i),s>1&&(c=new this.constructor(c.getBlocks().slice(1)),h=f+u.getLength(),p=p.insertDocumentAtRange(c,h))):p=this.insertDocumentAtRange(c,i),p},a.prototype.insertTextAtRange=function(t,n){var i,o,r,s,a;return a=(n=e(n))[0],s=this.locationFromPosition(a),o=s.index,r=s.offset,i=this.removeTextAtRange(n),new this.constructor(i.blockList.editObjectAtIndex(o,function(e){return e.copyWithText(e.text.insertTextAtPosition(t,r))}))},a.prototype.removeTextAtRange=function(t){var i,o,r,s,a,u,c,l,h,p,d,f,g,m,y,v,b;return h=t=e(t),y=h[0],s=h[1],n(t)?this:(c=this.locationFromPosition(y),u=c.index,a=this.getBlockAtIndex(u),l=a.text.getTextAtRange([0,c.offset]),g=this.locationFromPosition(s),f=g.index,d=this.getBlockAtIndex(f),m=d.text.getTextAtRange([g.offset,d.getLength()]),v=l.appendText(m),p=u!==f&&0===c.offset,b=p&&a.getAttributeLevel()>=d.getAttributeLevel(),o=b?d.copyWithText(v):a.copyWithText(v),r=this.blockList.toArray(),i=f+1-u,r.splice(u,i,o),new this.constructor(r))},a.prototype.moveTextFromRangeToPosition=function(t,n){var i,o,s,a,u,c,l,h,p,d;if(c=t=e(t),p=c[0],s=c[1],n>=p&&s>=n)return this;if(o=this.getDocumentAtRange(t),h=this.removeTextAtRange(t),u=n>p,u&&(n-=o.getLength()),!h.firstBlockInRangeIsEntirelySelected(t)){if(l=o.getBlocks(),a=l[0],i=2<=l.length?r.call(l,1):[],0===i.length?(d=a.getTextWithoutBlockBreak(),u&&(n+=1)):d=a.text,h=h.insertTextAtRange(d,n),0===i.length)return h;o=new this.constructor(i),n+=d.getLength()}return h.insertDocumentAtRange(o,n)},a.prototype.addAttributeAtRange=function(t,e,n){var i;return i=this.blockList,this.eachBlockAtRange(n,function(n,o,r){return i=i.editObjectAtIndex(r,function(){return Trix.config.blockAttributes[t]?n.addAttribute(t,e):o[0]===o[1]?n:n.copyWithText(n.text.addAttributeAtRange(t,e,o))})}),new this.constructor(i)},a.prototype.addAttribute=function(t,e){var n;return n=this.blockList,this.eachBlock(function(i,o){return n=n.editObjectAtIndex(o,function(){return i.addAttribute(t,e)})}),new this.constructor(n)},a.prototype.removeAttributeAtRange=function(t,e){var n;return n=this.blockList,this.eachBlockAtRange(e,function(e,i,o){return Trix.config.blockAttributes[t]?n=n.editObjectAtIndex(o,function(){return e.removeAttribute(t)}):i[0]!==i[1]?n=n.editObjectAtIndex(o,function(){return e.copyWithText(e.text.removeAttributeAtRange(t,i))}):void 0}),new this.constructor(n)},a.prototype.updateAttributesForAttachment=function(t,e){var n,i,o,r;return o=(i=this.getRangeOfAttachment(e))[0],n=this.locationFromPosition(o).index,r=this.getTextAtIndex(n),new this.constructor(this.blockList.editObjectAtIndex(n,function(n){return n.copyWithText(r.updateAttributesForAttachment(t,e))}))},a.prototype.removeAttributeForAttachment=function(t,e){var n;return n=this.getRangeOfAttachment(e),this.removeAttributeAtRange(t,n)},a.prototype.insertBlockBreakAtRange=function(t){var n,i,o,r;return r=(t=e(t))[0],o=this.locationFromPosition(r).offset,i=this.removeTextAtRange(t),0===o&&(n=[new Trix.Block]),new this.constructor(i.blockList.insertSplittableListAtPosition(new Trix.SplittableList(n),r))},a.prototype.applyBlockAttributeAtRange=function(t,e,n){var i,o,r;return o=this.expandRangeToLineBreaksAndSplitBlocks(n),i=o.document,n=o.range,Trix.config.blockAttributes[t].listAttribute?(i=i.removeLastListAttributeAtRange(n,{exceptAttributeName:t}),r=i.convertLineBreaksToBlockBreaksInRange(n),i=r.document,n=r.range):i=i.consolidateBlocksAtRange(n),i.addAttributeAtRange(t,e,n)},a.prototype.removeLastListAttributeAtRange=function(t,e){var n;return null==e&&(e={}),n=this.blockList,this.eachBlockAtRange(t,function(t,i,o){var r;if((r=t.getLastAttribute())&&Trix.config.blockAttributes[r].listAttribute&&r!==e.exceptAttributeName)return n=n.editObjectAtIndex(o,function(){return t.removeAttribute(r)})}),new this.constructor(n)},a.prototype.firstBlockInRangeIsEntirelySelected=function(t){var n,i,o,r,s,a;return r=t=e(t),a=r[0],n=r[1],i=this.locationFromPosition(a),s=this.locationFromPosition(n),0===i.offset&&i.index<s.index?!0:i.index===s.index?(o=this.getBlockAtIndex(i.index).getLength(),0===i.offset&&s.offset===o):!1},a.prototype.expandRangeToLineBreaksAndSplitBlocks=function(t){var n,i,o,r,s,a,u,c,l;return a=t=e(t),l=a[0],r=a[1],c=this.locationFromPosition(l),o=this.locationFromPosition(r),n=this,u=n.getBlockAtIndex(c.index),null!=(c.offset=u.findLineBreakInDirectionFromPosition(\"backward\",c.offset))&&(s=n.positionFromLocation(c),n=n.insertBlockBreakAtRange([s,s+1]),o.index+=1,o.offset-=n.getBlockAtIndex(c.index).getLength(),c.index+=1),c.offset=0,0===o.offset&&o.index>c.index?(o.index-=1,o.offset=n.getBlockAtIndex(o.index).getBlockBreakPosition()):(i=n.getBlockAtIndex(o.index),\"\\n\"===i.text.getStringAtRange([o.offset-1,o.offset])?o.offset-=1:o.offset=i.findLineBreakInDirectionFromPosition(\"forward\",o.offset),o.offset!==i.getBlockBreakPosition()&&(s=n.positionFromLocation(o),n=n.insertBlockBreakAtRange([s,s+1]))),l=n.positionFromLocation(c),r=n.positionFromLocation(o),t=e([l,r]),{document:n,range:t}},a.prototype.convertLineBreaksToBlockBreaksInRange=function(t){var n,i,o;return i=(t=e(t))[0],o=this.getStringAtRange(t).slice(0,-1),n=this,o.replace(/.*?\\n/g,function(t){return i+=t.length,n=n.insertBlockBreakAtRange([i-1,i])}),{document:n,range:t}},a.prototype.consolidateBlocksAtRange=function(t){var n,i,o,r,s;return o=t=e(t),s=o[0],i=o[1],r=this.locationFromPosition(s).index,n=this.locationFromPosition(i).index,new this.constructor(this.blockList.consolidateFromIndexToIndex(r,n))},a.prototype.getDocumentAtRange=function(t){var n;return t=e(t),n=this.blockList.getSplittableListInRange(t).toArray(),new this.constructor(n)},a.prototype.getStringAtRange=function(t){return this.getDocumentAtRange(t).toString()},a.prototype.getBlockAtIndex=function(t){return this.blockList.getObjectAtIndex(t)},a.prototype.getBlockAtPosition=function(t){var e;return e=this.locationFromPosition(t).index,this.getBlockAtIndex(e)},a.prototype.getTextAtIndex=function(t){var e;return null!=(e=this.getBlockAtIndex(t))?e.text:void 0},a.prototype.getTextAtPosition=function(t){var e;return e=this.locationFromPosition(t).index,this.getTextAtIndex(e)},a.prototype.getPieceAtPosition=function(t){var e,n,i;return i=this.locationFromPosition(t),e=i.index,n=i.offset,this.getTextAtIndex(e).getPieceAtPosition(t)},a.prototype.getCharacterAtPosition=function(t){var e,n,i;return i=this.locationFromPosition(t),e=i.index,n=i.offset,this.getTextAtIndex(e).getStringAtRange([n,n+1])},a.prototype.getLength=function(){return this.blockList.getEndPosition()},a.prototype.getBlocks=function(){return this.blockList.toArray()},a.prototype.getBlockCount=function(){return this.blockList.length},a.prototype.getEditCount=function(){return this.editCount},a.prototype.eachBlock=function(t){return this.blockList.eachObject(t)},a.prototype.eachBlockAtRange=function(t,n){var i,o,r,s,a,u,c,l,h,p,d,f;if(u=t=e(t),d=u[0],r=u[1],p=this.locationFromPosition(d),o=this.locationFromPosition(r),p.index===o.index)return i=this.getBlockAtIndex(p.index),f=[p.offset,o.offset],n(i,f,p.index);for(h=[],a=s=c=p.index,l=o.index;l>=c?l>=s:s>=l;a=l>=c?++s:--s)(i=this.getBlockAtIndex(a))?(f=function(){switch(a){case p.index:return[p.offset,i.text.getLength()];case o.index:return[0,o.offset];default:return[0,i.text.getLength()]}}(),h.push(n(i,f,a))):h.push(void 0);return h},a.prototype.getCommonAttributesAtRange=function(t){var i,o,r;return o=(t=e(t))[0],n(t)?this.getCommonAttributesAtPosition(o):(r=[],i=[],this.eachBlockAtRange(t,function(t,e){return e[0]!==e[1]?(r.push(t.text.getCommonAttributesAtRange(e)),i.push(u(t))):void 0}),Trix.Hash.fromCommonAttributesOfObjects(r).merge(Trix.Hash.fromCommonAttributesOfObjects(i)).toObject())},a.prototype.getCommonAttributesAtPosition=function(t){var e,n,i,o,r,a,c,l,h,p;if(h=this.locationFromPosition(t),r=h.index,l=h.offset,i=this.getBlockAtIndex(r),!i)return{};o=u(i),e=i.text.getAttributesAtPosition(l),n=i.text.getAttributesAtPosition(l-1),a=function(){var t,e;t=Trix.config.textAttributes,e=[];for(c in t)p=t[c],p.inheritable&&e.push(c);return e}();for(c in n)p=n[c],(p===e[c]||s.call(a,c)>=0)&&(o[c]=p);return o},a.prototype.getRangeOfCommonAttributeAtPosition=function(t,n){var i,o,r,s,a,u,c,l,h;return a=this.locationFromPosition(n),r=a.index,s=a.offset,h=this.getTextAtIndex(r),u=h.getExpandedRangeForAttributeAtOffset(t,s),l=u[0],o=u[1],c=this.positionFromLocation({index:r,offset:l}),i=this.positionFromLocation({index:r,offset:o}),e([c,i])},a.prototype.getBaseBlockAttributes=function(){var t,e,n,i,o,r,s;for(t=this.getBlockAtIndex(0).getAttributes(),n=i=1,s=this.getBlockCount();s>=1?s>i:i>s;n=s>=1?++i:--i)e=this.getBlockAtIndex(n).getAttributes(),r=Math.min(t.length,e.length),t=function(){var n,i,s;for(s=[],o=n=0,i=r;(i>=0?i>n:n>i)&&e[o]===t[o];o=i>=0?++n:--n)s.push(e[o]);return s}();return t},u=function(t){var e,n;return n={},(e=t.getLastAttribute())&&(n[e]=!0),n},a.prototype.getAttachmentById=function(t){var e,n,i,o;for(o=this.getAttachments(),n=0,i=o.length;i>n;n++)if(e=o[n],e.id===t)return e},a.prototype.getAttachmentPieces=function(){var t;return t=[],this.blockList.eachObject(function(e){var n;\nreturn n=e.text,t=t.concat(n.getAttachmentPieces())}),t},a.prototype.getAttachments=function(){var t,e,n,i,o;for(i=this.getAttachmentPieces(),o=[],t=0,e=i.length;e>t;t++)n=i[t],o.push(n.attachment);return o},a.prototype.getRangeOfAttachment=function(t){var n,i,o,r,s,a,u;for(r=0,s=this.blockList.toArray(),i=n=0,o=s.length;o>n;i=++n){if(a=s[i].text,u=a.getRangeOfAttachment(t))return e([r+u[0],r+u[1]]);r+=a.getLength()}},a.prototype.getAttachmentPieceForAttachment=function(t){var e,n,i,o;for(o=this.getAttachmentPieces(),e=0,n=o.length;n>e;e++)if(i=o[e],i.attachment===t)return i},a.prototype.rangeFromLocationRange=function(t){var i,o;return t=e(t),i=this.positionFromLocation(t[0]),n(t)||(o=this.positionFromLocation(t[1])),[i,null!=o?o:i]},a.prototype.locationFromPosition=function(t){var e,n;return n=this.blockList.findIndexAndOffsetAtPosition(Math.max(0,t)),null!=n.index?n:(e=this.getBlocks(),{index:e.length-1,offset:e[e.length-1].getLength()})},a.prototype.positionFromLocation=function(t){return this.blockList.findPositionAtIndexAndOffset(t.index,t.offset)},a.prototype.locationRangeFromPosition=function(t){return e(this.locationFromPosition(t))},a.prototype.locationRangeFromRange=function(t){var n,i,o,r;if(t=e(t))return r=t[0],i=t[1],o=this.locationFromPosition(r),n=this.locationFromPosition(i),e([o,n])},a.prototype.rangeFromLocationRange=function(t){var i,o;return t=e(t),i=this.positionFromLocation(t[0]),n(t)||(o=this.positionFromLocation(t[1])),e([i,o])},a.prototype.isEqualTo=function(t){return this.blockList.isEqualTo(null!=t?t.blockList:void 0)},a.prototype.getTexts=function(){var t,e,n,i,o;for(i=this.getBlocks(),o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(t.text);return o},a.prototype.getPieces=function(){var t,e,n,i,o;for(n=[],i=this.getTexts(),t=0,e=i.length;e>t;t++)o=i[t],n.push.apply(n,o.getPieces());return n},a.prototype.getObjects=function(){return this.getBlocks().concat(this.getTexts()).concat(this.getPieces())},a.prototype.toSerializableDocument=function(){var t;return t=[],this.blockList.eachObject(function(e){return t.push(e.copyWithText(e.text.toSerializableText()))}),new this.constructor(t)},a.prototype.toString=function(){return this.blockList.toString()},a.prototype.toJSON=function(){return this.blockList.toJSON()},a.prototype.toConsole=function(){var t;return JSON.stringify(function(){var e,n,i,o;for(i=this.blockList.toArray(),o=[],e=0,n=i.length;n>e;e++)t=i[e],o.push(JSON.parse(t.text.toConsole()));return o}.call(this))},a}(Trix.Object)}.call(this),function(){var t,e,n,i,o,r=function(t,e){function n(){this.constructor=t}for(var i in e)s.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},s={}.hasOwnProperty;e=Trix.normalizeRange,i=Trix.rangesAreEqual,n=Trix.objectsAreEqual,o=Trix.summarizeArrayChange,t=Trix.extend,Trix.Composition=function(s){function a(){this.document=new Trix.Document,this.attachments=[],this.currentAttributes={},this.revision=0}var u;return r(a,s),a.prototype.setDocument=function(t){var e;return t.isEqualTo(this.document)?void 0:(this.document=t,this.refreshAttachments(),this.revision++,null!=(e=this.delegate)&&\"function\"==typeof e.compositionDidChangeDocument?e.compositionDidChangeDocument(t):void 0)},a.prototype.getSnapshot=function(){return{document:this.document,selectedRange:this.getSelectedRange()}},a.prototype.loadSnapshot=function(t){var e,n,i,o;return e=t.document,o=t.selectedRange,null!=(n=this.delegate)&&\"function\"==typeof n.compositionWillLoadSnapshot&&n.compositionWillLoadSnapshot(),this.setDocument(null!=e?e:new Trix.Document),this.setSelection(null!=o?o:[0,0]),null!=(i=this.delegate)&&\"function\"==typeof i.compositionDidLoadSnapshot?i.compositionDidLoadSnapshot():void 0},a.prototype.insertText=function(t,e){var n,i,o,r;return r=(null!=e?e:{updatePosition:!0}).updatePosition,i=this.getSelectedRange(),this.setDocument(this.document.insertTextAtRange(t,i)),o=i[0],n=o+t.getLength(),r&&this.setSelection(n),this.notifyDelegateOfInsertionAtRange([o,n])},a.prototype.insertBlock=function(t){var e;return null==t&&(t=new Trix.Block),e=new Trix.Document([t]),this.insertDocument(e)},a.prototype.insertDocument=function(t){var e,n,i;return null==t&&(t=new Trix.Document),n=this.getSelectedRange(),this.setDocument(this.document.insertDocumentAtRange(t,n)),i=n[0],e=i+t.getLength(),this.setSelection(e),this.notifyDelegateOfInsertionAtRange([i,e])},a.prototype.insertString=function(t,e){var n,i;return n=this.getCurrentTextAttributes(),i=Trix.Text.textForStringWithAttributes(t,n),this.insertText(i,e)},a.prototype.insertBlockBreak=function(){var t,e,n;return e=this.getSelectedRange(),this.setDocument(this.document.insertBlockBreakAtRange(e)),n=e[0],t=n+1,this.setSelection(t),this.notifyDelegateOfInsertionAtRange([n,t])},a.prototype.breakFormattedBlock=function(){var t,e,n,i,o,r,s,a;return r=this.getPosition(),s=[r-1,r],e=this.document,a=e.locationFromPosition(r),n=a.index,o=a.offset,t=e.getBlockAtIndex(n),t.getBlockBreakPosition()===o?(e=e.removeTextAtRange(s),s=[r,r]):\"\\n\"===t.text.getStringAtRange([o,o+1])?s=[r-1,r+1]:r+=1,i=new Trix.Document([t.removeLastAttribute().copyWithoutText()]),this.setDocument(e.insertDocumentAtRange(i,s)),this.setSelection(r)},a.prototype.insertLineBreak=function(){var t,e,n,i,o,r,s;return o=this.getSelectedRange(),s=o[0],i=o[1],r=this.document.locationFromPosition(s),n=this.document.locationFromPosition(i),t=this.document.getBlockAtIndex(n.index),t.hasAttributes()?t.isListItem()?t.isEmpty()?(this.decreaseListLevel(),this.setSelection(s)):0===r.offset?(e=new Trix.Document([t.copyWithoutText()]),this.insertDocument(e)):this.insertBlockBreak():t.isEmpty()?this.removeLastBlockAttribute():\"\\n\"===t.text.getStringAtRange([n.offset-1,n.offset])?this.breakFormattedBlock():this.insertString(\"\\n\"):this.insertString(\"\\n\")},a.prototype.insertHTML=function(t){var e,n,i,o,r;return r=this.getPosition(),o=this.document.getLength(),e=Trix.Document.fromHTML(t),this.setDocument(this.document.mergeDocumentAtRange(e,this.getSelectedRange())),n=this.document.getLength(),i=r+(n-o),this.setSelection(i),this.notifyDelegateOfInsertionAtRange([i,i])},a.prototype.replaceHTML=function(t){var e,n;return e=Trix.Document.fromHTML(t).copyUsingObjectsFromDocument(this.document),n=this.getPointRange(),this.setDocument(e),this.setSelectionPointRange(n)},a.prototype.insertFile=function(t){var e,n;return(null!=(n=this.delegate)?n.compositionShouldAcceptFile(t):void 0)?(e=Trix.Attachment.attachmentForFile(t),this.insertAttachment(e)):void 0},a.prototype.insertAttachment=function(t){var e;return e=Trix.Text.textForAttachmentWithAttributes(t,this.currentAttributes),this.insertText(e)},a.prototype.deleteInDirection=function(t){var e,n,i,o,r,s,a;if(r=this.getSelectedRange(),a=r[0],i=r[1],o=r,n=this.getBlock(),a===i){if(s=this.document.locationFromPosition(a),\"backward\"===t&&0===s.offset&&this.canDecreaseBlockAttributeLevel()&&(n.isListItem()?this.decreaseListLevel():this.decreaseBlockAttributeLevel(),this.setSelection(a),n.isEmpty()))return;o=this.getExpandedRangeInDirection(t),\"backward\"===t&&(e=this.getAttachmentAtRange(o))}return e?(this.editAttachment(e),!1):(this.setDocument(this.document.removeTextAtRange(o)),this.setSelection(o[0]),n.isListItem()?!1:void 0)},a.prototype.moveTextFromRange=function(t){var e;return e=this.getSelectedRange()[0],this.setDocument(this.document.moveTextFromRangeToPosition(t,e)),this.setSelection(e)},a.prototype.removeAttachment=function(t){var e;return(e=this.document.getRangeOfAttachment(t))?(this.stopEditingAttachment(),this.setDocument(this.document.removeTextAtRange(e)),this.setSelection(e[0])):void 0},a.prototype.removeLastBlockAttribute=function(){var t,e,n,i;return n=this.getSelectedRange(),i=n[0],e=n[1],t=this.document.getBlockAtPosition(e),this.removeCurrentAttribute(t.getLastAttribute()),this.setSelection(i)},u=\" \",a.prototype.insertPlaceholder=function(){return this.placeholderPosition=this.getPosition(),this.insertString(u)},a.prototype.selectPlaceholder=function(){return null!=this.placeholderPosition?(this.setSelectedRange([this.placeholderPosition,this.placeholderPosition+u.length]),this.getSelectedRange()):void 0},a.prototype.forgetPlaceholder=function(){return this.placeholderPosition=null},a.prototype.hasCurrentAttribute=function(t){return null!=this.currentAttributes[t]},a.prototype.toggleCurrentAttribute=function(t){var e;return(e=!this.currentAttributes[t])?this.setCurrentAttribute(t,e):this.removeCurrentAttribute(t)},a.prototype.canSetCurrentAttribute=function(t){switch(t){case\"href\":return!this.selectionContainsAttachmentWithAttribute(t);default:return!0}},a.prototype.setCurrentAttribute=function(t,e){return Trix.config.blockAttributes[t]?this.setBlockAttribute(t,e):(this.setTextAttribute(t,e),this.currentAttributes[t]=e,this.notifyDelegateOfCurrentAttributesChange())},a.prototype.setTextAttribute=function(t,e){var n,i,o,r;if(i=this.getSelectedRange())return o=i[0],n=i[1],o!==n?this.setDocument(this.document.addAttributeAtRange(t,e,i)):\"href\"===t?(r=Trix.Text.textForStringWithAttributes(e,{href:e}),this.insertText(r)):void 0},a.prototype.setBlockAttribute=function(t,e){var n;if(n=this.getSelectedRange())return this.setDocument(this.document.applyBlockAttributeAtRange(t,e,n)),this.setSelection(n)},a.prototype.removeCurrentAttribute=function(t){return Trix.config.blockAttributes[t]?(this.removeBlockAttribute(t),this.updateCurrentAttributes()):(this.removeTextAttribute(t),delete this.currentAttributes[t],this.notifyDelegateOfCurrentAttributesChange())},a.prototype.removeTextAttribute=function(t){var e;if(e=this.getSelectedRange())return this.setDocument(this.document.removeAttributeAtRange(t,e))},a.prototype.removeBlockAttribute=function(t){var e;if(e=this.getSelectedRange())return this.setDocument(this.document.removeAttributeAtRange(t,e))},a.prototype.increaseBlockAttributeLevel=function(){var t,e;return(t=null!=(e=this.getBlock())?e.getLastAttribute():void 0)?this.setCurrentAttribute(t):void 0},a.prototype.decreaseBlockAttributeLevel=function(){var t,e;return(t=null!=(e=this.getBlock())?e.getLastAttribute():void 0)?this.removeCurrentAttribute(t):void 0},a.prototype.decreaseListLevel=function(){var t,e,n,i,o,r;for(r=this.getSelectedRange()[0],o=this.document.locationFromPosition(r).index,n=o,t=this.getBlock().getAttributeLevel();(e=this.document.getBlockAtIndex(n+1))&&e.isListItem()&&e.getAttributeLevel()>t;)n++;return r=this.document.positionFromLocation({index:o,offset:0}),i=this.document.positionFromLocation({index:n,offset:0}),this.setDocument(this.document.removeLastListAttributeAtRange([r,i]))},a.prototype.canIncreaseBlockAttributeLevel=function(){var t,e,n,i;if(t=this.getBlock())return n=t.getConfig(\"nestable\"),null!=n?n:t.isListItem()&&(i=this.getPreviousBlock())?(e=t.getAttributeLevel(),i.getAttributeAtLevel(e)===t.getAttributeAtLevel(e)):void 0},a.prototype.canDecreaseBlockAttributeLevel=function(){var t;return(null!=(t=this.getBlock())?t.getAttributeLevel():void 0)>0},a.prototype.updateCurrentAttributes=function(){var t,e;return(e=this.getSelectedRange({ignoreLock:!0}))&&(t=this.document.getCommonAttributesAtRange(e),!n(t,this.currentAttributes))?(this.currentAttributes=t,this.notifyDelegateOfCurrentAttributesChange()):void 0},a.prototype.getCurrentAttributes=function(){return t.call({},this.currentAttributes)},a.prototype.getCurrentTextAttributes=function(){var t,e,n,i;t={},n=this.currentAttributes;for(e in n)i=n[e],Trix.config.textAttributes[e]&&(t[e]=i);return t},a.prototype.freezeSelection=function(){return this.setCurrentAttribute(\"frozen\",!0)},a.prototype.thawSelection=function(){return this.removeCurrentAttribute(\"frozen\")},a.prototype.hasFrozenSelection=function(){return this.hasCurrentAttribute(\"frozen\")},a.proxyMethod(\"getSelectionManager().getPointRange\"),a.proxyMethod(\"getSelectionManager().setLocationRangeFromPointRange\"),a.proxyMethod(\"getSelectionManager().locationIsCursorTarget\"),a.proxyMethod(\"getSelectionManager().selectionIsExpanded\"),a.proxyMethod(\"delegate?.getSelectionManager\"),a.prototype.setSelection=function(t){var e,n;return e=this.document.locationRangeFromRange(t),null!=(n=this.delegate)?n.compositionDidRequestChangingSelection({locationRange:e}):void 0},a.prototype.setSelectionPointRange=function(t){var e;return null!=(e=this.delegate)?e.compositionDidRequestChangingSelection({pointRange:t}):void 0},a.prototype.getSelectedRange=function(){var t;return(t=this.getLocationRange())?this.document.rangeFromLocationRange(t):void 0},a.prototype.setSelectedRange=function(t){var e;return e=this.document.locationRangeFromRange(t),this.getSelectionManager().setLocationRange(e)},a.prototype.getPosition=function(){var t;return(t=this.getLocationRange())?this.document.positionFromLocation(t[0]):void 0},a.prototype.getLocationRange=function(){var t;return null!=(t=this.getSelectionManager().getLocationRange())?t:e({index:0,offset:0})},a.prototype.getExpandedRangeInDirection=function(t){var n,i,o;return i=this.getSelectedRange(),o=i[0],n=i[1],\"backward\"===t?o=this.translateUTF16PositionFromOffset(o,-1):n=this.translateUTF16PositionFromOffset(n,1),e([o,n])},a.prototype.moveCursorInDirection=function(t){var e,n,o,r;return this.editingAttachment?o=this.document.getRangeOfAttachment(this.editingAttachment):(r=this.getSelectedRange(),o=this.getExpandedRangeInDirection(t),n=!i(r,o)),this.setSelectedRange(\"backward\"===t?o[0]:o[1]),n&&(e=this.getAttachmentAtRange(o))?this.editAttachment(e):void 0},a.prototype.expandSelectionInDirection=function(t){var e;return e=this.getExpandedRangeInDirection(t),this.setSelectedRange(e)},a.prototype.expandSelectionForEditing=function(){return this.hasCurrentAttribute(\"href\")?this.expandSelectionAroundCommonAttribute(\"href\"):void 0},a.prototype.expandSelectionAroundCommonAttribute=function(t){var e,n;return e=this.getPosition(),n=this.document.getRangeOfCommonAttributeAtPosition(t,e),this.setSelectedRange(n)},a.prototype.selectionContainsAttachmentWithAttribute=function(t){var e,n,i,o,r;if(r=this.getSelectedRange()){for(o=this.document.getDocumentAtRange(r).getAttachments(),n=0,i=o.length;i>n;n++)if(e=o[n],e.hasAttribute(t))return!0;return!1}},a.prototype.selectionIsInCursorTarget=function(){return this.editingAttachment||this.positionIsCursorTarget(this.getPosition())},a.prototype.positionIsCursorTarget=function(t){var e;return(e=this.document.locationFromPosition(t))?this.locationIsCursorTarget(e):void 0},a.prototype.getSelectedDocument=function(){var t;return(t=this.getSelectedRange())?this.document.getDocumentAtRange(t):void 0},a.prototype.getAttachments=function(){return this.attachments.slice(0)},a.prototype.refreshAttachments=function(){var t,e,n,i,r,s,a,u,c,l,h;for(n=this.document.getAttachments(),u=o(this.attachments,n),t=u.added,h=u.removed,i=0,s=h.length;s>i;i++)e=h[i],e.delegate=null,null!=(c=this.delegate)&&\"function\"==typeof c.compositionDidRemoveAttachment&&c.compositionDidRemoveAttachment(e);for(r=0,a=t.length;a>r;r++)e=t[r],e.delegate=this,null!=(l=this.delegate)&&\"function\"==typeof l.compositionDidAddAttachment&&l.compositionDidAddAttachment(e);return this.attachments=n},a.prototype.attachmentDidChangeAttributes=function(t){var e;return this.revision++,null!=(e=this.delegate)&&\"function\"==typeof e.compositionDidEditAttachment?e.compositionDidEditAttachment(t):void 0},a.prototype.editAttachment=function(t){var e;if(t!==this.editingAttachment)return this.stopEditingAttachment(),this.editingAttachment=t,null!=(e=this.delegate)&&\"function\"==typeof e.compositionDidStartEditingAttachment?e.compositionDidStartEditingAttachment(this.editingAttachment):void 0},a.prototype.stopEditingAttachment=function(){var t;if(this.editingAttachment)return null!=(t=this.delegate)&&\"function\"==typeof t.compositionDidStopEditingAttachment&&t.compositionDidStopEditingAttachment(this.editingAttachment),this.editingAttachment=null},a.prototype.canEditAttachmentCaption=function(){var t;return null!=(t=this.editingAttachment)?t.isPreviewable():void 0},a.prototype.updateAttributesForAttachment=function(t,e){return this.setDocument(this.document.updateAttributesForAttachment(t,e))},a.prototype.removeAttributeForAttachment=function(t,e){return this.setDocument(this.document.removeAttributeForAttachment(t,e))},a.prototype.getPreviousBlock=function(){var t,e;return(e=this.getLocationRange())&&(t=e[0].index,t>0)?this.document.getBlockAtIndex(t-1):void 0},a.prototype.getBlock=function(){var t;return(t=this.getLocationRange())?this.document.getBlockAtIndex(t[0].index):void 0},a.prototype.getAttachmentAtRange=function(t){var e;return e=this.document.getDocumentAtRange(t),e.toString()===Trix.OBJECT_REPLACEMENT_CHARACTER+\"\\n\"?e.getAttachments()[0]:void 0},a.prototype.notifyDelegateOfCurrentAttributesChange=function(){var t;return null!=(t=this.delegate)&&\"function\"==typeof t.compositionDidChangeCurrentAttributes?t.compositionDidChangeCurrentAttributes(this.currentAttributes):void 0},a.prototype.notifyDelegateOfInsertionAtRange=function(t){var e;return null!=(e=this.delegate)&&\"function\"==typeof e.compositionDidPerformInsertionAtRange?e.compositionDidPerformInsertionAtRange(t):void 0},a.prototype.translateUTF16PositionFromOffset=function(t,e){var n,i;return i=this.document.toUTF16String(),n=i.offsetFromUCS2Offset(t),i.offsetToUCS2Offset(n+e)},a}(Trix.BasicObject)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.UndoManager=function(e){function n(t){this.composition=t,this.undoEntries=[],this.redoEntries=[]}var i;return t(n,e),n.prototype.recordUndoEntry=function(t,e){var n,o,r,s,a;return s=null!=e?e:{},o=s.context,n=s.consolidatable,r=this.undoEntries.slice(-1)[0],n&&i(r,t,o)?void 0:(a=this.createEntry({description:t,context:o}),this.undoEntries.push(a),this.redoEntries=[])},n.prototype.undo=function(){var t,e;return(e=this.undoEntries.pop())?(t=this.createEntry(e),this.redoEntries.push(t),this.composition.loadSnapshot(e.snapshot)):void 0},n.prototype.redo=function(){var t,e;return(t=this.redoEntries.pop())?(e=this.createEntry(t),this.undoEntries.push(e),this.composition.loadSnapshot(t.snapshot)):void 0},n.prototype.canUndo=function(){return this.undoEntries.length>0},n.prototype.canRedo=function(){return this.redoEntries.length>0},n.prototype.createEntry=function(t){var e,n,i;return i=null!=t?t:{},n=i.description,e=i.context,{description:null!=n?n.toString():void 0,context:JSON.stringify(e),snapshot:this.composition.getSnapshot()}},i=function(t,e,n){return(null!=t?t.description:void 0)===(null!=e?e.toString():void 0)&&(null!=t?t.context:void 0)===JSON.stringify(n)},n}(Trix.BasicObject)}.call(this),function(){Trix.Editor=function(){function t(t,e,n){this.composition=t,this.selectionManager=e,this.element=n,this.undoManager=new Trix.UndoManager(this.composition)}return t.prototype.loadDocument=function(t){return this.loadSnapshot({document:t,selectedRange:[0,0]})},t.prototype.loadHTML=function(t){return null==t&&(t=\"\"),this.loadDocument(Trix.Document.fromHTML(t,{referenceElement:this.element}))},t.prototype.loadJSON=function(t){var e,n;return e=t.document,n=t.selectedRange,e=Trix.Document.fromJSON(e),this.loadSnapshot({document:e,selectedRange:n})},t.prototype.loadSnapshot=function(t){return this.undoManager=new Trix.UndoManager(this.composition),this.composition.loadSnapshot(t)},t.prototype.getDocument=function(){return this.composition.document},t.prototype.getSelectedDocument=function(){return this.composition.getSelectedDocument()},t.prototype.getSnapshot=function(){return this.composition.getSnapshot()},t.prototype.toJSON=function(){return this.getSnapshot()},t.prototype.deleteInDirection=function(t){return this.composition.deleteInDirection(t)},t.prototype.insertAttachment=function(t){return this.composition.insertAttachment(t)},t.prototype.insertDocument=function(t){return this.composition.insertDocument(t)},t.prototype.insertFile=function(t){return this.composition.insertFile(t)},t.prototype.insertHTML=function(t){return this.composition.insertHTML(t)},t.prototype.insertString=function(t){return this.composition.insertString(t)},t.prototype.insertText=function(t){return this.composition.insertText(t)},t.prototype.insertLineBreak=function(){return this.composition.insertLineBreak()},t.prototype.getSelectedRange=function(){return this.composition.getSelectedRange()},t.prototype.getPosition=function(){return this.composition.getPosition()},t.prototype.getClientRectAtPosition=function(t){var e;return e=this.getDocument().locationRangeFromRange([t,t+1]),this.selectionManager.getClientRectAtLocationRange(e)},t.prototype.expandSelectionInDirection=function(t){return this.composition.expandSelectionInDirection(t)},t.prototype.moveCursorInDirection=function(t){return this.composition.moveCursorInDirection(t)},t.prototype.setSelectedRange=function(t){return this.composition.setSelectedRange(t)},t.prototype.activateAttribute=function(t,e){return null==e&&(e=!0),this.composition.setCurrentAttribute(t,e)},t.prototype.attributeIsActive=function(t){return this.composition.hasCurrentAttribute(t)},t.prototype.canActivateAttribute=function(t){return this.composition.canSetCurrentAttribute(t)},t.prototype.deactivateAttribute=function(t){return this.composition.removeCurrentAttribute(t)},t.prototype.canDecreaseIndentationLevel=function(){return this.composition.canDecreaseBlockAttributeLevel()},t.prototype.canIncreaseIndentationLevel=function(){return this.composition.canIncreaseBlockAttributeLevel()},t.prototype.decreaseIndentationLevel=function(){return this.canDecreaseIndentationLevel()?this.composition.decreaseBlockAttributeLevel():void 0},t.prototype.increaseIndentationLevel=function(){return this.canIncreaseIndentationLevel()?this.composition.increaseBlockAttributeLevel():void 0},t.prototype.canRedo=function(){return this.undoManager.canRedo()},t.prototype.canUndo=function(){return this.undoManager.canUndo()},t.prototype.recordUndoEntry=function(t,e){var n,i,o;return o=null!=e?e:{},i=o.context,n=o.consolidatable,this.undoManager.recordUndoEntry(t,{context:i,consolidatable:n})},t.prototype.redo=function(){return this.canRedo()?this.undoManager.redo():void 0},t.prototype.undo=function(){return this.canUndo()?this.undoManager.undo():void 0},t}()}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.ManagedAttachment=function(e){function n(t,e){var n;this.attachmentManager=t,this.attachment=e,n=this.attachment,this.id=n.id,this.file=n.file}return t(n,e),n.prototype.remove=function(){return this.attachmentManager.requestRemovalOfAttachment(this.attachment)},n.proxyMethod(\"attachment.getAttribute\"),n.proxyMethod(\"attachment.hasAttribute\"),n.proxyMethod(\"attachment.setAttribute\"),n.proxyMethod(\"attachment.getAttributes\"),n.proxyMethod(\"attachment.setAttributes\"),n.proxyMethod(\"attachment.isPending\"),n.proxyMethod(\"attachment.isPreviewable\"),n.proxyMethod(\"attachment.getURL\"),n.proxyMethod(\"attachment.getHref\"),n.proxyMethod(\"attachment.getFilename\"),n.proxyMethod(\"attachment.getFilesize\"),n.proxyMethod(\"attachment.getFormattedFilesize\"),n.proxyMethod(\"attachment.getExtension\"),n.proxyMethod(\"attachment.getContentType\"),n.proxyMethod(\"attachment.getFile\"),n.proxyMethod(\"attachment.setFile\"),n.proxyMethod(\"attachment.releaseFile\"),n.proxyMethod(\"attachment.getUploadProgress\"),n.proxyMethod(\"attachment.setUploadProgress\"),n}(Trix.BasicObject)}.call(this),function(){var t=function(t,n){function i(){this.constructor=t}for(var o in n)e.call(n,o)&&(t[o]=n[o]);return i.prototype=n.prototype,t.prototype=new i,t.__super__=n.prototype,t},e={}.hasOwnProperty;Trix.AttachmentManager=function(e){function n(t){var e,n,i;for(null==t&&(t=[]),this.managedAttachments={},n=0,i=t.length;i>n;n++)e=t[n],this.manageAttachment(e)}return t(n,e),n.prototype.getAttachments=function(){var t,e,n,i;n=this.managedAttachments,i=[];for(e in n)t=n[e],i.push(t);return i},n.prototype.manageAttachment=function(t){var e,n;return null!=(e=this.managedAttachments)[n=t.id]?e[n]:e[n]=new Trix.ManagedAttachment(this,t)},n.prototype.attachmentIsManaged=function(t){return t.id in this.managedAttachments},n.prototype.requestRemovalOfAttachment=function(t){var e;return this.attachmentIsManaged(t)&&null!=(e=this.delegate)&&\"function\"==typeof e.attachmentManagerDidRequestRemovalOfAttachment?e.attachmentManagerDidRequestRemovalOfAttachment(t):void 0},n.prototype.unmanageAttachment=function(t){var e;return e=this.managedAttachments[t.id],delete this.managedAttachments[t.id],e},n}(Trix.BasicObject)}.call(this),function(){var t,e,n,i,o,r,s,a,u,c,l,h;t=Trix.elementContainsNode,e=Trix.findChildIndexOfNode,n=Trix.findClosestElementFromNode,i=Trix.findNodeFromContainerAndOffset,s=Trix.nodeIsBlockStartComment,r=Trix.nodeIsBlockContainer,a=Trix.nodeIsCursorTarget,u=Trix.nodeIsEmptyTextNode,c=Trix.nodeIsTextNode,o=Trix.nodeIsAttachmentElement,l=Trix.tagName,h=Trix.walkTree,Trix.LocationMapper=function(){function n(t){this.element=t}var i,p,d,f;return n.prototype.findLocationFromContainerAndOffset=function(n,i){var o,r,u,l,f,g;for(r=0,u=!1,l={index:0,offset:0},(o=this.findAttachmentElementParentForNode(n))&&(n=o.parentNode,i=e(o)),g=h(this.element,{usingFilter:d});g.nextNode();){if(f=g.currentNode,f===n&&c(n)){a(f)||(l.offset+=i);break}if(f.parentNode===n){if(r++===i)break}else if(!t(n,f)&&r>0)break;s(f)?(u&&l.index++,l.offset=0,u=!0):l.offset+=p(f)}return l},n.prototype.findContainerAndOffsetFromLocation=function(t){var n,i,o,s,a,u;if(0===t.index&&0===t.offset){for(n=this.element,s=0;n.firstChild;)if(n=n.firstChild,r(n)){s=1;break}return[n,s]}if(a=this.findNodeAndOffsetFromLocation(t),i=a[0],o=a[1],i){if(c(i))n=i,u=i.textContent,s=t.offset-o;else{if(n=i.parentNode,!r(n))for(;i===n.lastChild&&(i=n,n=n.parentNode,!r(n)););s=e(i),0!==t.offset&&s++}return[n,s]}},n.prototype.findNodeAndOffsetFromLocation=function(t){var e,n,i,o,r,s,u,l;for(u=0,l=this.getSignificantNodesForIndex(t.index),n=0,i=l.length;i>n;n++){if(e=l[n],o=p(e),t.offset<=u+o)if(c(e)){if(r=e,s=u,t.offset===s&&a(r))break}else r||(r=e,s=u);if(u+=o,u>t.offset)break}return[r,s]},n.prototype.findAttachmentElementParentForNode=function(t){for(;t&&t!==this.element;){if(o(t))return t;t=t.parentNode}},n.prototype.getSignificantNodesForIndex=function(t){var e,n,o,r,a;for(o=[],a=h(this.element,{usingFilter:i}),r=!1;a.nextNode();)if(n=a.currentNode,s(n)){if(\"undefined\"!=typeof e&&null!==e?e++:e=0,e===t)r=!0;else if(r)break}else r&&o.push(n);return o},p=function(t){var e;return t.nodeType===Node.TEXT_NODE?a(t)?0:(e=t.textContent,e.length):\"br\"===l(t)||o(t)?1:0},i=function(t){return f(t)===NodeFilter.FILTER_ACCEPT?d(t):NodeFilter.FILTER_REJECT},f=function(t){return u(t)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},d=function(t){return o(t.parentNode)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT},n}()}.call(this),function(){var t,e,n,i,o,r,s,a=[].slice;n=Trix.getDOMRange,r=Trix.setDOMRange,e=Trix.findNodeFromContainerAndOffset,s=Trix.tagName,o=Trix.selectionElements,i=Trix.normalizeRange,t=Trix.defer,Trix.PointMapper=function(){function t(){}var u,c;return t.prototype.findPointRangeFromDOMRange=function(t){var e,n,o;return e=this.findPointFromDOMRangeAtIndex(t,1),n=[e],t.collapsed||(o=this.findPointFromDOMRangeAtIndex(t,0),n.unshift(o)),i(n)},t.prototype.createDOMRangeFromPoint=function(t){var e,i,o,s,a,u,c,l;if(c=t.x,l=t.y,document.caretPositionFromPoint)return a=document.caretPositionFromPoint(c,l),o=a.offsetNode,i=a.offset,e=document.createRange(),e.setStart(o,i),e;if(document.caretRangeFromPoint)return document.caretRangeFromPoint(c,l);if(document.body.createTextRange){s=n();try{u=document.body.createTextRange(),u.moveToPoint(c,l),u.select()}catch(h){}return e=n(),r(s),e}},t.prototype.getClientRectsForDOMRange=function(t){var e,n,i;return n=a.call(t.getClientRects()),i=n[0],e=n[n.length-1],[i,e]},t.prototype.findPointFromDOMRangeAtIndex=function(t,n){var i,r,a,u,l;return t=t.cloneRange(),a=0===n?\"start\":\"end\",i=e(t[a+\"Container\"],t[a+\"Offset\"]),\"br\"===s(i)?(r=c(i),null==r&&(r=this.getClientRectsForDOMRange(t)[n]),r&&(u=r.left,l=r.bottom)):(i=o.create(\"cursorPoint\"),\"end\"===a&&t.collapse(!1),t.insertNode(i),r=i.getBoundingClientRect(),o.remove(i),u=r.left-n,l=r.top+1),null!=u&&null!=l?{x:u,y:l}:void 0},c=function(t){var e;return e=t.getBoundingClientRect(),u(e)?e:void 0},u=function(t){var e,n;for(e in t)if(n=t[e],Math.abs(n))return!0;return!1},t}()}.call(this),function(){var t=function(t,e){return function(){return t.apply(e,arguments)}},e=function(t,e){function i(){this.constructor=t}for(var o in e)n.call(e,o)&&(t[o]=e[o]);return i.prototype=e.prototype,t.prototype=new i,t.__super__=e.prototype,t},n={}.hasOwnProperty,i=[].indexOf||function(t){for(var e=0,n=this.length;n>e;e++)if(e in this&&this[e]===t)return e;return-1};Trix.SelectionChangeObserver=function(n){function o(){this.run=t(this.run,this),this.update=t(this.update,this),this.selectionManagers=[]}var r,s;return e(o,n),o.prototype.start=function(){return this.started?void 0:(this.started=!0,\"onselectionchange\"in document?document.addEventListener(\"selectionchange\",this.update,!0):this.run())},o.prototype.stop=function(){return this.started?(this.started=!1,document.removeEventListener(\"selectionchange\",this.update,!0)):void 0},o.prototype.registerSelectionManager=function(t){return i.call(this.selectionManagers,t)<0?(this.selectionManagers.push(t),this.start()):void 0},o.prototype.unregisterSelectionManager=function(t){var e;return this.selectionManagers=function(){var n,i,o,r;for(o=this.selectionManagers,r=[],n=0,i=o.length;i>n;n++)e=o[n],e!==t&&r.push(e);return r}.call(this),0===this.selectionManagers.length?this.stop():void 0},o.prototype.notifySelectionManagersOfSelectionChange=function(){var t,e,n,i,o;for(n=this.selectionManagers,i=[],t=0,e=n.length;e>t;t++)o=n[t],i.push(o.selectionDidChange());return i},o.prototype.update=function(){var t;return t=s(),r(t,this.domRange)?void 0:(this.domRange=t,this.notifySelectionManagersOfSelectionChange())},o.prototype.reset=function(){return this.domRange=null,this.update()},o.prototype.run=function(){return this.started?(this.update(),requestAnimationFrame(this.run)):void 0},s=function(){var t;return t=window.getSelection(),t.rangeCount>0?t.getRangeAt(0):void 0},r=function(t,e){return(null!=t?t.startContainer:void 0)===(null!=e?e.startContainer:void 0)&&(null!=t?t.startOffset:void 0)===(null!=e?e.startOffset:void 0)&&(null!=t?t.endContainer:void 0)===(null!=e?e.endContainer:void 0)&&(null!=t?t.endOffset:void 0)===(null!=e?e.endOffset:void 0)},o}(Trix.BasicObject),null==Trix.selectionChangeObserver&&(Trix.selectionChangeObserver=new Trix.SelectionChangeObserver)}.call(this),function(){var t,e,n,i,o,r,s,a,u,c,l,h,p=function(t,e){return function(){return t.apply(e,arguments)}},d=function(t,e){function n(){this.constructor=t}for(var i in e)f.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},f={}.hasOwnProperty;i=Trix.getDOMSelection,n=Trix.getDOMRange,h=Trix.setDOMRange,t=Trix.defer,e=Trix.elementContainsNode,a=Trix.nodeIsCursorTarget,s=Trix.innerElementIsActive,o=Trix.handleEvent,r=Trix.handleEventOnce,u=Trix.normalizeRange,c=Trix.rangeIsCollapsed,l=Trix.rangesAreEqual,Trix.SelectionManager=function(t){function r(t){this.element=t,this.selectionDidChange=p(this.selectionDidChange,this),this.didMouseDown=p(this.didMouseDown,this),this.locationMapper=new Trix.LocationMapper(this.element),this.pointMapper=new Trix.PointMapper,this.lockCount=0,o(\"mousedown\",{onElement:this.element,withCallback:this.didMouseDown})}return d(r,t),r.prototype.getLocationRange=function(t){var e,n;return null==t&&(t={}),e=t.ignoreLock?this.currentLocationRange:null!=(n=this.lockedLocationRange)?n:this.currentLocationRange},r.prototype.setLocationRange=function(t){var e;if(!this.lockedLocationRange)return t=u(t),(e=this.createDOMRangeFromLocationRange(t))?(h(e),this.updateCurrentLocationRange(t)):void 0},r.prototype.getPointRange=function(){var t;return(t=n())?this.findPointRangeFromDOMRange(t):void 0},r.prototype.setLocationRangeFromPointRange=function(t){var e,n;return t=u(t),n=this.getLocationAtPoint(t[0]),e=this.getLocationAtPoint(t[1]),this.setLocationRange([n,e])},r.prototype.getClientRectAtLocationRange=function(t){var e;return(e=this.createDOMRangeFromLocationRange(t))?this.getClientRectsForDOMRange(e)[1]:void 0},r.prototype.locationIsCursorTarget=function(t){var e,n,i;return i=this.findNodeAndOffsetFromLocation(t),e=i[0],n=i[1],a(e)},r.prototype.lock=function(){return 0===this.lockCount++?(this.updateCurrentLocationRange(),this.lockedLocationRange=this.getLocationRange()):void 0\n},r.prototype.unlock=function(){var t;return 0===--this.lockCount&&(t=this.lockedLocationRange,this.lockedLocationRange=null,null!=t)?this.setLocationRange(t):void 0},r.prototype.clearSelection=function(){var t;return null!=(t=i())?t.removeAllRanges():void 0},r.prototype.selectionIsCollapsed=function(){var t;return(null!=(t=n())?t.collapsed:void 0)===!0},r.prototype.selectionIsExpanded=function(){return!this.selectionIsCollapsed()},r.proxyMethod(\"locationMapper.findLocationFromContainerAndOffset\"),r.proxyMethod(\"locationMapper.findContainerAndOffsetFromLocation\"),r.proxyMethod(\"locationMapper.findNodeAndOffsetFromLocation\"),r.proxyMethod(\"pointMapper.findPointRangeFromDOMRange\"),r.proxyMethod(\"pointMapper.createDOMRangeFromPoint\"),r.proxyMethod(\"pointMapper.getClientRectsForDOMRange\"),r.prototype.didMouseDown=function(){return this.pauseTemporarily()},r.prototype.pauseTemporarily=function(){var t,n,i,r;return this.paused=!0,n=function(t){return function(){var n,o,s;for(t.paused=!1,clearTimeout(r),o=0,s=i.length;s>o;o++)n=i[o],n.destroy();return e(document,t.element)?t.selectionDidChange():void 0}}(this),r=setTimeout(n,200),i=function(){var e,i,r,s;for(r=[\"mousemove\",\"keydown\"],s=[],e=0,i=r.length;i>e;e++)t=r[e],s.push(o(t,{onElement:document,withCallback:n}));return s}()},r.prototype.selectionDidChange=function(){return this.paused||s(this.element)?void 0:this.updateCurrentLocationRange()},r.prototype.updateCurrentLocationRange=function(t){var e,i;return null==t&&(t=this.createLocationRangeFromDOMRange(n())),l(t,this.currentLocationRange)?void 0:(this.currentLocationRange=t,null!=(e=this.delegate)&&\"function\"==typeof e.locationRangeDidChange?e.locationRangeDidChange(null!=(i=this.currentLocationRange)?i.slice(0):void 0):void 0)},r.prototype.createDOMRangeFromLocationRange=function(t){var e,n,i,o;return i=this.findContainerAndOffsetFromLocation(t[0]),n=c(t)?i:null!=(o=this.findContainerAndOffsetFromLocation(t[1]))?o:i,null!=i&&null!=n?(e=document.createRange(),e.setStart.apply(e,i),e.setEnd.apply(e,n),e):void 0},r.prototype.createLocationRangeFromDOMRange=function(t){var e,n;if(null!=t&&this.domRangeWithinElement(t)&&(n=this.findLocationFromContainerAndOffset(t.startContainer,t.startOffset)))return t.collapsed||(e=this.findLocationFromContainerAndOffset(t.endContainer,t.endOffset)),u([n,e])},r.prototype.getLocationAtPoint=function(t){var e,n;return(e=this.createDOMRangeFromPoint(t))&&null!=(n=this.createLocationRangeFromDOMRange(e))?n[0]:void 0},r.prototype.domRangeWithinElement=function(t){return t.collapsed?e(this.element,t.startContainer):e(this.element,t.startContainer)&&e(this.element,t.endContainer)},r}(Trix.BasicObject)}.call(this),function(){var t,e,n,i=function(t,e){function n(){this.constructor=t}for(var i in e)o.call(e,i)&&(t[i]=e[i]);return n.prototype=e.prototype,t.prototype=new n,t.__super__=e.prototype,t},o={}.hasOwnProperty,r=[].slice;e=Trix.rangeIsCollapsed,n=Trix.rangesAreEqual,t=Trix.objectsAreEqual,Trix.EditorController=function(o){function s(t){var e,n;this.editorElement=t.editorElement,e=t.document,n=t.html,this.selectionManager=new Trix.SelectionManager(this.editorElement),this.selectionManager.delegate=this,this.composition=new Trix.Composition,this.composition.delegate=this,this.attachmentManager=new Trix.AttachmentManager(this.composition.getAttachments()),this.attachmentManager.delegate=this,this.inputController=new Trix.InputController(this.editorElement),this.inputController.delegate=this,this.inputController.responder=this.composition,this.compositionController=new Trix.CompositionController(this.editorElement,this.composition),this.compositionController.delegate=this,this.toolbarController=new Trix.ToolbarController(this.editorElement.toolbarElement),this.toolbarController.delegate=this,this.editor=new Trix.Editor(this.composition,this.selectionManager,this.editorElement),null!=e?this.editor.loadDocument(e):this.editor.loadHTML(n)}return i(s,o),s.prototype.registerSelectionManager=function(){return Trix.selectionChangeObserver.registerSelectionManager(this.selectionManager)},s.prototype.unregisterSelectionManager=function(){return Trix.selectionChangeObserver.unregisterSelectionManager(this.selectionManager)},s.prototype.compositionDidChangeDocument=function(){return this.editorElement.notify(\"document-change\"),this.handlingInput?void 0:this.render()},s.prototype.compositionDidChangeCurrentAttributes=function(t){return this.currentAttributes=t,this.toolbarController.updateAttributes(this.currentAttributes),this.updateCurrentActions(),this.editorElement.notify(\"attributes-change\",{attributes:this.currentAttributes})},s.prototype.compositionDidPerformInsertionAtRange=function(t){return this.pasting?this.pastedRange=t:void 0},s.prototype.compositionShouldAcceptFile=function(t){return this.editorElement.notify(\"file-accept\",{file:t})},s.prototype.compositionDidAddAttachment=function(t){var e;return e=this.attachmentManager.manageAttachment(t),this.editorElement.notify(\"attachment-add\",{attachment:e})},s.prototype.compositionDidEditAttachment=function(t){var e;return this.compositionController.rerenderViewForObject(t),e=this.attachmentManager.manageAttachment(t),this.editorElement.notify(\"attachment-edit\",{attachment:e}),this.editorElement.notify(\"change\")},s.prototype.compositionDidRemoveAttachment=function(t){var e;return e=this.attachmentManager.unmanageAttachment(t),this.editorElement.notify(\"attachment-remove\",{attachment:e})},s.prototype.compositionDidStartEditingAttachment=function(t){var e,n;return n=this.composition.document,e=n.getRangeOfAttachment(t),this.attachmentLocationRange=n.locationRangeFromRange(e),this.compositionController.installAttachmentEditorForAttachment(t),this.selectionManager.setLocationRange(this.attachmentLocationRange)},s.prototype.compositionDidStopEditingAttachment=function(){return this.compositionController.uninstallAttachmentEditor(),this.attachmentLocationRange=null},s.prototype.compositionDidRequestChangingSelection=function(t){return!this.loadingSnapshot||this.isFocused()?(this.requestedSelection=t,this.documentWhenSelectionRequested=this.composition.document,this.handlingInput?void 0:this.render()):void 0},s.prototype.compositionWillLoadSnapshot=function(){return this.loadingSnapshot=!0},s.prototype.compositionDidLoadSnapshot=function(){return this.compositionController.refreshViewCache(),this.render(),this.loadingSnapshot=!1},s.prototype.getSelectionManager=function(){return this.selectionManager},s.proxyMethod(\"getSelectionManager().setLocationRange\"),s.proxyMethod(\"getSelectionManager().getLocationRange\"),s.prototype.attachmentManagerDidRequestRemovalOfAttachment=function(t){return this.removeAttachment(t)},s.prototype.compositionControllerWillSyncDocumentView=function(){return this.inputController.editorWillSyncDocumentView(),this.selectionManager.lock(),this.selectionManager.clearSelection()},s.prototype.compositionControllerDidSyncDocumentView=function(){return this.inputController.editorDidSyncDocumentView(),this.selectionManager.unlock(),this.updateCurrentActions(),this.editorElement.notify(\"sync\")},s.prototype.compositionControllerDidRender=function(){var t,e,n;return null!=this.requestedSelection&&(this.documentWhenSelectionRequested.isEqualTo(this.composition.document)&&(n=this.requestedSelection,t=n.locationRange,e=n.pointRange,t?this.selectionManager.setLocationRange(t):e&&this.selectionManager.setLocationRangeFromPointRange(e)),this.composition.updateCurrentAttributes(),this.requestedSelection=null,this.documentWhenSelectionRequested=null),this.editorElement.notify(\"render\")},s.prototype.compositionControllerDidFocus=function(){return this.toolbarController.hideDialog(),this.editorElement.notify(\"focus\")},s.prototype.compositionControllerDidBlur=function(){return this.editorElement.notify(\"blur\")},s.prototype.compositionControllerDidSelectAttachment=function(t){return this.composition.editAttachment(t)},s.prototype.compositionControllerDidRequestDeselectingAttachment=function(){return this.attachmentLocationRange?this.selectionManager.setLocationRange(this.attachmentLocationRange[1]):void 0},s.prototype.compositionControllerWillUpdateAttachment=function(t){return this.editor.recordUndoEntry(\"Edit Attachment\",{context:t.id,consolidatable:!0})},s.prototype.compositionControllerDidRequestRemovalOfAttachment=function(t){return this.removeAttachment(t)},s.prototype.inputControllerWillHandleInput=function(){return this.handlingInput=!0,this.requestedRender=!1},s.prototype.inputControllerDidRequestRender=function(){return this.requestedRender=!0},s.prototype.inputControllerDidHandleInput=function(){return this.handlingInput=!1,this.requestedRender?(this.requestedRender=!1,this.render()):void 0},s.prototype.inputControllerWillPerformTyping=function(){return this.recordTypingUndoEntry()},s.prototype.inputControllerWillCutText=function(){return this.editor.recordUndoEntry(\"Cut\")},s.prototype.inputControllerWillPasteText=function(){return this.editor.recordUndoEntry(\"Paste\"),this.pasting=!0},s.prototype.inputControllerDidPaste=function(t){var e;return e=this.pastedRange,this.pastedRange=null,this.pasting=null,this.editorElement.notify(\"paste\",{pasteData:t,range:e}),this.render()},s.prototype.inputControllerWillMoveText=function(){return this.editor.recordUndoEntry(\"Move\")},s.prototype.inputControllerWillAttachFiles=function(){return this.editor.recordUndoEntry(\"Drop Files\")},s.prototype.inputControllerDidReceiveKeyboardCommand=function(t){return this.toolbarController.applyKeyboardCommand(t)},s.prototype.inputControllerDidStartDrag=function(){return this.locationRangeBeforeDrag=this.selectionManager.getLocationRange()},s.prototype.inputControllerDidReceiveDragOverPoint=function(t){return this.selectionManager.setLocationRangeFromPointRange(t)},s.prototype.inputControllerDidCancelDrag=function(){return this.selectionManager.setLocationRange(this.locationRangeBeforeDrag),this.locationRangeBeforeDrag=null},s.prototype.locationRangeDidChange=function(t){return this.composition.updateCurrentAttributes(),this.updateCurrentActions(),this.attachmentLocationRange&&!n(this.attachmentLocationRange,t)&&this.composition.stopEditingAttachment(),this.editorElement.notify(\"selection-change\")},s.prototype.toolbarDidClickButton=function(){return this.getLocationRange()?void 0:this.setLocationRange({index:0,offset:0})},s.prototype.toolbarDidInvokeAction=function(t){return this.invokeAction(t)},s.prototype.toolbarDidToggleAttribute=function(t){return this.recordFormattingUndoEntry(),this.composition.toggleCurrentAttribute(t),this.render(),this.editorElement.focus()},s.prototype.toolbarDidUpdateAttribute=function(t,e){return this.recordFormattingUndoEntry(),this.composition.setCurrentAttribute(t,e),this.render(),this.editorElement.focus()},s.prototype.toolbarDidRemoveAttribute=function(t){return this.recordFormattingUndoEntry(),this.composition.removeCurrentAttribute(t),this.render(),this.editorElement.focus()},s.prototype.toolbarWillShowDialog=function(){return this.composition.expandSelectionForEditing(),this.freezeSelection()},s.prototype.toolbarDidShowDialog=function(t){return this.editorElement.notify(\"toolbar-dialog-show\",{dialogName:t})},s.prototype.toolbarDidHideDialog=function(t){return this.editorElement.focus(),this.thawSelection(),this.editorElement.notify(\"toolbar-dialog-hide\",{dialogName:t})},s.prototype.freezeSelection=function(){return this.selectionFrozen?void 0:(this.selectionManager.lock(),this.composition.freezeSelection(),this.selectionFrozen=!0,this.render())},s.prototype.thawSelection=function(){return this.selectionFrozen?(this.composition.thawSelection(),this.selectionManager.unlock(),this.selectionFrozen=!1,this.render()):void 0},s.prototype.actions={undo:{test:function(){return this.editor.canUndo()},perform:function(){return this.editor.undo()}},redo:{test:function(){return this.editor.canRedo()},perform:function(){return this.editor.redo()}},link:{test:function(){return this.editor.canActivateAttribute(\"href\")}},increaseBlockLevel:{test:function(){return this.editor.canIncreaseIndentationLevel()},perform:function(){return this.editor.increaseIndentationLevel()&&this.render()}},decreaseBlockLevel:{test:function(){return this.editor.canDecreaseIndentationLevel()},perform:function(){return this.editor.decreaseIndentationLevel()&&this.render()}}},s.prototype.canInvokeAction=function(t){var e,n;return this.actionIsExternal(t)?!0:!!(null!=(e=this.actions[t])&&null!=(n=e.test)?n.call(this):void 0)},s.prototype.invokeAction=function(t){var e,n;return this.actionIsExternal(t)?this.editorElement.notify(\"action-invoke\",{actionName:t}):null!=(e=this.actions[t])&&null!=(n=e.perform)?n.call(this):void 0},s.prototype.actionIsExternal=function(t){return/^x-./.test(t)},s.prototype.getCurrentActions=function(){var t,e;e={};for(t in this.actions)e[t]=this.canInvokeAction(t);return e},s.prototype.updateCurrentActions=function(){var e;return e=this.getCurrentActions(),t(e,this.currentActions)?void 0:(this.currentActions=e,this.toolbarController.updateActions(this.currentActions),this.editorElement.notify(\"actions-change\",{actions:this.currentActions}))},s.prototype.reparse=function(){return this.composition.replaceHTML(this.editorElement.innerHTML)},s.prototype.render=function(){return this.compositionController.render()},s.prototype.removeAttachment=function(t){return this.editor.recordUndoEntry(\"Delete Attachment\"),this.composition.removeAttachment(t),this.render()},s.prototype.recordFormattingUndoEntry=function(){var t;return t=this.selectionManager.getLocationRange(),e(t)?void 0:this.editor.recordUndoEntry(\"Formatting\",{context:this.getUndoContext(),consolidatable:!0})},s.prototype.recordTypingUndoEntry=function(){return this.editor.recordUndoEntry(\"Typing\",{context:this.getUndoContext(this.currentAttributes),consolidatable:!0})},s.prototype.getUndoContext=function(){var t;return t=1<=arguments.length?r.call(arguments,0):[],[this.getLocationContext(),this.getTimeContext()].concat(r.call(t))},s.prototype.getLocationContext=function(){var t;return t=this.selectionManager.getLocationRange(),e(t)?t[0].index:t},s.prototype.getTimeContext=function(){return Trix.config.undoInterval>0?Math.floor((new Date).getTime()/Trix.config.undoInterval):0},s.prototype.isFocused=function(){var t;return this.editorElement===(null!=(t=this.editorElement.ownerDocument)?t.activeElement:void 0)},s}(Trix.Controller)}.call(this),function(){var t,e,n,i,o,r,s;o=Trix.makeElement,r=Trix.selectionElements,s=Trix.triggerEvent,n=Trix.handleEvent,i=Trix.handleEventOnce,e=Trix.defer,t=Trix.AttachmentView.attachmentSelector,Trix.registerElement(\"trix-editor\",function(){var e,a,u,c,l,h;return c=0,e=function(t){return!document.querySelector(\":focus\")&&t.hasAttribute(\"autofocus\")&&document.querySelector(\"[autofocus]\")===t?t.focus():void 0},l=function(t){return t.hasAttribute(\"contenteditable\")?void 0:(t.setAttribute(\"contenteditable\",\"\"),i(\"focus\",{onElement:t,withCallback:function(){return a(t)}}))},a=function(t){return u(t),h(t)},u=function(t){return(\"function\"==typeof document.queryCommandSupported?document.queryCommandSupported(\"enableObjectResizing\"):void 0)?(document.execCommand(\"enableObjectResizing\",!1,!1),n(\"mscontrolselect\",{onElement:t,preventDefault:!0})):void 0},h=function(){var t;return(\"function\"==typeof document.queryCommandSupported?document.queryCommandSupported(\"DefaultParagraphSeparator\"):void 0)&&(t=Trix.config.blockAttributes[\"default\"].tagName,\"div\"===t||\"p\"===t)?document.execCommand(\"DefaultParagraphSeparator\",!1,t):void 0},{defaultCSS:\"%t:empty:not(:focus)::before {\\n  content: attr(placeholder);\\n  color: graytext;\\n}\\n\\n%t a[contenteditable=false] {\\n  cursor: text;\\n}\\n\\n%t img {\\n  max-width: 100%;\\n  height: auto;\\n}\\n\\n%t \"+t+\" figcaption textarea {\\n  resize: none;\\n}\\n\\n%t \"+t+\" figcaption textarea.trix-autoresize-clone {\\n  position: absolute;\\n  left: -9999px;\\n  max-height: 0px;\\n}\\n\\n%t \"+r.selector+\" { \"+r.cssText+\" }\",trixId:{get:function(){return this.hasAttribute(\"trix-id\")?this.getAttribute(\"trix-id\"):(this.setAttribute(\"trix-id\",++c),this.trixId)}},toolbarElement:{get:function(){var t,e,n;return this.hasAttribute(\"toolbar\")?null!=(e=this.ownerDocument)?e.getElementById(this.getAttribute(\"toolbar\")):void 0:this.parentElement?(n=\"trix-toolbar-\"+this.trixId,this.setAttribute(\"toolbar\",n),t=o(\"trix-toolbar\",{id:n}),this.parentElement.insertBefore(t,this),t):void 0}},inputElement:{get:function(){var t,e,n;return this.hasAttribute(\"input\")?null!=(n=this.ownerDocument)?n.getElementById(this.getAttribute(\"input\")):void 0:this.parentElement?(e=\"trix-input-\"+this.trixId,this.setAttribute(\"input\",e),t=o(\"input\",{type:\"hidden\",id:e}),this.parentElement.insertBefore(t,this.nextElementSibling),t):void 0}},editor:{get:function(){var t;return null!=(t=this.editorController)?t.editor:void 0}},name:{get:function(){var t;return null!=(t=this.inputElement)?t.name:void 0}},value:{get:function(){var t;return null!=(t=this.inputElement)?t.value:void 0},set:function(t){var e;return this.defaultValue=t,null!=(e=this.editor)?e.loadHTML(this.defaultValue):void 0}},notify:function(t,e){var n;switch(t){case\"document-change\":this.documentChangedSinceLastRender=!0;break;case\"render\":this.documentChangedSinceLastRender&&(this.documentChangedSinceLastRender=!1,this.notify(\"change\"));break;case\"change\":case\"attachment-add\":case\"attachment-edit\":case\"attachment-remove\":null!=(n=this.inputElement)&&(n.value=Trix.serializeToContentType(this,\"text/html\"))}return this.editorController?s(\"trix-\"+t,{onElement:this,attributes:e}):void 0},createdCallback:function(){return l(this)},attachedCallback:function(){return this.hasAttribute(\"data-trix-internal\")?void 0:(e(this),null==this.editorController&&(this.editorController=new Trix.EditorController({editorElement:this,html:this.defaultValue=this.value})),this.editorController.registerSelectionManager(),this.registerResetListener(),requestAnimationFrame(function(t){return function(){return t.notify(\"initialize\")}}(this)))},detachedCallback:function(){var t;return null!=(t=this.editorController)&&t.unregisterSelectionManager(),this.unregisterResetListener()},registerResetListener:function(){return this.resetListener=this.resetBubbled.bind(this),window.addEventListener(\"reset\",this.resetListener,!1)},unregisterResetListener:function(){return window.removeEventListener(\"reset\",this.resetListener,!1)},resetBubbled:function(t){var e;return t.target!==(null!=(e=this.inputElement)?e.form:void 0)||t.defaultPrevented?void 0:this.reset()},reset:function(){return this.value=this.defaultValue}}}())}.call(this);"
 
 /***/ },
 /* 4 */
+/*!***************************************************************!*\
+  !*** ./app/frontend/javascripts/visualization-show.js.coffee ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var NodesCollection, RelationsCollection, VisualizationGraph, VisualizationModel, VisualizationShow, VisualizationTableNodes, VisualizationTableRelations,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-	VisualizationModel = __webpack_require__(5);
-
-	NodesCollection = __webpack_require__(6);
-
-	RelationsCollection = __webpack_require__(8);
-
-	VisualizationGraph = __webpack_require__(10);
-
-	VisualizationTableNodes = __webpack_require__(50);
-
-	VisualizationTableRelations = __webpack_require__(54);
-
+	
+	VisualizationModel = __webpack_require__(/*! ./models/visualization.js */ 5);
+	
+	NodesCollection = __webpack_require__(/*! ./collections/nodes-collection.js */ 6);
+	
+	RelationsCollection = __webpack_require__(/*! ./collections/relations-collection.js */ 8);
+	
+	VisualizationGraph = __webpack_require__(/*! ./views/visualization-graph.js */ 10);
+	
+	VisualizationTableNodes = __webpack_require__(/*! ./views/visualization-table-nodes.js */ 50);
+	
+	VisualizationTableRelations = __webpack_require__(/*! ./views/visualization-table-relations.js */ 54);
+	
 	VisualizationShow = (function() {
 	  VisualizationShow.prototype.id = null;
-
+	
 	  VisualizationShow.prototype.nodes = null;
-
+	
 	  VisualizationShow.prototype.visualizationGraph = null;
-
+	
 	  VisualizationShow.prototype.visualizationTableNodes = null;
-
+	
 	  VisualizationShow.prototype.visualizationTableRelations = null;
-
+	
 	  VisualizationShow.prototype.$tableSelector = null;
-
+	
 	  function VisualizationShow(_id) {
 	    this.resize = bind(this.resize, this);
 	    console.log('setup visualization', _id);
@@ -151,7 +166,7 @@
 	    });
 	    $('#visualization-table-selector > li > a').click(this.updateTable);
 	  }
-
+	
 	  VisualizationShow.prototype.updateTable = function(e) {
 	    e.preventDefault();
 	    if ($(e.target).parent().hasClass('active')) {
@@ -161,11 +176,11 @@
 	    $('#visualization-table-view .tab-pane.active').removeClass('active');
 	    return $('#visualization-table-view ' + $(e.target).attr('href')).addClass('active');
 	  };
-
+	
 	  VisualizationShow.prototype.resize = function() {
 	    return this.visualizationGraph.resize();
 	  };
-
+	
 	  VisualizationShow.prototype.render = function() {
 	    this.resize();
 	    this.visualization.fetch({
@@ -178,148 +193,163 @@
 	      url: '/api/visualizations/' + this.id + '/relations/'
 	    });
 	  };
-
+	
 	  return VisualizationShow;
-
+	
 	})();
-
+	
 	module.exports = VisualizationShow;
 
 
 /***/ },
 /* 5 */
+/*!*****************************************************************!*\
+  !*** ./app/frontend/javascripts/models/visualization.js.coffee ***!
+  \*****************************************************************/
 /***/ function(module, exports) {
 
 	var Visualization,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
+	
 	Visualization = (function(superClass) {
 	  extend(Visualization, superClass);
-
+	
 	  function Visualization() {
 	    return Visualization.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  Visualization.prototype.paramRoot = 'visualization';
-
+	
 	  Visualization.prototype.urlRoot = '/api/visualizations';
-
+	
 	  Visualization.prototype.defaults = {
 	    parameters: null
 	  };
-
+	
 	  return Visualization;
-
+	
 	})(Backbone.Model);
-
+	
 	module.exports = Visualization;
 
 
 /***/ },
 /* 6 */
+/*!*************************************************************************!*\
+  !*** ./app/frontend/javascripts/collections/nodes-collection.js.coffee ***!
+  \*************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Node, NodesCollection,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	Node = __webpack_require__(7);
-
+	
+	Node = __webpack_require__(/*! ./../models/node.js */ 7);
+	
 	NodesCollection = (function(superClass) {
 	  extend(NodesCollection, superClass);
-
+	
 	  function NodesCollection() {
 	    return NodesCollection.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  NodesCollection.prototype.model = Node;
-
+	
 	  NodesCollection.prototype.url = '/api/nodes';
-
+	
 	  return NodesCollection;
-
+	
 	})(Backbone.Collection);
-
+	
 	module.exports = NodesCollection;
 
 
 /***/ },
 /* 7 */
+/*!********************************************************!*\
+  !*** ./app/frontend/javascripts/models/node.js.coffee ***!
+  \********************************************************/
 /***/ function(module, exports) {
 
 	var Node,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
+	
 	Node = (function(superClass) {
 	  extend(Node, superClass);
-
+	
 	  function Node() {
 	    return Node.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  Node.prototype.paramRoot = 'node';
-
+	
 	  Node.prototype.defaults = {
 	    name: null,
 	    description: null,
 	    visible: false,
 	    node_type: null
 	  };
-
+	
 	  return Node;
-
+	
 	})(Backbone.Model);
-
+	
 	module.exports = Node;
 
 
 /***/ },
 /* 8 */
+/*!*****************************************************************************!*\
+  !*** ./app/frontend/javascripts/collections/relations-collection.js.coffee ***!
+  \*****************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Relation, RelationsCollection,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	Relation = __webpack_require__(9);
-
+	
+	Relation = __webpack_require__(/*! ./../models/relation.js */ 9);
+	
 	RelationsCollection = (function(superClass) {
 	  extend(RelationsCollection, superClass);
-
+	
 	  function RelationsCollection() {
 	    return RelationsCollection.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  RelationsCollection.prototype.model = Relation;
-
+	
 	  RelationsCollection.prototype.url = '/api/relations';
-
+	
 	  return RelationsCollection;
-
+	
 	})(Backbone.Collection);
-
+	
 	module.exports = RelationsCollection;
 
 
 /***/ },
 /* 9 */
+/*!************************************************************!*\
+  !*** ./app/frontend/javascripts/models/relation.js.coffee ***!
+  \************************************************************/
 /***/ function(module, exports) {
 
 	var Relation,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
+	
 	Relation = (function(superClass) {
 	  extend(Relation, superClass);
-
+	
 	  function Relation() {
 	    return Relation.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  Relation.prototype.paramRoot = 'relation';
-
+	
 	  Relation.prototype.defaults = {
 	    source_id: null,
 	    target_id: null,
@@ -328,34 +358,37 @@
 	    relation_type: null,
 	    direction: true
 	  };
-
+	
 	  return Relation;
-
+	
 	})(Backbone.Model);
-
+	
 	module.exports = Relation;
 
 
 /***/ },
 /* 10 */
+/*!**********************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-graph.js.coffee ***!
+  \**********************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var VisualizationGraph, VisualizationGraphCanvas, VisualizationGraphConfiguration, VisualizationGraphInfo, VisualizationGraphNavigation,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	VisualizationGraphCanvas = __webpack_require__(11);
-
-	VisualizationGraphConfiguration = __webpack_require__(13);
-
-	VisualizationGraphNavigation = __webpack_require__(15);
-
-	VisualizationGraphInfo = __webpack_require__(16);
-
+	
+	VisualizationGraphCanvas = __webpack_require__(/*! ./../views/visualization-graph-canvas.js */ 11);
+	
+	VisualizationGraphConfiguration = __webpack_require__(/*! ./../views/visualization-graph-configuration.js */ 13);
+	
+	VisualizationGraphNavigation = __webpack_require__(/*! ./../views/visualization-graph-navigation.js */ 15);
+	
+	VisualizationGraphInfo = __webpack_require__(/*! ./../views/visualization-graph-info.js */ 16);
+	
 	VisualizationGraph = (function(superClass) {
 	  extend(VisualizationGraph, superClass);
-
+	
 	  function VisualizationGraph() {
 	    this.onRelationsSync = bind(this.onRelationsSync, this);
 	    this.onNodesSync = bind(this.onNodesSync, this);
@@ -363,21 +396,21 @@
 	    this.onPanelConfigureShow = bind(this.onPanelConfigureShow, this);
 	    return VisualizationGraph.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  VisualizationGraph.prototype.el = '.visualization-graph-component';
-
+	
 	  VisualizationGraph.prototype.visualizationSync = false;
-
+	
 	  VisualizationGraph.prototype.nodesSync = false;
-
+	
 	  VisualizationGraph.prototype.relationsSync = false;
-
+	
 	  VisualizationGraph.prototype.visualizationGraphCanvas = null;
-
+	
 	  VisualizationGraph.prototype.visualizationGraphConfiguration = null;
-
+	
 	  VisualizationGraph.prototype.visualizationGraphNavigation = null;
-
+	
 	  VisualizationGraph.prototype.initialize = function() {
 	    console.log('initialize Graph', this.collection);
 	    this.model.once('sync', this.onVisualizationSync, this);
@@ -389,7 +422,7 @@
 	    $('#visualization-share .close').click(this.onPanelShareHide);
 	    return this.resize();
 	  };
-
+	
 	  VisualizationGraph.prototype.onPanelConfigureShow = function() {
 	    $('html, body').animate({
 	      scrollTop: 0
@@ -397,20 +430,20 @@
 	    this.visualizationGraphConfiguration.$el.addClass('active');
 	    return this.visualizationGraphCanvas.setOffsetX(200);
 	  };
-
+	
 	  VisualizationGraph.prototype.onPanelConfigureHide = function() {
 	    this.visualizationGraphConfiguration.$el.removeClass('active');
 	    return this.visualizationGraphCanvas.setOffsetX(0);
 	  };
-
+	
 	  VisualizationGraph.prototype.onPanelShareShow = function() {
 	    return $('#visualization-share').addClass('active');
 	  };
-
+	
 	  VisualizationGraph.prototype.onPanelShareHide = function() {
 	    return $('#visualization-share').removeClass('active');
 	  };
-
+	
 	  VisualizationGraph.prototype.onVisualizationSync = function(visualization) {
 	    this.visualizationSync = true;
 	    console.log('onVisualizationSync');
@@ -418,7 +451,7 @@
 	      return this.render();
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodesSync = function(nodes) {
 	    this.nodesSync = true;
 	    console.log('onNodesSync');
@@ -426,7 +459,7 @@
 	      return this.render();
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.onRelationsSync = function(relations) {
 	    this.relationsSync = true;
 	    console.log('onRelationsSync');
@@ -434,7 +467,7 @@
 	      return this.render();
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.getDataFromCollection = function() {
 	    var data;
 	    data = {
@@ -451,7 +484,7 @@
 	    });
 	    return data;
 	  };
-
+	
 	  VisualizationGraph.prototype.render = function() {
 	    console.log('render Graph');
 	    this.visualizationGraphConfiguration = new VisualizationGraphConfiguration({
@@ -487,7 +520,7 @@
 	    Backbone.on('visualization.navigation.zoomout', this.onZoomOut, this);
 	    return Backbone.on('visualization.navigation.fullscreen', this.onFullscreen, this);
 	  };
-
+	
 	  VisualizationGraph.prototype.resize = function() {
 	    var h;
 	    h = $('body').hasClass('fullscreen') ? $(window).height() : $(window).height() - 50 - 64 - 64;
@@ -496,13 +529,13 @@
 	      return this.visualizationGraphCanvas.resize();
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.setOffsetY = function(offset) {
 	    if (this.visualizationGraphCanvas) {
 	      return this.visualizationGraphCanvas.setOffsetY(offset);
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodesAdd = function(node) {
 	    return this.collection.nodes.once('sync', (function(_this) {
 	      return function(model) {
@@ -512,18 +545,18 @@
 	      };
 	    })(this), this);
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodeChangeName = function(node) {
 	    console.log('onNodeChangeName', node.attributes.name);
 	    this.visualizationGraphCanvas.updateNodesLabels();
 	    return this.updateGraphInfoNode(node);
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodeChangeDescription = function(node) {
 	    console.log('onNodeChangeDescription', node.attributes.description);
 	    return this.updateGraphInfoNode(node);
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodeChangeVisible = function(node) {
 	    console.log('onNodeChangeVisibe', node);
 	    if (node.attributes.visible) {
@@ -536,7 +569,7 @@
 	    }
 	    return this.visualizationGraphCanvas.updateLayout();
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodesRemove = function(node) {
 	    console.log('onNodesRemove', node.attributes.name);
 	    this.visualizationGraphCanvas.removeNode(node.attributes);
@@ -545,7 +578,7 @@
 	      return this.visualizationGraphInfo.hide();
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.onRelationsChangeNode = function(relation) {
 	    console.log('onRelationsChange', relation);
 	    if (relation.attributes.source_id && relation.attributes.target_id) {
@@ -554,101 +587,104 @@
 	      return this.visualizationGraphCanvas.updateLayout();
 	    }
 	  };
-
+	
 	  VisualizationGraph.prototype.onRelationsChangeType = function(relation) {
 	    console.log('onRelationsChangeType', relation);
 	    return this.visualizationGraphCanvas.updateRelationsLabels();
 	  };
-
+	
 	  VisualizationGraph.prototype.onRelationsChangeDirection = function(relation) {
 	    return this.visualizationGraphCanvas.updateRelations();
 	  };
-
+	
 	  VisualizationGraph.prototype.onRelationsRemove = function(relation) {
 	    this.visualizationGraphCanvas.removeRelation(relation.attributes);
 	    return this.visualizationGraphCanvas.updateLayout();
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodeShowInfo = function(e) {
 	    console.log('show info', e.node);
 	    this.visualizationGraphCanvas.focusNode(e.node);
 	    return this.visualizationGraphInfo.show(e.node);
 	  };
-
+	
 	  VisualizationGraph.prototype.onNodeHideInfo = function(e) {
 	    this.visualizationGraphCanvas.unfocusNode();
 	    return this.visualizationGraphInfo.hide();
 	  };
-
+	
 	  VisualizationGraph.prototype.onUpdateNodesColor = function(e) {
 	    return this.visualizationGraphCanvas.updateNodesColor(e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onUpdateNodesSize = function(e) {
 	    return this.visualizationGraphCanvas.updateNodesSize(e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onToogleNodesLabels = function(e) {
 	    return this.visualizationGraphCanvas.toogleNodesLabels(e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onToogleNodesWithoutRelation = function(e) {
 	    return this.visualizationGraphCanvas.toogleNodesWithoutRelation(e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onUpdateRelationsCurvature = function(e) {
 	    return this.visualizationGraphCanvas.updateRelationsCurvature(e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onUpdateRelationsLineStyle = function(e) {
 	    return this.visualizationGraphCanvas.updateRelationsLineStyle(e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onUpdateForceLayoutParam = function(e) {
 	    return this.visualizationGraphCanvas.updateForceLayoutParameter(e.name, e.value);
 	  };
-
+	
 	  VisualizationGraph.prototype.onZoomIn = function(e) {
 	    return this.visualizationGraphCanvas.zoomIn();
 	  };
-
+	
 	  VisualizationGraph.prototype.onZoomOut = function(e) {
 	    return this.visualizationGraphCanvas.zoomOut();
 	  };
-
+	
 	  VisualizationGraph.prototype.onFullscreen = function(e) {
 	    $('body').toggleClass('fullscreen');
 	    return this.resize();
 	  };
-
+	
 	  VisualizationGraph.prototype.updateGraphInfoNode = function(node) {
 	    if (this.visualizationGraphInfo.isVisible() && this.visualizationGraphInfo.node.id === node.id) {
 	      this.visualizationGraphInfo.node = node;
 	      return this.visualizationGraphInfo.render();
 	    }
 	  };
-
+	
 	  return VisualizationGraph;
-
+	
 	})(Backbone.View);
-
+	
 	module.exports = VisualizationGraph;
 
 
 /***/ },
 /* 11 */
+/*!*****************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-graph-canvas.js.coffee ***!
+  \*****************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var VisualizationGraphCanvas, d3,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	d3 = __webpack_require__(12);
-
+	
+	d3 = __webpack_require__(/*! d3 */ 12);
+	
 	VisualizationGraphCanvas = (function(superClass) {
 	  extend(VisualizationGraphCanvas, superClass);
-
+	
 	  function VisualizationGraphCanvas() {
 	    this.setNodesRelationsSize = bind(this.setNodesRelationsSize, this);
 	    this.getNodeSize = bind(this.getNodeSize, this);
@@ -674,7 +710,7 @@
 	    this.removeRelationData = bind(this.removeRelationData, this);
 	    return VisualizationGraphCanvas.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  VisualizationGraphCanvas.prototype.COLORS = {
 	    'solid-1': '#ef9387',
 	    'solid-2': '#fccf80',
@@ -699,53 +735,53 @@
 	    'quantitative-9': '#ffe795',
 	    'quantitative-10': '#fff0c2'
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.COLOR_QUALITATIVE = null;
-
+	
 	  VisualizationGraphCanvas.prototype.COLOR_QUANTITATIVE = null;
-
+	
 	  VisualizationGraphCanvas.prototype.svg = null;
-
+	
 	  VisualizationGraphCanvas.prototype.container = null;
-
+	
 	  VisualizationGraphCanvas.prototype.color = null;
-
+	
 	  VisualizationGraphCanvas.prototype.data = null;
-
+	
 	  VisualizationGraphCanvas.prototype.data_nodes = [];
-
+	
 	  VisualizationGraphCanvas.prototype.data_nodes_map = d3.map();
-
+	
 	  VisualizationGraphCanvas.prototype.data_relations = [];
-
+	
 	  VisualizationGraphCanvas.prototype.data_relations_visibles = [];
-
+	
 	  VisualizationGraphCanvas.prototype.nodes_cont = null;
-
+	
 	  VisualizationGraphCanvas.prototype.nodes_labels_cont = null;
-
+	
 	  VisualizationGraphCanvas.prototype.relations_cont = null;
-
+	
 	  VisualizationGraphCanvas.prototype.relations_labels_cont = null;
-
+	
 	  VisualizationGraphCanvas.prototype.nodes = null;
-
+	
 	  VisualizationGraphCanvas.prototype.nodes_labels = null;
-
+	
 	  VisualizationGraphCanvas.prototype.relations = null;
-
+	
 	  VisualizationGraphCanvas.prototype.relations_labels = null;
-
+	
 	  VisualizationGraphCanvas.prototype.force = null;
-
+	
 	  VisualizationGraphCanvas.prototype.forceDrag = null;
-
+	
 	  VisualizationGraphCanvas.prototype.linkedByIndex = {};
-
+	
 	  VisualizationGraphCanvas.prototype.parameters = null;
-
+	
 	  VisualizationGraphCanvas.prototype.nodes_relations_size = null;
-
+	
 	  VisualizationGraphCanvas.prototype.viewport = {
 	    width: 0,
 	    height: 0,
@@ -769,7 +805,7 @@
 	    },
 	    scale: 1
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.initialize = function(options) {
 	    var defs;
 	    this.COLOR_QUALITATIVE = [this.COLORS['solid-1'], this.COLORS['solid-2'], this.COLORS['solid-3'], this.COLORS['solid-4'], this.COLORS['solid-5'], this.COLORS['solid-6'], this.COLORS['solid-7'], this.COLORS['solid-8'], this.COLORS['solid-9'], this.COLORS['solid-10'], this.COLORS['solid-11'], this.COLORS['solid-12']];
@@ -800,7 +836,7 @@
 	    this.rescale();
 	    return this.updateLayout();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.initializeData = function(data) {
 	    console.log('initializeData');
 	    data.nodes.forEach((function(_this) {
@@ -830,7 +866,7 @@
 	    console.log('current nodes', this.data_nodes);
 	    return console.log('current relations', this.data_relations_visibles);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateLayout = function() {
 	    console.log('updateLayout');
 	    this.updateRelations();
@@ -839,7 +875,7 @@
 	    this.updateNodesLabels();
 	    return this.updateForce();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateNodes = function() {
 	    this.nodes = this.nodes_cont.selectAll('.node').data(this.data_nodes);
 	    this.nodes.enter().append('circle').attr('class', 'node').call(this.forceDrag).on('mouseover', this.onNodeOver).on('mouseout', this.onNodeOut).on('click', this.onNodeClick).on('dblclick', this.onNodeDoubleClick);
@@ -848,7 +884,7 @@
 	    }).attr('r', this.getNodeSize).style('fill', this.getNodeColor).style('stroke', this.getNodeColor);
 	    return this.nodes.exit().remove();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateRelations = function() {
 	    this.relations = this.relations_cont.selectAll('.relation').data(this.data_relations_visibles);
 	    this.relations.enter().append('path').attr('class', 'relation');
@@ -857,7 +893,7 @@
 	    }).attr('marker-end', this.getRelationMarkerEnd).attr('marker-start', this.getRelationMarkerStart);
 	    return this.relations.exit().remove();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateNodesLabels = function() {
 	    this.nodes_labels = this.nodes_labels_cont.selectAll('.node-label').data(this.data_nodes);
 	    this.nodes_labels.enter().append('text').attr('id', function(d, i) {
@@ -869,10 +905,10 @@
 	    this.nodes_labels.call(this.formatNodesLabels);
 	    return this.nodes_labels.exit().remove();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateRelationsLabels = function() {
-	    this.relations_labels = this.relations_labels_cont.selectAll('.relation-label-g').data(this.data_relations_visibles);
-	    this.relations_labels.enter().append('g').attr('class', 'relation-label-g').append('text').attr('id', function(d) {
+	    this.relations_labels = this.relations_labels_cont.selectAll('.relation-label').data(this.data_relations_visibles);
+	    this.relations_labels.enter().append('text').attr('id', function(d) {
 	      return 'relation-label-' + d.id;
 	    }).attr('class', 'relation-label').attr('x', 0).attr('dy', -4).append('textPath').attr('xlink:href', function(d) {
 	      return '#relation-' + d.id;
@@ -882,16 +918,16 @@
 	    });
 	    return this.relations_labels.exit().remove();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateForce = function() {
 	    return this.force.nodes(this.data_nodes).links(this.data_relations_visibles).start();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.addNodeData = function(node) {
 	    this.data_nodes_map.set(node.id, node);
 	    return this.data_nodes.push(node);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.removeNodeData = function(node) {
 	    this.data_nodes_map.remove(node.id);
 	    return this.data_nodes = this.data_nodes.filter((function(_this) {
@@ -900,7 +936,7 @@
 	      };
 	    })(this));
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.addRelationData = function(relation) {
 	    var index;
 	    index = this.data_relations.indexOf(relation);
@@ -916,7 +952,7 @@
 	      return this.linkedByIndex[relation.source_id + ',' + relation.target_id] = true;
 	    }
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.removeRelationData = function(relation) {
 	    var index;
 	    console.log('remove relation from data_relations', this.data_relations);
@@ -927,7 +963,7 @@
 	    }
 	    return this.removeVisibleRelationData(relation);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.removeVisibleRelationData = function(relation) {
 	    var index;
 	    console.log('remove relation from data_relations_visibles', this.data_relations_visibles);
@@ -936,19 +972,19 @@
 	      return this.data_relations_visibles.splice(index, 1);
 	    }
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.addNode = function(node) {
 	    console.log('addNode', node);
 	    return this.addNodeData(node);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.removeNode = function(node) {
 	    console.log('removeNode', node);
 	    this.nodes.selectAll('#node-' + node.id).classed('active', false);
 	    this.removeNodeData(node);
 	    return this.removeNodeRelations(node);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.removeNodeRelations = function(node) {
 	    return this.data_relations_visibles = this.data_relations_visibles.filter((function(_this) {
 	      return function(d) {
@@ -956,7 +992,7 @@
 	      };
 	    })(this));
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.addRelation = function(relation) {
 	    console.log('addRelation', relation);
 	    this.addRelationData(relation);
@@ -964,7 +1000,7 @@
 	      return this.setNodesRelationsSize();
 	    }
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.removeRelation = function(relation) {
 	    console.log('removeRelation', relation);
 	    this.removeRelationData(relation);
@@ -972,7 +1008,7 @@
 	      return this.setNodesRelationsSize();
 	    }
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.showNode = function(node) {
 	    console.log('show node', node);
 	    this.addNodeData(node);
@@ -984,20 +1020,20 @@
 	      };
 	    })(this));
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.hideNode = function(node) {
 	    return this.removeNode(node);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.focusNode = function(node) {
 	    this.unfocusNode();
 	    return this.nodes_cont.selectAll('#node-' + node.id).classed('active', true);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.unfocusNode = function() {
 	    return this.nodes_cont.selectAll('.active').classed('active', false);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.resize = function() {
 	    this.viewport.width = this.$el.width();
 	    this.viewport.height = this.$el.height();
@@ -1008,7 +1044,7 @@
 	    this.rescale();
 	    return this.force.size([this.viewport.width, this.viewport.height]);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.rescale = function() {
 	    var translateStr;
 	    this.container.attr('transform', this.getContainerTransform());
@@ -1018,26 +1054,26 @@
 	    this.nodes_cont.attr('transform', translateStr);
 	    return this.nodes_labels_cont.attr('transform', translateStr);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.setOffsetX = function(offset) {
 	    this.viewport.offsetx = offset < 0 ? 0 : offset;
 	    return this.container.transition().duration(400).ease('ease-out').attr('transform', this.getContainerTransform());
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.setOffsetY = function(offset) {
 	    this.viewport.offsety = offset < 0 ? 0 : offset;
 	    return this.container.attr('transform', this.getContainerTransform());
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getContainerTransform = function() {
 	    return 'translate(' + (this.viewport.center.x + this.viewport.origin.x + this.viewport.x - this.viewport.offsetx) + ',' + (this.viewport.center.y + this.viewport.origin.y + this.viewport.y - this.viewport.offsety) + ')scale(' + this.viewport.scale + ')';
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateNodesColor = function(value) {
 	    this.parameters.nodesColor = value;
 	    return this.nodes.style('fill', this.getNodeColor).style('stroke', this.getNodeColor);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateNodesSize = function(value) {
 	    console.log('updateNodesSize', value);
 	    this.parameters.nodesSize = parseInt(value);
@@ -1048,11 +1084,11 @@
 	    this.nodes_labels.selectAll('.first-line').attr('dy', this.getNodeLabelYPos);
 	    return this.relations.attr('d', this.drawRelationPath);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.toogleNodesLabels = function(value) {
 	    return this.nodes_labels.classed('hide', !value);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.toogleNodesWithoutRelation = function(value) {
 	    if (value) {
 	      this.data_nodes.forEach((function(_this) {
@@ -1073,16 +1109,16 @@
 	    }
 	    return this.updateLayout();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateRelationsCurvature = function(value) {
 	    this.parameters.relationsCurvature = value;
 	    return this.onTick();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateRelationsLineStyle = function(value) {
 	    return this.relations_cont.attr('class', 'relations-cont ' + this.getRelationsLineStyle(value));
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getRelationsLineStyle = function(value) {
 	    var lineStyle;
 	    lineStyle = (function() {
@@ -1097,7 +1133,7 @@
 	    })();
 	    return lineStyle;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.updateForceLayoutParameter = function(param, value) {
 	    this.force.stop();
 	    if (param === 'linkDistance') {
@@ -1115,17 +1151,17 @@
 	    }
 	    return this.force.start();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.zoomIn = function() {
 	    this.viewport.scale *= 1.2;
 	    return this.rescale();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.zoomOut = function() {
 	    this.viewport.scale /= 1.2;
 	    return this.rescale();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onCanvasDrag = function() {
 	    this.viewport.x += d3.event.dx;
 	    this.viewport.y += d3.event.dy;
@@ -1134,11 +1170,11 @@
 	    this.rescale();
 	    return d3.event.sourceEvent.stopPropagation();
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onCanvasDragStart = function() {
 	    return this.svg.style('cursor', 'move');
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onCanvasDragEnd = function() {
 	    if (this.viewport.dx === 0 && this.viewport.dy === 0) {
 	      Backbone.trigger('visualization.node.hideInfo');
@@ -1147,13 +1183,13 @@
 	    this.viewport.dx = this.viewport.dy = 0;
 	    return this.svg.style('cursor', 'default');
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onNodeDragStart = function(d) {
 	    d3.event.sourceEvent.stopPropagation();
 	    this.viewport.drag.x = d.x;
 	    return this.viewport.drag.y = d.y;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onNodeDragEnd = function(d) {
 	    d3.event.sourceEvent.stopPropagation();
 	    if (this.viewport.drag.x === d.x && this.viewport.drag.y === d.y) {
@@ -1161,7 +1197,7 @@
 	    }
 	    return d.fixed = true;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onNodeOver = function(d) {
 	    this.nodes_labels.classed('weaken', true);
 	    this.nodes_labels.classed('highlighted', (function(_this) {
@@ -1175,21 +1211,21 @@
 	        return o.source.index === d.index || o.target.index === d.index;
 	      };
 	    })(this));
-	    return this.relations_labels.selectAll('.relation-label').classed('highlighted', (function(_this) {
+	    return this.relations_labels.classed('highlighted', (function(_this) {
 	      return function(o) {
 	        return o.source.index === d.index || o.target.index === d.index;
 	      };
 	    })(this));
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onNodeOut = function(d) {
 	    this.nodes_labels.classed('weaken', false);
 	    this.nodes_labels.classed('highlighted', false);
 	    this.relations.classed('weaken', false);
 	    this.relations.classed('highlighted', false);
-	    return this.relations_labels.selectAll('.relation-label').classed('highlighted', false);
+	    return this.relations_labels.classed('highlighted', false);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onNodeClick = function(d) {
 	    if (d3.event.defaultPrevented) {
 	      return;
@@ -1198,11 +1234,11 @@
 	      node: d
 	    });
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onNodeDoubleClick = function(d) {
 	    return d.fixed = false;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.onTick = function() {
 	    this.relations.attr('d', this.drawRelationPath).attr('marker-end', this.getRelationMarkerEnd).attr('marker-start', this.getRelationMarkerStart);
 	    this.nodes.attr('transform', function(d) {
@@ -1212,7 +1248,7 @@
 	      return 'translate(' + d.x + ',' + d.y + ')';
 	    });
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.drawRelationPath = function(d) {
 	    var diff, dist, div, dx, dy, free, length, p2, path, prod, scale, sum, unit, v2;
 	    length = function(arg) {
@@ -1286,11 +1322,11 @@
 	    }
 	    return path;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getNodeById = function(id) {
 	    return this.data_nodes_map.get(id);
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getNodeRelations = function(node) {
 	    var arr;
 	    arr = [];
@@ -1301,21 +1337,21 @@
 	    });
 	    return arr;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.hasNodeRelations = function(node) {
 	    return this.data_relations_visibles.some(function(d) {
 	      return d.source_id === node.id || d.target_id === node.id;
 	    });
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.areNodesRelated = function(a, b) {
 	    return this.linkedByIndex[a.id + ',' + b.id] || this.linkedByIndex[b.id + ',' + a.id] || a.id === b.id;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getNodeLabelYPos = function(d) {
 	    return parseInt(this.svg.select('#node-' + d.id).attr('r')) + 13;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getNodeColor = function(d) {
 	    var color;
 	    if (this.parameters.nodesColor === 'qualitative') {
@@ -1327,7 +1363,7 @@
 	    }
 	    return color;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getNodeSize = function(d) {
 	    var size;
 	    if (this.parameters.nodesSize === 1) {
@@ -1337,7 +1373,7 @@
 	    }
 	    return size;
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getRelationMarkerEnd = function(d) {
 	    if (d.direction && d.angle >= 0) {
 	      return 'url(#arrow-end)';
@@ -1345,7 +1381,7 @@
 	      return '';
 	    }
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.getRelationMarkerStart = function(d) {
 	    if (d.direction && d.angle < 0) {
 	      return 'url(#arrow-start)';
@@ -1353,7 +1389,7 @@
 	      return '';
 	    }
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.setNodesRelationsSize = function() {
 	    this.nodes_relations_size = {};
 	    this.data_nodes.forEach((function(_this) {
@@ -1371,7 +1407,7 @@
 	      return d.value;
 	    });
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.formatNodesLabels = function(nodes) {
 	    return nodes.each(function() {
 	      var dy, i, line, node, tspan, word, words;
@@ -1400,7 +1436,7 @@
 	      }
 	    });
 	  };
-
+	
 	  VisualizationGraphCanvas.prototype.mixColor = function(c1, c2, weight) {
 	    var color, d2h, h2d, i, j, v1, v2, val;
 	    d2h = function(d) {
@@ -1422,16 +1458,19 @@
 	    }
 	    return color;
 	  };
-
+	
 	  return VisualizationGraphCanvas;
-
+	
 	})(Backbone.View);
-
+	
 	module.exports = VisualizationGraphCanvas;
 
 
 /***/ },
 /* 12 */
+/*!********************!*\
+  !*** ./~/d3/d3.js ***!
+  \********************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function() {
@@ -3147,7 +3186,7 @@
 	        {
 	          return hsl(parseFloat(m2[0]), parseFloat(m2[1]) / 100, parseFloat(m2[2]) / 100);
 	        }
-
+	
 	       case "rgb":
 	        {
 	          return rgb(d3_rgb_parseNumber(m2[0]), d3_rgb_parseNumber(m2[1]), d3_rgb_parseNumber(m2[2]));
@@ -3667,33 +3706,33 @@
 	        comma = true;
 	        type = "g";
 	        break;
-
+	
 	       case "%":
 	        scale = 100;
 	        suffix = "%";
 	        type = "f";
 	        break;
-
+	
 	       case "p":
 	        scale = 100;
 	        suffix = "%";
 	        type = "r";
 	        break;
-
+	
 	       case "b":
 	       case "o":
 	       case "x":
 	       case "X":
 	        if (symbol === "#") prefix = "0" + type.toLowerCase();
-
+	
 	       case "c":
 	        exponent = false;
-
+	
 	       case "d":
 	        integer = true;
 	        precision = 0;
 	        break;
-
+	
 	       case "s":
 	        scale = -1;
 	        type = "r";
@@ -7132,15 +7171,15 @@
 	         case 0:
 	          find(node, x1, y1, xm, ym);
 	          break;
-
+	
 	         case 1:
 	          find(node, xm, y1, x2, ym);
 	          break;
-
+	
 	         case 2:
 	          find(node, x1, ym, xm, y2);
 	          break;
-
+	
 	         case 3:
 	          find(node, xm, ym, x2, y2);
 	          break;
@@ -10990,18 +11029,21 @@
 
 /***/ },
 /* 13 */
+/*!************************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-graph-configuration.js.coffee ***!
+  \************************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var BootstrapSwitch, VisualizationGraphConfiguration,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	BootstrapSwitch = __webpack_require__(14);
-
+	
+	BootstrapSwitch = __webpack_require__(/*! bootstrap-switch */ 14);
+	
 	VisualizationGraphConfiguration = (function(superClass) {
 	  extend(VisualizationGraphConfiguration, superClass);
-
+	
 	  function VisualizationGraphConfiguration() {
 	    this.onResetDefaults = bind(this.onResetDefaults, this);
 	    this.onUpdateVisualizationParemeters = bind(this.onUpdateVisualizationParemeters, this);
@@ -11013,11 +11055,11 @@
 	    this.onChangeValue = bind(this.onChangeValue, this);
 	    return VisualizationGraphConfiguration.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  VisualizationGraphConfiguration.prototype.el = '.visualization-graph-panel-configuration';
-
+	
 	  VisualizationGraphConfiguration.prototype.parameters = null;
-
+	
 	  VisualizationGraphConfiguration.prototype.parametersDefault = {
 	    nodesColor: 'solid-1',
 	    nodesSize: 11,
@@ -11031,7 +11073,7 @@
 	    theta: 0.8,
 	    gravity: 0.1
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onChangeValue = function(e) {
 	    var key, value;
 	    key = $(e.target).attr('name');
@@ -11042,7 +11084,7 @@
 	      value: value
 	    });
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onChangeNodesColor = function(e) {
 	    this.parameters.nodesColor = $(e.target).find('.active').data('value');
 	    console.log('onChangeNodesColor', this.parameters.nodesColor);
@@ -11051,7 +11093,7 @@
 	    });
 	    return this.updateParameters();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onChangeNodesSize = function(e) {
 	    this.parameters.nodesSize = parseInt($(e.target).find('.active').data('value'));
 	    console.log('onChangeNodesSize', this.parameters.nodesSize);
@@ -11060,7 +11102,7 @@
 	    });
 	    return this.updateParameters();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onToogleNodesLabel = function(e, state) {
 	    this.parameters.showNodesLabel = state;
 	    console.log('onToogleNodesLabel', this.parameters.showNodesLabel);
@@ -11069,14 +11111,14 @@
 	    });
 	    return this.updateParameters();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onChangeRelationsCurvature = function(e) {
 	    this.parameters.relationsCurvature = $(e.target).val();
 	    return Backbone.trigger('visualization.config.updateRelationsCurvature', {
 	      value: this.parameters.relationsCurvature
 	    });
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onChangeRelationsLineStyle = function(e) {
 	    this.parameters.relationsLineStyle = parseInt($(e.target).val());
 	    Backbone.trigger('visualization.config.updateRelationsLineStyle', {
@@ -11084,11 +11126,11 @@
 	    });
 	    return this.updateParameters();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onUpdateVisualizationParemeters = function(e) {
 	    return this.updateParameters();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onResetDefaults = function(e) {
 	    e.preventDefault();
 	    $(e.target).blur();
@@ -11101,7 +11143,7 @@
 	    this.setupSlidersValues();
 	    return this.updateParameters();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.setupParameters = function() {
 	    this.parameters = this.parameters || {};
 	    this.parameters.nodesColor = this.parameters.nodesColor || this.parametersDefault.nodesColor;
@@ -11121,13 +11163,13 @@
 	    this.$el.find('#relations-line-style').val(this.parameters.relationsLineStyle);
 	    return this.setupSlidersValues();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.updateParameters = function() {
 	    return this.model.save({
 	      parameters: JSON.stringify(this.parameters)
 	    });
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.setupSlidersValues = function() {
 	    this.$el.find('#curvature').slider('setValue', parseFloat(this.parameters.relationsCurvature));
 	    this.$el.find('#linkdistance').slider('setValue', parseFloat(this.parameters.linkDistance));
@@ -11137,11 +11179,11 @@
 	    this.$el.find('#theta').slider('setValue', parseFloat(this.parameters.theta));
 	    return this.$el.find('#gravity').slider('setValue', parseFloat(this.parameters.gravity));
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.initialize = function() {
 	    return this.render();
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.render = function() {
 	    var $sliders;
 	    this.parameters = $.parseJSON(this.model.get('parameters'));
@@ -11166,7 +11208,7 @@
 	    this.$el.find('#reset-defaults').click(this.onResetDefaults);
 	    return this;
 	  };
-
+	
 	  VisualizationGraphConfiguration.prototype.onDropboxSelectChange = function(e) {
 	    if ($(this).data('value') === void 0) {
 	      return;
@@ -11180,16 +11222,19 @@
 	    }
 	    return $(this).parent().parent().trigger('change');
 	  };
-
+	
 	  return VisualizationGraphConfiguration;
-
+	
 	})(Backbone.View);
-
+	
 	module.exports = VisualizationGraphConfiguration;
 
 
 /***/ },
 /* 14 */
+/*!********************************************************!*\
+  !*** ./~/bootstrap-switch/dist/js/bootstrap-switch.js ***!
+  \********************************************************/
 /***/ function(module, exports) {
 
 	/* ========================================================================
@@ -11212,10 +11257,10 @@
 	 * limitations under the License.
 	 * ========================================================================
 	 */
-
+	
 	(function() {
 	  var __slice = [].slice;
-
+	
 	  (function($, window) {
 	    "use strict";
 	    var BootstrapSwitch;
@@ -11311,9 +11356,9 @@
 	        this._externalLabelHandler();
 	        this.$element.trigger("init.bootstrapSwitch");
 	      }
-
+	
 	      BootstrapSwitch.prototype._constructor = BootstrapSwitch;
-
+	
 	      BootstrapSwitch.prototype.state = function(value, skip) {
 	        if (typeof value === "undefined") {
 	          return this.options.state;
@@ -11331,7 +11376,7 @@
 	        this.$element.prop("checked", value).trigger("change.bootstrapSwitch", skip);
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.toggleState = function(skip) {
 	        if (this.options.disabled || this.options.readonly) {
 	          return this.$element;
@@ -11343,7 +11388,7 @@
 	          return this.$element.prop("checked", !this.options.state).trigger("change.bootstrapSwitch", skip);
 	        }
 	      };
-
+	
 	      BootstrapSwitch.prototype.size = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.size;
@@ -11359,7 +11404,7 @@
 	        this.options.size = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.animate = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.animate;
@@ -11370,13 +11415,13 @@
 	        }
 	        return this.toggleAnimate();
 	      };
-
+	
 	      BootstrapSwitch.prototype.toggleAnimate = function() {
 	        this.options.animate = !this.options.animate;
 	        this.$wrapper.toggleClass("" + this.options.baseClass + "-animate");
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.disabled = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.disabled;
@@ -11387,14 +11432,14 @@
 	        }
 	        return this.toggleDisabled();
 	      };
-
+	
 	      BootstrapSwitch.prototype.toggleDisabled = function() {
 	        this.options.disabled = !this.options.disabled;
 	        this.$element.prop("disabled", this.options.disabled);
 	        this.$wrapper.toggleClass("" + this.options.baseClass + "-disabled");
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.readonly = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.readonly;
@@ -11405,14 +11450,14 @@
 	        }
 	        return this.toggleReadonly();
 	      };
-
+	
 	      BootstrapSwitch.prototype.toggleReadonly = function() {
 	        this.options.readonly = !this.options.readonly;
 	        this.$element.prop("readonly", this.options.readonly);
 	        this.$wrapper.toggleClass("" + this.options.baseClass + "-readonly");
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.indeterminate = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.indeterminate;
@@ -11423,7 +11468,7 @@
 	        }
 	        return this.toggleIndeterminate();
 	      };
-
+	
 	      BootstrapSwitch.prototype.toggleIndeterminate = function() {
 	        this.options.indeterminate = !this.options.indeterminate;
 	        this.$element.prop("indeterminate", this.options.indeterminate);
@@ -11431,7 +11476,7 @@
 	        this._containerPosition();
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.inverse = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.inverse;
@@ -11442,7 +11487,7 @@
 	        }
 	        return this.toggleInverse();
 	      };
-
+	
 	      BootstrapSwitch.prototype.toggleInverse = function() {
 	        var $off, $on;
 	        this.$wrapper.toggleClass("" + this.options.baseClass + "-inverse");
@@ -11455,7 +11500,7 @@
 	        this.options.inverse = !this.options.inverse;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.onColor = function(value) {
 	        var color;
 	        color = this.options.onColor;
@@ -11469,7 +11514,7 @@
 	        this.options.onColor = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.offColor = function(value) {
 	        var color;
 	        color = this.options.offColor;
@@ -11483,7 +11528,7 @@
 	        this.options.offColor = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.onText = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.onText;
@@ -11494,7 +11539,7 @@
 	        this.options.onText = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.offText = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.offText;
@@ -11505,7 +11550,7 @@
 	        this.options.offText = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.labelText = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.labelText;
@@ -11515,7 +11560,7 @@
 	        this.options.labelText = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.handleWidth = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.handleWidth;
@@ -11525,7 +11570,7 @@
 	        this._containerPosition();
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.labelWidth = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.labelWidth;
@@ -11535,11 +11580,11 @@
 	        this._containerPosition();
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.baseClass = function(value) {
 	        return this.options.baseClass;
 	      };
-
+	
 	      BootstrapSwitch.prototype.wrapperClass = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.wrapperClass;
@@ -11552,7 +11597,7 @@
 	        this.options.wrapperClass = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.radioAllOff = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.radioAllOff;
@@ -11564,7 +11609,7 @@
 	        this.options.radioAllOff = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.onInit = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.onInit;
@@ -11575,7 +11620,7 @@
 	        this.options.onInit = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.onSwitchChange = function(value) {
 	        if (typeof value === "undefined") {
 	          return this.options.onSwitchChange;
@@ -11586,7 +11631,7 @@
 	        this.options.onSwitchChange = value;
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype.destroy = function() {
 	        var $form;
 	        $form = this.$element.closest("form");
@@ -11597,7 +11642,7 @@
 	        this.$element.unwrap().unwrap().off(".bootstrapSwitch").removeData("bootstrap-switch");
 	        return this.$element;
 	      };
-
+	
 	      BootstrapSwitch.prototype._width = function() {
 	        var $handles, handleWidth;
 	        $handles = this.$on.add(this.$off);
@@ -11621,7 +11666,7 @@
 	        this.$container.width((this._handleWidth * 2) + this._labelWidth);
 	        return this.$wrapper.width(this._handleWidth + this._labelWidth);
 	      };
-
+	
 	      BootstrapSwitch.prototype._containerPosition = function(state, callback) {
 	        if (state == null) {
 	          state = this.options.state;
@@ -11655,7 +11700,7 @@
 	          return callback();
 	        }, 50);
 	      };
-
+	
 	      BootstrapSwitch.prototype._init = function() {
 	        var init, initInterval;
 	        init = (function(_this) {
@@ -11680,7 +11725,7 @@
 	          };
 	        })(this), 50);
 	      };
-
+	
 	      BootstrapSwitch.prototype._elementHandlers = function() {
 	        return this.$element.on({
 	          "change.bootstrapSwitch": (function(_this) {
@@ -11734,7 +11779,7 @@
 	          })(this)
 	        });
 	      };
-
+	
 	      BootstrapSwitch.prototype._handleHandlers = function() {
 	        this.$on.on("click.bootstrapSwitch", (function(_this) {
 	          return function(event) {
@@ -11753,7 +11798,7 @@
 	          };
 	        })(this));
 	      };
-
+	
 	      BootstrapSwitch.prototype._labelHandlers = function() {
 	        return this.$label.on({
 	          "mousedown.bootstrapSwitch touchstart.bootstrapSwitch": (function(_this) {
@@ -11812,7 +11857,7 @@
 	          })(this)
 	        });
 	      };
-
+	
 	      BootstrapSwitch.prototype._externalLabelHandler = function() {
 	        var $externalLabel;
 	        $externalLabel = this.$element.closest("label");
@@ -11826,7 +11871,7 @@
 	          };
 	        })(this));
 	      };
-
+	
 	      BootstrapSwitch.prototype._formHandler = function() {
 	        var $form;
 	        $form = this.$element.closest("form");
@@ -11843,7 +11888,7 @@
 	          }, 1);
 	        }).data("bootstrap-switch", true);
 	      };
-
+	
 	      BootstrapSwitch.prototype._getClasses = function(classes) {
 	        var c, cls, _i, _len;
 	        if (!$.isArray(classes)) {
@@ -11856,9 +11901,9 @@
 	        }
 	        return cls;
 	      };
-
+	
 	      return BootstrapSwitch;
-
+	
 	    })();
 	    $.fn.bootstrapSwitch = function() {
 	      var args, option, ret;
@@ -11900,31 +11945,34 @@
 	      onSwitchChange: function() {}
 	    };
 	  })(window.jQuery, window);
-
+	
 	}).call(this);
 
 
 /***/ },
 /* 15 */
+/*!*********************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-graph-navigation.js.coffee ***!
+  \*********************************************************************************/
 /***/ function(module, exports) {
 
 	var VisualizationGraphNavigation,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
+	
 	VisualizationGraphNavigation = (function(superClass) {
 	  extend(VisualizationGraphNavigation, superClass);
-
+	
 	  function VisualizationGraphNavigation() {
 	    return VisualizationGraphNavigation.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  VisualizationGraphNavigation.prototype.el = '.visualization-graph-menu-navigation';
-
+	
 	  VisualizationGraphNavigation.prototype.initialize = function() {
 	    return this.render();
 	  };
-
+	
 	  VisualizationGraphNavigation.prototype.render = function() {
 	    this.$el.find('.zoomin').click(function() {
 	      $(this).trigger('blur');
@@ -11940,52 +11988,55 @@
 	    });
 	    return this;
 	  };
-
+	
 	  return VisualizationGraphNavigation;
-
+	
 	})(Backbone.View);
-
+	
 	module.exports = VisualizationGraphNavigation;
 
 
 /***/ },
 /* 16 */
+/*!***************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-graph-info.js.coffee ***!
+  \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handlebars, HandlebarsTemplate, Node, VisualizationGraphInfo,
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	Node = __webpack_require__(7);
-
-	Handlebars = __webpack_require__(17);
-
-	HandlebarsTemplate = __webpack_require__(48);
-
+	
+	Node = __webpack_require__(/*! ./../models/node.js */ 7);
+	
+	Handlebars = __webpack_require__(/*! handlebars */ 17);
+	
+	HandlebarsTemplate = __webpack_require__(/*! ./../templates/visualization-graph-info.handlebars */ 48);
+	
 	VisualizationGraphInfo = (function(superClass) {
 	  extend(VisualizationGraphInfo, superClass);
-
+	
 	  function VisualizationGraphInfo() {
 	    return VisualizationGraphInfo.__super__.constructor.apply(this, arguments);
 	  }
-
+	
 	  VisualizationGraphInfo.prototype.el = '.visualization-graph-info';
-
+	
 	  VisualizationGraphInfo.prototype.show = function(node) {
 	    this.node = new Node(node);
 	    this.$el.addClass('active');
 	    this.$el.find('.panel-heading > a.btn').attr('href', '/nodes/' + node.id + '/edit/');
 	    return this.render();
 	  };
-
+	
 	  VisualizationGraphInfo.prototype.hide = function() {
 	    return this.$el.removeClass('active');
 	  };
-
+	
 	  VisualizationGraphInfo.prototype.isVisible = function() {
 	    return this.$el.hasClass('active');
 	  };
-
+	
 	  VisualizationGraphInfo.prototype.initialize = function() {
 	    this.$el.find('.close').click(function(e) {
 	      e.preventDefault();
@@ -11993,7 +12044,7 @@
 	    });
 	    return this.render();
 	  };
-
+	
 	  VisualizationGraphInfo.prototype.render = function() {
 	    if (this.node) {
 	      this.template = HandlebarsTemplate({
@@ -12004,35 +12055,38 @@
 	    }
 	    return this;
 	  };
-
+	
 	  return VisualizationGraphInfo;
-
+	
 	})(Backbone.View);
-
+	
 	module.exports = VisualizationGraphInfo;
 
 
 /***/ },
 /* 17 */
+/*!***********************************!*\
+  !*** ./~/handlebars/lib/index.js ***!
+  \***********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// USAGE:
 	// var handlebars = require('handlebars');
 	/* eslint-disable no-var */
-
+	
 	// var local = handlebars.create();
-
-	var handlebars = __webpack_require__(18)['default'];
-
-	var printer = __webpack_require__(46);
+	
+	var handlebars = __webpack_require__(/*! ../dist/cjs/handlebars */ 18)['default'];
+	
+	var printer = __webpack_require__(/*! ../dist/cjs/handlebars/compiler/printer */ 46);
 	handlebars.PrintVisitor = printer.PrintVisitor;
 	handlebars.print = printer.print;
-
+	
 	module.exports = handlebars;
-
+	
 	// Publish a Node.js require() handler for .handlebars and .hbs files
 	function extension(module, filename) {
-	  var fs = __webpack_require__(47);
+	  var fs = __webpack_require__(/*! fs */ 47);
 	  var templateString = fs.readFileSync(filename, 'utf8');
 	  module.exports = handlebars.compile(templateString);
 	}
@@ -12045,70 +12099,73 @@
 
 /***/ },
 /* 18 */
+/*!*********************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars.js ***!
+  \*********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _handlebarsRuntime = __webpack_require__(19);
-
+	
+	var _handlebarsRuntime = __webpack_require__(/*! ./handlebars.runtime */ 19);
+	
 	var _handlebarsRuntime2 = _interopRequireDefault(_handlebarsRuntime);
-
+	
 	// Compiler imports
-
-	var _handlebarsCompilerAst = __webpack_require__(37);
-
+	
+	var _handlebarsCompilerAst = __webpack_require__(/*! ./handlebars/compiler/ast */ 37);
+	
 	var _handlebarsCompilerAst2 = _interopRequireDefault(_handlebarsCompilerAst);
-
-	var _handlebarsCompilerBase = __webpack_require__(38);
-
-	var _handlebarsCompilerCompiler = __webpack_require__(43);
-
-	var _handlebarsCompilerJavascriptCompiler = __webpack_require__(44);
-
+	
+	var _handlebarsCompilerBase = __webpack_require__(/*! ./handlebars/compiler/base */ 38);
+	
+	var _handlebarsCompilerCompiler = __webpack_require__(/*! ./handlebars/compiler/compiler */ 43);
+	
+	var _handlebarsCompilerJavascriptCompiler = __webpack_require__(/*! ./handlebars/compiler/javascript-compiler */ 44);
+	
 	var _handlebarsCompilerJavascriptCompiler2 = _interopRequireDefault(_handlebarsCompilerJavascriptCompiler);
-
-	var _handlebarsCompilerVisitor = __webpack_require__(41);
-
+	
+	var _handlebarsCompilerVisitor = __webpack_require__(/*! ./handlebars/compiler/visitor */ 41);
+	
 	var _handlebarsCompilerVisitor2 = _interopRequireDefault(_handlebarsCompilerVisitor);
-
-	var _handlebarsNoConflict = __webpack_require__(36);
-
+	
+	var _handlebarsNoConflict = __webpack_require__(/*! ./handlebars/no-conflict */ 36);
+	
 	var _handlebarsNoConflict2 = _interopRequireDefault(_handlebarsNoConflict);
-
+	
 	var _create = _handlebarsRuntime2['default'].create;
 	function create() {
 	  var hb = _create();
-
+	
 	  hb.compile = function (input, options) {
 	    return _handlebarsCompilerCompiler.compile(input, options, hb);
 	  };
 	  hb.precompile = function (input, options) {
 	    return _handlebarsCompilerCompiler.precompile(input, options, hb);
 	  };
-
+	
 	  hb.AST = _handlebarsCompilerAst2['default'];
 	  hb.Compiler = _handlebarsCompilerCompiler.Compiler;
 	  hb.JavaScriptCompiler = _handlebarsCompilerJavascriptCompiler2['default'];
 	  hb.Parser = _handlebarsCompilerBase.parser;
 	  hb.parse = _handlebarsCompilerBase.parse;
-
+	
 	  return hb;
 	}
-
+	
 	var inst = create();
 	inst.create = create;
-
+	
 	_handlebarsNoConflict2['default'](inst);
-
+	
 	inst.Visitor = _handlebarsCompilerVisitor2['default'];
-
+	
 	inst['default'] = inst;
-
+	
 	exports['default'] = inst;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2xpYi9oYW5kbGViYXJzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7aUNBQW9CLHNCQUFzQjs7Ozs7O3FDQUcxQiwyQkFBMkI7Ozs7c0NBQ0gsNEJBQTRCOzswQ0FDdEIsZ0NBQWdDOztvREFDL0MsMkNBQTJDOzs7O3lDQUN0RCwrQkFBK0I7Ozs7b0NBRTVCLDBCQUEwQjs7OztBQUVqRCxJQUFJLE9BQU8sR0FBRywrQkFBUSxNQUFNLENBQUM7QUFDN0IsU0FBUyxNQUFNLEdBQUc7QUFDaEIsTUFBSSxFQUFFLEdBQUcsT0FBTyxFQUFFLENBQUM7O0FBRW5CLElBQUUsQ0FBQyxPQUFPLEdBQUcsVUFBUyxLQUFLLEVBQUUsT0FBTyxFQUFFO0FBQ3BDLFdBQU8sb0NBQVEsS0FBSyxFQUFFLE9BQU8sRUFBRSxFQUFFLENBQUMsQ0FBQztHQUNwQyxDQUFDO0FBQ0YsSUFBRSxDQUFDLFVBQVUsR0FBRyxVQUFTLEtBQUssRUFBRSxPQUFPLEVBQUU7QUFDdkMsV0FBTyx1Q0FBVyxLQUFLLEVBQUUsT0FBTyxFQUFFLEVBQUUsQ0FBQyxDQUFDO0dBQ3ZDLENBQUM7O0FBRUYsSUFBRSxDQUFDLEdBQUcscUNBQU0sQ0FBQztBQUNiLElBQUUsQ0FBQyxRQUFRLHVDQUFXLENBQUM7QUFDdkIsSUFBRSxDQUFDLGtCQUFrQixvREFBcUIsQ0FBQztBQUMzQyxJQUFFLENBQUMsTUFBTSxpQ0FBUyxDQUFDO0FBQ25CLElBQUUsQ0FBQyxLQUFLLGdDQUFRLENBQUM7O0FBRWpCLFNBQU8sRUFBRSxDQUFDO0NBQ1g7O0FBRUQsSUFBSSxJQUFJLEdBQUcsTUFBTSxFQUFFLENBQUM7QUFDcEIsSUFBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUM7O0FBRXJCLGtDQUFXLElBQUksQ0FBQyxDQUFDOztBQUVqQixJQUFJLENBQUMsT0FBTyx5Q0FBVSxDQUFDOztBQUV2QixJQUFJLENBQUMsU0FBUyxDQUFDLEdBQUcsSUFBSSxDQUFDOztxQkFFUixJQUFJIiwiZmlsZSI6ImhhbmRsZWJhcnMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgcnVudGltZSBmcm9tICcuL2hhbmRsZWJhcnMucnVudGltZSc7XG5cbi8vIENvbXBpbGVyIGltcG9ydHNcbmltcG9ydCBBU1QgZnJvbSAnLi9oYW5kbGViYXJzL2NvbXBpbGVyL2FzdCc7XG5pbXBvcnQgeyBwYXJzZXIgYXMgUGFyc2VyLCBwYXJzZSB9IGZyb20gJy4vaGFuZGxlYmFycy9jb21waWxlci9iYXNlJztcbmltcG9ydCB7IENvbXBpbGVyLCBjb21waWxlLCBwcmVjb21waWxlIH0gZnJvbSAnLi9oYW5kbGViYXJzL2NvbXBpbGVyL2NvbXBpbGVyJztcbmltcG9ydCBKYXZhU2NyaXB0Q29tcGlsZXIgZnJvbSAnLi9oYW5kbGViYXJzL2NvbXBpbGVyL2phdmFzY3JpcHQtY29tcGlsZXInO1xuaW1wb3J0IFZpc2l0b3IgZnJvbSAnLi9oYW5kbGViYXJzL2NvbXBpbGVyL3Zpc2l0b3InO1xuXG5pbXBvcnQgbm9Db25mbGljdCBmcm9tICcuL2hhbmRsZWJhcnMvbm8tY29uZmxpY3QnO1xuXG5sZXQgX2NyZWF0ZSA9IHJ1bnRpbWUuY3JlYXRlO1xuZnVuY3Rpb24gY3JlYXRlKCkge1xuICBsZXQgaGIgPSBfY3JlYXRlKCk7XG5cbiAgaGIuY29tcGlsZSA9IGZ1bmN0aW9uKGlucHV0LCBvcHRpb25zKSB7XG4gICAgcmV0dXJuIGNvbXBpbGUoaW5wdXQsIG9wdGlvbnMsIGhiKTtcbiAgfTtcbiAgaGIucHJlY29tcGlsZSA9IGZ1bmN0aW9uKGlucHV0LCBvcHRpb25zKSB7XG4gICAgcmV0dXJuIHByZWNvbXBpbGUoaW5wdXQsIG9wdGlvbnMsIGhiKTtcbiAgfTtcblxuICBoYi5BU1QgPSBBU1Q7XG4gIGhiLkNvbXBpbGVyID0gQ29tcGlsZXI7XG4gIGhiLkphdmFTY3JpcHRDb21waWxlciA9IEphdmFTY3JpcHRDb21waWxlcjtcbiAgaGIuUGFyc2VyID0gUGFyc2VyO1xuICBoYi5wYXJzZSA9IHBhcnNlO1xuXG4gIHJldHVybiBoYjtcbn1cblxubGV0IGluc3QgPSBjcmVhdGUoKTtcbmluc3QuY3JlYXRlID0gY3JlYXRlO1xuXG5ub0NvbmZsaWN0KGluc3QpO1xuXG5pbnN0LlZpc2l0b3IgPSBWaXNpdG9yO1xuXG5pbnN0WydkZWZhdWx0J10gPSBpbnN0O1xuXG5leHBvcnQgZGVmYXVsdCBpbnN0O1xuIl19
@@ -12116,71 +12173,74 @@
 
 /***/ },
 /* 19 */
+/*!*****************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars.runtime.js ***!
+  \*****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
+	
 	// istanbul ignore next
-
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	var _handlebarsBase = __webpack_require__(20);
-
+	
+	var _handlebarsBase = __webpack_require__(/*! ./handlebars/base */ 20);
+	
 	var base = _interopRequireWildcard(_handlebarsBase);
-
+	
 	// Each of these augment the Handlebars object. No need to setup here.
 	// (This is done to easily share code between commonjs and browse envs)
-
-	var _handlebarsSafeString = __webpack_require__(34);
-
+	
+	var _handlebarsSafeString = __webpack_require__(/*! ./handlebars/safe-string */ 34);
+	
 	var _handlebarsSafeString2 = _interopRequireDefault(_handlebarsSafeString);
-
-	var _handlebarsException = __webpack_require__(22);
-
+	
+	var _handlebarsException = __webpack_require__(/*! ./handlebars/exception */ 22);
+	
 	var _handlebarsException2 = _interopRequireDefault(_handlebarsException);
-
-	var _handlebarsUtils = __webpack_require__(21);
-
+	
+	var _handlebarsUtils = __webpack_require__(/*! ./handlebars/utils */ 21);
+	
 	var Utils = _interopRequireWildcard(_handlebarsUtils);
-
-	var _handlebarsRuntime = __webpack_require__(35);
-
+	
+	var _handlebarsRuntime = __webpack_require__(/*! ./handlebars/runtime */ 35);
+	
 	var runtime = _interopRequireWildcard(_handlebarsRuntime);
-
-	var _handlebarsNoConflict = __webpack_require__(36);
-
+	
+	var _handlebarsNoConflict = __webpack_require__(/*! ./handlebars/no-conflict */ 36);
+	
 	var _handlebarsNoConflict2 = _interopRequireDefault(_handlebarsNoConflict);
-
+	
 	// For compatibility and usage outside of module systems, make the Handlebars object a namespace
 	function create() {
 	  var hb = new base.HandlebarsEnvironment();
-
+	
 	  Utils.extend(hb, base);
 	  hb.SafeString = _handlebarsSafeString2['default'];
 	  hb.Exception = _handlebarsException2['default'];
 	  hb.Utils = Utils;
 	  hb.escapeExpression = Utils.escapeExpression;
-
+	
 	  hb.VM = runtime;
 	  hb.template = function (spec) {
 	    return runtime.template(spec, hb);
 	  };
-
+	
 	  return hb;
 	}
-
+	
 	var inst = create();
 	inst.create = create;
-
+	
 	_handlebarsNoConflict2['default'](inst);
-
+	
 	inst['default'] = inst;
-
+	
 	exports['default'] = inst;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2xpYi9oYW5kbGViYXJzLnJ1bnRpbWUuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7OEJBQXNCLG1CQUFtQjs7SUFBN0IsSUFBSTs7Ozs7b0NBSU8sMEJBQTBCOzs7O21DQUMzQix3QkFBd0I7Ozs7K0JBQ3ZCLG9CQUFvQjs7SUFBL0IsS0FBSzs7aUNBQ1Esc0JBQXNCOztJQUFuQyxPQUFPOztvQ0FFSSwwQkFBMEI7Ozs7O0FBR2pELFNBQVMsTUFBTSxHQUFHO0FBQ2hCLE1BQUksRUFBRSxHQUFHLElBQUksSUFBSSxDQUFDLHFCQUFxQixFQUFFLENBQUM7O0FBRTFDLE9BQUssQ0FBQyxNQUFNLENBQUMsRUFBRSxFQUFFLElBQUksQ0FBQyxDQUFDO0FBQ3ZCLElBQUUsQ0FBQyxVQUFVLG9DQUFhLENBQUM7QUFDM0IsSUFBRSxDQUFDLFNBQVMsbUNBQVksQ0FBQztBQUN6QixJQUFFLENBQUMsS0FBSyxHQUFHLEtBQUssQ0FBQztBQUNqQixJQUFFLENBQUMsZ0JBQWdCLEdBQUcsS0FBSyxDQUFDLGdCQUFnQixDQUFDOztBQUU3QyxJQUFFLENBQUMsRUFBRSxHQUFHLE9BQU8sQ0FBQztBQUNoQixJQUFFLENBQUMsUUFBUSxHQUFHLFVBQVMsSUFBSSxFQUFFO0FBQzNCLFdBQU8sT0FBTyxDQUFDLFFBQVEsQ0FBQyxJQUFJLEVBQUUsRUFBRSxDQUFDLENBQUM7R0FDbkMsQ0FBQzs7QUFFRixTQUFPLEVBQUUsQ0FBQztDQUNYOztBQUVELElBQUksSUFBSSxHQUFHLE1BQU0sRUFBRSxDQUFDO0FBQ3BCLElBQUksQ0FBQyxNQUFNLEdBQUcsTUFBTSxDQUFDOztBQUVyQixrQ0FBVyxJQUFJLENBQUMsQ0FBQzs7QUFFakIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxHQUFHLElBQUksQ0FBQzs7cUJBRVIsSUFBSSIsImZpbGUiOiJoYW5kbGViYXJzLnJ1bnRpbWUuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgKiBhcyBiYXNlIGZyb20gJy4vaGFuZGxlYmFycy9iYXNlJztcblxuLy8gRWFjaCBvZiB0aGVzZSBhdWdtZW50IHRoZSBIYW5kbGViYXJzIG9iamVjdC4gTm8gbmVlZCB0byBzZXR1cCBoZXJlLlxuLy8gKFRoaXMgaXMgZG9uZSB0byBlYXNpbHkgc2hhcmUgY29kZSBiZXR3ZWVuIGNvbW1vbmpzIGFuZCBicm93c2UgZW52cylcbmltcG9ydCBTYWZlU3RyaW5nIGZyb20gJy4vaGFuZGxlYmFycy9zYWZlLXN0cmluZyc7XG5pbXBvcnQgRXhjZXB0aW9uIGZyb20gJy4vaGFuZGxlYmFycy9leGNlcHRpb24nO1xuaW1wb3J0ICogYXMgVXRpbHMgZnJvbSAnLi9oYW5kbGViYXJzL3V0aWxzJztcbmltcG9ydCAqIGFzIHJ1bnRpbWUgZnJvbSAnLi9oYW5kbGViYXJzL3J1bnRpbWUnO1xuXG5pbXBvcnQgbm9Db25mbGljdCBmcm9tICcuL2hhbmRsZWJhcnMvbm8tY29uZmxpY3QnO1xuXG4vLyBGb3IgY29tcGF0aWJpbGl0eSBhbmQgdXNhZ2Ugb3V0c2lkZSBvZiBtb2R1bGUgc3lzdGVtcywgbWFrZSB0aGUgSGFuZGxlYmFycyBvYmplY3QgYSBuYW1lc3BhY2VcbmZ1bmN0aW9uIGNyZWF0ZSgpIHtcbiAgbGV0IGhiID0gbmV3IGJhc2UuSGFuZGxlYmFyc0Vudmlyb25tZW50KCk7XG5cbiAgVXRpbHMuZXh0ZW5kKGhiLCBiYXNlKTtcbiAgaGIuU2FmZVN0cmluZyA9IFNhZmVTdHJpbmc7XG4gIGhiLkV4Y2VwdGlvbiA9IEV4Y2VwdGlvbjtcbiAgaGIuVXRpbHMgPSBVdGlscztcbiAgaGIuZXNjYXBlRXhwcmVzc2lvbiA9IFV0aWxzLmVzY2FwZUV4cHJlc3Npb247XG5cbiAgaGIuVk0gPSBydW50aW1lO1xuICBoYi50ZW1wbGF0ZSA9IGZ1bmN0aW9uKHNwZWMpIHtcbiAgICByZXR1cm4gcnVudGltZS50ZW1wbGF0ZShzcGVjLCBoYik7XG4gIH07XG5cbiAgcmV0dXJuIGhiO1xufVxuXG5sZXQgaW5zdCA9IGNyZWF0ZSgpO1xuaW5zdC5jcmVhdGUgPSBjcmVhdGU7XG5cbm5vQ29uZmxpY3QoaW5zdCk7XG5cbmluc3RbJ2RlZmF1bHQnXSA9IGluc3Q7XG5cbmV4cG9ydCBkZWZhdWx0IGluc3Q7XG4iXX0=
@@ -12188,34 +12248,37 @@
 
 /***/ },
 /* 20 */
+/*!**************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/base.js ***!
+  \**************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.HandlebarsEnvironment = HandlebarsEnvironment;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(21);
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _utils = __webpack_require__(/*! ./utils */ 21);
+	
+	var _exception = __webpack_require__(/*! ./exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
-	var _helpers = __webpack_require__(23);
-
-	var _decorators = __webpack_require__(31);
-
-	var _logger = __webpack_require__(33);
-
+	
+	var _helpers = __webpack_require__(/*! ./helpers */ 23);
+	
+	var _decorators = __webpack_require__(/*! ./decorators */ 31);
+	
+	var _logger = __webpack_require__(/*! ./logger */ 33);
+	
 	var _logger2 = _interopRequireDefault(_logger);
-
+	
 	var VERSION = '4.0.5';
 	exports.VERSION = VERSION;
 	var COMPILER_REVISION = 7;
-
+	
 	exports.COMPILER_REVISION = COMPILER_REVISION;
 	var REVISION_CHANGES = {
 	  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
@@ -12226,25 +12289,25 @@
 	  6: '>= 2.0.0-beta.1',
 	  7: '>= 4.0.0'
 	};
-
+	
 	exports.REVISION_CHANGES = REVISION_CHANGES;
 	var objectType = '[object Object]';
-
+	
 	function HandlebarsEnvironment(helpers, partials, decorators) {
 	  this.helpers = helpers || {};
 	  this.partials = partials || {};
 	  this.decorators = decorators || {};
-
+	
 	  _helpers.registerDefaultHelpers(this);
 	  _decorators.registerDefaultDecorators(this);
 	}
-
+	
 	HandlebarsEnvironment.prototype = {
 	  constructor: HandlebarsEnvironment,
-
+	
 	  logger: _logger2['default'],
 	  log: _logger2['default'].log,
-
+	
 	  registerHelper: function registerHelper(name, fn) {
 	    if (_utils.toString.call(name) === objectType) {
 	      if (fn) {
@@ -12258,7 +12321,7 @@
 	  unregisterHelper: function unregisterHelper(name) {
 	    delete this.helpers[name];
 	  },
-
+	
 	  registerPartial: function registerPartial(name, partial) {
 	    if (_utils.toString.call(name) === objectType) {
 	      _utils.extend(this.partials, name);
@@ -12272,7 +12335,7 @@
 	  unregisterPartial: function unregisterPartial(name) {
 	    delete this.partials[name];
 	  },
-
+	
 	  registerDecorator: function registerDecorator(name, fn) {
 	    if (_utils.toString.call(name) === objectType) {
 	      if (fn) {
@@ -12287,9 +12350,9 @@
 	    delete this.decorators[name];
 	  }
 	};
-
+	
 	var log = _logger2['default'].log;
-
+	
 	exports.log = log;
 	exports.createFrame = _utils.createFrame;
 	exports.logger = _logger2['default'];
@@ -12298,10 +12361,13 @@
 
 /***/ },
 /* 21 */
+/*!***************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/utils.js ***!
+  \***************************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.extend = extend;
 	exports.indexOf = indexOf;
@@ -12319,14 +12385,14 @@
 	  '`': '&#x60;',
 	  '=': '&#x3D;'
 	};
-
+	
 	var badChars = /[&<>"'`=]/g,
 	    possible = /[&<>"'`=]/;
-
+	
 	function escapeChar(chr) {
 	  return escape[chr];
 	}
-
+	
 	function extend(obj /* , ...source */) {
 	  for (var i = 1; i < arguments.length; i++) {
 	    for (var key in arguments[i]) {
@@ -12335,12 +12401,12 @@
 	      }
 	    }
 	  }
-
+	
 	  return obj;
 	}
-
+	
 	var toString = Object.prototype.toString;
-
+	
 	exports.toString = toString;
 	// Sourced from lodash
 	// https://github.com/bestiejs/lodash/blob/master/LICENSE.txt
@@ -12356,17 +12422,17 @@
 	  };
 	}
 	exports.isFunction = isFunction;
-
+	
 	/* eslint-enable func-style */
-
+	
 	/* istanbul ignore next */
 	var isArray = Array.isArray || function (value) {
 	  return value && typeof value === 'object' ? toString.call(value) === '[object Array]' : false;
 	};
-
+	
 	exports.isArray = isArray;
 	// Older IE versions do not directly support indexOf so we must implement our own, sadly.
-
+	
 	function indexOf(array, value) {
 	  for (var i = 0, len = array.length; i < len; i++) {
 	    if (array[i] === value) {
@@ -12375,7 +12441,7 @@
 	  }
 	  return -1;
 	}
-
+	
 	function escapeExpression(string) {
 	  if (typeof string !== 'string') {
 	    // don't escape SafeStrings, since they're already safe
@@ -12386,19 +12452,19 @@
 	    } else if (!string) {
 	      return string + '';
 	    }
-
+	
 	    // Force a string conversion as this will be done by the append regardless and
 	    // the regex test will do this transparently behind the scenes, causing issues if
 	    // an object's to string has escaped characters in it.
 	    string = '' + string;
 	  }
-
+	
 	  if (!possible.test(string)) {
 	    return string;
 	  }
 	  return string.replace(badChars, escapeChar);
 	}
-
+	
 	function isEmpty(value) {
 	  if (!value && value !== 0) {
 	    return true;
@@ -12408,18 +12474,18 @@
 	    return false;
 	  }
 	}
-
+	
 	function createFrame(object) {
 	  var frame = extend({}, object);
 	  frame._parent = object;
 	  return frame;
 	}
-
+	
 	function blockParams(params, ids) {
 	  params.path = ids;
 	  return params;
 	}
-
+	
 	function appendContextPath(contextPath, id) {
 	  return (contextPath ? contextPath + '.' : '') + id;
 	}
@@ -12428,14 +12494,17 @@
 
 /***/ },
 /* 22 */
+/*!*******************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/exception.js ***!
+  \*******************************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
+	
 	var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
-
+	
 	function Exception(message, node) {
 	  var loc = node && node.loc,
 	      line = undefined,
@@ -12443,30 +12512,30 @@
 	  if (loc) {
 	    line = loc.start.line;
 	    column = loc.start.column;
-
+	
 	    message += ' - ' + line + ':' + column;
 	  }
-
+	
 	  var tmp = Error.prototype.constructor.call(this, message);
-
+	
 	  // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
 	  for (var idx = 0; idx < errorProps.length; idx++) {
 	    this[errorProps[idx]] = tmp[errorProps[idx]];
 	  }
-
+	
 	  /* istanbul ignore else */
 	  if (Error.captureStackTrace) {
 	    Error.captureStackTrace(this, Exception);
 	  }
-
+	
 	  if (loc) {
 	    this.lineNumber = line;
 	    this.column = column;
 	  }
 	}
-
+	
 	Exception.prototype = new Error();
-
+	
 	exports['default'] = Exception;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2V4Y2VwdGlvbi5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQ0EsSUFBTSxVQUFVLEdBQUcsQ0FBQyxhQUFhLEVBQUUsVUFBVSxFQUFFLFlBQVksRUFBRSxTQUFTLEVBQUUsTUFBTSxFQUFFLFFBQVEsRUFBRSxPQUFPLENBQUMsQ0FBQzs7QUFFbkcsU0FBUyxTQUFTLENBQUMsT0FBTyxFQUFFLElBQUksRUFBRTtBQUNoQyxNQUFJLEdBQUcsR0FBRyxJQUFJLElBQUksSUFBSSxDQUFDLEdBQUc7TUFDdEIsSUFBSSxZQUFBO01BQ0osTUFBTSxZQUFBLENBQUM7QUFDWCxNQUFJLEdBQUcsRUFBRTtBQUNQLFFBQUksR0FBRyxHQUFHLENBQUMsS0FBSyxDQUFDLElBQUksQ0FBQztBQUN0QixVQUFNLEdBQUcsR0FBRyxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUM7O0FBRTFCLFdBQU8sSUFBSSxLQUFLLEdBQUcsSUFBSSxHQUFHLEdBQUcsR0FBRyxNQUFNLENBQUM7R0FDeEM7O0FBRUQsTUFBSSxHQUFHLEdBQUcsS0FBSyxDQUFDLFNBQVMsQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLElBQUksRUFBRSxPQUFPLENBQUMsQ0FBQzs7O0FBRzFELE9BQUssSUFBSSxHQUFHLEdBQUcsQ0FBQyxFQUFFLEdBQUcsR0FBRyxVQUFVLENBQUMsTUFBTSxFQUFFLEdBQUcsRUFBRSxFQUFFO0FBQ2hELFFBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLENBQUMsR0FBRyxHQUFHLENBQUMsVUFBVSxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUM7R0FDOUM7OztBQUdELE1BQUksS0FBSyxDQUFDLGlCQUFpQixFQUFFO0FBQzNCLFNBQUssQ0FBQyxpQkFBaUIsQ0FBQyxJQUFJLEVBQUUsU0FBUyxDQUFDLENBQUM7R0FDMUM7O0FBRUQsTUFBSSxHQUFHLEVBQUU7QUFDUCxRQUFJLENBQUMsVUFBVSxHQUFHLElBQUksQ0FBQztBQUN2QixRQUFJLENBQUMsTUFBTSxHQUFHLE1BQU0sQ0FBQztHQUN0QjtDQUNGOztBQUVELFNBQVMsQ0FBQyxTQUFTLEdBQUcsSUFBSSxLQUFLLEVBQUUsQ0FBQzs7cUJBRW5CLFNBQVMiLCJmaWxlIjoiZXhjZXB0aW9uLmpzIiwic291cmNlc0NvbnRlbnQiOlsiXG5jb25zdCBlcnJvclByb3BzID0gWydkZXNjcmlwdGlvbicsICdmaWxlTmFtZScsICdsaW5lTnVtYmVyJywgJ21lc3NhZ2UnLCAnbmFtZScsICdudW1iZXInLCAnc3RhY2snXTtcblxuZnVuY3Rpb24gRXhjZXB0aW9uKG1lc3NhZ2UsIG5vZGUpIHtcbiAgbGV0IGxvYyA9IG5vZGUgJiYgbm9kZS5sb2MsXG4gICAgICBsaW5lLFxuICAgICAgY29sdW1uO1xuICBpZiAobG9jKSB7XG4gICAgbGluZSA9IGxvYy5zdGFydC5saW5lO1xuICAgIGNvbHVtbiA9IGxvYy5zdGFydC5jb2x1bW47XG5cbiAgICBtZXNzYWdlICs9ICcgLSAnICsgbGluZSArICc6JyArIGNvbHVtbjtcbiAgfVxuXG4gIGxldCB0bXAgPSBFcnJvci5wcm90b3R5cGUuY29uc3RydWN0b3IuY2FsbCh0aGlzLCBtZXNzYWdlKTtcblxuICAvLyBVbmZvcnR1bmF0ZWx5IGVycm9ycyBhcmUgbm90IGVudW1lcmFibGUgaW4gQ2hyb21lIChhdCBsZWFzdCksIHNvIGBmb3IgcHJvcCBpbiB0bXBgIGRvZXNuJ3Qgd29yay5cbiAgZm9yIChsZXQgaWR4ID0gMDsgaWR4IDwgZXJyb3JQcm9wcy5sZW5ndGg7IGlkeCsrKSB7XG4gICAgdGhpc1tlcnJvclByb3BzW2lkeF1dID0gdG1wW2Vycm9yUHJvcHNbaWR4XV07XG4gIH1cblxuICAvKiBpc3RhbmJ1bCBpZ25vcmUgZWxzZSAqL1xuICBpZiAoRXJyb3IuY2FwdHVyZVN0YWNrVHJhY2UpIHtcbiAgICBFcnJvci5jYXB0dXJlU3RhY2tUcmFjZSh0aGlzLCBFeGNlcHRpb24pO1xuICB9XG5cbiAgaWYgKGxvYykge1xuICAgIHRoaXMubGluZU51bWJlciA9IGxpbmU7XG4gICAgdGhpcy5jb2x1bW4gPSBjb2x1bW47XG4gIH1cbn1cblxuRXhjZXB0aW9uLnByb3RvdHlwZSA9IG5ldyBFcnJvcigpO1xuXG5leHBvcnQgZGVmYXVsdCBFeGNlcHRpb247XG4iXX0=
@@ -12474,44 +12543,47 @@
 
 /***/ },
 /* 23 */
+/*!*****************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers.js ***!
+  \*****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.registerDefaultHelpers = registerDefaultHelpers;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _helpersBlockHelperMissing = __webpack_require__(24);
-
+	
+	var _helpersBlockHelperMissing = __webpack_require__(/*! ./helpers/block-helper-missing */ 24);
+	
 	var _helpersBlockHelperMissing2 = _interopRequireDefault(_helpersBlockHelperMissing);
-
-	var _helpersEach = __webpack_require__(25);
-
+	
+	var _helpersEach = __webpack_require__(/*! ./helpers/each */ 25);
+	
 	var _helpersEach2 = _interopRequireDefault(_helpersEach);
-
-	var _helpersHelperMissing = __webpack_require__(26);
-
+	
+	var _helpersHelperMissing = __webpack_require__(/*! ./helpers/helper-missing */ 26);
+	
 	var _helpersHelperMissing2 = _interopRequireDefault(_helpersHelperMissing);
-
-	var _helpersIf = __webpack_require__(27);
-
+	
+	var _helpersIf = __webpack_require__(/*! ./helpers/if */ 27);
+	
 	var _helpersIf2 = _interopRequireDefault(_helpersIf);
-
-	var _helpersLog = __webpack_require__(28);
-
+	
+	var _helpersLog = __webpack_require__(/*! ./helpers/log */ 28);
+	
 	var _helpersLog2 = _interopRequireDefault(_helpersLog);
-
-	var _helpersLookup = __webpack_require__(29);
-
+	
+	var _helpersLookup = __webpack_require__(/*! ./helpers/lookup */ 29);
+	
 	var _helpersLookup2 = _interopRequireDefault(_helpersLookup);
-
-	var _helpersWith = __webpack_require__(30);
-
+	
+	var _helpersWith = __webpack_require__(/*! ./helpers/with */ 30);
+	
 	var _helpersWith2 = _interopRequireDefault(_helpersWith);
-
+	
 	function registerDefaultHelpers(instance) {
 	  _helpersBlockHelperMissing2['default'](instance);
 	  _helpersEach2['default'](instance);
@@ -12526,19 +12598,22 @@
 
 /***/ },
 /* 24 */
+/*!**************************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/block-helper-missing.js ***!
+  \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('blockHelperMissing', function (context, options) {
 	    var inverse = options.inverse,
 	        fn = options.fn;
-
+	
 	    if (context === true) {
 	      return fn(this);
 	    } else if (context === false || context == null) {
@@ -12548,7 +12623,7 @@
 	        if (options.ids) {
 	          options.ids = [options.name];
 	        }
-
+	
 	        return instance.helpers.each(context, options);
 	      } else {
 	        return inverse(this);
@@ -12559,76 +12634,79 @@
 	        data.contextPath = _utils.appendContextPath(options.data.contextPath, options.name);
 	        options = { data: data };
 	      }
-
+	
 	      return fn(context, options);
 	    }
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvYmxvY2staGVscGVyLW1pc3NpbmcuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztxQkFBc0QsVUFBVTs7cUJBRWpELFVBQVMsUUFBUSxFQUFFO0FBQ2hDLFVBQVEsQ0FBQyxjQUFjLENBQUMsb0JBQW9CLEVBQUUsVUFBUyxPQUFPLEVBQUUsT0FBTyxFQUFFO0FBQ3ZFLFFBQUksT0FBTyxHQUFHLE9BQU8sQ0FBQyxPQUFPO1FBQ3pCLEVBQUUsR0FBRyxPQUFPLENBQUMsRUFBRSxDQUFDOztBQUVwQixRQUFJLE9BQU8sS0FBSyxJQUFJLEVBQUU7QUFDcEIsYUFBTyxFQUFFLENBQUMsSUFBSSxDQUFDLENBQUM7S0FDakIsTUFBTSxJQUFJLE9BQU8sS0FBSyxLQUFLLElBQUksT0FBTyxJQUFJLElBQUksRUFBRTtBQUMvQyxhQUFPLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUN0QixNQUFNLElBQUksZUFBUSxPQUFPLENBQUMsRUFBRTtBQUMzQixVQUFJLE9BQU8sQ0FBQyxNQUFNLEdBQUcsQ0FBQyxFQUFFO0FBQ3RCLFlBQUksT0FBTyxDQUFDLEdBQUcsRUFBRTtBQUNmLGlCQUFPLENBQUMsR0FBRyxHQUFHLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDO1NBQzlCOztBQUVELGVBQU8sUUFBUSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsT0FBTyxFQUFFLE9BQU8sQ0FBQyxDQUFDO09BQ2hELE1BQU07QUFDTCxlQUFPLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztPQUN0QjtLQUNGLE1BQU07QUFDTCxVQUFJLE9BQU8sQ0FBQyxJQUFJLElBQUksT0FBTyxDQUFDLEdBQUcsRUFBRTtBQUMvQixZQUFJLElBQUksR0FBRyxtQkFBWSxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7QUFDckMsWUFBSSxDQUFDLFdBQVcsR0FBRyx5QkFBa0IsT0FBTyxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDO0FBQzdFLGVBQU8sR0FBRyxFQUFDLElBQUksRUFBRSxJQUFJLEVBQUMsQ0FBQztPQUN4Qjs7QUFFRCxhQUFPLEVBQUUsQ0FBQyxPQUFPLEVBQUUsT0FBTyxDQUFDLENBQUM7S0FDN0I7R0FDRixDQUFDLENBQUM7Q0FDSiIsImZpbGUiOiJibG9jay1oZWxwZXItbWlzc2luZy5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7YXBwZW5kQ29udGV4dFBhdGgsIGNyZWF0ZUZyYW1lLCBpc0FycmF5fSBmcm9tICcuLi91dGlscyc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uKGluc3RhbmNlKSB7XG4gIGluc3RhbmNlLnJlZ2lzdGVySGVscGVyKCdibG9ja0hlbHBlck1pc3NpbmcnLCBmdW5jdGlvbihjb250ZXh0LCBvcHRpb25zKSB7XG4gICAgbGV0IGludmVyc2UgPSBvcHRpb25zLmludmVyc2UsXG4gICAgICAgIGZuID0gb3B0aW9ucy5mbjtcblxuICAgIGlmIChjb250ZXh0ID09PSB0cnVlKSB7XG4gICAgICByZXR1cm4gZm4odGhpcyk7XG4gICAgfSBlbHNlIGlmIChjb250ZXh0ID09PSBmYWxzZSB8fCBjb250ZXh0ID09IG51bGwpIHtcbiAgICAgIHJldHVybiBpbnZlcnNlKHRoaXMpO1xuICAgIH0gZWxzZSBpZiAoaXNBcnJheShjb250ZXh0KSkge1xuICAgICAgaWYgKGNvbnRleHQubGVuZ3RoID4gMCkge1xuICAgICAgICBpZiAob3B0aW9ucy5pZHMpIHtcbiAgICAgICAgICBvcHRpb25zLmlkcyA9IFtvcHRpb25zLm5hbWVdO1xuICAgICAgICB9XG5cbiAgICAgICAgcmV0dXJuIGluc3RhbmNlLmhlbHBlcnMuZWFjaChjb250ZXh0LCBvcHRpb25zKTtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIHJldHVybiBpbnZlcnNlKHRoaXMpO1xuICAgICAgfVxuICAgIH0gZWxzZSB7XG4gICAgICBpZiAob3B0aW9ucy5kYXRhICYmIG9wdGlvbnMuaWRzKSB7XG4gICAgICAgIGxldCBkYXRhID0gY3JlYXRlRnJhbWUob3B0aW9ucy5kYXRhKTtcbiAgICAgICAgZGF0YS5jb250ZXh0UGF0aCA9IGFwcGVuZENvbnRleHRQYXRoKG9wdGlvbnMuZGF0YS5jb250ZXh0UGF0aCwgb3B0aW9ucy5uYW1lKTtcbiAgICAgICAgb3B0aW9ucyA9IHtkYXRhOiBkYXRhfTtcbiAgICAgIH1cblxuICAgICAgcmV0dXJuIGZuKGNvbnRleHQsIG9wdGlvbnMpO1xuICAgIH1cbiAgfSk7XG59XG4iXX0=
 
 
 /***/ },
 /* 25 */
+/*!**********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/each.js ***!
+  \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _utils = __webpack_require__(21);
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
+	var _exception = __webpack_require__(/*! ../exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('each', function (context, options) {
 	    if (!options) {
 	      throw new _exception2['default']('Must pass iterator to #each');
 	    }
-
+	
 	    var fn = options.fn,
 	        inverse = options.inverse,
 	        i = 0,
 	        ret = '',
 	        data = undefined,
 	        contextPath = undefined;
-
+	
 	    if (options.data && options.ids) {
 	      contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';
 	    }
-
+	
 	    if (_utils.isFunction(context)) {
 	      context = context.call(this);
 	    }
-
+	
 	    if (options.data) {
 	      data = _utils.createFrame(options.data);
 	    }
-
+	
 	    function execIteration(field, index, last) {
 	      if (data) {
 	        data.key = field;
 	        data.index = index;
 	        data.first = index === 0;
 	        data.last = !!last;
-
+	
 	        if (contextPath) {
 	          data.contextPath = contextPath + field;
 	        }
 	      }
-
+	
 	      ret = ret + fn(context[field], {
 	        data: data,
 	        blockParams: _utils.blockParams([context[field], field], [contextPath + field, null])
 	      });
 	    }
-
+	
 	    if (context && typeof context === 'object') {
 	      if (_utils.isArray(context)) {
 	        for (var j = context.length; i < j; i++) {
@@ -12638,7 +12716,7 @@
 	        }
 	      } else {
 	        var priorKey = undefined;
-
+	
 	        for (var key in context) {
 	          if (context.hasOwnProperty(key)) {
 	            // We're running the iterations one step out of sync so we can detect
@@ -12656,34 +12734,37 @@
 	        }
 	      }
 	    }
-
+	
 	    if (i === 0) {
 	      ret = inverse(this);
 	    }
-
+	
 	    return ret;
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvZWFjaC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7O3FCQUErRSxVQUFVOzt5QkFDbkUsY0FBYzs7OztxQkFFckIsVUFBUyxRQUFRLEVBQUU7QUFDaEMsVUFBUSxDQUFDLGNBQWMsQ0FBQyxNQUFNLEVBQUUsVUFBUyxPQUFPLEVBQUUsT0FBTyxFQUFFO0FBQ3pELFFBQUksQ0FBQyxPQUFPLEVBQUU7QUFDWixZQUFNLDJCQUFjLDZCQUE2QixDQUFDLENBQUM7S0FDcEQ7O0FBRUQsUUFBSSxFQUFFLEdBQUcsT0FBTyxDQUFDLEVBQUU7UUFDZixPQUFPLEdBQUcsT0FBTyxDQUFDLE9BQU87UUFDekIsQ0FBQyxHQUFHLENBQUM7UUFDTCxHQUFHLEdBQUcsRUFBRTtRQUNSLElBQUksWUFBQTtRQUNKLFdBQVcsWUFBQSxDQUFDOztBQUVoQixRQUFJLE9BQU8sQ0FBQyxJQUFJLElBQUksT0FBTyxDQUFDLEdBQUcsRUFBRTtBQUMvQixpQkFBVyxHQUFHLHlCQUFrQixPQUFPLENBQUMsSUFBSSxDQUFDLFdBQVcsRUFBRSxPQUFPLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQyxDQUFDLEdBQUcsR0FBRyxDQUFDO0tBQ2pGOztBQUVELFFBQUksa0JBQVcsT0FBTyxDQUFDLEVBQUU7QUFBRSxhQUFPLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUFFOztBQUUxRCxRQUFJLE9BQU8sQ0FBQyxJQUFJLEVBQUU7QUFDaEIsVUFBSSxHQUFHLG1CQUFZLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUNsQzs7QUFFRCxhQUFTLGFBQWEsQ0FBQyxLQUFLLEVBQUUsS0FBSyxFQUFFLElBQUksRUFBRTtBQUN6QyxVQUFJLElBQUksRUFBRTtBQUNSLFlBQUksQ0FBQyxHQUFHLEdBQUcsS0FBSyxDQUFDO0FBQ2pCLFlBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxDQUFDO0FBQ25CLFlBQUksQ0FBQyxLQUFLLEdBQUcsS0FBSyxLQUFLLENBQUMsQ0FBQztBQUN6QixZQUFJLENBQUMsSUFBSSxHQUFHLENBQUMsQ0FBQyxJQUFJLENBQUM7O0FBRW5CLFlBQUksV0FBVyxFQUFFO0FBQ2YsY0FBSSxDQUFDLFdBQVcsR0FBRyxXQUFXLEdBQUcsS0FBSyxDQUFDO1NBQ3hDO09BQ0Y7O0FBRUQsU0FBRyxHQUFHLEdBQUcsR0FBRyxFQUFFLENBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxFQUFFO0FBQzdCLFlBQUksRUFBRSxJQUFJO0FBQ1YsbUJBQVcsRUFBRSxtQkFBWSxDQUFDLE9BQU8sQ0FBQyxLQUFLLENBQUMsRUFBRSxLQUFLLENBQUMsRUFBRSxDQUFDLFdBQVcsR0FBRyxLQUFLLEVBQUUsSUFBSSxDQUFDLENBQUM7T0FDL0UsQ0FBQyxDQUFDO0tBQ0o7O0FBRUQsUUFBSSxPQUFPLElBQUksT0FBTyxPQUFPLEtBQUssUUFBUSxFQUFFO0FBQzFDLFVBQUksZUFBUSxPQUFPLENBQUMsRUFBRTtBQUNwQixhQUFLLElBQUksQ0FBQyxHQUFHLE9BQU8sQ0FBQyxNQUFNLEVBQUUsQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEVBQUUsRUFBRTtBQUN2QyxjQUFJLENBQUMsSUFBSSxPQUFPLEVBQUU7QUFDaEIseUJBQWEsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxFQUFFLENBQUMsS0FBSyxPQUFPLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxDQUFDO1dBQy9DO1NBQ0Y7T0FDRixNQUFNO0FBQ0wsWUFBSSxRQUFRLFlBQUEsQ0FBQzs7QUFFYixhQUFLLElBQUksR0FBRyxJQUFJLE9BQU8sRUFBRTtBQUN2QixjQUFJLE9BQU8sQ0FBQyxjQUFjLENBQUMsR0FBRyxDQUFDLEVBQUU7Ozs7QUFJL0IsZ0JBQUksUUFBUSxLQUFLLFNBQVMsRUFBRTtBQUMxQiwyQkFBYSxDQUFDLFFBQVEsRUFBRSxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUM7YUFDaEM7QUFDRCxvQkFBUSxHQUFHLEdBQUcsQ0FBQztBQUNmLGFBQUMsRUFBRSxDQUFDO1dBQ0w7U0FDRjtBQUNELFlBQUksUUFBUSxLQUFLLFNBQVMsRUFBRTtBQUMxQix1QkFBYSxDQUFDLFFBQVEsRUFBRSxDQUFDLEdBQUcsQ0FBQyxFQUFFLElBQUksQ0FBQyxDQUFDO1NBQ3RDO09BQ0Y7S0FDRjs7QUFFRCxRQUFJLENBQUMsS0FBSyxDQUFDLEVBQUU7QUFDWCxTQUFHLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDO0tBQ3JCOztBQUVELFdBQU8sR0FBRyxDQUFDO0dBQ1osQ0FBQyxDQUFDO0NBQ0oiLCJmaWxlIjoiZWFjaC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7YXBwZW5kQ29udGV4dFBhdGgsIGJsb2NrUGFyYW1zLCBjcmVhdGVGcmFtZSwgaXNBcnJheSwgaXNGdW5jdGlvbn0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IEV4Y2VwdGlvbiBmcm9tICcuLi9leGNlcHRpb24nO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbihpbnN0YW5jZSkge1xuICBpbnN0YW5jZS5yZWdpc3RlckhlbHBlcignZWFjaCcsIGZ1bmN0aW9uKGNvbnRleHQsIG9wdGlvbnMpIHtcbiAgICBpZiAoIW9wdGlvbnMpIHtcbiAgICAgIHRocm93IG5ldyBFeGNlcHRpb24oJ011c3QgcGFzcyBpdGVyYXRvciB0byAjZWFjaCcpO1xuICAgIH1cblxuICAgIGxldCBmbiA9IG9wdGlvbnMuZm4sXG4gICAgICAgIGludmVyc2UgPSBvcHRpb25zLmludmVyc2UsXG4gICAgICAgIGkgPSAwLFxuICAgICAgICByZXQgPSAnJyxcbiAgICAgICAgZGF0YSxcbiAgICAgICAgY29udGV4dFBhdGg7XG5cbiAgICBpZiAob3B0aW9ucy5kYXRhICYmIG9wdGlvbnMuaWRzKSB7XG4gICAgICBjb250ZXh0UGF0aCA9IGFwcGVuZENvbnRleHRQYXRoKG9wdGlvbnMuZGF0YS5jb250ZXh0UGF0aCwgb3B0aW9ucy5pZHNbMF0pICsgJy4nO1xuICAgIH1cblxuICAgIGlmIChpc0Z1bmN0aW9uKGNvbnRleHQpKSB7IGNvbnRleHQgPSBjb250ZXh0LmNhbGwodGhpcyk7IH1cblxuICAgIGlmIChvcHRpb25zLmRhdGEpIHtcbiAgICAgIGRhdGEgPSBjcmVhdGVGcmFtZShvcHRpb25zLmRhdGEpO1xuICAgIH1cblxuICAgIGZ1bmN0aW9uIGV4ZWNJdGVyYXRpb24oZmllbGQsIGluZGV4LCBsYXN0KSB7XG4gICAgICBpZiAoZGF0YSkge1xuICAgICAgICBkYXRhLmtleSA9IGZpZWxkO1xuICAgICAgICBkYXRhLmluZGV4ID0gaW5kZXg7XG4gICAgICAgIGRhdGEuZmlyc3QgPSBpbmRleCA9PT0gMDtcbiAgICAgICAgZGF0YS5sYXN0ID0gISFsYXN0O1xuXG4gICAgICAgIGlmIChjb250ZXh0UGF0aCkge1xuICAgICAgICAgIGRhdGEuY29udGV4dFBhdGggPSBjb250ZXh0UGF0aCArIGZpZWxkO1xuICAgICAgICB9XG4gICAgICB9XG5cbiAgICAgIHJldCA9IHJldCArIGZuKGNvbnRleHRbZmllbGRdLCB7XG4gICAgICAgIGRhdGE6IGRhdGEsXG4gICAgICAgIGJsb2NrUGFyYW1zOiBibG9ja1BhcmFtcyhbY29udGV4dFtmaWVsZF0sIGZpZWxkXSwgW2NvbnRleHRQYXRoICsgZmllbGQsIG51bGxdKVxuICAgICAgfSk7XG4gICAgfVxuXG4gICAgaWYgKGNvbnRleHQgJiYgdHlwZW9mIGNvbnRleHQgPT09ICdvYmplY3QnKSB7XG4gICAgICBpZiAoaXNBcnJheShjb250ZXh0KSkge1xuICAgICAgICBmb3IgKGxldCBqID0gY29udGV4dC5sZW5ndGg7IGkgPCBqOyBpKyspIHtcbiAgICAgICAgICBpZiAoaSBpbiBjb250ZXh0KSB7XG4gICAgICAgICAgICBleGVjSXRlcmF0aW9uKGksIGksIGkgPT09IGNvbnRleHQubGVuZ3RoIC0gMSk7XG4gICAgICAgICAgfVxuICAgICAgICB9XG4gICAgICB9IGVsc2Uge1xuICAgICAgICBsZXQgcHJpb3JLZXk7XG5cbiAgICAgICAgZm9yIChsZXQga2V5IGluIGNvbnRleHQpIHtcbiAgICAgICAgICBpZiAoY29udGV4dC5oYXNPd25Qcm9wZXJ0eShrZXkpKSB7XG4gICAgICAgICAgICAvLyBXZSdyZSBydW5uaW5nIHRoZSBpdGVyYXRpb25zIG9uZSBzdGVwIG91dCBvZiBzeW5jIHNvIHdlIGNhbiBkZXRlY3RcbiAgICAgICAgICAgIC8vIHRoZSBsYXN0IGl0ZXJhdGlvbiB3aXRob3V0IGhhdmUgdG8gc2NhbiB0aGUgb2JqZWN0IHR3aWNlIGFuZCBjcmVhdGVcbiAgICAgICAgICAgIC8vIGFuIGl0ZXJtZWRpYXRlIGtleXMgYXJyYXkuXG4gICAgICAgICAgICBpZiAocHJpb3JLZXkgIT09IHVuZGVmaW5lZCkge1xuICAgICAgICAgICAgICBleGVjSXRlcmF0aW9uKHByaW9yS2V5LCBpIC0gMSk7XG4gICAgICAgICAgICB9XG4gICAgICAgICAgICBwcmlvcktleSA9IGtleTtcbiAgICAgICAgICAgIGkrKztcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgICAgaWYgKHByaW9yS2V5ICE9PSB1bmRlZmluZWQpIHtcbiAgICAgICAgICBleGVjSXRlcmF0aW9uKHByaW9yS2V5LCBpIC0gMSwgdHJ1ZSk7XG4gICAgICAgIH1cbiAgICAgIH1cbiAgICB9XG5cbiAgICBpZiAoaSA9PT0gMCkge1xuICAgICAgcmV0ID0gaW52ZXJzZSh0aGlzKTtcbiAgICB9XG5cbiAgICByZXR1cm4gcmV0O1xuICB9KTtcbn1cbiJdfQ==
 
 
 /***/ },
 /* 26 */
+/*!********************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/helper-missing.js ***!
+  \********************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _exception = __webpack_require__(/*! ../exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('helperMissing', function () /* [args, ]options */{
 	    if (arguments.length === 1) {
@@ -12695,27 +12776,30 @@
 	    }
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvaGVscGVyLW1pc3NpbmcuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozt5QkFBc0IsY0FBYzs7OztxQkFFckIsVUFBUyxRQUFRLEVBQUU7QUFDaEMsVUFBUSxDQUFDLGNBQWMsQ0FBQyxlQUFlLEVBQUUsaUNBQWdDO0FBQ3ZFLFFBQUksU0FBUyxDQUFDLE1BQU0sS0FBSyxDQUFDLEVBQUU7O0FBRTFCLGFBQU8sU0FBUyxDQUFDO0tBQ2xCLE1BQU07O0FBRUwsWUFBTSwyQkFBYyxtQkFBbUIsR0FBRyxTQUFTLENBQUMsU0FBUyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsQ0FBQyxJQUFJLEdBQUcsR0FBRyxDQUFDLENBQUM7S0FDdkY7R0FDRixDQUFDLENBQUM7Q0FDSiIsImZpbGUiOiJoZWxwZXItbWlzc2luZy5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCBFeGNlcHRpb24gZnJvbSAnLi4vZXhjZXB0aW9uJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oaW5zdGFuY2UpIHtcbiAgaW5zdGFuY2UucmVnaXN0ZXJIZWxwZXIoJ2hlbHBlck1pc3NpbmcnLCBmdW5jdGlvbigvKiBbYXJncywgXW9wdGlvbnMgKi8pIHtcbiAgICBpZiAoYXJndW1lbnRzLmxlbmd0aCA9PT0gMSkge1xuICAgICAgLy8gQSBtaXNzaW5nIGZpZWxkIGluIGEge3tmb299fSBjb25zdHJ1Y3QuXG4gICAgICByZXR1cm4gdW5kZWZpbmVkO1xuICAgIH0gZWxzZSB7XG4gICAgICAvLyBTb21lb25lIGlzIGFjdHVhbGx5IHRyeWluZyB0byBjYWxsIHNvbWV0aGluZywgYmxvdyB1cC5cbiAgICAgIHRocm93IG5ldyBFeGNlcHRpb24oJ01pc3NpbmcgaGVscGVyOiBcIicgKyBhcmd1bWVudHNbYXJndW1lbnRzLmxlbmd0aCAtIDFdLm5hbWUgKyAnXCInKTtcbiAgICB9XG4gIH0pO1xufVxuIl19
 
 
 /***/ },
 /* 27 */
+/*!********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/if.js ***!
+  \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('if', function (conditional, options) {
 	    if (_utils.isFunction(conditional)) {
 	      conditional = conditional.call(this);
 	    }
-
+	
 	    // Default behavior is to render the positive path if the value is truthy and not empty.
 	    // The `includeZero` option may be set to treat the condtional as purely not empty based on the
 	    // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
@@ -12725,24 +12809,27 @@
 	      return options.fn(this);
 	    }
 	  });
-
+	
 	  instance.registerHelper('unless', function (conditional, options) {
 	    return instance.helpers['if'].call(this, conditional, { fn: options.inverse, inverse: options.fn, hash: options.hash });
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvaWYuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztxQkFBa0MsVUFBVTs7cUJBRTdCLFVBQVMsUUFBUSxFQUFFO0FBQ2hDLFVBQVEsQ0FBQyxjQUFjLENBQUMsSUFBSSxFQUFFLFVBQVMsV0FBVyxFQUFFLE9BQU8sRUFBRTtBQUMzRCxRQUFJLGtCQUFXLFdBQVcsQ0FBQyxFQUFFO0FBQUUsaUJBQVcsR0FBRyxXQUFXLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0tBQUU7Ozs7O0FBS3RFLFFBQUksQUFBQyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsV0FBVyxJQUFJLENBQUMsV0FBVyxJQUFLLGVBQVEsV0FBVyxDQUFDLEVBQUU7QUFDdkUsYUFBTyxPQUFPLENBQUMsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDO0tBQzlCLE1BQU07QUFDTCxhQUFPLE9BQU8sQ0FBQyxFQUFFLENBQUMsSUFBSSxDQUFDLENBQUM7S0FDekI7R0FDRixDQUFDLENBQUM7O0FBRUgsVUFBUSxDQUFDLGNBQWMsQ0FBQyxRQUFRLEVBQUUsVUFBUyxXQUFXLEVBQUUsT0FBTyxFQUFFO0FBQy9ELFdBQU8sUUFBUSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQyxJQUFJLENBQUMsSUFBSSxFQUFFLFdBQVcsRUFBRSxFQUFDLEVBQUUsRUFBRSxPQUFPLENBQUMsT0FBTyxFQUFFLE9BQU8sRUFBRSxPQUFPLENBQUMsRUFBRSxFQUFFLElBQUksRUFBRSxPQUFPLENBQUMsSUFBSSxFQUFDLENBQUMsQ0FBQztHQUN2SCxDQUFDLENBQUM7Q0FDSiIsImZpbGUiOiJpZi5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7aXNFbXB0eSwgaXNGdW5jdGlvbn0gZnJvbSAnLi4vdXRpbHMnO1xuXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbihpbnN0YW5jZSkge1xuICBpbnN0YW5jZS5yZWdpc3RlckhlbHBlcignaWYnLCBmdW5jdGlvbihjb25kaXRpb25hbCwgb3B0aW9ucykge1xuICAgIGlmIChpc0Z1bmN0aW9uKGNvbmRpdGlvbmFsKSkgeyBjb25kaXRpb25hbCA9IGNvbmRpdGlvbmFsLmNhbGwodGhpcyk7IH1cblxuICAgIC8vIERlZmF1bHQgYmVoYXZpb3IgaXMgdG8gcmVuZGVyIHRoZSBwb3NpdGl2ZSBwYXRoIGlmIHRoZSB2YWx1ZSBpcyB0cnV0aHkgYW5kIG5vdCBlbXB0eS5cbiAgICAvLyBUaGUgYGluY2x1ZGVaZXJvYCBvcHRpb24gbWF5IGJlIHNldCB0byB0cmVhdCB0aGUgY29uZHRpb25hbCBhcyBwdXJlbHkgbm90IGVtcHR5IGJhc2VkIG9uIHRoZVxuICAgIC8vIGJlaGF2aW9yIG9mIGlzRW1wdHkuIEVmZmVjdGl2ZWx5IHRoaXMgZGV0ZXJtaW5lcyBpZiAwIGlzIGhhbmRsZWQgYnkgdGhlIHBvc2l0aXZlIHBhdGggb3IgbmVnYXRpdmUuXG4gICAgaWYgKCghb3B0aW9ucy5oYXNoLmluY2x1ZGVaZXJvICYmICFjb25kaXRpb25hbCkgfHwgaXNFbXB0eShjb25kaXRpb25hbCkpIHtcbiAgICAgIHJldHVybiBvcHRpb25zLmludmVyc2UodGhpcyk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiBvcHRpb25zLmZuKHRoaXMpO1xuICAgIH1cbiAgfSk7XG5cbiAgaW5zdGFuY2UucmVnaXN0ZXJIZWxwZXIoJ3VubGVzcycsIGZ1bmN0aW9uKGNvbmRpdGlvbmFsLCBvcHRpb25zKSB7XG4gICAgcmV0dXJuIGluc3RhbmNlLmhlbHBlcnNbJ2lmJ10uY2FsbCh0aGlzLCBjb25kaXRpb25hbCwge2ZuOiBvcHRpb25zLmludmVyc2UsIGludmVyc2U6IG9wdGlvbnMuZm4sIGhhc2g6IG9wdGlvbnMuaGFzaH0pO1xuICB9KTtcbn1cbiJdfQ==
 
 
 /***/ },
 /* 28 */
+/*!*********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/log.js ***!
+  \*********************************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('log', function () /* message, options */{
 	    var args = [undefined],
@@ -12750,7 +12837,7 @@
 	    for (var i = 0; i < arguments.length - 1; i++) {
 	      args.push(arguments[i]);
 	    }
-
+	
 	    var level = 1;
 	    if (options.hash.level != null) {
 	      level = options.hash.level;
@@ -12758,58 +12845,64 @@
 	      level = options.data.level;
 	    }
 	    args[0] = level;
-
+	
 	    instance.log.apply(instance, args);
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvbG9nLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7cUJBQWUsVUFBUyxRQUFRLEVBQUU7QUFDaEMsVUFBUSxDQUFDLGNBQWMsQ0FBQyxLQUFLLEVBQUUsa0NBQWlDO0FBQzlELFFBQUksSUFBSSxHQUFHLENBQUMsU0FBUyxDQUFDO1FBQ2xCLE9BQU8sR0FBRyxTQUFTLENBQUMsU0FBUyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsQ0FBQztBQUM5QyxTQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsU0FBUyxDQUFDLE1BQU0sR0FBRyxDQUFDLEVBQUUsQ0FBQyxFQUFFLEVBQUU7QUFDN0MsVUFBSSxDQUFDLElBQUksQ0FBQyxTQUFTLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztLQUN6Qjs7QUFFRCxRQUFJLEtBQUssR0FBRyxDQUFDLENBQUM7QUFDZCxRQUFJLE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxJQUFJLElBQUksRUFBRTtBQUM5QixXQUFLLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUM7S0FDNUIsTUFBTSxJQUFJLE9BQU8sQ0FBQyxJQUFJLElBQUksT0FBTyxDQUFDLElBQUksQ0FBQyxLQUFLLElBQUksSUFBSSxFQUFFO0FBQ3JELFdBQUssR0FBRyxPQUFPLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQztLQUM1QjtBQUNELFFBQUksQ0FBQyxDQUFDLENBQUMsR0FBRyxLQUFLLENBQUM7O0FBRWhCLFlBQVEsQ0FBQyxHQUFHLE1BQUEsQ0FBWixRQUFRLEVBQVMsSUFBSSxDQUFDLENBQUM7R0FDeEIsQ0FBQyxDQUFDO0NBQ0oiLCJmaWxlIjoibG9nLmpzIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oaW5zdGFuY2UpIHtcbiAgaW5zdGFuY2UucmVnaXN0ZXJIZWxwZXIoJ2xvZycsIGZ1bmN0aW9uKC8qIG1lc3NhZ2UsIG9wdGlvbnMgKi8pIHtcbiAgICBsZXQgYXJncyA9IFt1bmRlZmluZWRdLFxuICAgICAgICBvcHRpb25zID0gYXJndW1lbnRzW2FyZ3VtZW50cy5sZW5ndGggLSAxXTtcbiAgICBmb3IgKGxldCBpID0gMDsgaSA8IGFyZ3VtZW50cy5sZW5ndGggLSAxOyBpKyspIHtcbiAgICAgIGFyZ3MucHVzaChhcmd1bWVudHNbaV0pO1xuICAgIH1cblxuICAgIGxldCBsZXZlbCA9IDE7XG4gICAgaWYgKG9wdGlvbnMuaGFzaC5sZXZlbCAhPSBudWxsKSB7XG4gICAgICBsZXZlbCA9IG9wdGlvbnMuaGFzaC5sZXZlbDtcbiAgICB9IGVsc2UgaWYgKG9wdGlvbnMuZGF0YSAmJiBvcHRpb25zLmRhdGEubGV2ZWwgIT0gbnVsbCkge1xuICAgICAgbGV2ZWwgPSBvcHRpb25zLmRhdGEubGV2ZWw7XG4gICAgfVxuICAgIGFyZ3NbMF0gPSBsZXZlbDtcblxuICAgIGluc3RhbmNlLmxvZyguLi4gYXJncyk7XG4gIH0pO1xufVxuIl19
 
 
 /***/ },
 /* 29 */
+/*!************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/lookup.js ***!
+  \************************************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('lookup', function (obj, field) {
 	    return obj && obj[field];
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvbG9va3VwLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7cUJBQWUsVUFBUyxRQUFRLEVBQUU7QUFDaEMsVUFBUSxDQUFDLGNBQWMsQ0FBQyxRQUFRLEVBQUUsVUFBUyxHQUFHLEVBQUUsS0FBSyxFQUFFO0FBQ3JELFdBQU8sR0FBRyxJQUFJLEdBQUcsQ0FBQyxLQUFLLENBQUMsQ0FBQztHQUMxQixDQUFDLENBQUM7Q0FDSiIsImZpbGUiOiJsb29rdXAuanMiLCJzb3VyY2VzQ29udGVudCI6WyJleHBvcnQgZGVmYXVsdCBmdW5jdGlvbihpbnN0YW5jZSkge1xuICBpbnN0YW5jZS5yZWdpc3RlckhlbHBlcignbG9va3VwJywgZnVuY3Rpb24ob2JqLCBmaWVsZCkge1xuICAgIHJldHVybiBvYmogJiYgb2JqW2ZpZWxkXTtcbiAgfSk7XG59XG4iXX0=
 
 
 /***/ },
 /* 30 */
+/*!**********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/helpers/with.js ***!
+  \**********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
 	exports['default'] = function (instance) {
 	  instance.registerHelper('with', function (context, options) {
 	    if (_utils.isFunction(context)) {
 	      context = context.call(this);
 	    }
-
+	
 	    var fn = options.fn;
-
+	
 	    if (!_utils.isEmpty(context)) {
 	      var data = options.data;
 	      if (options.data && options.ids) {
 	        data = _utils.createFrame(options.data);
 	        data.contextPath = _utils.appendContextPath(options.data.contextPath, options.ids[0]);
 	      }
-
+	
 	      return fn(context, {
 	        data: data,
 	        blockParams: _utils.blockParams([context], [data && data.contextPath])
@@ -12819,27 +12912,30 @@
 	    }
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2hlbHBlcnMvd2l0aC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O3FCQUErRSxVQUFVOztxQkFFMUUsVUFBUyxRQUFRLEVBQUU7QUFDaEMsVUFBUSxDQUFDLGNBQWMsQ0FBQyxNQUFNLEVBQUUsVUFBUyxPQUFPLEVBQUUsT0FBTyxFQUFFO0FBQ3pELFFBQUksa0JBQVcsT0FBTyxDQUFDLEVBQUU7QUFBRSxhQUFPLEdBQUcsT0FBTyxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUFFOztBQUUxRCxRQUFJLEVBQUUsR0FBRyxPQUFPLENBQUMsRUFBRSxDQUFDOztBQUVwQixRQUFJLENBQUMsZUFBUSxPQUFPLENBQUMsRUFBRTtBQUNyQixVQUFJLElBQUksR0FBRyxPQUFPLENBQUMsSUFBSSxDQUFDO0FBQ3hCLFVBQUksT0FBTyxDQUFDLElBQUksSUFBSSxPQUFPLENBQUMsR0FBRyxFQUFFO0FBQy9CLFlBQUksR0FBRyxtQkFBWSxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7QUFDakMsWUFBSSxDQUFDLFdBQVcsR0FBRyx5QkFBa0IsT0FBTyxDQUFDLElBQUksQ0FBQyxXQUFXLEVBQUUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDO09BQ2hGOztBQUVELGFBQU8sRUFBRSxDQUFDLE9BQU8sRUFBRTtBQUNqQixZQUFJLEVBQUUsSUFBSTtBQUNWLG1CQUFXLEVBQUUsbUJBQVksQ0FBQyxPQUFPLENBQUMsRUFBRSxDQUFDLElBQUksSUFBSSxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUM7T0FDaEUsQ0FBQyxDQUFDO0tBQ0osTUFBTTtBQUNMLGFBQU8sT0FBTyxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUM5QjtHQUNGLENBQUMsQ0FBQztDQUNKIiwiZmlsZSI6IndpdGguanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQge2FwcGVuZENvbnRleHRQYXRoLCBibG9ja1BhcmFtcywgY3JlYXRlRnJhbWUsIGlzRW1wdHksIGlzRnVuY3Rpb259IGZyb20gJy4uL3V0aWxzJztcblxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oaW5zdGFuY2UpIHtcbiAgaW5zdGFuY2UucmVnaXN0ZXJIZWxwZXIoJ3dpdGgnLCBmdW5jdGlvbihjb250ZXh0LCBvcHRpb25zKSB7XG4gICAgaWYgKGlzRnVuY3Rpb24oY29udGV4dCkpIHsgY29udGV4dCA9IGNvbnRleHQuY2FsbCh0aGlzKTsgfVxuXG4gICAgbGV0IGZuID0gb3B0aW9ucy5mbjtcblxuICAgIGlmICghaXNFbXB0eShjb250ZXh0KSkge1xuICAgICAgbGV0IGRhdGEgPSBvcHRpb25zLmRhdGE7XG4gICAgICBpZiAob3B0aW9ucy5kYXRhICYmIG9wdGlvbnMuaWRzKSB7XG4gICAgICAgIGRhdGEgPSBjcmVhdGVGcmFtZShvcHRpb25zLmRhdGEpO1xuICAgICAgICBkYXRhLmNvbnRleHRQYXRoID0gYXBwZW5kQ29udGV4dFBhdGgob3B0aW9ucy5kYXRhLmNvbnRleHRQYXRoLCBvcHRpb25zLmlkc1swXSk7XG4gICAgICB9XG5cbiAgICAgIHJldHVybiBmbihjb250ZXh0LCB7XG4gICAgICAgIGRhdGE6IGRhdGEsXG4gICAgICAgIGJsb2NrUGFyYW1zOiBibG9ja1BhcmFtcyhbY29udGV4dF0sIFtkYXRhICYmIGRhdGEuY29udGV4dFBhdGhdKVxuICAgICAgfSk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiBvcHRpb25zLmludmVyc2UodGhpcyk7XG4gICAgfVxuICB9KTtcbn1cbiJdfQ==
 
 
 /***/ },
 /* 31 */
+/*!********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/decorators.js ***!
+  \********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.registerDefaultDecorators = registerDefaultDecorators;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _decoratorsInline = __webpack_require__(32);
-
+	
+	var _decoratorsInline = __webpack_require__(/*! ./decorators/inline */ 32);
+	
 	var _decoratorsInline2 = _interopRequireDefault(_decoratorsInline);
-
+	
 	function registerDefaultDecorators(instance) {
 	  _decoratorsInline2['default'](instance);
 	}
@@ -12848,14 +12944,17 @@
 
 /***/ },
 /* 32 */
+/*!***************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/decorators/inline.js ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
 	exports['default'] = function (instance) {
 	  instance.registerDecorator('inline', function (fn, props, container, options) {
 	    var ret = fn;
@@ -12870,31 +12969,34 @@
 	        return ret;
 	      };
 	    }
-
+	
 	    props.partials[options.args[0]] = options.fn;
-
+	
 	    return ret;
 	  });
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2RlY29yYXRvcnMvaW5saW5lLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7cUJBQXFCLFVBQVU7O3FCQUVoQixVQUFTLFFBQVEsRUFBRTtBQUNoQyxVQUFRLENBQUMsaUJBQWlCLENBQUMsUUFBUSxFQUFFLFVBQVMsRUFBRSxFQUFFLEtBQUssRUFBRSxTQUFTLEVBQUUsT0FBTyxFQUFFO0FBQzNFLFFBQUksR0FBRyxHQUFHLEVBQUUsQ0FBQztBQUNiLFFBQUksQ0FBQyxLQUFLLENBQUMsUUFBUSxFQUFFO0FBQ25CLFdBQUssQ0FBQyxRQUFRLEdBQUcsRUFBRSxDQUFDO0FBQ3BCLFNBQUcsR0FBRyxVQUFTLE9BQU8sRUFBRSxPQUFPLEVBQUU7O0FBRS9CLFlBQUksUUFBUSxHQUFHLFNBQVMsQ0FBQyxRQUFRLENBQUM7QUFDbEMsaUJBQVMsQ0FBQyxRQUFRLEdBQUcsY0FBTyxFQUFFLEVBQUUsUUFBUSxFQUFFLEtBQUssQ0FBQyxRQUFRLENBQUMsQ0FBQztBQUMxRCxZQUFJLEdBQUcsR0FBRyxFQUFFLENBQUMsT0FBTyxFQUFFLE9BQU8sQ0FBQyxDQUFDO0FBQy9CLGlCQUFTLENBQUMsUUFBUSxHQUFHLFFBQVEsQ0FBQztBQUM5QixlQUFPLEdBQUcsQ0FBQztPQUNaLENBQUM7S0FDSDs7QUFFRCxTQUFLLENBQUMsUUFBUSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLENBQUMsR0FBRyxPQUFPLENBQUMsRUFBRSxDQUFDOztBQUU3QyxXQUFPLEdBQUcsQ0FBQztHQUNaLENBQUMsQ0FBQztDQUNKIiwiZmlsZSI6ImlubGluZS5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7ZXh0ZW5kfSBmcm9tICcuLi91dGlscyc7XG5cbmV4cG9ydCBkZWZhdWx0IGZ1bmN0aW9uKGluc3RhbmNlKSB7XG4gIGluc3RhbmNlLnJlZ2lzdGVyRGVjb3JhdG9yKCdpbmxpbmUnLCBmdW5jdGlvbihmbiwgcHJvcHMsIGNvbnRhaW5lciwgb3B0aW9ucykge1xuICAgIGxldCByZXQgPSBmbjtcbiAgICBpZiAoIXByb3BzLnBhcnRpYWxzKSB7XG4gICAgICBwcm9wcy5wYXJ0aWFscyA9IHt9O1xuICAgICAgcmV0ID0gZnVuY3Rpb24oY29udGV4dCwgb3B0aW9ucykge1xuICAgICAgICAvLyBDcmVhdGUgYSBuZXcgcGFydGlhbHMgc3RhY2sgZnJhbWUgcHJpb3IgdG8gZXhlYy5cbiAgICAgICAgbGV0IG9yaWdpbmFsID0gY29udGFpbmVyLnBhcnRpYWxzO1xuICAgICAgICBjb250YWluZXIucGFydGlhbHMgPSBleHRlbmQoe30sIG9yaWdpbmFsLCBwcm9wcy5wYXJ0aWFscyk7XG4gICAgICAgIGxldCByZXQgPSBmbihjb250ZXh0LCBvcHRpb25zKTtcbiAgICAgICAgY29udGFpbmVyLnBhcnRpYWxzID0gb3JpZ2luYWw7XG4gICAgICAgIHJldHVybiByZXQ7XG4gICAgICB9O1xuICAgIH1cblxuICAgIHByb3BzLnBhcnRpYWxzW29wdGlvbnMuYXJnc1swXV0gPSBvcHRpb25zLmZuO1xuXG4gICAgcmV0dXJuIHJldDtcbiAgfSk7XG59XG4iXX0=
 
 
 /***/ },
 /* 33 */
+/*!****************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/logger.js ***!
+  \****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ./utils */ 21);
+	
 	var logger = {
 	  methodMap: ['debug', 'info', 'warn', 'error'],
 	  level: 'info',
-
+	
 	  // Maps a given level value to the `methodMap` indexes above.
 	  lookupLevel: function lookupLevel(level) {
 	    if (typeof level === 'string') {
@@ -12905,30 +13007,30 @@
 	        level = parseInt(level, 10);
 	      }
 	    }
-
+	
 	    return level;
 	  },
-
+	
 	  // Can be overridden in the host environment
 	  log: function log(level) {
 	    level = logger.lookupLevel(level);
-
+	
 	    if (typeof console !== 'undefined' && logger.lookupLevel(logger.level) <= level) {
 	      var method = logger.methodMap[level];
 	      if (!console[method]) {
 	        // eslint-disable-line no-console
 	        method = 'log';
 	      }
-
+	
 	      for (var _len = arguments.length, message = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	        message[_key - 1] = arguments[_key];
 	      }
-
+	
 	      console[method].apply(console, message); // eslint-disable-line no-console
 	    }
 	  }
 	};
-
+	
 	exports['default'] = logger;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2xvZ2dlci5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O3FCQUFzQixTQUFTOztBQUUvQixJQUFJLE1BQU0sR0FBRztBQUNYLFdBQVMsRUFBRSxDQUFDLE9BQU8sRUFBRSxNQUFNLEVBQUUsTUFBTSxFQUFFLE9BQU8sQ0FBQztBQUM3QyxPQUFLLEVBQUUsTUFBTTs7O0FBR2IsYUFBVyxFQUFFLHFCQUFTLEtBQUssRUFBRTtBQUMzQixRQUFJLE9BQU8sS0FBSyxLQUFLLFFBQVEsRUFBRTtBQUM3QixVQUFJLFFBQVEsR0FBRyxlQUFRLE1BQU0sQ0FBQyxTQUFTLEVBQUUsS0FBSyxDQUFDLFdBQVcsRUFBRSxDQUFDLENBQUM7QUFDOUQsVUFBSSxRQUFRLElBQUksQ0FBQyxFQUFFO0FBQ2pCLGFBQUssR0FBRyxRQUFRLENBQUM7T0FDbEIsTUFBTTtBQUNMLGFBQUssR0FBRyxRQUFRLENBQUMsS0FBSyxFQUFFLEVBQUUsQ0FBQyxDQUFDO09BQzdCO0tBQ0Y7O0FBRUQsV0FBTyxLQUFLLENBQUM7R0FDZDs7O0FBR0QsS0FBRyxFQUFFLGFBQVMsS0FBSyxFQUFjO0FBQy9CLFNBQUssR0FBRyxNQUFNLENBQUMsV0FBVyxDQUFDLEtBQUssQ0FBQyxDQUFDOztBQUVsQyxRQUFJLE9BQU8sT0FBTyxLQUFLLFdBQVcsSUFBSSxNQUFNLENBQUMsV0FBVyxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsSUFBSSxLQUFLLEVBQUU7QUFDL0UsVUFBSSxNQUFNLEdBQUcsTUFBTSxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsQ0FBQztBQUNyQyxVQUFJLENBQUMsT0FBTyxDQUFDLE1BQU0sQ0FBQyxFQUFFOztBQUNwQixjQUFNLEdBQUcsS0FBSyxDQUFDO09BQ2hCOzt3Q0FQbUIsT0FBTztBQUFQLGVBQU87OztBQVEzQixhQUFPLENBQUMsTUFBTSxPQUFDLENBQWYsT0FBTyxFQUFZLE9BQU8sQ0FBQyxDQUFDO0tBQzdCO0dBQ0Y7Q0FDRixDQUFDOztxQkFFYSxNQUFNIiwiZmlsZSI6ImxvZ2dlci5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7aW5kZXhPZn0gZnJvbSAnLi91dGlscyc7XG5cbmxldCBsb2dnZXIgPSB7XG4gIG1ldGhvZE1hcDogWydkZWJ1ZycsICdpbmZvJywgJ3dhcm4nLCAnZXJyb3InXSxcbiAgbGV2ZWw6ICdpbmZvJyxcblxuICAvLyBNYXBzIGEgZ2l2ZW4gbGV2ZWwgdmFsdWUgdG8gdGhlIGBtZXRob2RNYXBgIGluZGV4ZXMgYWJvdmUuXG4gIGxvb2t1cExldmVsOiBmdW5jdGlvbihsZXZlbCkge1xuICAgIGlmICh0eXBlb2YgbGV2ZWwgPT09ICdzdHJpbmcnKSB7XG4gICAgICBsZXQgbGV2ZWxNYXAgPSBpbmRleE9mKGxvZ2dlci5tZXRob2RNYXAsIGxldmVsLnRvTG93ZXJDYXNlKCkpO1xuICAgICAgaWYgKGxldmVsTWFwID49IDApIHtcbiAgICAgICAgbGV2ZWwgPSBsZXZlbE1hcDtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIGxldmVsID0gcGFyc2VJbnQobGV2ZWwsIDEwKTtcbiAgICAgIH1cbiAgICB9XG5cbiAgICByZXR1cm4gbGV2ZWw7XG4gIH0sXG5cbiAgLy8gQ2FuIGJlIG92ZXJyaWRkZW4gaW4gdGhlIGhvc3QgZW52aXJvbm1lbnRcbiAgbG9nOiBmdW5jdGlvbihsZXZlbCwgLi4ubWVzc2FnZSkge1xuICAgIGxldmVsID0gbG9nZ2VyLmxvb2t1cExldmVsKGxldmVsKTtcblxuICAgIGlmICh0eXBlb2YgY29uc29sZSAhPT0gJ3VuZGVmaW5lZCcgJiYgbG9nZ2VyLmxvb2t1cExldmVsKGxvZ2dlci5sZXZlbCkgPD0gbGV2ZWwpIHtcbiAgICAgIGxldCBtZXRob2QgPSBsb2dnZXIubWV0aG9kTWFwW2xldmVsXTtcbiAgICAgIGlmICghY29uc29sZVttZXRob2RdKSB7ICAgLy8gZXNsaW50LWRpc2FibGUtbGluZSBuby1jb25zb2xlXG4gICAgICAgIG1ldGhvZCA9ICdsb2cnO1xuICAgICAgfVxuICAgICAgY29uc29sZVttZXRob2RdKC4uLm1lc3NhZ2UpOyAgICAvLyBlc2xpbnQtZGlzYWJsZS1saW5lIG5vLWNvbnNvbGVcbiAgICB9XG4gIH1cbn07XG5cbmV4cG9ydCBkZWZhdWx0IGxvZ2dlcjtcbiJdfQ==
@@ -12936,20 +13038,23 @@
 
 /***/ },
 /* 34 */
+/*!*********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/safe-string.js ***!
+  \*********************************************************/
 /***/ function(module, exports) {
 
 	// Build out our basic SafeString type
 	'use strict';
-
+	
 	exports.__esModule = true;
 	function SafeString(string) {
 	  this.string = string;
 	}
-
+	
 	SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
 	  return '' + this.string;
 	};
-
+	
 	exports['default'] = SafeString;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL3NhZmUtc3RyaW5nLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFDQSxTQUFTLFVBQVUsQ0FBQyxNQUFNLEVBQUU7QUFDMUIsTUFBSSxDQUFDLE1BQU0sR0FBRyxNQUFNLENBQUM7Q0FDdEI7O0FBRUQsVUFBVSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEdBQUcsVUFBVSxDQUFDLFNBQVMsQ0FBQyxNQUFNLEdBQUcsWUFBVztBQUN2RSxTQUFPLEVBQUUsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDO0NBQ3pCLENBQUM7O3FCQUVhLFVBQVUiLCJmaWxlIjoic2FmZS1zdHJpbmcuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBCdWlsZCBvdXQgb3VyIGJhc2ljIFNhZmVTdHJpbmcgdHlwZVxuZnVuY3Rpb24gU2FmZVN0cmluZyhzdHJpbmcpIHtcbiAgdGhpcy5zdHJpbmcgPSBzdHJpbmc7XG59XG5cblNhZmVTdHJpbmcucHJvdG90eXBlLnRvU3RyaW5nID0gU2FmZVN0cmluZy5wcm90b3R5cGUudG9IVE1MID0gZnVuY3Rpb24oKSB7XG4gIHJldHVybiAnJyArIHRoaXMuc3RyaW5nO1xufTtcblxuZXhwb3J0IGRlZmF1bHQgU2FmZVN0cmluZztcbiJdfQ==
@@ -12957,10 +13062,13 @@
 
 /***/ },
 /* 35 */
+/*!*****************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/runtime.js ***!
+  \*****************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.checkRevision = checkRevision;
 	exports.template = template;
@@ -12969,27 +13077,27 @@
 	exports.invokePartial = invokePartial;
 	exports.noop = noop;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
+	
 	// istanbul ignore next
-
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ./utils */ 21);
+	
 	var Utils = _interopRequireWildcard(_utils);
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _exception = __webpack_require__(/*! ./exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
-	var _base = __webpack_require__(20);
-
+	
+	var _base = __webpack_require__(/*! ./base */ 20);
+	
 	function checkRevision(compilerInfo) {
 	  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
 	      currentRevision = _base.COMPILER_REVISION;
-
+	
 	  if (compilerRevision !== currentRevision) {
 	    if (compilerRevision < currentRevision) {
 	      var runtimeVersions = _base.REVISION_CHANGES[currentRevision],
@@ -13001,7 +13109,7 @@
 	    }
 	  }
 	}
-
+	
 	function template(templateSpec, env) {
 	  /* istanbul ignore next */
 	  if (!env) {
@@ -13010,13 +13118,13 @@
 	  if (!templateSpec || !templateSpec.main) {
 	    throw new _exception2['default']('Unknown template object: ' + typeof templateSpec);
 	  }
-
+	
 	  templateSpec.main.decorator = templateSpec.main_d;
-
+	
 	  // Note: Using env.VM references rather than local var references throughout this section to allow
 	  // for external users to override these as psuedo-supported APIs.
 	  env.VM.checkRevision(templateSpec.compiler);
-
+	
 	  function invokePartialWrapper(partial, context, options) {
 	    if (options.hash) {
 	      context = Utils.extend({}, context, options.hash);
@@ -13024,10 +13132,10 @@
 	        options.ids[0] = true;
 	      }
 	    }
-
+	
 	    partial = env.VM.resolvePartial.call(this, partial, context, options);
 	    var result = env.VM.invokePartial.call(this, partial, context, options);
-
+	
 	    if (result == null && env.compile) {
 	      options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
 	      result = options.partials[options.name](context, options);
@@ -13039,7 +13147,7 @@
 	          if (!lines[i] && i + 1 === l) {
 	            break;
 	          }
-
+	
 	          lines[i] = options.indent + lines[i];
 	        }
 	        result = lines.join('\n');
@@ -13049,7 +13157,7 @@
 	      throw new _exception2['default']('The partial ' + options.name + ' could not be compiled when running in runtime-only mode');
 	    }
 	  }
-
+	
 	  // Just add water
 	  var container = {
 	    strict: function strict(obj, name) {
@@ -13069,16 +13177,16 @@
 	    lambda: function lambda(current, context) {
 	      return typeof current === 'function' ? current.call(context) : current;
 	    },
-
+	
 	    escapeExpression: Utils.escapeExpression,
 	    invokePartial: invokePartialWrapper,
-
+	
 	    fn: function fn(i) {
 	      var ret = templateSpec[i];
 	      ret.decorator = templateSpec[i + '_d'];
 	      return ret;
 	    },
-
+	
 	    programs: [],
 	    program: function program(i, data, declaredBlockParams, blockParams, depths) {
 	      var programWrapper = this.programs[i],
@@ -13090,7 +13198,7 @@
 	      }
 	      return programWrapper;
 	    },
-
+	
 	    data: function data(value, depth) {
 	      while (value && depth--) {
 	        value = value._parent;
@@ -13099,23 +13207,23 @@
 	    },
 	    merge: function merge(param, common) {
 	      var obj = param || common;
-
+	
 	      if (param && common && param !== common) {
 	        obj = Utils.extend({}, common, param);
 	      }
-
+	
 	      return obj;
 	    },
-
+	
 	    noop: env.VM.noop,
 	    compilerInfo: templateSpec.compiler
 	  };
-
+	
 	  function ret(context) {
 	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
+	
 	    var data = options.data;
-
+	
 	    ret._setup(options);
 	    if (!options.partial && templateSpec.useData) {
 	      data = initData(context, data);
@@ -13129,7 +13237,7 @@
 	        depths = [context];
 	      }
 	    }
-
+	
 	    function main(context /*, options*/) {
 	      return '' + templateSpec.main(container, context, container.helpers, container.partials, data, blockParams, depths);
 	    }
@@ -13137,11 +13245,11 @@
 	    return main(context, options);
 	  }
 	  ret.isTop = true;
-
+	
 	  ret._setup = function (options) {
 	    if (!options.partial) {
 	      container.helpers = container.merge(options.helpers, env.helpers);
-
+	
 	      if (templateSpec.usePartial) {
 	        container.partials = container.merge(options.partials, env.partials);
 	      }
@@ -13154,7 +13262,7 @@
 	      container.decorators = options.decorators;
 	    }
 	  };
-
+	
 	  ret._child = function (i, data, blockParams, depths) {
 	    if (templateSpec.useBlockParams && !blockParams) {
 	      throw new _exception2['default']('must pass block params');
@@ -13162,32 +13270,32 @@
 	    if (templateSpec.useDepths && !depths) {
 	      throw new _exception2['default']('must pass parent depths');
 	    }
-
+	
 	    return wrapProgram(container, i, templateSpec[i], data, 0, blockParams, depths);
 	  };
 	  return ret;
 	}
-
+	
 	function wrapProgram(container, i, fn, data, declaredBlockParams, blockParams, depths) {
 	  function prog(context) {
 	    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-
+	
 	    var currentDepths = depths;
 	    if (depths && context !== depths[0]) {
 	      currentDepths = [context].concat(depths);
 	    }
-
+	
 	    return fn(container, context, container.helpers, container.partials, options.data || data, blockParams && [options.blockParams].concat(blockParams), currentDepths);
 	  }
-
+	
 	  prog = executeDecorators(fn, prog, container, depths, data, blockParams);
-
+	
 	  prog.program = i;
 	  prog.depth = depths ? depths.length : 0;
 	  prog.blockParams = declaredBlockParams || 0;
 	  return prog;
 	}
-
+	
 	function resolvePartial(partial, context, options) {
 	  if (!partial) {
 	    if (options.name === '@partial-block') {
@@ -13202,38 +13310,38 @@
 	  }
 	  return partial;
 	}
-
+	
 	function invokePartial(partial, context, options) {
 	  options.partial = true;
 	  if (options.ids) {
 	    options.data.contextPath = options.ids[0] || options.data.contextPath;
 	  }
-
+	
 	  var partialBlock = undefined;
 	  if (options.fn && options.fn !== noop) {
 	    options.data = _base.createFrame(options.data);
 	    partialBlock = options.data['partial-block'] = options.fn;
-
+	
 	    if (partialBlock.partials) {
 	      options.partials = Utils.extend({}, options.partials, partialBlock.partials);
 	    }
 	  }
-
+	
 	  if (partial === undefined && partialBlock) {
 	    partial = partialBlock;
 	  }
-
+	
 	  if (partial === undefined) {
 	    throw new _exception2['default']('The partial ' + options.name + ' could not be found');
 	  } else if (partial instanceof Function) {
 	    return partial(context, options);
 	  }
 	}
-
+	
 	function noop() {
 	  return '';
 	}
-
+	
 	function initData(context, data) {
 	  if (!data || !('root' in data)) {
 	    data = data ? _base.createFrame(data) : {};
@@ -13241,7 +13349,7 @@
 	  }
 	  return data;
 	}
-
+	
 	function executeDecorators(fn, prog, container, depths, data, blockParams) {
 	  if (fn.decorator) {
 	    var props = {};
@@ -13255,13 +13363,16 @@
 
 /***/ },
 /* 36 */
+/*!*********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/no-conflict.js ***!
+  \*********************************************************/
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/* global window */
 	'use strict';
-
+	
 	exports.__esModule = true;
-
+	
 	exports['default'] = function (Handlebars) {
 	  /* istanbul ignore next */
 	  var root = typeof global !== 'undefined' ? global : window,
@@ -13274,18 +13385,21 @@
 	    return Handlebars;
 	  };
 	};
-
+	
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL25vLWNvbmZsaWN0LmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O3FCQUNlLFVBQVMsVUFBVSxFQUFFOztBQUVsQyxNQUFJLElBQUksR0FBRyxPQUFPLE1BQU0sS0FBSyxXQUFXLEdBQUcsTUFBTSxHQUFHLE1BQU07TUFDdEQsV0FBVyxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUM7O0FBRWxDLFlBQVUsQ0FBQyxVQUFVLEdBQUcsWUFBVztBQUNqQyxRQUFJLElBQUksQ0FBQyxVQUFVLEtBQUssVUFBVSxFQUFFO0FBQ2xDLFVBQUksQ0FBQyxVQUFVLEdBQUcsV0FBVyxDQUFDO0tBQy9CO0FBQ0QsV0FBTyxVQUFVLENBQUM7R0FDbkIsQ0FBQztDQUNIIiwiZmlsZSI6Im5vLWNvbmZsaWN0LmpzIiwic291cmNlc0NvbnRlbnQiOlsiLyogZ2xvYmFsIHdpbmRvdyAqL1xuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24oSGFuZGxlYmFycykge1xuICAvKiBpc3RhbmJ1bCBpZ25vcmUgbmV4dCAqL1xuICBsZXQgcm9vdCA9IHR5cGVvZiBnbG9iYWwgIT09ICd1bmRlZmluZWQnID8gZ2xvYmFsIDogd2luZG93LFxuICAgICAgJEhhbmRsZWJhcnMgPSByb290LkhhbmRsZWJhcnM7XG4gIC8qIGlzdGFuYnVsIGlnbm9yZSBuZXh0ICovXG4gIEhhbmRsZWJhcnMubm9Db25mbGljdCA9IGZ1bmN0aW9uKCkge1xuICAgIGlmIChyb290LkhhbmRsZWJhcnMgPT09IEhhbmRsZWJhcnMpIHtcbiAgICAgIHJvb3QuSGFuZGxlYmFycyA9ICRIYW5kbGViYXJzO1xuICAgIH1cbiAgICByZXR1cm4gSGFuZGxlYmFycztcbiAgfTtcbn1cbiJdfQ==
-
+	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 37 */
+/*!**********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/ast.js ***!
+  \**********************************************************/
 /***/ function(module, exports) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	var AST = {
 	  // Public API used to evaluate derived attributes regarding AST nodes
@@ -13296,12 +13410,12 @@
 	    helperExpression: function helperExpression(node) {
 	      return node.type === 'SubExpression' || (node.type === 'MustacheStatement' || node.type === 'BlockStatement') && !!(node.params && node.params.length || node.hash);
 	    },
-
+	
 	    scopedId: function scopedId(path) {
 	      return (/^\.|this\b/.test(path.original)
 	      );
 	    },
-
+	
 	    // an ID is simple if it only has one part, and that part is not
 	    // `..` or `this`.
 	    simpleId: function simpleId(path) {
@@ -13309,7 +13423,7 @@
 	    }
 	  }
 	};
-
+	
 	// Must be exported as an object rather than the root of the module as the jison lexer
 	// must modify the object to operate properly.
 	exports['default'] = AST;
@@ -13319,52 +13433,55 @@
 
 /***/ },
 /* 38 */
+/*!***********************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/base.js ***!
+  \***********************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.parse = parse;
 	// istanbul ignore next
-
+	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
+	
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _parser = __webpack_require__(39);
-
+	
+	var _parser = __webpack_require__(/*! ./parser */ 39);
+	
 	var _parser2 = _interopRequireDefault(_parser);
-
-	var _whitespaceControl = __webpack_require__(40);
-
+	
+	var _whitespaceControl = __webpack_require__(/*! ./whitespace-control */ 40);
+	
 	var _whitespaceControl2 = _interopRequireDefault(_whitespaceControl);
-
-	var _helpers = __webpack_require__(42);
-
+	
+	var _helpers = __webpack_require__(/*! ./helpers */ 42);
+	
 	var Helpers = _interopRequireWildcard(_helpers);
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
 	exports.parser = _parser2['default'];
-
+	
 	var yy = {};
 	_utils.extend(yy, Helpers);
-
+	
 	function parse(input, options) {
 	  // Just return if an already-compiled AST was passed in.
 	  if (input.type === 'Program') {
 	    return input;
 	  }
-
+	
 	  _parser2['default'].yy = yy;
-
+	
 	  // Altering the shared object here, but this is ok as parser is a sync operation
 	  yy.locInfo = function (locInfo) {
 	    return new yy.SourceLocation(options && options.srcName, locInfo);
 	  };
-
+	
 	  var strip = new _whitespaceControl2['default'](options);
 	  return strip.accept(_parser2['default'].parse(input));
 	}
@@ -13373,12 +13490,15 @@
 
 /***/ },
 /* 39 */
+/*!*************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/parser.js ***!
+  \*************************************************************/
 /***/ function(module, exports) {
 
 	/* istanbul ignore next */
 	/* Jison generated parser */
 	"use strict";
-
+	
 	var handlebars = (function () {
 	    var parser = { trace: function trace() {},
 	        yy: {},
@@ -13387,7 +13507,7 @@
 	        productions_: [0, [3, 2], [4, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [13, 1], [10, 3], [16, 5], [9, 4], [9, 4], [24, 6], [27, 6], [38, 6], [43, 2], [45, 3], [45, 1], [26, 3], [8, 5], [8, 5], [11, 5], [12, 3], [59, 5], [63, 1], [63, 1], [64, 5], [69, 1], [71, 3], [74, 3], [20, 1], [20, 1], [20, 1], [20, 1], [20, 1], [20, 1], [20, 1], [56, 1], [56, 1], [79, 2], [78, 1], [86, 3], [86, 1], [6, 0], [6, 2], [17, 1], [17, 2], [21, 0], [21, 2], [22, 0], [22, 1], [25, 0], [25, 1], [28, 0], [28, 1], [30, 0], [30, 2], [31, 0], [31, 1], [32, 0], [32, 1], [35, 0], [35, 2], [36, 0], [36, 1], [37, 0], [37, 1], [40, 0], [40, 2], [41, 0], [41, 1], [42, 0], [42, 1], [46, 0], [46, 1], [49, 0], [49, 2], [50, 0], [50, 1], [52, 0], [52, 2], [53, 0], [53, 1], [57, 0], [57, 2], [58, 0], [58, 1], [61, 0], [61, 2], [62, 0], [62, 1], [66, 0], [66, 2], [67, 0], [67, 1], [70, 1], [70, 2], [76, 1], [76, 2]],
 	        performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate, $$, _$
 	        /**/) {
-
+	
 	            var $0 = $$.length - 1;
 	            switch (yystate) {
 	                case 1:
@@ -13421,7 +13541,7 @@
 	                        strip: yy.stripFlags($$[$0], $$[$0]),
 	                        loc: yy.locInfo(this._$)
 	                    };
-
+	
 	                    break;
 	                case 10:
 	                    this.$ = {
@@ -13430,7 +13550,7 @@
 	                        value: $$[$0],
 	                        loc: yy.locInfo(this._$)
 	                    };
-
+	
 	                    break;
 	                case 11:
 	                    this.$ = yy.prepareRawBlock($$[$0 - 2], $$[$0 - 1], $$[$0], this._$);
@@ -13460,9 +13580,9 @@
 	                    var inverse = yy.prepareBlock($$[$0 - 2], $$[$0 - 1], $$[$0], $$[$0], false, this._$),
 	                        program = yy.prepareProgram([inverse], $$[$0 - 1].loc);
 	                    program.chained = true;
-
+	
 	                    this.$ = { strip: $$[$0 - 2].strip, program: program, chain: true };
-
+	
 	                    break;
 	                case 20:
 	                    this.$ = $$[$0];
@@ -13486,7 +13606,7 @@
 	                        strip: yy.stripFlags($$[$0 - 4], $$[$0]),
 	                        loc: yy.locInfo(this._$)
 	                    };
-
+	
 	                    break;
 	                case 25:
 	                    this.$ = yy.preparePartialBlock($$[$0 - 2], $$[$0 - 1], $$[$0], this._$);
@@ -13508,7 +13628,7 @@
 	                        hash: $$[$0 - 1],
 	                        loc: yy.locInfo(this._$)
 	                    };
-
+	
 	                    break;
 	                case 30:
 	                    this.$ = { type: 'Hash', pairs: $$[$0], loc: yy.locInfo(this._$) };
@@ -13799,14 +13919,14 @@
 	                    this.yylloc.last_column++;
 	                }
 	                if (this.options.ranges) this.yylloc.range[1]++;
-
+	
 	                this._input = this._input.slice(1);
 	                return ch;
 	            },
 	            unput: function unput(ch) {
 	                var len = ch.length;
 	                var lines = ch.split(/(?:\r\n?|\n)/g);
-
+	
 	                this._input = ch + this._input;
 	                this.yytext = this.yytext.substr(0, this.yytext.length - len - 1);
 	                //this.yyleng -= len;
@@ -13814,16 +13934,16 @@
 	                var oldLines = this.match.split(/(?:\r\n?|\n)/g);
 	                this.match = this.match.substr(0, this.match.length - 1);
 	                this.matched = this.matched.substr(0, this.matched.length - 1);
-
+	
 	                if (lines.length - 1) this.yylineno -= lines.length - 1;
 	                var r = this.yylloc.range;
-
+	
 	                this.yylloc = { first_line: this.yylloc.first_line,
 	                    last_line: this.yylineno + 1,
 	                    first_column: this.yylloc.first_column,
 	                    last_column: lines ? (lines.length === oldLines.length ? this.yylloc.first_column : 0) + oldLines[oldLines.length - lines.length].length - lines[0].length : this.yylloc.first_column - len
 	                };
-
+	
 	                if (this.options.ranges) {
 	                    this.yylloc.range = [r[0], r[0] + this.yyleng - len];
 	                }
@@ -13857,7 +13977,7 @@
 	                    return this.EOF;
 	                }
 	                if (!this._input) this.done = true;
-
+	
 	                var token, match, tempMatch, index, col, lines;
 	                if (!this._more) {
 	                    this.yytext = '';
@@ -13925,11 +14045,11 @@
 	        lexer.options = {};
 	        lexer.performAction = function anonymous(yy, yy_, $avoiding_name_collisions, YY_START
 	        /**/) {
-
+	
 	            function strip(start, end) {
 	                return yy_.yytext = yy_.yytext.substr(start, yy_.yyleng - end);
 	            }
-
+	
 	            var YYSTATE = YY_START;
 	            switch ($avoiding_name_collisions) {
 	                case 0:
@@ -13943,7 +14063,7 @@
 	                        this.begin("mu");
 	                    }
 	                    if (yy_.yytext) return 15;
-
+	
 	                    break;
 	                case 1:
 	                    return 15;
@@ -13951,7 +14071,7 @@
 	                case 2:
 	                    this.popState();
 	                    return 15;
-
+	
 	                    break;
 	                case 3:
 	                    this.begin('raw');return 15;
@@ -13967,7 +14087,7 @@
 	                        yy_.yytext = yy_.yytext.substr(5, yy_.yyleng - 9);
 	                        return 'END_RAW_BLOCK';
 	                    }
-
+	
 	                    break;
 	                case 5:
 	                    return 15;
@@ -13975,7 +14095,7 @@
 	                case 6:
 	                    this.popState();
 	                    return 14;
-
+	
 	                    break;
 	                case 7:
 	                    return 65;
@@ -13990,7 +14110,7 @@
 	                    this.popState();
 	                    this.begin('raw');
 	                    return 23;
-
+	
 	                    break;
 	                case 11:
 	                    return 55;
@@ -14026,12 +14146,12 @@
 	                    this.unput(yy_.yytext);
 	                    this.popState();
 	                    this.begin('com');
-
+	
 	                    break;
 	                case 22:
 	                    this.popState();
 	                    return 14;
-
+	
 	                    break;
 	                case 23:
 	                    return 48;
@@ -14117,57 +14237,60 @@
 
 /***/ },
 /* 40 */
+/*!*************************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/whitespace-control.js ***!
+  \*************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _visitor = __webpack_require__(41);
-
+	
+	var _visitor = __webpack_require__(/*! ./visitor */ 41);
+	
 	var _visitor2 = _interopRequireDefault(_visitor);
-
+	
 	function WhitespaceControl() {
 	  var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
+	
 	  this.options = options;
 	}
 	WhitespaceControl.prototype = new _visitor2['default']();
-
+	
 	WhitespaceControl.prototype.Program = function (program) {
 	  var doStandalone = !this.options.ignoreStandalone;
-
+	
 	  var isRoot = !this.isRootSeen;
 	  this.isRootSeen = true;
-
+	
 	  var body = program.body;
 	  for (var i = 0, l = body.length; i < l; i++) {
 	    var current = body[i],
 	        strip = this.accept(current);
-
+	
 	    if (!strip) {
 	      continue;
 	    }
-
+	
 	    var _isPrevWhitespace = isPrevWhitespace(body, i, isRoot),
 	        _isNextWhitespace = isNextWhitespace(body, i, isRoot),
 	        openStandalone = strip.openStandalone && _isPrevWhitespace,
 	        closeStandalone = strip.closeStandalone && _isNextWhitespace,
 	        inlineStandalone = strip.inlineStandalone && _isPrevWhitespace && _isNextWhitespace;
-
+	
 	    if (strip.close) {
 	      omitRight(body, i, true);
 	    }
 	    if (strip.open) {
 	      omitLeft(body, i, true);
 	    }
-
+	
 	    if (doStandalone && inlineStandalone) {
 	      omitRight(body, i);
-
+	
 	      if (omitLeft(body, i)) {
 	        // If we are on a standalone node, save the indent info for partials
 	        if (current.type === 'PartialStatement') {
@@ -14178,68 +14301,68 @@
 	    }
 	    if (doStandalone && openStandalone) {
 	      omitRight((current.program || current.inverse).body);
-
+	
 	      // Strip out the previous content node if it's whitespace only
 	      omitLeft(body, i);
 	    }
 	    if (doStandalone && closeStandalone) {
 	      // Always strip the next node
 	      omitRight(body, i);
-
+	
 	      omitLeft((current.inverse || current.program).body);
 	    }
 	  }
-
+	
 	  return program;
 	};
-
+	
 	WhitespaceControl.prototype.BlockStatement = WhitespaceControl.prototype.DecoratorBlock = WhitespaceControl.prototype.PartialBlockStatement = function (block) {
 	  this.accept(block.program);
 	  this.accept(block.inverse);
-
+	
 	  // Find the inverse program that is involed with whitespace stripping.
 	  var program = block.program || block.inverse,
 	      inverse = block.program && block.inverse,
 	      firstInverse = inverse,
 	      lastInverse = inverse;
-
+	
 	  if (inverse && inverse.chained) {
 	    firstInverse = inverse.body[0].program;
-
+	
 	    // Walk the inverse chain to find the last inverse that is actually in the chain.
 	    while (lastInverse.chained) {
 	      lastInverse = lastInverse.body[lastInverse.body.length - 1].program;
 	    }
 	  }
-
+	
 	  var strip = {
 	    open: block.openStrip.open,
 	    close: block.closeStrip.close,
-
+	
 	    // Determine the standalone candiacy. Basically flag our content as being possibly standalone
 	    // so our parent can determine if we actually are standalone
 	    openStandalone: isNextWhitespace(program.body),
 	    closeStandalone: isPrevWhitespace((firstInverse || program).body)
 	  };
-
+	
 	  if (block.openStrip.close) {
 	    omitRight(program.body, null, true);
 	  }
-
+	
 	  if (inverse) {
 	    var inverseStrip = block.inverseStrip;
-
+	
 	    if (inverseStrip.open) {
 	      omitLeft(program.body, null, true);
 	    }
-
+	
 	    if (inverseStrip.close) {
 	      omitRight(firstInverse.body, null, true);
 	    }
 	    if (block.closeStrip.open) {
 	      omitLeft(lastInverse.body, null, true);
 	    }
-
+	
 	    // Find standalone else statments
 	    if (!this.options.ignoreStandalone && isPrevWhitespace(program.body) && isNextWhitespace(firstInverse.body)) {
 	      omitLeft(program.body);
@@ -14248,14 +14371,14 @@
 	  } else if (block.closeStrip.open) {
 	    omitLeft(program.body, null, true);
 	  }
-
+	
 	  return strip;
 	};
-
+	
 	WhitespaceControl.prototype.Decorator = WhitespaceControl.prototype.MustacheStatement = function (mustache) {
 	  return mustache.strip;
 	};
-
+	
 	WhitespaceControl.prototype.PartialStatement = WhitespaceControl.prototype.CommentStatement = function (node) {
 	  /* istanbul ignore next */
 	  var strip = node.strip || {};
@@ -14265,12 +14388,12 @@
 	    close: strip.close
 	  };
 	};
-
+	
 	function isPrevWhitespace(body, i, isRoot) {
 	  if (i === undefined) {
 	    i = body.length;
 	  }
-
+	
 	  // Nodes that end with newlines are considered whitespace (but are special
 	  // cased for strip operations)
 	  var prev = body[i - 1],
@@ -14278,7 +14401,7 @@
 	  if (!prev) {
 	    return isRoot;
 	  }
-
+	
 	  if (prev.type === 'ContentStatement') {
 	    return (sibling || !isRoot ? /\r?\n\s*?$/ : /(^|\r?\n)\s*?$/).test(prev.original);
 	  }
@@ -14287,18 +14410,18 @@
 	  if (i === undefined) {
 	    i = -1;
 	  }
-
+	
 	  var next = body[i + 1],
 	      sibling = body[i + 2];
 	  if (!next) {
 	    return isRoot;
 	  }
-
+	
 	  if (next.type === 'ContentStatement') {
 	    return (sibling || !isRoot ? /^\s*?\r?\n/ : /^\s*?(\r?\n|$)/).test(next.original);
 	  }
 	}
-
+	
 	// Marks the node to the right of the position as omitted.
 	// I.e. {{foo}}' ' will mark the ' ' node as omitted.
 	//
@@ -14311,12 +14434,12 @@
 	  if (!current || current.type !== 'ContentStatement' || !multiple && current.rightStripped) {
 	    return;
 	  }
-
+	
 	  var original = current.value;
 	  current.value = current.value.replace(multiple ? /^\s+/ : /^[ \t]*\r?\n?/, '');
 	  current.rightStripped = current.value !== original;
 	}
-
+	
 	// Marks the node to the left of the position as omitted.
 	// I.e. ' '{{foo}} will mark the ' ' node as omitted.
 	//
@@ -14329,14 +14452,14 @@
 	  if (!current || current.type !== 'ContentStatement' || !multiple && current.leftStripped) {
 	    return;
 	  }
-
+	
 	  // We omit the last node if it's whitespace only and not preceeded by a non-content node.
 	  var original = current.value;
 	  current.value = current.value.replace(multiple ? /\s+$/ : /[ \t]+$/, '');
 	  current.leftStripped = current.value !== original;
 	  return current.leftStripped;
 	}
-
+	
 	exports['default'] = WhitespaceControl;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2NvbXBpbGVyL3doaXRlc3BhY2UtY29udHJvbC5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7O3VCQUFvQixXQUFXOzs7O0FBRS9CLFNBQVMsaUJBQWlCLEdBQWU7TUFBZCxPQUFPLHlEQUFHLEVBQUU7O0FBQ3JDLE1BQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxDQUFDO0NBQ3hCO0FBQ0QsaUJBQWlCLENBQUMsU0FBUyxHQUFHLDBCQUFhLENBQUM7O0FBRTVDLGlCQUFpQixDQUFDLFNBQVMsQ0FBQyxPQUFPLEdBQUcsVUFBUyxPQUFPLEVBQUU7QUFDdEQsTUFBTSxZQUFZLEdBQUcsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLGdCQUFnQixDQUFDOztBQUVwRCxNQUFJLE1BQU0sR0FBRyxDQUFDLElBQUksQ0FBQyxVQUFVLENBQUM7QUFDOUIsTUFBSSxDQUFDLFVBQVUsR0FBRyxJQUFJLENBQUM7O0FBRXZCLE1BQUksSUFBSSxHQUFHLE9BQU8sQ0FBQyxJQUFJLENBQUM7QUFDeEIsT0FBSyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxHQUFHLElBQUksQ0FBQyxNQUFNLEVBQUUsQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEVBQUUsRUFBRTtBQUMzQyxRQUFJLE9BQU8sR0FBRyxJQUFJLENBQUMsQ0FBQyxDQUFDO1FBQ2pCLEtBQUssR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxDQUFDOztBQUVqQyxRQUFJLENBQUMsS0FBSyxFQUFFO0FBQ1YsZUFBUztLQUNWOztBQUVELFFBQUksaUJBQWlCLEdBQUcsZ0JBQWdCLENBQUMsSUFBSSxFQUFFLENBQUMsRUFBRSxNQUFNLENBQUM7UUFDckQsaUJBQWlCLEdBQUcsZ0JBQWdCLENBQUMsSUFBSSxFQUFFLENBQUMsRUFBRSxNQUFNLENBQUM7UUFFckQsY0FBYyxHQUFHLEtBQUssQ0FBQyxjQUFjLElBQUksaUJBQWlCO1FBQzFE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QUFDeEQsTUFBSSxDQUFDLE9BQU8sSUFBSSxPQUFPLENBQUMsSUFBSSxLQUFLLGtCQUFrQixJQUFLLENBQUMsUUFBUSxJQUFJLE9BQU8sQ0FBQyxZQUFZLEFBQUMsRUFBRTtBQUMxRixXQUFPO0dBQ1I7OztBQUdELE1BQUksUUFBUSxHQUFHLE9BQU8sQ0FBQyxLQUFLLENBQUM7QUFDN0IsU0FBTyxDQUFDLEtBQUssR0FBRyxPQUFPLENBQUMsS0FBSyxDQUFDLE9BQU8sQ0FBQyxRQUFRLEdBQUksTUFBTSxHQUFLLFNBQVMsQUFBQyxFQUFFLEVBQUUsQ0FBQyxDQUFDO0FBQzdFLFNBQU8sQ0FBQyxZQUFZLEdBQUcsT0FBTyxDQUFDLEtBQUssS0FBSyxRQUFRLENBQUM7QUFDbEQsU0FBTyxPQUFPLENBQUMsWUFBWSxDQUFDO0NBQzdCOztxQkFFYyxpQkFBaUIiLCJmaWxlIjoid2hpdGVzcGFjZS1jb250cm9sLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IFZpc2l0b3IgZnJvbSAnLi92aXNpdG9yJztcblxuZnVuY3Rpb24gV2hpdGVzcGFjZUNvbnRyb2wob3B0aW9ucyA9IHt9KSB7XG4gIHRoaXMub3B0aW9ucyA9IG9wdGlvbnM7XG59XG5XaGl0ZXNwYWNlQ29udHJvbC5wcm90b3R5cGUgPSBuZXcgVmlzaXRvcigpO1xuXG5XaGl0ZXNwYWNlQ29udHJvbC5wcm90b3R5cGUuUHJvZ3JhbSA9IGZ1bmN0aW9uKHByb2dyYW0pIHtcbiAgY29uc3QgZG9TdGFuZGFsb25lID0gIXRoaXMub3B0aW9ucy5pZ25vcmVTdGFuZGFsb25lO1xuXG4gIGxldCBpc1Jvb3QgPSAhdGhpcy5pc1Jvb3RTZWVuO1xuICB0aGlzLmlzUm9vdFNlZW4gPSB0cnVlO1xuXG4gIGxldCBib2R5ID0gcHJvZ3JhbS5ib2R5O1xuICBmb3IgKGxldCBpID0gMCwgbCA9IGJvZHkubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgbGV0IGN1cnJlbnQgPSBib2R5W2ldLFxuICAgICAgICBzdHJpcCA9IHRoaXMuYWNjZXB0KGN1cnJlbnQpO1xuXG4gICAgaWYgKCFzdHJpcCkge1xuICAgICAgY29udGludWU7XG4gICAgfVxuXG4gICAgbGV0IF9pc1ByZXZXaGl0ZXNwYWNlID0gaXNQcmV2V2hpdGVzcGFjZShib2R5LCBpLCBpc1Jvb3QpLFxuICAgICAgICBfaXNOZXh0V2hpdGVzcGFjZSA9IGlzTmV4dFdoaXRlc3BhY2UoYm9keSwgaSwgaXNSb290KSxcblxuICAgICAgICBvcGVuU3RhbmRhbG9uZSA9IHN0cmlwLm9wZW5TdGFuZGFsb25lICYmIF9pc1ByZXZXaGl0ZXNwYWNlLFxuICAgICAgICBjbG9zZVN0YW5kYWxvbmUgPSBzdHJpcC5jbG9zZVN0YW5kYWxvbmUgJiYgX2lzTmV4dFdoaXRlc3BhY2UsXG4gICAgICAgIGlubGluZVN0YW5kYWxvbmUgPSBzdHJpcC5pbmxpbmVTdGFuZGFsb25lICYmIF9pc1ByZXZXaGl0ZXNwYWNlICYmIF9pc05leHRXaGl0ZXNwYWNlO1xuXG4gICAgaWYgKHN0cmlwLmNsb3NlKSB7XG4gICAgICBvbWl0UmlnaHQoYm9keSwgaSwgdHJ1ZSk7XG4gICAgfVxuICAgIGlmIChzdHJpcC5vcGVuKSB7XG4gICAgICBvbWl0TGVmdChib2R5LCBpLCB0cnVlKTtcbiAgICB9XG5cbiAgICBpZiAoZG9TdGFuZGFsb25lICYmIGlubGluZVN0YW5kYWxvbmUpIHtcbiAgICAgIG9taXRSaWdodChib2R5LCBpKTtcblxuICAgICAgaWYgKG9taXRMZWZ0KGJvZHksIGkpKSB7XG4gICAgICAgIC8vIElmIHdlIGFyZSBvbiBhIHN0YW5kYWxvbmUgbm9kZSwgc2F2ZSB0aGUgaW5kZW50IGluZm8gZm9yIHBhcnRpYWxzXG4gICAgICAgIGlmIChjdXJyZW50LnR5cGUgPT09ICdQYXJ0aWFsU3RhdGVtZW50Jykge1xuICAgICAgICAgIC8vIFB1bGwgb3V0IHRoZSB3aGl0ZXNwYWNlIGZyb20gdGhlIGZpbmFsIGxpbmVcbiAgICAgICAgICBjdXJyZW50LmluZGVudCA9ICgvKFsgXFx0XSskKS8pLmV4ZWMoYm9keVtpIC0gMV0ub3JpZ2luYWwpWzFdO1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfVxuICAgIGlmIChkb1N0YW5kYWxvbmUgJiYgb3BlblN0YW5kYWxvbmUpIHtcbiAgICAgIG9taXRSaWdodCgoY3VycmVudC5wcm9ncmFtIHx8IGN1cnJlbnQuaW52ZXJzZSkuYm9keSk7XG5cbiAgICAgIC8vIFN0cmlwIG91dCB0aGUgcHJldmlvdXMgY29udGVudCBub2RlIGlmIGl0J3Mgd2hpdGVzcGFjZSBvbmx5XG4gICAgICBvbWl0TGVmdChib2R5LCBpKTtcbiAgICB9XG4gICAgaWYgKGRvU3RhbmRhbG9uZSAmJiBjbG9zZVN0YW5kYWxvbmUpIHtcbiAgICAgIC8vIEFsd2F5cyBzdHJpcCB0aGUgbmV4dCBub2RlXG4gICAgICBvbWl0UmlnaHQoYm9keSwgaSk7XG5cbiAgICAgIG9taXRMZWZ0KChjdXJyZW50LmludmVyc2UgfHwgY3VycmVudC5wcm9ncmFtKS5ib2R5KTtcbiAgICB9XG4gIH1cblxuICByZXR1cm4gcHJvZ3JhbTtcbn07XG5cbldoaXRlc3BhY2VDb250cm9sLnByb3RvdHlwZS5CbG9ja1N0YXRlbWVudCA9XG5XaGl0ZXNwYWNlQ29udHJvbC5wcm90b3R5cGUuRGVjb3JhdG9yQmxvY2sgPVxuV2hpdGVzcGFjZUNvbnRyb2wucHJvdG90eXBlLlBhcnRpYWxCbG9ja1N0YXRlbWVudCA9IGZ1bmN0aW9uKGJsb2NrKSB7XG4gIHRoaXMuYWNjZXB0KGJsb2NrLnByb2dyYW0pO1xuICB0aGlzLmFjY2VwdChibG9jay5pbnZlcnNlKTtcblxuICAvLyBGaW5kIHRoZSBpbnZlcnNlIHByb2dyYW0gdGhhdCBpcyBpbnZvbGVkIHdpdGggd2hpdGVzcGFjZSBzdHJpcHBpbmcuXG4gIGxldCBwcm9ncmFtID0gYmxvY2sucHJvZ3JhbSB8fCBibG9jay5pbnZlcnNlLFxuICAgICAgaW52ZXJzZSA9IGJsb2NrLnByb2dyYW0gJiYgYmxvY2suaW52ZXJzZSxcbiAgICAgIGZpcnN0SW52ZXJzZSA9IGludmVyc2UsXG4gICAgICBsYXN0SW52ZXJzZSA9IGludmVyc2U7XG5cbiAgaWYgKGludmVyc2UgJiYgaW52ZXJzZS5jaGFpbmVkKSB7XG4gICAgZmlyc3RJbnZlcnNlID0gaW52ZXJzZS5ib2R5WzBdLnByb2dyYW07XG5cbiAgICAvLyBXYWxrIHRoZSBpbnZlcnNlIGNoYWluIHRvIGZpbmQgdGhlIGxhc3QgaW52ZXJzZSB0aGF0IGlzIGFjdHVhbGx5IGluIHRoZSBjaGFpbi5cbiAgICB3aGlsZSAobGFzdEludmVyc2UuY2hhaW5lZCkge1xuICAgICAgbGFzdEludmVyc2UgPSBsYXN0SW52ZXJzZS5ib2R5W2xhc3RJbnZlcnNlLmJvZHkubGVuZ3RoIC0gMV0ucHJvZ3JhbTtcbiAgICB9XG4gIH1cblxuICBsZXQgc3RyaXAgPSB7XG4gICAgb3BlbjogYmxvY2sub3BlblN0cmlwLm9wZW4sXG4gICAgY2xvc2U6IGJsb2NrLmNsb3NlU3RyaXAuY2xvc2UsXG5cbiAgICAvLyBEZXRlcm1pbmUgdGhlIHN0YW5kYWxvbmUgY2FuZGlhY3kuIEJhc2ljYWxseSBmbGFnIG91ciBjb250ZW50IGFzIGJlaW5nIHBvc3NpYmx5IHN0YW5kYWxvbmVcbiAgICAvLyBzbyBvdXIgcGFyZW50IGNhbiBkZXRlcm1pbmUgaWYgd2UgYWN0dWFsbHkgYXJlIHN0YW5kYWxvbmVcbiAgICBvcGVuU3RhbmRhbG9uZTogaXNOZXh0V2hpdGVzcGFjZShwcm9ncmFtLmJvZHkpLFxuICAgIGNsb3NlU3RhbmRhbG9uZTogaXNQcmV2V2hpdGVzcGFjZSgoZmlyc3RJbnZlcnNlIHx8IHByb2dyYW0pLmJvZHkpXG4gIH07XG5cbiAgaWYgKGJsb2NrLm9wZW5TdHJpcC5jbG9zZSkge1xuICAgIG9taXRSaWdodChwcm9ncmFtLmJvZHksIG51bGwsIHRydWUpO1xuICB9XG5cbiAgaWYgKGludmVyc2UpIHtcbiAgICBsZXQgaW52ZXJzZVN0cmlwID0gYmxvY2suaW52ZXJzZVN0cmlwO1xuXG4gICAgaWYgKGludmVyc2VTdHJpcC5vcGVuKSB7XG4gICAgICBvbWl0TGVmdChwcm9ncmFtLmJvZHksIG51bGwsIHRydWUpO1xuICAgIH1cblxuICAgIGlmIChpbnZlcnNlU3RyaXAuY2xvc2UpIHtcbiAgICAgIG9taXRSaWdodChmaXJzdEludmVyc2UuYm9keSwgbnVsbCwgdHJ1ZSk7XG4gICAgfVxuICAgIGlmIChibG9jay5jbG9zZVN0cmlwLm9wZW4pIHtcbiAgICAgIG9taXRMZWZ0KGxhc3RJbnZlcnNlLmJvZHksIG51bGwsIHRydWUpO1xuICAgIH1cblxuICAgIC8vIEZpbmQgc3RhbmRhbG9uZSBlbHNlIHN0YXRtZW50c1xuICAgIGlmICghdGhpcy5vcHRpb25zLmlnbm9yZVN0YW5kYWxvbmVcbiAgICAgICAgJiYgaXNQcmV2V2hpdGVzcGFjZShwcm9ncmFtLmJvZHkpXG4gICAgICAgICYmIGlzTmV4dFdoaXRlc3BhY2UoZmlyc3RJbnZlcnNlLmJvZHkpKSB7XG4gICAgICBvbWl0TGVmdChwcm9ncmFtLmJvZHkpO1xuICAgICAgb21pdFJpZ2h0KGZpcnN0SW52ZXJzZS5ib2R5KTtcbiAgICB9XG4gIH0gZWxzZSBpZiAoYmxvY2suY2xvc2VTdHJpcC5vcGVuKSB7XG4gICAgb21pdExlZnQocHJvZ3JhbS5ib2R5LCBudWxsLCB0cnVlKTtcbiAgfVxuXG4gIHJldHVybiBzdHJpcDtcbn07XG5cbldoaXRlc3BhY2VDb250cm9sLnByb3RvdHlwZS5EZWNvcmF0b3IgPVxuV2hpdGVzcGFjZUNvbnRyb2wucHJvdG90eXBlLk11c3RhY2hlU3RhdGVtZW50ID0gZnVuY3Rpb24obXVzdGFjaGUpIHtcbiAgcmV0dXJuIG11c3RhY2hlLnN0cmlwO1xufTtcblxuV2hpdGVzcGFjZUNvbnRyb2wucHJvdG90eXBlLlBhcnRpYWxTdGF0ZW1lbnQgPVxuICAgIFdoaXRlc3BhY2VDb250cm9sLnByb3RvdHlwZS5Db21tZW50U3RhdGVtZW50ID0gZnVuY3Rpb24obm9kZSkge1xuICAvKiBpc3RhbmJ1bCBpZ25vcmUgbmV4dCAqL1xuICBsZXQgc3RyaXAgPSBub2RlLnN0cmlwIHx8IHt9O1xuICByZXR1cm4ge1xuICAgIGlubGluZVN0YW5kYWxvbmU6IHRydWUsXG4gICAgb3Blbjogc3RyaXAub3BlbixcbiAgICBjbG9zZTogc3RyaXAuY2xvc2VcbiAgfTtcbn07XG5cblxuZnVuY3Rpb24gaXNQcmV2V2hpdGVzcGFjZShib2R5LCBpLCBpc1Jvb3QpIHtcbiAgaWYgKGkgPT09IHVuZGVmaW5lZCkge1xuICAgIGkgPSBib2R5Lmxlbmd0aDtcbiAgfVxuXG4gIC8vIE5vZGVzIHRoYXQgZW5kIHdpdGggbmV3bGluZXMgYXJlIGNvbnNpZGVyZWQgd2hpdGVzcGFjZSAoYnV0IGFyZSBzcGVjaWFsXG4gIC8vIGNhc2VkIGZvciBzdHJpcCBvcGVyYXRpb25zKVxuICBsZXQgcHJldiA9IGJvZHlbaSAtIDFdLFxuICAgICAgc2libGluZyA9IGJvZHlbaSAtIDJdO1xuICBpZiAoIXByZXYpIHtcbiAgICByZXR1cm4gaXNSb290O1xuICB9XG5cbiAgaWYgKHByZXYudHlwZSA9PT0gJ0NvbnRlbnRTdGF0ZW1lbnQnKSB7XG4gICAgcmV0dXJuIChzaWJsaW5nIHx8ICFpc1Jvb3QgPyAoL1xccj9cXG5cXHMqPyQvKSA6ICgvKF58XFxyP1xcbilcXHMqPyQvKSkudGVzdChwcmV2Lm9yaWdpbmFsKTtcbiAgfVxufVxuZnVuY3Rpb24gaXNOZXh0V2hpdGVzcGFjZShib2R5LCBpLCBpc1Jvb3QpIHtcbiAgaWYgKGkgPT09IHVuZGVmaW5lZCkge1xuICAgIGkgPSAtMTtcbiAgfVxuXG4gIGxldCBuZXh0ID0gYm9keVtpICsgMV0sXG4gICAgICBzaWJsaW5nID0gYm9keVtpICsgMl07XG4gIGlmICghbmV4dCkge1xuICAgIHJldHVybiBpc1Jvb3Q7XG4gIH1cblxuICBpZiAobmV4dC50eXBlID09PSAnQ29udGVudFN0YXRlbWVudCcpIHtcbiAgICByZXR1cm4gKHNpYmxpbmcgfHwgIWlzUm9vdCA/ICgvXlxccyo/XFxyP1xcbi8pIDogKC9eXFxzKj8oXFxyP1xcbnwkKS8pKS50ZXN0KG5leHQub3JpZ2luYWwpO1xuICB9XG59XG5cbi8vIE1hcmtzIHRoZSBub2RlIHRvIHRoZSByaWdodCBvZiB0aGUgcG9zaXRpb24gYXMgb21pdHRlZC5cbi8vIEkuZS4ge3tmb299fScgJyB3aWxsIG1hcmsgdGhlICcgJyBub2RlIGFzIG9taXR0ZWQuXG4vL1xuLy8gSWYgaSBpcyB1bmRlZmluZWQsIHRoZW4gdGhlIGZpcnN0IGNoaWxkIHdpbGwgYmUgbWFya2VkIGFzIHN1Y2guXG4vL1xuLy8gSWYgbXVsaXRwbGUgaXMgdHJ1dGh5IHRoZW4gYWxsIHdoaXRlc3BhY2Ugd2lsbCBiZSBzdHJpcHBlZCBvdXQgdW50aWwgbm9uLXdoaXRlc3BhY2Vcbi8vIGNvbnRlbnQgaXMgbWV0LlxuZnVuY3Rpb24gb21pdFJpZ2h0KGJvZHksIGksIG11bHRpcGxlKSB7XG4gIGxldCBjdXJyZW50ID0gYm9keVtpID09IG51bGwgPyAwIDogaSArIDFdO1xuICBpZiAoIWN1cnJlbnQgfHwgY3VycmVudC50eXBlICE9PSAnQ29udGVudFN0YXRlbWVudCcgfHwgKCFtdWx0aXBsZSAmJiBjdXJyZW50LnJpZ2h0U3RyaXBwZWQpKSB7XG4gICAgcmV0dXJuO1xuICB9XG5cbiAgbGV0IG9yaWdpbmFsID0gY3VycmVudC52YWx1ZTtcbiAgY3VycmVudC52YWx1ZSA9IGN1cnJlbnQudmFsdWUucmVwbGFjZShtdWx0aXBsZSA/ICgvXlxccysvKSA6ICgvXlsgXFx0XSpcXHI/XFxuPy8pLCAnJyk7XG4gIGN1cnJlbnQucmlnaHRTdHJpcHBlZCA9IGN1cnJlbnQudmFsdWUgIT09IG9yaWdpbmFsO1xufVxuXG4vLyBNYXJrcyB0aGUgbm9kZSB0byB0aGUgbGVmdCBvZiB0aGUgcG9zaXRpb24gYXMgb21pdHRlZC5cbi8vIEkuZS4gJyAne3tmb299fSB3aWxsIG1hcmsgdGhlICcgJyBub2RlIGFzIG9taXR0ZWQuXG4vL1xuLy8gSWYgaSBpcyB1bmRlZmluZWQgdGhlbiB0aGUgbGFzdCBjaGlsZCB3aWxsIGJlIG1hcmtlZCBhcyBzdWNoLlxuLy9cbi8vIElmIG11bGl0cGxlIGlzIHRydXRoeSB0aGVuIGFsbCB3aGl0ZXNwYWNlIHdpbGwgYmUgc3RyaXBwZWQgb3V0IHVudGlsIG5vbi13aGl0ZXNwYWNlXG4vLyBjb250ZW50IGlzIG1ldC5cbmZ1bmN0aW9uIG9taXRMZWZ0KGJvZHksIGksIG11bHRpcGxlKSB7XG4gIGxldCBjdXJyZW50ID0gYm9keVtpID09IG51bGwgPyBib2R5Lmxlbmd0aCAtIDEgOiBpIC0gMV07XG4gIGlmICghY3VycmVudCB8fCBjdXJyZW50LnR5cGUgIT09ICdDb250ZW50U3RhdGVtZW50JyB8fCAoIW11bHRpcGxlICYmIGN1cnJlbnQubGVmdFN0cmlwcGVkKSkge1xuICAgIHJldHVybjtcbiAgfVxuXG4gIC8vIFdlIG9taXQgdGhlIGxhc3Qgbm9kZSBpZiBpdCdzIHdoaXRlc3BhY2Ugb25seSBhbmQgbm90IHByZWNlZWRlZCBieSBhIG5vbi1jb250ZW50IG5vZGUuXG4gIGxldCBvcmlnaW5hbCA9IGN1cnJlbnQudmFsdWU7XG4gIGN1cnJlbnQudmFsdWUgPSBjdXJyZW50LnZhbHVlLnJlcGxhY2UobXVsdGlwbGUgPyAoL1xccyskLykgOiAoL1sgXFx0XSskLyksICcnKTtcbiAgY3VycmVudC5sZWZ0U3RyaXBwZWQgPSBjdXJyZW50LnZhbHVlICE9PSBvcmlnaW5hbDtcbiAgcmV0dXJuIGN1cnJlbnQubGVmdFN0cmlwcGVkO1xufVxuXG5leHBvcnQgZGVmYXVsdCBXaGl0ZXNwYWNlQ29udHJvbDtcbiJdfQ==
@@ -14344,27 +14467,30 @@
 
 /***/ },
 /* 41 */
+/*!**************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/visitor.js ***!
+  \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _exception = __webpack_require__(/*! ../exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
+	
 	function Visitor() {
 	  this.parents = [];
 	}
-
+	
 	Visitor.prototype = {
 	  constructor: Visitor,
 	  mutating: false,
-
+	
 	  // Visits a given value. If mutating, will replace the value if necessary.
 	  acceptKey: function acceptKey(node, name) {
 	    var value = this.accept(node[name]);
@@ -14377,23 +14503,23 @@
 	      node[name] = value;
 	    }
 	  },
-
+	
 	  // Performs an accept operation with added sanity check to ensure
 	  // required keys are not removed.
 	  acceptRequired: function acceptRequired(node, name) {
 	    this.acceptKey(node, name);
-
+	
 	    if (!node[name]) {
 	      throw new _exception2['default'](node.type + ' requires ' + name);
 	    }
 	  },
-
+	
 	  // Traverses a given array. If mutating, empty respnses will be removed
 	  // for child elements.
 	  acceptArray: function acceptArray(array) {
 	    for (var i = 0, l = array.length; i < l; i++) {
 	      this.acceptKey(array, i);
-
+	
 	      if (!array[i]) {
 	        array.splice(i, 1);
 	        i--;
@@ -14401,63 +14527,63 @@
 	      }
 	    }
 	  },
-
+	
 	  accept: function accept(object) {
 	    if (!object) {
 	      return;
 	    }
-
+	
 	    /* istanbul ignore next: Sanity code */
 	    if (!this[object.type]) {
 	      throw new _exception2['default']('Unknown type: ' + object.type, object);
 	    }
-
+	
 	    if (this.current) {
 	      this.parents.unshift(this.current);
 	    }
 	    this.current = object;
-
+	
 	    var ret = this[object.type](object);
-
+	
 	    this.current = this.parents.shift();
-
+	
 	    if (!this.mutating || ret) {
 	      return ret;
 	    } else if (ret !== false) {
 	      return object;
 	    }
 	  },
-
+	
 	  Program: function Program(program) {
 	    this.acceptArray(program.body);
 	  },
-
+	
 	  MustacheStatement: visitSubExpression,
 	  Decorator: visitSubExpression,
-
+	
 	  BlockStatement: visitBlock,
 	  DecoratorBlock: visitBlock,
-
+	
 	  PartialStatement: visitPartial,
 	  PartialBlockStatement: function PartialBlockStatement(partial) {
 	    visitPartial.call(this, partial);
-
+	
 	    this.acceptKey(partial, 'program');
 	  },
-
+	
 	  ContentStatement: function ContentStatement() /* content */{},
 	  CommentStatement: function CommentStatement() /* comment */{},
-
+	
 	  SubExpression: visitSubExpression,
-
+	
 	  PathExpression: function PathExpression() /* path */{},
-
+	
 	  StringLiteral: function StringLiteral() /* string */{},
 	  NumberLiteral: function NumberLiteral() /* number */{},
 	  BooleanLiteral: function BooleanLiteral() /* bool */{},
 	  UndefinedLiteral: function UndefinedLiteral() /* literal */{},
 	  NullLiteral: function NullLiteral() /* literal */{},
-
+	
 	  Hash: function Hash(hash) {
 	    this.acceptArray(hash.pairs);
 	  },
@@ -14465,7 +14591,7 @@
 	    this.acceptRequired(pair, 'value');
 	  }
 	};
-
+	
 	function visitSubExpression(mustache) {
 	  this.acceptRequired(mustache, 'path');
 	  this.acceptArray(mustache.params);
@@ -14473,7 +14599,7 @@
 	}
 	function visitBlock(block) {
 	  visitSubExpression.call(this, block);
-
+	
 	  this.acceptKey(block, 'program');
 	  this.acceptKey(block, 'inverse');
 	}
@@ -14482,7 +14608,7 @@
 	  this.acceptArray(partial.params);
 	  this.acceptKey(partial, 'hash');
 	}
-
+	
 	exports['default'] = Visitor;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2NvbXBpbGVyL3Zpc2l0b3IuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozt5QkFBc0IsY0FBYzs7OztBQUVwQyxTQUFTLE9BQU8sR0FBRztBQUNqQixNQUFJLENBQUMsT0FBTyxHQUFHLEVBQUUsQ0FBQztDQUNuQjs7QUFFRCxPQUFPLENBQUMsU0FBUyxHQUFHO0FBQ2xCLGFBQVcsRUFBRSxPQUFPO0FBQ3BCLFVBQVEsRUFBRSxLQUFLOzs7QUFHZixXQUFTLEVBQUUsbUJBQVMsSUFBSSxFQUFFLElBQUksRUFBRTtBQUM5QixRQUFJLEtBQUssR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDO0FBQ3BDLFFBQUksSUFBSSxDQUFDLFFBQVEsRUFBRTs7O0FBR2pCLFVBQUksS0FBSyxJQUFJLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxLQUFLLENBQUMsSUFBSSxDQUFDLEVBQUU7QUFDM0MsY0FBTSwyQkFBYyx3QkFBd0IsR0FBRyxLQUFLLENBQUMsSUFBSSxHQUFHLHlCQUF5QixHQUFHLElBQUksR0FBRyxNQUFNLEdBQUcsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO09BQ3BIO0FBQ0QsVUFBSSxDQUFDLElBQUksQ0FBQyxHQUFHLEtBQUssQ0FBQztLQUNwQjtHQUNGOzs7O0FBSUQsZ0JBQWMsRUFBRSx3QkFBUyxJQUFJLEVBQUUsSUFBSSxFQUFFO0FBQ25DLFFBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxFQUFFLElBQUksQ0FBQyxDQUFDOztBQUUzQixRQUFJLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxFQUFFO0FBQ2YsWUFBTSwyQkFBYyxJQUFJLENBQUMsSUFBSSxHQUFHLFlBQVksR0FBRyxJQUFJLENBQUMsQ0FBQztLQUN0RDtHQUNGOzs7O0FBSUQsYUFBVyxFQUFFLHFCQUFTLEtBQUssRUFBRTtBQUMzQixTQUFLLElBQUksQ0FBQyxHQUFH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O0FBQ2xDLE1BQUksQ0FBQyxTQUFTLENBQUMsUUFBUSxFQUFFLE1BQU0sQ0FBQyxDQUFDO0NBQ2xDO0FBQ0QsU0FBUyxVQUFVLENBQUMsS0FBSyxFQUFFO0FBQ3pCLG9CQUFrQixDQUFDLElBQUksQ0FBQyxJQUFJLEVBQUUsS0FBSyxDQUFDLENBQUM7O0FBRXJDLE1BQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxFQUFFLFNBQVMsQ0FBQyxDQUFDO0FBQ2pDLE1BQUksQ0FBQyxTQUFTLENBQUMsS0FBSyxFQUFFLFNBQVMsQ0FBQyxDQUFDO0NBQ2xDO0FBQ0QsU0FBUyxZQUFZLENBQUMsT0FBTyxFQUFFO0FBQzdCLE1BQUksQ0FBQyxjQUFjLENBQUMsT0FBTyxFQUFFLE1BQU0sQ0FBQyxDQUFDO0FBQ3JDLE1BQUksQ0FBQyxXQUFXLENBQUMsT0FBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0FBQ2pDLE1BQUksQ0FBQyxTQUFTLENBQUMsT0FBTyxFQUFFLE1BQU0sQ0FBQyxDQUFDO0NBQ2pDOztxQkFFYyxPQUFPIiwiZmlsZSI6InZpc2l0b3IuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgRXhjZXB0aW9uIGZyb20gJy4uL2V4Y2VwdGlvbic7XG5cbmZ1bmN0aW9uIFZpc2l0b3IoKSB7XG4gIHRoaXMucGFyZW50cyA9IFtdO1xufVxuXG5WaXNpdG9yLnByb3RvdHlwZSA9IHtcbiAgY29uc3RydWN0b3I6IFZpc2l0b3IsXG4gIG11dGF0aW5nOiBmYWxzZSxcblxuICAvLyBWaXNpdHMgYSBnaXZlbiB2YWx1ZS4gSWYgbXV0YXRpbmcsIHdpbGwgcmVwbGFjZSB0aGUgdmFsdWUgaWYgbmVjZXNzYXJ5LlxuICBhY2NlcHRLZXk6IGZ1bmN0aW9uKG5vZGUsIG5hbWUpIHtcbiAgICBsZXQgdmFsdWUgPSB0aGlzLmFjY2VwdChub2RlW25hbWVdKTtcbiAgICBpZiAodGhpcy5tdXRhdGluZykge1xuICAgICAgLy8gSGFja3kgc2FuaXR5IGNoZWNrOiBUaGlzIG1heSBoYXZlIGEgZmV3IGZhbHNlIHBvc2l0aXZlcyBmb3IgdHlwZSBmb3IgdGhlIGhlbHBlclxuICAgICAgLy8gbWV0aG9kcyBidXQgd2lsbCBnZW5lcmFsbHkgZG8gdGhlIHJpZ2h0IHRoaW5nIHdpdGhvdXQgYSBsb3Qgb2Ygb3ZlcmhlYWQuXG4gICAgICBpZiAodmFsdWUgJiYgIVZpc2l0b3IucHJvdG90eXBlW3ZhbHVlLnR5cGVdKSB7XG4gICAgICAgIHRocm93IG5ldyBFeGNlcHRpb24oJ1VuZXhwZWN0ZWQgbm9kZSB0eXBlIFwiJyArIHZhbHVlLnR5cGUgKyAnXCIgZm91bmQgd2hlbiBhY2NlcHRpbmcgJyArIG5hbWUgKyAnIG9uICcgKyBub2RlLnR5cGUpO1xuICAgICAgfVxuICAgICAgbm9kZVtuYW1lXSA9IHZhbHVlO1xuICAgIH1cbiAgfSxcblxuICAvLyBQZXJmb3JtcyBhbiBhY2NlcHQgb3BlcmF0aW9uIHdpdGggYWRkZWQgc2FuaXR5IGNoZWNrIHRvIGVuc3VyZVxuICAvLyByZXF1aXJlZCBrZXlzIGFyZSBub3QgcmVtb3ZlZC5cbiAgYWNjZXB0UmVxdWlyZWQ6IGZ1bmN0aW9uKG5vZGUsIG5hbWUpIHtcbiAgICB0aGlzLmFjY2VwdEtleShub2RlLCBuYW1lKTtcblxuICAgIGlmICghbm9kZVtuYW1lXSkge1xuICAgICAgdGhyb3cgbmV3IEV4Y2VwdGlvbihub2RlLnR5cGUgKyAnIHJlcXVpcmVzICcgKyBuYW1lKTtcbiAgICB9XG4gIH0sXG5cbiAgLy8gVHJhdmVyc2VzIGEgZ2l2ZW4gYXJyYXkuIElmIG11dGF0aW5nLCBlbXB0eSByZXNwbnNlcyB3aWxsIGJlIHJlbW92ZWRcbiAgLy8gZm9yIGNoaWxkIGVsZW1lbnRzLlxuICBhY2NlcHRBcnJheTogZnVuY3Rpb24oYXJyYXkpIHtcbiAgICBmb3IgKGxldCBpID0gMCwgbCA9IGFycmF5Lmxlbmd0aDsgaSA8IGw7IGkrKykge1xuICAgICAgdGhpcy5hY2NlcHRLZXkoYXJyYXksIGkpO1xuXG4gICAgICBpZiAoIWFycmF5W2ldKSB7XG4gICAgICAgIGFycmF5LnNwbGljZShpLCAxKTtcbiAgICAgICAgaS0tO1xuICAgICAgICBsLS07XG4gICAgICB9XG4gICAgfVxuICB9LFxuXG4gIGFjY2VwdDogZnVuY3Rpb24ob2JqZWN0KSB7XG4gICAgaWYgKCFvYmplY3QpIHtcbiAgICAgIHJldHVybjtcbiAgICB9XG5cbiAgICAvKiBpc3RhbmJ1bCBpZ25vcmUgbmV4dDogU2FuaXR5IGNvZGUgKi9cbiAgICBpZiAoIXRoaXNbb2JqZWN0LnR5cGVdKSB7XG4gICAgICB0aHJvdyBuZXcgRXhjZXB0aW9uKCdVbmtub3duIHR5cGU6ICcgKyBvYmplY3QudHlwZSwgb2JqZWN0KTtcbiAgICB9XG5cbiAgICBpZiAodGhpcy5jdXJyZW50KSB7XG4gICAgICB0aGlzLnBhcmVudHMudW5zaGlmdCh0aGlzLmN1cnJlbnQpO1xuICAgIH1cbiAgICB0aGlzLmN1cnJlbnQgPSBvYmplY3Q7XG5cbiAgICBsZXQgcmV0ID0gdGhpc1tvYmplY3QudHlwZV0ob2JqZWN0KTtcblxuICAgIHRoaXMuY3VycmVudCA9IHRoaXMucGFyZW50cy5zaGlmdCgpO1xuXG4gICAgaWYgKCF0aGlzLm11dGF0aW5nIHx8IHJldCkge1xuICAgICAgcmV0dXJuIHJldDtcbiAgICB9IGVsc2UgaWYgKHJldCAhPT0gZmFsc2UpIHtcbiAgICAgIHJldHVybiBvYmplY3Q7XG4gICAgfVxuICB9LFxuXG4gIFByb2dyYW06IGZ1bmN0aW9uKHByb2dyYW0pIHtcbiAgICB0aGlzLmFjY2VwdEFycmF5KHByb2dyYW0uYm9keSk7XG4gIH0sXG5cbiAgTXVzdGFjaGVTdGF0ZW1lbnQ6IHZpc2l0U3ViRXhwcmVzc2lvbixcbiAgRGVjb3JhdG9yOiB2aXNpdFN1YkV4cHJlc3Npb24sXG5cbiAgQmxvY2tTdGF0ZW1lbnQ6IHZpc2l0QmxvY2ssXG4gIERlY29yYXRvckJsb2NrOiB2aXNpdEJsb2NrLFxuXG4gIFBhcnRpYWxTdGF0ZW1lbnQ6IHZpc2l0UGFydGlhbCxcbiAgUGFydGlhbEJsb2NrU3RhdGVtZW50OiBmdW5jdGlvbihwYXJ0aWFsKSB7XG4gICAgdmlzaXRQYXJ0aWFsLmNhbGwodGhpcywgcGFydGlhbCk7XG5cbiAgICB0aGlzLmFjY2VwdEtleShwYXJ0aWFsLCAncHJvZ3JhbScpO1xuICB9LFxuXG4gIENvbnRlbnRTdGF0ZW1lbnQ6IGZ1bmN0aW9uKC8qIGNvbnRlbnQgKi8pIHt9LFxuICBDb21tZW50U3RhdGVtZW50OiBmdW5jdGlvbigvKiBjb21tZW50ICovKSB7fSxcblxuICBTdWJFeHByZXNzaW9uOiB2aXNpdFN1YkV4cHJlc3Npb24sXG5cbiAgUGF0aEV4cHJlc3Npb246IGZ1bmN0aW9uKC8qIHBhdGggKi8pIHt9LFxuXG4gIFN0cmluZ0xpdGVyYWw6IGZ1bmN0aW9uKC8qIHN0cmluZyAqLykge30sXG4gIE51bWJlckxpdGVyYWw6IGZ1bmN0aW9uKC8qIG51bWJlciAqLykge30sXG4gIEJvb2xlYW5MaXRlcmFsOiBmdW5jdGlvbigvKiBib29sICovKSB7fSxcbiAgVW5kZWZpbmVkTGl0ZXJhbDogZnVuY3Rpb24oLyogbGl0ZXJhbCAqLykge30sXG4gIE51bGxMaXRlcmFsOiBmdW5jdGlvbigvKiBsaXRlcmFsICovKSB7fSxcblxuICBIYXNoOiBmdW5jdGlvbihoYXNoKSB7XG4gICAgdGhpcy5hY2NlcHRBcnJheShoYXNoLnBhaXJzKTtcbiAgfSxcbiAgSGFzaFBhaXI6IGZ1bmN0aW9uKHBhaXIpIHtcbiAgICB0aGlzLmFjY2VwdFJlcXVpcmVkKHBhaXIsICd2YWx1ZScpO1xuICB9XG59O1xuXG5mdW5jdGlvbiB2aXNpdFN1YkV4cHJlc3Npb24obXVzdGFjaGUpIHtcbiAgdGhpcy5hY2NlcHRSZXF1aXJlZChtdXN0YWNoZSwgJ3BhdGgnKTtcbiAgdGhpcy5hY2NlcHRBcnJheShtdXN0YWNoZS5wYXJhbXMpO1xuICB0aGlzLmFjY2VwdEtleShtdXN0YWNoZSwgJ2hhc2gnKTtcbn1cbmZ1bmN0aW9uIHZpc2l0QmxvY2soYmxvY2spIHtcbiAgdmlzaXRTdWJFeHByZXNzaW9uLmNhbGwodGhpcywgYmxvY2spO1xuXG4gIHRoaXMuYWNjZXB0S2V5KGJsb2NrLCAncHJvZ3JhbScpO1xuICB0aGlzLmFjY2VwdEtleShibG9jaywgJ2ludmVyc2UnKTtcbn1cbmZ1bmN0aW9uIHZpc2l0UGFydGlhbChwYXJ0aWFsKSB7XG4gIHRoaXMuYWNjZXB0UmVxdWlyZWQocGFydGlhbCwgJ25hbWUnKTtcbiAgdGhpcy5hY2NlcHRBcnJheShwYXJ0aWFsLnBhcmFtcyk7XG4gIHRoaXMuYWNjZXB0S2V5KHBhcnRpYWwsICdoYXNoJyk7XG59XG5cbmV4cG9ydCBkZWZhdWx0IFZpc2l0b3I7XG4iXX0=
@@ -14490,10 +14616,13 @@
 
 /***/ },
 /* 42 */
+/*!**************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/helpers.js ***!
+  \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.SourceLocation = SourceLocation;
 	exports.id = id;
@@ -14506,23 +14635,23 @@
 	exports.prepareProgram = prepareProgram;
 	exports.preparePartialBlock = preparePartialBlock;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _exception = __webpack_require__(/*! ../exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
+	
 	function validateClose(open, close) {
 	  close = close.path ? close.path.original : close;
-
+	
 	  if (open.path.original !== close) {
 	    var errorNode = { loc: open.path.loc };
-
+	
 	    throw new _exception2['default'](open.path.original + " doesn't match " + close, errorNode);
 	  }
 	}
-
+	
 	function SourceLocation(source, locInfo) {
 	  this.source = source;
 	  this.start = {
@@ -14534,7 +14663,7 @@
 	    column: locInfo.last_column
 	  };
 	}
-
+	
 	function id(token) {
 	  if (/^\[.*\]$/.test(token)) {
 	    return token.substr(1, token.length - 2);
@@ -14542,34 +14671,34 @@
 	    return token;
 	  }
 	}
-
+	
 	function stripFlags(open, close) {
 	  return {
 	    open: open.charAt(2) === '~',
 	    close: close.charAt(close.length - 3) === '~'
 	  };
 	}
-
+	
 	function stripComment(comment) {
 	  return comment.replace(/^\{\{~?\!-?-?/, '').replace(/-?-?~?\}\}$/, '');
 	}
-
+	
 	function preparePath(data, parts, loc) {
 	  loc = this.locInfo(loc);
-
+	
 	  var original = data ? '@' : '',
 	      dig = [],
 	      depth = 0,
 	      depthString = '';
-
+	
 	  for (var i = 0, l = parts.length; i < l; i++) {
 	    var part = parts[i].part,
-
+	
 	    // If we have [] syntax then we do not treat path references as operators,
 	    // i.e. foo.[this] resolves to approximately context.foo['this']
 	    isLiteral = parts[i].original !== part;
 	    original += (parts[i].separator || '') + part;
-
+	
 	    if (!isLiteral && (part === '..' || part === '.' || part === 'this')) {
 	      if (dig.length > 0) {
 	        throw new _exception2['default']('Invalid path: ' + original, { loc: loc });
@@ -14581,7 +14710,7 @@
 	      dig.push(part);
 	    }
 	  }
-
+	
 	  return {
 	    type: 'PathExpression',
 	    data: data,
@@ -14591,12 +14720,12 @@
 	    loc: loc
 	  };
 	}
-
+	
 	function prepareMustache(path, params, hash, open, strip, locInfo) {
 	  // Must use charAt to support IE pre-10
 	  var escapeFlag = open.charAt(3) || open.charAt(2),
 	      escaped = escapeFlag !== '{' && escapeFlag !== '&';
-
+	
 	  var decorator = /\*/.test(open);
 	  return {
 	    type: decorator ? 'Decorator' : 'MustacheStatement',
@@ -14608,10 +14737,10 @@
 	    loc: this.locInfo(locInfo)
 	  };
 	}
-
+	
 	function prepareRawBlock(openRawBlock, contents, close, locInfo) {
 	  validateClose(openRawBlock, close);
-
+	
 	  locInfo = this.locInfo(locInfo);
 	  var program = {
 	    type: 'Program',
@@ -14619,7 +14748,7 @@
 	    strip: {},
 	    loc: locInfo
 	  };
-
+	
 	  return {
 	    type: 'BlockStatement',
 	    path: openRawBlock.path,
@@ -14632,38 +14761,38 @@
 	    loc: locInfo
 	  };
 	}
-
+	
 	function prepareBlock(openBlock, program, inverseAndProgram, close, inverted, locInfo) {
 	  if (close && close.path) {
 	    validateClose(openBlock, close);
 	  }
-
+	
 	  var decorator = /\*/.test(openBlock.open);
-
+	
 	  program.blockParams = openBlock.blockParams;
-
+	
 	  var inverse = undefined,
 	      inverseStrip = undefined;
-
+	
 	  if (inverseAndProgram) {
 	    if (decorator) {
 	      throw new _exception2['default']('Unexpected inverse block on decorator', inverseAndProgram);
 	    }
-
+	
 	    if (inverseAndProgram.chain) {
 	      inverseAndProgram.program.body[0].closeStrip = close.strip;
 	    }
-
+	
 	    inverseStrip = inverseAndProgram.strip;
 	    inverse = inverseAndProgram.program;
 	  }
-
+	
 	  if (inverted) {
 	    inverted = inverse;
 	    inverse = program;
 	    program = inverted;
 	  }
-
+	
 	  return {
 	    type: decorator ? 'DecoratorBlock' : 'BlockStatement',
 	    path: openBlock.path,
@@ -14677,12 +14806,12 @@
 	    loc: this.locInfo(locInfo)
 	  };
 	}
-
+	
 	function prepareProgram(statements, loc) {
 	  if (!loc && statements.length) {
 	    var firstLoc = statements[0].loc,
 	        lastLoc = statements[statements.length - 1].loc;
-
+	
 	    /* istanbul ignore else */
 	    if (firstLoc && lastLoc) {
 	      loc = {
@@ -14698,7 +14827,7 @@
 	      };
 	    }
 	  }
-
+	
 	  return {
 	    type: 'Program',
 	    body: statements,
@@ -14706,10 +14835,10 @@
 	    loc: loc
 	  };
 	}
-
+	
 	function preparePartialBlock(open, program, close, locInfo) {
 	  validateClose(open, close);
-
+	
 	  return {
 	    type: 'PartialBlockStatement',
 	    name: open.path,
@@ -14726,48 +14855,51 @@
 
 /***/ },
 /* 43 */
+/*!***************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/compiler.js ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-disable new-cap */
-
+	
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.Compiler = Compiler;
 	exports.precompile = precompile;
 	exports.compile = compile;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _exception = __webpack_require__(/*! ../exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
-	var _utils = __webpack_require__(21);
-
-	var _ast = __webpack_require__(37);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
+	var _ast = __webpack_require__(/*! ./ast */ 37);
+	
 	var _ast2 = _interopRequireDefault(_ast);
-
+	
 	var slice = [].slice;
-
+	
 	function Compiler() {}
-
+	
 	// the foundHelper register will disambiguate helper lookup from finding a
 	// function in a context. This is necessary for mustache compatibility, which
 	// requires that context functions in blocks are evaluated by blockHelperMissing,
 	// and then proceed as if the resulting value was provided to blockHelperMissing.
-
+	
 	Compiler.prototype = {
 	  compiler: Compiler,
-
+	
 	  equals: function equals(other) {
 	    var len = this.opcodes.length;
 	    if (other.opcodes.length !== len) {
 	      return false;
 	    }
-
+	
 	    for (var i = 0; i < len; i++) {
 	      var opcode = this.opcodes[i],
 	          otherOpcode = other.opcodes[i];
@@ -14775,7 +14907,7 @@
 	        return false;
 	      }
 	    }
-
+	
 	    // We know that length is the same between the two arrays because they are directly tied
 	    // to the opcode behavior above.
 	    len = this.children.length;
@@ -14784,12 +14916,12 @@
 	        return false;
 	      }
 	    }
-
+	
 	    return true;
 	  },
-
+	
 	  guid: 0,
-
+	
 	  compile: function compile(program, options) {
 	    this.sourceNode = [];
 	    this.opcodes = [];
@@ -14797,9 +14929,9 @@
 	    this.options = options;
 	    this.stringParams = options.stringParams;
 	    this.trackIds = options.trackIds;
-
+	
 	    options.blockParams = options.blockParams || [];
-
+	
 	    // These changes will propagate to the other compiler components
 	    var knownHelpers = options.knownHelpers;
 	    options.knownHelpers = {
@@ -14820,69 +14952,69 @@
 	        }
 	      }
 	    }
-
+	
 	    return this.accept(program);
 	  },
-
+	
 	  compileProgram: function compileProgram(program) {
 	    var childCompiler = new this.compiler(),
 	        // eslint-disable-line new-cap
 	    result = childCompiler.compile(program, this.options),
 	        guid = this.guid++;
-
+	
 	    this.usePartial = this.usePartial || result.usePartial;
-
+	
 	    this.children[guid] = result;
 	    this.useDepths = this.useDepths || result.useDepths;
-
+	
 	    return guid;
 	  },
-
+	
 	  accept: function accept(node) {
 	    /* istanbul ignore next: Sanity code */
 	    if (!this[node.type]) {
 	      throw new _exception2['default']('Unknown type: ' + node.type, node);
 	    }
-
+	
 	    this.sourceNode.unshift(node);
 	    var ret = this[node.type](node);
 	    this.sourceNode.shift();
 	    return ret;
 	  },
-
+	
 	  Program: function Program(program) {
 	    this.options.blockParams.unshift(program.blockParams);
-
+	
 	    var body = program.body,
 	        bodyLength = body.length;
 	    for (var i = 0; i < bodyLength; i++) {
 	      this.accept(body[i]);
 	    }
-
+	
 	    this.options.blockParams.shift();
-
+	
 	    this.isSimple = bodyLength === 1;
 	    this.blockParams = program.blockParams ? program.blockParams.length : 0;
-
+	
 	    return this;
 	  },
-
+	
 	  BlockStatement: function BlockStatement(block) {
 	    transformLiteralToPath(block);
-
+	
 	    var program = block.program,
 	        inverse = block.inverse;
-
+	
 	    program = program && this.compileProgram(program);
 	    inverse = inverse && this.compileProgram(inverse);
-
+	
 	    var type = this.classifySexpr(block);
-
+	
 	    if (type === 'helper') {
 	      this.helperSexpr(block, program, inverse);
 	    } else if (type === 'simple') {
 	      this.simpleSexpr(block);
-
+	
 	      // now that the simple mustache is resolved, we need to
 	      // evaluate it by executing `blockHelperMissing`
 	      this.opcode('pushProgram', program);
@@ -14891,7 +15023,7 @@
 	      this.opcode('blockValue', block.path.original);
 	    } else {
 	      this.ambiguousSexpr(block, program, inverse);
-
+	
 	      // now that the simple mustache is resolved, we need to
 	      // evaluate it by executing `blockHelperMissing`
 	      this.opcode('pushProgram', program);
@@ -14899,27 +15031,27 @@
 	      this.opcode('emptyHash');
 	      this.opcode('ambiguousBlockValue');
 	    }
-
+	
 	    this.opcode('append');
 	  },
-
+	
 	  DecoratorBlock: function DecoratorBlock(decorator) {
 	    var program = decorator.program && this.compileProgram(decorator.program);
 	    var params = this.setupFullMustacheParams(decorator, program, undefined),
 	        path = decorator.path;
-
+	
 	    this.useDecorators = true;
 	    this.opcode('registerDecorator', params.length, path.original);
 	  },
-
+	
 	  PartialStatement: function PartialStatement(partial) {
 	    this.usePartial = true;
-
+	
 	    var program = partial.program;
 	    if (program) {
 	      program = this.compileProgram(partial.program);
 	    }
-
+	
 	    var params = partial.params;
 	    if (params.length > 1) {
 	      throw new _exception2['default']('Unsupported number of partial arguments: ' + params.length, partial);
@@ -14930,31 +15062,31 @@
 	        params.push({ type: 'PathExpression', parts: [], depth: 0 });
 	      }
 	    }
-
+	
 	    var partialName = partial.name.original,
 	        isDynamic = partial.name.type === 'SubExpression';
 	    if (isDynamic) {
 	      this.accept(partial.name);
 	    }
-
+	
 	    this.setupFullMustacheParams(partial, program, undefined, true);
-
+	
 	    var indent = partial.indent || '';
 	    if (this.options.preventIndent && indent) {
 	      this.opcode('appendContent', indent);
 	      indent = '';
 	    }
-
+	
 	    this.opcode('invokePartial', isDynamic, partialName, indent);
 	    this.opcode('append');
 	  },
 	  PartialBlockStatement: function PartialBlockStatement(partialBlock) {
 	    this.PartialStatement(partialBlock);
 	  },
-
+	
 	  MustacheStatement: function MustacheStatement(mustache) {
 	    this.SubExpression(mustache);
-
+	
 	    if (mustache.escaped && !this.options.noEscape) {
 	      this.opcode('appendEscaped');
 	    } else {
@@ -14964,19 +15096,19 @@
 	  Decorator: function Decorator(decorator) {
 	    this.DecoratorBlock(decorator);
 	  },
-
+	
 	  ContentStatement: function ContentStatement(content) {
 	    if (content.value) {
 	      this.opcode('appendContent', content.value);
 	    }
 	  },
-
+	
 	  CommentStatement: function CommentStatement() {},
-
+	
 	  SubExpression: function SubExpression(sexpr) {
 	    transformLiteralToPath(sexpr);
 	    var type = this.classifySexpr(sexpr);
-
+	
 	    if (type === 'simple') {
 	      this.simpleSexpr(sexpr);
 	    } else if (type === 'helper') {
@@ -14989,30 +15121,30 @@
 	    var path = sexpr.path,
 	        name = path.parts[0],
 	        isBlock = program != null || inverse != null;
-
+	
 	    this.opcode('getContext', path.depth);
-
+	
 	    this.opcode('pushProgram', program);
 	    this.opcode('pushProgram', inverse);
-
+	
 	    path.strict = true;
 	    this.accept(path);
-
+	
 	    this.opcode('invokeAmbiguous', name, isBlock);
 	  },
-
+	
 	  simpleSexpr: function simpleSexpr(sexpr) {
 	    var path = sexpr.path;
 	    path.strict = true;
 	    this.accept(path);
 	    this.opcode('resolvePossibleLambda');
 	  },
-
+	
 	  helperSexpr: function helperSexpr(sexpr, program, inverse) {
 	    var params = this.setupFullMustacheParams(sexpr, program, inverse),
 	        path = sexpr.path,
 	        name = path.parts[0];
-
+	
 	    if (this.options.knownHelpers[name]) {
 	      this.opcode('invokeKnownHelper', params.length, name);
 	    } else if (this.options.knownHelpersOnly) {
@@ -15020,20 +15152,20 @@
 	    } else {
 	      path.strict = true;
 	      path.falsy = true;
-
+	
 	      this.accept(path);
 	      this.opcode('invokeHelper', params.length, path.original, _ast2['default'].helpers.simpleId(path));
 	    }
 	  },
-
+	
 	  PathExpression: function PathExpression(path) {
 	    this.addDepth(path.depth);
 	    this.opcode('getContext', path.depth);
-
+	
 	    var name = path.parts[0],
 	        scoped = _ast2['default'].helpers.scopedId(path),
 	        blockParamId = !path.depth && !scoped && this.blockParamIndex(name);
-
+	
 	    if (blockParamId) {
 	      this.opcode('lookupBlockParam', blockParamId, path.parts);
 	    } else if (!name) {
@@ -15046,34 +15178,34 @@
 	      this.opcode('lookupOnContext', path.parts, path.falsy, path.strict, scoped);
 	    }
 	  },
-
+	
 	  StringLiteral: function StringLiteral(string) {
 	    this.opcode('pushString', string.value);
 	  },
-
+	
 	  NumberLiteral: function NumberLiteral(number) {
 	    this.opcode('pushLiteral', number.value);
 	  },
-
+	
 	  BooleanLiteral: function BooleanLiteral(bool) {
 	    this.opcode('pushLiteral', bool.value);
 	  },
-
+	
 	  UndefinedLiteral: function UndefinedLiteral() {
 	    this.opcode('pushLiteral', 'undefined');
 	  },
-
+	
 	  NullLiteral: function NullLiteral() {
 	    this.opcode('pushLiteral', 'null');
 	  },
-
+	
 	  Hash: function Hash(hash) {
 	    var pairs = hash.pairs,
 	        i = 0,
 	        l = pairs.length;
-
+	
 	    this.opcode('pushHash');
-
+	
 	    for (; i < l; i++) {
 	      this.pushParam(pairs[i].value);
 	    }
@@ -15082,47 +15214,47 @@
 	    }
 	    this.opcode('popHash');
 	  },
-
+	
 	  // HELPERS
 	  opcode: function opcode(name) {
 	    this.opcodes.push({ opcode: name, args: slice.call(arguments, 1), loc: this.sourceNode[0].loc });
 	  },
-
+	
 	  addDepth: function addDepth(depth) {
 	    if (!depth) {
 	      return;
 	    }
-
+	
 	    this.useDepths = true;
 	  },
-
+	
 	  classifySexpr: function classifySexpr(sexpr) {
 	    var isSimple = _ast2['default'].helpers.simpleId(sexpr.path);
-
+	
 	    var isBlockParam = isSimple && !!this.blockParamIndex(sexpr.path.parts[0]);
-
+	
 	    // a mustache is an eligible helper if:
 	    // * its id is simple (a single part, not `this` or `..`)
 	    var isHelper = !isBlockParam && _ast2['default'].helpers.helperExpression(sexpr);
-
+	
 	    // if a mustache is an eligible helper but not a definite
 	    // helper, it is ambiguous, and will be resolved in a later
 	    // pass or at runtime.
 	    var isEligible = !isBlockParam && (isHelper || isSimple);
-
+	
 	    // if ambiguous, we can possibly resolve the ambiguity now
 	    // An eligible helper is one that does not have a complex path, i.e. `this.foo`, `../foo` etc.
 	    if (isEligible && !isHelper) {
 	      var _name2 = sexpr.path.parts[0],
 	          options = this.options;
-
+	
 	      if (options.knownHelpers[_name2]) {
 	        isHelper = true;
 	      } else if (options.knownHelpersOnly) {
 	        isEligible = false;
 	      }
 	    }
-
+	
 	    if (isHelper) {
 	      return 'helper';
 	    } else if (isEligible) {
@@ -15131,27 +15263,27 @@
 	      return 'simple';
 	    }
 	  },
-
+	
 	  pushParams: function pushParams(params) {
 	    for (var i = 0, l = params.length; i < l; i++) {
 	      this.pushParam(params[i]);
 	    }
 	  },
-
+	
 	  pushParam: function pushParam(val) {
 	    var value = val.value != null ? val.value : val.original || '';
-
+	
 	    if (this.stringParams) {
 	      if (value.replace) {
 	        value = value.replace(/^(\.?\.\/)*/g, '').replace(/\//g, '.');
 	      }
-
+	
 	      if (val.depth) {
 	        this.addDepth(val.depth);
 	      }
 	      this.opcode('getContext', val.depth || 0);
 	      this.opcode('pushStringParam', value, val.type);
-
+	
 	      if (val.type === 'SubExpression') {
 	        // SubExpressions get evaluated and passed in
 	        // in string params mode.
@@ -15171,30 +15303,30 @@
 	          if (value.replace) {
 	            value = value.replace(/^this(?:\.|$)/, '').replace(/^\.\//, '').replace(/^\.$/, '');
 	          }
-
+	
 	          this.opcode('pushId', val.type, value);
 	        }
 	      }
 	      this.accept(val);
 	    }
 	  },
-
+	
 	  setupFullMustacheParams: function setupFullMustacheParams(sexpr, program, inverse, omitEmpty) {
 	    var params = sexpr.params;
 	    this.pushParams(params);
-
+	
 	    this.opcode('pushProgram', program);
 	    this.opcode('pushProgram', inverse);
-
+	
 	    if (sexpr.hash) {
 	      this.accept(sexpr.hash);
 	    } else {
 	      this.opcode('emptyHash', omitEmpty);
 	    }
-
+	
 	    return params;
 	  },
-
+	
 	  blockParamIndex: function blockParamIndex(name) {
 	    for (var depth = 0, len = this.options.blockParams.length; depth < len; depth++) {
 	      var blockParams = this.options.blockParams[depth],
@@ -15205,12 +15337,12 @@
 	    }
 	  }
 	};
-
+	
 	function precompile(input, options, env) {
 	  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
 	    throw new _exception2['default']('You must pass a string or Handlebars AST to Handlebars.precompile. You passed ' + input);
 	  }
-
+	
 	  options = options || {};
 	  if (!('data' in options)) {
 	    options.data = true;
@@ -15218,35 +15350,35 @@
 	  if (options.compat) {
 	    options.useDepths = true;
 	  }
-
+	
 	  var ast = env.parse(input, options),
 	      environment = new env.Compiler().compile(ast, options);
 	  return new env.JavaScriptCompiler().compile(environment, options);
 	}
-
+	
 	function compile(input, options, env) {
 	  if (options === undefined) options = {};
-
+	
 	  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
 	    throw new _exception2['default']('You must pass a string or Handlebars AST to Handlebars.compile. You passed ' + input);
 	  }
-
+	
 	  if (!('data' in options)) {
 	    options.data = true;
 	  }
 	  if (options.compat) {
 	    options.useDepths = true;
 	  }
-
+	
 	  var compiled = undefined;
-
+	
 	  function compileInput() {
 	    var ast = env.parse(input, options),
 	        environment = new env.Compiler().compile(ast, options),
 	        templateSpec = new env.JavaScriptCompiler().compile(environment, options, undefined, true);
 	    return env.template(templateSpec);
 	  }
-
+	
 	  // Template is only compiled on first use and cached after that point.
 	  function ret(context, execOptions) {
 	    if (!compiled) {
@@ -15268,12 +15400,12 @@
 	  };
 	  return ret;
 	}
-
+	
 	function argEquals(a, b) {
 	  if (a === b) {
 	    return true;
 	  }
-
+	
 	  if (_utils.isArray(a) && _utils.isArray(b) && a.length === b.length) {
 	    for (var i = 0; i < a.length; i++) {
 	      if (!argEquals(a[i], b[i])) {
@@ -15283,7 +15415,7 @@
 	    return true;
 	  }
 	}
-
+	
 	function transformLiteralToPath(sexpr) {
 	  if (!sexpr.path.parts) {
 	    var literal = sexpr.path;
@@ -15304,33 +15436,36 @@
 
 /***/ },
 /* 44 */
+/*!**************************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/javascript-compiler.js ***!
+  \**************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
+	
 	exports.__esModule = true;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _base = __webpack_require__(20);
-
-	var _exception = __webpack_require__(22);
-
+	
+	var _base = __webpack_require__(/*! ../base */ 20);
+	
+	var _exception = __webpack_require__(/*! ../exception */ 22);
+	
 	var _exception2 = _interopRequireDefault(_exception);
-
-	var _utils = __webpack_require__(21);
-
-	var _codeGen = __webpack_require__(45);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
+	var _codeGen = __webpack_require__(/*! ./code-gen */ 45);
+	
 	var _codeGen2 = _interopRequireDefault(_codeGen);
-
+	
 	function Literal(value) {
 	  this.value = value;
 	}
-
+	
 	function JavaScriptCompiler() {}
-
+	
 	JavaScriptCompiler.prototype = {
 	  // PUBLIC API: You can override these methods in a subclass to provide
 	  // alternative compiled forms for name lookup and buffering semantics
@@ -15344,20 +15479,20 @@
 	  depthedLookup: function depthedLookup(name) {
 	    return [this.aliasable('container.lookup'), '(depths, "', name, '")'];
 	  },
-
+	
 	  compilerInfo: function compilerInfo() {
 	    var revision = _base.COMPILER_REVISION,
 	        versions = _base.REVISION_CHANGES[revision];
 	    return [revision, versions];
 	  },
-
+	
 	  appendToBuffer: function appendToBuffer(source, location, explicit) {
 	    // Force a source as this simplifies the merge logic.
 	    if (!_utils.isArray(source)) {
 	      source = [source];
 	    }
 	    source = this.source.wrap(source, location);
-
+	
 	    if (this.environment.isSimple) {
 	      return ['return ', source, ';'];
 	    } else if (explicit) {
@@ -15370,19 +15505,19 @@
 	      return source;
 	    }
 	  },
-
+	
 	  initializeBuffer: function initializeBuffer() {
 	    return this.quotedString('');
 	  },
 	  // END PUBLIC API
-
+	
 	  compile: function compile(environment, options, context, asObject) {
 	    this.environment = environment;
 	    this.options = options;
 	    this.stringParams = this.options.stringParams;
 	    this.trackIds = this.options.trackIds;
 	    this.precompile = !asObject;
-
+	
 	    this.name = this.environment.name;
 	    this.isChild = !!context;
 	    this.context = context || {
@@ -15390,9 +15525,9 @@
 	      programs: [],
 	      environments: []
 	    };
-
+	
 	    this.preamble();
-
+	
 	    this.stackSlot = 0;
 	    this.stackVars = [];
 	    this.aliases = {};
@@ -15401,41 +15536,41 @@
 	    this.compileStack = [];
 	    this.inlineStack = [];
 	    this.blockParams = [];
-
+	
 	    this.compileChildren(environment, options);
-
+	
 	    this.useDepths = this.useDepths || environment.useDepths || environment.useDecorators || this.options.compat;
 	    this.useBlockParams = this.useBlockParams || environment.useBlockParams;
-
+	
 	    var opcodes = environment.opcodes,
 	        opcode = undefined,
 	        firstLoc = undefined,
 	        i = undefined,
 	        l = undefined;
-
+	
 	    for (i = 0, l = opcodes.length; i < l; i++) {
 	      opcode = opcodes[i];
-
+	
 	      this.source.currentLocation = opcode.loc;
 	      firstLoc = firstLoc || opcode.loc;
 	      this[opcode.opcode].apply(this, opcode.args);
 	    }
-
+	
 	    // Flush any trailing content that might be pending.
 	    this.source.currentLocation = firstLoc;
 	    this.pushSource('');
-
+	
 	    /* istanbul ignore next */
 	    if (this.stackSlot || this.inlineStack.length || this.compileStack.length) {
 	      throw new _exception2['default']('Compile completed with content left on stack');
 	    }
-
+	
 	    if (!this.decorators.isEmpty()) {
 	      this.useDecorators = true;
-
+	
 	      this.decorators.prepend('var decorators = container.decorators;\n');
 	      this.decorators.push('return fn;');
-
+	
 	      if (asObject) {
 	        this.decorators = Function.apply(this, ['fn', 'props', 'container', 'depth0', 'data', 'blockParams', 'depths', this.decorators.merge()]);
 	      } else {
@@ -15446,23 +15581,23 @@
 	    } else {
 	      this.decorators = undefined;
 	    }
-
+	
 	    var fn = this.createFunctionContext(asObject);
 	    if (!this.isChild) {
 	      var ret = {
 	        compiler: this.compilerInfo(),
 	        main: fn
 	      };
-
+	
 	      if (this.decorators) {
 	        ret.main_d = this.decorators; // eslint-disable-line camelcase
 	        ret.useDecorators = true;
 	      }
-
+	
 	      var _context = this.context;
 	      var programs = _context.programs;
 	      var decorators = _context.decorators;
-
+	
 	      for (i = 0, l = programs.length; i < l; i++) {
 	        if (programs[i]) {
 	          ret[i] = programs[i];
@@ -15472,7 +15607,7 @@
 	          }
 	        }
 	      }
-
+	
 	      if (this.environment.usePartial) {
 	        ret.usePartial = true;
 	      }
@@ -15488,13 +15623,13 @@
 	      if (this.options.compat) {
 	        ret.compat = true;
 	      }
-
+	
 	      if (!asObject) {
 	        ret.compiler = JSON.stringify(ret.compiler);
-
+	
 	        this.source.currentLocation = { start: { line: 1, column: 0 } };
 	        ret = this.objectLiteral(ret);
-
+	
 	        if (options.srcName) {
 	          ret = ret.toStringWithSourceMap({ file: options.destName });
 	          ret.map = ret.map && ret.map.toString();
@@ -15504,13 +15639,13 @@
 	      } else {
 	        ret.compilerOptions = this.options;
 	      }
-
+	
 	      return ret;
 	    } else {
 	      return fn;
 	    }
 	  },
-
+	
 	  preamble: function preamble() {
 	    // track the last context pushed into place to allow skipping the
 	    // getContext opcode when it would be a noop
@@ -15518,15 +15653,15 @@
 	    this.source = new _codeGen2['default'](this.options.srcName);
 	    this.decorators = new _codeGen2['default'](this.options.srcName);
 	  },
-
+	
 	  createFunctionContext: function createFunctionContext(asObject) {
 	    var varDeclarations = '';
-
+	
 	    var locals = this.stackVars.concat(this.registers.list);
 	    if (locals.length > 0) {
 	      varDeclarations += ', ' + locals.join(', ');
 	    }
-
+	
 	    // Generate minimizer alias mappings
 	    //
 	    // When using true SourceNodes, this will update all references to the given alias
@@ -15537,28 +15672,28 @@
 	    for (var alias in this.aliases) {
 	      // eslint-disable-line guard-for-in
 	      var node = this.aliases[alias];
-
+	
 	      if (this.aliases.hasOwnProperty(alias) && node.children && node.referenceCount > 1) {
 	        varDeclarations += ', alias' + ++aliasCount + '=' + alias;
 	        node.children[0] = 'alias' + aliasCount;
 	      }
 	    }
-
+	
 	    var params = ['container', 'depth0', 'helpers', 'partials', 'data'];
-
+	
 	    if (this.useBlockParams || this.useDepths) {
 	      params.push('blockParams');
 	    }
 	    if (this.useDepths) {
 	      params.push('depths');
 	    }
-
+	
 	    // Perform a second pass over the output to merge content when possible
 	    var source = this.mergeSource(varDeclarations);
-
+	
 	    if (asObject) {
 	      params.push(source);
-
+	
 	      return Function.apply(this, params);
 	    } else {
 	      return this.source.wrap(['function(', params.join(','), ') {\n  ', source, '}']);
@@ -15589,14 +15724,14 @@
 	          bufferEnd.add(';');
 	          bufferStart = bufferEnd = undefined;
 	        }
-
+	
 	        sourceSeen = true;
 	        if (!isSimple) {
 	          appendOnly = false;
 	        }
 	      }
 	    });
-
+	
 	    if (appendOnly) {
 	      if (bufferStart) {
 	        bufferStart.prepend('return ');
@@ -15606,7 +15741,7 @@
 	      }
 	    } else {
 	      varDeclarations += ', buffer = ' + (appendFirst ? '' : this.initializeBuffer());
-
+	
 	      if (bufferStart) {
 	        bufferStart.prepend('return buffer + ');
 	        bufferEnd.add(';');
@@ -15614,14 +15749,14 @@
 	        this.source.push('return buffer;');
 	      }
 	    }
-
+	
 	    if (varDeclarations) {
 	      this.source.prepend('var ' + varDeclarations.substring(2) + (appendFirst ? '' : ';\n'));
 	    }
-
+	
 	    return this.source.merge();
 	  },
-
+	
 	  // [blockValue]
 	  //
 	  // On stack, before: hash, inverse, program, value
@@ -15635,13 +15770,13 @@
 	    var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
 	        params = [this.contextName(0)];
 	    this.setupHelperArgs(name, 0, params);
-
+	
 	    var blockName = this.popStack();
 	    params.splice(1, 0, blockName);
-
+	
 	    this.push(this.source.functionCall(blockHelperMissing, 'call', params));
 	  },
-
+	
 	  // [ambiguousBlockValue]
 	  //
 	  // On stack, before: hash, inverse, program, value
@@ -15653,15 +15788,15 @@
 	    var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
 	        params = [this.contextName(0)];
 	    this.setupHelperArgs('', 0, params, true);
-
+	
 	    this.flushInline();
-
+	
 	    var current = this.topStack();
 	    params.splice(1, 0, current);
-
+	
 	    this.pushSource(['if (!', this.lastHelper, ') { ', current, ' = ', this.source.functionCall(blockHelperMissing, 'call', params), '}']);
 	  },
-
+	
 	  // [appendContent]
 	  //
 	  // On stack, before: ...
@@ -15674,10 +15809,10 @@
 	    } else {
 	      this.pendingLocation = this.source.currentLocation;
 	    }
-
+	
 	    this.pendingContent = content;
 	  },
-
+	
 	  // [append]
 	  //
 	  // On stack, before: value, ...
@@ -15692,7 +15827,7 @@
 	      this.replaceStack(function (current) {
 	        return [' != null ? ', current, ' : ""'];
 	      });
-
+	
 	      this.pushSource(this.appendToBuffer(this.popStack()));
 	    } else {
 	      var local = this.popStack();
@@ -15702,7 +15837,7 @@
 	      }
 	    }
 	  },
-
+	
 	  // [appendEscaped]
 	  //
 	  // On stack, before: value, ...
@@ -15712,7 +15847,7 @@
 	  appendEscaped: function appendEscaped() {
 	    this.pushSource(this.appendToBuffer([this.aliasable('container.escapeExpression'), '(', this.popStack(), ')']));
 	  },
-
+	
 	  // [getContext]
 	  //
 	  // On stack, before: ...
@@ -15723,7 +15858,7 @@
 	  getContext: function getContext(depth) {
 	    this.lastContext = depth;
 	  },
-
+	
 	  // [pushContext]
 	  //
 	  // On stack, before: ...
@@ -15733,7 +15868,7 @@
 	  pushContext: function pushContext() {
 	    this.pushStackLiteral(this.contextName(this.lastContext));
 	  },
-
+	
 	  // [lookupOnContext]
 	  //
 	  // On stack, before: ...
@@ -15743,7 +15878,7 @@
 	  // it onto the stack.
 	  lookupOnContext: function lookupOnContext(parts, falsy, strict, scoped) {
 	    var i = 0;
-
+	
 	    if (!scoped && this.options.compat && !this.lastContext) {
 	      // The depthed query is expected to handle the undefined logic for the root level that
 	      // is implemented below, so we evaluate that directly in compat mode
@@ -15751,10 +15886,10 @@
 	    } else {
 	      this.pushContext();
 	    }
-
+	
 	    this.resolvePath('context', parts, i, falsy, strict);
 	  },
-
+	
 	  // [lookupBlockParam]
 	  //
 	  // On stack, before: ...
@@ -15764,11 +15899,11 @@
 	  // it onto the stack.
 	  lookupBlockParam: function lookupBlockParam(blockParamId, parts) {
 	    this.useBlockParams = true;
-
+	
 	    this.push(['blockParams[', blockParamId[0], '][', blockParamId[1], ']']);
 	    this.resolvePath('context', parts, 1);
 	  },
-
+	
 	  // [lookupData]
 	  //
 	  // On stack, before: ...
@@ -15781,20 +15916,20 @@
 	    } else {
 	      this.pushStackLiteral('container.data(data, ' + depth + ')');
 	    }
-
+	
 	    this.resolvePath('data', parts, 0, true, strict);
 	  },
-
+	
 	  resolvePath: function resolvePath(type, parts, i, falsy, strict) {
 	    // istanbul ignore next
-
+	
 	    var _this = this;
-
+	
 	    if (this.options.strict || this.options.assumeObjects) {
 	      this.push(strictLookup(this.options.strict && strict, this, parts, type));
 	      return;
 	    }
-
+	
 	    var len = parts.length;
 	    for (; i < len; i++) {
 	      /* eslint-disable no-loop-func */
@@ -15812,7 +15947,7 @@
 	      /* eslint-enable no-loop-func */
 	    }
 	  },
-
+	
 	  // [resolvePossibleLambda]
 	  //
 	  // On stack, before: value, ...
@@ -15823,7 +15958,7 @@
 	  resolvePossibleLambda: function resolvePossibleLambda() {
 	    this.push([this.aliasable('container.lambda'), '(', this.popStack(), ', ', this.contextName(0), ')']);
 	  },
-
+	
 	  // [pushStringParam]
 	  //
 	  // On stack, before: ...
@@ -15835,7 +15970,7 @@
 	  pushStringParam: function pushStringParam(string, type) {
 	    this.pushContext();
 	    this.pushString(type);
-
+	
 	    // If it's a subexpression, the string result
 	    // will be pushed after this opcode.
 	    if (type !== 'SubExpression') {
@@ -15846,7 +15981,7 @@
 	      }
 	    }
 	  },
-
+	
 	  emptyHash: function emptyHash(omitEmpty) {
 	    if (this.trackIds) {
 	      this.push('{}'); // hashIds
@@ -15866,7 +16001,7 @@
 	  popHash: function popHash() {
 	    var hash = this.hash;
 	    this.hash = this.hashes.pop();
-
+	
 	    if (this.trackIds) {
 	      this.push(this.objectLiteral(hash.ids));
 	    }
@@ -15874,10 +16009,10 @@
 	      this.push(this.objectLiteral(hash.contexts));
 	      this.push(this.objectLiteral(hash.types));
 	    }
-
+	
 	    this.push(this.objectLiteral(hash.values));
 	  },
-
+	
 	  // [pushString]
 	  //
 	  // On stack, before: ...
@@ -15887,7 +16022,7 @@
 	  pushString: function pushString(string) {
 	    this.pushStackLiteral(this.quotedString(string));
 	  },
-
+	
 	  // [pushLiteral]
 	  //
 	  // On stack, before: ...
@@ -15899,7 +16034,7 @@
 	  pushLiteral: function pushLiteral(value) {
 	    this.pushStackLiteral(value);
 	  },
-
+	
 	  // [pushProgram]
 	  //
 	  // On stack, before: ...
@@ -15915,7 +16050,7 @@
 	      this.pushStackLiteral(null);
 	    }
 	  },
-
+	
 	  // [registerDecorator]
 	  //
 	  // On stack, before: hash, program, params..., ...
@@ -15926,10 +16061,10 @@
 	  registerDecorator: function registerDecorator(paramSize, name) {
 	    var foundDecorator = this.nameLookup('decorators', name, 'decorator'),
 	        options = this.setupHelperArgs(name, paramSize);
-
+	
 	    this.decorators.push(['fn = ', this.decorators.functionCall(foundDecorator, '', ['fn', 'props', 'container', options]), ' || fn;']);
 	  },
-
+	
 	  // [invokeHelper]
 	  //
 	  // On stack, before: hash, inverse, program, params..., ...
@@ -15943,16 +16078,16 @@
 	    var nonHelper = this.popStack(),
 	        helper = this.setupHelper(paramSize, name),
 	        simple = isSimple ? [helper.name, ' || '] : '';
-
+	
 	    var lookup = ['('].concat(simple, nonHelper);
 	    if (!this.options.strict) {
 	      lookup.push(' || ', this.aliasable('helpers.helperMissing'));
 	    }
 	    lookup.push(')');
-
+	
 	    this.push(this.source.functionCall(lookup, 'call', helper.callParams));
 	  },
-
+	
 	  // [invokeKnownHelper]
 	  //
 	  // On stack, before: hash, inverse, program, params..., ...
@@ -15964,7 +16099,7 @@
 	    var helper = this.setupHelper(paramSize, name);
 	    this.push(this.source.functionCall(helper.name, 'call', helper.callParams));
 	  },
-
+	
 	  // [invokeAmbiguous]
 	  //
 	  // On stack, before: hash, inverse, program, params..., ...
@@ -15979,23 +16114,23 @@
 	  // `knownHelpersOnly` flags at compile-time.
 	  invokeAmbiguous: function invokeAmbiguous(name, helperCall) {
 	    this.useRegister('helper');
-
+	
 	    var nonHelper = this.popStack();
-
+	
 	    this.emptyHash();
 	    var helper = this.setupHelper(0, name, helperCall);
-
+	
 	    var helperName = this.lastHelper = this.nameLookup('helpers', name, 'helper');
-
+	
 	    var lookup = ['(', '(helper = ', helperName, ' || ', nonHelper, ')'];
 	    if (!this.options.strict) {
 	      lookup[0] = '(helper = ';
 	      lookup.push(' != null ? helper : ', this.aliasable('helpers.helperMissing'));
 	    }
-
+	
 	    this.push(['(', lookup, helper.paramsInit ? ['),(', helper.paramsInit] : [], '),', '(typeof helper === ', this.aliasable('"function"'), ' ? ', this.source.functionCall('helper', 'call', helper.callParams), ' : helper))']);
 	  },
-
+	
 	  // [invokePartial]
 	  //
 	  // On stack, before: context, ...
@@ -16006,34 +16141,34 @@
 	  invokePartial: function invokePartial(isDynamic, name, indent) {
 	    var params = [],
 	        options = this.setupParams(name, 1, params);
-
+	
 	    if (isDynamic) {
 	      name = this.popStack();
 	      delete options.name;
 	    }
-
+	
 	    if (indent) {
 	      options.indent = JSON.stringify(indent);
 	    }
 	    options.helpers = 'helpers';
 	    options.partials = 'partials';
 	    options.decorators = 'container.decorators';
-
+	
 	    if (!isDynamic) {
 	      params.unshift(this.nameLookup('partials', name, 'partial'));
 	    } else {
 	      params.unshift(name);
 	    }
-
+	
 	    if (this.options.compat) {
 	      options.depths = 'depths';
 	    }
 	    options = this.objectLiteral(options);
 	    params.push(options);
-
+	
 	    this.push(this.source.functionCall('container.invokePartial', '', params));
 	  },
-
+	
 	  // [assignToHash]
 	  //
 	  // On stack, before: value, ..., hash, ...
@@ -16045,7 +16180,7 @@
 	        context = undefined,
 	        type = undefined,
 	        id = undefined;
-
+	
 	    if (this.trackIds) {
 	      id = this.popStack();
 	    }
@@ -16053,7 +16188,7 @@
 	      type = this.popStack();
 	      context = this.popStack();
 	    }
-
+	
 	    var hash = this.hash;
 	    if (context) {
 	      hash.contexts[key] = context;
@@ -16066,7 +16201,7 @@
 	    }
 	    hash.values[key] = value;
 	  },
-
+	
 	  pushId: function pushId(type, name, child) {
 	    if (type === 'BlockParam') {
 	      this.pushStackLiteral('blockParams[' + name[0] + '].path[' + name[1] + ']' + (child ? ' + ' + JSON.stringify('.' + child) : ''));
@@ -16078,22 +16213,22 @@
 	      this.pushStackLiteral('null');
 	    }
 	  },
-
+	
 	  // HELPERS
-
+	
 	  compiler: JavaScriptCompiler,
-
+	
 	  compileChildren: function compileChildren(environment, options) {
 	    var children = environment.children,
 	        child = undefined,
 	        compiler = undefined;
-
+	
 	    for (var i = 0, l = children.length; i < l; i++) {
 	      child = children[i];
 	      compiler = new this.compiler(); // eslint-disable-line new-cap
-
+	
 	      var index = this.matchExistingProgram(child);
-
+	
 	      if (index == null) {
 	        this.context.programs.push(''); // Placeholder to prevent name conflicts for nested children
 	        index = this.context.programs.length;
@@ -16102,13 +16237,13 @@
 	        this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
 	        this.context.decorators[index] = compiler.decorators;
 	        this.context.environments[index] = child;
-
+	
 	        this.useDepths = this.useDepths || compiler.useDepths;
 	        this.useBlockParams = this.useBlockParams || compiler.useBlockParams;
 	      } else {
 	        child.index = index;
 	        child.name = 'program' + index;
-
+	
 	        this.useDepths = this.useDepths || child.useDepths;
 	        this.useBlockParams = this.useBlockParams || child.useBlockParams;
 	      }
@@ -16122,66 +16257,66 @@
 	      }
 	    }
 	  },
-
+	
 	  programExpression: function programExpression(guid) {
 	    var child = this.environment.children[guid],
 	        programParams = [child.index, 'data', child.blockParams];
-
+	
 	    if (this.useBlockParams || this.useDepths) {
 	      programParams.push('blockParams');
 	    }
 	    if (this.useDepths) {
 	      programParams.push('depths');
 	    }
-
+	
 	    return 'container.program(' + programParams.join(', ') + ')';
 	  },
-
+	
 	  useRegister: function useRegister(name) {
 	    if (!this.registers[name]) {
 	      this.registers[name] = true;
 	      this.registers.list.push(name);
 	    }
 	  },
-
+	
 	  push: function push(expr) {
 	    if (!(expr instanceof Literal)) {
 	      expr = this.source.wrap(expr);
 	    }
-
+	
 	    this.inlineStack.push(expr);
 	    return expr;
 	  },
-
+	
 	  pushStackLiteral: function pushStackLiteral(item) {
 	    this.push(new Literal(item));
 	  },
-
+	
 	  pushSource: function pushSource(source) {
 	    if (this.pendingContent) {
 	      this.source.push(this.appendToBuffer(this.source.quotedString(this.pendingContent), this.pendingLocation));
 	      this.pendingContent = undefined;
 	    }
-
+	
 	    if (source) {
 	      this.source.push(source);
 	    }
 	  },
-
+	
 	  replaceStack: function replaceStack(callback) {
 	    var prefix = ['('],
 	        stack = undefined,
 	        createdStack = undefined,
 	        usedLiteral = undefined;
-
+	
 	    /* istanbul ignore next */
 	    if (!this.isInline()) {
 	      throw new _exception2['default']('replaceStack on non-inline');
 	    }
-
+	
 	    // We want to merge the inline statement into the replacement statement via ','
 	    var top = this.popStack(true);
-
+	
 	    if (top instanceof Literal) {
 	      // Literals do not need to be inlined
 	      stack = [top.value];
@@ -16191,13 +16326,13 @@
 	      // Get or create the current stack name for use by the inline
 	      createdStack = true;
 	      var _name = this.incrStack();
-
+	
 	      prefix = ['((', this.push(_name), ' = ', top, ')'];
 	      stack = this.topStack();
 	    }
-
+	
 	    var item = callback.call(this, stack);
-
+	
 	    if (!usedLiteral) {
 	      this.popStack();
 	    }
@@ -16206,7 +16341,7 @@
 	    }
 	    this.push(prefix.concat(item, ')'));
 	  },
-
+	
 	  incrStack: function incrStack() {
 	    this.stackSlot++;
 	    if (this.stackSlot > this.stackVars.length) {
@@ -16235,11 +16370,11 @@
 	  isInline: function isInline() {
 	    return this.inlineStack.length;
 	  },
-
+	
 	  popStack: function popStack(wrapped) {
 	    var inline = this.isInline(),
 	        item = (inline ? this.inlineStack : this.compileStack).pop();
-
+	
 	    if (!wrapped && item instanceof Literal) {
 	      return item.value;
 	    } else {
@@ -16253,11 +16388,11 @@
 	      return item;
 	    }
 	  },
-
+	
 	  topStack: function topStack() {
 	    var stack = this.isInline() ? this.inlineStack : this.compileStack,
 	        item = stack[stack.length - 1];
-
+	
 	    /* istanbul ignore if */
 	    if (item instanceof Literal) {
 	      return item.value;
@@ -16265,7 +16400,7 @@
 	      return item;
 	    }
 	  },
-
+	
 	  contextName: function contextName(context) {
 	    if (this.useDepths && context) {
 	      return 'depths[' + context + ']';
@@ -16273,35 +16408,35 @@
 	      return 'depth' + context;
 	    }
 	  },
-
+	
 	  quotedString: function quotedString(str) {
 	    return this.source.quotedString(str);
 	  },
-
+	
 	  objectLiteral: function objectLiteral(obj) {
 	    return this.source.objectLiteral(obj);
 	  },
-
+	
 	  aliasable: function aliasable(name) {
 	    var ret = this.aliases[name];
 	    if (ret) {
 	      ret.referenceCount++;
 	      return ret;
 	    }
-
+	
 	    ret = this.aliases[name] = this.source.wrap(name);
 	    ret.aliasable = true;
 	    ret.referenceCount = 1;
-
+	
 	    return ret;
 	  },
-
+	
 	  setupHelper: function setupHelper(paramSize, name, blockHelper) {
 	    var params = [],
 	        paramsInit = this.setupHelperArgs(name, paramSize, params, blockHelper);
 	    var foundHelper = this.nameLookup('helpers', name, 'helper'),
 	        callContext = this.aliasable(this.contextName(0) + ' != null ? ' + this.contextName(0) + ' : {}');
-
+	
 	    return {
 	      params: params,
 	      paramsInit: paramsInit,
@@ -16309,7 +16444,7 @@
 	      callParams: [callContext].concat(params)
 	    };
 	  },
-
+	
 	  setupParams: function setupParams(helper, paramSize, params) {
 	    var options = {},
 	        contexts = [],
@@ -16317,14 +16452,14 @@
 	        ids = [],
 	        objectArgs = !params,
 	        param = undefined;
-
+	
 	    if (objectArgs) {
 	      params = [];
 	    }
-
+	
 	    options.name = this.quotedString(helper);
 	    options.hash = this.popStack();
-
+	
 	    if (this.trackIds) {
 	      options.hashIds = this.popStack();
 	    }
@@ -16332,24 +16467,24 @@
 	      options.hashTypes = this.popStack();
 	      options.hashContexts = this.popStack();
 	    }
-
+	
 	    var inverse = this.popStack(),
 	        program = this.popStack();
-
+	
 	    // Avoid setting fn and inverse if neither are set. This allows
 	    // helpers to do a check for `if (options.fn)`
 	    if (program || inverse) {
 	      options.fn = program || 'container.noop';
 	      options.inverse = inverse || 'container.noop';
 	    }
-
+	
 	    // The parameters go on to the stack in order (making sure that they are evaluated in order)
 	    // so we need to pop them off the stack in reverse order
 	    var i = paramSize;
 	    while (i--) {
 	      param = this.popStack();
 	      params[i] = param;
-
+	
 	      if (this.trackIds) {
 	        ids[i] = this.popStack();
 	      }
@@ -16358,11 +16493,11 @@
 	        contexts[i] = this.popStack();
 	      }
 	    }
-
+	
 	    if (objectArgs) {
 	      options.args = this.source.generateArray(params);
 	    }
-
+	
 	    if (this.trackIds) {
 	      options.ids = this.source.generateArray(ids);
 	    }
@@ -16370,7 +16505,7 @@
 	      options.types = this.source.generateArray(types);
 	      options.contexts = this.source.generateArray(contexts);
 	    }
-
+	
 	    if (this.options.data) {
 	      options.data = 'data';
 	    }
@@ -16379,7 +16514,7 @@
 	    }
 	    return options;
 	  },
-
+	
 	  setupHelperArgs: function setupHelperArgs(helper, paramSize, params, useRegister) {
 	    var options = this.setupParams(helper, paramSize, params);
 	    options = this.objectLiteral(options);
@@ -16395,21 +16530,21 @@
 	    }
 	  }
 	};
-
+	
 	(function () {
 	  var reservedWords = ('break else new var' + ' case finally return void' + ' catch for switch while' + ' continue function this with' + ' default if throw' + ' delete in try' + ' do instanceof typeof' + ' abstract enum int short' + ' boolean export interface static' + ' byte extends long super' + ' char final native synchronized' + ' class float package throws' + ' const goto private transient' + ' debugger implements protected volatile' + ' double import public let yield await' + ' null true false').split(' ');
-
+	
 	  var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
-
+	
 	  for (var i = 0, l = reservedWords.length; i < l; i++) {
 	    compilerWords[reservedWords[i]] = true;
 	  }
 	})();
-
+	
 	JavaScriptCompiler.isValidJavaScriptVariableName = function (name) {
 	  return !JavaScriptCompiler.RESERVED_WORDS[name] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name);
 	};
-
+	
 	function strictLookup(requireTerminal, compiler, parts, type) {
 	  var stack = compiler.popStack(),
 	      i = 0,
@@ -16417,18 +16552,18 @@
 	  if (requireTerminal) {
 	    len--;
 	  }
-
+	
 	  for (; i < len; i++) {
 	    stack = compiler.nameLookup(stack, parts[i], type);
 	  }
-
+	
 	  if (requireTerminal) {
 	    return [compiler.aliasable('container.strict'), '(', stack, ', ', compiler.quotedString(parts[i]), ')'];
 	  } else {
 	    return stack;
 	  }
 	}
-
+	
 	exports['default'] = JavaScriptCompiler;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2NvbXBpbGVyL2phdmFzY3JpcHQtY29tcGlsZXIuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7OztvQkFBb0QsU0FBUzs7eUJBQ3ZDLGNBQWM7Ozs7cUJBQ2QsVUFBVTs7dUJBQ1osWUFBWTs7OztBQUVoQyxTQUFTLE9BQU8sQ0FBQyxLQUFLLEVBQUU7QUFDdEIsTUFBSSxDQUFDLEtBQUssR0FBRyxLQUFLLENBQUM7Q0FDcEI7O0FBRUQsU0FBUyxrQkFBa0IsR0FBRyxFQUFFOztBQUVoQyxrQkFBa0IsQ0FBQyxTQUFTLEdBQUc7OztBQUc3QixZQUFVLEVBQUUsb0JBQVMsTUFBTSxFQUFFLElBQUksY0FBYTtBQUM1QyxRQUFJLGtCQUFrQixDQUFDLDZCQUE2QixDQUFDLElBQUksQ0FBQyxFQUFFO0FBQzFELGFBQU8sQ0FBQyxNQUFNLEVBQUUsR0FBRyxFQUFFLElBQUksQ0FBQyxDQUFDO0tBQzVCLE1BQU07QUFDTCxhQUFPLENBQUMsTUFBTSxFQUFFLEdBQUcsRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxFQUFFLEdBQUcsQ0FBQyxDQUFDO0tBQ2pEO0dBQ0Y7QUFDRCxlQUFhLEVBQUUsdUJBQVMsSUFBSSxFQUFFO0FBQzVCLFdBQU8sQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLGtCQUFrQixDQUFDLEVBQUUsWUFBWSxFQUFFLElBQUksRUFBRSxJQUFJLENBQUMsQ0FBQztHQUN2RTs7QUFFRCxjQUFZLEVBQUUsd0JBQVc7QUFDdkIsUUFBTSxRQUFRLDBCQUFvQjtRQUM1QixRQUFRLEdBQUcsdUJBQWlCLFFBQVEsQ0FBQyxDQUFDO0FBQzVDLFdBQU8sQ0FBQyxRQUFRLEVBQUUsUUFBUSxDQUFDLENBQUM7R0FDN0I7O0FBRUQsZ0JBQWMsRUFBRSx3QkFBUyxNQUFNLEVBQUUsUUFBUSxFQUFFLFFBQVEsRUFBRTs7QUFFbkQsUUFBSSxDQUFDLGVBQVEsTUFBTSxDQUFDLEVBQUU7QUFDcEIsWUFBTSxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7S0FDbkI7QUFDRCxVQUFNLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsTUFBTSxFQUFFLFFBQVEsQ0FBQyxDQUFDOztBQUU1QyxRQUFJLElBQUksQ0FBQyxXQUFXLENBQUMsUUFBUSxFQUFFO0FBQzdCLGFBQU8sQ0FBQyxTQUFTLEVBQUUsTUFBTSxFQUFFLEdBQUcsQ0FBQyxDQUFDO0tBQ2pDLE1BQU0sSUFBSSxRQUFRLEVBQUU7Ozs7QUFJbkIsYUFBTyxDQUFDLFlBQVksRUFBRSxNQUFNLEVBQUUsR0FBRyxDQUFDLENBQUM7S0FDcEMsTUFBTTtBQUNMLFlBQU0sQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDO0FBQzdCLGFBQU8sTUFBTSxDQUFDO0tBQ2Y7R0FDRjs7QUFFRCxrQkFBZ0IsRUFBRSw0QkFBVztBQUMzQixXQUFPLElBQUksQ0FBQyxZQUFZLENBQUMsRUFBRSxDQUFDLENBQUM7R0FDOUI7OztBQUdELFNBQU8sRUFBRSxpQkFBUyxXQUFXLEVBQUUsT0FBTyxFQUFFLE9BQU8sRUFBRSxRQUFRLEVBQUU7QUFDekQsUUFBSSxDQUFDLFdBQVcsR0FBRyxXQUFXLENBQUM7QUFDL0IsUUFBSSxDQUFDLE9BQU8sR0FBRyxPQUFPLENBQUM7QUFDdkIsUUFBSSxDQUFDLFlBQVksR0FBRyxJQUFJLENBQUMsT0FBTyxDQUFDLFlBQVksQ0FBQztBQUM5QyxRQUFJLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUMsUUFBUSxDQUFDO0FBQ3RDLFFBQUksQ0FBQyxVQUFVLEdBQUcsQ0FBQyxRQUFRLENBQUM7O0FBRTVCLFFBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUM7QUFDbEMsUUFBSSxDQUFDLE9BQU8sR0FBRyxDQUFDLENBQUMsT0FBTyxDQUFDO0FBQ3pCLFFBQUksQ0FBQyxPQUFPLEdBQUcsT0FBTyxJQUFJO0FBQ3hCLGdCQUFVLEVBQUUsRUFBRTtBQUNkLGNBQVEsRUFBRSxFQUFFO0FBQ1osa0JBQVksRUFBRSxFQUFFO0tBQ2pCLENBQUM7O0FBRUYsUUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDOztBQUVoQixRQUFJLENBQUMsU0FBUyxHQUFHLENBQUMsQ0FBQztBQUNuQixRQUFJLENBQUMsU0FBUyxHQUFHLEVBQUUsQ0FBQztBQUNwQixRQUFJLENBQUMsT0FBTyxHQUFHLEVBQUUsQ0FBQztBQUNsQixRQUFJLENBQUMsU0FBUyxHQUFHLEVBQUUsSUFBSSxFQUFFLEVBQUUsRUFBRSxDQUFDO0FBQzlCLFFBQUksQ0FBQyxNQUFNLEdBQUcsRUFBRSxDQUFDO0FBQ2pCLFFBQUksQ0FBQyxZQUFZLEdBQUcsRUFBRSxDQUFDO0FBQ3ZCLFFBQUksQ0FBQyxXQUFXLEdBQUcsRUFBRSxDQUFDO0FBQ3RCLFFBQUksQ0FBQyxXQUFXLEdBQUcsRUFBRSxDQUFDOztBQUV0QixRQUFJLENBQUMsZUFBZSxDQUFDLFdBQVcsRUFBRSxPQUFPLENBQUMsQ0FBQzs7QUFFM0MsUUFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUMsU0FBUyxJQUFJLFdBQVcsQ0FBQyxTQUFTLElBQUksV0FBVyxDQUFDLGFBQWEsSUFBSSxJQUFJLENBQUMsT0FBTyxDQUFDLE1BQU0sQ0FBQztBQUM3RyxRQUFJLENBQUMsY0FBYyxHQUFHLElBQUksQ0FBQyxjQUFjLElBQUksV0FBVyxDQUFDLGNBQWMsQ0FBQzs7QUFFeEUsUUFBSSxPQUFPLEdBQUcsV0FBVyxDQUFDLE9BQU87UUFDN0IsTUFBTSxZQUFBO1FBQ04sUUFBUSxZQUFBO1FBQ1IsQ0FBQyxZQUFBO1FBQ0QsQ0FBQyxZQUFBLENBQUM7O0FBRU4sU0FBSyxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsR0FBRyxPQUFPLENBQUMsTUFBTSxFQUFFLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxFQUFFLEVBQUU7QUFDMUMsWUFBTSxHQUFHLE9BQU8sQ0FBQyxDQUFDLENBQUMsQ0FBQzs7QUFFcEIsVUFBSSxDQUFDLE1BQU0sQ0FBQyxlQUFlLEdBQUcsTUFBTSxDQUFDLEdBQUcsQ0FBQztBQUN6QyxjQUFRLEdBQUcsUUFBUSxJQUFJLE1BQU0sQ0FBQyxHQUFHLENBQUM7QUFDbEMsVUFBSSxDQUFDLE1BQU0sQ0FBQyxNQUFNLENBQUMsQ0FBQyxLQUFLLENBQUMsSUFBSSxFQUFFLE1BQU0sQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUM5Qzs7O0FBR0QsUUFBSSxDQUFDLE1BQU0sQ0FBQyxlQUFlLEdBQUcsUUFBUSxDQUFDO0FBQ3ZDLFFBQUksQ0FBQyxVQUFVLENBQUMsRUFBRSxDQUFDLENBQUM7OztBQUdwQixRQUFJLElBQUksQ0FBQyxTQUFTLElBQUksSUFBSSxDQUFDLFdBQVcsQ0FBQyxNQUFNLElBQUksSUFBSSxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUU7QUFDekUsWUFBTSwyQkFBYyw4Q0FBOEMsQ0FBQyxDQUFDO0tBQ3JFOztBQUVELFFBQUksQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sRUFBRSxFQUFFO0FBQzlCLFVBQUksQ0FBQyxhQUFhLEdBQUcsSUFBSSxDQUFDOztBQUUxQixVQUFJLENBQUMsVUFBVSxDQUFDLE9BQU8sQ0FBQywwQ0FBMEMsQ0FBQyxDQUFDO0FBQ3BFLFVBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLFlBQVksQ0FBQyxDQUFDOztBQUVuQyxVQUFJLFFBQVEsRUFBRTtBQUNaLFlBQUksQ0FBQyxVQUFVLEdBQUcsUUFBUSxDQUFDLEtBQUssQ0FBQyxJQUFJLEVBQUUsQ0FBQyxJQUFJLEVBQUUsT0FBTyxFQUFFLFdBQVcsRUFBRSxRQUFRLEVBQUUsTUFBTSxFQUFFLGFBQWEsRUFBRSxRQUFRLEVBQUUsSUFBSSxDQUFDLFVBQVUsQ0FBQyxLQUFLLEVBQUUsQ0FBQyxDQUFDLENBQUM7T0FDMUksTUFBTTtBQUNMLFlBQUksQ0FBQyxVQUFVLENBQUMsT0FBTyxDQUFDLHVFQUF1RSxDQUFDLENBQUM7QUFDakcsWUFBSSxDQUFDLFVBQVUsQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUM7QUFDNUIsWUFBSSxDQUFDLFVBQVUsR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLEtBQUssRUFBRSxDQUFDO09BQzNDO0tBQ0YsTUFBTTtBQUNMLFVBQUksQ0FBQyxVQUFVLEdBQUcsU0FBUyxDQUFDO0tBQzdCOztBQUVELFFBQUksRUFBRSxHQUFHLElBQUksQ0FBQyxxQkFBcUIsQ0FBQyxRQUFRLENBQUMsQ0FBQztBQUM5QyxRQUFJLENBQUMsSUFBSSxDQUFDLE9BQU8sRUFBRTtBQUNqQixVQUFJLEdBQUcsR0FBRztBQUNSLGdCQUFRLEVBQUUsSUFBSSxDQUFDLFlBQVksRUFBRTtBQUM3QixZQUFJLEVBQUUsRUFBRTtPQUNULENBQUM7O0FBRUYsVUFBSSxJQUFJLENBQUMsVUFBVSxFQUFFO0FBQ25CLFdBQUcsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQztBQUM3QixXQUFHLENBQUMsYUFBYSxHQUFHLElBQUksQ0FBQztPQUMxQjs7cUJBRTRCLElBQUksQ0FBQyxPQUFPO1VBQXBDLFFBQVEsWUFBUixRQUFRO1VBQUUsVUFBVSxZQUFWLFVBQVU7O0FBQ3pCLFdBQUssQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsUUFBUSxDQUFDLE1BQU0sRUFBRSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsRUFBRSxFQUFFO0FBQzNDLFlBQUksUUFBUSxDQUFDLENBQUMsQ0FBQyxFQUFFO0FBQ2YsYUFBRyxDQUFDLENBQUMsQ0FBQyxHQUFHLFFBQVEsQ0FBQyxDQUFDLENBQUMsQ0FBQztBQUNyQixjQUFJLFVBQVUsQ0FBQyxDQUFDLENBQUMsRUFBRTtBQUNqQixlQUFHLENBQUMsQ0FBQyxHQUFHLElBQUksQ0FBQyxHQUFHLFVBQVUsQ0FBQyxDQUFDLENBQUMsQ0FBQztBQUM5QixlQUFHLENBQUMsYUFBYSxHQUFHLElBQUksQ0FBQztXQUMxQjtTQUNGO09BQ0Y7O0FBRUQsVUFBSSxJQUFJLENBQUMsV0FBVyxDQUFDLFVBQVUsRUFBRTtBQUMvQixXQUFHLENBQUMsVUFBVSxHQUFHLElBQUksQ0FBQztPQUN2QjtBQUNELFVBQUksSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLEVBQUU7QUFDckIsV0FBRyxDQUFDLE9BQU8sR0FBRyxJQUFJLENBQUM7T0FDcEI7QUFDRCxVQUFJLElBQUksQ0FBQyxTQUFTLEVBQUU7QUFDbEIsV0FBRyxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUM7T0FDdEI7QUFDRCxVQUFJLElBQUksQ0FBQyxjQUFjLEVBQUU7QUFDdkIsV0FBRyxDQUFDLGNBQWMsR0FBRyxJQUFJLENBQUM7T0FDM0I7QUFDRCxVQUFJLElBQUksQ0FBQyxPQUFPLENBQUMsTUFBTSxFQUFFO0FBQ3ZCLFdBQUcsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDO09BQ25COztBQUVELFVBQUksQ0FBQyxRQUFRLEVBQUU7QUFDYixXQUFHLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsR0FBRyxDQUFDLFFBQVEsQ0FBQyxDQUFDOztBQUU1QyxZQUFJLENBQUMsTUFBTSxDQUFDLGVBQWUsR0FBRyxFQUFDLEtBQUssRUFBRSxFQUFDLElBQUksRUFBRSxDQUFDLEVBQUUsTUFBTSxFQUFFLENBQUMsRUFBQyxFQUFDLENBQUM7QUFDNUQsV0FBRyxHQUFHLElBQUksQ0FBQyxhQUFhLENBQUMsR0FBRyxDQUFDLENBQUM7O0FBRTlCLFlBQUksT0FBTyxDQUFDLE9BQU8sRUFBRTtBQUNuQixhQUFHLEdBQUcsR0FBRyxDQUFDLHFCQUFxQixDQUFDLEVBQUMsSUFBSSxFQUFFLE9BQU8sQ0FBQyxRQUFRLEVBQUMsQ0FBQyxDQUFDO0FBQzFELGFBQUcsQ0FBQyxHQUFHLEdBQUcsR0FBRyxDQUFDLEdBQUcsSUFBSSxHQUFHLENBQUMsR0FBRyxDQUFDLFFBQVEsRUFBRSxDQUFDO1NBQ3pDLE1BQU07QUFDTCxhQUFHLEdBQUcsR0FBRyxDQUFDLFFBQVEsRUFBRSxDQUFDO1NBQ3RCO09BQ0YsTUFBTTtBQUNMLFdBQUcsQ0FBQyxlQUFlLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQztPQUNwQzs7QUFFRCxhQUFPLEdBQUcsQ0FBQztLQUNaLE1BQU07QUFDTCxhQUFPLEVBQUUsQ0FBQztLQUNYO0dBQ0Y7O0FBRUQsVUFBUSxFQUFFLG9CQUFXOzs7QUFHbkIsUUFBSSxDQUFDLFdBQVcsR0FBRyxDQUFDLENBQUM7QUFDckIsUUFBSSxDQUFDLE1BQU0sR0FBRyx5QkFBWSxJQUFJLENBQUMsT0FBTyxDQUFDLE9BQU8sQ0FBQyxDQUFDO0FBQ2hELFFBQUksQ0FBQyxVQUFVLEdBQUcseUJBQVksSUFBSSxDQUFDLE9BQU8sQ0FBQyxPQUFPLENBQUMsQ0FBQztHQUNyRDs7QUFFRCx1QkFBcUIsRUFBRSwrQkFBUyxRQUFRLEVBQUU7QUFDeEMsUUFBSSxlQUFlLEdBQUcsRUFBRSxDQUFDOztBQUV6QixRQUFJLE1BQU0sR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxDQUFDO0FBQ3hELFFBQUksTUFBTSxDQUFDLE1BQU0sR0FBRyxDQUFDLEVBQUU7QUFDckIscUJBQWUsSUFBSSxJQUFJLEdBQUcsTUFBTSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUM3Qzs7Ozs7Ozs7QUFRRCxRQUFJLFVBQVUsR0FBRyxDQUFDLENBQUM7QUFDbkIsU0FBSyxJQUFJLEtBQUssSUFBSSxJQUFJLENBQUMsT0FBTyxFQUFFOztBQUM5QixVQUFJLElBQUksR0FBRyxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssQ0FBQyxDQUFDOztBQUUvQixVQUFJLElBQUksQ0FBQyxPQUFPLENBQUMsY0FBYyxDQUFDLEtBQUssQ0FBQyxJQUFJLElBQUksQ0FBQyxRQUFRLElBQUksSUFBSSxDQUFDLGNBQWMsR0FBRyxDQUFDLEVBQUU7QUFDbEYsdUJBQWUsSUFBSSxTQUFTLEdBQUksRUFBRSxVQUFVLEFBQUMsR0FBRyxHQUFHLEdBQUcsS0FBSyxDQUFDO0FBQzVELFlBQUksQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLEdBQUcsT0FBTyxHQUFHLFVBQVUsQ0FBQztPQUN6QztLQUNGOztBQUVELFFBQUksTUFBTSxHQUFHLENBQUMsV0FBVyxFQUFFLFFBQVEsRUFBRSxTQUFTLEVBQUUsVUFBVSxFQUFFLE1BQU0sQ0FBQyxDQUFDOztBQUVwRSxRQUFJLElBQUksQ0FBQyxjQUFjLElBQUksSUFBSSxDQUFDLFNBQVMsRUFBRTtBQUN6QyxZQUFNLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDO0tBQzVCO0FBQ0QsUUFBSSxJQUFJLENBQUMsU0FBUyxFQUFFO0FBQ2xCLFlBQU0sQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFDLENBQUM7S0FDdkI7OztBQUdELFFBQUksTUFBTSxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsZUFBZSxDQUFDLENBQUM7O0FBRS9DLFFBQUksUUFBUSxFQUFFO0FBQ1osWUFBTSxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsQ0FBQzs7QUFFcEIsYUFBTyxRQUFRLENBQUMsS0FBSyxDQUFDLElBQUksRUFBRSxNQUFNLENBQUMsQ0FBQztLQUNyQyxNQUFNO0FBQ0wsYUFBTyxJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxDQUFDLFdBQVcsRUFBRSxNQUFNLENBQUMsSUFBSSxDQUFDLEdBQUcsQ0FBQyxFQUFFLFNBQVMsRUFBRSxNQUFNLEVBQUUsR0FBRyxDQUFDLENBQUMsQ0FBQztLQUNsRjtHQUNGO0FBQ0QsYUFBVyxFQUFFLHFCQUFTLGVBQWUsRUFBRTtBQUNyQyxRQUFJLFFBQVEsR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDLFFBQVE7UUFDcEMsVUFBVSxHQUFHLENBQUMsSUFBSSxDQUFDLFdBQVc7UUFDOUIsV0FBVyxZQUFBO1FBRVgsVUFBVSxZQUFBO1FBQ1YsV0FBVyxZQUFBO1FBQ1gsU0FBUyxZQUFBLENBQUM7QUFDZCxRQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxVQUFDLElBQUksRUFBSztBQUN6QixVQUFJLElBQUksQ0FBQyxjQUFjLEVBQUU7QUFDdkIsWUFBSSxXQUFXLEVBQUU7QUFDZixjQUFJLENBQUMsT0FBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1NBQ3RCLE1BQU07QUFDTCxxQkFBVyxHQUFHLElBQUksQ0FBQztTQUNwQjtBQUNELGlCQUFTLEdBQUcsSUFBSSxDQUFDO09BQ2xCLE1BQU07QUFDTCxZQUFJLFdBQVcsRUFBRTtBQUNmLGNBQUksQ0FBQyxVQUFVLEVBQUU7QUFDZix1QkFBVyxHQUFHLElBQUksQ0FBQztXQUNwQixNQUFNO0FBQ0wsdUJBQVcsQ0FBQyxPQUFPLENBQUMsWUFBWSxDQUFDLENBQUM7V0FDbkM7QUFDRCxtQkFBUyxDQUFDLEdBQUcsQ0FBQyxHQUFHLENBQUMsQ0FBQztBQUNuQixxQkFBVyxHQUFHLFNBQVMsR0FBRyxTQUFTLENBQUM7U0FDckM7O0FBRUQsa0JBQVUsR0FBRyxJQUFJLENBQUM7QUFDbEIsWUFBSSxDQUFDLFFBQVEsRUFBRTtBQUNiLG9CQUFVLEdBQUcsS0FBSyxDQUFDO1NBQ3BCO09BQ0Y7S0FDRixDQUFDLENBQUM7O0FBR0gsUUFBSSxVQUFVLEVBQUU7QUFDZCxVQUFJLFdBQVcsRUFBRTtBQUNmLG1CQUFXLENBQUMsT0FBTyxDQUFDLFNBQVMsQ0FBQyxDQUFDO0FBQy9CLGlCQUFTLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDO09BQ3BCLE1BQU0sSUFBSSxDQUFDLFVBQVUsRUFBRTtBQUN0QixZQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxZQUFZLENBQUMsQ0FBQztPQUNoQztLQUNGLE1BQU07QUFDTCxxQkFBZSxJQUFJLGFBQWEsSUFBSSxXQUFXLEdBQUcsRUFBRSxHQUFHLElBQUksQ0FBQyxnQkFBZ0IsRUFBRSxDQUFBLEFBQUMsQ0FBQzs7QUFFaEYsVUFBSSxXQUFXLEVBQUU7QUFDZixtQkFBVyxDQUFDLE9BQU8sQ0FBQyxrQkFBa0IsQ0FBQyxDQUFDO0FBQ3hDLGlCQUFTLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDO09BQ3BCLE1BQU07QUFDTCxZQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO09BQ3BDO0tBQ0Y7O0FBRUQsUUFBSSxlQUFlLEVBQUU7QUFDbkIsVUFBSSxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsTUFBTSxHQUFHLGVBQWUsQ0FBQyxTQUFTLENBQUMsQ0FBQyxDQUFDLElBQUksV0FBVyxHQUFHLEVBQUUsR0FBRyxLQUFLLENBQUEsQUFBQyxDQUFDLENBQUM7S0FDekY7O0FBRUQsV0FBTyxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssRUFBRSxDQUFDO0dBQzVCOzs7Ozs7Ozs7OztBQVdELFlBQVUsRUFBRSxvQkFBUyxJQUFJLEVBQUU7QUFDekIsUUFBSSxrQkFBa0IsR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLDRCQUE0QixDQUFDO1FBQ2pFLE1BQU0sR0FBRyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQyxDQUFDLENBQUMsQ0FBQztBQUNuQyxRQUFJLENBQUMsZUFBZSxDQUFDLElBQUksRUFBRSxDQUFDLEVBQUUsTUFBTSxDQUFDLENBQUM7O0FBRXRDLFFBQUksU0FBUyxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztBQUNoQyxVQUFNLENBQUMsTUFBTSxDQUFDLENBQUMsRUFBRSxDQUFDLEVBQUUsU0FBUyxDQUFDLENBQUM7O0FBRS9CLFFBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLENBQUMsa0JBQWtCLEVBQUUsTUFBTSxFQUFFLE1BQU0sQ0FBQyxDQUFDLENBQUM7R0FDekU7Ozs7Ozs7O0FBUUQscUJBQW1CLEVBQUUsK0JBQVc7O0FBRTlCLFFBQUksa0JBQWtCLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQyw0QkFBNEIsQ0FBQztRQUNqRSxNQUFNLEdBQUcsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUM7QUFDbkMsUUFBSSxDQUFDLGVBQWUsQ0FBQyxFQUFFLEVBQUUsQ0FBQyxFQUFFLE1BQU0sRUFBRSxJQUFJLENBQUMsQ0FBQzs7QUFFMUMsUUFBSSxDQUFDLFdBQVcsRUFBRSxDQUFDOztBQUVuQixRQUFJLE9BQU8sR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7QUFDOUIsVUFBTSxDQUFDLE1BQU0sQ0FBQyxDQUFDLEVBQUUsQ0FBQyxFQUFFLE9BQU8sQ0FBQyxDQUFDOztBQUU3QixRQUFJLENBQUMsVUFBVSxDQUFDLENBQ1osT0FBTyxFQUFFLElBQUksQ0FBQyxVQUFVLEVBQUUsTUFBTSxFQUM5QixPQUFPLEVBQUUsS0FBSyxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxDQUFDLGtCQUFrQixFQUFFLE1BQU0sRUFBRSxNQUFNLENBQUMsRUFDOUUsR0FBRyxDQUFDLENBQUMsQ0FBQztHQUNYOzs7Ozs7OztBQVFELGVBQWEsRUFBRSx1QkFBUyxPQUFPLEVBQUU7QUFDL0IsUUFBSSxJQUFJLENBQUMsY0FBYyxFQUFFO0FBQ3ZCLGFBQU8sR0FBRyxJQUFJLENBQUMsY0FBYyxHQUFHLE9BQU8sQ0FBQztLQUN6QyxNQUFNO0FBQ0wsVUFBSSxDQUFDLGVBQWUsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLGVBQWUsQ0FBQztLQUNwRDs7QUFFRCxRQUFJLENBQUMsY0FBYyxHQUFHLE9BQU8sQ0FBQztHQUMvQjs7Ozs7Ozs7Ozs7QUFXRCxRQUFNLEVBQUUsa0JBQVc7QUFDakIsUUFBSSxJQUFJLENBQUMsUUFBUSxFQUFFLEVBQUU7QUFDbkIsVUFBSSxDQUFDLFlBQVksQ0FBQyxVQUFDLE9BQU87ZUFBSyxDQUFDLGFBQWEsRUFBRSxPQUFPLEVBQUUsT0FBTyxDQUFDO09BQUEsQ0FBQyxDQUFDOztBQUVsRSxVQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDLENBQUMsQ0FBQztLQUN2RCxNQUFNO0FBQ0wsVUFBSSxLQUFLLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO0FBQzVCLFVBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQyxNQUFNLEVBQUUsS0FBSyxFQUFFLGNBQWMsRUFBRSxJQUFJLENBQUMsY0FBYyxDQUFDLEtBQUssRUFBRSxTQUFTLEVBQUUsSUFBSSxDQUFDLEVBQUUsSUFBSSxDQUFDLENBQUMsQ0FBQztBQUNwRyxVQUFJLElBQUksQ0FBQyxXQUFXLENBQUMsUUFBUSxFQUFFO0FBQzdCLFlBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQyxTQUFTLEVBQUUsSUFBSSxDQUFDLGNBQWMsQ0FBQyxJQUFJLEVBQUUsU0FBUyxFQUFFLElBQUksQ0FBQyxFQUFFLElBQUksQ0FBQyxDQUFDLENBQUM7T0FDaEY7S0FDRjtHQUNGOzs7Ozs7OztBQVFELGVBQWEsRUFBRSx5QkFBVztBQUN4QixRQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQy9CLENBQUMsSUFBSSxDQUFDLFNBQVMsQ0FBQyw0QkFBNEIsQ0FBQyxFQUFFLEdBQUcsRUFBRSxJQUFJLENBQUMsUUFBUSxFQUFFLEVBQUUsR0FBRyxDQUFDLENBQUMsQ0FBQyxDQUFDO0dBQ2pGOzs7Ozs7Ozs7QUFTRCxZQUFVLEVBQUUsb0JBQVMsS0FBSyxFQUFFO0FBQzFCLFFBQUksQ0FBQyxXQUFXLEdBQUcsS0FBSyxDQUFDO0dBQzFCOzs7Ozs7OztBQVFELGFBQVcsRUFBRSx1QkFBVztBQUN0QixRQUFJLENBQUMsZ0JBQWdCLENBQUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsV0FBVyxDQUFDLENBQUMsQ0FBQztHQUMzRDs7Ozs7Ozs7O0FBU0QsaUJBQWUsRUFBRSx5QkFBUyxLQUFLLEVBQUUsS0FBSyxFQUFFLE1BQU0sRUFBRSxNQUFNLEVBQUU7QUFDdEQsUUFBSSxDQUFDLEdBQUcsQ0FBQyxDQUFDOztBQUVWLFFBQUksQ0FBQyxNQUFNLElBQUksSUFBSSxDQUFDLE9BQU8sQ0FBQyxNQUFNLElBQUksQ0FBQyxJQUFJLENBQUMsV0FBVyxFQUFFOzs7QUFHdkQsVUFBSSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLEtBQUssQ0FBQyxDQUFDLEVBQUUsQ0FBQyxDQUFDLENBQUMsQ0FBQztLQUMzQyxNQUFNO0FBQ0wsVUFBSSxDQUFDLFdBQVcsRUFBRSxDQUFDO0tBQ3BCOztBQUVELFFBQUksQ0FBQyxXQUFXLENBQUMsU0FBUyxFQUFFLEtBQUssRUFBRSxDQUFDLEVBQUUsS0FBSyxFQUFFLE1BQU0sQ0FBQyxDQUFDO0dBQ3REOzs7Ozs7Ozs7QUFTRCxrQkFBZ0IsRUFBRSwwQkFBUyxZQUFZLEVBQUUsS0FBSyxFQUFFO0FBQzlDLFFBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDOztBQUUzQixRQUFJLENBQUMsSUFBSSxDQUFDLENBQUMsY0FBYyxFQUFFLFlBQVksQ0FBQyxDQUFDLENBQUMsRUFBRSxJQUFJLEVBQUUsWUFBWSxDQUFDLENBQUMsQ0FBQyxFQUFFLEdBQUcsQ0FBQyxDQUFDLENBQUM7QUFDekUsUUFBSSxDQUFDLFdBQVcsQ0FBQyxTQUFTLEVBQUUsS0FBSyxFQUFFLENBQUMsQ0FBQyxDQUFDO0dBQ3ZDOzs7Ozs7OztBQVFELFlBQVUsRUFBRSxvQkFBUyxLQUFLLEVBQUUsS0FBSyxFQUFFLE1BQU0sRUFBRTtBQUN6QyxRQUFJLENBQUMsS0FBSyxFQUFFO0FBQ1YsVUFBSSxDQUFDLGdCQUFnQixDQUFDLE1BQU0sQ0FBQyxDQUFDO0tBQy9CLE1BQU07QUFDTCxVQUFJLENBQUMsZ0JBQWdCLENBQUMsdUJBQXVCLEdBQUcsS0FBSyxHQUFHLEdBQUcsQ0FBQyxDQUFDO0tBQzlEOztBQUVELFFBQUksQ0FBQyxXQUFXLENBQUMsTUFBTSxFQUFFLEtBQUssRUFBRSxDQUFDLEVBQUUsSUFBSSxFQUFFLE1BQU0sQ0FBQyxDQUFDO0dBQ2xEOztBQUVELGFBQVcsRUFBRSxxQkFBUyxJQUFJLEVBQUUsS0FBSyxFQUFFLENBQUMsRUFBRSxLQUFLLEVBQUUsTUFBTSxFQUFFOzs7OztBQUNuRCxRQUFJLElBQUksQ0FBQyxPQUFPLENBQUMsTUFBTSxJQUFJLElBQUksQ0FBQyxPQUFPLENBQUMsYUFBYSxFQUFFO0FBQ3JELFVBQUksQ0FBQyxJQUFJLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsTUFBTSxJQUFJLE1BQU0sRUFBRSxJQUFJLEVBQUUsS0FBSyxFQUFFLElBQUksQ0FBQyxDQUFDLENBQUM7QUFDMUUsYUFBTztLQUNSOztBQUVELFFBQUksR0FBRyxHQUFHLEtBQUssQ0FBQyxNQUFNLENBQUM7QUFDdkIsV0FBTyxDQUFDLEdBQUcsR0FBRyxFQUFFLENBQUMsRUFBRSxFQUFFOztBQUVuQixVQUFJLENBQUMsWUFBWSxDQUFDLFVBQUMsT0FBTyxFQUFLO0FBQzdCLFlBQUksTUFBTSxHQUFHLE1BQUssVUFBVSxDQUFDLE9BQU8sRUFBRSxLQUFLLENBQUMsQ0FBQyxDQUFDLEVBQUUsSUFBSSxDQUFDLENBQUM7OztBQUd0RCxZQUFJLENBQUMsS0FBSyxFQUFFO0FBQ1YsaUJBQU8sQ0FBQyxhQUFhLEVBQUUsTUFBTSxFQUFFLEtBQUssRUFBRSxPQUFPLENBQUMsQ0FBQztTQUNoRCxNQUFNOztBQUVMLGlCQUFPLENBQUMsTUFBTSxFQUFFLE1BQU0sQ0FBQyxDQUFDO1NBQ3pCO09BQ0YsQ0FBQyxDQUFDOztLQUVKO0dBQ0Y7Ozs7Ozs7OztBQVNELHVCQUFxQixFQUFFLGlDQUFXO0FBQ2hDLFFBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLGtCQUFrQixDQUFDLEVBQUUsR0FBRyxFQUFFLElBQUksQ0FBQyxRQUFRLEVBQUUsRUFBRSxJQUFJLEVBQUUsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUMsRUFBRSxHQUFHLENBQUMsQ0FBQyxDQUFDO0dBQ3ZHOzs7Ozs7Ozs7O0FBVUQsaUJBQWUsRUFBRSx5QkFBUyxNQUFNLEVBQUUsSUFBSSxFQUFFO0FBQ3RDLFFBQUksQ0FBQyxXQUFXLEVBQUUsQ0FBQztBQUNuQixRQUFJLENBQUMsVUFBVSxDQUFDLElBQUksQ0FBQyxDQUFDOzs7O0FBSXRCLFFBQUksSUFBSSxLQUFLLGVBQWUsRUFBRTtBQUM1QixVQUFJLE9BQU8sTUFBTSxLQUFLLFFBQVEsRUFBRTtBQUM5QixZQUFJLENBQUMsVUFBVSxDQUFDLE1BQU0sQ0FBQyxDQUFDO09BQ3pCLE1BQU07QUFDTCxZQUFJLENBQUMsZ0JBQWdCLENBQUMsTUFBTSxDQUFDLENBQUM7T0FDL0I7S0FDRjtHQUNGOztBQUVELFdBQVMsRUFBRSxtQkFBUyxTQUFTLEVBQUU7QUFDN0IsUUFBSSxJQUFJLENBQUMsUUFBUSxFQUFFO0FBQ2pCLFVBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7S0FDakI7QUFDRCxRQUFJLElBQUksQ0FBQyxZQUFZLEVBQUU7QUFDckIsVUFBSSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztBQUNoQixVQUFJLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0tBQ2pCO0FBQ0QsUUFBSSxDQUFDLGdCQUFnQixDQUFDLFNBQVMsR0FBRyxXQUFXLEdBQUcsSUFBSSxDQUFDLENBQUM7R0FDdkQ7QUFDRCxVQUFRLEVBQUUsb0JBQVc7QUFDbkIsUUFBSSxJQUFJLENBQUMsSUFBSSxFQUFFO0FBQ2IsVUFBSSxDQUFDLE1BQU0sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0tBQzdCO0FBQ0QsUUFBSSxDQUFDLElBQUksR0FBRyxFQUFDLE1BQU0sRUFBRSxFQUFFLEVBQUUsS0FBSyxFQUFFLEVBQUUsRUFBRSxRQUFRLEVBQUUsRUFBRSxFQUFFLEdBQUcsRUFBRSxFQUFFLEVBQUMsQ0FBQztHQUM1RDtBQUNELFNBQU8sRUFBRSxtQkFBVztBQUNsQixRQUFJLElBQUksR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDO0FBQ3JCLFFBQUksQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxHQUFHLEVBQUUsQ0FBQzs7QUFFOUIsUUFBSSxJQUFJLENBQUMsUUFBUSxFQUFFO0FBQ2pCLFVBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsR0FBRyxDQUFDLENBQUMsQ0FBQztLQUN6QztBQUNELFFBQUksSUFBSSxDQUFDLFlBQVksRUFBRTtBQUNyQixVQUFJLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxhQUFhLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUM7QUFDN0MsVUFBSSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDO0tBQzNDOztBQUVELFFBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQztHQUM1Qzs7Ozs7Ozs7QUFRRCxZQUFVLEVBQUUsb0JBQVMsTUFBTSxFQUFFO0FBQzNCLFFBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxJQUFJLENBQUMsWUFBWSxDQUFDLE1BQU0sQ0FBQyxDQUFDLENBQUM7R0FDbEQ7Ozs7Ozs7Ozs7QUFVRCxhQUFXLEVBQUUscUJBQVMsS0FBSyxFQUFFO0FBQzNCLFFBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxLQUFLLENBQUMsQ0FBQztHQUM5Qjs7Ozs7Ozs7OztBQVVELGFBQVcsRUFBRSxxQkFBUyxJQUFJLEVBQUU7QUFDMUIsUUFBSSxJQUFJLElBQUksSUFBSSxFQUFFO0FBQ2hCLFVBQUksQ0FBQyxnQkFBZ0IsQ0FBQyxJQUFJLENBQUMsaUJBQWlCLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQztLQUNyRCxNQUFNO0FBQ0wsVUFBSSxDQUFDLGdCQUFnQixDQUFDLElBQUksQ0FBQyxDQUFDO0tBQzdCO0dBQ0Y7Ozs7Ozs7OztBQVNELG1CQUFpQixFQUFBLDJCQUFDLFNBQVMsRUFBRSxJQUFJLEVBQUU7QUFDakMsUUFBSSxjQUFjLEdBQUcsSUFBSSxDQUFDLFVBQVUsQ0FBQyxZQUFZLEVBQUUsSUFBSSxFQUFFLFdBQVcsQ0FBQztRQUNqRSxPQUFPLEdBQUcsSUFBSSxDQUFDLGVBQWUsQ0FBQyxJQUFJLEVBQUUsU0FBUyxDQUFDLENBQUM7O0FBRXBELFFBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLENBQ25CLE9BQU8sRUFDUCxJQUFJLENBQUMsVUFBVSxDQUFDLFlBQVksQ0FBQyxjQUFjLEVBQUUsRUFBRSxFQUFFLENBQUMsSUFBSSxFQUFFLE9BQU8sRUFBRSxXQUFXLEVBQUUsT0FBTyxDQUFDLENBQUMsRUFDdkYsU0FBUyxDQUNWLENBQUMsQ0FBQztHQUNKOzs7Ozs7Ozs7OztBQVdELGNBQVksRUFBRSxzQkFBUyxTQUFTLEVBQUUsSUFBSSxFQUFFLFFBQVEsRUFBRTtBQUNoRCxRQUFJLFNBQVMsR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFO1FBQzNCLE1BQU0sR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDLFNBQVMsRUFBRSxJQUFJLENBQUM7UUFDMUMsTUFBTSxHQUFHLFFBQVEsR0FBRyxDQUFDLE1BQU0sQ0FBQyxJQUFJLEVBQUUsTUFBTSxDQUFDLEdBQUcsRUFBRSxDQUFDOztBQUVuRCxRQUFJLE1BQU0sR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxNQUFNLEVBQUUsU0FBUyxDQUFDLENBQUM7QUFDN0MsUUFBSSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsTUFBTSxFQUFFO0FBQ3hCLFlBQU0sQ0FBQyxJQUFJLENBQUMsTUFBTSxFQUFFLElBQUksQ0FBQyxTQUFTLENBQUMsdUJBQXVCLENBQUMsQ0FBQyxDQUFDO0tBQzlEO0FBQ0QsVUFBTSxDQUFDLElBQUksQ0FBQyxHQUFHLENBQUMsQ0FBQzs7QUFFakIsUUFBSSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUUsTUFBTSxFQUFFLE1BQU0sQ0FBQyxVQUFVLENBQUMsQ0FBQyxDQUFDO0dBQ3hFOzs7Ozs7Ozs7QUFTRCxtQkFBaUIsRUFBRSwyQkFBUyxTQUFTLEVBQUUsSUFBSSxFQUFFO0FBQzNDLFFBQUksTUFBTSxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsU0FBUyxFQUFFLElBQUksQ0FBQyxDQUFDO0FBQy9DLFFBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDLElBQUksRUFBRSxNQUFNLEVBQUUsTUFBTSxDQUFDLFVBQVUsQ0FBQyxDQUFDLENBQUM7R0FDN0U7Ozs7Ozs7Ozs7Ozs7O0FBY0QsaUJBQWUsRUFBRSx5QkFBUyxJQUFJLEVBQUUsVUFBVSxFQUFFO0FBQzFDLFFBQUksQ0FBQyxXQUFXLENBQUMsUUFBUSxDQUFDLENBQUM7O0FBRTNCLFFBQUksU0FBUyxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQzs7QUFFaEMsUUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO0FBQ2pCLFFBQUksTUFBTSxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsQ0FBQyxFQUFFLElBQUksRUFBRSxVQUFVLENBQUMsQ0FBQzs7QUFFbkQsUUFBSSxVQUFVLEdBQUcsSUFBSSxDQUFDLFVBQVUsR0FBRyxJQUFJLENBQUMsVUFBVSxDQUFDLFNBQVMsRUFBRSxJQUFJLEVBQUUsUUFBUSxDQUFDLENBQUM7O0FBRTlFLFFBQUksTUFBTSxHQUFHLENBQUMsR0FBRyxFQUFFLFlBQVksRUFBRSxVQUFVLEVBQUUsTUFBTSxFQUFFLFNBQVMsRUFBRSxHQUFHLENBQUMsQ0FBQztBQUNyRSxRQUFJLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxNQUFNLEVBQUU7QUFDeEIsWUFBTSxDQUFDLENBQUMsQ0FBQyxHQUFHLFlBQVksQ0FBQztBQUN6QixZQUFNLENBQUMsSUFBSSxDQUNULHNCQUFzQixFQUN0QixJQUFJLENBQUMsU0FBUyxDQUFDLHVCQUF1QixDQUFDLENBQ3hDLENBQUM7S0FDSDs7QUFFRCxRQUFJLENBQUMsSUFBSSxDQUFDLENBQ04sR0FBRyxFQUFFLE1BQU0sRUFDVixNQUFNLENBQUMsVUFBVSxHQUFHLENBQUMsS0FBSyxFQUFFLE1BQU0sQ0FBQyxVQUFVLENBQUMsR0FBRyxFQUFFLEVBQUcsSUFBSSxFQUMzRCxxQkFBcUIsRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLFlBQVksQ0FBQyxFQUFFLEtBQUssRUFDMUQsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLENBQUMsUUFBUSxFQUFFLE1BQU0sRUFBRSxNQUFNLENBQUMsVUFBVSxDQUFDLEVBQUUsYUFBYSxDQUMvRSxDQUFDLENBQUM7R0FDSjs7Ozs7Ozs7O0FBU0QsZUFBYSxFQUFFLHVCQUFTLFNBQVMsRUFBRSxJQUFJLEVBQUUsTUFBTSxFQUFFO0FBQy9DLFFBQUksTUFBTSxHQUFHLEVBQUU7UUFDWCxPQUFPLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLEVBQUUsQ0FBQyxFQUFFLE1BQU0sQ0FBQyxDQUFDOztBQUVoRCxRQUFJLFNBQVMsRUFBRTtBQUNiLFVBQUksR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7QUFDdkIsYUFBTyxPQUFPLENBQUMsSUFBSSxDQUFDO0tBQ3JCOztBQUVELFFBQUksTUFBTSxFQUFFO0FBQ1YsYUFBTyxDQUFDLE1BQU0sR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0tBQ3pDO0FBQ0QsV0FBTyxDQUFDLE9BQU8sR0FBRyxTQUFTLENBQUM7QUFDNUIsV0FBTyxDQUFDLFFBQVEsR0FBRyxVQUFVLENBQUM7QUFDOUIsV0FBTyxDQUFDLFVBQVUsR0FBRyxzQkFBc0IsQ0FBQzs7QUFFNUMsUUFBSSxDQUFDLFNBQVMsRUFBRTtBQUNkLFlBQU0sQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxVQUFVLEVBQUUsSUFBSSxFQUFFLFNBQVMsQ0FBQyxDQUFDLENBQUM7S0FDOUQsTUFBTTtBQUNMLFlBQU0sQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7S0FDdEI7O0FBRUQsUUFBSSxJQUFJLENBQUMsT0FBTyxDQUFDLE1BQU0sRUFBRTtBQUN2QixhQUFPLENBQUMsTUFBTSxHQUFHLFFBQVEsQ0FBQztLQUMzQjtBQUNELFdBQU8sR0FBRyxJQUFJLENBQUMsYUFBYSxDQUFDLE9BQU8sQ0FBQyxDQUFDO0FBQ3RDLFVBQU0sQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUM7O0FBRXJCLFFBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxZQUFZLENBQUMseUJBQXlCLEVBQUUsRUFBRSxFQUFFLE1BQU0sQ0FBQyxDQUFDLENBQUM7R0FDNUU7Ozs7Ozs7O0FBUUQsY0FBWSxFQUFFLHNCQUFTLEdBQUcsRUFBRTtBQUMxQixRQUFJLEtBQUssR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFO1FBQ3ZCLE9BQU8sWUFBQTtRQUNQLElBQUksWUFBQTtRQUNKLEVBQUUsWUFBQSxDQUFDOztBQUVQLFFBQUksSUFBSSxDQUFDLFFBQVEsRUFBRTtBQUNqQixRQUFFLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO0tBQ3RCO0FBQ0QsUUFBSSxJQUFJLENBQUMsWUFBWSxFQUFFO0FBQ3JCLFVBQUksR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7QUFDdkIsYUFBTyxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztLQUMzQjs7QUFFRCxRQUFJLElBQUksR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDO0FBQ3JCLFFBQUksT0FBTyxFQUFFO0FBQ1gsVUFBSSxDQUFDLFFBQVEsQ0FBQyxHQUFHLENBQUMsR0FBRyxPQUFPLENBQUM7S0FDOUI7QUFDRCxRQUFJLElBQUksRUFBRTtBQUNSLFVBQUksQ0FBQyxLQUFLLENBQUMsR0FBRyxDQUFDLEdBQUcsSUFBSSxDQUFDO0tBQ3hCO0FBQ0QsUUFBSSxFQUFFLEVBQUU7QUFDTixVQUFJLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxHQUFHLEVBQUUsQ0FBQztLQUNwQjtBQUNELFFBQUksQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDLEdBQUcsS0FBSyxDQUFDO0dBQzFCOztBQUVELFFBQU0sRUFBRSxnQkFBUyxJQUFJLEVBQUUsSUFBSSxFQUFFLEtBQUssRUFBRTtBQUNsQyxRQUFJLElBQUksS0FBSyxZQUFZLEVBQUU7QUFDekIsVUFBSSxDQUFDLGdCQUFnQixDQUNqQixjQUFjLEdBQUcsSUFBSSxDQUFDLENBQUMsQ0FBQyxHQUFHLFNBQVMsR0FBRyxJQUFJLENBQUMsQ0FBQyxDQUFDLEdBQUcsR0FBRyxJQUNqRCxLQUFLLEdBQUcsS0FBSyxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUMsR0FBRyxHQUFHLEtBQUssQ0FBQyxHQUFHLEVBQUUsQ0FBQSxBQUFDLENBQUMsQ0FBQztLQUMzRCxNQUFNLElBQUksSUFBSSxLQUFLLGdCQUFnQixFQUFFO0FBQ3BDLFVBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLENBQUM7S0FDdkIsTUFBTSxJQUFJLElBQUksS0FBSyxlQUFlLEVBQUU7QUFDbkMsVUFBSSxDQUFDLGdCQUFnQixDQUFDLE1BQU0sQ0FBQyxDQUFDO0tBQy9CLE1BQU07QUFDTCxVQUFJLENBQUMsZ0JBQWdCLENBQUMsTUFBTSxDQUFDLENBQUM7S0FDL0I7R0FDRjs7OztBQUlELFVBQVEsRUFBRSxrQkFBa0I7O0FBRTVCLGlCQUFlLEVBQUUseUJBQVMsV0FBVyxFQUFFLE9BQU8sRUFBRTtBQUM5QyxRQUFJLFFBQVEsR0FBRyxXQUFXLENBQUMsUUFBUTtRQUFFLEtBQUssWUFBQTtRQUFFLFFBQVEsWUFBQSxDQUFDOztBQUVyRCxTQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEdBQUcsUUFBUSxDQUFDLE1BQU0sRUFBRSxDQUFDLEdBQUcsQ0FBQyxFQUFFLENBQUMsRUFBRSxFQUFFO0FBQy9DLFdBQUssR0FBRyxRQUFRLENBQUMsQ0FBQyxDQUFDLENBQUM7QUFDcEIsY0FBUSxHQUFHLElBQUksSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDOztBQUUvQixVQUFJLEtBQUssR0FBRyxJQUFJLENBQUMsb0JBQW9CLENBQUMsS0FBSyxDQUFDLENBQUM7O0FBRTdDLFVBQUksS0FBSyxJQUFJLElBQUksRUFBRTtBQUNqQixZQUFJLENBQUMsT0FBTyxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsRUFBRSxDQUFDLENBQUM7QUFDL0IsYUFBSyxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUMsUUFBUSxDQUFDLE1BQU0sQ0FBQztBQUNyQyxhQUFLLENBQUMsS0FBSyxHQUFHLEtBQUssQ0FBQztBQUNwQixhQUFLLENBQUMsSUFBSSxHQUFHLFNBQVMsR0FBRyxLQUFLLENBQUM7QUFDL0IsWUFBSSxDQUFDLE9BQU8sQ0FBQyxRQUFRLENBQUMsS0FBSyxDQUFDLEdBQUcsUUFBUSxDQUFDLE9BQU8sQ0FBQyxLQUFLLEVBQUUsT0FBTyxFQUFFLElBQUksQ0FBQyxPQUFPLEVBQUUsQ0FBQyxJQUFJLENBQUMsVUFBVSxDQUFDLENBQUM7QUFDaEcsWUFBSSxDQUFDLE9BQU8sQ0FBQyxVQUFVLENBQUMsS0FBSyxDQUFDLEdBQUcsUUFBUSxDQUFDLFVBQVUsQ0FBQztBQUNyRCxZQUFJLENBQUMsT0FBTyxDQUFDLFlBQVksQ0FBQyxLQUFLLENBQUMsR0FBRyxLQUFLLENBQUM7O0FBRXpDLFlBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFNBQVMsSUFBSSxRQUFRLENBQUMsU0FBUyxDQUFDO0FBQ3RELFlBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLGNBQWMsSUFBSSxRQUFRLENBQUMsY0FBYyxDQUFDO09BQ3RFLE1BQU07QUFDTCxhQUFLLENBQUMsS0FBSyxHQUFHLEtBQUssQ0FBQztBQUNwQixhQUFLLENBQUMsSUFBSSxHQUFHLFNBQVMsR0FBRyxLQUFLLENBQUM7O0FBRS9CLFlBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLFNBQVMsSUFBSSxLQUFLLENBQUMsU0FBUyxDQUFDO0FBQ25ELFlBQUksQ0FBQyxjQUFjLEdBQUcsSUFBSSxDQUFDLGNBQWMsSUFBSSxLQUFLLENBQUMsY0FBYyxDQUFDO09BQ25FO0tBQ0Y7R0FDRjtBQUNELHNCQUFvQixFQUFFLDhCQUFTLEtBQUssRUFBRTtBQUNwQyxTQUFLLElBQUksQ0FBQyxHQUFHLENBQUMsRUFBRSxHQUFHLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQyxZQUFZLENBQUMsTUFBTSxFQUFFLENBQUMsR0FBRyxHQUFHLEVBQUUsQ0FBQyxFQUFFLEVBQUU7QUFDcEUsVUFBSSxXQUFXLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQyxZQUFZLENBQUMsQ0FBQyxDQUFDLENBQUM7QUFDL0MsVUFBSSxXQUFXLElBQUksV0FBVyxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsRUFBRTtBQUM1QyxlQUFPLENBQUMsQ0FBQztPQUNWO0tBQ0Y7R0FDRjs7QUFFRCxtQkFBaUIsRUFBRSwyQkFBUyxJQUFJLEVBQUU7QUFDaEMsUUFBSSxLQUFLLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDO1FBQ3ZDLGFBQWEsR0FBRyxDQUFDLEtBQUssQ0FBQyxLQUFLLEVBQUUsTUFBTSxFQUFFLEtBQUssQ0FBQyxXQUFXLENBQUMsQ0FBQzs7QUFFN0QsUUFBSSxJQUFJLENBQUMsY0FBYyxJQUFJLElBQUksQ0FBQyxTQUFTLEVBQUU7QUFDekMsbUJBQWEsQ0FBQyxJQUFJLENBQUMsYUFBYSxDQUFDLENBQUM7S0FDbkM7QUFDRCxRQUFJLElBQUksQ0FBQyxTQUFTLEVBQUU7QUFDbEIsbUJBQWEsQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFDLENBQUM7S0FDOUI7O0FBRUQsV0FBTyxvQkFBb0IsR0FBRyxhQUFhLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxHQUFHLEdBQUcsQ0FBQztHQUM5RDs7QUFFRCxhQUFXLEVBQUUscUJBQVMsSUFBSSxFQUFFO0FBQzFCLFFBQUksQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLElBQUksQ0FBQyxFQUFFO0FBQ3pCLFVBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLEdBQUcsSUFBSSxDQUFDO0FBQzVCLFVBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztLQUNoQztHQUNGOztBQUVELE1BQUksRUFBRSxjQUFTLElBQUksRUFBRTtBQUNuQixRQUFJLEVBQUUsSUFBSSxZQUFZLE9BQU8sQ0FBQSxBQUFDLEVBQUU7QUFDOUIsVUFBSSxHQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0tBQy9COztBQUVELFFBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxDQUFDO0FBQzVCLFdBQU8sSUFBSSxDQUFDO0dBQ2I7O0FBRUQsa0JBQWdCLEVBQUUsMEJBQVMsSUFBSSxFQUFFO0FBQy9CLFFBQUksQ0FBQyxJQUFJLENBQUMsSUFBSSxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUMsQ0FBQztHQUM5Qjs7QUFFRCxZQUFVLEVBQUUsb0JBQVMsTUFBTSxFQUFFO0FBQzNCLFFBQUksSUFBSSxDQUFDLGNBQWMsRUFBRTtBQUN2QixVQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FDWixJQUFJLENBQUMsY0FBYyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxjQUFjLENBQUMsRUFBRSxJQUFJLENBQUMsZUFBZSxDQUFDLENBQUMsQ0FBQztBQUM5RixVQUFJLENBQUMsY0FBYyxHQUFHLFNBQVMsQ0FBQztLQUNqQzs7QUFFRCxRQUFJLE1BQU0sRUFBRTtBQUNWLFVBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQyxDQUFDO0tBQzFCO0dBQ0Y7O0FBRUQsY0FBWSxFQUFFLHNCQUFTLFFBQVEsRUFBRTtBQUMvQixRQUFJLE1BQU0sR0FBRyxDQUFDLEdBQUcsQ0FBQztRQUNkLEtBQUssWUFBQTtRQUNMLFlBQVksWUFBQTtRQUNaLFdBQVcsWUFBQSxDQUFDOzs7QUFHaEIsUUFBSSxDQUFDLElBQUksQ0FBQyxRQUFRLEVBQUUsRUFBRTtBQUNwQixZQUFNLDJCQUFjLDRCQUE0QixDQUFDLENBQUM7S0FDbkQ7OztBQUdELFFBQUksR0FBRyxHQUFHLElBQUksQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLENBQUM7O0FBRTlCLFFBQUksR0FBRyxZQUFZLE9BQU8sRUFBRTs7QUFFMUIsV0FBSyxHQUFHLENBQUMsR0FBRyxDQUFDLEtBQUssQ0FBQyxDQUFDO0FBQ3BCLFlBQU0sR0FBRyxDQUFDLEdBQUcsRUFBRSxLQUFLLENBQUMsQ0FBQztBQUN0QixpQkFBVyxHQUFHLElBQUksQ0FBQztLQUNwQixNQUFNOztBQUVMLGtCQUFZLEdBQUcsSUFBSSxDQUFDO0FBQ3BCLFVBQUksS0FBSSxHQUFHLElBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQzs7QUFFNUIsWUFBTSxHQUFHLENBQUMsSUFBSSxFQUFFLElBQUksQ0FBQyxJQUFJLENBQUMsS0FBSSxDQUFDLEVBQUUsS0FBSyxFQUFFLEdBQUcsRUFBRSxHQUFHLENBQUMsQ0FBQztBQUNsRCxXQUFLLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO0tBQ3pCOztBQUVELFFBQUksSUFBSSxHQUFHLFFBQVEsQ0FBQyxJQUFJLENBQUMsSUFBSSxFQUFFLEtBQUssQ0FBQyxDQUFDOztBQUV0QyxRQUFJLENBQUMsV0FBVyxFQUFFO0FBQ2hCLFVBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztLQUNqQjtBQUNELFFBQUksWUFBWSxFQUFFO0FBQ2hCLFVBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQztLQUNsQjtBQUNELFFBQUksQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLE1BQU0sQ0FBQyxJQUFJLEVBQUUsR0FBRyxDQUFDLENBQUMsQ0FBQztHQUNyQzs7QUFFRCxXQUFTLEVBQUUscUJBQVc7QUFDcEIsUUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO0FBQ2pCLFFBQUksSUFBSSxDQUFDLFNBQVMsR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLE1BQU0sRUFBRTtBQUFFLFVBQUksQ0FBQyxTQUFTLENBQUMsSUFBSSxDQUFDLE9BQU8sR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7S0FBRTtBQUM5RixXQUFPLElBQUksQ0FBQyxZQUFZLEVBQUUsQ0FBQztHQUM1QjtBQUNELGNBQVksRUFBRSx3QkFBVztBQUN2QixXQUFPLE9BQU8sR0FBRyxJQUFJLENBQUMsU0FBUyxDQUFDO0dBQ2pDO0FBQ0QsYUFBVyxFQUFFLHVCQUFXO0FBQ3RCLFFBQUksV0FBVyxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUM7QUFDbkMsUUFBSSxDQUFDLFdBQVcsR0FBRyxFQUFFLENBQUM7QUFDdEIsU0FBSyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsR0FBRyxHQUFHLFdBQVcsQ0FBQyxNQUFNLEVBQUUsQ0FBQyxHQUFHLEdBQUcsRUFBRSxDQUFDLEVBQUUsRUFBRTtBQUN0RCxVQUFJLEtBQUssR0FBRyxXQUFXLENBQUMsQ0FBQyxDQUFDLENBQUM7O0FBRTNCLFVBQUksS0FBSyxZQUFZLE9BQU8sRUFBRTtBQUM1QixZQUFJLENBQUMsWUFBWSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsQ0FBQztPQUMvQixNQUFNO0FBQ0wsWUFBSSxLQUFLLEdBQUcsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO0FBQzdCLFlBQUksQ0FBQyxVQUFVLENBQUMsQ0FBQyxLQUFLLEVBQUUsS0FBSyxFQUFFLEtBQUssRUFBRSxHQUFHLENBQUMsQ0FBQyxDQUFDO0FBQzVDLFlBQUksQ0FBQyxZQUFZLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxDQUFDO09BQy9CO0tBQ0Y7R0FDRjtBQUNELFVBQVEsRUFBRSxvQkFBVztBQUNuQixXQUFPLElBQUksQ0FBQyxXQUFXLENBQUMsTUFBTSxDQUFDO0dBQ2hDOztBQUVELFVBQVEsRUFBRSxrQkFBUyxPQUFPLEVBQUU7QUFDMUIsUUFBSSxNQUFNLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBRTtRQUN4QixJQUFJLEdBQUcsQ0FBQyxNQUFNLEdBQUcsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsWUFBWSxDQUFBLENBQUUsR0FBRyxFQUFFLENBQUM7O0FBRWpFLFFBQUksQ0FBQyxPQUFPLElBQUssSUFBSSxZQUFZLE9BQU8sQUFBQyxFQUFFO0FBQ3pDLGFBQU8sSUFBSSxDQUFDLEtBQUssQ0FBQztLQUNuQixNQUFNO0FBQ0wsVUFBSSxDQUFDLE1BQU0sRUFBRTs7QUFFWCxZQUFJLENBQUMsSUFBSSxDQUFDLFNBQVMsRUFBRTtBQUNuQixnQkFBTSwyQkFBYyxtQkFBbUIsQ0FBQyxDQUFDO1NBQzFDO0FBQ0QsWUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO09BQ2xCO0FBQ0QsYUFBTyxJQUFJLENBQUM7S0FDYjtHQUNGOztBQUVELFVBQVEsRUFBRSxvQkFBVztBQUNuQixRQUFJLEtBQUssR0FBSSxJQUFJLENBQUMsUUFBUSxFQUFFLEdBQUcsSUFBSSxDQUFDLFdBQVcsR0FBRyxJQUFJLENBQUMsWUFBWSxBQUFDO1FBQ2hFLElBQUksR0FBRyxLQUFLLENBQUMsS0FBSyxDQUFDLE1BQU0sR0FBRyxDQUFDLENBQUMsQ0FBQzs7O0FBR25DLFFBQUksSUFBSSxZQUFZLE9BQU8sRUFBRTtBQUMzQixhQUFPLElBQUksQ0FBQyxLQUFLLENBQUM7S0FDbkIsTUFBTTtBQUNMLGFBQU8sSUFBSSxDQUFDO0tBQ2I7R0FDRjs7QUFFRCxhQUFXLEVBQUUscUJBQVMsT0FBTyxFQUFFO0FBQzdCLFFBQUksSUFBSSxDQUFDLFNBQVMsSUFBSSxPQUFPLEVBQUU7QUFDN0IsYUFBTyxTQUFTLEdBQUcsT0FBTyxHQUFHLEdBQUcsQ0FBQztLQUNsQyxNQUFNO0FBQ0wsYUFBTyxPQUFPLEdBQUcsT0FBTyxDQUFDO0tBQzFCO0dBQ0Y7O0FBRUQsY0FBWSxFQUFFLHNCQUFTLEdBQUcsRUFBRTtBQUMxQixXQUFPLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxDQUFDLEdBQUcsQ0FBQyxDQUFDO0dBQ3RDOztBQUVELGVBQWEsRUFBRSx1QkFBUyxHQUFHLEVBQUU7QUFDM0IsV0FBTyxJQUFJLENBQUMsTUFBTSxDQUFDLGFBQWEsQ0FBQyxHQUFHLENBQUMsQ0FBQztHQUN2Qzs7QUFFRCxXQUFTLEVBQUUsbUJBQVMsSUFBSSxFQUFFO0FBQ3hCLFFBQUksR0FBRyxHQUFHLElBQUksQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7QUFDN0IsUUFBSSxHQUFHLEVBQUU7QUFDUCxTQUFHLENBQUMsY0FBYyxFQUFFLENBQUM7QUFDckIsYUFBTyxHQUFHLENBQUM7S0FDWjs7QUFFRCxPQUFHLEdBQUcsSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsQ0FBQztBQUNsRCxPQUFHLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQztBQUNyQixPQUFHLENBQUMsY0FBYyxHQUFHLENBQUMsQ0FBQzs7QUFFdkIsV0FBTyxHQUFHLENBQUM7R0FDWjs7QUFFRCxhQUFXLEVBQUUscUJBQVMsU0FBUyxFQUFFLElBQUksRUFBRSxXQUFXLEVBQUU7QUFDbEQsUUFBSSxNQUFNLEdBQUcsRUFBRTtRQUNYLFVBQVUsR0FBRyxJQUFJLENBQUMsZUFBZSxDQUFDLElBQUksRUFBRSxTQUFTLEVBQUUsTUFBTSxFQUFFLFdBQVcsQ0FBQyxDQUFDO0FBQzVFLFFBQUksV0FBVyxHQUFHLElBQUksQ0FBQyxVQUFVLENBQUMsU0FBUyxFQUFFLElBQUksRUFBRSxRQUFRLENBQUM7UUFDeEQsV0FBVyxHQUFHLElBQUksQ0FBQyxTQUFTLENBQUksSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUMsbUJBQWMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxDQUFDLENBQUMsV0FBUSxDQUFDOztBQUVqRyxXQUFPO0FBQ0wsWUFBTSxFQUFFLE1BQU07QUFDZCxnQkFBVSxFQUFFLFVBQVU7QUFDdEIsVUFBSSxFQUFFLFdBQVc7QUFDakIsZ0JBQVUsRUFBRSxDQUFDLFdBQVcsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxNQUFNLENBQUM7S0FDekMsQ0FBQztHQUNIOztBQUVELGFBQVcsRUFBRSxxQkFBUyxNQUFNLEVBQUUsU0FBUyxFQUFFLE1BQU0sRUFBRTtBQUMvQyxRQUFJLE9BQU8sR0FBRyxFQUFFO1FBQ1osUUFBUSxHQUFHLEVBQUU7UUFDYixLQUFLLEdBQUcsRUFBRTtRQUNWLEdBQUcsR0FBRyxFQUFFO1FBQ1IsVUFBVSxHQUFHLENBQUMsTUFBTTtRQUNwQixLQUFLLFlBQUEsQ0FBQzs7QUFFVixRQUFJLFVBQVUsRUFBRTtBQUNkLFlBQU0sR0FBRyxFQUFFLENBQUM7S0FDYjs7QUFFRCxXQUFPLENBQUMsSUFBSSxHQUFHLElBQUksQ0FBQyxZQUFZLENBQUMsTUFBTSxDQUFDLENBQUM7QUFDekMsV0FBTyxDQUFDLElBQUksR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7O0FBRS9CLFFBQUksSUFBSSxDQUFDLFFBQVEsRUFBRTtBQUNqQixhQUFPLENBQUMsT0FBTyxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztLQUNuQztBQUNELFFBQUksSUFBSSxDQUFDLFlBQVksRUFBRTtBQUNyQixhQUFPLENBQUMsU0FBUyxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztBQUNwQyxhQUFPLENBQUMsWUFBWSxHQUFHLElBQUksQ0FBQyxRQUFRLEVBQUUsQ0FBQztLQUN4Qzs7QUFFRCxRQUFJLE9BQU8sR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFO1FBQ3pCLE9BQU8sR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7Ozs7QUFJOUIsUUFBSSxPQUFPLElBQUksT0FBTyxFQUFFO0FBQ3RCLGFBQU8sQ0FBQyxFQUFFLEdBQUcsT0FBTyxJQUFJLGdCQUFnQixDQUFDO0FBQ3pDLGFBQU8sQ0FBQyxPQUFPLEdBQUcsT0FBTyxJQUFJLGdCQUFnQixDQUFDO0tBQy9DOzs7O0FBSUQsUUFBSSxDQUFDLEdBQUcsU0FBUyxDQUFDO0FBQ2xCLFdBQU8sQ0FBQyxFQUFFLEVBQUU7QUFDVixXQUFLLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO0FBQ3hCLFlBQU0sQ0FBQyxDQUFDLENBQUMsR0FBRyxLQUFLLENBQUM7O0FBRWxCLFVBQUksSUFBSSxDQUFDLFFBQVEsRUFBRTtBQUNqQixXQUFHLENBQUMsQ0FBQyxDQUFDLEdBQUcsSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO09BQzFCO0FBQ0QsVUFBSSxJQUFJLENBQUMsWUFBWSxFQUFFO0FBQ3JCLGFBQUssQ0FBQyxDQUFDLENBQUMsR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7QUFDM0IsZ0JBQVEsQ0FBQyxDQUFDLENBQUMsR0FBRyxJQUFJLENBQUMsUUFBUSxFQUFFLENBQUM7T0FDL0I7S0FDRjs7QUFFRCxRQUFJLFVBQVUsRUFBRTtBQUNkLGFBQU8sQ0FBQyxJQUFJLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxhQUFhLENBQUMsTUFBTSxDQUFDLENBQUM7S0FDbEQ7O0FBRUQsUUFBSSxJQUFJLENBQUMsUUFBUSxFQUFFO0FBQ2pCLGFBQU8sQ0FBQyxHQUFHLEdBQUcsSUFBSSxDQUFDLE1BQU0sQ0FBQyxhQUFhLENBQUMsR0FBRyxDQUFDLENBQUM7S0FDOUM7QUFDRCxRQUFJLElBQUksQ0FBQyxZQUFZLEVBQUU7QUFDckIsYUFBTyxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUMsTUFBTSxDQUFDLGFBQWEsQ0FBQyxLQUFLLENBQUMsQ0FBQztBQUNqRCxhQUFPLENBQUMsUUFBUSxHQUFHLElBQUksQ0FBQyxNQUFNLENBQUMsYUFBYSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0tBQ3hEOztBQUVELFFBQUksSUFBSSxDQUFDLE9BQU8sQ0FBQyxJQUFJLEVBQUU7QUFDckIsYUFBTyxDQUFDLElBQUksR0FBRyxNQUFNLENBQUM7S0FDdkI7QUFDRCxRQUFJLElBQUksQ0FBQyxjQUFjLEVBQUU7QUFDdkIsYUFBTyxDQUFDLFdBQVcsR0FBRyxhQUFhLENBQUM7S0FDckM7QUFDRCxXQUFPLE9BQU8sQ0FBQztHQUNoQjs7QUFFRCxpQkFBZSxFQUFFLHlCQUFTLE1BQU0sRUFBRSxTQUFTLEVBQUUsTUFBTSxFQUFFLFdBQVcsRUFBRTtBQUNoRSxRQUFJLE9BQU8sR0FBRyxJQUFJLENBQUMsV0FBVyxDQUFDLE1BQU0sRUFBRSxTQUFTLEVBQUUsTUFBTSxDQUFDLENBQUM7QUFDMUQsV0FBTyxHQUFHLElBQUksQ0FBQyxhQUFhLENBQUMsT0FBTyxDQUFDLENBQUM7QUFDdEMsUUFBSSxXQUFXLEVBQUU7QUFDZixVQUFJLENBQUMsV0FBVyxDQUFDLFNBQVMsQ0FBQyxDQUFDO0FBQzVCLFlBQU0sQ0FBQyxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7QUFDdkIsYUFBTyxDQUFDLFVBQVUsRUFBRSxPQUFPLENBQUMsQ0FBQztLQUM5QixNQUFNLElBQUksTUFBTSxFQUFFO0FBQ2pCLFlBQU0sQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLENBQUM7QUFDckIsYUFBTyxFQUFFLENBQUM7S0FDWCxNQUFNO0FBQ0wsYUFBTyxPQUFPLENBQUM7S0FDaEI7R0FDRjtDQUNGLENBQUM7O0FBR0YsQUFBQyxDQUFBLFlBQVc7QUFDVixNQUFNLGFBQWEsR0FBRyxDQUNwQixvQkFBb0IsR0FDcEIsMkJBQTJCLEdBQzNCLHlCQUF5QixHQUN6Qiw4QkFBOEIsR0FDOUIsbUJBQW1CLEdBQ25CLGdCQUFnQixHQUNoQix1QkFBdUIsR0FDdkIsMEJBQTBCLEdBQzFCLGtDQUFrQyxHQUNsQywwQkFBMEIsR0FDMUIsaUNBQWlDLEdBQ2pDLDZCQUE2QixHQUM3QiwrQkFBK0IsR0FDL0IseUNBQXlDLEdBQ3pDLHVDQUF1QyxHQUN2QyxrQkFBa0IsQ0FBQSxDQUNsQixLQUFLLENBQUMsR0FBRyxDQUFDLENBQUM7O0FBRWIsTUFBTSxhQUFhLEdBQUcsa0JBQWtCLENBQUMsY0FBYyxHQUFHLEVBQUUsQ0FBQzs7QUFFN0QsT0FBSyxJQUFJLENBQUMsR0FBRyxDQUFDLEVBQUUsQ0FBQyxHQUFHLGFBQWEsQ0FBQyxNQUFNLEVBQUUsQ0FBQyxHQUFHLENBQUMsRUFBRSxDQUFDLEVBQUUsRUFBRTtBQUNwRCxpQkFBYSxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUMsQ0FBQyxHQUFHLElBQUksQ0FBQztHQUN4QztDQUNGLENBQUEsRUFBRSxDQUFFOztBQUVMLGtCQUFrQixDQUFDLDZCQUE2QixHQUFHLFVBQVMsSUFBSSxFQUFFO0FBQ2hFLFNBQU8sQ0FBQyxrQkFBa0IsQ0FBQyxjQUFjLENBQUMsSUFBSSxDQUFDLElBQUksQUFBQyw0QkFBNEIsQ0FBRSxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7Q0FDOUYsQ0FBQzs7QUFFRixTQUFTLFlBQVksQ0FBQyxlQUFlLEVBQUUsUUFBUSxFQUFFLEtBQUssRUFBRSxJQUFJLEVBQUU7QUFDNUQsTUFBSSxLQUFLLEdBQUcsUUFBUSxDQUFDLFFBQVEsRUFBRTtNQUMzQixDQUFDLEdBQUcsQ0FBQztNQUNMLEdBQUcsR0FBRyxLQUFLLENBQUMsTUFBTSxDQUFDO0FBQ3ZCLE1BQUksZUFBZSxFQUFFO0FBQ25CLE9BQUcsRUFBRSxDQUFDO0dBQ1A7O0FBRUQsU0FBTyxDQUFDLEdBQUcsR0FBRyxFQUFFLENBQUMsRUFBRSxFQUFFO0FBQ25CLFNBQUssR0FBRyxRQUFRLENBQUMsVUFBVSxDQUFDLEtBQUssRUFBRSxLQUFLLENBQUMsQ0FBQyxDQUFDLEVBQUUsSUFBSSxDQUFDLENBQUM7R0FDcEQ7O0FBRUQsTUFBSSxlQUFlLEVBQUU7QUFDbkIsV0FBTyxDQUFDLFFBQVEsQ0FBQyxTQUFTLENBQUMsa0JBQWtCLENBQUMsRUFBRSxHQUFHLEVBQUUsS0FBSyxFQUFFLElBQUksRUFBRSxRQUFRLENBQUMsWUFBWSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUMsQ0FBQyxFQUFFLEdBQUcsQ0FBQyxDQUFDO0dBQ3pHLE1BQU07QUFDTCxXQUFPLEtBQUssQ0FBQztHQUNkO0NBQ0Y7O3FCQUVjLGtCQUFrQiIsImZpbGUiOiJqYXZhc2NyaXB0LWNvbXBpbGVyLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ09NUElMRVJfUkVWSVNJT04sIFJFVklTSU9OX0NIQU5HRVMgfSBmcm9tICcuLi9iYXNlJztcbmltcG9ydCBFeGNlcHRpb24gZnJvbSAnLi4vZXhjZXB0aW9uJztcbmltcG9ydCB7aXNBcnJheX0gZnJvbSAnLi4vdXRpbHMnO1xuaW1wb3J0IENvZGVHZW4gZnJvbSAnLi9jb2RlLWdlbic7XG5cbmZ1bmN0aW9uIExpdGVyYWwodmFsdWUpIHtcbiAgdGhpcy52YWx1ZSA9IHZhbHVlO1xufVxuXG5mdW5jdGlvbiBKYXZhU2NyaXB0Q29tcGlsZXIoKSB7fVxuXG5KYXZhU2NyaXB0Q29tcGlsZXIucHJvdG90eXBlID0ge1xuICAvLyBQVUJMSUMgQVBJOiBZb3UgY2FuIG92ZXJyaWRlIHRoZXNlIG1ldGhvZHMgaW4gYSBzdWJjbGFzcyB0byBwcm92aWRlXG4gIC8vIGFsdGVybmF0aXZlIGNvbXBpbGVkIGZvcm1zIGZvciBuYW1lIGxvb2t1cCBhbmQgYnVmZmVyaW5nIHNlbWFudGljc1xuICBuYW1lTG9va3VwOiBmdW5jdGlvbihwYXJlbnQsIG5hbWUvKiAsIHR5cGUqLykge1xuICAgIGlmIChKYXZhU2NyaXB0Q29tcGlsZXIuaXNWYWxpZEphdmFTY3JpcHRWYXJpYWJsZU5hbWUobmFtZSkpIHtcbiAgICAgIHJldHVybiBbcGFyZW50LCAnLicsIG5hbWVdO1xuICAgIH0gZWxzZSB7XG4gICAgICByZXR1cm4gW3BhcmVudCwgJ1snLCBKU09OLnN0cmluZ2lmeShuYW1lKSwgJ10nXTtcbiAgICB9XG4gIH0sXG4gIGRlcHRoZWRMb29rdXA6IGZ1bmN0aW9uKG5hbWUpIHtcbiAgICByZXR1cm4gW3RoaXMuYWxpYXNhYmxlKCdjb250YWluZXIubG9va3VwJyksICcoZGVwdGhzLCBcIicsIG5hbWUsICdcIiknXTtcbiAgfSxcblxuICBjb21waWxlckluZm86IGZ1bmN0aW9uKCkge1xuICAgIGNvbnN0IHJldmlzaW9uID0gQ09NUElMRVJfUkVWSVNJT04sXG4gICAgICAgICAgdmVyc2lvbnMgPSBSRVZJU0lPTl9DSEFOR0VTW3JldmlzaW9uXTtcbiAgICByZXR1cm4gW3JldmlzaW9uLCB2ZXJzaW9uc107XG4gIH0sXG5cbiAgYXBwZW5kVG9CdWZmZXI6IGZ1bmN0aW9uKHNvdXJjZSwgbG9jYXRpb24sIGV4cGxpY2l0KSB7XG4gICAgLy8gRm9yY2UgYSBzb3VyY2UgYXMgdGhpcyBzaW1wbGlmaWVzIHRoZSBtZXJnZSBsb2dpYy5cbiAgICBpZiAoIWlzQXJyYXkoc291cmNlKSkge1xuICAgICAgc291cmNlID0gW3NvdXJjZV07XG4gICAgfVxuICAgIHNvdXJjZSA9IHRoaXMuc291cmNlLndyYXAoc291cmNlLCBsb2NhdGlvbik7XG5cbiAgICBpZiAodGhpcy5lbnZpcm9ubWVudC5pc1NpbXBsZSkge1xuICAgICAgcmV0dXJuIFsncmV0dXJuICcsIHNvdXJjZSwgJzsnXTtcbiAgICB9IGVsc2UgaWYgKGV4cGxpY2l0KSB7XG4gICAgICAvLyBUaGlzIGlzIGEgY2FzZSB3aGVyZSB0aGUgYnVmZmVyIG9wZXJhdGlvbiBvY2N1cnMgYXMgYSBjaGlsZCBvZiBhbm90aGVyXG4gICAgICAvLyBjb25zdHJ1Y3QsIGdlbmVyYWxseSBicmFjZXMuIFdlIGhhdmUgdG8gZXhwbGljaXRseSBvdXRwdXQgdGhlc2UgYnVmZmVyXG4gICAgICAvLyBvcGVyYXRpb25zIHRvIGVuc3VyZSB0aGF0IHRoZSBlbWl0dGVkIGNvZGUgZ29lcyBpbiB0aGUgY29ycmVjdCBsb2NhdGlvbi5cbiAgICAgIHJldHVybiBbJ2J1ZmZlciArPSAnLCBzb3VyY2UsICc7J107XG4gICAgfSBlbHNlIHtcbiAgICAgIHNvdXJjZS5hcHBlbmRUb0J1ZmZlciA9IHRydWU7XG4gICAgICByZXR1cm4gc291cmNlO1xuICAgIH1cbiAgfSxcblxuICBpbml0aWFsaXplQnVmZmVyOiBmdW5jdGlvbigpIHtcbiAgICByZXR1cm4gdGhpcy5xdW90ZWRTdHJpbmcoJycpO1xuICB9LFxuICAvLyBFTkQgUFVCTElDIEFQSVxuXG4gIGNvbXBpbGU6IGZ1bmN0aW9uKGVudmlyb25tZW50LCBvcHRpb25zLCBjb250ZXh0LCBhc09iamVjdCkge1xuICAgIHRoaXMuZW52aXJvbm1lbnQgPSBlbnZpcm9ubWVudDtcbiAgICB0aGlzLm9wdGlvbnMgPSBvcHRpb25zO1xuICAgIHRoaXMuc3RyaW5nUGFyYW1zID0gdGhpcy5vcHRpb25zLnN0cmluZ1BhcmFtcztcbiAgICB0aGlzLnRyYWNrSWRzID0gdGhpcy5vcHRpb25zLnRyYWNrSWRzO1xuICAgIHRoaXMucHJlY29tcGlsZSA9ICFhc09iamVjdDtcblxuICAgIHRoaXMubmFtZSA9IHRoaXMuZW52aXJvbm1lbnQubmFtZTtcbiAgICB0aGlzLmlzQ2hpbGQgPSAhIWNvbnRleHQ7XG4gICAgdGhpcy5jb250ZXh0ID0gY29udGV4dCB8fCB7XG4gICAgICBkZWNvcmF0b3JzOiBbXSxcbiAgICAgIHByb2dyYW1zOiBbXSxcbiAgICAgIGVudmlyb25tZW50czogW11cbiAgICB9O1xuXG4gICAgdGhpcy5wcmVhbWJsZSgpO1xuXG4gICAgdGhpcy5zdGFja1Nsb3QgPSAwO1xuICAgIHRoaXMuc3RhY2tWYXJzID0gW107XG4gICAgdGhpcy5hbGlhc2VzID0ge307XG4gICAgdGhpcy5yZWdpc3RlcnMgPSB7IGxpc3Q6IFtdIH07XG4gICAgdGhpcy5oYXNoZXMgPSBbXTtcbiAgICB0aGlzLmNvbXBpbGVTdGFjayA9IFtdO1xuICAgIHRoaXMuaW5saW5lU3RhY2sgPSBbXTtcbiAgICB0aGlzLmJsb2NrUGFyYW1zID0gW107XG5cbiAgICB0aGlzLmNvbXBpbGVDaGlsZHJlbihlbnZpcm9ubWVudCwgb3B0aW9ucyk7XG5cbiAgICB0aGlzLnVzZURlcHRocyA9IHRoaXMudXNlRGVwdGhzIHx8IGVudmlyb25tZW50LnVzZURlcHRocyB8fCBlbnZpcm9ubWVudC51c2VEZWNvcmF0b3JzIHx8IHRoaXMub3B0aW9ucy5jb21wYXQ7XG4gICAgdGhpcy51c2VCbG9ja1BhcmFtcyA9IHRoaXMudXNlQmxvY2tQYXJhbXMgfHwgZW52aXJvbm1lbnQudXNlQmxvY2tQYXJhbXM7XG5cbiAgICBsZXQgb3Bjb2RlcyA9IGVudmlyb25tZW50Lm9wY29kZXMsXG4gICAgICAgIG9wY29kZSxcbiAgICAgICAgZmlyc3RMb2MsXG4gICAgICAgIGksXG4gICAgICAgIGw7XG5cbiAgICBmb3IgKGkgPSAwLCBsID0gb3Bjb2Rlcy5sZW5ndGg7IGkgPCBsOyBpKyspIHtcbiAgICAgIG9wY29kZSA9IG9wY29kZXNbaV07XG5cbiAgICAgIHRoaXMuc291cmNlLmN1cnJlbnRMb2NhdGlvbiA9IG9wY29kZS5sb2M7XG4gICAgICBmaXJzdExvYyA9IGZpcnN0TG9jIHx8IG9wY29kZS5sb2M7XG4gICAgICB0aGlzW29wY29kZS5vcGNvZGVdLmFwcGx5KHRoaXMsIG9wY29kZS5hcmdzKTtcbiAgICB9XG5cbiAgICAvLyBGbHVzaCBhbnkgdHJhaWxpbmcgY29udGVudCB0aGF0IG1pZ2h0IGJlIHBlbmRpbmcuXG4gICAgdGhpcy5zb3VyY2UuY3VycmVudExvY2F0aW9uID0gZmlyc3RMb2M7XG4gICAgdGhpcy5wdXNoU291cmNlKCcnKTtcblxuICAgIC8qIGlzdGFuYnVsIGlnbm9yZSBuZXh0ICovXG4gICAgaWYgKHRoaXMuc3RhY2tTbG90IHx8IHRoaXMuaW5saW5lU3RhY2subGVuZ3RoIHx8IHRoaXMuY29tcGlsZVN0YWNrLmxlbmd0aCkge1xuICAgICAgdGhyb3cgbmV3IEV4Y2VwdGlvbignQ29tcGlsZSBjb21wbGV0ZWQgd2l0aCBjb250ZW50IGxlZnQgb24gc3RhY2snKTtcbiAgICB9XG5cbiAgICBpZiAoIXRoaXMuZGVjb3JhdG9ycy5pc0VtcHR5KCkpIHtcbiAgICAgIHRoaXMudXNlRGVjb3JhdG9ycyA9IHRydWU7XG5cbiAgICAgIHRoaXMuZGVjb3JhdG9ycy5wcmVwZW5kKCd2YXIgZGVjb3JhdG9ycyA9IGNvbnRhaW5lci5kZWNvcmF0b3JzO1xcbicpO1xuICAgICAgdGhpcy5kZWNvcmF0b3JzLnB1c2goJ3JldHVybiBmbjsnKTtcblxuICAgICAgaWYgKGFzT2JqZWN0KSB7XG4gICAgICAgIHRoaXMuZGVjb3JhdG9ycyA9IEZ1bmN0aW9uLmFwcGx5KHRoaXMsIFsnZm4nLCAncHJvcHMnLCAnY29udGFpbmVyJywgJ2RlcHRoMCcsICdkYXRhJywgJ2Jsb2NrUGFyYW1zJywgJ2RlcHRocycsIHRoaXMuZGVjb3JhdG9ycy5tZXJnZSgpXSk7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICB0aGlzLmRlY29yYXRvcnMucHJlcGVuZCgnZnVuY3Rpb24oZm4sIHByb3BzLCBjb250YWluZXIsIGRlcHRoMCwgZGF0YSwgYmxvY2tQYXJhbXMsIGRlcHRocykge1xcbicpO1xuICAgICAgICB0aGlzLmRlY29yYXRvcnMucHVzaCgnfVxcbicpO1xuICAgICAgICB0aGlzLmRlY29yYXRvcnMgPSB0aGlzLmRlY29yYXRvcnMubWVyZ2UoKTtcbiAgICAgIH1cbiAgICB9IGVsc2Uge1xuICAgICAgdGhpcy5kZWNvcmF0b3JzID0gdW5kZWZpbmVkO1xuICAgIH1cblxuICAgIGxldCBmbiA9IHRoaXMuY3JlYXRlRnVuY3Rpb25Db250ZXh0KGFzT2JqZWN0KTtcbiAgICBpZiAoIXRoaXMuaXNDaGlsZCkge1xuICAgICAgbGV0IHJldCA9IHtcbiAgICAgICAgY29tcGlsZXI6IHRoaXMuY29tcGlsZXJJbmZvKCksXG4gICAgICAgIG1haW46IGZuXG4gICAgICB9O1xuXG4gICAgICBpZiAodGhpcy5kZWNvcmF0b3JzKSB7XG4gICAgICAgIHJldC5tYWluX2QgPSB0aGlzLmRlY29yYXRvcnM7ICAgLy8gZXNsaW50LWRpc2FibGUtbGluZSBjYW1lbGNhc2VcbiAgICAgICAgcmV0LnVzZURlY29yYXRvcnMgPSB0cnVlO1xuICAgICAgfVxuXG4gICAgICBsZXQge3Byb2dyYW1zLCBkZWNvcmF0b3JzfSA9IHRoaXMuY29udGV4dDtcbiAgICAgIGZvciAoaSA9IDAsIGwgPSBwcm9ncmFtcy5sZW5ndGg7IGkgPCBsOyBpKyspIHtcbiAgICAgICAgaWYgKHByb2dyYW1zW2ldKSB7XG4gICAgICAgICAgcmV0W2ldID0gcHJvZ3JhbXNbaV07XG4gICAgICAgICAgaWYgKGRlY29yYXRvcnNbaV0pIHtcbiAgICAgICAgICAgIHJldFtpICsgJ19kJ10gPSBkZWNvcmF0b3JzW2ldO1xuICAgICAgICAgICAgcmV0LnVzZURlY29yYXRvcnMgPSB0cnVlO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICBpZiAodGhpcy5lbnZpcm9ubWVudC51c2VQYXJ0aWFsKSB7XG4gICAgICAgIHJldC51c2VQYXJ0aWFsID0gdHJ1ZTtcbiAgICAgIH1cbiAgICAgIGlmICh0aGlzLm9wdGlvbnMuZGF0YSkge1xuICAgICAgICByZXQudXNlRGF0YSA9IHRydWU7XG4gICAgICB9XG4gICAgICBpZiAodGhpcy51c2VEZXB0aHMpIHtcbiAgICAgICAgcmV0LnVzZURlcHRocyA9IHRydWU7XG4gICAgICB9XG4gICAgICBpZiAodGhpcy51c2VCbG9ja1BhcmFtcykge1xuICAgICAgICByZXQudXNlQmxvY2tQYXJhbXMgPSB0cnVlO1xuICAgICAgfVxuICAgICAgaWYgKHRoaXMub3B0aW9ucy5jb21wYXQpIHtcbiAgICAgICAgcmV0LmNvbXBhdCA9IHRydWU7XG4gICAgICB9XG5cbiAgICAgIGlmICghYXNPYmplY3QpIHtcbiAgICAgICAgcmV0LmNvbXBpbGVyID0gSlNPTi5zdHJpbmdpZnkocmV0LmNvbXBpbGVyKTtcblxuICAgICAgICB0aGlzLnNvdXJjZS5jdXJyZW50TG9jYXRpb24gPSB7c3RhcnQ6IHtsaW5lOiAxLCBjb2x1bW46IDB9fTtcbiAgICAgICAgcmV0ID0gdGhpcy5vYmplY3RMaXRlcmFsKHJldCk7XG5cbiAgICAgICAgaWYgKG9wdGlvbnMuc3JjTmFtZSkge1xuICAgICAgICAgIHJldCA9IHJldC50b1N0cmluZ1dpdGhTb3VyY2VNYXAoe2ZpbGU6IG9wdGlvbnMuZGVzdE5hbWV9KTtcbiAgICAgICAgICByZXQubWFwID0gcmV0Lm1hcCAmJiByZXQubWFwLnRvU3RyaW5nKCk7XG4gICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgcmV0ID0gcmV0LnRvU3RyaW5nKCk7XG4gICAgICAgIH1cbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIHJldC5jb21waWxlck9wdGlvbnMgPSB0aGlzLm9wdGlvbnM7XG4gICAgICB9XG5cbiAgICAgIHJldHVybiByZXQ7XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiBmbjtcbiAgICB9XG4gIH0sXG5cbiAgcHJlYW1ibGU6IGZ1bmN0aW9uKCkge1xuICAgIC8vIHRyYWNrIHRoZSBsYXN0IGNvbnRleHQgcHVzaGVkIGludG8gcGxhY2UgdG8gYWxsb3cgc2tpcHBpbmcgdGhlXG4gICAgLy8gZ2V0Q29udGV4dCBvcGNvZGUgd2hlbiBpdCB3b3VsZCBiZSBhIG5vb3BcbiAgICB0aGlzLmxhc3RDb250ZXh0ID0gMDtcbiAgICB0aGlzLnNvdXJjZSA9IG5ldyBDb2RlR2VuKHRoaXMub3B0aW9ucy5zcmNOYW1lKTtcbiAgICB0aGlzLmRlY29yYXRvcnMgPSBuZXcgQ29kZUdlbih0aGlzLm9wdGlvbnMuc3JjTmFtZSk7XG4gIH0sXG5cbiAgY3JlYXRlRnVuY3Rpb25Db250ZXh0OiBmdW5jdGlvbihhc09iamVjdCkge1xuICAgIGxldCB2YXJEZWNsYXJhdGlvbnMgPSAnJztcblxuICAgIGxldCBsb2NhbHMgPSB0aGlzLnN0YWNrVmFycy5jb25jYXQodGhpcy5yZWdpc3RlcnMubGlzdCk7XG4gICAgaWYgKGxvY2Fscy5sZW5ndGggPiAwKSB7XG4gICAgICB2YXJEZWNsYXJhdGlvbnMgKz0gJywgJyArIGxvY2Fscy5qb2luKCcsICcpO1xuICAgIH1cblxuICAgIC8vIEdlbmVyYXRlIG1pbmltaXplciBhbGlhcyBtYXBwaW5nc1xuICAgIC8vXG4gICAgLy8gV2hlbiB1c2luZyB0cnVlIFNvdXJjZU5vZGVzLCB0aGlzIHdpbGwgdXBkYXRlIGFsbCByZWZlcmVuY2VzIHRvIHRoZSBnaXZlbiBhbGlhc1xuICAgIC8vIGFzIHRoZSBzb3VyY2Ugbm9kZXMgYXJlIHJldXNlZCBpbiBzaXR1LiBGb3IgdGhlIG5vbi1zb3VyY2Ugbm9kZSBjb21waWxhdGlvbiBtb2RlLFxuICAgIC8vIGFsaWFzZXMgd2lsbCBub3QgYmUgdXNlZCwgYnV0IHRoaXMgY2FzZSBpcyBhbHJlYWR5IGJlaW5nIHJ1biBvbiB0aGUgY2xpZW50IGFuZFxuICAgIC8vIHdlIGFyZW4ndCBjb25jZXJuIGFib3V0IG1pbmltaXppbmcgdGhlIHRlbXBsYXRlIHNpemUuXG4gICAgbGV0IGFsaWFzQ291bnQgPSAwO1xuICAgIGZvciAobGV0IGFsaWFzIGluIHRoaXMuYWxpYXNlcykgeyAgICAvLyBlc2xpbnQtZGlzYWJsZS1saW5lIGd1YXJkLWZvci1pblxuICAgICAgbGV0IG5vZGUgPSB0aGlzLmFsaWFzZXNbYWxpYXNdO1xuXG4gICAgICBpZiAodGhpcy5hbGlhc2VzLmhhc093blByb3BlcnR5KGFsaWFzKSAmJiBub2RlLmNoaWxkcmVuICYmIG5vZGUucmVmZXJlbmNlQ291bnQgPiAxKSB7XG4gICAgICAgIHZhckRlY2xhcmF0aW9ucyArPSAnLCBhbGlhcycgKyAoKythbGlhc0NvdW50KSArICc9JyArIGFsaWFzO1xuICAgICAgICBub2RlLmNoaWxkcmVuWzBdID0gJ2FsaWFzJyArIGFsaWFzQ291bnQ7XG4gICAgICB9XG4gICAgfVxuXG4gICAgbGV0IHBhcmFtcyA9IFsnY29udGFpbmVyJywgJ2RlcHRoMCcsICdoZWxwZXJzJywgJ3BhcnRpYWxzJywgJ2RhdGEnXTtcblxuICAgIGlmICh0aGlzLnVzZUJsb2NrUGFyYW1zIHx8IHRoaXMudXNlRGVwdGhzKSB7XG4gICAgICBwYXJhbXMucHVzaCgnYmxvY2tQYXJhbXMnKTtcbiAgICB9XG4gICAgaWYgKHRoaXMudXNlRGVwdGhzKSB7XG4gICAgICBwYXJhbXMucHVzaCgnZGVwdGhzJyk7XG4gICAgfVxuXG4gICAgLy8gUGVyZm9ybSBhIHNlY29uZCBwYXNzIG92ZXIgdGhlIG91dHB1dCB0byBtZXJnZSBjb250ZW50IHdoZW4gcG9zc2libGVcbiAgICBsZXQgc291cmNlID0gdGhpcy5tZXJnZVNvdXJjZSh2YXJEZWNsYXJhdGlvbnMpO1xuXG4gICAgaWYgKGFzT2JqZWN0KSB7XG4gICAgICBwYXJhbXMucHVzaChzb3VyY2UpO1xuXG4gICAgICByZXR1cm4gRnVuY3Rpb24uYXBwbHkodGhpcywgcGFyYW1zKTtcbiAgICB9IGVsc2Uge1xuICAgICAgcmV0dXJuIHRoaXMuc291cmNlLndyYXAoWydmdW5jdGlvbignLCBwYXJhbXMuam9pbignLCcpLCAnKSB7XFxuICAnLCBzb3VyY2UsICd9J10pO1xuICAgIH1cbiAgfSxcbiAgbWVyZ2VTb3VyY2U6IGZ1bmN0aW9uKHZhckRlY2xhcmF0aW9ucykge1xuICAgIGxldCBpc1NpbXBsZSA9IHRoaXMuZW52aXJvbm1lbnQuaXNTaW1wbGUsXG4gICAgICAgIGFwcGVuZE9ubHkgPSAhdGhpcy5mb3JjZUJ1ZmZlcixcbiAgICAgICAgYXBwZW5kRmlyc3QsXG5cbiAgICAgICAgc291cmNlU2VlbixcbiAgICAgICAgYnVmZmVyU3RhcnQsXG4gICAgICAgIGJ1ZmZlckVuZDtcbiAgICB0aGlzLnNvdXJjZS5lYWNoKChsaW5lKSA9PiB7XG4gICAgICBpZiAobGluZS5hcHBlbmRUb0J1ZmZlcikge1xuICAgICAgICBpZiAoYnVmZmVyU3RhcnQpIHtcbiAgICAgICAgICBsaW5lLnByZXBlbmQoJyAgKyAnKTtcbiAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICBidWZmZXJTdGFydCA9IGxpbmU7XG4gICAgICAgIH1cbiAgICAgICAgYnVmZmVyRW5kID0gbGluZTtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIGlmIChidWZmZXJTdGFydCkge1xuICAgICAgICAgIGlmICghc291cmNlU2Vlbikge1xuICAgICAgICAgICAgYXBwZW5kRmlyc3QgPSB0cnVlO1xuICAgICAgICAgIH0gZWxzZSB7XG4gICAgICAgICAgICBidWZmZXJTdGFydC5wcmVwZW5kKCdidWZmZXIgKz0gJyk7XG4gICAgICAgICAgfVxuICAgICAgICAgIGJ1ZmZlckVuZC5hZGQoJzsnKTtcbiAgICAgICAgICBidWZmZXJTdGFydCA9IGJ1ZmZlckVuZCA9IHVuZGVmaW5lZDtcbiAgICAgICAgfVxuXG4gICAgICAgIHNvdXJjZVNlZW4gPSB0cnVlO1xuICAgICAgICBpZiAoIWlzU2ltcGxlKSB7XG4gICAgICAgICAgYXBwZW5kT25seSA9IGZhbHNlO1xuICAgICAgICB9XG4gICAgICB9XG4gICAgfSk7XG5cblxuICAgIGlmIChhcHBlbmRPbmx5KSB7XG4gICAgICBpZiAoYnVmZmVyU3RhcnQpIHtcbiAgICAgICAgYnVmZmVyU3RhcnQucHJlcGVuZCgncmV0dXJuICcpO1xuICAgICAgICBidWZmZXJFbmQuYWRkKCc7Jyk7XG4gICAgICB9IGVsc2UgaWYgKCFzb3VyY2VTZWVuKSB7XG4gICAgICAgIHRoaXMuc291cmNlLnB1c2goJ3JldHVybiBcIlwiOycpO1xuICAgICAgfVxuICAgIH0gZWxzZSB7XG4gICAgICB2YXJEZWNsYXJhdGlvbnMgKz0gJywgYnVmZmVyID0gJyArIChhcHBlbmRGaXJzdCA/ICcnIDogdGhpcy5pbml0aWFsaXplQnVmZmVyKCkpO1xuXG4gICAgICBpZiAoYnVmZmVyU3RhcnQpIHtcbiAgICAgICAgYnVmZmVyU3RhcnQucHJlcGVuZCgncmV0dXJuIGJ1ZmZlciArICcpO1xuICAgICAgICBidWZmZXJFbmQuYWRkKCc7Jyk7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICB0aGlzLnNvdXJjZS5wdXNoKCdyZXR1cm4gYnVmZmVyOycpO1xuICAgICAgfVxuICAgIH1cblxuICAgIGlmICh2YXJEZWNsYXJhdGlvbnMpIHtcbiAgICAgIHRoaXMuc291cmNlLnByZXBlbmQoJ3ZhciAnICsgdmFyRGVjbGFyYXRpb25zLnN1YnN0cmluZygyKSArIChhcHBlbmRGaXJzdCA/ICcnIDogJztcXG4nKSk7XG4gICAgfVxuXG4gICAgcmV0dXJuIHRoaXMuc291cmNlLm1lcmdlKCk7XG4gIH0sXG5cbiAgLy8gW2Jsb2NrVmFsdWVdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IGhhc2gsIGludmVyc2UsIHByb2dyYW0sIHZhbHVlXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogcmV0dXJuIHZhbHVlIG9mIGJsb2NrSGVscGVyTWlzc2luZ1xuICAvL1xuICAvLyBUaGUgcHVycG9zZSBvZiB0aGlzIG9wY29kZSBpcyB0byB0YWtlIGEgYmxvY2sgb2YgdGhlIGZvcm1cbiAgLy8gYHt7I3RoaXMuZm9vfX0uLi57ey90aGlzLmZvb319YCwgcmVzb2x2ZSB0aGUgdmFsdWUgb2YgYGZvb2AsIGFuZFxuICAvLyByZXBsYWNlIGl0IG9uIHRoZSBzdGFjayB3aXRoIHRoZSByZXN1bHQgb2YgcHJvcGVybHlcbiAgLy8gaW52b2tpbmcgYmxvY2tIZWxwZXJNaXNzaW5nLlxuICBibG9ja1ZhbHVlOiBmdW5jdGlvbihuYW1lKSB7XG4gICAgbGV0IGJsb2NrSGVscGVyTWlzc2luZyA9IHRoaXMuYWxpYXNhYmxlKCdoZWxwZXJzLmJsb2NrSGVscGVyTWlzc2luZycpLFxuICAgICAgICBwYXJhbXMgPSBbdGhpcy5jb250ZXh0TmFtZSgwKV07XG4gICAgdGhpcy5zZXR1cEhlbHBlckFyZ3MobmFtZSwgMCwgcGFyYW1zKTtcblxuICAgIGxldCBibG9ja05hbWUgPSB0aGlzLnBvcFN0YWNrKCk7XG4gICAgcGFyYW1zLnNwbGljZSgxLCAwLCBibG9ja05hbWUpO1xuXG4gICAgdGhpcy5wdXNoKHRoaXMuc291cmNlLmZ1bmN0aW9uQ2FsbChibG9ja0hlbHBlck1pc3NpbmcsICdjYWxsJywgcGFyYW1zKSk7XG4gIH0sXG5cbiAgLy8gW2FtYmlndW91c0Jsb2NrVmFsdWVdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IGhhc2gsIGludmVyc2UsIHByb2dyYW0sIHZhbHVlXG4gIC8vIENvbXBpbGVyIHZhbHVlLCBiZWZvcmU6IGxhc3RIZWxwZXI9dmFsdWUgb2YgbGFzdCBmb3VuZCBoZWxwZXIsIGlmIGFueVxuICAvLyBPbiBzdGFjaywgYWZ0ZXIsIGlmIG5vIGxhc3RIZWxwZXI6IHNhbWUgYXMgW2Jsb2NrVmFsdWVdXG4gIC8vIE9uIHN0YWNrLCBhZnRlciwgaWYgbGFzdEhlbHBlcjogdmFsdWVcbiAgYW1iaWd1b3VzQmxvY2tWYWx1ZTogZnVuY3Rpb24oKSB7XG4gICAgLy8gV2UncmUgYmVpbmcgYSBiaXQgY2hlZWt5IGFuZCByZXVzaW5nIHRoZSBvcHRpb25zIHZhbHVlIGZyb20gdGhlIHByaW9yIGV4ZWNcbiAgICBsZXQgYmxvY2tIZWxwZXJNaXNzaW5nID0gdGhpcy5hbGlhc2FibGUoJ2hlbHBlcnMuYmxvY2tIZWxwZXJNaXNzaW5nJyksXG4gICAgICAgIHBhcmFtcyA9IFt0aGlzLmNvbnRleHROYW1lKDApXTtcbiAgICB0aGlzLnNldHVwSGVscGVyQXJncygnJywgMCwgcGFyYW1zLCB0cnVlKTtcblxuICAgIHRoaXMuZmx1c2hJbmxpbmUoKTtcblxuICAgIGxldCBjdXJyZW50ID0gdGhpcy50b3BTdGFjaygpO1xuICAgIHBhcmFtcy5zcGxpY2UoMSwgMCwgY3VycmVudCk7XG5cbiAgICB0aGlzLnB1c2hTb3VyY2UoW1xuICAgICAgICAnaWYgKCEnLCB0aGlzLmxhc3RIZWxwZXIsICcpIHsgJyxcbiAgICAgICAgICBjdXJyZW50LCAnID0gJywgdGhpcy5zb3VyY2UuZnVuY3Rpb25DYWxsKGJsb2NrSGVscGVyTWlzc2luZywgJ2NhbGwnLCBwYXJhbXMpLFxuICAgICAgICAnfSddKTtcbiAgfSxcblxuICAvLyBbYXBwZW5kQ29udGVudF1cbiAgLy9cbiAgLy8gT24gc3RhY2ssIGJlZm9yZTogLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogLi4uXG4gIC8vXG4gIC8vIEFwcGVuZHMgdGhlIHN0cmluZyB2YWx1ZSBvZiBgY29udGVudGAgdG8gdGhlIGN1cnJlbnQgYnVmZmVyXG4gIGFwcGVuZENvbnRlbnQ6IGZ1bmN0aW9uKGNvbnRlbnQpIHtcbiAgICBpZiAodGhpcy5wZW5kaW5nQ29udGVudCkge1xuICAgICAgY29udGVudCA9IHRoaXMucGVuZGluZ0NvbnRlbnQgKyBjb250ZW50O1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLnBlbmRpbmdMb2NhdGlvbiA9IHRoaXMuc291cmNlLmN1cnJlbnRMb2NhdGlvbjtcbiAgICB9XG5cbiAgICB0aGlzLnBlbmRpbmdDb250ZW50ID0gY29udGVudDtcbiAgfSxcblxuICAvLyBbYXBwZW5kXVxuICAvL1xuICAvLyBPbiBzdGFjaywgYmVmb3JlOiB2YWx1ZSwgLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogLi4uXG4gIC8vXG4gIC8vIENvZXJjZXMgYHZhbHVlYCB0byBhIFN0cmluZyBhbmQgYXBwZW5kcyBpdCB0byB0aGUgY3VycmVudCBidWZmZXIuXG4gIC8vXG4gIC8vIElmIGB2YWx1ZWAgaXMgdHJ1dGh5LCBvciAwLCBpdCBpcyBjb2VyY2VkIGludG8gYSBzdHJpbmcgYW5kIGFwcGVuZGVkXG4gIC8vIE90aGVyd2lzZSwgdGhlIGVtcHR5IHN0cmluZyBpcyBhcHBlbmRlZFxuICBhcHBlbmQ6IGZ1bmN0aW9uKCkge1xuICAgIGlmICh0aGlzLmlzSW5saW5lKCkpIHtcbiAgICAgIHRoaXMucmVwbGFjZVN0YWNrKChjdXJyZW50KSA9PiBbJyAhPSBudWxsID8gJywgY3VycmVudCwgJyA6IFwiXCInXSk7XG5cbiAgICAgIHRoaXMucHVzaFNvdXJjZSh0aGlzLmFwcGVuZFRvQnVmZmVyKHRoaXMucG9wU3RhY2soKSkpO1xuICAgIH0gZWxzZSB7XG4gICAgICBsZXQgbG9jYWwgPSB0aGlzLnBvcFN0YWNrKCk7XG4gICAgICB0aGlzLnB1c2hTb3VyY2UoWydpZiAoJywgbG9jYWwsICcgIT0gbnVsbCkgeyAnLCB0aGlzLmFwcGVuZFRvQnVmZmVyKGxvY2FsLCB1bmRlZmluZWQsIHRydWUpLCAnIH0nXSk7XG4gICAgICBpZiAodGhpcy5lbnZpcm9ubWVudC5pc1NpbXBsZSkge1xuICAgICAgICB0aGlzLnB1c2hTb3VyY2UoWydlbHNlIHsgJywgdGhpcy5hcHBlbmRUb0J1ZmZlcihcIicnXCIsIHVuZGVmaW5lZCwgdHJ1ZSksICcgfSddKTtcbiAgICAgIH1cbiAgICB9XG4gIH0sXG5cbiAgLy8gW2FwcGVuZEVzY2FwZWRdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IHZhbHVlLCAuLi5cbiAgLy8gT24gc3RhY2ssIGFmdGVyOiAuLi5cbiAgLy9cbiAgLy8gRXNjYXBlIGB2YWx1ZWAgYW5kIGFwcGVuZCBpdCB0byB0aGUgYnVmZmVyXG4gIGFwcGVuZEVzY2FwZWQ6IGZ1bmN0aW9uKCkge1xuICAgIHRoaXMucHVzaFNvdXJjZSh0aGlzLmFwcGVuZFRvQnVmZmVyKFxuICAgICAgICBbdGhpcy5hbGlhc2FibGUoJ2NvbnRhaW5lci5lc2NhcGVFeHByZXNzaW9uJyksICcoJywgdGhpcy5wb3BTdGFjaygpLCAnKSddKSk7XG4gIH0sXG5cbiAgLy8gW2dldENvbnRleHRdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IC4uLlxuICAvLyBDb21waWxlciB2YWx1ZSwgYWZ0ZXI6IGxhc3RDb250ZXh0PWRlcHRoXG4gIC8vXG4gIC8vIFNldCB0aGUgdmFsdWUgb2YgdGhlIGBsYXN0Q29udGV4dGAgY29tcGlsZXIgdmFsdWUgdG8gdGhlIGRlcHRoXG4gIGdldENvbnRleHQ6IGZ1bmN0aW9uKGRlcHRoKSB7XG4gICAgdGhpcy5sYXN0Q29udGV4dCA9IGRlcHRoO1xuICB9LFxuXG4gIC8vIFtwdXNoQ29udGV4dF1cbiAgLy9cbiAgLy8gT24gc3RhY2ssIGJlZm9yZTogLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogY3VycmVudENvbnRleHQsIC4uLlxuICAvL1xuICAvLyBQdXNoZXMgdGhlIHZhbHVlIG9mIHRoZSBjdXJyZW50IGNvbnRleHQgb250byB0aGUgc3RhY2suXG4gIHB1c2hDb250ZXh0OiBmdW5jdGlvbigpIHtcbiAgICB0aGlzLnB1c2hTdGFja0xpdGVyYWwodGhpcy5jb250ZXh0TmFtZSh0aGlzLmxhc3RDb250ZXh0KSk7XG4gIH0sXG5cbiAgLy8gW2xvb2t1cE9uQ29udGV4dF1cbiAgLy9cbiAgLy8gT24gc3RhY2ssIGJlZm9yZTogLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogY3VycmVudENvbnRleHRbbmFtZV0sIC4uLlxuICAvL1xuICAvLyBMb29rcyB1cCB0aGUgdmFsdWUgb2YgYG5hbWVgIG9uIHRoZSBjdXJyZW50IGNvbnRleHQgYW5kIHB1c2hlc1xuICAvLyBpdCBvbnRvIHRoZSBzdGFjay5cbiAgbG9va3VwT25Db250ZXh0OiBmdW5jdGlvbihwYXJ0cywgZmFsc3ksIHN0cmljdCwgc2NvcGVkKSB7XG4gICAgbGV0IGkgPSAwO1xuXG4gICAgaWYgKCFzY29wZWQgJiYgdGhpcy5vcHRpb25zLmNvbXBhdCAmJiAhdGhpcy5sYXN0Q29udGV4dCkge1xuICAgICAgLy8gVGhlIGRlcHRoZWQgcXVlcnkgaXMgZXhwZWN0ZWQgdG8gaGFuZGxlIHRoZSB1bmRlZmluZWQgbG9naWMgZm9yIHRoZSByb290IGxldmVsIHRoYXRcbiAgICAgIC8vIGlzIGltcGxlbWVudGVkIGJlbG93LCBzbyB3ZSBldmFsdWF0ZSB0aGF0IGRpcmVjdGx5IGluIGNvbXBhdCBtb2RlXG4gICAgICB0aGlzLnB1c2godGhpcy5kZXB0aGVkTG9va3VwKHBhcnRzW2krK10pKTtcbiAgICB9IGVsc2Uge1xuICAgICAgdGhpcy5wdXNoQ29udGV4dCgpO1xuICAgIH1cblxuICAgIHRoaXMucmVzb2x2ZVBhdGgoJ2NvbnRleHQnLCBwYXJ0cywgaSwgZmFsc3ksIHN0cmljdCk7XG4gIH0sXG5cbiAgLy8gW2xvb2t1cEJsb2NrUGFyYW1dXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IGJsb2NrUGFyYW1bbmFtZV0sIC4uLlxuICAvL1xuICAvLyBMb29rcyB1cCB0aGUgdmFsdWUgb2YgYHBhcnRzYCBvbiB0aGUgZ2l2ZW4gYmxvY2sgcGFyYW0gYW5kIHB1c2hlc1xuICAvLyBpdCBvbnRvIHRoZSBzdGFjay5cbiAgbG9va3VwQmxvY2tQYXJhbTogZnVuY3Rpb24oYmxvY2tQYXJhbUlkLCBwYXJ0cykge1xuICAgIHRoaXMudXNlQmxvY2tQYXJhbXMgPSB0cnVlO1xuXG4gICAgdGhpcy5wdXNoKFsnYmxvY2tQYXJhbXNbJywgYmxvY2tQYXJhbUlkWzBdLCAnXVsnLCBibG9ja1BhcmFtSWRbMV0sICddJ10pO1xuICAgIHRoaXMucmVzb2x2ZVBhdGgoJ2NvbnRleHQnLCBwYXJ0cywgMSk7XG4gIH0sXG5cbiAgLy8gW2xvb2t1cERhdGFdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IGRhdGEsIC4uLlxuICAvL1xuICAvLyBQdXNoIHRoZSBkYXRhIGxvb2t1cCBvcGVyYXRvclxuICBsb29rdXBEYXRhOiBmdW5jdGlvbihkZXB0aCwgcGFydHMsIHN0cmljdCkge1xuICAgIGlmICghZGVwdGgpIHtcbiAgICAgIHRoaXMucHVzaFN0YWNrTGl0ZXJhbCgnZGF0YScpO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLnB1c2hTdGFja0xpdGVyYWwoJ2NvbnRhaW5lci5kYXRhKGRhdGEsICcgKyBkZXB0aCArICcpJyk7XG4gICAgfVxuXG4gICAgdGhpcy5yZXNvbHZlUGF0aCgnZGF0YScsIHBhcnRzLCAwLCB0cnVlLCBzdHJpY3QpO1xuICB9LFxuXG4gIHJlc29sdmVQYXRoOiBmdW5jdGlvbih0eXBlLCBwYXJ0cywgaSwgZmFsc3ksIHN0cmljdCkge1xuICAgIGlmICh0aGlzLm9wdGlvbnMuc3RyaWN0IHx8IHRoaXMub3B0aW9ucy5hc3N1bWVPYmplY3RzKSB7XG4gICAgICB0aGlzLnB1c2goc3RyaWN0TG9va3VwKHRoaXMub3B0aW9ucy5zdHJpY3QgJiYgc3RyaWN0LCB0aGlzLCBwYXJ0cywgdHlwZSkpO1xuICAgICAgcmV0dXJuO1xuICAgIH1cblxuICAgIGxldCBsZW4gPSBwYXJ0cy5sZW5ndGg7XG4gICAgZm9yICg7IGkgPCBsZW47IGkrKykge1xuICAgICAgLyogZXNsaW50LWRpc2FibGUgbm8tbG9vcC1mdW5jICovXG4gICAgICB0aGlzLnJlcGxhY2VTdGFjaygoY3VycmVudCkgPT4ge1xuICAgICAgICBsZXQgbG9va3VwID0gdGhpcy5uYW1lTG9va3VwKGN1cnJlbnQsIHBhcnRzW2ldLCB0eXBlKTtcbiAgICAgICAgLy8gV2Ugd2FudCB0byBlbnN1cmUgdGhhdCB6ZXJvIGFuZCBmYWxzZSBhcmUgaGFuZGxlZCBwcm9wZXJseSBpZiB0aGUgY29udGV4dCAoZmFsc3kgZmxhZylcbiAgICAgICAgLy8gbmVlZHMgdG8gaGF2ZSB0aGUgc3BlY2lhbCBoYW5kbGluZyBmb3IgdGhlc2UgdmFsdWVzLlxuICAgICAgICBpZiAoIWZhbHN5KSB7XG4gICAgICAgICAgcmV0dXJuIFsnICE9IG51bGwgPyAnLCBsb29rdXAsICcgOiAnLCBjdXJyZW50XTtcbiAgICAgICAgfSBlbHNlIHtcbiAgICAgICAgICAvLyBPdGhlcndpc2Ugd2UgY2FuIHVzZSBnZW5lcmljIGZhbHN5IGhhbmRsaW5nXG4gICAgICAgICAgcmV0dXJuIFsnICYmICcsIGxvb2t1cF07XG4gICAgICAgIH1cbiAgICAgIH0pO1xuICAgICAgLyogZXNsaW50LWVuYWJsZSBuby1sb29wLWZ1bmMgKi9cbiAgICB9XG4gIH0sXG5cbiAgLy8gW3Jlc29sdmVQb3NzaWJsZUxhbWJkYV1cbiAgLy9cbiAgLy8gT24gc3RhY2ssIGJlZm9yZTogdmFsdWUsIC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IHJlc29sdmVkIHZhbHVlLCAuLi5cbiAgLy9cbiAgLy8gSWYgdGhlIGB2YWx1ZWAgaXMgYSBsYW1iZGEsIHJlcGxhY2UgaXQgb24gdGhlIHN0YWNrIGJ5XG4gIC8vIHRoZSByZXR1cm4gdmFsdWUgb2YgdGhlIGxhbWJkYVxuICByZXNvbHZlUG9zc2libGVMYW1iZGE6IGZ1bmN0aW9uKCkge1xuICAgIHRoaXMucHVzaChbdGhpcy5hbGlhc2FibGUoJ2NvbnRhaW5lci5sYW1iZGEnKSwgJygnLCB0aGlzLnBvcFN0YWNrKCksICcsICcsIHRoaXMuY29udGV4dE5hbWUoMCksICcpJ10pO1xuICB9LFxuXG4gIC8vIFtwdXNoU3RyaW5nUGFyYW1dXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IHN0cmluZywgY3VycmVudENvbnRleHQsIC4uLlxuICAvL1xuICAvLyBUaGlzIG9wY29kZSBpcyBkZXNpZ25lZCBmb3IgdXNlIGluIHN0cmluZyBtb2RlLCB3aGljaFxuICAvLyBwcm92aWRlcyB0aGUgc3RyaW5nIHZhbHVlIG9mIGEgcGFyYW1ldGVyIGFsb25nIHdpdGggaXRzXG4gIC8vIGRlcHRoIHJhdGhlciB0aGFuIHJlc29sdmluZyBpdCBpbW1lZGlhdGVseS5cbiAgcHVzaFN0cmluZ1BhcmFtOiBmdW5jdGlvbihzdHJpbmcsIHR5cGUpIHtcbiAgICB0aGlzLnB1c2hDb250ZXh0KCk7XG4gICAgdGhpcy5wdXNoU3RyaW5nKHR5cGUpO1xuXG4gICAgLy8gSWYgaXQncyBhIHN1YmV4cHJlc3Npb24sIHRoZSBzdHJpbmcgcmVzdWx0XG4gICAgLy8gd2lsbCBiZSBwdXNoZWQgYWZ0ZXIgdGhpcyBvcGNvZGUuXG4gICAgaWYgKHR5cGUgIT09ICdTdWJFeHByZXNzaW9uJykge1xuICAgICAgaWYgKHR5cGVvZiBzdHJpbmcgPT09ICdzdHJpbmcnKSB7XG4gICAgICAgIHRoaXMucHVzaFN0cmluZyhzdHJpbmcpO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgdGhpcy5wdXNoU3RhY2tMaXRlcmFsKHN0cmluZyk7XG4gICAgICB9XG4gICAgfVxuICB9LFxuXG4gIGVtcHR5SGFzaDogZnVuY3Rpb24ob21pdEVtcHR5KSB7XG4gICAgaWYgKHRoaXMudHJhY2tJZHMpIHtcbiAgICAgIHRoaXMucHVzaCgne30nKTsgLy8gaGFzaElkc1xuICAgIH1cbiAgICBpZiAodGhpcy5zdHJpbmdQYXJhbXMpIHtcbiAgICAgIHRoaXMucHVzaCgne30nKTsgLy8gaGFzaENvbnRleHRzXG4gICAgICB0aGlzLnB1c2goJ3t9Jyk7IC8vIGhhc2hUeXBlc1xuICAgIH1cbiAgICB0aGlzLnB1c2hTdGFja0xpdGVyYWwob21pdEVtcHR5ID8gJ3VuZGVmaW5lZCcgOiAne30nKTtcbiAgfSxcbiAgcHVzaEhhc2g6IGZ1bmN0aW9uKCkge1xuICAgIGlmICh0aGlzLmhhc2gpIHtcbiAgICAgIHRoaXMuaGFzaGVzLnB1c2godGhpcy5oYXNoKTtcbiAgICB9XG4gICAgdGhpcy5oYXNoID0ge3ZhbHVlczogW10sIHR5cGVzOiBbXSwgY29udGV4dHM6IFtdLCBpZHM6IFtdfTtcbiAgfSxcbiAgcG9wSGFzaDogZnVuY3Rpb24oKSB7XG4gICAgbGV0IGhhc2ggPSB0aGlzLmhhc2g7XG4gICAgdGhpcy5oYXNoID0gdGhpcy5oYXNoZXMucG9wKCk7XG5cbiAgICBpZiAodGhpcy50cmFja0lkcykge1xuICAgICAgdGhpcy5wdXNoKHRoaXMub2JqZWN0TGl0ZXJhbChoYXNoLmlkcykpO1xuICAgIH1cbiAgICBpZiAodGhpcy5zdHJpbmdQYXJhbXMpIHtcbiAgICAgIHRoaXMucHVzaCh0aGlzLm9iamVjdExpdGVyYWwoaGFzaC5jb250ZXh0cykpO1xuICAgICAgdGhpcy5wdXNoKHRoaXMub2JqZWN0TGl0ZXJhbChoYXNoLnR5cGVzKSk7XG4gICAgfVxuXG4gICAgdGhpcy5wdXNoKHRoaXMub2JqZWN0TGl0ZXJhbChoYXNoLnZhbHVlcykpO1xuICB9LFxuXG4gIC8vIFtwdXNoU3RyaW5nXVxuICAvL1xuICAvLyBPbiBzdGFjaywgYmVmb3JlOiAuLi5cbiAgLy8gT24gc3RhY2ssIGFmdGVyOiBxdW90ZWRTdHJpbmcoc3RyaW5nKSwgLi4uXG4gIC8vXG4gIC8vIFB1c2ggYSBxdW90ZWQgdmVyc2lvbiBvZiBgc3RyaW5nYCBvbnRvIHRoZSBzdGFja1xuICBwdXNoU3RyaW5nOiBmdW5jdGlvbihzdHJpbmcpIHtcbiAgICB0aGlzLnB1c2hTdGFja0xpdGVyYWwodGhpcy5xdW90ZWRTdHJpbmcoc3RyaW5nKSk7XG4gIH0sXG5cbiAgLy8gW3B1c2hMaXRlcmFsXVxuICAvL1xuICAvLyBPbiBzdGFjaywgYmVmb3JlOiAuLi5cbiAgLy8gT24gc3RhY2ssIGFmdGVyOiB2YWx1ZSwgLi4uXG4gIC8vXG4gIC8vIFB1c2hlcyBhIHZhbHVlIG9udG8gdGhlIHN0YWNrLiBUaGlzIG9wZXJhdGlvbiBwcmV2ZW50c1xuICAvLyB0aGUgY29tcGlsZXIgZnJvbSBjcmVhdGluZyBhIHRlbXBvcmFyeSB2YXJpYWJsZSB0byBob2xkXG4gIC8vIGl0LlxuICBwdXNoTGl0ZXJhbDogZnVuY3Rpb24odmFsdWUpIHtcbiAgICB0aGlzLnB1c2hTdGFja0xpdGVyYWwodmFsdWUpO1xuICB9LFxuXG4gIC8vIFtwdXNoUHJvZ3JhbV1cbiAgLy9cbiAgLy8gT24gc3RhY2ssIGJlZm9yZTogLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogcHJvZ3JhbShndWlkKSwgLi4uXG4gIC8vXG4gIC8vIFB1c2ggYSBwcm9ncmFtIGV4cHJlc3Npb24gb250byB0aGUgc3RhY2suIFRoaXMgdGFrZXNcbiAgLy8gYSBjb21waWxlLXRpbWUgZ3VpZCBhbmQgY29udmVydHMgaXQgaW50byBhIHJ1bnRpbWUtYWNjZXNzaWJsZVxuICAvLyBleHByZXNzaW9uLlxuICBwdXNoUHJvZ3JhbTogZnVuY3Rpb24oZ3VpZCkge1xuICAgIGlmIChndWlkICE9IG51bGwpIHtcbiAgICAgIHRoaXMucHVzaFN0YWNrTGl0ZXJhbCh0aGlzLnByb2dyYW1FeHByZXNzaW9uKGd1aWQpKTtcbiAgICB9IGVsc2Uge1xuICAgICAgdGhpcy5wdXNoU3RhY2tMaXRlcmFsKG51bGwpO1xuICAgIH1cbiAgfSxcblxuICAvLyBbcmVnaXN0ZXJEZWNvcmF0b3JdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IGhhc2gsIHByb2dyYW0sIHBhcmFtcy4uLiwgLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogLi4uXG4gIC8vXG4gIC8vIFBvcHMgb2ZmIHRoZSBkZWNvcmF0b3IncyBwYXJhbWV0ZXJzLCBpbnZva2VzIHRoZSBkZWNvcmF0b3IsXG4gIC8vIGFuZCBpbnNlcnRzIHRoZSBkZWNvcmF0b3IgaW50byB0aGUgZGVjb3JhdG9ycyBsaXN0LlxuICByZWdpc3RlckRlY29yYXRvcihwYXJhbVNpemUsIG5hbWUpIHtcbiAgICBsZXQgZm91bmREZWNvcmF0b3IgPSB0aGlzLm5hbWVMb29rdXAoJ2RlY29yYXRvcnMnLCBuYW1lLCAnZGVjb3JhdG9yJyksXG4gICAgICAgIG9wdGlvbnMgPSB0aGlzLnNldHVwSGVscGVyQXJncyhuYW1lLCBwYXJhbVNpemUpO1xuXG4gICAgdGhpcy5kZWNvcmF0b3JzLnB1c2goW1xuICAgICAgJ2ZuID0gJyxcbiAgICAgIHRoaXMuZGVjb3JhdG9ycy5mdW5jdGlvbkNhbGwoZm91bmREZWNvcmF0b3IsICcnLCBbJ2ZuJywgJ3Byb3BzJywgJ2NvbnRhaW5lcicsIG9wdGlvbnNdKSxcbiAgICAgICcgfHwgZm47J1xuICAgIF0pO1xuICB9LFxuXG4gIC8vIFtpbnZva2VIZWxwZXJdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IGhhc2gsIGludmVyc2UsIHByb2dyYW0sIHBhcmFtcy4uLiwgLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogcmVzdWx0IG9mIGhlbHBlciBpbnZvY2F0aW9uXG4gIC8vXG4gIC8vIFBvcHMgb2ZmIHRoZSBoZWxwZXIncyBwYXJhbWV0ZXJzLCBpbnZva2VzIHRoZSBoZWxwZXIsXG4gIC8vIGFuZCBwdXNoZXMgdGhlIGhlbHBlcidzIHJldHVybiB2YWx1ZSBvbnRvIHRoZSBzdGFjay5cbiAgLy9cbiAgLy8gSWYgdGhlIGhlbHBlciBpcyBub3QgZm91bmQsIGBoZWxwZXJNaXNzaW5nYCBpcyBjYWxsZWQuXG4gIGludm9rZUhlbHBlcjogZnVuY3Rpb24ocGFyYW1TaXplLCBuYW1lLCBpc1NpbXBsZSkge1xuICAgIGxldCBub25IZWxwZXIgPSB0aGlzLnBvcFN0YWNrKCksXG4gICAgICAgIGhlbHBlciA9IHRoaXMuc2V0dXBIZWxwZXIocGFyYW1TaXplLCBuYW1lKSxcbiAgICAgICAgc2ltcGxlID0gaXNTaW1wbGUgPyBbaGVscGVyLm5hbWUsICcgfHwgJ10gOiAnJztcblxuICAgIGxldCBsb29rdXAgPSBbJygnXS5jb25jYXQoc2ltcGxlLCBub25IZWxwZXIpO1xuICAgIGlmICghdGhpcy5vcHRpb25zLnN0cmljdCkge1xuICAgICAgbG9va3VwLnB1c2goJyB8fCAnLCB0aGlzLmFsaWFzYWJsZSgnaGVscGVycy5oZWxwZXJNaXNzaW5nJykpO1xuICAgIH1cbiAgICBsb29rdXAucHVzaCgnKScpO1xuXG4gICAgdGhpcy5wdXNoKHRoaXMuc291cmNlLmZ1bmN0aW9uQ2FsbChsb29rdXAsICdjYWxsJywgaGVscGVyLmNhbGxQYXJhbXMpKTtcbiAgfSxcblxuICAvLyBbaW52b2tlS25vd25IZWxwZXJdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IGhhc2gsIGludmVyc2UsIHByb2dyYW0sIHBhcmFtcy4uLiwgLi4uXG4gIC8vIE9uIHN0YWNrLCBhZnRlcjogcmVzdWx0IG9mIGhlbHBlciBpbnZvY2F0aW9uXG4gIC8vXG4gIC8vIFRoaXMgb3BlcmF0aW9uIGlzIHVzZWQgd2hlbiB0aGUgaGVscGVyIGlzIGtub3duIHRvIGV4aXN0LFxuICAvLyBzbyBhIGBoZWxwZXJNaXNzaW5nYCBmYWxsYmFjayBpcyBub3QgcmVxdWlyZWQuXG4gIGludm9rZUtub3duSGVscGVyOiBmdW5jdGlvbihwYXJhbVNpemUsIG5hbWUpIHtcbiAgICBsZXQgaGVscGVyID0gdGhpcy5zZXR1cEhlbHBlcihwYXJhbVNpemUsIG5hbWUpO1xuICAgIHRoaXMucHVzaCh0aGlzLnNvdXJjZS5mdW5jdGlvbkNhbGwoaGVscGVyLm5hbWUsICdjYWxsJywgaGVscGVyLmNhbGxQYXJhbXMpKTtcbiAgfSxcblxuICAvLyBbaW52b2tlQW1iaWd1b3VzXVxuICAvL1xuICAvLyBPbiBzdGFjaywgYmVmb3JlOiBoYXNoLCBpbnZlcnNlLCBwcm9ncmFtLCBwYXJhbXMuLi4sIC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IHJlc3VsdCBvZiBkaXNhbWJpZ3VhdGlvblxuICAvL1xuICAvLyBUaGlzIG9wZXJhdGlvbiBpcyB1c2VkIHdoZW4gYW4gZXhwcmVzc2lvbiBsaWtlIGB7e2Zvb319YFxuICAvLyBpcyBwcm92aWRlZCwgYnV0IHdlIGRvbid0IGtub3cgYXQgY29tcGlsZS10aW1lIHdoZXRoZXIgaXRcbiAgLy8gaXMgYSBoZWxwZXIgb3IgYSBwYXRoLlxuICAvL1xuICAvLyBUaGlzIG9wZXJhdGlvbiBlbWl0cyBtb3JlIGNvZGUgdGhhbiB0aGUgb3RoZXIgb3B0aW9ucyxcbiAgLy8gYW5kIGNhbiBiZSBhdm9pZGVkIGJ5IHBhc3NpbmcgdGhlIGBrbm93bkhlbHBlcnNgIGFuZFxuICAvLyBga25vd25IZWxwZXJzT25seWAgZmxhZ3MgYXQgY29tcGlsZS10aW1lLlxuICBpbnZva2VBbWJpZ3VvdXM6IGZ1bmN0aW9uKG5hbWUsIGhlbHBlckNhbGwpIHtcbiAgICB0aGlzLnVzZVJlZ2lzdGVyKCdoZWxwZXInKTtcblxuICAgIGxldCBub25IZWxwZXIgPSB0aGlzLnBvcFN0YWNrKCk7XG5cbiAgICB0aGlzLmVtcHR5SGFzaCgpO1xuICAgIGxldCBoZWxwZXIgPSB0aGlzLnNldHVwSGVscGVyKDAsIG5hbWUsIGhlbHBlckNhbGwpO1xuXG4gICAgbGV0IGhlbHBlck5hbWUgPSB0aGlzLmxhc3RIZWxwZXIgPSB0aGlzLm5hbWVMb29rdXAoJ2hlbHBlcnMnLCBuYW1lLCAnaGVscGVyJyk7XG5cbiAgICBsZXQgbG9va3VwID0gWycoJywgJyhoZWxwZXIgPSAnLCBoZWxwZXJOYW1lLCAnIHx8ICcsIG5vbkhlbHBlciwgJyknXTtcbiAgICBpZiAoIXRoaXMub3B0aW9ucy5zdHJpY3QpIHtcbiAgICAgIGxvb2t1cFswXSA9ICcoaGVscGVyID0gJztcbiAgICAgIGxvb2t1cC5wdXNoKFxuICAgICAgICAnICE9IG51bGwgPyBoZWxwZXIgOiAnLFxuICAgICAgICB0aGlzLmFsaWFzYWJsZSgnaGVscGVycy5oZWxwZXJNaXNzaW5nJylcbiAgICAgICk7XG4gICAgfVxuXG4gICAgdGhpcy5wdXNoKFtcbiAgICAgICAgJygnLCBsb29rdXAsXG4gICAgICAgIChoZWxwZXIucGFyYW1zSW5pdCA/IFsnKSwoJywgaGVscGVyLnBhcmFtc0luaXRdIDogW10pLCAnKSwnLFxuICAgICAgICAnKHR5cGVvZiBoZWxwZXIgPT09ICcsIHRoaXMuYWxpYXNhYmxlKCdcImZ1bmN0aW9uXCInKSwgJyA/ICcsXG4gICAgICAgIHRoaXMuc291cmNlLmZ1bmN0aW9uQ2FsbCgnaGVscGVyJywgJ2NhbGwnLCBoZWxwZXIuY2FsbFBhcmFtcyksICcgOiBoZWxwZXIpKSdcbiAgICBdKTtcbiAgfSxcblxuICAvLyBbaW52b2tlUGFydGlhbF1cbiAgLy9cbiAgLy8gT24gc3RhY2ssIGJlZm9yZTogY29udGV4dCwgLi4uXG4gIC8vIE9uIHN0YWNrIGFmdGVyOiByZXN1bHQgb2YgcGFydGlhbCBpbnZvY2F0aW9uXG4gIC8vXG4gIC8vIFRoaXMgb3BlcmF0aW9uIHBvcHMgb2ZmIGEgY29udGV4dCwgaW52b2tlcyBhIHBhcnRpYWwgd2l0aCB0aGF0IGNvbnRleHQsXG4gIC8vIGFuZCBwdXNoZXMgdGhlIHJlc3VsdCBvZiB0aGUgaW52b2NhdGlvbiBiYWNrLlxuICBpbnZva2VQYXJ0aWFsOiBmdW5jdGlvbihpc0R5bmFtaWMsIG5hbWUsIGluZGVudCkge1xuICAgIGxldCBwYXJhbXMgPSBbXSxcbiAgICAgICAgb3B0aW9ucyA9IHRoaXMuc2V0dXBQYXJhbXMobmFtZSwgMSwgcGFyYW1zKTtcblxuICAgIGlmIChpc0R5bmFtaWMpIHtcbiAgICAgIG5hbWUgPSB0aGlzLnBvcFN0YWNrKCk7XG4gICAgICBkZWxldGUgb3B0aW9ucy5uYW1lO1xuICAgIH1cblxuICAgIGlmIChpbmRlbnQpIHtcbiAgICAgIG9wdGlvbnMuaW5kZW50ID0gSlNPTi5zdHJpbmdpZnkoaW5kZW50KTtcbiAgICB9XG4gICAgb3B0aW9ucy5oZWxwZXJzID0gJ2hlbHBlcnMnO1xuICAgIG9wdGlvbnMucGFydGlhbHMgPSAncGFydGlhbHMnO1xuICAgIG9wdGlvbnMuZGVjb3JhdG9ycyA9ICdjb250YWluZXIuZGVjb3JhdG9ycyc7XG5cbiAgICBpZiAoIWlzRHluYW1pYykge1xuICAgICAgcGFyYW1zLnVuc2hpZnQodGhpcy5uYW1lTG9va3VwKCdwYXJ0aWFscycsIG5hbWUsICdwYXJ0aWFsJykpO1xuICAgIH0gZWxzZSB7XG4gICAgICBwYXJhbXMudW5zaGlmdChuYW1lKTtcbiAgICB9XG5cbiAgICBpZiAodGhpcy5vcHRpb25zLmNvbXBhdCkge1xuICAgICAgb3B0aW9ucy5kZXB0aHMgPSAnZGVwdGhzJztcbiAgICB9XG4gICAgb3B0aW9ucyA9IHRoaXMub2JqZWN0TGl0ZXJhbChvcHRpb25zKTtcbiAgICBwYXJhbXMucHVzaChvcHRpb25zKTtcblxuICAgIHRoaXMucHVzaCh0aGlzLnNvdXJjZS5mdW5jdGlvbkNhbGwoJ2NvbnRhaW5lci5pbnZva2VQYXJ0aWFsJywgJycsIHBhcmFtcykpO1xuICB9LFxuXG4gIC8vIFthc3NpZ25Ub0hhc2hdXG4gIC8vXG4gIC8vIE9uIHN0YWNrLCBiZWZvcmU6IHZhbHVlLCAuLi4sIGhhc2gsIC4uLlxuICAvLyBPbiBzdGFjaywgYWZ0ZXI6IC4uLiwgaGFzaCwgLi4uXG4gIC8vXG4gIC8vIFBvcHMgYSB2YWx1ZSBvZmYgdGhlIHN0YWNrIGFuZCBhc3NpZ25zIGl0IHRvIHRoZSBjdXJyZW50IGhhc2hcbiAgYXNzaWduVG9IYXNoOiBmdW5jdGlvbihrZXkpIHtcbiAgICBsZXQgdmFsdWUgPSB0aGlzLnBvcFN0YWNrKCksXG4gICAgICAgIGNvbnRleHQsXG4gICAgICAgIHR5cGUsXG4gICAgICAgIGlkO1xuXG4gICAgaWYgKHRoaXMudHJhY2tJZHMpIHtcbiAgICAgIGlkID0gdGhpcy5wb3BTdGFjaygpO1xuICAgIH1cbiAgICBpZiAodGhpcy5zdHJpbmdQYXJhbXMpIHtcbiAgICAgIHR5cGUgPSB0aGlzLnBvcFN0YWNrKCk7XG4gICAgICBjb250ZXh0ID0gdGhpcy5wb3BTdGFjaygpO1xuICAgIH1cblxuICAgIGxldCBoYXNoID0gdGhpcy5oYXNoO1xuICAgIGlmIChjb250ZXh0KSB7XG4gICAgICBoYXNoLmNvbnRleHRzW2tleV0gPSBjb250ZXh0O1xuICAgIH1cbiAgICBpZiAodHlwZSkge1xuICAgICAgaGFzaC50eXBlc1trZXldID0gdHlwZTtcbiAgICB9XG4gICAgaWYgKGlkKSB7XG4gICAgICBoYXNoLmlkc1trZXldID0gaWQ7XG4gICAgfVxuICAgIGhhc2gudmFsdWVzW2tleV0gPSB2YWx1ZTtcbiAgfSxcblxuICBwdXNoSWQ6IGZ1bmN0aW9uKHR5cGUsIG5hbWUsIGNoaWxkKSB7XG4gICAgaWYgKHR5cGUgPT09ICdCbG9ja1BhcmFtJykge1xuICAgICAgdGhpcy5wdXNoU3RhY2tMaXRlcmFsKFxuICAgICAgICAgICdibG9ja1BhcmFtc1snICsgbmFtZVswXSArICddLnBhdGhbJyArIG5hbWVbMV0gKyAnXSdcbiAgICAgICAgICArIChjaGlsZCA/ICcgKyAnICsgSlNPTi5zdHJpbmdpZnkoJy4nICsgY2hpbGQpIDogJycpKTtcbiAgICB9IGVsc2UgaWYgKHR5cGUgPT09ICdQYXRoRXhwcmVzc2lvbicpIHtcbiAgICAgIHRoaXMucHVzaFN0cmluZyhuYW1lKTtcbiAgICB9IGVsc2UgaWYgKHR5cGUgPT09ICdTdWJFeHByZXNzaW9uJykge1xuICAgICAgdGhpcy5wdXNoU3RhY2tMaXRlcmFsKCd0cnVlJyk7XG4gICAgfSBlbHNlIHtcbiAgICAgIHRoaXMucHVzaFN0YWNrTGl0ZXJhbCgnbnVsbCcpO1xuICAgIH1cbiAgfSxcblxuICAvLyBIRUxQRVJTXG5cbiAgY29tcGlsZXI6IEphdmFTY3JpcHRDb21waWxlcixcblxuICBjb21waWxlQ2hpbGRyZW46IGZ1bmN0aW9uKGVudmlyb25tZW50LCBvcHRpb25zKSB7XG4gICAgbGV0IGNoaWxkcmVuID0gZW52aXJvbm1lbnQuY2hpbGRyZW4sIGNoaWxkLCBjb21waWxlcjtcblxuICAgIGZvciAobGV0IGkgPSAwLCBsID0gY2hpbGRyZW4ubGVuZ3RoOyBpIDwgbDsgaSsrKSB7XG4gICAgICBjaGlsZCA9IGNoaWxkcmVuW2ldO1xuICAgICAgY29tcGlsZXIgPSBuZXcgdGhpcy5jb21waWxlcigpOyAgICAvLyBlc2xpbnQtZGlzYWJsZS1saW5lIG5ldy1jYXBcblxuICAgICAgbGV0IGluZGV4ID0gdGhpcy5tYXRjaEV4aXN0aW5nUHJvZ3JhbShjaGlsZCk7XG5cbiAgICAgIGlmIChpbmRleCA9PSBudWxsKSB7XG4gICAgICAgIHRoaXMuY29udGV4dC5wcm9ncmFtcy5wdXNoKCcnKTsgICAgIC8vIFBsYWNlaG9sZGVyIHRvIHByZXZlbnQgbmFtZSBjb25mbGljdHMgZm9yIG5lc3RlZCBjaGlsZHJlblxuICAgICAgICBpbmRleCA9IHRoaXMuY29udGV4dC5wcm9ncmFtcy5sZW5ndGg7XG4gICAgICAgIGNoaWxkLmluZGV4ID0gaW5kZXg7XG4gICAgICAgIGNoaWxkLm5hbWUgPSAncHJvZ3JhbScgKyBpbmRleDtcbiAgICAgICAgdGhpcy5jb250ZXh0LnByb2dyYW1zW2luZGV4XSA9IGNvbXBpbGVyLmNvbXBpbGUoY2hpbGQsIG9wdGlvbnMsIHRoaXMuY29udGV4dCwgIXRoaXMucHJlY29tcGlsZSk7XG4gICAgICAgIHRoaXMuY29udGV4dC5kZWNvcmF0b3JzW2luZGV4XSA9IGNvbXBpbGVyLmRlY29yYXRvcnM7XG4gICAgICAgIHRoaXMuY29udGV4dC5lbnZpcm9ubWVudHNbaW5kZXhdID0gY2hpbGQ7XG5cbiAgICAgICAgdGhpcy51c2VEZXB0aHMgPSB0aGlzLnVzZURlcHRocyB8fCBjb21waWxlci51c2VEZXB0aHM7XG4gICAgICAgIHRoaXMudXNlQmxvY2tQYXJhbXMgPSB0aGlzLnVzZUJsb2NrUGFyYW1zIHx8IGNvbXBpbGVyLnVzZUJsb2NrUGFyYW1zO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgY2hpbGQuaW5kZXggPSBpbmRleDtcbiAgICAgICAgY2hpbGQubmFtZSA9ICdwcm9ncmFtJyArIGluZGV4O1xuXG4gICAgICAgIHRoaXMudXNlRGVwdGhzID0gdGhpcy51c2VEZXB0aHMgfHwgY2hpbGQudXNlRGVwdGhzO1xuICAgICAgICB0aGlzLnVzZUJsb2NrUGFyYW1zID0gdGhpcy51c2VCbG9ja1BhcmFtcyB8fCBjaGlsZC51c2VCbG9ja1BhcmFtcztcbiAgICAgIH1cbiAgICB9XG4gIH0sXG4gIG1hdGNoRXhpc3RpbmdQcm9ncmFtOiBmdW5jdGlvbihjaGlsZCkge1xuICAgIGZvciAobGV0IGkgPSAwLCBsZW4gPSB0aGlzLmNvbnRleHQuZW52aXJvbm1lbnRzLmxlbmd0aDsgaSA8IGxlbjsgaSsrKSB7XG4gICAgICBsZXQgZW52aXJvbm1lbnQgPSB0aGlzLmNvbnRleHQuZW52aXJvbm1lbnRzW2ldO1xuICAgICAgaWYgKGVudmlyb25tZW50ICYmIGVudmlyb25tZW50LmVxdWFscyhjaGlsZCkpIHtcbiAgICAgICAgcmV0dXJuIGk7XG4gICAgICB9XG4gICAgfVxuICB9LFxuXG4gIHByb2dyYW1FeHByZXNzaW9uOiBmdW5jdGlvbihndWlkKSB7XG4gICAgbGV0IGNoaWxkID0gdGhpcy5lbnZpcm9ubWVudC5jaGlsZHJlbltndWlkXSxcbiAgICAgICAgcHJvZ3JhbVBhcmFtcyA9IFtjaGlsZC5pbmRleCwgJ2RhdGEnLCBjaGlsZC5ibG9ja1BhcmFtc107XG5cbiAgICBpZiAodGhpcy51c2VCbG9ja1BhcmFtcyB8fCB0aGlzLnVzZURlcHRocykge1xuICAgICAgcHJvZ3JhbVBhcmFtcy5wdXNoKCdibG9ja1BhcmFtcycpO1xuICAgIH1cbiAgICBpZiAodGhpcy51c2VEZXB0aHMpIHtcbiAgICAgIHByb2dyYW1QYXJhbXMucHVzaCgnZGVwdGhzJyk7XG4gICAgfVxuXG4gICAgcmV0dXJuICdjb250YWluZXIucHJvZ3JhbSgnICsgcHJvZ3JhbVBhcmFtcy5qb2luKCcsICcpICsgJyknO1xuICB9LFxuXG4gIHVzZVJlZ2lzdGVyOiBmdW5jdGlvbihuYW1lKSB7XG4gICAgaWYgKCF0aGlzLnJlZ2lzdGVyc1tuYW1lXSkge1xuICAgICAgdGhpcy5yZWdpc3RlcnNbbmFtZV0gPSB0cnVlO1xuICAgICAgdGhpcy5yZWdpc3RlcnMubGlzdC5wdXNoKG5hbWUpO1xuICAgIH1cbiAgfSxcblxuICBwdXNoOiBmdW5jdGlvbihleHByKSB7XG4gICAgaWYgKCEoZXhwciBpbnN0YW5jZW9mIExpdGVyYWwpKSB7XG4gICAgICBleHByID0gdGhpcy5zb3VyY2Uud3JhcChleHByKTtcbiAgICB9XG5cbiAgICB0aGlzLmlubGluZVN0YWNrLnB1c2goZXhwcik7XG4gICAgcmV0dXJuIGV4cHI7XG4gIH0sXG5cbiAgcHVzaFN0YWNrTGl0ZXJhbDogZnVuY3Rpb24oaXRlbSkge1xuICAgIHRoaXMucHVzaChuZXcgTGl0ZXJhbChpdGVtKSk7XG4gIH0sXG5cbiAgcHVzaFNvdXJjZTogZnVuY3Rpb24oc291cmNlKSB7XG4gICAgaWYgKHRoaXMucGVuZGluZ0NvbnRlbnQpIHtcbiAgICAgIHRoaXMuc291cmNlLnB1c2goXG4gICAgICAgICAgdGhpcy5hcHBlbmRUb0J1ZmZlcih0aGlzLnNvdXJjZS5xdW90ZWRTdHJpbmcodGhpcy5wZW5kaW5nQ29udGVudCksIHRoaXMucGVuZGluZ0xvY2F0aW9uKSk7XG4gICAgICB0aGlzLnBlbmRpbmdDb250ZW50ID0gdW5kZWZpbmVkO1xuICAgIH1cblxuICAgIGlmIChzb3VyY2UpIHtcbiAgICAgIHRoaXMuc291cmNlLnB1c2goc291cmNlKTtcbiAgICB9XG4gIH0sXG5cbiAgcmVwbGFjZVN0YWNrOiBmdW5jdGlvbihjYWxsYmFjaykge1xuICAgIGxldCBwcmVmaXggPSBbJygnXSxcbiAgICAgICAgc3RhY2ssXG4gICAgICAgIGNyZWF0ZWRTdGFjayxcbiAgICAgICAgdXNlZExpdGVyYWw7XG5cbiAgICAvKiBpc3RhbmJ1bCBpZ25vcmUgbmV4dCAqL1xuICAgIGlmICghdGhpcy5pc0lubGluZSgpKSB7XG4gICAgICB0aHJvdyBuZXcgRXhjZXB0aW9uKCdyZXBsYWNlU3RhY2sgb24gbm9uLWlubGluZScpO1xuICAgIH1cblxuICAgIC8vIFdlIHdhbnQgdG8gbWVyZ2UgdGhlIGlubGluZSBzdGF0ZW1lbnQgaW50byB0aGUgcmVwbGFjZW1lbnQgc3RhdGVtZW50IHZpYSAnLCdcbiAgICBsZXQgdG9wID0gdGhpcy5wb3BTdGFjayh0cnVlKTtcblxuICAgIGlmICh0b3AgaW5zdGFuY2VvZiBMaXRlcmFsKSB7XG4gICAgICAvLyBMaXRlcmFscyBkbyBub3QgbmVlZCB0byBiZSBpbmxpbmVkXG4gICAgICBzdGFjayA9IFt0b3AudmFsdWVdO1xuICAgICAgcHJlZml4ID0gWycoJywgc3RhY2tdO1xuICAgICAgdXNlZExpdGVyYWwgPSB0cnVlO1xuICAgIH0gZWxzZSB7XG4gICAgICAvLyBHZXQgb3IgY3JlYXRlIHRoZSBjdXJyZW50IHN0YWNrIG5hbWUgZm9yIHVzZSBieSB0aGUgaW5saW5lXG4gICAgICBjcmVhdGVkU3RhY2sgPSB0cnVlO1xuICAgICAgbGV0IG5hbWUgPSB0aGlzLmluY3JTdGFjaygpO1xuXG4gICAgICBwcmVmaXggPSBbJygoJywgdGhpcy5wdXNoKG5hbWUpLCAnID0gJywgdG9wLCAnKSddO1xuICAgICAgc3RhY2sgPSB0aGlzLnRvcFN0YWNrKCk7XG4gICAgfVxuXG4gICAgbGV0IGl0ZW0gPSBjYWxsYmFjay5jYWxsKHRoaXMsIHN0YWNrKTtcblxuICAgIGlmICghdXNlZExpdGVyYWwpIHtcbiAgICAgIHRoaXMucG9wU3RhY2soKTtcbiAgICB9XG4gICAgaWYgKGNyZWF0ZWRTdGFjaykge1xuICAgICAgdGhpcy5zdGFja1Nsb3QtLTtcbiAgICB9XG4gICAgdGhpcy5wdXNoKHByZWZpeC5jb25jYXQoaXRlbSwgJyknKSk7XG4gIH0sXG5cbiAgaW5jclN0YWNrOiBmdW5jdGlvbigpIHtcbiAgICB0aGlzLnN0YWNrU2xvdCsrO1xuICAgIGlmICh0aGlzLnN0YWNrU2xvdCA+IHRoaXMuc3RhY2tWYXJzLmxlbmd0aCkgeyB0aGlzLnN0YWNrVmFycy5wdXNoKCdzdGFjaycgKyB0aGlzLnN0YWNrU2xvdCk7IH1cbiAgICByZXR1cm4gdGhpcy50b3BTdGFja05hbWUoKTtcbiAgfSxcbiAgdG9wU3RhY2tOYW1lOiBmdW5jdGlvbigpIHtcbiAgICByZXR1cm4gJ3N0YWNrJyArIHRoaXMuc3RhY2tTbG90O1xuICB9LFxuICBmbHVzaElubGluZTogZnVuY3Rpb24oKSB7XG4gICAgbGV0IGlubGluZVN0YWNrID0gdGhpcy5pbmxpbmVTdGFjaztcbiAgICB0aGlzLmlubGluZVN0YWNrID0gW107XG4gICAgZm9yIChsZXQgaSA9IDAsIGxlbiA9IGlubGluZVN0YWNrLmxlbmd0aDsgaSA8IGxlbjsgaSsrKSB7XG4gICAgICBsZXQgZW50cnkgPSBpbmxpbmVTdGFja1tpXTtcbiAgICAgIC8qIGlzdGFuYnVsIGlnbm9yZSBpZiAqL1xuICAgICAgaWYgKGVudHJ5IGluc3RhbmNlb2YgTGl0ZXJhbCkge1xuICAgICAgICB0aGlzLmNvbXBpbGVTdGFjay5wdXNoKGVudHJ5KTtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIGxldCBzdGFjayA9IHRoaXMuaW5jclN0YWNrKCk7XG4gICAgICAgIHRoaXMucHVzaFNvdXJjZShbc3RhY2ssICcgPSAnLCBlbnRyeSwgJzsnXSk7XG4gICAgICAgIHRoaXMuY29tcGlsZVN0YWNrLnB1c2goc3RhY2spO1xuICAgICAgfVxuICAgIH1cbiAgfSxcbiAgaXNJbmxpbmU6IGZ1bmN0aW9uKCkge1xuICAgIHJldHVybiB0aGlzLmlubGluZVN0YWNrLmxlbmd0aDtcbiAgfSxcblxuICBwb3BTdGFjazogZnVuY3Rpb24od3JhcHBlZCkge1xuICAgIGxldCBpbmxpbmUgPSB0aGlzLmlzSW5saW5lKCksXG4gICAgICAgIGl0ZW0gPSAoaW5saW5lID8gdGhpcy5pbmxpbmVTdGFjayA6IHRoaXMuY29tcGlsZVN0YWNrKS5wb3AoKTtcblxuICAgIGlmICghd3JhcHBlZCAmJiAoaXRlbSBpbnN0YW5jZW9mIExpdGVyYWwpKSB7XG4gICAgICByZXR1cm4gaXRlbS52YWx1ZTtcbiAgICB9IGVsc2Uge1xuICAgICAgaWYgKCFpbmxpbmUpIHtcbiAgICAgICAgLyogaXN0YW5idWwgaWdub3JlIG5leHQgKi9cbiAgICAgICAgaWYgKCF0aGlzLnN0YWNrU2xvdCkge1xuICAgICAgICAgIHRocm93IG5ldyBFeGNlcHRpb24oJ0ludmFsaWQgc3RhY2sgcG9wJyk7XG4gICAgICAgIH1cbiAgICAgICAgdGhpcy5zdGFja1Nsb3QtLTtcbiAgICAgIH1cbiAgICAgIHJldHVybiBpdGVtO1xuICAgIH1cbiAgfSxcblxuICB0b3BTdGFjazogZnVuY3Rpb24oKSB7XG4gICAgbGV0IHN0YWNrID0gKHRoaXMuaXNJbmxpbmUoKSA/IHRoaXMuaW5saW5lU3RhY2sgOiB0aGlzLmNvbXBpbGVTdGFjayksXG4gICAgICAgIGl0ZW0gPSBzdGFja1tzdGFjay5sZW5ndGggLSAxXTtcblxuICAgIC8qIGlzdGFuYnVsIGlnbm9yZSBpZiAqL1xuICAgIGlmIChpdGVtIGluc3RhbmNlb2YgTGl0ZXJhbCkge1xuICAgICAgcmV0dXJuIGl0ZW0udmFsdWU7XG4gICAgfSBlbHNlIHtcbiAgICAgIHJldHVybiBpdGVtO1xuICAgIH1cbiAgfSxcblxuICBjb250ZXh0TmFtZTogZnVuY3Rpb24oY29udGV4dCkge1xuICAgIGlmICh0aGlzLnVzZURlcHRocyAmJiBjb250ZXh0KSB7XG4gICAgICByZXR1cm4gJ2RlcHRoc1snICsgY29udGV4dCArICddJztcbiAgICB9IGVsc2Uge1xuICAgICAgcmV0dXJuICdkZXB0aCcgKyBjb250ZXh0O1xuICAgIH1cbiAgfSxcblxuICBxdW90ZWRTdHJpbmc6IGZ1bmN0aW9uKHN0cikge1xuICAgIHJldHVybiB0aGlzLnNvdXJjZS5xdW90ZWRTdHJpbmcoc3RyKTtcbiAgfSxcblxuICBvYmplY3RMaXRlcmFsOiBmdW5jdGlvbihvYmopIHtcbiAgICByZXR1cm4gdGhpcy5zb3VyY2Uub2JqZWN0TGl0ZXJhbChvYmopO1xuICB9LFxuXG4gIGFsaWFzYWJsZTogZnVuY3Rpb24obmFtZSkge1xuICAgIGxldCByZXQgPSB0aGlzLmFsaWFzZXNbbmFtZV07XG4gICAgaWYgKHJldCkge1xuICAgICAgcmV0LnJlZmVyZW5jZUNvdW50Kys7XG4gICAgICByZXR1cm4gcmV0O1xuICAgIH1cblxuICAgIHJldCA9IHRoaXMuYWxpYXNlc1tuYW1lXSA9IHRoaXMuc291cmNlLndyYXAobmFtZSk7XG4gICAgcmV0LmFsaWFzYWJsZSA9IHRydWU7XG4gICAgcmV0LnJlZmVyZW5jZUNvdW50ID0gMTtcblxuICAgIHJldHVybiByZXQ7XG4gIH0sXG5cbiAgc2V0dXBIZWxwZXI6IGZ1bmN0aW9uKHBhcmFtU2l6ZSwgbmFtZSwgYmxvY2tIZWxwZXIpIHtcbiAgICBsZXQgcGFyYW1zID0gW10sXG4gICAgICAgIHBhcmFtc0luaXQgPSB0aGlzLnNldHVwSGVscGVyQXJncyhuYW1lLCBwYXJhbVNpemUsIHBhcmFtcywgYmxvY2tIZWxwZXIpO1xuICAgIGxldCBmb3VuZEhlbHBlciA9IHRoaXMubmFtZUxvb2t1cCgnaGVscGVycycsIG5hbWUsICdoZWxwZXInKSxcbiAgICAgICAgY2FsbENvbnRleHQgPSB0aGlzLmFsaWFzYWJsZShgJHt0aGlzLmNvbnRleHROYW1lKDApfSAhPSBudWxsID8gJHt0aGlzLmNvbnRleHROYW1lKDApfSA6IHt9YCk7XG5cbiAgICByZXR1cm4ge1xuICAgICAgcGFyYW1zOiBwYXJhbXMsXG4gICAgICBwYXJhbXNJbml0OiBwYXJhbXNJbml0LFxuICAgICAgbmFtZTogZm91bmRIZWxwZXIsXG4gICAgICBjYWxsUGFyYW1zOiBbY2FsbENvbnRleHRdLmNvbmNhdChwYXJhbXMpXG4gICAgfTtcbiAgfSxcblxuICBzZXR1cFBhcmFtczogZnVuY3Rpb24oaGVscGVyLCBwYXJhbVNpemUsIHBhcmFtcykge1xuICAgIGxldCBvcHRpb25zID0ge30sXG4gICAgICAgIGNvbnRleHRzID0gW10sXG4gICAgICAgIHR5cGVzID0gW10sXG4gICAgICAgIGlkcyA9IFtdLFxuICAgICAgICBvYmplY3RBcmdzID0gIXBhcmFtcyxcbiAgICAgICAgcGFyYW07XG5cbiAgICBpZiAob2JqZWN0QXJncykge1xuICAgICAgcGFyYW1zID0gW107XG4gICAgfVxuXG4gICAgb3B0aW9ucy5uYW1lID0gdGhpcy5xdW90ZWRTdHJpbmcoaGVscGVyKTtcbiAgICBvcHRpb25zLmhhc2ggPSB0aGlzLnBvcFN0YWNrKCk7XG5cbiAgICBpZiAodGhpcy50cmFja0lkcykge1xuICAgICAgb3B0aW9ucy5oYXNoSWRzID0gdGhpcy5wb3BTdGFjaygpO1xuICAgIH1cbiAgICBpZiAodGhpcy5zdHJpbmdQYXJhbXMpIHtcbiAgICAgIG9wdGlvbnMuaGFzaFR5cGVzID0gdGhpcy5wb3BTdGFjaygpO1xuICAgICAgb3B0aW9ucy5oYXNoQ29udGV4dHMgPSB0aGlzLnBvcFN0YWNrKCk7XG4gICAgfVxuXG4gICAgbGV0IGludmVyc2UgPSB0aGlzLnBvcFN0YWNrKCksXG4gICAgICAgIHByb2dyYW0gPSB0aGlzLnBvcFN0YWNrKCk7XG5cbiAgICAvLyBBdm9pZCBzZXR0aW5nIGZuIGFuZCBpbnZlcnNlIGlmIG5laXRoZXIgYXJlIHNldC4gVGhpcyBhbGxvd3NcbiAgICAvLyBoZWxwZXJzIHRvIGRvIGEgY2hlY2sgZm9yIGBpZiAob3B0aW9ucy5mbilgXG4gICAgaWYgKHByb2dyYW0gfHwgaW52ZXJzZSkge1xuICAgICAgb3B0aW9ucy5mbiA9IHByb2dyYW0gfHwgJ2NvbnRhaW5lci5ub29wJztcbiAgICAgIG9wdGlvbnMuaW52ZXJzZSA9IGludmVyc2UgfHwgJ2NvbnRhaW5lci5ub29wJztcbiAgICB9XG5cbiAgICAvLyBUaGUgcGFyYW1ldGVycyBnbyBvbiB0byB0aGUgc3RhY2sgaW4gb3JkZXIgKG1ha2luZyBzdXJlIHRoYXQgdGhleSBhcmUgZXZhbHVhdGVkIGluIG9yZGVyKVxuICAgIC8vIHNvIHdlIG5lZWQgdG8gcG9wIHRoZW0gb2ZmIHRoZSBzdGFjayBpbiByZXZlcnNlIG9yZGVyXG4gICAgbGV0IGkgPSBwYXJhbVNpemU7XG4gICAgd2hpbGUgKGktLSkge1xuICAgICAgcGFyYW0gPSB0aGlzLnBvcFN0YWNrKCk7XG4gICAgICBwYXJhbXNbaV0gPSBwYXJhbTtcblxuICAgICAgaWYgKHRoaXMudHJhY2tJZHMpIHtcbiAgICAgICAgaWRzW2ldID0gdGhpcy5wb3BTdGFjaygpO1xuICAgICAgfVxuICAgICAgaWYgKHRoaXMuc3RyaW5nUGFyYW1zKSB7XG4gICAgICAgIHR5cGVzW2ldID0gdGhpcy5wb3BTdGFjaygpO1xuICAgICAgICBjb250ZXh0c1tpXSA9IHRoaXMucG9wU3RhY2soKTtcbiAgICAgIH1cbiAgICB9XG5cbiAgICBpZiAob2JqZWN0QXJncykge1xuICAgICAgb3B0aW9ucy5hcmdzID0gdGhpcy5zb3VyY2UuZ2VuZXJhdGVBcnJheShwYXJhbXMpO1xuICAgIH1cblxuICAgIGlmICh0aGlzLnRyYWNrSWRzKSB7XG4gICAgICBvcHRpb25zLmlkcyA9IHRoaXMuc291cmNlLmdlbmVyYXRlQXJyYXkoaWRzKTtcbiAgICB9XG4gICAgaWYgKHRoaXMuc3RyaW5nUGFyYW1zKSB7XG4gICAgICBvcHRpb25zLnR5cGVzID0gdGhpcy5zb3VyY2UuZ2VuZXJhdGVBcnJheSh0eXBlcyk7XG4gICAgICBvcHRpb25zLmNvbnRleHRzID0gdGhpcy5zb3VyY2UuZ2VuZXJhdGVBcnJheShjb250ZXh0cyk7XG4gICAgfVxuXG4gICAgaWYgKHRoaXMub3B0aW9ucy5kYXRhKSB7XG4gICAgICBvcHRpb25zLmRhdGEgPSAnZGF0YSc7XG4gICAgfVxuICAgIGlmICh0aGlzLnVzZUJsb2NrUGFyYW1zKSB7XG4gICAgICBvcHRpb25zLmJsb2NrUGFyYW1zID0gJ2Jsb2NrUGFyYW1zJztcbiAgICB9XG4gICAgcmV0dXJuIG9wdGlvbnM7XG4gIH0sXG5cbiAgc2V0dXBIZWxwZXJBcmdzOiBmdW5jdGlvbihoZWxwZXIsIHBhcmFtU2l6ZSwgcGFyYW1zLCB1c2VSZWdpc3Rlcikge1xuICAgIGxldCBvcHRpb25zID0gdGhpcy5zZXR1cFBhcmFtcyhoZWxwZXIsIHBhcmFtU2l6ZSwgcGFyYW1zKTtcbiAgICBvcHRpb25zID0gdGhpcy5vYmplY3RMaXRlcmFsKG9wdGlvbnMpO1xuICAgIGlmICh1c2VSZWdpc3Rlcikge1xuICAgICAgdGhpcy51c2VSZWdpc3Rlcignb3B0aW9ucycpO1xuICAgICAgcGFyYW1zLnB1c2goJ29wdGlvbnMnKTtcbiAgICAgIHJldHVybiBbJ29wdGlvbnM9Jywgb3B0aW9uc107XG4gICAgfSBlbHNlIGlmIChwYXJhbXMpIHtcbiAgICAgIHBhcmFtcy5wdXNoKG9wdGlvbnMpO1xuICAgICAgcmV0dXJuICcnO1xuICAgIH0gZWxzZSB7XG4gICAgICByZXR1cm4gb3B0aW9ucztcbiAgICB9XG4gIH1cbn07XG5cblxuKGZ1bmN0aW9uKCkge1xuICBjb25zdCByZXNlcnZlZFdvcmRzID0gKFxuICAgICdicmVhayBlbHNlIG5ldyB2YXInICtcbiAgICAnIGNhc2UgZmluYWxseSByZXR1cm4gdm9pZCcgK1xuICAgICcgY2F0Y2ggZm9yIHN3aXRjaCB3aGlsZScgK1xuICAgICcgY29udGludWUgZnVuY3Rpb24gdGhpcyB3aXRoJyArXG4gICAgJyBkZWZhdWx0IGlmIHRocm93JyArXG4gICAgJyBkZWxldGUgaW4gdHJ5JyArXG4gICAgJyBkbyBpbnN0YW5jZW9mIHR5cGVvZicgK1xuICAgICcgYWJzdHJhY3QgZW51bSBpbnQgc2hvcnQnICtcbiAgICAnIGJvb2xlYW4gZXhwb3J0IGludGVyZmFjZSBzdGF0aWMnICtcbiAgICAnIGJ5dGUgZXh0ZW5kcyBsb25nIHN1cGVyJyArXG4gICAgJyBjaGFyIGZpbmFsIG5hdGl2ZSBzeW5jaHJvbml6ZWQnICtcbiAgICAnIGNsYXNzIGZsb2F0IHBhY2thZ2UgdGhyb3dzJyArXG4gICAgJyBjb25zdCBnb3RvIHByaXZhdGUgdHJhbnNpZW50JyArXG4gICAgJyBkZWJ1Z2dlciBpbXBsZW1lbnRzIHByb3RlY3RlZCB2b2xhdGlsZScgK1xuICAgICcgZG91YmxlIGltcG9ydCBwdWJsaWMgbGV0IHlpZWxkIGF3YWl0JyArXG4gICAgJyBudWxsIHRydWUgZmFsc2UnXG4gICkuc3BsaXQoJyAnKTtcblxuICBjb25zdCBjb21waWxlcldvcmRzID0gSmF2YVNjcmlwdENvbXBpbGVyLlJFU0VSVkVEX1dPUkRTID0ge307XG5cbiAgZm9yIChsZXQgaSA9IDAsIGwgPSByZXNlcnZlZFdvcmRzLmxlbmd0aDsgaSA8IGw7IGkrKykge1xuICAgIGNvbXBpbGVyV29yZHNbcmVzZXJ2ZWRXb3Jkc1tpXV0gPSB0cnVlO1xuICB9XG59KCkpO1xuXG5KYXZhU2NyaXB0Q29tcGlsZXIuaXNWYWxpZEphdmFTY3JpcHRWYXJpYWJsZU5hbWUgPSBmdW5jdGlvbihuYW1lKSB7XG4gIHJldHVybiAhSmF2YVNjcmlwdENvbXBpbGVyLlJFU0VSVkVEX1dPUkRTW25hbWVdICYmICgvXlthLXpBLVpfJF1bMC05YS16QS1aXyRdKiQvKS50ZXN0KG5hbWUpO1xufTtcblxuZnVuY3Rpb24gc3RyaWN0TG9va3VwKHJlcXVpcmVUZXJtaW5hbCwgY29tcGlsZXIsIHBhcnRzLCB0eXBlKSB7XG4gIGxldCBzdGFjayA9IGNvbXBpbGVyLnBvcFN0YWNrKCksXG4gICAgICBpID0gMCxcbiAgICAgIGxlbiA9IHBhcnRzLmxlbmd0aDtcbiAgaWYgKHJlcXVpcmVUZXJtaW5hbCkge1xuICAgIGxlbi0tO1xuICB9XG5cbiAgZm9yICg7IGkgPCBsZW47IGkrKykge1xuICAgIHN0YWNrID0gY29tcGlsZXIubmFtZUxvb2t1cChzdGFjaywgcGFydHNbaV0sIHR5cGUpO1xuICB9XG5cbiAgaWYgKHJlcXVpcmVUZXJtaW5hbCkge1xuICAgIHJldHVybiBbY29tcGlsZXIuYWxpYXNhYmxlKCdjb250YWluZXIuc3RyaWN0JyksICcoJywgc3RhY2ssICcsICcsIGNvbXBpbGVyLnF1b3RlZFN0cmluZyhwYXJ0c1tpXSksICcpJ107XG4gIH0gZWxzZSB7XG4gICAgcmV0dXJuIHN0YWNrO1xuICB9XG59XG5cbmV4cG9ydCBkZWZhdWx0IEphdmFTY3JpcHRDb21waWxlcjtcbiJdfQ==
@@ -16436,17 +16571,20 @@
 
 /***/ },
 /* 45 */
+/*!***************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/code-gen.js ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/* global define */
 	'use strict';
-
+	
 	exports.__esModule = true;
-
-	var _utils = __webpack_require__(21);
-
+	
+	var _utils = __webpack_require__(/*! ../utils */ 21);
+	
 	var SourceNode = undefined;
-
+	
 	try {
 	  /* istanbul ignore next */
 	  if (false) {
@@ -16457,7 +16595,7 @@
 	  }
 	} catch (err) {}
 	/* NOP */
-
+	
 	/* istanbul ignore if: tested but not covered in istanbul due to dist build  */
 	if (!SourceNode) {
 	  SourceNode = function (line, column, srcFile, chunks) {
@@ -16488,11 +16626,11 @@
 	    }
 	  };
 	}
-
+	
 	function castChunk(chunk, codeGen, loc) {
 	  if (_utils.isArray(chunk)) {
 	    var ret = [];
-
+	
 	    for (var i = 0, len = chunk.length; i < len; i++) {
 	      ret.push(codeGen.wrap(chunk[i], loc));
 	    }
@@ -16503,12 +16641,12 @@
 	  }
 	  return chunk;
 	}
-
+	
 	function CodeGen(srcFile) {
 	  this.srcFile = srcFile;
 	  this.source = [];
 	}
-
+	
 	CodeGen.prototype = {
 	  isEmpty: function isEmpty() {
 	    return !this.source.length;
@@ -16519,7 +16657,7 @@
 	  push: function push(source, loc) {
 	    this.source.push(this.wrap(source, loc));
 	  },
-
+	
 	  merge: function merge() {
 	    var source = this.empty();
 	    this.each(function (line) {
@@ -16527,42 +16665,42 @@
 	    });
 	    return source;
 	  },
-
+	
 	  each: function each(iter) {
 	    for (var i = 0, len = this.source.length; i < len; i++) {
 	      iter(this.source[i]);
 	    }
 	  },
-
+	
 	  empty: function empty() {
 	    var loc = this.currentLocation || { start: {} };
 	    return new SourceNode(loc.start.line, loc.start.column, this.srcFile);
 	  },
 	  wrap: function wrap(chunk) {
 	    var loc = arguments.length <= 1 || arguments[1] === undefined ? this.currentLocation || { start: {} } : arguments[1];
-
+	
 	    if (chunk instanceof SourceNode) {
 	      return chunk;
 	    }
-
+	
 	    chunk = castChunk(chunk, this, loc);
-
+	
 	    return new SourceNode(loc.start.line, loc.start.column, this.srcFile, chunk);
 	  },
-
+	
 	  functionCall: function functionCall(fn, type, params) {
 	    params = this.generateList(params);
 	    return this.wrap([fn, type ? '.' + type + '(' : '(', params, ')']);
 	  },
-
+	
 	  quotedString: function quotedString(str) {
 	    return '"' + (str + '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\u2028/g, '\\u2028') // Per Ecma-262 7.3 + 7.8.4
 	    .replace(/\u2029/g, '\\u2029') + '"';
 	  },
-
+	
 	  objectLiteral: function objectLiteral(obj) {
 	    var pairs = [];
-
+	
 	    for (var key in obj) {
 	      if (obj.hasOwnProperty(key)) {
 	        var value = castChunk(obj[key], this);
@@ -16571,36 +16709,36 @@
 	        }
 	      }
 	    }
-
+	
 	    var ret = this.generateList(pairs);
 	    ret.prepend('{');
 	    ret.add('}');
 	    return ret;
 	  },
-
+	
 	  generateList: function generateList(entries) {
 	    var ret = this.empty();
-
+	
 	    for (var i = 0, len = entries.length; i < len; i++) {
 	      if (i) {
 	        ret.add(',');
 	      }
-
+	
 	      ret.add(castChunk(entries[i], this));
 	    }
-
+	
 	    return ret;
 	  },
-
+	
 	  generateArray: function generateArray(entries) {
 	    var ret = this.generateList(entries);
 	    ret.prepend('[');
 	    ret.add(']');
-
+	
 	    return ret;
 	  }
 	};
-
+	
 	exports['default'] = CodeGen;
 	module.exports = exports['default'];
 	//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uL2xpYi9oYW5kbGViYXJzL2NvbXBpbGVyL2NvZGUtZ2VuLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O3FCQUNzQixVQUFVOztBQUVoQyxJQUFJLFVBQVUsWUFBQSxDQUFDOztBQUVmLElBQUk7O0FBRUYsTUFBSSxPQUFPLE1BQU0sS0FBSyxVQUFVLElBQUksQ0FBQyxNQUFNLENBQUMsR0FBRyxFQUFFOzs7QUFHL0MsUUFBSSxTQUFTLEdBQUcsT0FBTyxDQUFDLFlBQVksQ0FBQyxDQUFDO0FBQ3RDLGNBQVUsR0FBRyxTQUFTLENBQUMsVUFBVSxDQUFDO0dBQ25DO0NBQ0YsQ0FBQyxPQUFPLEdBQUcsRUFBRSxFQUViOzs7O0FBQUEsQUFHRCxJQUFJLENBQUMsVUFBVSxFQUFFO0FBQ2YsWUFBVSxHQUFHLFVBQVMsSUFBSSxFQUFFLE1BQU0sRUFBRSxPQUFPLEVBQUUsTUFBTSxFQUFFO0FBQ25ELFFBQUksQ0FBQyxHQUFHLEdBQUcsRUFBRSxDQUFDO0FBQ2QsUUFBSSxNQUFNLEVBQUU7QUFDVixVQUFJLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0tBQ2xCO0dBQ0YsQ0FBQzs7QUFFRixZQUFVLENBQUMsU0FBUyxHQUFHO0FBQ3JCLE9BQUcsRUFBRSxhQUFTLE1BQU0sRUFBRTtBQUNwQixVQUFJLGVBQVEsTUFBTSxDQUFDLEVBQUU7QUFDbkIsY0FBTSxHQUFHLE1BQU0sQ0FBQyxJQUFJLENBQUMsRUFBRSxDQUFDLENBQUM7T0FDMUI7QUFDRCxVQUFJLENBQUMsR0FBRyxJQUFJLE1BQU0sQ0FBQztLQUNwQjtBQUNELFdBQU8sRUFBRSxpQkFBUyxNQUFNLEVBQUU7QUFDeEIsVUFBSSxlQUFRLE1BQU0sQ0FBQyxFQUFFO0FBQ25CLGNBQU0sR0FBRyxNQUFNLENBQUMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxDQUFDO09BQzFCO0FBQ0QsVUFBSSxDQUFDLEdBQUcsR0FBRyxNQUFNLEdBQUcsSUFBSSxDQUFDLEdBQUcsQ0FBQztL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T0FBRyxDQUFDLE9BQU8sQ0FBQyxHQUFHLENBQUMsQ0FBQztBQUNqQixPQUFHLENBQUMsR0FBRyxDQUFDLEdBQUcsQ0FBQyxDQUFDOztBQUViLFdBQU8sR0FBRyxDQUFDO0dBQ1o7Q0FDRixDQUFDOztxQkFFYSxPQUFPIiwiZmlsZSI6ImNvZGUtZ2VuLmpzIiwic291cmNlc0NvbnRlbnQiOlsiLyogZ2xvYmFsIGRlZmluZSAqL1xuaW1wb3J0IHtpc0FycmF5fSBmcm9tICcuLi91dGlscyc7XG5cbmxldCBTb3VyY2VOb2RlO1xuXG50cnkge1xuICAvKiBpc3RhbmJ1bCBpZ25vcmUgbmV4dCAqL1xuICBpZiAodHlwZW9mIGRlZmluZSAhPT0gJ2Z1bmN0aW9uJyB8fCAhZGVmaW5lLmFtZCkge1xuICAgIC8vIFdlIGRvbid0IHN1cHBvcnQgdGhpcyBpbiBBTUQgZW52aXJvbm1lbnRzLiBGb3IgdGhlc2UgZW52aXJvbm1lbnRzLCB3ZSBhc3VzbWUgdGhhdFxuICAgIC8vIHRoZXkgYXJlIHJ1bm5pbmcgb24gdGhlIGJyb3dzZXIgYW5kIHRodXMgaGF2ZSBubyBuZWVkIGZvciB0aGUgc291cmNlLW1hcCBsaWJyYXJ5LlxuICAgIGxldCBTb3VyY2VNYXAgPSByZXF1aXJlKCdzb3VyY2UtbWFwJyk7XG4gICAgU291cmNlTm9kZSA9IFNvdXJjZU1hcC5Tb3VyY2VOb2RlO1xuICB9XG59IGNhdGNoIChlcnIpIHtcbiAgLyogTk9QICovXG59XG5cbi8qIGlzdGFuYnVsIGlnbm9yZSBpZjogdGVzdGVkIGJ1dCBub3QgY292ZXJlZCBpbiBpc3RhbmJ1bCBkdWUgdG8gZGlzdCBidWlsZCAgKi9cbmlmICghU291cmNlTm9kZSkge1xuICBTb3VyY2VOb2RlID0gZnVuY3Rpb24obGluZSwgY29sdW1uLCBzcmNGaWxlLCBjaHVua3MpIHtcbiAgICB0aGlzLnNyYyA9ICcnO1xuICAgIGlmIChjaHVua3MpIHtcbiAgICAgIHRoaXMuYWRkKGNodW5rcyk7XG4gICAgfVxuICB9O1xuICAvKiBpc3RhbmJ1bCBpZ25vcmUgbmV4dCAqL1xuICBTb3VyY2VOb2RlLnByb3RvdHlwZSA9IHtcbiAgICBhZGQ6IGZ1bmN0aW9uKGNodW5rcykge1xuICAgICAgaWYgKGlzQXJyYXkoY2h1bmtzKSkge1xuICAgICAgICBjaHVua3MgPSBjaHVua3Muam9pbignJyk7XG4gICAgICB9XG4gICAgICB0aGlzLnNyYyArPSBjaHVua3M7XG4gICAgfSxcbiAgICBwcmVwZW5kOiBmdW5jdGlvbihjaHVua3MpIHtcbiAgICAgIGlmIChpc0FycmF5KGNodW5rcykpIHtcbiAgICAgICAgY2h1bmtzID0gY2h1bmtzLmpvaW4oJycpO1xuICAgICAgfVxuICAgICAgdGhpcy5zcmMgPSBjaHVua3MgKyB0aGlzLnNyYztcbiAgICB9LFxuICAgIHRvU3RyaW5nV2l0aFNvdXJjZU1hcDogZnVuY3Rpb24oKSB7XG4gICAgICByZXR1cm4ge2NvZGU6IHRoaXMudG9TdHJpbmcoKX07XG4gICAgfSxcbiAgICB0b1N0cmluZzogZnVuY3Rpb24oKSB7XG4gICAgICByZXR1cm4gdGhpcy5zcmM7XG4gICAgfVxuICB9O1xufVxuXG5cbmZ1bmN0aW9uIGNhc3RDaHVuayhjaHVuaywgY29kZUdlbiwgbG9jKSB7XG4gIGlmIChpc0FycmF5KGNodW5rKSkge1xuICAgIGxldCByZXQgPSBbXTtcblxuICAgIGZvciAobGV0IGkgPSAwLCBsZW4gPSBjaHVuay5sZW5ndGg7IGkgPCBsZW47IGkrKykge1xuICAgICAgcmV0LnB1c2goY29kZUdlbi53cmFwKGNodW5rW2ldLCBsb2MpKTtcbiAgICB9XG4gICAgcmV0dXJuIHJldDtcbiAgfSBlbHNlIGlmICh0eXBlb2YgY2h1bmsgPT09ICdib29sZWFuJyB8fCB0eXBlb2YgY2h1bmsgPT09ICdudW1iZXInKSB7XG4gICAgLy8gSGFuZGxlIHByaW1pdGl2ZXMgdGhhdCB0aGUgU291cmNlTm9kZSB3aWxsIHRocm93IHVwIG9uXG4gICAgcmV0dXJuIGNodW5rICsgJyc7XG4gIH1cbiAgcmV0dXJuIGNodW5rO1xufVxuXG5cbmZ1bmN0aW9uIENvZGVHZW4oc3JjRmlsZSkge1xuICB0aGlzLnNyY0ZpbGUgPSBzcmNGaWxlO1xuICB0aGlzLnNvdXJjZSA9IFtdO1xufVxuXG5Db2RlR2VuLnByb3RvdHlwZSA9IHtcbiAgaXNFbXB0eSgpIHtcbiAgICByZXR1cm4gIXRoaXMuc291cmNlLmxlbmd0aDtcbiAgfSxcbiAgcHJlcGVuZDogZnVuY3Rpb24oc291cmNlLCBsb2MpIHtcbiAgICB0aGlzLnNvdXJjZS51bnNoaWZ0KHRoaXMud3JhcChzb3VyY2UsIGxvYykpO1xuICB9LFxuICBwdXNoOiBmdW5jdGlvbihzb3VyY2UsIGxvYykge1xuICAgIHRoaXMuc291cmNlLnB1c2godGhpcy53cmFwKHNvdXJjZSwgbG9jKSk7XG4gIH0sXG5cbiAgbWVyZ2U6IGZ1bmN0aW9uKCkge1xuICAgIGxldCBzb3VyY2UgPSB0aGlzLmVtcHR5KCk7XG4gICAgdGhpcy5lYWNoKGZ1bmN0aW9uKGxpbmUpIHtcbiAgICAgIHNvdXJjZS5hZGQoWycgICcsIGxpbmUsICdcXG4nXSk7XG4gICAgfSk7XG4gICAgcmV0dXJuIHNvdXJjZTtcbiAgfSxcblxuICBlYWNoOiBmdW5jdGlvbihpdGVyKSB7XG4gICAgZm9yIChsZXQgaSA9IDAsIGxlbiA9IHRoaXMuc291cmNlLmxlbmd0aDsgaSA8IGxlbjsgaSsrKSB7XG4gICAgICBpdGVyKHRoaXMuc291cmNlW2ldKTtcbiAgICB9XG4gIH0sXG5cbiAgZW1wdHk6IGZ1bmN0aW9uKCkge1xuICAgIGxldCBsb2MgPSB0aGlzLmN1cnJlbnRMb2NhdGlvbiB8fCB7c3RhcnQ6IHt9fTtcbiAgICByZXR1cm4gbmV3IFNvdXJjZU5vZGUobG9jLnN0YXJ0LmxpbmUsIGxvYy5zdGFydC5jb2x1bW4sIHRoaXMuc3JjRmlsZSk7XG4gIH0sXG4gIHdyYXA6IGZ1bmN0aW9uKGNodW5rLCBsb2MgPSB0aGlzLmN1cnJlbnRMb2NhdGlvbiB8fCB7c3RhcnQ6IHt9fSkge1xuICAgIGlmIChjaHVuayBpbnN0YW5jZW9mIFNvdXJjZU5vZGUpIHtcbiAgICAgIHJldHVybiBjaHVuaztcbiAgICB9XG5cbiAgICBjaHVuayA9IGNhc3RDaHVuayhjaHVuaywgdGhpcywgbG9jKTtcblxuICAgIHJldHVybiBuZXcgU291cmNlTm9kZShsb2Muc3RhcnQubGluZSwgbG9jLnN0YXJ0LmNvbHVtbiwgdGhpcy5zcmNGaWxlLCBjaHVuayk7XG4gIH0sXG5cbiAgZnVuY3Rpb25DYWxsOiBmdW5jdGlvbihmbiwgdHlwZSwgcGFyYW1zKSB7XG4gICAgcGFyYW1zID0gdGhpcy5nZW5lcmF0ZUxpc3QocGFyYW1zKTtcbiAgICByZXR1cm4gdGhpcy53cmFwKFtmbiwgdHlwZSA/ICcuJyArIHR5cGUgKyAnKCcgOiAnKCcsIHBhcmFtcywgJyknXSk7XG4gIH0sXG5cbiAgcXVvdGVkU3RyaW5nOiBmdW5jdGlvbihzdHIpIHtcbiAgICByZXR1cm4gJ1wiJyArIChzdHIgKyAnJylcbiAgICAgIC5yZXBsYWNlKC9cXFxcL2csICdcXFxcXFxcXCcpXG4gICAgICAucmVwbGFjZSgvXCIvZywgJ1xcXFxcIicpXG4gICAgICAucmVwbGFjZSgvXFxuL2csICdcXFxcbicpXG4gICAgICAucmVwbGFjZSgvXFxyL2csICdcXFxccicpXG4gICAgICAucmVwbGFjZSgvXFx1MjAyOC9nLCAnXFxcXHUyMDI4JykgICAvLyBQZXIgRWNtYS0yNjIgNy4zICsgNy44LjRcbiAgICAgIC5yZXBsYWNlKC9cXHUyMDI5L2csICdcXFxcdTIwMjknKSArICdcIic7XG4gIH0sXG5cbiAgb2JqZWN0TGl0ZXJhbDogZnVuY3Rpb24ob2JqKSB7XG4gICAgbGV0IHBhaXJzID0gW107XG5cbiAgICBmb3IgKGxldCBrZXkgaW4gb2JqKSB7XG4gICAgICBpZiAob2JqLmhhc093blByb3BlcnR5KGtleSkpIHtcbiAgICAgICAgbGV0IHZhbHVlID0gY2FzdENodW5rKG9ialtrZXldLCB0aGlzKTtcbiAgICAgICAgaWYgKHZhbHVlICE9PSAndW5kZWZpbmVkJykge1xuICAgICAgICAgIHBhaXJzLnB1c2goW3RoaXMucXVvdGVkU3RyaW5nKGtleSksICc6JywgdmFsdWVdKTtcbiAgICAgICAgfVxuICAgICAgfVxuICAgIH1cblxuICAgIGxldCByZXQgPSB0aGlzLmdlbmVyYXRlTGlzdChwYWlycyk7XG4gICAgcmV0LnByZXBlbmQoJ3snKTtcbiAgICByZXQuYWRkKCd9Jyk7XG4gICAgcmV0dXJuIHJldDtcbiAgfSxcblxuXG4gIGdlbmVyYXRlTGlzdDogZnVuY3Rpb24oZW50cmllcykge1xuICAgIGxldCByZXQgPSB0aGlzLmVtcHR5KCk7XG5cbiAgICBmb3IgKGxldCBpID0gMCwgbGVuID0gZW50cmllcy5sZW5ndGg7IGkgPCBsZW47IGkrKykge1xuICAgICAgaWYgKGkpIHtcbiAgICAgICAgcmV0LmFkZCgnLCcpO1xuICAgICAgfVxuXG4gICAgICByZXQuYWRkKGNhc3RDaHVuayhlbnRyaWVzW2ldLCB0aGlzKSk7XG4gICAgfVxuXG4gICAgcmV0dXJuIHJldDtcbiAgfSxcblxuICBnZW5lcmF0ZUFycmF5OiBmdW5jdGlvbihlbnRyaWVzKSB7XG4gICAgbGV0IHJldCA9IHRoaXMuZ2VuZXJhdGVMaXN0KGVudHJpZXMpO1xuICAgIHJldC5wcmVwZW5kKCdbJyk7XG4gICAgcmV0LmFkZCgnXScpO1xuXG4gICAgcmV0dXJuIHJldDtcbiAgfVxufTtcblxuZXhwb3J0IGRlZmF1bHQgQ29kZUdlbjtcblxuIl19
@@ -16608,49 +16746,52 @@
 
 /***/ },
 /* 46 */
+/*!**************************************************************!*\
+  !*** ./~/handlebars/dist/cjs/handlebars/compiler/printer.js ***!
+  \**************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	/* eslint-disable new-cap */
 	'use strict';
-
+	
 	exports.__esModule = true;
 	exports.print = print;
 	exports.PrintVisitor = PrintVisitor;
 	// istanbul ignore next
-
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-	var _visitor = __webpack_require__(41);
-
+	
+	var _visitor = __webpack_require__(/*! ./visitor */ 41);
+	
 	var _visitor2 = _interopRequireDefault(_visitor);
-
+	
 	function print(ast) {
 	  return new PrintVisitor().accept(ast);
 	}
-
+	
 	function PrintVisitor() {
 	  this.padding = 0;
 	}
-
+	
 	PrintVisitor.prototype = new _visitor2['default']();
-
+	
 	PrintVisitor.prototype.pad = function (string) {
 	  var out = '';
-
+	
 	  for (var i = 0, l = this.padding; i < l; i++) {
 	    out += '  ';
 	  }
-
+	
 	  out += string + '\n';
 	  return out;
 	};
-
+	
 	PrintVisitor.prototype.Program = function (program) {
 	  var out = '',
 	      body = program.body,
 	      i = undefined,
 	      l = undefined;
-
+	
 	  if (program.blockParams) {
 	    var blockParams = 'BLOCK PARAMS: [';
 	    for (i = 0, l = program.blockParams.length; i < l; i++) {
@@ -16659,26 +16800,26 @@
 	    blockParams += ' ]';
 	    out += this.pad(blockParams);
 	  }
-
+	
 	  for (i = 0, l = body.length; i < l; i++) {
 	    out += this.accept(body[i]);
 	  }
-
+	
 	  this.padding--;
-
+	
 	  return out;
 	};
-
+	
 	PrintVisitor.prototype.MustacheStatement = function (mustache) {
 	  return this.pad('{{ ' + this.SubExpression(mustache) + ' }}');
 	};
 	PrintVisitor.prototype.Decorator = function (mustache) {
 	  return this.pad('{{ DIRECTIVE ' + this.SubExpression(mustache) + ' }}');
 	};
-
+	
 	PrintVisitor.prototype.BlockStatement = PrintVisitor.prototype.DecoratorBlock = function (block) {
 	  var out = '';
-
+	
 	  out += this.pad((block.type === 'DecoratorBlock' ? 'DIRECTIVE ' : '') + 'BLOCK:');
 	  this.padding++;
 	  out += this.pad(this.SubExpression(block));
@@ -16701,10 +16842,10 @@
 	    }
 	  }
 	  this.padding--;
-
+	
 	  return out;
 	};
-
+	
 	PrintVisitor.prototype.PartialStatement = function (partial) {
 	  var content = 'PARTIAL:' + partial.name.original;
 	  if (partial.params[0]) {
@@ -16723,72 +16864,72 @@
 	  if (partial.hash) {
 	    content += ' ' + this.accept(partial.hash);
 	  }
-
+	
 	  content += ' ' + this.pad('PROGRAM:');
 	  this.padding++;
 	  content += this.accept(partial.program);
 	  this.padding--;
-
+	
 	  return this.pad('{{> ' + content + ' }}');
 	};
-
+	
 	PrintVisitor.prototype.ContentStatement = function (content) {
 	  return this.pad("CONTENT[ '" + content.value + "' ]");
 	};
-
+	
 	PrintVisitor.prototype.CommentStatement = function (comment) {
 	  return this.pad("{{! '" + comment.value + "' }}");
 	};
-
+	
 	PrintVisitor.prototype.SubExpression = function (sexpr) {
 	  var params = sexpr.params,
 	      paramStrings = [],
 	      hash = undefined;
-
+	
 	  for (var i = 0, l = params.length; i < l; i++) {
 	    paramStrings.push(this.accept(params[i]));
 	  }
-
+	
 	  params = '[' + paramStrings.join(', ') + ']';
-
+	
 	  hash = sexpr.hash ? ' ' + this.accept(sexpr.hash) : '';
-
+	
 	  return this.accept(sexpr.path) + ' ' + params + hash;
 	};
-
+	
 	PrintVisitor.prototype.PathExpression = function (id) {
 	  var path = id.parts.join('/');
 	  return (id.data ? '@' : '') + 'PATH:' + path;
 	};
-
+	
 	PrintVisitor.prototype.StringLiteral = function (string) {
 	  return '"' + string.value + '"';
 	};
-
+	
 	PrintVisitor.prototype.NumberLiteral = function (number) {
 	  return 'NUMBER{' + number.value + '}';
 	};
-
+	
 	PrintVisitor.prototype.BooleanLiteral = function (bool) {
 	  return 'BOOLEAN{' + bool.value + '}';
 	};
-
+	
 	PrintVisitor.prototype.UndefinedLiteral = function () {
 	  return 'UNDEFINED';
 	};
-
+	
 	PrintVisitor.prototype.NullLiteral = function () {
 	  return 'NULL';
 	};
-
+	
 	PrintVisitor.prototype.Hash = function (hash) {
 	  var pairs = hash.pairs,
 	      joinedPairs = [];
-
+	
 	  for (var i = 0, l = pairs.length; i < l; i++) {
 	    joinedPairs.push(this.accept(pairs[i]));
 	  }
-
+	
 	  return 'HASH{' + joinedPairs.join(', ') + '}';
 	};
 	PrintVisitor.prototype.HashPair = function (pair) {
@@ -16800,18 +16941,24 @@
 
 /***/ },
 /* 47 */
+/*!***************************************************!*\
+  !*** (webpack)/~/node-libs-browser/mock/empty.js ***!
+  \***************************************************/
 /***/ function(module, exports) {
 
-	
+
 
 /***/ },
 /* 48 */
+/*!********************************************************************************!*\
+  !*** ./app/frontend/javascripts/templates/visualization-graph-info.handlebars ***!
+  \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	var Handlebars = __webpack_require__(49);
+	var Handlebars = __webpack_require__(/*! ./~/handlebars/runtime.js */ 49);
 	module.exports = (Handlebars["default"] || Handlebars).template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
 	    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function";
-
+	
 	  return "<h3 class=\"name\">"
 	    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
 	    + "</h3>\n<div class=\"picture\"></div>\n<div class=\"description\">\n  "
@@ -16821,35 +16968,41 @@
 
 /***/ },
 /* 49 */
+/*!*********************************!*\
+  !*** ./~/handlebars/runtime.js ***!
+  \*********************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	// Create a simple path alias to allow browserify to resolve
 	// the runtime on a supported path.
-	module.exports = __webpack_require__(19)['default'];
+	module.exports = __webpack_require__(/*! ./dist/cjs/handlebars.runtime */ 19)['default'];
 
 
 /***/ },
 /* 50 */
+/*!****************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-table-nodes.js.coffee ***!
+  \****************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBase, VisualizationTableNodes,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	Handsontable = __webpack_require__(51);
-
-	VisualizationTableBase = __webpack_require__(53);
-
+	
+	Handsontable = __webpack_require__(/*! ./../dist/handsontable.full.js */ 51);
+	
+	VisualizationTableBase = __webpack_require__(/*! ./visualization-table-base.js */ 53);
+	
 	VisualizationTableNodes = (function(superClass) {
 	  extend(VisualizationTableNodes, superClass);
-
+	
 	  VisualizationTableNodes.prototype.el = '.visualization-table-nodes';
-
+	
 	  VisualizationTableNodes.prototype.nodes_types = null;
-
+	
 	  VisualizationTableNodes.prototype.tableColHeaders = ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" href="#" data-toggle="modal" data-target="#table-add-column-modal" title="Add Custom Column"></a>'];
-
+	
 	  VisualizationTableNodes.prototype.columns = {
 	    'delete': 0,
 	    'duplicate': 1,
@@ -16859,7 +17012,7 @@
 	    'visible': 5,
 	    'image': 6
 	  };
-
+	
 	  function VisualizationTableNodes(model1, collection) {
 	    this.model = model1;
 	    this.collection = collection;
@@ -16881,12 +17034,12 @@
 	    this.$el.find('.add-custom-column').click(this.onShowAddCustomColumnModal);
 	    $('#add-custom-column-form').submit(this.onAddCustomColumn);
 	  }
-
+	
 	  VisualizationTableNodes.prototype.onSync = function() {
 	    console.log('onSync', this.model);
 	    return this.getNodesTypes();
 	  };
-
+	
 	  VisualizationTableNodes.prototype.getTableColumns = function() {
 	    return [
 	      {
@@ -16922,7 +17075,7 @@
 	      }
 	    ];
 	  };
-
+	
 	  VisualizationTableNodes.prototype.getNodesTypes = function() {
 	    return $.ajax({
 	      url: '/api/visualizations/' + $('body').data('id') + '/nodes/types.json',
@@ -16930,7 +17083,7 @@
 	      success: this.onNodesTypesSucess
 	    });
 	  };
-
+	
 	  VisualizationTableNodes.prototype.onNodesTypesSucess = function(response) {
 	    this.nodes_types = response;
 	    this.setNodesTypesSource();
@@ -16943,7 +17096,7 @@
 	      };
 	    })(this));
 	  };
-
+	
 	  VisualizationTableNodes.prototype.addModel = function(index) {
 	    var model;
 	    model = this.collection.create({
@@ -16971,7 +17124,7 @@
 	      }
 	    }, this);
 	  };
-
+	
 	  VisualizationTableNodes.prototype.updateModel = function(change) {
 	    var index, key, model, model_id, obj, value;
 	    index = change[0];
@@ -16988,20 +17141,20 @@
 	      return model.save(obj);
 	    }
 	  };
-
+	
 	  VisualizationTableNodes.prototype.addNodesType = function(type) {
 	    this.nodes_types.push(type);
 	    return this.setNodesTypesSource();
 	  };
-
+	
 	  VisualizationTableNodes.prototype.setNodesTypesSource = function() {
 	    return this.table_options.columns[this.columns.type].source = this.nodes_types;
 	  };
-
+	
 	  VisualizationTableNodes.prototype.onShowAddCustomColumnModal = function(e) {
 	    return e.preventDefault();
 	  };
-
+	
 	  VisualizationTableNodes.prototype.onAddCustomColumn = function(e) {
 	    var column_name, index;
 	    e.preventDefault();
@@ -17018,7 +17171,7 @@
 	    }
 	    return $('#table-add-column-modal').modal('hide');
 	  };
-
+	
 	  VisualizationTableNodes.prototype.onBeforeKeyDown = function(e) {
 	    var selected;
 	    selected = this.table.getSelected();
@@ -17042,7 +17195,7 @@
 	      }
 	    }
 	  };
-
+	
 	  VisualizationTableNodes.prototype.showDescriptionModal = function(index) {
 	    var $modal;
 	    console.log('showDescriptionModal', index);
@@ -17058,14 +17211,14 @@
 	    })(this));
 	    return $modal.modal('show');
 	  };
-
+	
 	  VisualizationTableNodes.prototype.showImageModal = function(index) {
 	    var $modal;
 	    console.log('showImageModal', index);
 	    $modal = $('#table-image-modal');
 	    return $modal.modal('show');
 	  };
-
+	
 	  VisualizationTableNodes.prototype.rowDescriptionRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    link = document.createElement('A');
@@ -17081,7 +17234,7 @@
 	    })(this));
 	    return td;
 	  };
-
+	
 	  VisualizationTableNodes.prototype.rowVisibleRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
@@ -17097,7 +17250,7 @@
 	    })(this));
 	    return td;
 	  };
-
+	
 	  VisualizationTableNodes.prototype.rowImageRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
@@ -17113,24 +17266,27 @@
 	    })(this));
 	    return td;
 	  };
-
+	
 	  return VisualizationTableNodes;
-
+	
 	})(VisualizationTableBase);
-
+	
 	module.exports = VisualizationTableNodes;
 
 
 /***/ },
 /* 51 */
+/*!************************************************************!*\
+  !*** ./app/frontend/javascripts/dist/handsontable.full.js ***!
+  \************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var require;var require;/* WEBPACK VAR INJECTION */(function(process, global) {/*!
 	(The MIT License)
-
+	
 	Copyright (c) 2012-2014 Marcin Warpechowski
 	Copyright (c) 2015 Handsoncode sp. z o.o. <hello@handsoncode.net>
-
+	
 	Permission is hereby granted, free of charge, to any person obtaining
 	a copy of this software and associated documentation files (the
 	'Software'), to deal in the Software without restriction, including
@@ -17138,10 +17294,10 @@
 	distribute, sublicense, and/or sell copies of the Software, and to
 	permit persons to whom the Software is furnished to do so, subject to
 	the following conditions:
-
+	
 	The above copyright notice and this permission notice shall be
 	included in all copies or substantial portions of the Software.
-
+	
 	THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
 	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
@@ -17149,35 +17305,35 @@
 	CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 	TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+	
 	*/
 	(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Handsontable = f()}})(function(){var define,module,exports;return (function init(modules, cache, entry) {
 	  (function outer (modules, cache, entry) {
 	    // Save the require from previous bundle to this closure if any
 	    var previousRequire = typeof require == "function" && require;
 	    var globalNS = JSON.parse('{"zeroclipboard":"ZeroClipboard","moment":"moment","pikaday":"Pikaday"}') || {};
-
+	
 	    function newRequire(name, jumped){
 	      if(!cache[name]) {
-
+	
 	        if(!modules[name]) {
 	          // if we cannot find the the module within our internal map or
 	          // cache jump to the current global require ie. the last bundle
 	          // that was added to the page.
 	          var currentRequire = typeof require == "function" && require;
 	          if (!jumped && currentRequire) return require(name, true);
-
+	
 	          // If there are other bundles on this page the require from the
 	          // previous one is saved to 'previousRequire'. Repeat this as
 	          // many times as there are bundles until the module is found or
 	          // we exhaust the require chain.
 	          if (previousRequire) return require(name, true);
-
+	
 	          // Try find module from global scope
 	          if (globalNS[name] && typeof window[globalNS[name]] !== 'undefined') {
 	            return window[globalNS[name]];
 	          }
-
+	
 	          var err = new Error('Cannot find module \'' + name + '\'');
 	          err.code = 'MODULE_NOT_FOUND';
 	          throw err;
@@ -17188,15 +17344,15 @@
 	          return newRequire(id ? id : x);
 	        },m,m.exports,outer,modules,cache,entry);
 	      }
-
+	
 	      return cache[name].exports;
 	    }
 	    for(var i=0;i<entry.length;i++) newRequire(entry[i]);
-
+	
 	    // Override the current require with this new one
 	    return newRequire;
 	  })(modules, cache, entry);
-
+	
 	  return function() {
 	    return Handsontable;
 	  };
@@ -17245,7 +17401,7 @@
 	    };
 	  })(window, jQuery, Handsontable);
 	}
-
+	
 	//# 
 	},{}],2:[function(require,module,exports){
 	"use strict";
@@ -17640,7 +17796,7 @@
 	}, {});
 	;
 	window.WalkontableBorder = WalkontableBorder;
-
+	
 	//# 
 	},{"cell/coords":5,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"overlay/_base.js":11}],3:[function(require,module,exports){
 	"use strict";
@@ -17814,7 +17970,7 @@
 	  }});
 	;
 	window.WalkontableViewportColumnsCalculator = WalkontableViewportColumnsCalculator;
-
+	
 	//# 
 	},{}],4:[function(require,module,exports){
 	"use strict";
@@ -17905,7 +18061,7 @@
 	  }});
 	;
 	window.WalkontableViewportRowsCalculator = WalkontableViewportRowsCalculator;
-
+	
 	//# 
 	},{}],5:[function(require,module,exports){
 	"use strict";
@@ -17955,7 +18111,7 @@
 	}, {});
 	;
 	window.WalkontableCellCoords = WalkontableCellCoords;
-
+	
 	//# 
 	},{}],6:[function(require,module,exports){
 	"use strict";
@@ -18213,7 +18369,7 @@
 	}, {});
 	;
 	window.WalkontableCellRange = WalkontableCellRange;
-
+	
 	//# 
 	},{"cell/coords":5}],7:[function(require,module,exports){
 	"use strict";
@@ -18389,7 +18545,7 @@
 	}, {});
 	;
 	window.Walkontable = Walkontable;
-
+	
 	//# 
 	},{"event":8,"helpers/dom/element":45,"helpers/object":51,"helpers/string":53,"overlay/_base.js":11,"overlay/debug.js":12,"overlay/left.js":13,"overlay/top.js":14,"overlay/topLeftCorner.js":15,"overlays":16,"scroll":17,"settings":19,"table":20,"viewport":22}],8:[function(require,module,exports){
 	"use strict";
@@ -18553,7 +18709,7 @@
 	};
 	;
 	window.WalkontableEvent = WalkontableEvent;
-
+	
 	//# 
 	},{"eventManager":41,"helpers/dom/element":45}],9:[function(require,module,exports){
 	"use strict";
@@ -18596,7 +18752,7 @@
 	}, {});
 	;
 	window.WalkontableColumnFilter = WalkontableColumnFilter;
-
+	
 	//# 
 	},{}],10:[function(require,module,exports){
 	"use strict";
@@ -18639,7 +18795,7 @@
 	}, {});
 	;
 	window.WalkontableRowFilter = WalkontableRowFilter;
-
+	
 	//# 
 	},{}],11:[function(require,module,exports){
 	"use strict";
@@ -18761,7 +18917,7 @@
 	});
 	;
 	window.WalkontableOverlay = WalkontableOverlay;
-
+	
 	//# 
 	},{"eventManager":41,"helpers/dom/element":45,"helpers/object":51}],12:[function(require,module,exports){
 	"use strict";
@@ -18787,7 +18943,7 @@
 	;
 	window.WalkontableDebugOverlay = WalkontableDebugOverlay;
 	WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_DEBUG, WalkontableDebugOverlay);
-
+	
 	//# 
 	},{"_base":11,"helpers/dom/element":45}],13:[function(require,module,exports){
 	"use strict";
@@ -18981,7 +19137,7 @@
 	;
 	window.WalkontableLeftOverlay = WalkontableLeftOverlay;
 	WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_LEFT, WalkontableLeftOverlay);
-
+	
 	//# 
 	},{"_base":11,"helpers/dom/element":45}],14:[function(require,module,exports){
 	"use strict";
@@ -19183,7 +19339,7 @@
 	;
 	window.WalkontableTopOverlay = WalkontableTopOverlay;
 	WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_TOP, WalkontableTopOverlay);
-
+	
 	//# 
 	},{"_base":11,"helpers/dom/element":45}],15:[function(require,module,exports){
 	"use strict";
@@ -19248,7 +19404,7 @@
 	;
 	window.WalkontableTopLeftCornerOverlay = WalkontableTopLeftCornerOverlay;
 	WalkontableOverlay.registerOverlay(WalkontableOverlay.CLONE_TOP_LEFT_CORNER, WalkontableTopLeftCornerOverlay);
-
+	
 	//# 
 	},{"_base":11,"helpers/dom/element":45}],16:[function(require,module,exports){
 	"use strict";
@@ -19728,7 +19884,7 @@
 	}, {});
 	;
 	window.WalkontableOverlays = WalkontableOverlays;
-
+	
 	//# 
 	},{"eventManager":41,"helpers/dom/element":45,"helpers/unicode":54}],17:[function(require,module,exports){
 	"use strict";
@@ -19910,7 +20066,7 @@
 	}, {});
 	;
 	window.WalkontableScroll = WalkontableScroll;
-
+	
 	//# 
 	},{"helpers/dom/element":45,"helpers/number":50}],18:[function(require,module,exports){
 	"use strict";
@@ -20038,7 +20194,7 @@
 	}, {});
 	;
 	window.WalkontableSelection = WalkontableSelection;
-
+	
 	//# 
 	},{"border":2,"cell/coords":5,"cell/range":6,"helpers/dom/element":45}],19:[function(require,module,exports){
 	"use strict";
@@ -20156,7 +20312,7 @@
 	}, {});
 	;
 	window.WalkontableSettings = WalkontableSettings;
-
+	
 	//# 
 	},{"helpers/dom/element":45}],20:[function(require,module,exports){
 	"use strict";
@@ -20557,7 +20713,7 @@
 	}, {});
 	;
 	window.WalkontableTable = WalkontableTable;
-
+	
 	//# 
 	},{"cell/coords":5,"cell/range":6,"filter/column":9,"filter/row":10,"helpers/dom/element":45,"tableRenderer":21}],21:[function(require,module,exports){
 	"use strict";
@@ -20981,7 +21137,7 @@
 	}
 	;
 	window.WalkontableTableRenderer = WalkontableTableRenderer;
-
+	
 	//# 
 	},{"helpers/dom/element":45}],22:[function(require,module,exports){
 	"use strict";
@@ -21282,7 +21438,7 @@
 	}, {});
 	;
 	window.WalkontableViewport = WalkontableViewport;
-
+	
 	//# 
 	},{"calculator/viewportColumns":3,"calculator/viewportRows":4,"eventManager":41,"helpers/dom/element":45}],23:[function(require,module,exports){
 	"use strict";
@@ -21364,7 +21520,7 @@
 	    }
 	  }));
 	}));
-
+	
 	//# 
 	},{"cellTypes":24,"core":25,"es6collections":"es6collections","helpers/array":42,"helpers/browser":43,"helpers/data":44,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/feature":47,"helpers/function":48,"helpers/mixed":49,"helpers/number":50,"helpers/object":51,"helpers/setting":52,"helpers/string":53,"helpers/unicode":54,"pluginHooks":57,"plugins":58,"plugins/jqueryHandsontable":1,"renderers/_cellDecorator":92,"shims/classes":99}],24:[function(require,module,exports){
 	"use strict";
@@ -21473,7 +21629,7 @@
 	    numeric: Handsontable.NumericValidator,
 	    autocomplete: Handsontable.AutocompleteValidator
 	  }};
-
+	
 	//# 
 	},{"editors":29,"editors/autocompleteEditor":31,"editors/checkboxEditor":32,"editors/dateEditor":33,"editors/dropdownEditor":34,"editors/handsontableEditor":35,"editors/mobileTextEditor":36,"editors/numericEditor":37,"editors/passwordEditor":38,"editors/selectEditor":39,"editors/textEditor":40,"helpers/browser":43,"renderers":91,"renderers/autocompleteRenderer":93,"renderers/checkboxRenderer":94,"renderers/htmlRenderer":95,"renderers/numericRenderer":96,"renderers/passwordRenderer":97,"renderers/textRenderer":98,"validators/autocompleteValidator":104,"validators/dateValidator":105,"validators/numericValidator":106,"validators/timeValidator":107}],25:[function(require,module,exports){
 	"use strict";
@@ -23280,7 +23436,7 @@
 	  sortFunction: void 0
 	};
 	Handsontable.DefaultSettings = DefaultSettings;
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/calculator/viewportColumns":3,"3rdparty/walkontable/src/cell/coords":5,"3rdparty/walkontable/src/cell/range":6,"3rdparty/walkontable/src/selection":18,"dataMap":26,"dataSource":27,"editorManager":28,"eventManager":41,"helpers/array":42,"helpers/data":44,"helpers/dom/element":45,"helpers/number":50,"helpers/object":51,"helpers/setting":52,"helpers/string":53,"numeral":"numeral","plugins":58,"renderers":91,"tableView":100}],26:[function(require,module,exports){
 	"use strict";
@@ -23754,7 +23910,7 @@
 	};
 	;
 	Handsontable.DataMap = DataMap;
-
+	
 	//# 
 	},{"SheetClip":"SheetClip","helpers/array":42,"helpers/data":44,"helpers/number":50,"helpers/object":51,"helpers/setting":52,"multiMap":56,"utils/interval":102}],27:[function(require,module,exports){
 	"use strict";
@@ -23843,7 +23999,7 @@
 	  }
 	}, {});
 	;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/data":44,"helpers/number":50,"helpers/object":51,"helpers/setting":52}],28:[function(require,module,exports){
 	"use strict";
@@ -24139,7 +24295,7 @@
 	  };
 	  init();
 	}
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"editors":29,"eventManager":41,"helpers/dom/event":46,"helpers/unicode":54}],29:[function(require,module,exports){
 	"use strict";
@@ -24221,7 +24377,7 @@
 	function hasEditor(editorName) {
 	  return registeredEditorNames[editorName] ? true : false;
 	}
-
+	
 	//# 
 	},{"helpers/string":53}],30:[function(require,module,exports){
 	"use strict";
@@ -24434,7 +24590,7 @@
 	  }
 	  return section;
 	};
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"helpers/mixed":49}],31:[function(require,module,exports){
 	"use strict";
@@ -24698,7 +24854,7 @@
 	};
 	;
 	registerEditor('autocomplete', AutocompleteEditor);
-
+	
 	//# 
 	},{"editors":29,"handsontableEditor":35,"helpers/array":42,"helpers/dom/element":45,"helpers/mixed":49,"helpers/unicode":54}],32:[function(require,module,exports){
 	"use strict";
@@ -24735,7 +24891,7 @@
 	}, {}, BaseEditor);
 	;
 	registerEditor('checkbox', CheckboxEditor);
-
+	
 	//# 
 	},{"_baseEditor":30,"editors":29,"helpers/dom/element":45}],33:[function(require,module,exports){
 	"use strict";
@@ -24922,7 +25078,7 @@
 	}, {}, TextEditor);
 	;
 	registerEditor('date', DateEditor);
-
+	
 	//# 
 	},{"editors":29,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/object":51,"helpers/unicode":54,"moment":"moment","pikaday":"pikaday","textEditor":40}],34:[function(require,module,exports){
 	"use strict";
@@ -24958,7 +25114,7 @@
 	});
 	;
 	registerEditor('dropdown', DropdownEditor);
-
+	
 	//# 
 	},{"autocompleteEditor":31,"editors":29}],35:[function(require,module,exports){
 	"use strict";
@@ -25109,7 +25265,7 @@
 	};
 	;
 	registerEditor('handsontable', HandsontableEditor);
-
+	
 	//# 
 	},{"editors":29,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/object":51,"helpers/unicode":54,"textEditor":40}],36:[function(require,module,exports){
 	"use strict";
@@ -25368,7 +25524,7 @@
 	};
 	;
 	registerEditor('mobile', MobileTextEditor);
-
+	
 	//# 
 	},{"_baseEditor":30,"editors":29,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/unicode":54}],37:[function(require,module,exports){
 	"use strict";
@@ -25402,7 +25558,7 @@
 	  }}, {}, TextEditor);
 	;
 	registerEditor('numeric', NumericEditor);
-
+	
 	//# 
 	},{"editors":29,"numeral":"numeral","textEditor":40}],38:[function(require,module,exports){
 	"use strict";
@@ -25437,7 +25593,7 @@
 	  }}, {}, TextEditor);
 	;
 	registerEditor('password', PasswordEditor);
-
+	
 	//# 
 	},{"editors":29,"helpers/dom/element":45,"textEditor":40}],39:[function(require,module,exports){
 	"use strict";
@@ -25662,7 +25818,7 @@
 	};
 	;
 	registerEditor('select', SelectEditor);
-
+	
 	//# 
 	},{"_baseEditor":30,"editors":29,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/unicode":54}],40:[function(require,module,exports){
 	"use strict";
@@ -25980,7 +26136,7 @@
 	};
 	;
 	registerEditor('text', TextEditor);
-
+	
 	//# 
 	},{"_baseEditor":30,"autoResize":"autoResize","editors":29,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/unicode":54}],41:[function(require,module,exports){
 	"use strict";
@@ -26185,7 +26341,7 @@
 	function eventManager(context) {
 	  return new EventManager(context);
 	}
-
+	
 	//# 
 	},{"helpers/dom/element":45,"helpers/dom/event":46,"helpers/feature":47}],42:[function(require,module,exports){
 	"use strict";
@@ -26344,7 +26500,7 @@
 	  }));
 	  return unique;
 	}
-
+	
 	//# 
 	},{}],43:[function(require,module,exports){
 	"use strict";
@@ -26388,7 +26544,7 @@
 	  }
 	  return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent));
 	}
-
+	
 	//# 
 	},{}],44:[function(require,module,exports){
 	"use strict";
@@ -26517,7 +26673,7 @@
 	    return type;
 	  }
 	}
-
+	
 	//# 
 	},{"object":51}],45:[function(require,module,exports){
 	"use strict";
@@ -27198,7 +27354,7 @@
 	function isOutsideInput(element) {
 	  return isInput(element) && element.className.indexOf('handsontableInput') == -1 && element.className.indexOf('copyPaste') == -1;
 	}
-
+	
 	//# 
 	},{"../browser":43,"../feature":47}],46:[function(require,module,exports){
 	"use strict";
@@ -27250,7 +27406,7 @@
 	  }
 	  return event.clientY + getWindowScrollTop();
 	}
-
+	
 	//# 
 	},{"element":45}],47:[function(require,module,exports){
 	"use strict";
@@ -27360,7 +27516,7 @@
 	  }
 	  return comparisonFunction;
 	}
-
+	
 	//# 
 	},{}],48:[function(require,module,exports){
 	"use strict";
@@ -27529,7 +27685,7 @@
 	  }
 	  return given([]);
 	}
-
+	
 	//# 
 	},{"array":42}],49:[function(require,module,exports){
 	"use strict";
@@ -27557,7 +27713,7 @@
 	      return value.toString();
 	  }
 	}
-
+	
 	//# 
 	},{}],50:[function(require,module,exports){
 	"use strict";
@@ -27611,7 +27767,7 @@
 	  percent = parseInt(value * percent / 100);
 	  return percent;
 	}
-
+	
 	//# 
 	},{}],51:[function(require,module,exports){
 	"use strict";
@@ -27824,7 +27980,7 @@
 	  }));
 	  return result;
 	}
-
+	
 	//# 
 	},{"array":42}],52:[function(require,module,exports){
 	"use strict";
@@ -27846,7 +28002,7 @@
 	  }
 	  return ColumnSettings;
 	}
-
+	
 	//# 
 	},{"object":51}],53:[function(require,module,exports){
 	"use strict";
@@ -27961,7 +28117,7 @@
 	  return truncatedString + string;
 	}
 	;
-
+	
 	//# 
 	},{"mixed":49,"number":50}],54:[function(require,module,exports){
 	"use strict";
@@ -28050,7 +28206,7 @@
 	  });
 	  return result;
 	}
-
+	
 	//# 
 	},{"array":42}],55:[function(require,module,exports){
 	"use strict";
@@ -28095,7 +28251,7 @@
 	;
 	Handsontable.utils = Handsontable.utils || {};
 	Handsontable.utils.localHooks = localHooks;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/object":51}],56:[function(require,module,exports){
 	"use strict";
@@ -28147,7 +28303,7 @@
 	    return obj !== obj;
 	  }
 	}
-
+	
 	//# 
 	},{}],57:[function(require,module,exports){
 	"use strict";
@@ -28298,7 +28454,7 @@
 	;
 	Handsontable.utils = Handsontable.utils || {};
 	Handsontable.utils.Hooks = Hooks;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/object":51}],58:[function(require,module,exports){
 	"use strict";
@@ -28370,7 +28526,7 @@
 	  return pluginName;
 	}
 	;
-
+	
 	//# 
 	},{"helpers/object":51,"helpers/string":53}],59:[function(require,module,exports){
 	"use strict";
@@ -28503,7 +28659,7 @@
 	}, {});
 	var $__default = BasePlugin;
 	Handsontable.plugins.BasePlugin = BasePlugin;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/object":51,"plugins":58}],60:[function(require,module,exports){
 	"use strict";
@@ -28785,7 +28941,7 @@
 	}, BasePlugin);
 	;
 	registerPlugin('autoColumnSize', AutoColumnSize);
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/calculator/viewportColumns":3,"_base":59,"helpers/array":42,"helpers/dom/element":45,"helpers/feature":47,"helpers/number":50,"helpers/object":51,"helpers/string":53,"plugins":58,"utils/ghostTable":101,"utils/samplesGenerator":103}],61:[function(require,module,exports){
 	"use strict";
@@ -29104,7 +29260,7 @@
 	}, BasePlugin);
 	;
 	registerPlugin('autoRowSize', AutoRowSize);
-
+	
 	//# 
 	},{"_base":59,"helpers/array":42,"helpers/dom/element":45,"helpers/feature":47,"helpers/number":50,"helpers/object":51,"helpers/string":53,"plugins":58,"utils/ghostTable":101,"utils/samplesGenerator":103}],62:[function(require,module,exports){
 	"use strict";
@@ -29380,7 +29536,7 @@
 	  };
 	}
 	Handsontable.Autofill = Autofill;
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"eventManager":41,"helpers/dom/element":45,"plugins":58}],63:[function(require,module,exports){
 	"use strict";
@@ -29787,7 +29943,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('columnSorting', ColumnSorting);
-
+	
 	//# 
 	},{"_base":59,"eventManager":41,"helpers/array":42,"helpers/dom/element":45,"plugins":58}],64:[function(require,module,exports){
 	"use strict";
@@ -29875,7 +30031,7 @@
 	  }
 	});
 	;
-
+	
 	//# 
 	},{"helpers/dom/element":45}],65:[function(require,module,exports){
 	"use strict";
@@ -30170,7 +30326,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('comments', Comments);
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"_base":59,"commentEditor":64,"eventManager":41,"helpers/dom/element":45,"plugins":58}],66:[function(require,module,exports){
 	"use strict";
@@ -30243,7 +30399,7 @@
 	  return command;
 	}
 	;
-
+	
 	//# 
 	},{"helpers/array":42}],67:[function(require,module,exports){
 	"use strict";
@@ -30437,7 +30593,7 @@
 	Handsontable.hooks.register('afterContextMenuExecute');
 	;
 	registerPlugin('contextMenu', ContextMenu);
-
+	
 	//# 
 	},{"_base":59,"commandExecutor":66,"eventManager":41,"helpers/array":42,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/object":51,"itemsFactory":69,"menu":70,"plugins":58,"predefinedItems":71}],68:[function(require,module,exports){
 	"use strict";
@@ -30517,7 +30673,7 @@
 	;
 	Handsontable.plugins.utils = Handsontable.plugins.utils || {};
 	Handsontable.plugins.utils.Cursor = Cursor;
-
+	
 	//# 
 	},{"helpers/dom/element":45,"helpers/dom/event":46}],69:[function(require,module,exports){
 	"use strict";
@@ -30636,7 +30792,7 @@
 	  return result;
 	}
 	;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/object":51,"predefinedItems":71}],70:[function(require,module,exports){
 	"use strict";
@@ -31147,7 +31303,7 @@
 	}, {});
 	mixin(Menu, localHooks);
 	;
-
+	
 	//# 
 	},{"cursor":68,"eventManager":41,"helpers/array":42,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/function":48,"helpers/object":51,"helpers/unicode":54,"mixins/localHooks":55,"predefinedItems":71,"utils":72}],71:[function(require,module,exports){
 	"use strict";
@@ -31706,7 +31862,7 @@
 	  enumerable: true,
 	  writable: true
 	}), $__4);
-
+	
 	//# 
 	},{"helpers/number":50,"helpers/object":51,"utils":72}],72:[function(require,module,exports){
 	"use strict";
@@ -31845,7 +32001,7 @@
 	function markLabelAsSelected(label) {
 	  return '<span class="selected">' + String.fromCharCode(10003) + '</span>' + label;
 	}
-
+	
 	//# 
 	},{"helpers/dom/element":45}],73:[function(require,module,exports){
 	"use strict";
@@ -31977,7 +32133,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('contextMenuCopyPaste', ContextMenuCopyPaste);
-
+	
 	//# 
 	},{"_base":59,"eventManager":41,"helpers/array":42,"helpers/dom/element":45,"plugins":58,"zeroclipboard":"zeroclipboard"}],74:[function(require,module,exports){
 	"use strict";
@@ -32180,7 +32336,7 @@
 	Handsontable.hooks.register('afterCopyLimit');
 	Handsontable.hooks.register('modifyCopyableRange');
 	;
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"3rdparty/walkontable/src/cell/range":6,"SheetClip":"SheetClip","copyPaste":"copyPaste","helpers/array":42,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/function":48,"helpers/number":50,"helpers/unicode":54,"plugins":58}],75:[function(require,module,exports){
 	"use strict";
@@ -32517,7 +32673,7 @@
 	  }
 	});
 	Handsontable.CustomBorders = CustomBorders;
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/range":6,"3rdparty/walkontable/src/selection":18,"plugins":58}],76:[function(require,module,exports){
 	"use strict";
@@ -32605,7 +32761,7 @@
 	  setupListening(this);
 	});
 	Handsontable.plugins.DragToScroll = DragToScroll;
-
+	
 	//# 
 	},{"eventManager":41,"plugins":58}],77:[function(require,module,exports){
 	"use strict";
@@ -32747,7 +32903,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('manualColumnFreeze', ManualColumnFreeze);
-
+	
 	//# 
 	},{"_base":59,"plugins":58}],78:[function(require,module,exports){
 	"use strict";
@@ -33084,7 +33240,7 @@
 	Handsontable.hooks.register('beforeColumnMove');
 	Handsontable.hooks.register('afterColumnMove');
 	Handsontable.hooks.register('unmodifyCol');
-
+	
 	//# 
 	},{"_base.js":59,"eventManager":41,"helpers/array":42,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/number":50,"plugins":58}],79:[function(require,module,exports){
 	"use strict";
@@ -33345,7 +33501,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('manualColumnResize', ManualColumnResize);
-
+	
 	//# 
 	},{"_base.js":59,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"plugins":58}],80:[function(require,module,exports){
 	"use strict";
@@ -33667,7 +33823,7 @@
 	registerPlugin('ManualRowMove', ManualRowMove);
 	Handsontable.hooks.register('beforeRowMove');
 	Handsontable.hooks.register('afterRowMove');
-
+	
 	//# 
 	},{"_base.js":59,"eventManager":41,"helpers/array":42,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/number":50,"plugins":58}],81:[function(require,module,exports){
 	"use strict";
@@ -33908,7 +34064,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('manualRowResize', ManualRowResize);
-
+	
 	//# 
 	},{"_base.js":59,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"plugins":58}],82:[function(require,module,exports){
 	"use strict";
@@ -34446,7 +34602,7 @@
 	Handsontable.hooks.add('afterCreateRow', onAfterCreateRow);
 	Handsontable.hooks.add('afterRemoveRow', onAfterRemoveRow);
 	Handsontable.MergeCells = MergeCells;
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"3rdparty/walkontable/src/cell/range":6,"3rdparty/walkontable/src/table":20,"helpers/dom/event":46,"plugins":58}],83:[function(require,module,exports){
 	"use strict";
@@ -34733,7 +34889,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('multipleSelectionHandles', MultipleSelectionHandles);
-
+	
 	//# 
 	},{"_base":59,"eventManager":41,"helpers/dom/element":45,"plugins":58}],84:[function(require,module,exports){
 	"use strict";
@@ -34788,7 +34944,7 @@
 	}, {});
 	mixin(DataObserver, localHooks);
 	;
-
+	
 	//# 
 	},{"../../helpers/object":51,"../../mixins/localHooks":55,"jsonpatch":"jsonpatch","utils":86}],85:[function(require,module,exports){
 	"use strict";
@@ -34932,7 +35088,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('observeChanges', ObserveChanges);
-
+	
 	//# 
 	},{"_base":59,"dataObserver":84,"helpers/array":42,"jsonpatch":"jsonpatch","plugins":58}],86:[function(require,module,exports){
 	"use strict";
@@ -34991,7 +35147,7 @@
 	    col: /^\d*$/.test(column) ? parseInt(column, 10) : column
 	  };
 	}
-
+	
 	//# 
 	},{"../../helpers/array":42}],87:[function(require,module,exports){
 	"use strict";
@@ -35103,7 +35259,7 @@
 	var htPersistentState = new HandsontablePersistentState();
 	Handsontable.hooks.add('beforeInit', htPersistentState.init);
 	Handsontable.hooks.add('afterUpdateSettings', htPersistentState.init);
-
+	
 	//# 
 	},{"plugins":58}],88:[function(require,module,exports){
 	"use strict";
@@ -35211,7 +35367,7 @@
 	}
 	Handsontable.hooks.add('afterInit', init);
 	Handsontable.hooks.add('afterUpdateSettings', init);
-
+	
 	//# 
 	},{"helpers/dom/element":45,"renderers":91}],89:[function(require,module,exports){
 	"use strict";
@@ -35324,7 +35480,7 @@
 	}, {}, BasePlugin);
 	;
 	registerPlugin('touchScroll', TouchScroll);
-
+	
 	//# 
 	},{"_base":59,"helpers/dom/element":45,"plugins":58}],90:[function(require,module,exports){
 	"use strict";
@@ -35674,7 +35830,7 @@
 	}
 	Handsontable.hooks.add('afterInit', init);
 	Handsontable.hooks.add('afterUpdateSettings', init);
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/dom/event":46,"helpers/number":50,"helpers/object":51}],91:[function(require,module,exports){
 	"use strict";
@@ -35719,7 +35875,7 @@
 	  return rendererName in registeredRenderers;
 	}
 	;
-
+	
 	//# 
 	},{"helpers/string":53}],92:[function(require,module,exports){
 	"use strict";
@@ -35761,7 +35917,7 @@
 	    addClass(TD, cellProperties.placeholderCellClassName);
 	  }
 	}
-
+	
 	//# 
 	},{"helpers/dom/element":45,"renderers":91}],93:[function(require,module,exports){
 	"use strict";
@@ -35818,7 +35974,7 @@
 	}
 	;
 	registerRenderer('autocomplete', autocompleteRenderer);
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"eventManager":41,"helpers/dom/element":45,"renderers":91}],94:[function(require,module,exports){
 	"use strict";
@@ -35977,7 +36133,7 @@
 	function preventDefault(event) {
 	  event.preventDefault();
 	}
-
+	
 	//# 
 	},{"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46,"helpers/string":53,"helpers/unicode":54,"renderers":91}],95:[function(require,module,exports){
 	"use strict";
@@ -36002,7 +36158,7 @@
 	}
 	;
 	registerRenderer('html', htmlRenderer);
-
+	
 	//# 
 	},{"helpers/dom/element":45,"renderers":91}],96:[function(require,module,exports){
 	"use strict";
@@ -36034,7 +36190,7 @@
 	}
 	;
 	registerRenderer('numeric', numericRenderer);
-
+	
 	//# 
 	},{"helpers/dom/element":45,"helpers/number":50,"numeral":"numeral","renderers":91}],97:[function(require,module,exports){
 	"use strict";
@@ -36061,7 +36217,7 @@
 	}
 	;
 	registerRenderer('password', passwordRenderer);
-
+	
 	//# 
 	},{"helpers/dom/element":45,"renderers":91}],98:[function(require,module,exports){
 	"use strict";
@@ -36104,7 +36260,7 @@
 	}
 	;
 	registerRenderer('text', textRenderer);
-
+	
 	//# 
 	},{"helpers/dom/element":45,"helpers/mixed":49,"renderers":91}],99:[function(require,module,exports){
 	"use strict";
@@ -36500,7 +36656,7 @@
 	  $traceurRuntime.superGet = superGet;
 	  $traceurRuntime.superSet = superSet;
 	})();
-
+	
 	//# 
 	},{}],100:[function(require,module,exports){
 	"use strict";
@@ -37025,7 +37181,7 @@
 	  this.eventManager.destroy();
 	};
 	;
-
+	
 	//# 
 	},{"3rdparty/walkontable/src/cell/coords":5,"3rdparty/walkontable/src/core":7,"3rdparty/walkontable/src/selection":18,"eventManager":41,"helpers/dom/element":45,"helpers/dom/event":46}],101:[function(require,module,exports){
 	"use strict";
@@ -37250,7 +37406,7 @@
 	;
 	Handsontable.utils = Handsontable.utils || {};
 	Handsontable.utils.GhostTable = GhostTable;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/dom/element":45,"helpers/mixed":49,"helpers/number":50,"helpers/object":51}],102:[function(require,module,exports){
 	"use strict";
@@ -37326,7 +37482,7 @@
 	}
 	Handsontable.utils = Handsontable.utils || {};
 	Handsontable.utils.Interval = Interval;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/feature":47,"helpers/mixed":49,"helpers/number":50,"helpers/object":51}],103:[function(require,module,exports){
 	"use strict";
@@ -37462,7 +37618,7 @@
 	;
 	Handsontable.utils = Handsontable.utils || {};
 	Handsontable.utils.SamplesGenerator = SamplesGenerator;
-
+	
 	//# 
 	},{"helpers/array":42,"helpers/dom/element":45,"helpers/mixed":49,"helpers/number":50,"helpers/object":51}],104:[function(require,module,exports){
 	"use strict";
@@ -37497,7 +37653,7 @@
 	    callback(found);
 	  };
 	}
-
+	
 	//# 
 	},{"helpers/mixed":49}],105:[function(require,module,exports){
 	"use strict";
@@ -37547,7 +37703,7 @@
 	  }
 	  return date.format(dateFormat);
 	};
-
+	
 	//# 
 	},{"editors":29,"moment":"moment"}],106:[function(require,module,exports){
 	"use strict";
@@ -37563,7 +37719,7 @@
 	    callback(/^-?\d*(\.|\,)?\d*$/.test(value));
 	  }
 	};
-
+	
 	//# 
 	},{}],107:[function(require,module,exports){
 	"use strict";
@@ -37610,7 +37766,7 @@
 	  }
 	  callback(valid);
 	};
-
+	
 	//# 
 	},{"editors":29,"moment":"moment"}],"SheetClip":[function(require,module,exports){
 	"use strict";
@@ -37701,7 +37857,7 @@
 	    global.SheetClip = SheetClip;
 	  }
 	}(window));
-
+	
 	//# 
 	},{}],"autoResize":[function(require,module,exports){
 	"use strict";
@@ -37854,7 +38010,7 @@
 	if (typeof exports !== 'undefined') {
 	  module.exports = autoResize;
 	}
-
+	
 	//# 
 	},{}],"copyPaste":[function(require,module,exports){
 	"use strict";
@@ -38048,7 +38204,7 @@
 	CopyPasteClass.prototype.hasBeenDestroyed = function() {
 	  return !this.refCounter;
 	};
-
+	
 	//# 
 	},{}],"es6collections":[function(require,module,exports){
 	"use strict";
@@ -38215,7 +38371,7 @@
 	    }
 	  }
 	})(typeof exports != 'undefined' && typeof global != 'undefined' ? global : window);
-
+	
 	//# 
 	},{}],"jsonpatch":[function(require,module,exports){
 	"use strict";
@@ -38669,7 +38825,7 @@
 	  exports.unobserve = jsonpatch.unobserve;
 	  exports.generate = jsonpatch.generate;
 	}
-
+	
 	//# 
 	},{}],"moment":[function(require,module,exports){
 	//! moment.js
@@ -38677,33 +38833,33 @@
 	//! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 	//! license : MIT
 	//! momentjs.com
-
+	
 	;(function (global, factory) {
 	    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	    typeof define === 'function' && define.amd ? define(factory) :
 	    global.moment = factory()
 	}(this, function () { 'use strict';
-
+	
 	    var hookCallback;
-
+	
 	    function utils_hooks__hooks () {
 	        return hookCallback.apply(null, arguments);
 	    }
-
+	
 	    // This is done to register the method called with moment()
 	    // without creating circular dependencies.
 	    function setHookCallback (callback) {
 	        hookCallback = callback;
 	    }
-
+	
 	    function isArray(input) {
 	        return Object.prototype.toString.call(input) === '[object Array]';
 	    }
-
+	
 	    function isDate(input) {
 	        return input instanceof Date || Object.prototype.toString.call(input) === '[object Date]';
 	    }
-
+	
 	    function map(arr, fn) {
 	        var res = [], i;
 	        for (i = 0; i < arr.length; ++i) {
@@ -38711,33 +38867,33 @@
 	        }
 	        return res;
 	    }
-
+	
 	    function hasOwnProp(a, b) {
 	        return Object.prototype.hasOwnProperty.call(a, b);
 	    }
-
+	
 	    function extend(a, b) {
 	        for (var i in b) {
 	            if (hasOwnProp(b, i)) {
 	                a[i] = b[i];
 	            }
 	        }
-
+	
 	        if (hasOwnProp(b, 'toString')) {
 	            a.toString = b.toString;
 	        }
-
+	
 	        if (hasOwnProp(b, 'valueOf')) {
 	            a.valueOf = b.valueOf;
 	        }
-
+	
 	        return a;
 	    }
-
+	
 	    function create_utc__createUTC (input, format, locale, strict) {
 	        return createLocalOrUTC(input, format, locale, strict, true).utc();
 	    }
-
+	
 	    function defaultParsingFlags() {
 	        // We need to deep clone this object.
 	        return {
@@ -38753,14 +38909,14 @@
 	            iso             : false
 	        };
 	    }
-
+	
 	    function getParsingFlags(m) {
 	        if (m._pf == null) {
 	            m._pf = defaultParsingFlags();
 	        }
 	        return m._pf;
 	    }
-
+	
 	    function valid__isValid(m) {
 	        if (m._isValid == null) {
 	            var flags = getParsingFlags(m);
@@ -38772,7 +38928,7 @@
 	                !flags.nullInput &&
 	                !flags.invalidFormat &&
 	                !flags.userInvalidated;
-
+	
 	            if (m._strict) {
 	                m._isValid = m._isValid &&
 	                    flags.charsLeftOver === 0 &&
@@ -38782,7 +38938,7 @@
 	        }
 	        return m._isValid;
 	    }
-
+	
 	    function valid__createInvalid (flags) {
 	        var m = create_utc__createUTC(NaN);
 	        if (flags != null) {
@@ -38791,21 +38947,21 @@
 	        else {
 	            getParsingFlags(m).userInvalidated = true;
 	        }
-
+	
 	        return m;
 	    }
-
+	
 	    function isUndefined(input) {
 	        return input === void 0;
 	    }
-
+	
 	    // Plugins that add properties should also add the key here (null value),
 	    // so we can properly clone ourselves.
 	    var momentProperties = utils_hooks__hooks.momentProperties = [];
-
+	
 	    function copyConfig(to, from) {
 	        var i, prop, val;
-
+	
 	        if (!isUndefined(from._isAMomentObject)) {
 	            to._isAMomentObject = from._isAMomentObject;
 	        }
@@ -38836,7 +38992,7 @@
 	        if (!isUndefined(from._locale)) {
 	            to._locale = from._locale;
 	        }
-
+	
 	        if (momentProperties.length > 0) {
 	            for (i in momentProperties) {
 	                prop = momentProperties[i];
@@ -38846,12 +39002,12 @@
 	                }
 	            }
 	        }
-
+	
 	        return to;
 	    }
-
+	
 	    var updateInProgress = false;
-
+	
 	    // Moment prototype object
 	    function Moment(config) {
 	        copyConfig(this, config);
@@ -38864,11 +39020,11 @@
 	            updateInProgress = false;
 	        }
 	    }
-
+	
 	    function isMoment (obj) {
 	        return obj instanceof Moment || (obj != null && obj._isAMomentObject != null);
 	    }
-
+	
 	    function absFloor (number) {
 	        if (number < 0) {
 	            return Math.ceil(number);
@@ -38876,18 +39032,18 @@
 	            return Math.floor(number);
 	        }
 	    }
-
+	
 	    function toInt(argumentForCoercion) {
 	        var coercedNumber = +argumentForCoercion,
 	            value = 0;
-
+	
 	        if (coercedNumber !== 0 && isFinite(coercedNumber)) {
 	            value = absFloor(coercedNumber);
 	        }
-
+	
 	        return value;
 	    }
-
+	
 	    // compare two arrays, return the number of differences
 	    function compareArrays(array1, array2, dontConvert) {
 	        var len = Math.min(array1.length, array2.length),
@@ -38902,24 +39058,24 @@
 	        }
 	        return diffs + lengthDiff;
 	    }
-
+	
 	    function Locale() {
 	    }
-
+	
 	    // internal storage for locale config files
 	    var locales = {};
 	    var globalLocale;
-
+	
 	    function normalizeLocale(key) {
 	        return key ? key.toLowerCase().replace('_', '-') : key;
 	    }
-
+	
 	    // pick the locale from the array
 	    // try ['en-au', 'en-gb'] as 'en-au', 'en-gb', 'en', as in move through the list trying each
 	    // substring from most specific to least, but move to the next array item if it's a more specific variant than the current root
 	    function chooseLocale(names) {
 	        var i = 0, j, next, locale, split;
-
+	
 	        while (i < names.length) {
 	            split = normalizeLocale(names[i]).split('-');
 	            j = split.length;
@@ -38940,7 +39096,7 @@
 	        }
 	        return null;
 	    }
-
+	
 	    function loadLocale(name) {
 	        var oldLocale = null;
 	        // TODO: Find a better way to register and load all the locales in Node
@@ -38956,7 +39112,7 @@
 	        }
 	        return locales[name];
 	    }
-
+	
 	    // This function will load locale and then set the global locale.  If
 	    // no arguments are passed in, it will simply return the current global
 	    // locale key.
@@ -38969,25 +39125,25 @@
 	            else {
 	                data = defineLocale(key, values);
 	            }
-
+	
 	            if (data) {
 	                // moment.duration._locale = moment._locale = data;
 	                globalLocale = data;
 	            }
 	        }
-
+	
 	        return globalLocale._abbr;
 	    }
-
+	
 	    function defineLocale (name, values) {
 	        if (values !== null) {
 	            values.abbr = name;
 	            locales[name] = locales[name] || new Locale();
 	            locales[name].set(values);
-
+	
 	            // backwards compat for now: also set the locale
 	            locale_locales__getSetGlobalLocale(name);
-
+	
 	            return locales[name];
 	        } else {
 	            // useful for testing
@@ -38995,19 +39151,19 @@
 	            return null;
 	        }
 	    }
-
+	
 	    // returns locale data
 	    function locale_locales__getLocale (key) {
 	        var locale;
-
+	
 	        if (key && key._locale && key._locale._abbr) {
 	            key = key._locale._abbr;
 	        }
-
+	
 	        if (!key) {
 	            return globalLocale;
 	        }
-
+	
 	        if (!isArray(key)) {
 	            //short-circuit everything else
 	            locale = loadLocale(key);
@@ -39016,26 +39172,26 @@
 	            }
 	            key = [key];
 	        }
-
+	
 	        return chooseLocale(key);
 	    }
-
+	
 	    var aliases = {};
-
+	
 	    function addUnitAlias (unit, shorthand) {
 	        var lowerCase = unit.toLowerCase();
 	        aliases[lowerCase] = aliases[lowerCase + 's'] = aliases[shorthand] = unit;
 	    }
-
+	
 	    function normalizeUnits(units) {
 	        return typeof units === 'string' ? aliases[units] || aliases[units.toLowerCase()] : undefined;
 	    }
-
+	
 	    function normalizeObjectUnits(inputObject) {
 	        var normalizedInput = {},
 	            normalizedProp,
 	            prop;
-
+	
 	        for (prop in inputObject) {
 	            if (hasOwnProp(inputObject, prop)) {
 	                normalizedProp = normalizeUnits(prop);
@@ -39044,14 +39200,14 @@
 	                }
 	            }
 	        }
-
+	
 	        return normalizedInput;
 	    }
-
+	
 	    function isFunction(input) {
 	        return input instanceof Function || Object.prototype.toString.call(input) === '[object Function]';
 	    }
-
+	
 	    function makeGetSet (unit, keepTime) {
 	        return function (value) {
 	            if (value != null) {
@@ -39063,20 +39219,20 @@
 	            }
 	        };
 	    }
-
+	
 	    function get_set__get (mom, unit) {
 	        return mom.isValid() ?
 	            mom._d['get' + (mom._isUTC ? 'UTC' : '') + unit]() : NaN;
 	    }
-
+	
 	    function get_set__set (mom, unit, value) {
 	        if (mom.isValid()) {
 	            mom._d['set' + (mom._isUTC ? 'UTC' : '') + unit](value);
 	        }
 	    }
-
+	
 	    // MOMENTS
-
+	
 	    function getSet (units, value) {
 	        var unit;
 	        if (typeof units === 'object') {
@@ -39091,7 +39247,7 @@
 	        }
 	        return this;
 	    }
-
+	
 	    function zeroFill(number, targetLength, forceSign) {
 	        var absNumber = '' + Math.abs(number),
 	            zerosToFill = targetLength - absNumber.length,
@@ -39099,15 +39255,15 @@
 	        return (sign ? (forceSign ? '+' : '') : '-') +
 	            Math.pow(10, Math.max(0, zerosToFill)).toString().substr(1) + absNumber;
 	    }
-
+	
 	    var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g;
-
+	
 	    var localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g;
-
+	
 	    var formatFunctions = {};
-
+	
 	    var formatTokenFunctions = {};
-
+	
 	    // token:    'M'
 	    // padded:   ['MM', 2]
 	    // ordinal:  'Mo'
@@ -39133,17 +39289,17 @@
 	            };
 	        }
 	    }
-
+	
 	    function removeFormattingTokens(input) {
 	        if (input.match(/\[[\s\S]/)) {
 	            return input.replace(/^\[|\]$/g, '');
 	        }
 	        return input.replace(/\\/g, '');
 	    }
-
+	
 	    function makeFormatFunction(format) {
 	        var array = format.match(formattingTokens), i, length;
-
+	
 	        for (i = 0, length = array.length; i < length; i++) {
 	            if (formatTokenFunctions[array[i]]) {
 	                array[i] = formatTokenFunctions[array[i]];
@@ -39151,7 +39307,7 @@
 	                array[i] = removeFormattingTokens(array[i]);
 	            }
 	        }
-
+	
 	        return function (mom) {
 	            var output = '';
 	            for (i = 0; i < length; i++) {
@@ -39160,36 +39316,36 @@
 	            return output;
 	        };
 	    }
-
+	
 	    // format date using native date object
 	    function formatMoment(m, format) {
 	        if (!m.isValid()) {
 	            return m.localeData().invalidDate();
 	        }
-
+	
 	        format = expandFormat(format, m.localeData());
 	        formatFunctions[format] = formatFunctions[format] || makeFormatFunction(format);
-
+	
 	        return formatFunctions[format](m);
 	    }
-
+	
 	    function expandFormat(format, locale) {
 	        var i = 5;
-
+	
 	        function replaceLongDateFormatTokens(input) {
 	            return locale.longDateFormat(input) || input;
 	        }
-
+	
 	        localFormattingTokens.lastIndex = 0;
 	        while (i >= 0 && localFormattingTokens.test(format)) {
 	            format = format.replace(localFormattingTokens, replaceLongDateFormatTokens);
 	            localFormattingTokens.lastIndex = 0;
 	            i -= 1;
 	        }
-
+	
 	        return format;
 	    }
-
+	
 	    var match1         = /\d/;            //       0 - 9
 	    var match2         = /\d\d/;          //      00 - 99
 	    var match3         = /\d{3}/;         //     000 - 999
@@ -39201,49 +39357,49 @@
 	    var match1to3      = /\d{1,3}/;       //       0 - 999
 	    var match1to4      = /\d{1,4}/;       //       0 - 9999
 	    var match1to6      = /[+-]?\d{1,6}/;  // -999999 - 999999
-
+	
 	    var matchUnsigned  = /\d+/;           //       0 - inf
 	    var matchSigned    = /[+-]?\d+/;      //    -inf - inf
-
+	
 	    var matchOffset    = /Z|[+-]\d\d:?\d\d/gi; // +00:00 -00:00 +0000 -0000 or Z
 	    var matchShortOffset = /Z|[+-]\d\d(?::?\d\d)?/gi; // +00 -00 +00:00 -00:00 +0000 -0000 or Z
-
+	
 	    var matchTimestamp = /[+-]?\d+(\.\d{1,3})?/; // 123456789 123456789.123
-
+	
 	    // any word (or two) characters or numbers including two/three word month in arabic.
 	    // includes scottish gaelic two word and hyphenated months
 	    var matchWord = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
-
-
+	
+	
 	    var regexes = {};
-
+	
 	    function addRegexToken (token, regex, strictRegex) {
 	        regexes[token] = isFunction(regex) ? regex : function (isStrict, localeData) {
 	            return (isStrict && strictRegex) ? strictRegex : regex;
 	        };
 	    }
-
+	
 	    function getParseRegexForToken (token, config) {
 	        if (!hasOwnProp(regexes, token)) {
 	            return new RegExp(unescapeFormat(token));
 	        }
-
+	
 	        return regexes[token](config._strict, config._locale);
 	    }
-
+	
 	    // Code from http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
 	    function unescapeFormat(s) {
 	        return regexEscape(s.replace('\\', '').replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (matched, p1, p2, p3, p4) {
 	            return p1 || p2 || p3 || p4;
 	        }));
 	    }
-
+	
 	    function regexEscape(s) {
 	        return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 	    }
-
+	
 	    var tokens = {};
-
+	
 	    function addParseToken (token, callback) {
 	        var i, func = callback;
 	        if (typeof token === 'string') {
@@ -39258,20 +39414,20 @@
 	            tokens[token[i]] = func;
 	        }
 	    }
-
+	
 	    function addWeekParseToken (token, callback) {
 	        addParseToken(token, function (input, array, config, token) {
 	            config._w = config._w || {};
 	            callback(input, config._w, config, token);
 	        });
 	    }
-
+	
 	    function addTimeToArrayFromToken(token, input, config) {
 	        if (input != null && hasOwnProp(tokens, token)) {
 	            tokens[token](input, config._a, config, token);
 	        }
 	    }
-
+	
 	    var YEAR = 0;
 	    var MONTH = 1;
 	    var DATE = 2;
@@ -39281,31 +39437,31 @@
 	    var MILLISECOND = 6;
 	    var WEEK = 7;
 	    var WEEKDAY = 8;
-
+	
 	    function daysInMonth(year, month) {
 	        return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('M', ['MM', 2], 'Mo', function () {
 	        return this.month() + 1;
 	    });
-
+	
 	    addFormatToken('MMM', 0, 0, function (format) {
 	        return this.localeData().monthsShort(this, format);
 	    });
-
+	
 	    addFormatToken('MMMM', 0, 0, function (format) {
 	        return this.localeData().months(this, format);
 	    });
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('month', 'M');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('M',    match1to2);
 	    addRegexToken('MM',   match1to2, match2);
 	    addRegexToken('MMM',  function (isStrict, locale) {
@@ -39314,11 +39470,11 @@
 	    addRegexToken('MMMM', function (isStrict, locale) {
 	        return locale.monthsRegex(isStrict);
 	    });
-
+	
 	    addParseToken(['M', 'MM'], function (input, array) {
 	        array[MONTH] = toInt(input) - 1;
 	    });
-
+	
 	    addParseToken(['MMM', 'MMMM'], function (input, array, config, token) {
 	        var month = config._locale.monthsParse(input, token, config._strict);
 	        // if we didn't find a month name, mark the date as invalid.
@@ -39328,31 +39484,31 @@
 	            getParsingFlags(config).invalidMonth = input;
 	        }
 	    });
-
+	
 	    // LOCALES
-
+	
 	    var MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s+)+MMMM?/;
 	    var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
 	    function localeMonths (m, format) {
 	        return isArray(this._months) ? this._months[m.month()] :
 	            this._months[MONTHS_IN_FORMAT.test(format) ? 'format' : 'standalone'][m.month()];
 	    }
-
+	
 	    var defaultLocaleMonthsShort = 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_');
 	    function localeMonthsShort (m, format) {
 	        return isArray(this._monthsShort) ? this._monthsShort[m.month()] :
 	            this._monthsShort[MONTHS_IN_FORMAT.test(format) ? 'format' : 'standalone'][m.month()];
 	    }
-
+	
 	    function localeMonthsParse (monthName, format, strict) {
 	        var i, mom, regex;
-
+	
 	        if (!this._monthsParse) {
 	            this._monthsParse = [];
 	            this._longMonthsParse = [];
 	            this._shortMonthsParse = [];
 	        }
-
+	
 	        for (i = 0; i < 12; i++) {
 	            // make the regex if we don't have it already
 	            mom = create_utc__createUTC([2000, i]);
@@ -39374,17 +39530,17 @@
 	            }
 	        }
 	    }
-
+	
 	    // MOMENTS
-
+	
 	    function setMonth (mom, value) {
 	        var dayOfMonth;
-
+	
 	        if (!mom.isValid()) {
 	            // No op
 	            return mom;
 	        }
-
+	
 	        // TODO: Move this out of here!
 	        if (typeof value === 'string') {
 	            value = mom.localeData().monthsParse(value);
@@ -39393,12 +39549,12 @@
 	                return mom;
 	            }
 	        }
-
+	
 	        dayOfMonth = Math.min(mom.date(), daysInMonth(mom.year(), value));
 	        mom._d['set' + (mom._isUTC ? 'UTC' : '') + 'Month'](value, dayOfMonth);
 	        return mom;
 	    }
-
+	
 	    function getSetMonth (value) {
 	        if (value != null) {
 	            setMonth(this, value);
@@ -39408,11 +39564,11 @@
 	            return get_set__get(this, 'Month');
 	        }
 	    }
-
+	
 	    function getDaysInMonth () {
 	        return daysInMonth(this.year(), this.month());
 	    }
-
+	
 	    var defaultMonthsShortRegex = matchWord;
 	    function monthsShortRegex (isStrict) {
 	        if (this._monthsParseExact) {
@@ -39429,7 +39585,7 @@
 	                this._monthsShortStrictRegex : this._monthsShortRegex;
 	        }
 	    }
-
+	
 	    var defaultMonthsRegex = matchWord;
 	    function monthsRegex (isStrict) {
 	        if (this._monthsParseExact) {
@@ -39446,12 +39602,12 @@
 	                this._monthsStrictRegex : this._monthsRegex;
 	        }
 	    }
-
+	
 	    function computeMonthsParse () {
 	        function cmpLenRev(a, b) {
 	            return b.length - a.length;
 	        }
-
+	
 	        var shortPieces = [], longPieces = [], mixedPieces = [],
 	            i, mom;
 	        for (i = 0; i < 12; i++) {
@@ -39472,17 +39628,17 @@
 	            longPieces[i] = regexEscape(longPieces[i]);
 	            mixedPieces[i] = regexEscape(mixedPieces[i]);
 	        }
-
+	
 	        this._monthsRegex = new RegExp('^(' + mixedPieces.join('|') + ')', 'i');
 	        this._monthsShortRegex = this._monthsRegex;
 	        this._monthsStrictRegex = new RegExp('^(' + longPieces.join('|') + ')$', 'i');
 	        this._monthsShortStrictRegex = new RegExp('^(' + shortPieces.join('|') + ')$', 'i');
 	    }
-
+	
 	    function checkOverflow (m) {
 	        var overflow;
 	        var a = m._a;
-
+	
 	        if (a && getParsingFlags(m).overflow === -2) {
 	            overflow =
 	                a[MONTH]       < 0 || a[MONTH]       > 11  ? MONTH :
@@ -39492,7 +39648,7 @@
 	                a[SECOND]      < 0 || a[SECOND]      > 59  ? SECOND :
 	                a[MILLISECOND] < 0 || a[MILLISECOND] > 999 ? MILLISECOND :
 	                -1;
-
+	
 	            if (getParsingFlags(m)._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
 	                overflow = DATE;
 	            }
@@ -39502,23 +39658,23 @@
 	            if (getParsingFlags(m)._overflowWeekday && overflow === -1) {
 	                overflow = WEEKDAY;
 	            }
-
+	
 	            getParsingFlags(m).overflow = overflow;
 	        }
-
+	
 	        return m;
 	    }
-
+	
 	    function warn(msg) {
 	        if (utils_hooks__hooks.suppressDeprecationWarnings === false &&
 	                (typeof console !==  'undefined') && console.warn) {
 	            console.warn('Deprecation warning: ' + msg);
 	        }
 	    }
-
+	
 	    function deprecate(msg, fn) {
 	        var firstTime = true;
-
+	
 	        return extend(function () {
 	            if (firstTime) {
 	                warn(msg + '\nArguments: ' + Array.prototype.slice.call(arguments).join(', ') + '\n' + (new Error()).stack);
@@ -39527,25 +39683,25 @@
 	            return fn.apply(this, arguments);
 	        }, fn);
 	    }
-
+	
 	    var deprecations = {};
-
+	
 	    function deprecateSimple(name, msg) {
 	        if (!deprecations[name]) {
 	            warn(msg);
 	            deprecations[name] = true;
 	        }
 	    }
-
+	
 	    utils_hooks__hooks.suppressDeprecationWarnings = false;
-
+	
 	    // iso 8601 regex
 	    // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
 	    var extendedIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?/;
 	    var basicIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?/;
-
+	
 	    var tzRegex = /Z|[+-]\d\d(?::?\d\d)?/;
-
+	
 	    var isoDates = [
 	        ['YYYYYY-MM-DD', /[+-]\d{6}-\d\d-\d\d/],
 	        ['YYYY-MM-DD', /\d{4}-\d\d-\d\d/],
@@ -39560,7 +39716,7 @@
 	        ['GGGG[W]WW', /\d{4}W\d{2}/, false],
 	        ['YYYYDDD', /\d{7}/]
 	    ];
-
+	
 	    // iso time formats and regexes
 	    var isoTimes = [
 	        ['HH:mm:ss.SSSS', /\d\d:\d\d:\d\d\.\d+/],
@@ -39573,19 +39729,19 @@
 	        ['HHmm', /\d\d\d\d/],
 	        ['HH', /\d\d/]
 	    ];
-
+	
 	    var aspNetJsonRegex = /^\/?Date\((\-?\d+)/i;
-
+	
 	    // date from iso format
 	    function configFromISO(config) {
 	        var i, l,
 	            string = config._i,
 	            match = extendedIsoRegex.exec(string) || basicIsoRegex.exec(string),
 	            allowTime, dateFormat, timeFormat, tzFormat;
-
+	
 	        if (match) {
 	            getParsingFlags(config).iso = true;
-
+	
 	            for (i = 0, l = isoDates.length; i < l; i++) {
 	                if (isoDates[i][1].exec(match[1])) {
 	                    dateFormat = isoDates[i][0];
@@ -39628,23 +39784,23 @@
 	            config._isValid = false;
 	        }
 	    }
-
+	
 	    // date from iso format or fallback
 	    function configFromString(config) {
 	        var matched = aspNetJsonRegex.exec(config._i);
-
+	
 	        if (matched !== null) {
 	            config._d = new Date(+matched[1]);
 	            return;
 	        }
-
+	
 	        configFromISO(config);
 	        if (config._isValid === false) {
 	            delete config._isValid;
 	            utils_hooks__hooks.createFromInputFallback(config);
 	        }
 	    }
-
+	
 	    utils_hooks__hooks.createFromInputFallback = deprecate(
 	        'moment construction falls back to js Date. This is ' +
 	        'discouraged and will be removed in upcoming major ' +
@@ -39654,56 +39810,56 @@
 	            config._d = new Date(config._i + (config._useUTC ? ' UTC' : ''));
 	        }
 	    );
-
+	
 	    function createDate (y, m, d, h, M, s, ms) {
 	        //can't just apply() to create a date:
 	        //http://stackoverflow.com/questions/181348/instantiating-a-javascript-object-by-calling-prototype-constructor-apply
 	        var date = new Date(y, m, d, h, M, s, ms);
-
+	
 	        //the date constructor remaps years 0-99 to 1900-1999
 	        if (y < 100 && y >= 0 && isFinite(date.getFullYear())) {
 	            date.setFullYear(y);
 	        }
 	        return date;
 	    }
-
+	
 	    function createUTCDate (y) {
 	        var date = new Date(Date.UTC.apply(null, arguments));
-
+	
 	        //the Date.UTC function remaps years 0-99 to 1900-1999
 	        if (y < 100 && y >= 0 && isFinite(date.getUTCFullYear())) {
 	            date.setUTCFullYear(y);
 	        }
 	        return date;
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('Y', 0, 0, function () {
 	        var y = this.year();
 	        return y <= 9999 ? '' + y : '+' + y;
 	    });
-
+	
 	    addFormatToken(0, ['YY', 2], 0, function () {
 	        return this.year() % 100;
 	    });
-
+	
 	    addFormatToken(0, ['YYYY',   4],       0, 'year');
 	    addFormatToken(0, ['YYYYY',  5],       0, 'year');
 	    addFormatToken(0, ['YYYYYY', 6, true], 0, 'year');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('year', 'y');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('Y',      matchSigned);
 	    addRegexToken('YY',     match1to2, match2);
 	    addRegexToken('YYYY',   match1to4, match4);
 	    addRegexToken('YYYYY',  match1to6, match6);
 	    addRegexToken('YYYYYY', match1to6, match6);
-
+	
 	    addParseToken(['YYYYY', 'YYYYYY'], YEAR);
 	    addParseToken('YYYY', function (input, array) {
 	        array[YEAR] = input.length === 2 ? utils_hooks__hooks.parseTwoDigitYear(input) : toInt(input);
@@ -39714,48 +39870,48 @@
 	    addParseToken('Y', function (input, array) {
 	        array[YEAR] = parseInt(input, 10);
 	    });
-
+	
 	    // HELPERS
-
+	
 	    function daysInYear(year) {
 	        return isLeapYear(year) ? 366 : 365;
 	    }
-
+	
 	    function isLeapYear(year) {
 	        return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 	    }
-
+	
 	    // HOOKS
-
+	
 	    utils_hooks__hooks.parseTwoDigitYear = function (input) {
 	        return toInt(input) + (toInt(input) > 68 ? 1900 : 2000);
 	    };
-
+	
 	    // MOMENTS
-
+	
 	    var getSetYear = makeGetSet('FullYear', false);
-
+	
 	    function getIsLeapYear () {
 	        return isLeapYear(this.year());
 	    }
-
+	
 	    // start-of-first-week - start-of-year
 	    function firstWeekOffset(year, dow, doy) {
 	        var // first-week day -- which january is always in the first week (4 for iso, 1 for other)
 	            fwd = 7 + dow - doy,
 	            // first-week day local weekday -- which local weekday is fwd
 	            fwdlw = (7 + createUTCDate(year, 0, fwd).getUTCDay() - dow) % 7;
-
+	
 	        return -fwdlw + fwd - 1;
 	    }
-
+	
 	    //http://en.wikipedia.org/wiki/ISO_week_date#Calculating_a_date_given_the_year.2C_week_number_and_weekday
 	    function dayOfYearFromWeeks(year, week, weekday, dow, doy) {
 	        var localWeekday = (7 + weekday - dow) % 7,
 	            weekOffset = firstWeekOffset(year, dow, doy),
 	            dayOfYear = 1 + 7 * (week - 1) + localWeekday + weekOffset,
 	            resYear, resDayOfYear;
-
+	
 	        if (dayOfYear <= 0) {
 	            resYear = year - 1;
 	            resDayOfYear = daysInYear(resYear) + dayOfYear;
@@ -39766,18 +39922,18 @@
 	            resYear = year;
 	            resDayOfYear = dayOfYear;
 	        }
-
+	
 	        return {
 	            year: resYear,
 	            dayOfYear: resDayOfYear
 	        };
 	    }
-
+	
 	    function weekOfYear(mom, dow, doy) {
 	        var weekOffset = firstWeekOffset(mom.year(), dow, doy),
 	            week = Math.floor((mom.dayOfYear() - weekOffset - 1) / 7) + 1,
 	            resWeek, resYear;
-
+	
 	        if (week < 1) {
 	            resYear = mom.year() - 1;
 	            resWeek = week + weeksInYear(resYear, dow, doy);
@@ -39788,19 +39944,19 @@
 	            resYear = mom.year();
 	            resWeek = week;
 	        }
-
+	
 	        return {
 	            week: resWeek,
 	            year: resYear
 	        };
 	    }
-
+	
 	    function weeksInYear(year, dow, doy) {
 	        var weekOffset = firstWeekOffset(year, dow, doy),
 	            weekOffsetNext = firstWeekOffset(year + 1, dow, doy);
 	        return (daysInYear(year) - weekOffset + weekOffsetNext) / 7;
 	    }
-
+	
 	    // Pick the first defined of two or three arguments.
 	    function defaults(a, b, c) {
 	        if (a != null) {
@@ -39811,7 +39967,7 @@
 	        }
 	        return c;
 	    }
-
+	
 	    function currentDateArray(config) {
 	        // hooks is actually the exported moment object
 	        var nowValue = new Date(utils_hooks__hooks.now());
@@ -39820,38 +39976,38 @@
 	        }
 	        return [nowValue.getFullYear(), nowValue.getMonth(), nowValue.getDate()];
 	    }
-
+	
 	    // convert an array to a date.
 	    // the array should mirror the parameters below
 	    // note: all values past the year are optional and will default to the lowest possible value.
 	    // [year, month, day , hour, minute, second, millisecond]
 	    function configFromArray (config) {
 	        var i, date, input = [], currentDate, yearToUse;
-
+	
 	        if (config._d) {
 	            return;
 	        }
-
+	
 	        currentDate = currentDateArray(config);
-
+	
 	        //compute day of the year from weeks and weekdays
 	        if (config._w && config._a[DATE] == null && config._a[MONTH] == null) {
 	            dayOfYearFromWeekInfo(config);
 	        }
-
+	
 	        //if the day of the year is set, figure out what it is
 	        if (config._dayOfYear) {
 	            yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
-
+	
 	            if (config._dayOfYear > daysInYear(yearToUse)) {
 	                getParsingFlags(config)._overflowDayOfYear = true;
 	            }
-
+	
 	            date = createUTCDate(yearToUse, 0, config._dayOfYear);
 	            config._a[MONTH] = date.getUTCMonth();
 	            config._a[DATE] = date.getUTCDate();
 	        }
-
+	
 	        // Default to current date.
 	        // * if no year, month, day of month are given, default to today
 	        // * if day of month is given, default month and year
@@ -39860,12 +40016,12 @@
 	        for (i = 0; i < 3 && config._a[i] == null; ++i) {
 	            config._a[i] = input[i] = currentDate[i];
 	        }
-
+	
 	        // Zero out whatever was not defaulted, including time
 	        for (; i < 7; i++) {
 	            config._a[i] = input[i] = (config._a[i] == null) ? (i === 2 ? 1 : 0) : config._a[i];
 	        }
-
+	
 	        // Check for 24:00:00.000
 	        if (config._a[HOUR] === 24 &&
 	                config._a[MINUTE] === 0 &&
@@ -39874,27 +40030,27 @@
 	            config._nextDay = true;
 	            config._a[HOUR] = 0;
 	        }
-
+	
 	        config._d = (config._useUTC ? createUTCDate : createDate).apply(null, input);
 	        // Apply timezone offset from input. The actual utcOffset can be changed
 	        // with parseZone.
 	        if (config._tzm != null) {
 	            config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
 	        }
-
+	
 	        if (config._nextDay) {
 	            config._a[HOUR] = 24;
 	        }
 	    }
-
+	
 	    function dayOfYearFromWeekInfo(config) {
 	        var w, weekYear, week, weekday, dow, doy, temp, weekdayOverflow;
-
+	
 	        w = config._w;
 	        if (w.GG != null || w.W != null || w.E != null) {
 	            dow = 1;
 	            doy = 4;
-
+	
 	            // TODO: We need to take the current isoWeekYear, but that depends on
 	            // how we interpret now (local, utc, fixed offset). So create
 	            // a now version of current config (take local/utc/offset flags, and
@@ -39908,10 +40064,10 @@
 	        } else {
 	            dow = config._locale._week.dow;
 	            doy = config._locale._week.doy;
-
+	
 	            weekYear = defaults(w.gg, config._a[YEAR], weekOfYear(local__createLocal(), dow, doy).year);
 	            week = defaults(w.w, 1);
-
+	
 	            if (w.d != null) {
 	                // weekday -- low day numbers are considered next week
 	                weekday = w.d;
@@ -39939,10 +40095,10 @@
 	            config._dayOfYear = temp.dayOfYear;
 	        }
 	    }
-
+	
 	    // constant that refers to the ISO standard
 	    utils_hooks__hooks.ISO_8601 = function () {};
-
+	
 	    // date from string and format string
 	    function configFromStringAndFormat(config) {
 	        // TODO: Move this to another part of the creation flow to prevent circular deps
@@ -39950,18 +40106,18 @@
 	            configFromISO(config);
 	            return;
 	        }
-
+	
 	        config._a = [];
 	        getParsingFlags(config).empty = true;
-
+	
 	        // This array is used to make a Date, either with `new Date` or `Date.UTC`
 	        var string = '' + config._i,
 	            i, parsedInput, tokens, token, skipped,
 	            stringLength = string.length,
 	            totalParsedInputLength = 0;
-
+	
 	        tokens = expandFormat(config._f, config._locale).match(formattingTokens) || [];
-
+	
 	        for (i = 0; i < tokens.length; i++) {
 	            token = tokens[i];
 	            parsedInput = (string.match(getParseRegexForToken(token, config)) || [])[0];
@@ -39989,13 +40145,13 @@
 	                getParsingFlags(config).unusedTokens.push(token);
 	            }
 	        }
-
+	
 	        // add remaining unparsed input length to the string
 	        getParsingFlags(config).charsLeftOver = stringLength - totalParsedInputLength;
 	        if (string.length > 0) {
 	            getParsingFlags(config).unusedInput.push(string);
 	        }
-
+	
 	        // clear _12h flag if hour is <= 12
 	        if (getParsingFlags(config).bigHour === true &&
 	                config._a[HOUR] <= 12 &&
@@ -40004,15 +40160,15 @@
 	        }
 	        // handle meridiem
 	        config._a[HOUR] = meridiemFixWrap(config._locale, config._a[HOUR], config._meridiem);
-
+	
 	        configFromArray(config);
 	        checkOverflow(config);
 	    }
-
-
+	
+	
 	    function meridiemFixWrap (locale, hour, meridiem) {
 	        var isPm;
-
+	
 	        if (meridiem == null) {
 	            // nothing to do
 	            return hour;
@@ -40034,22 +40190,22 @@
 	            return hour;
 	        }
 	    }
-
+	
 	    // date from string and array of format strings
 	    function configFromStringAndArray(config) {
 	        var tempConfig,
 	            bestMoment,
-
+	
 	            scoreToBeat,
 	            i,
 	            currentScore;
-
+	
 	        if (config._f.length === 0) {
 	            getParsingFlags(config).invalidFormat = true;
 	            config._d = new Date(NaN);
 	            return;
 	        }
-
+	
 	        for (i = 0; i < config._f.length; i++) {
 	            currentScore = 0;
 	            tempConfig = copyConfig({}, config);
@@ -40058,41 +40214,41 @@
 	            }
 	            tempConfig._f = config._f[i];
 	            configFromStringAndFormat(tempConfig);
-
+	
 	            if (!valid__isValid(tempConfig)) {
 	                continue;
 	            }
-
+	
 	            // if there is any input that was not parsed add a penalty for that format
 	            currentScore += getParsingFlags(tempConfig).charsLeftOver;
-
+	
 	            //or tokens
 	            currentScore += getParsingFlags(tempConfig).unusedTokens.length * 10;
-
+	
 	            getParsingFlags(tempConfig).score = currentScore;
-
+	
 	            if (scoreToBeat == null || currentScore < scoreToBeat) {
 	                scoreToBeat = currentScore;
 	                bestMoment = tempConfig;
 	            }
 	        }
-
+	
 	        extend(config, bestMoment || tempConfig);
 	    }
-
+	
 	    function configFromObject(config) {
 	        if (config._d) {
 	            return;
 	        }
-
+	
 	        var i = normalizeObjectUnits(config._i);
 	        config._a = map([i.year, i.month, i.day || i.date, i.hour, i.minute, i.second, i.millisecond], function (obj) {
 	            return obj && parseInt(obj, 10);
 	        });
-
+	
 	        configFromArray(config);
 	    }
-
+	
 	    function createFromConfig (config) {
 	        var res = new Moment(checkOverflow(prepareConfig(config)));
 	        if (res._nextDay) {
@@ -40100,24 +40256,24 @@
 	            res.add(1, 'd');
 	            res._nextDay = undefined;
 	        }
-
+	
 	        return res;
 	    }
-
+	
 	    function prepareConfig (config) {
 	        var input = config._i,
 	            format = config._f;
-
+	
 	        config._locale = config._locale || locale_locales__getLocale(config._l);
-
+	
 	        if (input === null || (format === undefined && input === '')) {
 	            return valid__createInvalid({nullInput: true});
 	        }
-
+	
 	        if (typeof input === 'string') {
 	            config._i = input = config._locale.preparse(input);
 	        }
-
+	
 	        if (isMoment(input)) {
 	            return new Moment(checkOverflow(input));
 	        } else if (isArray(format)) {
@@ -40129,14 +40285,14 @@
 	        } else {
 	            configFromInput(config);
 	        }
-
+	
 	        if (!valid__isValid(config)) {
 	            config._d = null;
 	        }
-
+	
 	        return config;
 	    }
-
+	
 	    function configFromInput(config) {
 	        var input = config._i;
 	        if (input === undefined) {
@@ -40159,10 +40315,10 @@
 	            utils_hooks__hooks.createFromInputFallback(config);
 	        }
 	    }
-
+	
 	    function createLocalOrUTC (input, format, locale, strict, isUTC) {
 	        var c = {};
-
+	
 	        if (typeof(locale) === 'boolean') {
 	            strict = locale;
 	            locale = undefined;
@@ -40175,14 +40331,14 @@
 	        c._i = input;
 	        c._f = format;
 	        c._strict = strict;
-
+	
 	        return createFromConfig(c);
 	    }
-
+	
 	    function local__createLocal (input, format, locale, strict) {
 	        return createLocalOrUTC(input, format, locale, strict, false);
 	    }
-
+	
 	    var prototypeMin = deprecate(
 	         'moment().min is deprecated, use moment.min instead. https://github.com/moment/moment/issues/1548',
 	         function () {
@@ -40194,7 +40350,7 @@
 	             }
 	         }
 	     );
-
+	
 	    var prototypeMax = deprecate(
 	        'moment().max is deprecated, use moment.max instead. https://github.com/moment/moment/issues/1548',
 	        function () {
@@ -40206,7 +40362,7 @@
 	            }
 	        }
 	    );
-
+	
 	    // Pick a moment m from moments so that m[fn](other) is true for all
 	    // other. This relies on the function fn to be transitive.
 	    //
@@ -40228,24 +40384,24 @@
 	        }
 	        return res;
 	    }
-
+	
 	    // TODO: Use [].sort instead?
 	    function min () {
 	        var args = [].slice.call(arguments, 0);
-
+	
 	        return pickBy('isBefore', args);
 	    }
-
+	
 	    function max () {
 	        var args = [].slice.call(arguments, 0);
-
+	
 	        return pickBy('isAfter', args);
 	    }
-
+	
 	    var now = function () {
 	        return Date.now ? Date.now() : +(new Date());
 	    };
-
+	
 	    function Duration (duration) {
 	        var normalizedInput = normalizeObjectUnits(duration),
 	            years = normalizedInput.year || 0,
@@ -40257,7 +40413,7 @@
 	            minutes = normalizedInput.minute || 0,
 	            seconds = normalizedInput.second || 0,
 	            milliseconds = normalizedInput.millisecond || 0;
-
+	
 	        // representation for dateAddRemove
 	        this._milliseconds = +milliseconds +
 	            seconds * 1e3 + // 1000
@@ -40273,20 +40429,20 @@
 	        this._months = +months +
 	            quarters * 3 +
 	            years * 12;
-
+	
 	        this._data = {};
-
+	
 	        this._locale = locale_locales__getLocale();
-
+	
 	        this._bubble();
 	    }
-
+	
 	    function isDuration (obj) {
 	        return obj instanceof Duration;
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    function offset (token, separator) {
 	        addFormatToken(token, 0, 0, function () {
 	            var offset = this.utcOffset();
@@ -40298,35 +40454,35 @@
 	            return sign + zeroFill(~~(offset / 60), 2) + separator + zeroFill(~~(offset) % 60, 2);
 	        });
 	    }
-
+	
 	    offset('Z', ':');
 	    offset('ZZ', '');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('Z',  matchShortOffset);
 	    addRegexToken('ZZ', matchShortOffset);
 	    addParseToken(['Z', 'ZZ'], function (input, array, config) {
 	        config._useUTC = true;
 	        config._tzm = offsetFromString(matchShortOffset, input);
 	    });
-
+	
 	    // HELPERS
-
+	
 	    // timezone chunker
 	    // '+10:00' > ['10',  '00']
 	    // '-1530'  > ['-15', '30']
 	    var chunkOffset = /([\+\-]|\d\d)/gi;
-
+	
 	    function offsetFromString(matcher, string) {
 	        var matches = ((string || '').match(matcher) || []);
 	        var chunk   = matches[matches.length - 1] || [];
 	        var parts   = (chunk + '').match(chunkOffset) || ['-', 0, 0];
 	        var minutes = +(parts[1] * 60) + toInt(parts[2]);
-
+	
 	        return parts[0] === '+' ? minutes : -minutes;
 	    }
-
+	
 	    // Return a moment from input, that is local/utc/zone equivalent to model.
 	    function cloneWithOffset(input, model) {
 	        var res, diff;
@@ -40341,21 +40497,21 @@
 	            return local__createLocal(input).local();
 	        }
 	    }
-
+	
 	    function getDateOffset (m) {
 	        // On Firefox.24 Date#getTimezoneOffset returns a floating point.
 	        // https://github.com/moment/moment/pull/1871
 	        return -Math.round(m._d.getTimezoneOffset() / 15) * 15;
 	    }
-
+	
 	    // HOOKS
-
+	
 	    // This function will be called whenever a moment is mutated.
 	    // It is intended to keep the offset in sync with the timezone.
 	    utils_hooks__hooks.updateOffset = function () {};
-
+	
 	    // MOMENTS
-
+	
 	    // keepLocalTime = true means only change the timezone, without
 	    // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
 	    // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
@@ -40400,37 +40556,37 @@
 	            return this._isUTC ? offset : getDateOffset(this);
 	        }
 	    }
-
+	
 	    function getSetZone (input, keepLocalTime) {
 	        if (input != null) {
 	            if (typeof input !== 'string') {
 	                input = -input;
 	            }
-
+	
 	            this.utcOffset(input, keepLocalTime);
-
+	
 	            return this;
 	        } else {
 	            return -this.utcOffset();
 	        }
 	    }
-
+	
 	    function setOffsetToUTC (keepLocalTime) {
 	        return this.utcOffset(0, keepLocalTime);
 	    }
-
+	
 	    function setOffsetToLocal (keepLocalTime) {
 	        if (this._isUTC) {
 	            this.utcOffset(0, keepLocalTime);
 	            this._isUTC = false;
-
+	
 	            if (keepLocalTime) {
 	                this.subtract(getDateOffset(this), 'm');
 	            }
 	        }
 	        return this;
 	    }
-
+	
 	    function setOffsetToParsedOffset () {
 	        if (this._tzm) {
 	            this.utcOffset(this._tzm);
@@ -40439,33 +40595,33 @@
 	        }
 	        return this;
 	    }
-
+	
 	    function hasAlignedHourOffset (input) {
 	        if (!this.isValid()) {
 	            return false;
 	        }
 	        input = input ? local__createLocal(input).utcOffset() : 0;
-
+	
 	        return (this.utcOffset() - input) % 60 === 0;
 	    }
-
+	
 	    function isDaylightSavingTime () {
 	        return (
 	            this.utcOffset() > this.clone().month(0).utcOffset() ||
 	            this.utcOffset() > this.clone().month(5).utcOffset()
 	        );
 	    }
-
+	
 	    function isDaylightSavingTimeShifted () {
 	        if (!isUndefined(this._isDSTShifted)) {
 	            return this._isDSTShifted;
 	        }
-
+	
 	        var c = {};
-
+	
 	        copyConfig(c, this);
 	        c = prepareConfig(c);
-
+	
 	        if (c._a) {
 	            var other = c._isUTC ? create_utc__createUTC(c._a) : local__createLocal(c._a);
 	            this._isDSTShifted = this.isValid() &&
@@ -40473,29 +40629,29 @@
 	        } else {
 	            this._isDSTShifted = false;
 	        }
-
+	
 	        return this._isDSTShifted;
 	    }
-
+	
 	    function isLocal () {
 	        return this.isValid() ? !this._isUTC : false;
 	    }
-
+	
 	    function isUtcOffset () {
 	        return this.isValid() ? this._isUTC : false;
 	    }
-
+	
 	    function isUtc () {
 	        return this.isValid() ? this._isUTC && this._offset === 0 : false;
 	    }
-
+	
 	    // ASP.NET json date format regex
 	    var aspNetRegex = /^(\-)?(?:(\d*)[. ])?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?\d*)?$/;
-
+	
 	    // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
 	    // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
 	    var isoRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/;
-
+	
 	    function create__createDuration (input, key) {
 	        var duration = input,
 	            // matching against regexp is expensive, do it on demand
@@ -40503,7 +40659,7 @@
 	            sign,
 	            ret,
 	            diffRes;
-
+	
 	        if (isDuration(input)) {
 	            duration = {
 	                ms : input._milliseconds,
@@ -40542,23 +40698,23 @@
 	            duration = {};
 	        } else if (typeof duration === 'object' && ('from' in duration || 'to' in duration)) {
 	            diffRes = momentsDifference(local__createLocal(duration.from), local__createLocal(duration.to));
-
+	
 	            duration = {};
 	            duration.ms = diffRes.milliseconds;
 	            duration.M = diffRes.months;
 	        }
-
+	
 	        ret = new Duration(duration);
-
+	
 	        if (isDuration(input) && hasOwnProp(input, '_locale')) {
 	            ret._locale = input._locale;
 	        }
-
+	
 	        return ret;
 	    }
-
+	
 	    create__createDuration.fn = Duration.prototype;
-
+	
 	    function parseIso (inp, sign) {
 	        // We'd normally use ~~inp for this, but unfortunately it also
 	        // converts floats to ints.
@@ -40567,27 +40723,27 @@
 	        // apply sign while we're at it
 	        return (isNaN(res) ? 0 : res) * sign;
 	    }
-
+	
 	    function positiveMomentsDifference(base, other) {
 	        var res = {milliseconds: 0, months: 0};
-
+	
 	        res.months = other.month() - base.month() +
 	            (other.year() - base.year()) * 12;
 	        if (base.clone().add(res.months, 'M').isAfter(other)) {
 	            --res.months;
 	        }
-
+	
 	        res.milliseconds = +other - +(base.clone().add(res.months, 'M'));
-
+	
 	        return res;
 	    }
-
+	
 	    function momentsDifference(base, other) {
 	        var res;
 	        if (!(base.isValid() && other.isValid())) {
 	            return {milliseconds: 0, months: 0};
 	        }
-
+	
 	        other = cloneWithOffset(other, base);
 	        if (base.isBefore(other)) {
 	            res = positiveMomentsDifference(base, other);
@@ -40596,10 +40752,10 @@
 	            res.milliseconds = -res.milliseconds;
 	            res.months = -res.months;
 	        }
-
+	
 	        return res;
 	    }
-
+	
 	    // TODO: remove 'name' arg after deprecation is removed
 	    function createAdder(direction, name) {
 	        return function (val, period) {
@@ -40609,26 +40765,26 @@
 	                deprecateSimple(name, 'moment().' + name  + '(period, number) is deprecated. Please use moment().' + name + '(number, period).');
 	                tmp = val; val = period; period = tmp;
 	            }
-
+	
 	            val = typeof val === 'string' ? +val : val;
 	            dur = create__createDuration(val, period);
 	            add_subtract__addSubtract(this, dur, direction);
 	            return this;
 	        };
 	    }
-
+	
 	    function add_subtract__addSubtract (mom, duration, isAdding, updateOffset) {
 	        var milliseconds = duration._milliseconds,
 	            days = duration._days,
 	            months = duration._months;
-
+	
 	        if (!mom.isValid()) {
 	            // No op
 	            return;
 	        }
-
+	
 	        updateOffset = updateOffset == null ? true : updateOffset;
-
+	
 	        if (milliseconds) {
 	            mom._d.setTime(+mom._d + milliseconds * isAdding);
 	        }
@@ -40642,10 +40798,10 @@
 	            utils_hooks__hooks.updateOffset(mom, days || months);
 	        }
 	    }
-
+	
 	    var add_subtract__add      = createAdder(1, 'add');
 	    var add_subtract__subtract = createAdder(-1, 'subtract');
-
+	
 	    function moment_calendar__calendar (time, formats) {
 	        // We want to compare the start of today, vs this.
 	        // Getting start-of-today depends on whether we're local/utc/offset or not.
@@ -40658,16 +40814,16 @@
 	                diff < 1 ? 'sameDay' :
 	                diff < 2 ? 'nextDay' :
 	                diff < 7 ? 'nextWeek' : 'sameElse';
-
+	
 	        var output = formats && (isFunction(formats[format]) ? formats[format]() : formats[format]);
-
+	
 	        return this.format(output || this.localeData().calendar(format, this, local__createLocal(now)));
 	    }
-
+	
 	    function clone () {
 	        return new Moment(this);
 	    }
-
+	
 	    function isAfter (input, units) {
 	        var localInput = isMoment(input) ? input : local__createLocal(input);
 	        if (!(this.isValid() && localInput.isValid())) {
@@ -40680,7 +40836,7 @@
 	            return +localInput < +this.clone().startOf(units);
 	        }
 	    }
-
+	
 	    function isBefore (input, units) {
 	        var localInput = isMoment(input) ? input : local__createLocal(input);
 	        if (!(this.isValid() && localInput.isValid())) {
@@ -40693,11 +40849,11 @@
 	            return +this.clone().endOf(units) < +localInput;
 	        }
 	    }
-
+	
 	    function isBetween (from, to, units) {
 	        return this.isAfter(from, units) && this.isBefore(to, units);
 	    }
-
+	
 	    function isSame (input, units) {
 	        var localInput = isMoment(input) ? input : local__createLocal(input),
 	            inputMs;
@@ -40712,34 +40868,34 @@
 	            return +(this.clone().startOf(units)) <= inputMs && inputMs <= +(this.clone().endOf(units));
 	        }
 	    }
-
+	
 	    function isSameOrAfter (input, units) {
 	        return this.isSame(input, units) || this.isAfter(input,units);
 	    }
-
+	
 	    function isSameOrBefore (input, units) {
 	        return this.isSame(input, units) || this.isBefore(input,units);
 	    }
-
+	
 	    function diff (input, units, asFloat) {
 	        var that,
 	            zoneDelta,
 	            delta, output;
-
+	
 	        if (!this.isValid()) {
 	            return NaN;
 	        }
-
+	
 	        that = cloneWithOffset(input, this);
-
+	
 	        if (!that.isValid()) {
 	            return NaN;
 	        }
-
+	
 	        zoneDelta = (that.utcOffset() - this.utcOffset()) * 6e4;
-
+	
 	        units = normalizeUnits(units);
-
+	
 	        if (units === 'year' || units === 'month' || units === 'quarter') {
 	            output = monthDiff(this, that);
 	            if (units === 'quarter') {
@@ -40758,14 +40914,14 @@
 	        }
 	        return asFloat ? output : absFloor(output);
 	    }
-
+	
 	    function monthDiff (a, b) {
 	        // difference in months
 	        var wholeMonthDiff = ((b.year() - a.year()) * 12) + (b.month() - a.month()),
 	            // b is in (anchor - 1 month, anchor + 1 month)
 	            anchor = a.clone().add(wholeMonthDiff, 'months'),
 	            anchor2, adjust;
-
+	
 	        if (b - anchor < 0) {
 	            anchor2 = a.clone().add(wholeMonthDiff - 1, 'months');
 	            // linear across the month
@@ -40775,16 +40931,16 @@
 	            // linear across the month
 	            adjust = (b - anchor) / (anchor2 - anchor);
 	        }
-
+	
 	        return -(wholeMonthDiff + adjust);
 	    }
-
+	
 	    utils_hooks__hooks.defaultFormat = 'YYYY-MM-DDTHH:mm:ssZ';
-
+	
 	    function toString () {
 	        return this.clone().locale('en').format('ddd MMM DD YYYY HH:mm:ss [GMT]ZZ');
 	    }
-
+	
 	    function moment_format__toISOString () {
 	        var m = this.clone().utc();
 	        if (0 < m.year() && m.year() <= 9999) {
@@ -40798,12 +40954,12 @@
 	            return formatMoment(m, 'YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
 	        }
 	    }
-
+	
 	    function format (inputString) {
 	        var output = formatMoment(this, inputString || utils_hooks__hooks.defaultFormat);
 	        return this.localeData().postformat(output);
 	    }
-
+	
 	    function from (time, withoutSuffix) {
 	        if (this.isValid() &&
 	                ((isMoment(time) && time.isValid()) ||
@@ -40813,11 +40969,11 @@
 	            return this.localeData().invalidDate();
 	        }
 	    }
-
+	
 	    function fromNow (withoutSuffix) {
 	        return this.from(local__createLocal(), withoutSuffix);
 	    }
-
+	
 	    function to (time, withoutSuffix) {
 	        if (this.isValid() &&
 	                ((isMoment(time) && time.isValid()) ||
@@ -40827,17 +40983,17 @@
 	            return this.localeData().invalidDate();
 	        }
 	    }
-
+	
 	    function toNow (withoutSuffix) {
 	        return this.to(local__createLocal(), withoutSuffix);
 	    }
-
+	
 	    // If passed a locale key, it will set the locale for this
 	    // instance.  Otherwise, it will return the locale configuration
 	    // variables for this instance.
 	    function locale (key) {
 	        var newLocaleData;
-
+	
 	        if (key === undefined) {
 	            return this._locale._abbr;
 	        } else {
@@ -40848,7 +41004,7 @@
 	            return this;
 	        }
 	    }
-
+	
 	    var lang = deprecate(
 	        'moment().lang() is deprecated. Instead, use moment().localeData() to get the language configuration. Use moment().locale() to change languages.',
 	        function (key) {
@@ -40859,11 +41015,11 @@
 	            }
 	        }
 	    );
-
+	
 	    function localeData () {
 	        return this._locale;
 	    }
-
+	
 	    function startOf (units) {
 	        units = normalizeUnits(units);
 	        // the following switch intentionally omits break keywords
@@ -40890,7 +41046,7 @@
 	        case 'second':
 	            this.milliseconds(0);
 	        }
-
+	
 	        // weeks are a special case
 	        if (units === 'week') {
 	            this.weekday(0);
@@ -40898,15 +41054,15 @@
 	        if (units === 'isoWeek') {
 	            this.isoWeekday(1);
 	        }
-
+	
 	        // quarters are also special
 	        if (units === 'quarter') {
 	            this.month(Math.floor(this.month() / 3) * 3);
 	        }
-
+	
 	        return this;
 	    }
-
+	
 	    function endOf (units) {
 	        units = normalizeUnits(units);
 	        if (units === undefined || units === 'millisecond') {
@@ -40914,24 +41070,24 @@
 	        }
 	        return this.startOf(units).add(1, (units === 'isoWeek' ? 'week' : units)).subtract(1, 'ms');
 	    }
-
+	
 	    function to_type__valueOf () {
 	        return +this._d - ((this._offset || 0) * 60000);
 	    }
-
+	
 	    function unix () {
 	        return Math.floor(+this / 1000);
 	    }
-
+	
 	    function toDate () {
 	        return this._offset ? new Date(+this) : this._d;
 	    }
-
+	
 	    function toArray () {
 	        var m = this;
 	        return [m.year(), m.month(), m.date(), m.hour(), m.minute(), m.second(), m.millisecond()];
 	    }
-
+	
 	    function toObject () {
 	        var m = this;
 	        return {
@@ -40944,24 +41100,24 @@
 	            milliseconds: m.milliseconds()
 	        };
 	    }
-
+	
 	    function toJSON () {
 	        // JSON.stringify(new Date(NaN)) === 'null'
 	        return this.isValid() ? this.toISOString() : 'null';
 	    }
-
+	
 	    function moment_valid__isValid () {
 	        return valid__isValid(this);
 	    }
-
+	
 	    function parsingFlags () {
 	        return extend({}, getParsingFlags(this));
 	    }
-
+	
 	    function invalidAt () {
 	        return getParsingFlags(this).overflow;
 	    }
-
+	
 	    function creationData() {
 	        return {
 	            input: this._i,
@@ -40971,33 +41127,33 @@
 	            strict: this._strict
 	        };
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken(0, ['gg', 2], 0, function () {
 	        return this.weekYear() % 100;
 	    });
-
+	
 	    addFormatToken(0, ['GG', 2], 0, function () {
 	        return this.isoWeekYear() % 100;
 	    });
-
+	
 	    function addWeekYearFormatToken (token, getter) {
 	        addFormatToken(0, [token, token.length], 0, getter);
 	    }
-
+	
 	    addWeekYearFormatToken('gggg',     'weekYear');
 	    addWeekYearFormatToken('ggggg',    'weekYear');
 	    addWeekYearFormatToken('GGGG',  'isoWeekYear');
 	    addWeekYearFormatToken('GGGGG', 'isoWeekYear');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('weekYear', 'gg');
 	    addUnitAlias('isoWeekYear', 'GG');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('G',      matchSigned);
 	    addRegexToken('g',      matchSigned);
 	    addRegexToken('GG',     match1to2, match2);
@@ -41006,17 +41162,17 @@
 	    addRegexToken('gggg',   match1to4, match4);
 	    addRegexToken('GGGGG',  match1to6, match6);
 	    addRegexToken('ggggg',  match1to6, match6);
-
+	
 	    addWeekParseToken(['gggg', 'ggggg', 'GGGG', 'GGGGG'], function (input, week, config, token) {
 	        week[token.substr(0, 2)] = toInt(input);
 	    });
-
+	
 	    addWeekParseToken(['gg', 'GG'], function (input, week, config, token) {
 	        week[token] = utils_hooks__hooks.parseTwoDigitYear(input);
 	    });
-
+	
 	    // MOMENTS
-
+	
 	    function getSetWeekYear (input) {
 	        return getSetWeekYearHelper.call(this,
 	                input,
@@ -41025,21 +41181,21 @@
 	                this.localeData()._week.dow,
 	                this.localeData()._week.doy);
 	    }
-
+	
 	    function getSetISOWeekYear (input) {
 	        return getSetWeekYearHelper.call(this,
 	                input, this.isoWeek(), this.isoWeekday(), 1, 4);
 	    }
-
+	
 	    function getISOWeeksInYear () {
 	        return weeksInYear(this.year(), 1, 4);
 	    }
-
+	
 	    function getWeeksInYear () {
 	        var weekInfo = this.localeData()._week;
 	        return weeksInYear(this.year(), weekInfo.dow, weekInfo.doy);
 	    }
-
+	
 	    function getSetWeekYearHelper(input, week, weekday, dow, doy) {
 	        var weeksTarget;
 	        if (input == null) {
@@ -41052,152 +41208,152 @@
 	            return setWeekAll.call(this, input, week, weekday, dow, doy);
 	        }
 	    }
-
+	
 	    function setWeekAll(weekYear, week, weekday, dow, doy) {
 	        var dayOfYearData = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy),
 	            date = createUTCDate(dayOfYearData.year, 0, dayOfYearData.dayOfYear);
-
+	
 	        // console.log("got", weekYear, week, weekday, "set", date.toISOString());
 	        this.year(date.getUTCFullYear());
 	        this.month(date.getUTCMonth());
 	        this.date(date.getUTCDate());
 	        return this;
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('Q', 0, 'Qo', 'quarter');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('quarter', 'Q');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('Q', match1);
 	    addParseToken('Q', function (input, array) {
 	        array[MONTH] = (toInt(input) - 1) * 3;
 	    });
-
+	
 	    // MOMENTS
-
+	
 	    function getSetQuarter (input) {
 	        return input == null ? Math.ceil((this.month() + 1) / 3) : this.month((input - 1) * 3 + this.month() % 3);
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('w', ['ww', 2], 'wo', 'week');
 	    addFormatToken('W', ['WW', 2], 'Wo', 'isoWeek');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('week', 'w');
 	    addUnitAlias('isoWeek', 'W');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('w',  match1to2);
 	    addRegexToken('ww', match1to2, match2);
 	    addRegexToken('W',  match1to2);
 	    addRegexToken('WW', match1to2, match2);
-
+	
 	    addWeekParseToken(['w', 'ww', 'W', 'WW'], function (input, week, config, token) {
 	        week[token.substr(0, 1)] = toInt(input);
 	    });
-
+	
 	    // HELPERS
-
+	
 	    // LOCALES
-
+	
 	    function localeWeek (mom) {
 	        return weekOfYear(mom, this._week.dow, this._week.doy).week;
 	    }
-
+	
 	    var defaultLocaleWeek = {
 	        dow : 0, // Sunday is the first day of the week.
 	        doy : 6  // The week that contains Jan 1st is the first week of the year.
 	    };
-
+	
 	    function localeFirstDayOfWeek () {
 	        return this._week.dow;
 	    }
-
+	
 	    function localeFirstDayOfYear () {
 	        return this._week.doy;
 	    }
-
+	
 	    // MOMENTS
-
+	
 	    function getSetWeek (input) {
 	        var week = this.localeData().week(this);
 	        return input == null ? week : this.add((input - week) * 7, 'd');
 	    }
-
+	
 	    function getSetISOWeek (input) {
 	        var week = weekOfYear(this, 1, 4).week;
 	        return input == null ? week : this.add((input - week) * 7, 'd');
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('D', ['DD', 2], 'Do', 'date');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('date', 'D');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('D',  match1to2);
 	    addRegexToken('DD', match1to2, match2);
 	    addRegexToken('Do', function (isStrict, locale) {
 	        return isStrict ? locale._ordinalParse : locale._ordinalParseLenient;
 	    });
-
+	
 	    addParseToken(['D', 'DD'], DATE);
 	    addParseToken('Do', function (input, array) {
 	        array[DATE] = toInt(input.match(match1to2)[0], 10);
 	    });
-
+	
 	    // MOMENTS
-
+	
 	    var getSetDayOfMonth = makeGetSet('Date', true);
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('d', 0, 'do', 'day');
-
+	
 	    addFormatToken('dd', 0, 0, function (format) {
 	        return this.localeData().weekdaysMin(this, format);
 	    });
-
+	
 	    addFormatToken('ddd', 0, 0, function (format) {
 	        return this.localeData().weekdaysShort(this, format);
 	    });
-
+	
 	    addFormatToken('dddd', 0, 0, function (format) {
 	        return this.localeData().weekdays(this, format);
 	    });
-
+	
 	    addFormatToken('e', 0, 0, 'weekday');
 	    addFormatToken('E', 0, 0, 'isoWeekday');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('day', 'd');
 	    addUnitAlias('weekday', 'e');
 	    addUnitAlias('isoWeekday', 'E');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('d',    match1to2);
 	    addRegexToken('e',    match1to2);
 	    addRegexToken('E',    match1to2);
 	    addRegexToken('dd',   matchWord);
 	    addRegexToken('ddd',  matchWord);
 	    addRegexToken('dddd', matchWord);
-
+	
 	    addWeekParseToken(['dd', 'ddd', 'dddd'], function (input, week, config, token) {
 	        var weekday = config._locale.weekdaysParse(input, token, config._strict);
 	        // if we didn't get a weekday name, mark the date as invalid
@@ -41207,61 +41363,61 @@
 	            getParsingFlags(config).invalidWeekday = input;
 	        }
 	    });
-
+	
 	    addWeekParseToken(['d', 'e', 'E'], function (input, week, config, token) {
 	        week[token] = toInt(input);
 	    });
-
+	
 	    // HELPERS
-
+	
 	    function parseWeekday(input, locale) {
 	        if (typeof input !== 'string') {
 	            return input;
 	        }
-
+	
 	        if (!isNaN(input)) {
 	            return parseInt(input, 10);
 	        }
-
+	
 	        input = locale.weekdaysParse(input);
 	        if (typeof input === 'number') {
 	            return input;
 	        }
-
+	
 	        return null;
 	    }
-
+	
 	    // LOCALES
-
+	
 	    var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
 	    function localeWeekdays (m, format) {
 	        return isArray(this._weekdays) ? this._weekdays[m.day()] :
 	            this._weekdays[this._weekdays.isFormat.test(format) ? 'format' : 'standalone'][m.day()];
 	    }
-
+	
 	    var defaultLocaleWeekdaysShort = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_');
 	    function localeWeekdaysShort (m) {
 	        return this._weekdaysShort[m.day()];
 	    }
-
+	
 	    var defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_');
 	    function localeWeekdaysMin (m) {
 	        return this._weekdaysMin[m.day()];
 	    }
-
+	
 	    function localeWeekdaysParse (weekdayName, format, strict) {
 	        var i, mom, regex;
-
+	
 	        if (!this._weekdaysParse) {
 	            this._weekdaysParse = [];
 	            this._minWeekdaysParse = [];
 	            this._shortWeekdaysParse = [];
 	            this._fullWeekdaysParse = [];
 	        }
-
+	
 	        for (i = 0; i < 7; i++) {
 	            // make the regex if we don't have it already
-
+	
 	            mom = local__createLocal([2000, 1]).day(i);
 	            if (strict && !this._fullWeekdaysParse[i]) {
 	                this._fullWeekdaysParse[i] = new RegExp('^' + this.weekdays(mom, '').replace('.', '\.?') + '$', 'i');
@@ -41284,9 +41440,9 @@
 	            }
 	        }
 	    }
-
+	
 	    // MOMENTS
-
+	
 	    function getSetDayOfWeek (input) {
 	        if (!this.isValid()) {
 	            return input != null ? this : NaN;
@@ -41299,7 +41455,7 @@
 	            return day;
 	        }
 	    }
-
+	
 	    function getSetLocaleDayOfWeek (input) {
 	        if (!this.isValid()) {
 	            return input != null ? this : NaN;
@@ -41307,7 +41463,7 @@
 	        var weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
 	        return input == null ? weekday : this.add(input - weekday, 'd');
 	    }
-
+	
 	    function getSetISODayOfWeek (input) {
 	        if (!this.isValid()) {
 	            return input != null ? this : NaN;
@@ -41317,90 +41473,90 @@
 	        // as a setter, sunday should belong to the previous week.
 	        return input == null ? this.day() || 7 : this.day(this.day() % 7 ? input : input - 7);
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('DDD', ['DDDD', 3], 'DDDo', 'dayOfYear');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('dayOfYear', 'DDD');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('DDD',  match1to3);
 	    addRegexToken('DDDD', match3);
 	    addParseToken(['DDD', 'DDDD'], function (input, array, config) {
 	        config._dayOfYear = toInt(input);
 	    });
-
+	
 	    // HELPERS
-
+	
 	    // MOMENTS
-
+	
 	    function getSetDayOfYear (input) {
 	        var dayOfYear = Math.round((this.clone().startOf('day') - this.clone().startOf('year')) / 864e5) + 1;
 	        return input == null ? dayOfYear : this.add((input - dayOfYear), 'd');
 	    }
-
+	
 	    // FORMATTING
-
+	
 	    function hFormat() {
 	        return this.hours() % 12 || 12;
 	    }
-
+	
 	    addFormatToken('H', ['HH', 2], 0, 'hour');
 	    addFormatToken('h', ['hh', 2], 0, hFormat);
-
+	
 	    addFormatToken('hmm', 0, 0, function () {
 	        return '' + hFormat.apply(this) + zeroFill(this.minutes(), 2);
 	    });
-
+	
 	    addFormatToken('hmmss', 0, 0, function () {
 	        return '' + hFormat.apply(this) + zeroFill(this.minutes(), 2) +
 	            zeroFill(this.seconds(), 2);
 	    });
-
+	
 	    addFormatToken('Hmm', 0, 0, function () {
 	        return '' + this.hours() + zeroFill(this.minutes(), 2);
 	    });
-
+	
 	    addFormatToken('Hmmss', 0, 0, function () {
 	        return '' + this.hours() + zeroFill(this.minutes(), 2) +
 	            zeroFill(this.seconds(), 2);
 	    });
-
+	
 	    function meridiem (token, lowercase) {
 	        addFormatToken(token, 0, 0, function () {
 	            return this.localeData().meridiem(this.hours(), this.minutes(), lowercase);
 	        });
 	    }
-
+	
 	    meridiem('a', true);
 	    meridiem('A', false);
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('hour', 'h');
-
+	
 	    // PARSING
-
+	
 	    function matchMeridiem (isStrict, locale) {
 	        return locale._meridiemParse;
 	    }
-
+	
 	    addRegexToken('a',  matchMeridiem);
 	    addRegexToken('A',  matchMeridiem);
 	    addRegexToken('H',  match1to2);
 	    addRegexToken('h',  match1to2);
 	    addRegexToken('HH', match1to2, match2);
 	    addRegexToken('hh', match1to2, match2);
-
+	
 	    addRegexToken('hmm', match3to4);
 	    addRegexToken('hmmss', match5to6);
 	    addRegexToken('Hmm', match3to4);
 	    addRegexToken('Hmmss', match5to6);
-
+	
 	    addParseToken(['H', 'HH'], HOUR);
 	    addParseToken(['a', 'A'], function (input, array, config) {
 	        config._isPm = config._locale.isPM(input);
@@ -41436,15 +41592,15 @@
 	        array[MINUTE] = toInt(input.substr(pos1, 2));
 	        array[SECOND] = toInt(input.substr(pos2));
 	    });
-
+	
 	    // LOCALES
-
+	
 	    function localeIsPM (input) {
 	        // IE8 Quirks Mode & IE7 Standards Mode do not allow accessing strings like arrays
 	        // Using charAt should be more compatible.
 	        return ((input + '').toLowerCase().charAt(0) === 'p');
 	    }
-
+	
 	    var defaultLocaleMeridiemParse = /[ap]\.?m?\.?/i;
 	    function localeMeridiem (hours, minutes, isLower) {
 	        if (hours > 11) {
@@ -41453,62 +41609,62 @@
 	            return isLower ? 'am' : 'AM';
 	        }
 	    }
-
-
+	
+	
 	    // MOMENTS
-
+	
 	    // Setting the hour should keep the time, because the user explicitly
 	    // specified which hour he wants. So trying to maintain the same hour (in
 	    // a new timezone) makes sense. Adding/subtracting hours does not follow
 	    // this rule.
 	    var getSetHour = makeGetSet('Hours', true);
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('m', ['mm', 2], 0, 'minute');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('minute', 'm');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('m',  match1to2);
 	    addRegexToken('mm', match1to2, match2);
 	    addParseToken(['m', 'mm'], MINUTE);
-
+	
 	    // MOMENTS
-
+	
 	    var getSetMinute = makeGetSet('Minutes', false);
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('s', ['ss', 2], 0, 'second');
-
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('second', 's');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('s',  match1to2);
 	    addRegexToken('ss', match1to2, match2);
 	    addParseToken(['s', 'ss'], SECOND);
-
+	
 	    // MOMENTS
-
+	
 	    var getSetSecond = makeGetSet('Seconds', false);
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('S', 0, 0, function () {
 	        return ~~(this.millisecond() / 100);
 	    });
-
+	
 	    addFormatToken(0, ['SS', 2], 0, function () {
 	        return ~~(this.millisecond() / 10);
 	    });
-
+	
 	    addFormatToken(0, ['SSS', 3], 0, 'millisecond');
 	    addFormatToken(0, ['SSSS', 4], 0, function () {
 	        return this.millisecond() * 10;
@@ -41528,51 +41684,51 @@
 	    addFormatToken(0, ['SSSSSSSSS', 9], 0, function () {
 	        return this.millisecond() * 1000000;
 	    });
-
-
+	
+	
 	    // ALIASES
-
+	
 	    addUnitAlias('millisecond', 'ms');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('S',    match1to3, match1);
 	    addRegexToken('SS',   match1to3, match2);
 	    addRegexToken('SSS',  match1to3, match3);
-
+	
 	    var token;
 	    for (token = 'SSSS'; token.length <= 9; token += 'S') {
 	        addRegexToken(token, matchUnsigned);
 	    }
-
+	
 	    function parseMs(input, array) {
 	        array[MILLISECOND] = toInt(('0.' + input) * 1000);
 	    }
-
+	
 	    for (token = 'S'; token.length <= 9; token += 'S') {
 	        addParseToken(token, parseMs);
 	    }
 	    // MOMENTS
-
+	
 	    var getSetMillisecond = makeGetSet('Milliseconds', false);
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('z',  0, 0, 'zoneAbbr');
 	    addFormatToken('zz', 0, 0, 'zoneName');
-
+	
 	    // MOMENTS
-
+	
 	    function getZoneAbbr () {
 	        return this._isUTC ? 'UTC' : '';
 	    }
-
+	
 	    function getZoneName () {
 	        return this._isUTC ? 'Coordinated Universal Time' : '';
 	    }
-
+	
 	    var momentPrototype__proto = Moment.prototype;
-
+	
 	    momentPrototype__proto.add               = add_subtract__add;
 	    momentPrototype__proto.calendar          = moment_calendar__calendar;
 	    momentPrototype__proto.clone             = clone;
@@ -41610,47 +41766,47 @@
 	    momentPrototype__proto.unix              = unix;
 	    momentPrototype__proto.valueOf           = to_type__valueOf;
 	    momentPrototype__proto.creationData      = creationData;
-
+	
 	    // Year
 	    momentPrototype__proto.year       = getSetYear;
 	    momentPrototype__proto.isLeapYear = getIsLeapYear;
-
+	
 	    // Week Year
 	    momentPrototype__proto.weekYear    = getSetWeekYear;
 	    momentPrototype__proto.isoWeekYear = getSetISOWeekYear;
-
+	
 	    // Quarter
 	    momentPrototype__proto.quarter = momentPrototype__proto.quarters = getSetQuarter;
-
+	
 	    // Month
 	    momentPrototype__proto.month       = getSetMonth;
 	    momentPrototype__proto.daysInMonth = getDaysInMonth;
-
+	
 	    // Week
 	    momentPrototype__proto.week           = momentPrototype__proto.weeks        = getSetWeek;
 	    momentPrototype__proto.isoWeek        = momentPrototype__proto.isoWeeks     = getSetISOWeek;
 	    momentPrototype__proto.weeksInYear    = getWeeksInYear;
 	    momentPrototype__proto.isoWeeksInYear = getISOWeeksInYear;
-
+	
 	    // Day
 	    momentPrototype__proto.date       = getSetDayOfMonth;
 	    momentPrototype__proto.day        = momentPrototype__proto.days             = getSetDayOfWeek;
 	    momentPrototype__proto.weekday    = getSetLocaleDayOfWeek;
 	    momentPrototype__proto.isoWeekday = getSetISODayOfWeek;
 	    momentPrototype__proto.dayOfYear  = getSetDayOfYear;
-
+	
 	    // Hour
 	    momentPrototype__proto.hour = momentPrototype__proto.hours = getSetHour;
-
+	
 	    // Minute
 	    momentPrototype__proto.minute = momentPrototype__proto.minutes = getSetMinute;
-
+	
 	    // Second
 	    momentPrototype__proto.second = momentPrototype__proto.seconds = getSetSecond;
-
+	
 	    // Millisecond
 	    momentPrototype__proto.millisecond = momentPrototype__proto.milliseconds = getSetMillisecond;
-
+	
 	    // Offset
 	    momentPrototype__proto.utcOffset            = getSetOffset;
 	    momentPrototype__proto.utc                  = setOffsetToUTC;
@@ -41663,27 +41819,27 @@
 	    momentPrototype__proto.isUtcOffset          = isUtcOffset;
 	    momentPrototype__proto.isUtc                = isUtc;
 	    momentPrototype__proto.isUTC                = isUtc;
-
+	
 	    // Timezone
 	    momentPrototype__proto.zoneAbbr = getZoneAbbr;
 	    momentPrototype__proto.zoneName = getZoneName;
-
+	
 	    // Deprecations
 	    momentPrototype__proto.dates  = deprecate('dates accessor is deprecated. Use date instead.', getSetDayOfMonth);
 	    momentPrototype__proto.months = deprecate('months accessor is deprecated. Use month instead', getSetMonth);
 	    momentPrototype__proto.years  = deprecate('years accessor is deprecated. Use year instead', getSetYear);
 	    momentPrototype__proto.zone   = deprecate('moment().zone is deprecated, use moment().utcOffset instead. https://github.com/moment/moment/issues/1779', getSetZone);
-
+	
 	    var momentPrototype = momentPrototype__proto;
-
+	
 	    function moment__createUnix (input) {
 	        return local__createLocal(input * 1000);
 	    }
-
+	
 	    function moment__createInZone () {
 	        return local__createLocal.apply(null, arguments).parseZone();
 	    }
-
+	
 	    var defaultCalendar = {
 	        sameDay : '[Today at] LT',
 	        nextDay : '[Tomorrow at] LT',
@@ -41692,12 +41848,12 @@
 	        lastWeek : '[Last] dddd [at] LT',
 	        sameElse : 'L'
 	    };
-
+	
 	    function locale_calendar__calendar (key, mom, now) {
 	        var output = this._calendar[key];
 	        return isFunction(output) ? output.call(mom, now) : output;
 	    }
-
+	
 	    var defaultLongDateFormat = {
 	        LTS  : 'h:mm:ss A',
 	        LT   : 'h:mm A',
@@ -41706,39 +41862,39 @@
 	        LLL  : 'MMMM D, YYYY h:mm A',
 	        LLLL : 'dddd, MMMM D, YYYY h:mm A'
 	    };
-
+	
 	    function longDateFormat (key) {
 	        var format = this._longDateFormat[key],
 	            formatUpper = this._longDateFormat[key.toUpperCase()];
-
+	
 	        if (format || !formatUpper) {
 	            return format;
 	        }
-
+	
 	        this._longDateFormat[key] = formatUpper.replace(/MMMM|MM|DD|dddd/g, function (val) {
 	            return val.slice(1);
 	        });
-
+	
 	        return this._longDateFormat[key];
 	    }
-
+	
 	    var defaultInvalidDate = 'Invalid date';
-
+	
 	    function invalidDate () {
 	        return this._invalidDate;
 	    }
-
+	
 	    var defaultOrdinal = '%d';
 	    var defaultOrdinalParse = /\d{1,2}/;
-
+	
 	    function ordinal (number) {
 	        return this._ordinal.replace('%d', number);
 	    }
-
+	
 	    function preParsePostFormat (string) {
 	        return string;
 	    }
-
+	
 	    var defaultRelativeTime = {
 	        future : 'in %s',
 	        past   : '%s ago',
@@ -41754,19 +41910,19 @@
 	        y  : 'a year',
 	        yy : '%d years'
 	    };
-
+	
 	    function relative__relativeTime (number, withoutSuffix, string, isFuture) {
 	        var output = this._relativeTime[string];
 	        return (isFunction(output)) ?
 	            output(number, withoutSuffix, string, isFuture) :
 	            output.replace(/%d/i, number);
 	    }
-
+	
 	    function pastFuture (diff, output) {
 	        var format = this._relativeTime[diff > 0 ? 'future' : 'past'];
 	        return isFunction(format) ? format(output) : format.replace(/%s/i, output);
 	    }
-
+	
 	    function locale_set__set (config) {
 	        var prop, i;
 	        for (i in config) {
@@ -41781,9 +41937,9 @@
 	        // number + (possibly) stuff coming from _ordinalParseLenient.
 	        this._ordinalParseLenient = new RegExp(this._ordinalParse.source + '|' + (/\d{1,2}/).source);
 	    }
-
+	
 	    var prototype__proto = Locale.prototype;
-
+	
 	    prototype__proto._calendar       = defaultCalendar;
 	    prototype__proto.calendar        = locale_calendar__calendar;
 	    prototype__proto._longDateFormat = defaultLongDateFormat;
@@ -41799,7 +41955,7 @@
 	    prototype__proto.relativeTime    = relative__relativeTime;
 	    prototype__proto.pastFuture      = pastFuture;
 	    prototype__proto.set             = locale_set__set;
-
+	
 	    // Month
 	    prototype__proto.months            =        localeMonths;
 	    prototype__proto._months           = defaultLocaleMonths;
@@ -41810,13 +41966,13 @@
 	    prototype__proto.monthsRegex       = monthsRegex;
 	    prototype__proto._monthsShortRegex = defaultMonthsShortRegex;
 	    prototype__proto.monthsShortRegex  = monthsShortRegex;
-
+	
 	    // Week
 	    prototype__proto.week = localeWeek;
 	    prototype__proto._week = defaultLocaleWeek;
 	    prototype__proto.firstDayOfYear = localeFirstDayOfYear;
 	    prototype__proto.firstDayOfWeek = localeFirstDayOfWeek;
-
+	
 	    // Day of Week
 	    prototype__proto.weekdays       =        localeWeekdays;
 	    prototype__proto._weekdays      = defaultLocaleWeekdays;
@@ -41825,30 +41981,30 @@
 	    prototype__proto.weekdaysShort  =        localeWeekdaysShort;
 	    prototype__proto._weekdaysShort = defaultLocaleWeekdaysShort;
 	    prototype__proto.weekdaysParse  =        localeWeekdaysParse;
-
+	
 	    // Hours
 	    prototype__proto.isPM = localeIsPM;
 	    prototype__proto._meridiemParse = defaultLocaleMeridiemParse;
 	    prototype__proto.meridiem = localeMeridiem;
-
+	
 	    function lists__get (format, index, field, setter) {
 	        var locale = locale_locales__getLocale();
 	        var utc = create_utc__createUTC().set(setter, index);
 	        return locale[field](utc, format);
 	    }
-
+	
 	    function list (format, index, field, count, setter) {
 	        if (typeof format === 'number') {
 	            index = format;
 	            format = undefined;
 	        }
-
+	
 	        format = format || '';
-
+	
 	        if (index != null) {
 	            return lists__get(format, index, field, setter);
 	        }
-
+	
 	        var i;
 	        var out = [];
 	        for (i = 0; i < count; i++) {
@@ -41856,27 +42012,27 @@
 	        }
 	        return out;
 	    }
-
+	
 	    function lists__listMonths (format, index) {
 	        return list(format, index, 'months', 12, 'month');
 	    }
-
+	
 	    function lists__listMonthsShort (format, index) {
 	        return list(format, index, 'monthsShort', 12, 'month');
 	    }
-
+	
 	    function lists__listWeekdays (format, index) {
 	        return list(format, index, 'weekdays', 7, 'day');
 	    }
-
+	
 	    function lists__listWeekdaysShort (format, index) {
 	        return list(format, index, 'weekdaysShort', 7, 'day');
 	    }
-
+	
 	    function lists__listWeekdaysMin (format, index) {
 	        return list(format, index, 'weekdaysMin', 7, 'day');
 	    }
-
+	
 	    locale_locales__getSetGlobalLocale('en', {
 	        ordinalParse: /\d{1,2}(th|st|nd|rd)/,
 	        ordinal : function (number) {
@@ -41888,50 +42044,50 @@
 	            return number + output;
 	        }
 	    });
-
+	
 	    // Side effect imports
 	    utils_hooks__hooks.lang = deprecate('moment.lang is deprecated. Use moment.locale instead.', locale_locales__getSetGlobalLocale);
 	    utils_hooks__hooks.langData = deprecate('moment.langData is deprecated. Use moment.localeData instead.', locale_locales__getLocale);
-
+	
 	    var mathAbs = Math.abs;
-
+	
 	    function duration_abs__abs () {
 	        var data           = this._data;
-
+	
 	        this._milliseconds = mathAbs(this._milliseconds);
 	        this._days         = mathAbs(this._days);
 	        this._months       = mathAbs(this._months);
-
+	
 	        data.milliseconds  = mathAbs(data.milliseconds);
 	        data.seconds       = mathAbs(data.seconds);
 	        data.minutes       = mathAbs(data.minutes);
 	        data.hours         = mathAbs(data.hours);
 	        data.months        = mathAbs(data.months);
 	        data.years         = mathAbs(data.years);
-
+	
 	        return this;
 	    }
-
+	
 	    function duration_add_subtract__addSubtract (duration, input, value, direction) {
 	        var other = create__createDuration(input, value);
-
+	
 	        duration._milliseconds += direction * other._milliseconds;
 	        duration._days         += direction * other._days;
 	        duration._months       += direction * other._months;
-
+	
 	        return duration._bubble();
 	    }
-
+	
 	    // supports only 2.0-style add(1, 's') or add(duration)
 	    function duration_add_subtract__add (input, value) {
 	        return duration_add_subtract__addSubtract(this, input, value, 1);
 	    }
-
+	
 	    // supports only 2.0-style subtract(1, 's') or subtract(duration)
 	    function duration_add_subtract__subtract (input, value) {
 	        return duration_add_subtract__addSubtract(this, input, value, -1);
 	    }
-
+	
 	    function absCeil (number) {
 	        if (number < 0) {
 	            return Math.floor(number);
@@ -41939,14 +42095,14 @@
 	            return Math.ceil(number);
 	        }
 	    }
-
+	
 	    function bubble () {
 	        var milliseconds = this._milliseconds;
 	        var days         = this._days;
 	        var months       = this._months;
 	        var data         = this._data;
 	        var seconds, minutes, hours, years, monthsFromDays;
-
+	
 	        // if we have a mix of positive and negative values, bubble down first
 	        // check: https://github.com/moment/moment/issues/2166
 	        if (!((milliseconds >= 0 && days >= 0 && months >= 0) ||
@@ -41955,56 +42111,56 @@
 	            days = 0;
 	            months = 0;
 	        }
-
+	
 	        // The following code bubbles up values, see the tests for
 	        // examples of what that means.
 	        data.milliseconds = milliseconds % 1000;
-
+	
 	        seconds           = absFloor(milliseconds / 1000);
 	        data.seconds      = seconds % 60;
-
+	
 	        minutes           = absFloor(seconds / 60);
 	        data.minutes      = minutes % 60;
-
+	
 	        hours             = absFloor(minutes / 60);
 	        data.hours        = hours % 24;
-
+	
 	        days += absFloor(hours / 24);
-
+	
 	        // convert days to months
 	        monthsFromDays = absFloor(daysToMonths(days));
 	        months += monthsFromDays;
 	        days -= absCeil(monthsToDays(monthsFromDays));
-
+	
 	        // 12 months -> 1 year
 	        years = absFloor(months / 12);
 	        months %= 12;
-
+	
 	        data.days   = days;
 	        data.months = months;
 	        data.years  = years;
-
+	
 	        return this;
 	    }
-
+	
 	    function daysToMonths (days) {
 	        // 400 years have 146097 days (taking into account leap year rules)
 	        // 400 years have 12 months === 4800
 	        return days * 4800 / 146097;
 	    }
-
+	
 	    function monthsToDays (months) {
 	        // the reverse of daysToMonths
 	        return months * 146097 / 4800;
 	    }
-
+	
 	    function as (units) {
 	        var days;
 	        var months;
 	        var milliseconds = this._milliseconds;
-
+	
 	        units = normalizeUnits(units);
-
+	
 	        if (units === 'month' || units === 'year') {
 	            days   = this._days   + milliseconds / 864e5;
 	            months = this._months + daysToMonths(days);
@@ -42024,7 +42180,7 @@
 	            }
 	        }
 	    }
-
+	
 	    // TODO: Use this.as('ms')?
 	    function duration_as__valueOf () {
 	        return (
@@ -42034,13 +42190,13 @@
 	            toInt(this._months / 12) * 31536e6
 	        );
 	    }
-
+	
 	    function makeAs (alias) {
 	        return function () {
 	            return this.as(alias);
 	        };
 	    }
-
+	
 	    var asMilliseconds = makeAs('ms');
 	    var asSeconds      = makeAs('s');
 	    var asMinutes      = makeAs('m');
@@ -42049,18 +42205,18 @@
 	    var asWeeks        = makeAs('w');
 	    var asMonths       = makeAs('M');
 	    var asYears        = makeAs('y');
-
+	
 	    function duration_get__get (units) {
 	        units = normalizeUnits(units);
 	        return this[units + 's']();
 	    }
-
+	
 	    function makeGetter(name) {
 	        return function () {
 	            return this._data[name];
 	        };
 	    }
-
+	
 	    var milliseconds = makeGetter('milliseconds');
 	    var seconds      = makeGetter('seconds');
 	    var minutes      = makeGetter('minutes');
@@ -42068,11 +42224,11 @@
 	    var days         = makeGetter('days');
 	    var months       = makeGetter('months');
 	    var years        = makeGetter('years');
-
+	
 	    function weeks () {
 	        return absFloor(this.days() / 7);
 	    }
-
+	
 	    var round = Math.round;
 	    var thresholds = {
 	        s: 45,  // seconds to minute
@@ -42081,12 +42237,12 @@
 	        d: 26,  // days to month
 	        M: 11   // months to year
 	    };
-
+	
 	    // helper function for moment.fn.from, moment.fn.fromNow, and moment.duration.fn.humanize
 	    function substituteTimeAgo(string, number, withoutSuffix, isFuture, locale) {
 	        return locale.relativeTime(number || 1, !!withoutSuffix, string, isFuture);
 	    }
-
+	
 	    function duration_humanize__relativeTime (posNegDuration, withoutSuffix, locale) {
 	        var duration = create__createDuration(posNegDuration).abs();
 	        var seconds  = round(duration.as('s'));
@@ -42095,7 +42251,7 @@
 	        var days     = round(duration.as('d'));
 	        var months   = round(duration.as('M'));
 	        var years    = round(duration.as('y'));
-
+	
 	        var a = seconds < thresholds.s && ['s', seconds]  ||
 	                minutes <= 1           && ['m']           ||
 	                minutes < thresholds.m && ['mm', minutes] ||
@@ -42106,13 +42262,13 @@
 	                months  <= 1           && ['M']           ||
 	                months  < thresholds.M && ['MM', months]  ||
 	                years   <= 1           && ['y']           || ['yy', years];
-
+	
 	        a[2] = withoutSuffix;
 	        a[3] = +posNegDuration > 0;
 	        a[4] = locale;
 	        return substituteTimeAgo.apply(null, a);
 	    }
-
+	
 	    // This function allows you to set a threshold for relative time strings
 	    function duration_humanize__getSetRelativeTimeThreshold (threshold, limit) {
 	        if (thresholds[threshold] === undefined) {
@@ -42124,20 +42280,20 @@
 	        thresholds[threshold] = limit;
 	        return true;
 	    }
-
+	
 	    function humanize (withSuffix) {
 	        var locale = this.localeData();
 	        var output = duration_humanize__relativeTime(this, !withSuffix, locale);
-
+	
 	        if (withSuffix) {
 	            output = locale.pastFuture(+this, output);
 	        }
-
+	
 	        return locale.postformat(output);
 	    }
-
+	
 	    var iso_string__abs = Math.abs;
-
+	
 	    function iso_string__toISOString() {
 	        // for ISO strings we do not use the normal bubbling rules:
 	        //  * milliseconds bubble up until they become hours
@@ -42150,18 +42306,18 @@
 	        var days         = iso_string__abs(this._days);
 	        var months       = iso_string__abs(this._months);
 	        var minutes, hours, years;
-
+	
 	        // 3600 seconds -> 60 minutes -> 1 hour
 	        minutes           = absFloor(seconds / 60);
 	        hours             = absFloor(minutes / 60);
 	        seconds %= 60;
 	        minutes %= 60;
-
+	
 	        // 12 months -> 1 year
 	        years  = absFloor(months / 12);
 	        months %= 12;
-
-
+	
+	
 	        // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js
 	        var Y = years;
 	        var M = months;
@@ -42170,13 +42326,13 @@
 	        var m = minutes;
 	        var s = seconds;
 	        var total = this.asSeconds();
-
+	
 	        if (!total) {
 	            // this is the same as C#'s (Noda) and python (isodate)...
 	            // but not other JS (goog.date)
 	            return 'P0D';
 	        }
-
+	
 	        return (total < 0 ? '-' : '') +
 	            'P' +
 	            (Y ? Y + 'Y' : '') +
@@ -42187,9 +42343,9 @@
 	            (m ? m + 'M' : '') +
 	            (s ? s + 'S' : '');
 	    }
-
+	
 	    var duration_prototype__proto = Duration.prototype;
-
+	
 	    duration_prototype__proto.abs            = duration_abs__abs;
 	    duration_prototype__proto.add            = duration_add_subtract__add;
 	    duration_prototype__proto.subtract       = duration_add_subtract__subtract;
@@ -42219,20 +42375,20 @@
 	    duration_prototype__proto.toJSON         = iso_string__toISOString;
 	    duration_prototype__proto.locale         = locale;
 	    duration_prototype__proto.localeData     = localeData;
-
+	
 	    // Deprecations
 	    duration_prototype__proto.toIsoString = deprecate('toIsoString() is deprecated. Please use toISOString() instead (notice the capitals)', iso_string__toISOString);
 	    duration_prototype__proto.lang = lang;
-
+	
 	    // Side effect imports
-
+	
 	    // FORMATTING
-
+	
 	    addFormatToken('X', 0, 0, 'unix');
 	    addFormatToken('x', 0, 0, 'valueOf');
-
+	
 	    // PARSING
-
+	
 	    addRegexToken('x', matchSigned);
 	    addRegexToken('X', matchTimestamp);
 	    addParseToken('X', function (input, array, config) {
@@ -42241,14 +42397,14 @@
 	    addParseToken('x', function (input, array, config) {
 	        config._d = new Date(toInt(input));
 	    });
-
+	
 	    // Side effect imports
-
-
+	
+	
 	    utils_hooks__hooks.version = '2.11.2';
-
+	
 	    setHookCallback(local__createLocal);
-
+	
 	    utils_hooks__hooks.fn                    = momentPrototype;
 	    utils_hooks__hooks.min                   = min;
 	    utils_hooks__hooks.max                   = max;
@@ -42272,11 +42428,11 @@
 	    utils_hooks__hooks.normalizeUnits        = normalizeUnits;
 	    utils_hooks__hooks.relativeTimeThreshold = duration_humanize__getSetRelativeTimeThreshold;
 	    utils_hooks__hooks.prototype             = momentPrototype;
-
+	
 	    var _moment = utils_hooks__hooks;
-
+	
 	    return _moment;
-
+	
 	}));
 	},{}],"numeral":[function(require,module,exports){
 	"use strict";
@@ -42808,7 +42964,7 @@
 	    });
 	  }
 	}).call(window);
-
+	
 	//# 
 	},{}],"pikaday":[function(require,module,exports){
 	/*!
@@ -42816,11 +42972,11 @@
 	 *
 	 * Copyright © 2014 David Bushell | BSD & MIT license | https://github.com/dbushell/Pikaday
 	 */
-
+	
 	(function (root, factory)
 	{
 	    'use strict';
-
+	
 	    var moment;
 	    if (typeof exports === 'object') {
 	        // CommonJS module
@@ -42842,18 +42998,18 @@
 	}(this, function (moment)
 	{
 	    'use strict';
-
+	
 	    /**
 	     * feature detection and helper functions
 	     */
 	    var hasMoment = typeof moment === 'function',
-
+	
 	    hasEventListeners = !!window.addEventListener,
-
+	
 	    document = window.document,
-
+	
 	    sto = window.setTimeout,
-
+	
 	    addEvent = function(el, e, callback, capture)
 	    {
 	        if (hasEventListeners) {
@@ -42862,7 +43018,7 @@
 	            el.attachEvent('on' + e, callback);
 	        }
 	    },
-
+	
 	    removeEvent = function(el, e, callback, capture)
 	    {
 	        if (hasEventListeners) {
@@ -42871,11 +43027,11 @@
 	            el.detachEvent('on' + e, callback);
 	        }
 	    },
-
+	
 	    fireEvent = function(el, eventName, data)
 	    {
 	        var ev;
-
+	
 	        if (document.createEvent) {
 	            ev = document.createEvent('HTMLEvents');
 	            ev.initEvent(eventName, true, false);
@@ -42887,67 +43043,67 @@
 	            el.fireEvent('on' + eventName, ev);
 	        }
 	    },
-
+	
 	    trim = function(str)
 	    {
 	        return str.trim ? str.trim() : str.replace(/^\s+|\s+$/g,'');
 	    },
-
+	
 	    hasClass = function(el, cn)
 	    {
 	        return (' ' + el.className + ' ').indexOf(' ' + cn + ' ') !== -1;
 	    },
-
+	
 	    addClass = function(el, cn)
 	    {
 	        if (!hasClass(el, cn)) {
 	            el.className = (el.className === '') ? cn : el.className + ' ' + cn;
 	        }
 	    },
-
+	
 	    removeClass = function(el, cn)
 	    {
 	        el.className = trim((' ' + el.className + ' ').replace(' ' + cn + ' ', ' '));
 	    },
-
+	
 	    isArray = function(obj)
 	    {
 	        return (/Array/).test(Object.prototype.toString.call(obj));
 	    },
-
+	
 	    isDate = function(obj)
 	    {
 	        return (/Date/).test(Object.prototype.toString.call(obj)) && !isNaN(obj.getTime());
 	    },
-
+	
 	    isWeekend = function(date)
 	    {
 	        var day = date.getDay();
 	        return day === 0 || day === 6;
 	    },
-
+	
 	    isLeapYear = function(year)
 	    {
 	        // solution by Matti Virkkunen: http://stackoverflow.com/a/4881951
 	        return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
 	    },
-
+	
 	    getDaysInMonth = function(year, month)
 	    {
 	        return [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month];
 	    },
-
+	
 	    setToStartOfDay = function(date)
 	    {
 	        if (isDate(date)) date.setHours(0,0,0,0);
 	    },
-
+	
 	    compareDates = function(a,b)
 	    {
 	        // weak date comparison (use setToStartOfDay(date) to ensure correct result)
 	        return a.getTime() === b.getTime();
 	    },
-
+	
 	    extend = function(to, from, overwrite)
 	    {
 	        var prop, hasProp;
@@ -42972,7 +43128,7 @@
 	        }
 	        return to;
 	    },
-
+	
 	    adjustCalendar = function(calendar) {
 	        if (calendar.month < 0) {
 	            calendar.year -= Math.ceil(Math.abs(calendar.month)/12);
@@ -42984,75 +43140,75 @@
 	        }
 	        return calendar;
 	    },
-
+	
 	    /**
 	     * defaults and localisation
 	     */
 	    defaults = {
-
+	
 	        // bind the picker to a form field
 	        field: null,
-
+	
 	        // automatically show/hide the picker on `field` focus (default `true` if `field` is set)
 	        bound: undefined,
-
+	
 	        // position of the datepicker, relative to the field (default to bottom & left)
 	        // ('bottom' & 'left' keywords are not used, 'top' & 'right' are modifier on the bottom/left position)
 	        position: 'bottom left',
-
+	
 	        // automatically fit in the viewport even if it means repositioning from the position option
 	        reposition: true,
-
+	
 	        // the default output format for `.toString()` and `field` value
 	        format: 'YYYY-MM-DD',
-
+	
 	        // the initial date to view when first opened
 	        defaultDate: null,
-
+	
 	        // make the `defaultDate` the initial selected value
 	        setDefaultDate: false,
-
+	
 	        // first day of week (0: Sunday, 1: Monday etc)
 	        firstDay: 0,
-
+	
 	        // the minimum/earliest date that can be selected
 	        minDate: null,
 	        // the maximum/latest date that can be selected
 	        maxDate: null,
-
+	
 	        // number of years either side, or array of upper/lower range
 	        yearRange: 10,
-
+	
 	        // show week numbers at head of row
 	        showWeekNumber: false,
-
+	
 	        // used internally (don't config outside)
 	        minYear: 0,
 	        maxYear: 9999,
 	        minMonth: undefined,
 	        maxMonth: undefined,
-
+	
 	        startRange: null,
 	        endRange: null,
-
+	
 	        isRTL: false,
-
+	
 	        // Additional text to append to the year in the calendar title
 	        yearSuffix: '',
-
+	
 	        // Render the month after year in the calendar title
 	        showMonthAfterYear: false,
-
+	
 	        // how many months are visible
 	        numberOfMonths: 1,
-
+	
 	        // when numberOfMonths is used, this will help you to choose where the main calendar will be (default `left`, can be set to `right`)
 	        // only used for the first display or when a selected date is not visible
 	        mainCalendar: 'left',
-
+	
 	        // Specify a DOM element to render the calendar in
 	        container: undefined,
-
+	
 	        // internationalization
 	        i18n: {
 	            previousMonth : 'Previous Month',
@@ -43061,18 +43217,18 @@
 	            weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
 	            weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
 	        },
-
+	
 	        // Theme Classname
 	        theme: null,
-
+	
 	        // callback function
 	        onSelect: null,
 	        onOpen: null,
 	        onClose: null,
 	        onDraw: null
 	    },
-
-
+	
+	
 	    /**
 	     * templating functions to abstract HTML rendering
 	     */
@@ -43084,7 +43240,7 @@
 	        }
 	        return abbr ? opts.i18n.weekdaysShort[day] : opts.i18n.weekdays[day];
 	    },
-
+	
 	    renderDay = function(opts)
 	    {
 	        if (opts.isEmpty) {
@@ -43116,24 +43272,24 @@
 	                 '</button>' +
 	               '</td>';
 	    },
-
+	
 	    renderWeek = function (d, m, y) {
 	        // Lifted from http://javascript.about.com/library/blweekyear.htm, lightly modified.
 	        var onejan = new Date(y, 0, 1),
 	            weekNum = Math.ceil((((new Date(y, m, d) - onejan) / 86400000) + onejan.getDay()+1)/7);
 	        return '<td class="pika-week">' + weekNum + '</td>';
 	    },
-
+	
 	    renderRow = function(days, isRTL)
 	    {
 	        return '<tr>' + (isRTL ? days.reverse() : days).join('') + '</tr>';
 	    },
-
+	
 	    renderBody = function(rows)
 	    {
 	        return '<tbody>' + rows.join('') + '</tbody>';
 	    },
-
+	
 	    renderHead = function(opts)
 	    {
 	        var i, arr = [];
@@ -43145,7 +43301,7 @@
 	        }
 	        return '<thead>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</thead>';
 	    },
-
+	
 	    renderTitle = function(instance, c, year, month, refYear)
 	    {
 	        var i, j, arr,
@@ -43157,7 +43313,7 @@
 	            yearHtml,
 	            prev = true,
 	            next = true;
-
+	
 	        for (arr = [], i = 0; i < 12; i++) {
 	            arr.push('<option value="' + (year === refYear ? i - c : 12 + i - c) + '"' +
 	                (i === month ? ' selected': '') +
@@ -43165,7 +43321,7 @@
 	                opts.i18n.months[i] + '</option>');
 	        }
 	        monthHtml = '<div class="pika-label">' + opts.i18n.months[month] + '<select class="pika-select pika-select-month" tabindex="-1">' + arr.join('') + '</select></div>';
-
+	
 	        if (isArray(opts.yearRange)) {
 	            i = opts.yearRange[0];
 	            j = opts.yearRange[1] + 1;
@@ -43173,44 +43329,44 @@
 	            i = year - opts.yearRange;
 	            j = 1 + year + opts.yearRange;
 	        }
-
+	
 	        for (arr = []; i < j && i <= opts.maxYear; i++) {
 	            if (i >= opts.minYear) {
 	                arr.push('<option value="' + i + '"' + (i === year ? ' selected': '') + '>' + (i) + '</option>');
 	            }
 	        }
 	        yearHtml = '<div class="pika-label">' + year + opts.yearSuffix + '<select class="pika-select pika-select-year" tabindex="-1">' + arr.join('') + '</select></div>';
-
+	
 	        if (opts.showMonthAfterYear) {
 	            html += yearHtml + monthHtml;
 	        } else {
 	            html += monthHtml + yearHtml;
 	        }
-
+	
 	        if (isMinYear && (month === 0 || opts.minMonth >= month)) {
 	            prev = false;
 	        }
-
+	
 	        if (isMaxYear && (month === 11 || opts.maxMonth <= month)) {
 	            next = false;
 	        }
-
+	
 	        if (c === 0) {
 	            html += '<button class="pika-prev' + (prev ? '' : ' is-disabled') + '" type="button">' + opts.i18n.previousMonth + '</button>';
 	        }
 	        if (c === (instance._o.numberOfMonths - 1) ) {
 	            html += '<button class="pika-next' + (next ? '' : ' is-disabled') + '" type="button">' + opts.i18n.nextMonth + '</button>';
 	        }
-
+	
 	        return html += '</div>';
 	    },
-
+	
 	    renderTable = function(opts, data)
 	    {
 	        return '<table cellpadding="0" cellspacing="0" class="pika-table">' + renderHead(opts) + renderBody(data) + '</table>';
 	    },
-
-
+	
+	
 	    /**
 	     * Pikaday constructor
 	     */
@@ -43218,7 +43374,7 @@
 	    {
 	        var self = this,
 	            opts = self.config(options);
-
+	
 	        self._onMouseDown = function(e)
 	        {
 	            if (!self._v) {
@@ -43229,7 +43385,7 @@
 	            if (!target) {
 	                return;
 	            }
-
+	
 	            if (!hasClass(target, 'is-disabled')) {
 	                if (hasClass(target, 'pika-button') && !hasClass(target, 'is-empty')) {
 	                    self.setDate(new Date(target.getAttribute('data-pika-year'), target.getAttribute('data-pika-month'), target.getAttribute('data-pika-day')));
@@ -43261,7 +43417,7 @@
 	                self._c = true;
 	            }
 	        };
-
+	
 	        self._onChange = function(e)
 	        {
 	            e = e || window.event;
@@ -43276,11 +43432,11 @@
 	                self.gotoYear(target.value);
 	            }
 	        };
-
+	
 	        self._onInputChange = function(e)
 	        {
 	            var date;
-
+	
 	            if (e.firedBy === self) {
 	                return;
 	            }
@@ -43298,17 +43454,17 @@
 	                self.show();
 	            }
 	        };
-
+	
 	        self._onInputFocus = function()
 	        {
 	            self.show();
 	        };
-
+	
 	        self._onInputClick = function()
 	        {
 	            self.show();
 	        };
-
+	
 	        self._onInputBlur = function()
 	        {
 	            // IE allows pika div to gain focus; catch blur the input field
@@ -43319,7 +43475,7 @@
 	                }
 	            }
 	            while ((pEl = pEl.parentNode));
-
+	
 	            if (!self._c) {
 	                self._b = sto(function() {
 	                    self.hide();
@@ -43327,7 +43483,7 @@
 	            }
 	            self._c = false;
 	        };
-
+	
 	        self._onClick = function(e)
 	        {
 	            e = e || window.event;
@@ -43352,14 +43508,14 @@
 	                self.hide();
 	            }
 	        };
-
+	
 	        self.el = document.createElement('div');
 	        self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
-
+	
 	        addEvent(self.el, 'mousedown', self._onMouseDown, true);
 	        addEvent(self.el, 'touchend', self._onMouseDown, true);
 	        addEvent(self.el, 'change', self._onChange);
-
+	
 	        if (opts.field) {
 	            if (opts.container) {
 	                opts.container.appendChild(self.el);
@@ -43369,7 +43525,7 @@
 	                opts.field.parentNode.insertBefore(self.el, opts.field.nextSibling);
 	            }
 	            addEvent(opts.field, 'change', self._onInputChange);
-
+	
 	            if (!opts.defaultDate) {
 	                if (hasMoment && opts.field.value) {
 	                    opts.defaultDate = moment(opts.field.value, opts.format).toDate();
@@ -43379,9 +43535,9 @@
 	                opts.setDefaultDate = true;
 	            }
 	        }
-
+	
 	        var defDate = opts.defaultDate;
-
+	
 	        if (isDate(defDate)) {
 	            if (opts.setDefaultDate) {
 	                self.setDate(defDate, true);
@@ -43391,7 +43547,7 @@
 	        } else {
 	            self.gotoDate(new Date());
 	        }
-
+	
 	        if (opts.bound) {
 	            this.hide();
 	            self.el.className += ' is-bound';
@@ -43402,14 +43558,14 @@
 	            this.show();
 	        }
 	    };
-
-
+	
+	
 	    /**
 	     * public Pikaday API
 	     */
 	    Pikaday.prototype = {
-
-
+	
+	
 	        /**
 	         * configure functionality
 	         */
@@ -43418,26 +43574,26 @@
 	            if (!this._o) {
 	                this._o = extend({}, defaults, true);
 	            }
-
+	
 	            var opts = extend(this._o, options, true);
-
+	
 	            opts.isRTL = !!opts.isRTL;
-
+	
 	            opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
-
+	
 	            opts.theme = (typeof opts.theme) === 'string' && opts.theme ? opts.theme : null;
-
+	
 	            opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
-
+	
 	            opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
-
+	
 	            opts.disableWeekends = !!opts.disableWeekends;
-
+	
 	            opts.disableDayFn = (typeof opts.disableDayFn) === 'function' ? opts.disableDayFn : null;
-
+	
 	            var nom = parseInt(opts.numberOfMonths, 10) || 1;
 	            opts.numberOfMonths = nom > 4 ? 4 : nom;
-
+	
 	            if (!isDate(opts.minDate)) {
 	                opts.minDate = false;
 	            }
@@ -43453,7 +43609,7 @@
 	            if (opts.maxDate) {
 	                this.setMaxDate(opts.maxDate);
 	            }
-
+	
 	            if (isArray(opts.yearRange)) {
 	                var fallback = new Date().getFullYear() - 10;
 	                opts.yearRange[0] = parseInt(opts.yearRange[0], 10) || fallback;
@@ -43464,10 +43620,10 @@
 	                    opts.yearRange = 100;
 	                }
 	            }
-
+	
 	            return opts;
 	        },
-
+	
 	        /**
 	         * return a formatted string of the current selection (using Moment.js if available)
 	         */
@@ -43475,7 +43631,7 @@
 	        {
 	            return !isDate(this._d) ? '' : hasMoment ? moment(this._d).format(format || this._o.format) : this._d.toDateString();
 	        },
-
+	
 	        /**
 	         * return a Moment.js object of the current selection (if available)
 	         */
@@ -43483,7 +43639,7 @@
 	        {
 	            return hasMoment ? moment(this._d) : null;
 	        },
-
+	
 	        /**
 	         * set the current selection from a Moment.js object (if available)
 	         */
@@ -43493,7 +43649,7 @@
 	                this.setDate(date.toDate(), preventOnSelect);
 	            }
 	        },
-
+	
 	        /**
 	         * return a Date object of the current selection
 	         */
@@ -43501,7 +43657,7 @@
 	        {
 	            return isDate(this._d) ? new Date(this._d.getTime()) : null;
 	        },
-
+	
 	        /**
 	         * set the current selection
 	         */
@@ -43509,12 +43665,12 @@
 	        {
 	            if (!date) {
 	                this._d = null;
-
+	
 	                if (this._o.field) {
 	                    this._o.field.value = '';
 	                    fireEvent(this._o.field, 'change', { firedBy: this });
 	                }
-
+	
 	                return this.draw();
 	            }
 	            if (typeof date === 'string') {
@@ -43523,20 +43679,20 @@
 	            if (!isDate(date)) {
 	                return;
 	            }
-
+	
 	            var min = this._o.minDate,
 	                max = this._o.maxDate;
-
+	
 	            if (isDate(min) && date < min) {
 	                date = min;
 	            } else if (isDate(max) && date > max) {
 	                date = max;
 	            }
-
+	
 	            this._d = new Date(date.getTime());
 	            setToStartOfDay(this._d);
 	            this.gotoDate(this._d);
-
+	
 	            if (this._o.field) {
 	                this._o.field.value = this.toString();
 	                fireEvent(this._o.field, 'change', { firedBy: this });
@@ -43545,18 +43701,18 @@
 	                this._o.onSelect.call(this, this.getDate());
 	            }
 	        },
-
+	
 	        /**
 	         * change view to a specific date
 	         */
 	        gotoDate: function(date)
 	        {
 	            var newCalendar = true;
-
+	
 	            if (!isDate(date)) {
 	                return;
 	            }
-
+	
 	            if (this.calendars) {
 	                var firstVisibleDate = new Date(this.calendars[0].year, this.calendars[0].month, 1),
 	                    lastVisibleDate = new Date(this.calendars[this.calendars.length-1].year, this.calendars[this.calendars.length-1].month, 1),
@@ -43566,7 +43722,7 @@
 	                lastVisibleDate.setDate(lastVisibleDate.getDate()-1);
 	                newCalendar = (visibleDate < firstVisibleDate.getTime() || lastVisibleDate.getTime() < visibleDate);
 	            }
-
+	
 	            if (newCalendar) {
 	                this.calendars = [{
 	                    month: date.getMonth(),
@@ -43576,10 +43732,10 @@
 	                    this.calendars[0].month += 1 - this._o.numberOfMonths;
 	                }
 	            }
-
+	
 	            this.adjustCalendars();
 	        },
-
+	
 	        adjustCalendars: function() {
 	            this.calendars[0] = adjustCalendar(this.calendars[0]);
 	            for (var c = 1; c < this._o.numberOfMonths; c++) {
@@ -43590,12 +43746,12 @@
 	            }
 	            this.draw();
 	        },
-
+	
 	        gotoToday: function()
 	        {
 	            this.gotoDate(new Date());
 	        },
-
+	
 	        /**
 	         * change view to a specific month (zero-index, e.g. 0: January)
 	         */
@@ -43606,19 +43762,19 @@
 	                this.adjustCalendars();
 	            }
 	        },
-
+	
 	        nextMonth: function()
 	        {
 	            this.calendars[0].month++;
 	            this.adjustCalendars();
 	        },
-
+	
 	        prevMonth: function()
 	        {
 	            this.calendars[0].month--;
 	            this.adjustCalendars();
 	        },
-
+	
 	        /**
 	         * change view to a specific full year (e.g. "2012")
 	         */
@@ -43629,7 +43785,7 @@
 	                this.adjustCalendars();
 	            }
 	        },
-
+	
 	        /**
 	         * change the minDate
 	         */
@@ -43641,7 +43797,7 @@
 	            this._o.minMonth = value.getMonth();
 	            this.draw();
 	        },
-
+	
 	        /**
 	         * change the maxDate
 	         */
@@ -43653,17 +43809,17 @@
 	            this._o.maxMonth = value.getMonth();
 	            this.draw();
 	        },
-
+	
 	        setStartRange: function(value)
 	        {
 	            this._o.startRange = value;
 	        },
-
+	
 	        setEndRange: function(value)
 	        {
 	            this._o.endRange = value;
 	        },
-
+	
 	        /**
 	         * refresh the HTML
 	         */
@@ -43678,7 +43834,7 @@
 	                minMonth = opts.minMonth,
 	                maxMonth = opts.maxMonth,
 	                html = '';
-
+	
 	            if (this._y <= minYear) {
 	                this._y = minYear;
 	                if (!isNaN(minMonth) && this._m < minMonth) {
@@ -43691,13 +43847,13 @@
 	                    this._m = maxMonth;
 	                }
 	            }
-
+	
 	            for (var c = 0; c < opts.numberOfMonths; c++) {
 	                html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year) + this.render(this.calendars[c].year, this.calendars[c].month) + '</div>';
 	            }
-
+	
 	            this.el.innerHTML = html;
-
+	
 	            if (opts.bound) {
 	                if(opts.field.type !== 'hidden') {
 	                    sto(function() {
@@ -43705,7 +43861,7 @@
 	                    }, 1);
 	                }
 	            }
-
+	
 	            if (typeof this._o.onDraw === 'function') {
 	                var self = this;
 	                sto(function() {
@@ -43713,15 +43869,15 @@
 	                }, 0);
 	            }
 	        },
-
+	
 	        adjustPosition: function()
 	        {
 	            var field, pEl, width, height, viewportWidth, viewportHeight, scrollTop, left, top, clientRect;
-
+	
 	            if (this._o.container) return;
-
+	
 	            this.el.style.position = 'absolute';
-
+	
 	            field = this._o.trigger;
 	            pEl = field;
 	            width = this.el.offsetWidth;
@@ -43729,7 +43885,7 @@
 	            viewportWidth = window.innerWidth || document.documentElement.clientWidth;
 	            viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 	            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop;
-
+	
 	            if (typeof field.getBoundingClientRect === 'function') {
 	                clientRect = field.getBoundingClientRect();
 	                left = clientRect.left + window.pageXOffset;
@@ -43742,7 +43898,7 @@
 	                    top  += pEl.offsetTop;
 	                }
 	            }
-
+	
 	            // default position is bottom & left
 	            if ((this._o.reposition && left + width > viewportWidth) ||
 	                (
@@ -43760,11 +43916,11 @@
 	            ) {
 	                top = top - height - field.offsetHeight;
 	            }
-
+	
 	            this.el.style.left = left + 'px';
 	            this.el.style.top = top + 'px';
 	        },
-
+	
 	        /**
 	         * render HTML for a particular month
 	         */
@@ -43814,9 +43970,9 @@
 	                        isEndRange: isEndRange,
 	                        isInRange: isInRange
 	                    };
-
+	
 	                row.push(renderDay(dayConfig));
-
+	
 	                if (++r === 7) {
 	                    if (opts.showWeekNumber) {
 	                        row.unshift(renderWeek(i - before, month, year));
@@ -43828,12 +43984,12 @@
 	            }
 	            return renderTable(opts, data);
 	        },
-
+	
 	        isVisible: function()
 	        {
 	            return this._v;
 	        },
-
+	
 	        show: function()
 	        {
 	            if (!this._v) {
@@ -43849,7 +44005,7 @@
 	                }
 	            }
 	        },
-
+	
 	        hide: function()
 	        {
 	            var v = this._v;
@@ -43867,7 +44023,7 @@
 	                }
 	            }
 	        },
-
+	
 	        /**
 	         * GAME OVER
 	         */
@@ -43889,13 +44045,13 @@
 	                this.el.parentNode.removeChild(this.el);
 	            }
 	        }
-
+	
 	    };
-
+	
 	    return Pikaday;
-
+	
 	}));
-
+	
 	},{"moment":"moment"}],"zeroclipboard":[function(require,module,exports){
 	/*!
 	 * ZeroClipboard
@@ -44869,7 +45025,7 @@
 	      }
 	      _clearTimeoutsAndPolling();
 	      break;
-
+	
 	     case "ready":
 	      _zcSwfVersion = event.swfVersion;
 	      var wasDeactivated = _flashState.deactivated === true;
@@ -44885,11 +45041,11 @@
 	      });
 	      _clearTimeoutsAndPolling();
 	      break;
-
+	
 	     case "beforecopy":
 	      _copyTarget = element;
 	      break;
-
+	
 	     case "copy":
 	      var textContent, htmlContent, targetEl = event.relatedTarget;
 	      if (!(_clipData["text/html"] || _clipData["text/plain"]) && targetEl && (htmlContent = targetEl.value || targetEl.outerHTML || targetEl.innerHTML) && (textContent = targetEl.value || targetEl.textContent || targetEl.innerText)) {
@@ -44903,7 +45059,7 @@
 	        event.clipboardData.setData("text/plain", textContent);
 	      }
 	      break;
-
+	
 	     case "aftercopy":
 	      _queueEmitClipboardErrors(event);
 	      ZeroClipboard.clearData();
@@ -44911,7 +45067,7 @@
 	        element.focus();
 	      }
 	      break;
-
+	
 	     case "_mouseover":
 	      ZeroClipboard.focus(element);
 	      if (_globalConfig.bubbleEvents === true && sourceIsSwf) {
@@ -44927,7 +45083,7 @@
 	        }));
 	      }
 	      break;
-
+	
 	     case "_mouseout":
 	      ZeroClipboard.blur();
 	      if (_globalConfig.bubbleEvents === true && sourceIsSwf) {
@@ -44943,7 +45099,7 @@
 	        }));
 	      }
 	      break;
-
+	
 	     case "_mousedown":
 	      _addClass(element, _globalConfig.activeClass);
 	      if (_globalConfig.bubbleEvents === true && sourceIsSwf) {
@@ -44952,7 +45108,7 @@
 	        }));
 	      }
 	      break;
-
+	
 	     case "_mouseup":
 	      _removeClass(element, _globalConfig.activeClass);
 	      if (_globalConfig.bubbleEvents === true && sourceIsSwf) {
@@ -44961,7 +45117,7 @@
 	        }));
 	      }
 	      break;
-
+	
 	     case "_click":
 	      _copyTarget = null;
 	      if (_globalConfig.bubbleEvents === true && sourceIsSwf) {
@@ -44970,7 +45126,7 @@
 	        }));
 	      }
 	      break;
-
+	
 	     case "_mousemove":
 	      if (_globalConfig.bubbleEvents === true && sourceIsSwf) {
 	        _fireMouseEvent(_extend({}, event, {
@@ -45196,7 +45352,7 @@
 	          newClipData.text = clipData[dataFormat];
 	          formatMap.text = dataFormat;
 	          break;
-
+	
 	         case "text/html":
 	         case "html":
 	         case "air:html":
@@ -45204,7 +45360,7 @@
 	          newClipData.html = clipData[dataFormat];
 	          formatMap.html = dataFormat;
 	          break;
-
+	
 	         case "application/rtf":
 	         case "text/rtf":
 	         case "rtf":
@@ -45214,7 +45370,7 @@
 	          newClipData.rtf = clipData[dataFormat];
 	          formatMap.rtf = dataFormat;
 	          break;
-
+	
 	         default:
 	          break;
 	        }
@@ -46480,20 +46636,23 @@
 	}());
 	},{}]},{},[23,60,62,61,63,84,85,86,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,104,105,106,107,93,94,95,96,97,98,31,35,32,33,40,34,36,37,38,39])("zeroclipboard")
 	});
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! (webpack)/~/node-libs-browser/~/process/browser.js */ 52), (function() { return this; }())))
 
 /***/ },
 /* 52 */
+/*!**********************************************************!*\
+  !*** (webpack)/~/node-libs-browser/~/process/browser.js ***!
+  \**********************************************************/
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-
+	
 	var process = module.exports = {};
 	var queue = [];
 	var draining = false;
 	var currentQueue;
 	var queueIndex = -1;
-
+	
 	function cleanUpNextTick() {
 	    draining = false;
 	    if (currentQueue.length) {
@@ -46505,14 +46664,14 @@
 	        drainQueue();
 	    }
 	}
-
+	
 	function drainQueue() {
 	    if (draining) {
 	        return;
 	    }
 	    var timeout = setTimeout(cleanUpNextTick);
 	    draining = true;
-
+	
 	    var len = queue.length;
 	    while(len) {
 	        currentQueue = queue;
@@ -46529,7 +46688,7 @@
 	    draining = false;
 	    clearTimeout(timeout);
 	}
-
+	
 	process.nextTick = function (fun) {
 	    var args = new Array(arguments.length - 1);
 	    if (arguments.length > 1) {
@@ -46542,7 +46701,7 @@
 	        setTimeout(drainQueue, 0);
 	    }
 	};
-
+	
 	// v8 likes predictible objects
 	function Item(fun, array) {
 	    this.fun = fun;
@@ -46557,9 +46716,9 @@
 	process.argv = [];
 	process.version = ''; // empty string to avoid regexp issues
 	process.versions = {};
-
+	
 	function noop() {}
-
+	
 	process.on = noop;
 	process.addListener = noop;
 	process.once = noop;
@@ -46567,11 +46726,11 @@
 	process.removeListener = noop;
 	process.removeAllListeners = noop;
 	process.emit = noop;
-
+	
 	process.binding = function (name) {
 	    throw new Error('process.binding is not supported');
 	};
-
+	
 	process.cwd = function () { return '/' };
 	process.chdir = function (dir) {
 	    throw new Error('process.chdir is not supported');
@@ -46581,30 +46740,33 @@
 
 /***/ },
 /* 53 */
+/*!***************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-table-base.js.coffee ***!
+  \***************************************************************************/
 /***/ function(module, exports) {
 
 	var VisualizationTableBase,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
+	
 	VisualizationTableBase = (function(superClass) {
 	  extend(VisualizationTableBase, superClass);
-
+	
 	  VisualizationTableBase.prototype.table = null;
-
+	
 	  VisualizationTableBase.prototype.table_type = null;
-
+	
 	  VisualizationTableBase.prototype.table_options = null;
-
+	
 	  VisualizationTableBase.prototype.table_height = null;
-
+	
 	  VisualizationTableBase.prototype.table_offset_top = null;
-
+	
 	  VisualizationTableBase.prototype.visualizationSync = false;
-
+	
 	  VisualizationTableBase.prototype.collectionSync = false;
-
+	
 	  function VisualizationTableBase(model1, collection, table_type) {
 	    this.model = model1;
 	    this.collection = collection;
@@ -46629,19 +46791,19 @@
 	      columnSorting: true
 	    };
 	  }
-
+	
 	  VisualizationTableBase.prototype.destroy = function() {
 	    this.undelegateEvents();
 	    this.$el.removeData().unbind();
 	    this.remove();
 	    return Backbone.View.prototype.remove.call(this);
 	  };
-
+	
 	  VisualizationTableBase.prototype.initialize = function(obj) {
 	    this.model.once('sync', this.onVisualizationSync, this);
 	    return this.collection.once('sync', this.onCollectionSync, this);
 	  };
-
+	
 	  VisualizationTableBase.prototype.onVisualizationSync = function() {
 	    this.visualizationSync = true;
 	    console.log('onVisualizationSync');
@@ -46649,7 +46811,7 @@
 	      return this.onSync();
 	    }
 	  };
-
+	
 	  VisualizationTableBase.prototype.onCollectionSync = function() {
 	    this.collectionSync = true;
 	    console.log('onCollectionSync');
@@ -46658,11 +46820,11 @@
 	      return this.onSync();
 	    }
 	  };
-
+	
 	  VisualizationTableBase.prototype.onSync = function() {
 	    return this;
 	  };
-
+	
 	  VisualizationTableBase.prototype.setupTable = function() {
 	    this.table_options.afterCreateRow = this.onTableCreateRow;
 	    this.table_options.afterChange = this.onTableChangeRow;
@@ -46670,12 +46832,12 @@
 	    this.table = new Handsontable(this.$el.get(0), this.table_options);
 	    return this.resize();
 	  };
-
+	
 	  VisualizationTableBase.prototype.onTableCreateRow = function(index, amount) {
 	    console.log('onTableCreateRow', this.table_type, index, amount);
 	    return this.addModel(index);
 	  };
-
+	
 	  VisualizationTableBase.prototype.onTableChangeRow = function(changes, source) {
 	    var change, i, len, results;
 	    if (source !== 'loadData') {
@@ -46692,7 +46854,7 @@
 	      return results;
 	    }
 	  };
-
+	
 	  VisualizationTableBase.prototype.onTableRemoveRow = function(index, amount) {
 	    var model, model_id;
 	    console.log('onTableRemoveRow', this.table_type, index, amount);
@@ -46702,36 +46864,36 @@
 	      return model.destroy();
 	    }
 	  };
-
+	
 	  VisualizationTableBase.prototype.show = function() {
 	    this.$el.removeClass('hide');
 	    this.resize();
 	    return this.table.render();
 	  };
-
+	
 	  VisualizationTableBase.prototype.hide = function() {
 	    return this.$el.addClass('hide');
 	  };
-
+	
 	  VisualizationTableBase.prototype.setSize = function(tableHeight, tableOffsetTop) {
 	    this.table_height = tableHeight;
 	    this.table_offset_top = tableOffsetTop;
 	    return this.resize();
 	  };
-
+	
 	  VisualizationTableBase.prototype.resize = function() {
 	    console.log('resize table');
 	    return this.$el.height(this.table_height - (this.$el.offset().top - this.table_offset_top));
 	  };
-
+	
 	  VisualizationTableBase.prototype.render = function() {
 	    return this;
 	  };
-
+	
 	  VisualizationTableBase.prototype.addRow = function() {
 	    return this.table.alter('insert_row', 0, 1);
 	  };
-
+	
 	  VisualizationTableBase.prototype.duplicateRow = function(row) {
 	    var model, model_id;
 	    model_id = this.getIdAtRow(row);
@@ -46740,11 +46902,11 @@
 	    this.table.alter('insert_row', row + 1, 1);
 	    return console.log('duplicate row', row, model);
 	  };
-
+	
 	  VisualizationTableBase.prototype.getIdAtRow = function(index) {
 	    return this.table.getDataAtRowProp(index, 'id');
 	  };
-
+	
 	  VisualizationTableBase.prototype.showDeleteModal = function(index) {
 	    var $modal;
 	    $modal = $('#delete-' + this.table_type + '-modal');
@@ -46759,7 +46921,7 @@
 	    });
 	    return $modal.modal('show');
 	  };
-
+	
 	  VisualizationTableBase.prototype.rowDuplicateRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    link = document.createElement('A');
@@ -46775,7 +46937,7 @@
 	    })(this));
 	    return td;
 	  };
-
+	
 	  VisualizationTableBase.prototype.rowDeleteRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    link = document.createElement('A');
@@ -46791,40 +46953,43 @@
 	    })(this));
 	    return td;
 	  };
-
+	
 	  return VisualizationTableBase;
-
+	
 	})(Backbone.View);
-
+	
 	module.exports = VisualizationTableBase;
 
 
 /***/ },
 /* 54 */
+/*!********************************************************************************!*\
+  !*** ./app/frontend/javascripts/views/visualization-table-relations.js.coffee ***!
+  \********************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var Handsontable, VisualizationTableBase, VisualizationTableRelations,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
 	  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
 	  hasProp = {}.hasOwnProperty;
-
-	Handsontable = __webpack_require__(51);
-
-	VisualizationTableBase = __webpack_require__(53);
-
+	
+	Handsontable = __webpack_require__(/*! ./../dist/handsontable.full.js */ 51);
+	
+	VisualizationTableBase = __webpack_require__(/*! ./visualization-table-base.js */ 53);
+	
 	VisualizationTableRelations = (function(superClass) {
 	  extend(VisualizationTableRelations, superClass);
-
+	
 	  VisualizationTableRelations.prototype.el = '.visualization-table-relations';
-
+	
 	  VisualizationTableRelations.prototype.relations_types = null;
-
+	
 	  VisualizationTableRelations.prototype.nodes = null;
-
+	
 	  VisualizationTableRelations.prototype.tableColHeaders = ['', '', 'Source', 'Relationship', 'Target', 'Date', 'Direction', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>'];
-
+	
 	  VisualizationTableRelations.prototype.duplicate = null;
-
+	
 	  VisualizationTableRelations.prototype.columns = {
 	    'delete': 0,
 	    'duplicate': 1,
@@ -46832,7 +46997,7 @@
 	    'type': 3,
 	    'target': 4
 	  };
-
+	
 	  function VisualizationTableRelations(model1, collection) {
 	    this.model = model1;
 	    this.collection = collection;
@@ -46849,11 +47014,11 @@
 	    this.table_options.colHeaders = this.tableColHeaders;
 	    this.table_options.columns = this.getTableColumns();
 	  }
-
+	
 	  VisualizationTableRelations.prototype.onSync = function() {
 	    return this.getRelationsTypes();
 	  };
-
+	
 	  VisualizationTableRelations.prototype.getTableColumns = function() {
 	    return [
 	      {
@@ -46886,7 +47051,7 @@
 	      }
 	    ];
 	  };
-
+	
 	  VisualizationTableRelations.prototype.setNodes = function(_nodes) {
 	    this.nodes = _nodes;
 	    this.nodes.on('update', this.updateNodes, this);
@@ -46905,7 +47070,7 @@
 	    })(this), this);
 	    return this.nodes.on('remove', this.removeRelationsWithNode, this);
 	  };
-
+	
 	  VisualizationTableRelations.prototype.updateNodes = function() {
 	    this.table_options.columns[this.columns.source].source = this.table_options.columns[this.columns.target].source = this.nodes.toJSON().map(function(d) {
 	      return d.name;
@@ -46914,7 +47079,7 @@
 	      return this.table.updateSettings(this.table_options);
 	    }
 	  };
-
+	
 	  VisualizationTableRelations.prototype.getRelationsTypes = function() {
 	    return $.ajax({
 	      url: '/api/visualizations/' + $('body').data('id') + '/relations/types.json',
@@ -46922,7 +47087,7 @@
 	      success: this.onRelationsTypesSucess
 	    });
 	  };
-
+	
 	  VisualizationTableRelations.prototype.onRelationsTypesSucess = function(response) {
 	    this.relations_types = response;
 	    this.setRelationsTypesSource();
@@ -46935,7 +47100,7 @@
 	      };
 	    })(this));
 	  };
-
+	
 	  VisualizationTableRelations.prototype.addModel = function(index) {
 	    var model;
 	    console.log('addModel', index);
@@ -46964,7 +47129,7 @@
 	      }
 	    }, this);
 	  };
-
+	
 	  VisualizationTableRelations.prototype.updateModel = function(change) {
 	    var index, key, model, model_id, node, obj, value;
 	    index = change[0];
@@ -47000,16 +47165,16 @@
 	      return model.save(obj);
 	    }
 	  };
-
+	
 	  VisualizationTableRelations.prototype.addRelationsType = function(type) {
 	    this.relations_types.push(type);
 	    return this.setRelationsTypesSource();
 	  };
-
+	
 	  VisualizationTableRelations.prototype.setRelationsTypesSource = function() {
 	    return this.table_options.columns[this.columns.type].source = this.relations_types;
 	  };
-
+	
 	  VisualizationTableRelations.prototype.removeRelationsWithNode = function(node) {
 	    var i, j, ref, relation, results;
 	    ref = this.table_options.data;
@@ -47024,7 +47189,7 @@
 	    }
 	    return results;
 	  };
-
+	
 	  VisualizationTableRelations.prototype.onBeforeKeyDown = function(e) {
 	    var selected;
 	    selected = this.table.getSelected();
@@ -47040,7 +47205,7 @@
 	      }
 	    }
 	  };
-
+	
 	  VisualizationTableRelations.prototype.rowDirectionRenderer = function(instance, td, row, col, prop, value, cellProperties) {
 	    var link;
 	    Handsontable.renderers.CheckboxRenderer.apply(this, arguments);
@@ -47056,54 +47221,57 @@
 	    })(this));
 	    return td;
 	  };
-
+	
 	  return VisualizationTableRelations;
-
+	
 	})(VisualizationTableBase);
-
+	
 	module.exports = VisualizationTableRelations;
 
 
 /***/ },
 /* 55 */
+/*!***************************************************************!*\
+  !*** ./app/frontend/javascripts/visualization-edit.js.coffee ***!
+  \***************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	var NodesCollection, RelationsCollection, VisualizationEdit, VisualizationGraph, VisualizationModel, VisualizationTableNodes, VisualizationTableRelations,
 	  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-	VisualizationModel = __webpack_require__(5);
-
-	NodesCollection = __webpack_require__(6);
-
-	RelationsCollection = __webpack_require__(8);
-
-	VisualizationGraph = __webpack_require__(10);
-
-	VisualizationTableNodes = __webpack_require__(50);
-
-	VisualizationTableRelations = __webpack_require__(54);
-
+	
+	VisualizationModel = __webpack_require__(/*! ./models/visualization.js */ 5);
+	
+	NodesCollection = __webpack_require__(/*! ./collections/nodes-collection.js */ 6);
+	
+	RelationsCollection = __webpack_require__(/*! ./collections/relations-collection.js */ 8);
+	
+	VisualizationGraph = __webpack_require__(/*! ./views/visualization-graph.js */ 10);
+	
+	VisualizationTableNodes = __webpack_require__(/*! ./views/visualization-table-nodes.js */ 50);
+	
+	VisualizationTableRelations = __webpack_require__(/*! ./views/visualization-table-relations.js */ 54);
+	
 	VisualizationEdit = (function() {
 	  VisualizationEdit.prototype.mainHeaderHeight = 84;
-
+	
 	  VisualizationEdit.prototype.visualizationHeaderHeight = 91;
-
+	
 	  VisualizationEdit.prototype.tableHeaderHeight = 42;
-
+	
 	  VisualizationEdit.prototype.id = null;
-
+	
 	  VisualizationEdit.prototype.nodes = null;
-
+	
 	  VisualizationEdit.prototype.visualizationGraph = null;
-
+	
 	  VisualizationEdit.prototype.visualizationTable = null;
-
+	
 	  VisualizationEdit.prototype.visualizationTableNodes = null;
-
+	
 	  VisualizationEdit.prototype.visualizationTableRelations = null;
-
+	
 	  VisualizationEdit.prototype.$tableSelector = null;
-
+	
 	  function VisualizationEdit(_id) {
 	    this.onScroll = bind(this.onScroll, this);
 	    this.resize = bind(this.resize, this);
@@ -47139,7 +47307,7 @@
 	    });
 	    $(window).scroll(this.onScroll);
 	  }
-
+	
 	  VisualizationEdit.prototype.setupAffix = function() {
 	    return $('.visualization-graph').affix({
 	      offset: {
@@ -47147,7 +47315,7 @@
 	      }
 	    });
 	  };
-
+	
 	  VisualizationEdit.prototype.updateTable = function(e) {
 	    e.preventDefault();
 	    if ($(e.target).parent().hasClass('active')) {
@@ -47164,7 +47332,7 @@
 	      return this.visualizationTableRelations.show();
 	    }
 	  };
-
+	
 	  VisualizationEdit.prototype.resize = function() {
 	    var graphHeight, tableHeight, windowHeight;
 	    console.log('resize!');
@@ -47178,11 +47346,11 @@
 	    this.visualizationTableNodes.setSize(tableHeight, this.visualizationTable.offset().top);
 	    return this.visualizationTableRelations.setSize(tableHeight, this.visualizationTable.offset().top);
 	  };
-
+	
 	  VisualizationEdit.prototype.onScroll = function() {
 	    return this.visualizationGraph.setOffsetY($(window).scrollTop() - this.mainHeaderHeight - this.visualizationHeaderHeight);
 	  };
-
+	
 	  VisualizationEdit.prototype.render = function() {
 	    this.setupAffix();
 	    this.resize();
@@ -47196,13 +47364,14 @@
 	      url: '/api/visualizations/' + this.id + '/relations/'
 	    });
 	  };
-
+	
 	  return VisualizationEdit;
-
+	
 	})();
-
+	
 	module.exports = VisualizationEdit;
 
 
 /***/ }
 /******/ ]);
+//# sourceMappingURL=app-bundle.js.map

@@ -308,23 +308,21 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # DATA JOIN
     # Join new data with old elements, if any
-    @relations_labels = @relations_labels_cont.selectAll('.relation-label-g').data(@data_relations_visibles)
+    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
 
     # ENTER
     # Create new elements as needed.
     @relations_labels.enter()
-      .append('g')
-        .attr('class', 'relation-label-g')
-        .append('text')
-          .attr('id', (d) -> return 'relation-label-'+d.id)
-          .attr('class', 'relation-label')
-          .attr('x', 0)
-          .attr('dy', -4)
-        .append('textPath')
-          .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
-          .style('text-anchor', 'middle')
-          .attr('startOffset', '50%') 
-          #.text((d) -> return d.relation_type)
+      .append('text')
+        .attr('id', (d) -> return 'relation-label-'+d.id)
+        .attr('class', 'relation-label')
+        .attr('x', 0)
+        .attr('dy', -4)
+      .append('textPath')
+        .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
+        .style('text-anchor', 'middle')
+        .attr('startOffset', '50%') 
+        #.text((d) -> return d.relation_type)
 
     # ENTER + UPDATE
     # Appending to the enter selection expands the update selection to include
@@ -611,7 +609,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
     # highlight node relation labels
-    @relations_labels.selectAll('.relation-label').classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+    @relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
     #@nodes.select('circle')
@@ -621,7 +619,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
-    @relations_labels.selectAll('.relation-label').classed 'highlighted', false
+    @relations_labels.classed 'highlighted', false
 
   onNodeClick: (d) =>
     # Avoid trigger click on dragEnd
