@@ -29,11 +29,20 @@ class ApiController < ApplicationController
     render json: node
   end
 
-  # Update a Node attribute
+  # Update a Node
   # PUT /api/nodes/:id
   def node_update
     Node.update(params[:id], node_params)
     render json: {}
+    #TODO! Add error validation
+  end
+
+  # Update a Node attribute
+  # PATCH /api/nodes/:id/
+  def node_update_attr
+    node = Node.find(params[:id])
+    node.update_attributes( node_params )
+    render json: node
     #TODO! Add error validation
   end
 
