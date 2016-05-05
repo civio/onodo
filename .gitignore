@@ -19,8 +19,9 @@
 !/log/.keep
 /tmp
 
-# Ignore source maps
+# Ignore source maps and bundled artifacts
 *.map
+app-bundle.js
 
 # Ignore node modules folder
 node_modules/*
