@@ -31,9 +31,9 @@
                 User settings
             %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "user-dropdown"}
               %li
-                = link_to "Dashboard", user_path(current_user)
+                = link_to "Dashboard", dashboard_path
               %li
-                = link_to "Settings", edit_user_registration_path(current_user)
+                = link_to "Settings", edit_settings_path
               %li
                 = link_to "Create visualization", new_visualization_path, :class => 'active'
               %li

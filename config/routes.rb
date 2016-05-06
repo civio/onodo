@@ -1,23 +1,31 @@
 Rails.application.routes.draw do
 
-  # You can have the root of your site routed with "root"
   root 'home#index'
 
-  devise_for :users, :skip => [:sessions], controllers: {registrations: 'registrations'}
+  devise_for :users, :skip => [:sessions], controllers: { registrations: 'registrations' }
   devise_scope :user do
-    get 'login' => 'devise/sessions#new', :as => :new_user_session
-    post 'login' => 'devise/sessions#create', :as => :user_session
-    delete 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
+    get     'login'    => 'devise/sessions#new',      as: :new_user_session
+    post    'login'    => 'devise/sessions#create',   as: :user_session
+    delete  'logout'   => 'devise/sessions#destroy',  as: :destroy_user_session
+    get     'settings' => 'registrations#edit',       as: :edit_settings
   end
   
   # Add user profile page & dashboard
-  resources :users, :only => [:show]
-  get '/users/:id/visualizations' => 'users#show'
-  get '/users/:id/stories'        => 'users#show_stories'
-  
+  scope 'dashboard' do
+    get ''               => 'users#show_dashboard',                as: :dashboard
+    get 'visualizations' => 'users#show_dashboard_visualizations', as: :visualizations_dashboard
+    get 'stories'        => 'users#show_dashboard_stories',        as: :stories_dashboard
+  end
+  resources :users, :only => [:show] do
+    collection do
+      get ':id/visualizations' => 'users#show_visualizations', as: :visualizations
+      get ':id/stories'        => 'users#show_stories',        as: :stories
+    end
+  end
+
   resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do 
     collection do 
-      get ':id/edit/info' => 'visualizations#editinfo'
+      get  ':id/edit/info' => 'visualizations#editinfo'
       post 'publish'
       post 'unpublish'
     end 
@@ -25,7 +33,7 @@ Rails.application.routes.draw do
 
   resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy] do 
     collection do 
-      get ':id/edit/info' => 'stories#editinfo'
+      get  ':id/edit/info' => 'stories#editinfo'
       post 'publish'
       post 'unpublish'
     end 
@@ -35,39 +43,39 @@ Rails.application.routes.draw do
 
   resources :nodes, :only => [:index, :edit, :update] do
     collection do 
-      get ':id/edit/description'  => 'nodes#edit_description'
-      get ':id/edit/image'  => 'nodes#edit_image'
+      get ':id/edit/description' => 'nodes#edit_description'
+      get ':id/edit/image'       => 'nodes#edit_image'
     end 
   end
 
-  get '/explore'                  => 'pages#explore_stories'
-  get '/explore/visualizations/'  => 'pages#explore_visualizations'
-  get '/explore/stories/'         => 'pages#explore_stories'
-  get '/gallery'                  => 'pages#gallery'
+  get '/explore'                 => 'pages#explore_stories'
+  get '/explore/visualizations/' => 'pages#explore_visualizations'
+  get '/explore/stories/'        => 'pages#explore_stories'
+  get '/gallery'                 => 'pages#gallery'
 
 
   # API routes
   scope 'api', as: :api do
     scope 'visualizations' do
-      get     ':visualization_id'                 => 'api#visualization', as: :visualization
-      put     ':visualization_id'                 => 'api#visualization_update'
-      get     ':visualization_id/nodes'           => 'api#nodes'
-      get     ':visualization_id/nodes/types'     => 'api#nodes_types'
-      get     ':visualization_id/relations'       => 'api#relations'
-      get     ':visualization_id/relations/types' => 'api#relations_types'
+      get ':visualization_id'                 => 'api#visualization',        as: :visualization
+      put ':visualization_id'                 => 'api#visualization_update'
+      get ':visualization_id/nodes'           => 'api#nodes'
+      get ':visualization_id/nodes/types'     => 'api#nodes_types'
+      get ':visualization_id/relations'       => 'api#relations'
+      get ':visualization_id/relations/types' => 'api#relations_types'
     end
     scope 'nodes' do
-      post    ''        => 'api#node_create', as: :nodes
-      get     ':id'     => 'api#node', as: :node
-      put     ':id'     => 'api#node_update'
-      patch   ':id'     => 'api#node_update_attr'
-      delete  ':id'     => 'api#node_destroy'
+      post   ''    => 'api#node_create',      as: :nodes
+      get    ':id' => 'api#node',             as: :node
+      put    ':id' => 'api#node_update'
+      patch  ':id' => 'api#node_update_attr'
+      delete ':id' => 'api#node_destroy'
     end
     scope 'relations' do
-      post    ''        => 'api#relation_create', as: :relations
-      get     ':id'     => 'api#relation', as: :relation
-      put     ':id'     => 'api#relation_update'
-      delete  ':id'     => 'api#relation_destroy'
+      post    ''   => 'api#relation_create',  as: :relations
+      get    ':id' => 'api#relation',         as: :relation
+      put    ':id' => 'api#relation_update'
+      delete ':id' => 'api#relation_destroy'
     end
   end
 
