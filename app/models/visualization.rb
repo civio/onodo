@@ -3,5 +3,7 @@ class Visualization < ActiveRecord::Base
 
   has_one :dataset, dependent: :destroy
 
+  has_many :stories, dependent: :destroy
+
   validates :name, presence: true, uniqueness: true
 end
