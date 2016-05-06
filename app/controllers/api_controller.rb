@@ -29,11 +29,20 @@ class ApiController < ApplicationController
     render json: node
   end
 
-  # Update a Node attribute
+  # Update a Node
   # PUT /api/nodes/:id
   def node_update
     Node.update(params[:id], node_params)
     render json: {}
+    #TODO! Add error validation
+  end
+
+  # Update a Node attribute
+  # PATCH /api/nodes/:id/
+  def node_update_attr
+    node = Node.find(params[:id])
+    node.update_attributes( node_params )
+    render json: node
     #TODO! Add error validation
   end
 
@@ -115,7 +124,7 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :visualization_id, :dataset_id) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url) if params[:node]
     end
 
     def relation_params

@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :nodes, :only => [:index, :edit, :update] do
     collection do 
       get ':id/edit/description'  => 'nodes#edit_description'
+      get ':id/edit/image'  => 'nodes#edit_image'
     end 
   end
 
@@ -46,9 +47,9 @@ Rails.application.routes.draw do
 
 
   # API routes
-  scope 'api' do
+  scope 'api', as: :api do
     scope 'visualizations' do
-      get     ':visualization_id'                 => 'api#visualization'
+      get     ':visualization_id'                 => 'api#visualization', as: :visualization
       put     ':visualization_id'                 => 'api#visualization_update'
       get     ':visualization_id/nodes'           => 'api#nodes'
       get     ':visualization_id/nodes/types'     => 'api#nodes_types'
@@ -56,14 +57,15 @@ Rails.application.routes.draw do
       get     ':visualization_id/relations/types' => 'api#relations_types'
     end
     scope 'nodes' do
-      post    ''        => 'api#node_create'
-      get     ':id'     => 'api#node'
+      post    ''        => 'api#node_create', as: :nodes
+      get     ':id'     => 'api#node', as: :node
       put     ':id'     => 'api#node_update'
+      patch   ':id'     => 'api#node_update_attr'
       delete  ':id'     => 'api#node_destroy'
     end
     scope 'relations' do
-      post    ''        => 'api#relation_create'
-      get     ':id'     => 'api#relation'
+      post    ''        => 'api#relation_create', as: :relations
+      get     ':id'     => 'api#relation', as: :relation
       put     ':id'     => 'api#relation_update'
       delete  ':id'     => 'api#relation_destroy'
     end
