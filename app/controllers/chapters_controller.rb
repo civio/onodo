@@ -1,6 +1,6 @@
 class ChaptersController < ApplicationController
 
-  before_action :require_login, except: [:show]
+  before_action :authenticate_user!, except: [:show]
   before_action :set_chapter, except: [:new, :create]
   before_action :require_story_ownership, except: [:show, :new, :create]
 

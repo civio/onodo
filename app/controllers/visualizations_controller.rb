@@ -1,6 +1,6 @@
 class VisualizationsController < ApplicationController
 
-  before_action :require_login, except: [:show]
+  before_action :authenticate_user!, except: [:show]
   before_action :set_visualization, except: [:new, :create]
   before_action :require_visualization_ownership, except: [:show, :new, :create]
 
