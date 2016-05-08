@@ -17,16 +17,17 @@ class ApiController < ApplicationController
   # Get a Node
   # GET /api/nodes/:id
   def node
-    render json: Node.find(params[:id])
+    @node = Node.find(params[:id])
+    render :node
   end
 
   # Create a new Node
   # POST /api/nodes
   def node_create
     #puts node_params
-    node = Node.new(node_params)
-    node.save(:validate => false)
-    render json: node
+    @node = Node.new(node_params)
+    @node.save(:validate => false)
+    render :node
   end
 
   # Update a Node
@@ -40,9 +41,8 @@ class ApiController < ApplicationController
   # Update a Node attribute
   # PATCH /api/nodes/:id/
   def node_update_attr
-    node = Node.find(params[:id])
-    node.update_attributes( node_params )
-    render json: node
+    @node = Node.update(params[:id], node_params)
+    render :node
     #TODO! Add error validation
   end
 
