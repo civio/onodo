@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506103130) do
+ActiveRecord::Schema.define(version: 20160508231127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
@@ -28,15 +29,16 @@ ActiveRecord::Schema.define(version: 20160506103130) do
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.boolean  "visible",      default: true
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "visible",       default: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "node_type"
     t.integer  "dataset_id"
-    t.string   "custom_field"
+    t.hstore   "custom_fields"
     t.string   "image"
   end
 
+  add_index "nodes", ["custom_fields"], name: "index_nodes_on_custom_fields", using: :btree
   add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id", using: :btree
 
   create_table "relations", force: :cascade do |t|

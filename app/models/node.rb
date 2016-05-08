@@ -5,6 +5,7 @@ class Node < ActiveRecord::Base
 
   validates :name, presence: true
 
+  store_accessor :custom_fields
   mount_uploader :image, ImageUploader
 
   # Returns all the relations a node is involved in.
