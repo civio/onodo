@@ -8,6 +8,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     nodesColor:         'solid-1'
     nodesSize:          11
     showNodesLabel:     1
+    showNodesImage:     1
     relationsCurvature: 1
     relationsLineStyle: 0
     linkDistance:       100
@@ -40,6 +41,12 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.showNodesLabel = state
     console.log 'onToogleNodesLabel', @parameters.showNodesLabel
     Backbone.trigger 'visualization.config.toogleNodesLabel', {value: @parameters.showNodesLabel}
+    @updateParameters()
+
+  onToogleNodesImage: (e, state) =>
+    @parameters.showNodesImage = state
+    console.log 'onToogleNodesImage', @parameters.showNodesImage
+    Backbone.trigger 'visualization.config.toogleNodesImage', {value: @parameters.showNodesImage}
     @updateParameters()
 
   onChangeRelationsCurvature: (e) =>
@@ -75,6 +82,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.nodesColor          = @parameters.nodesColor || @parametersDefault.nodesColor
     @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
     @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
+    @parameters.showNodesImage      = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
     @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
     @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
@@ -85,6 +93,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
     # setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch 'state', @parameters.showNodesLabel
+    @$el.find('#showNodesImage').bootstrapSwitch 'state', @parameters.showNodesImage
     # setup dropbox selects (nodes color & nodes size)
     @$el.find('#nodes-color .dropdown-menu li[data-value="' + @parameters.nodesColor + '"]').trigger 'click'
     @$el.find('#nodes-size .dropdown-menu li[data-value="' + @parameters.nodesSize + '"]').trigger 'click'
@@ -114,6 +123,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     console.log 'configuration model', @model.get('parameters'), @parameters
     # Setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch()
+    @$el.find('#showNodesImage').bootstrapSwitch()
     # Setup dropbox selects (nodes color & nodes size)
     @$el.find('.dropdown-select .dropdown-menu li').click @onDropboxSelectChange
     # Setup sliders
@@ -127,6 +137,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#nodes-color').change @onChangeNodesColor
     @$el.find('#nodes-size').change @onChangeNodesSize
     @$el.find('#showNodesLabel').on 'switchChange.bootstrapSwitch', @onToogleNodesLabel
+    @$el.find('#showNodesImage').on 'switchChange.bootstrapSwitch', @onToogleNodesImage
     @$el.find('#curvature').change @onChangeRelationsCurvature
     @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
     # Force Layout Parameters

@@ -109,7 +109,8 @@ class VisualizationGraph extends Backbone.View
     # Subscribe Config Panel Events
     Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesSize',             @onUpdateNodesSize, @
-    Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabels, @
+    Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabel, @
+    Backbone.on 'visualization.config.toogleNodesImage',            @onToogleNodesImage, @
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
@@ -213,8 +214,11 @@ class VisualizationGraph extends Backbone.View
   onUpdateNodesSize: (e) ->
     @visualizationGraphCanvas.updateNodesSize e.value
 
-  onToogleNodesLabels: (e) ->
-    @visualizationGraphCanvas.toogleNodesLabels e.value
+  onToogleNodesLabel: (e) ->
+    @visualizationGraphCanvas.toogleNodesLabel e.value
+
+  onToogleNodesImage: (e) ->
+    @visualizationGraphCanvas.toogleNodesImage e.value
   
   onToogleNodesWithoutRelation: (e) ->
     @visualizationGraphCanvas.toogleNodesWithoutRelation e.value

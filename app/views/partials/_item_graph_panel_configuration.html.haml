@@ -71,11 +71,18 @@
                     Based on number of relations
         %hr
         .row
-          .col-sm-5
+          .col-sm-6
             %p.configuration-label.configuration-switch-label
               Show Nodes Label
-          .col-sm-7.text-right
+          .col-sm-6.text-right
             = check_box_tag :showNodesLabel, 1, false, data: { "size" => "small" }
+        %hr
+        .row
+          .col-sm-6
+            %p.configuration-label.configuration-switch-label
+              Show Nodes Image
+          .col-sm-6.text-right
+            = check_box_tag :showNodesImage, 1, false, data: { "size" => "small" }
       #relations.tab-pane.fade{ role: "tabpanel" }
         .form-group
           %label{ for: "curvature"}

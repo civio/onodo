@@ -509,8 +509,13 @@ class VisualizationGraphCanvas extends Backbone.View
     # update relations arrows position
     @relations.attr 'd', @drawRelationPath
 
-  toogleNodesLabels: (value) =>
+  toogleNodesLabel: (value) =>
     @nodes_labels.classed 'hide', !value
+
+  toogleNodesImage: (value) =>
+    @parameters.showNodesImage = value
+    console.log 'toogleNodesImage',  @parameters
+    @updateNodes()
   
   toogleNodesWithoutRelation: (value) =>
     if value
@@ -723,7 +728,11 @@ class VisualizationGraphCanvas extends Backbone.View
     return color
 
   getNodeFill: (d) =>
-    return if d.image.url == null then @getNodeColor(d) else 'url(#node-pattern-'+d.id+')'
+    if @parameters.showNodesImage and d.image.url != null
+      fill = 'url(#node-pattern-'+d.id+')'
+    else
+      fill = @getNodeColor(d)
+    return fill
 
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
