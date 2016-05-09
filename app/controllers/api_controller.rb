@@ -4,7 +4,8 @@ class ApiController < ApplicationController
   # GET /api/visualizations/:visualization_id/nodes
   def nodes
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
-    render json: Node.where(dataset_id: dataset.id).order(:name)
+    @nodes = Node.where(dataset_id: dataset.id).order(:name)
+    render :visualization_nodes
   end
 
   # Get uniques & non-blank Nodes Types (for a visualization)
@@ -111,6 +112,7 @@ class ApiController < ApplicationController
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
     @dataset_id = dataset.id
     @visualization = Visualization.find(params[:visualization_id])
+    render :visualization
   end
 
   # Update a Visualization

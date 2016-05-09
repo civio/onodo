@@ -1,0 +1,1 @@
+json.merge! @nodes.as_json
