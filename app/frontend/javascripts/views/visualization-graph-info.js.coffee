@@ -29,7 +29,11 @@ class VisualizationGraphInfo extends Backbone.View
     # Update template & render if we have node info
     if @node
       # Compile the template using Handlebars
-      @template = HandlebarsTemplate {name: @node.attributes.name, description: @node.attributes.description}
+      @template = HandlebarsTemplate {
+        name: @node.get('name')
+        description: @node.get('description')
+        image: if @node.get('image') then @node.get('image').huge.url else null
+      }
       #console.log 'template', @template
       @$el.find('.panel-body').html @template, @
     return this

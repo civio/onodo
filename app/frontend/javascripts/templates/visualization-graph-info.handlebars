@@ -1,5 +1,9 @@
 <h3 class="name">{{ name }}</h3>
-<div class="picture"></div>
+{{#if image}}
+<div class="picture">
+  <img src="{{ image }}" alt="{{ name }}">
+</div>
+{{/if}}
 <div class="description">
   {{{ description }}}
 </div>
