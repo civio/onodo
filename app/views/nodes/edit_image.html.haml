@@ -1,23 +1,49 @@
-%p
-  This is the image used to display in the visualization
-  %br
-  %small
-    2 MB max. jpg / png / gif
-  %hr
-  = form_for @node, url: api_node_path(@node), method: :patch, html: { class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
-    .row
-      .col-sm-6
-        .form-group
-          %label Upload from your computer
-          = f.file_field :image, class: 'form-control'
-          = f.hidden_field :image_cache
-      .col-sm-6
-        .form-group
-          %label Choose it from internet
-          = f.text_field :remote_image_url, class: 'form-control'
+- if @node.image.blank?
+  / Upload image form
+  .step-upload
+    %p
+      This is the image used to display in the visualization
+      %br
+      %small
+        2 MB max. jpg / png / gif
+      %hr
+      = form_for @node, url: api_node_path(@node), method: :patch, html: { class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
+        .row
+          .col-sm-6
+            .form-group
+              %label Upload from your computer
+              = f.file_field :image, class: 'form-control'
+              = f.hidden_field :image_cache
+          .col-sm-6
+            .form-group
+              %label Choose it from internet
+              = f.text_field :remote_image_url, class: 'form-control'
+        .row
+          .col-sm-12
+            .actions
+              = f.submit "Upload Image", class: 'btn btn-default btn-primary'
+              %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} Cancel
+      %iframe#uploadTarget{name: 'uploadTarget', height: 0, width: 0, frameborder: 0, scrolling: 'no', style: 'display:none'}
+  .step-confirm.hide
+    %img#node-img
     .row
       .col-sm-12
         .actions
-          = f.submit 'Upload Image', class: 'btn btn-default btn-primary'
-          %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} Cancel
-  %iframe#uploadTarget{name: 'uploadTarget', height: 0, width: 0, frameborder: 0, scrolling: 'no', style: 'display:none'}
+          %a#add-image.btn.btn-primary{type: 'button'}
+            Add Image
+          %a#change-image.btn.btn-invert{type: 'button'}
+            Change
+          %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} 
+            Cancel
+- else
+  / Edit image form
+  =image_tag @node.image.big
+  .row
+    .col-sm-12
+      .actions
+        %a.btn.btn-primary{type: 'button'}
+          Change
+        %a#delete-image.btn.btn-danger{type: 'button'}
+          Delete
+        %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} 
+          Cancel

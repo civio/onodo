@@ -208,12 +208,44 @@ class VisualizationTableNodes extends VisualizationTableBase
     $modal = $('#table-image-modal')
     # Load description edit form via ajax in modal
     $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(index)+'/edit/image/', () =>
-      # Add on submit handler to save new description via model
-      $modal.find('#uploadTarget').on 'load', (e) =>
-        e.preventDefault()
-        image = $.parseJSON($(e.target).contents().text()).image
-        @table.setDataAtRowProp index, 'image', image
-        $modal.modal 'hide'
+      # Upload photo
+      if $modal.find('.step-upload').size() > 0
+        console.log 'Upload photo'
+        # Disable buttons on form submit
+        $modal.find('.form-default').on 'submit', (e) =>
+          $modal.find('.step-upload .actions a.btn-invert').hide()
+          $modal.find('.step-upload input[type="submit"]').addClass('disabled')
+        # Add on submit handler to save new description via model
+        $modal.find('#uploadTarget').on 'load',  (e) =>
+          e.preventDefault()
+          console.log 'onImageModalUploadConfirm'
+          image = $.parseJSON($(e.target).contents().text()).image
+          $modal = $('#table-image-modal')
+          # Hide Step Upload & Show Step Confirm
+          $modal.find('.step-upload').addClass('hide')
+          $modal.find('.step-confirm').removeClass('hide').children('#node-img').attr('src', image.big.url)
+          # Add Image Btn event handler
+          $modal.find('.step-confirm #add-image').one 'click', (e) =>
+            e.preventDefault()
+            @table.setDataAtRowProp index, 'image', image
+            $modal.modal 'hide'
+          # Change Image Btn event handler
+          $modal.find('.step-confirm #change-image').one 'click', (e) =>
+            e.preventDefault()
+            # Reset Step Upload btns
+            $modal.find('.step-upload .actions a.btn-invert').show()
+            $modal.find('.step-upload input[type="submit"]').removeClass('disabled')
+            # Hide Step Confirm & Show Step Upload
+            $modal.find('.step-confirm').addClass('hide')
+            $modal.find('.step-upload').removeClass('hide')
+      # Edit Photo
+      else
+        $modal.find('#delete-image').one 'click', (e) =>
+          e.preventDefault()
+          console.log 'Delete image'
+          # !!! TODO - Delete image through CarrierWave
+          #@table.setDataAtRowProp index, 'image', null
+          $modal.modal 'hide'
     # Show modal
     $modal.modal 'show'
 
@@ -252,7 +284,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
     # Add image icon link
     link = document.createElement('A')
-    link.className = if value.url then 'icon-image active' else 'icon-image'
+    link.className = if value and value.url then 'icon-image active' else 'icon-image'
     link.innerHTML = link.title = 'Node Image'
     Handsontable.Dom.empty(td)
     td.appendChild(link)
