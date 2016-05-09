@@ -34,11 +34,11 @@ ActiveRecord::Schema.define(version: 20160508231127) do
     t.datetime "updated_at",                   null: false
     t.string   "node_type"
     t.integer  "dataset_id"
-    t.hstore   "custom_fields"
     t.string   "image"
+    t.hstore   "custom_fields"
   end
 
-  add_index "nodes", ["custom_fields"], name: "index_nodes_on_custom_fields", using: :btree
+  add_index "nodes", ["custom_fields"], name: "index_nodes_on_custom_fields", using: :gist
   add_index "nodes", ["dataset_id"], name: "index_nodes_on_dataset_id", using: :btree
 
   create_table "relations", force: :cascade do |t|
