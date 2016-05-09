@@ -108,6 +108,8 @@ class VisualizationTableNodes extends VisualizationTableBase
           @table.setDataAtRowProp index, 'node_type', @duplicate.get('node_type')
         if @duplicate.get('description')
           @table.setDataAtRowProp index, 'description', @duplicate.get('description')
+        if @duplicate.get('image')
+          @table.setDataAtRowProp index, 'image', @duplicate.get('image')
         @table.setDataAtRowProp index, 'visible', @duplicate.get('visible')
         console.log 'now set duplicate values'
         @duplicate = null

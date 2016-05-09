@@ -227,8 +227,7 @@ class VisualizationGraphCanvas extends Backbone.View
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    console.log 'nodes with img', @data_nodes.filter (d) -> return d.image.url != null
-    patterns = @defs.selectAll('filter').data(@data_nodes.filter (d) -> return d.image.url != null)
+    patterns = @defs.selectAll('filter').data(@data_nodes.filter (d) -> return d.image != null and d.image.url != null)
 
     # ENTER
     patterns.enter().append('pattern')
@@ -728,7 +727,7 @@ class VisualizationGraphCanvas extends Backbone.View
     return color
 
   getNodeFill: (d) =>
-    if @parameters.showNodesImage and d.image.url != null
+    if @parameters.showNodesImage and d.image != null and d.image.url != null
       fill = 'url(#node-pattern-'+d.id+')'
     else
       fill = @getNodeColor(d)
