@@ -88,6 +88,7 @@ class VisualizationGraph extends Backbone.View
     @collection.nodes.bind 'change:name',         @onNodeChangeName, @
     @collection.nodes.bind 'change:description',  @onNodeChangeDescription, @
     @collection.nodes.bind 'change:visible',      @onNodeChangeVisible, @
+    @collection.nodes.bind 'change:image',        @onNodeChangeImage, @
     @collection.nodes.bind 'remove',              @onNodesRemove, @
     #!!! We need to arr node_type changes
     #@collection.nodes.bind 'change:node_type',   @onNodeChangeType, @
@@ -160,6 +161,11 @@ class VisualizationGraph extends Backbone.View
       if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
         @visualizationGraphInfo.hide()
     @visualizationGraphCanvas.updateLayout()
+
+  onNodeChangeImage: (node) ->
+    console.log 'onNodeChangeImage', node
+    @visualizationGraphCanvas.updateImages()
+    @visualizationGraphCanvas.updateNodes()
 
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name

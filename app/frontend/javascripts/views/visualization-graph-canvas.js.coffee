@@ -31,6 +31,7 @@ class VisualizationGraphCanvas extends Backbone.View
   COLOR_QUANTITATIVE: null
 
   svg:                    null
+  defs:                   null
   container:              null
   color:                  null
   data:                   null
@@ -145,9 +146,9 @@ class VisualizationGraphCanvas extends Backbone.View
           .on('dragend',    @onCanvasDragEnd))
 
     # Define Arrow Markers
-    defs = @svg.append('svg:defs')
+    @defs = @svg.append('svg:defs')
     # Setup arrow end
-    defs.append('svg:marker')
+    @defs.append('svg:marker')
         .attr('id', 'arrow-end')
         .attr('class', 'arrow-marker')
         .attr('viewBox', '-8 -10 8 20')
@@ -159,7 +160,7 @@ class VisualizationGraphCanvas extends Backbone.View
       .append('svg:path')
         .attr('d', 'M -10 -8 L 0 0 L -10 8')
     # Setup arrow start
-    defs.append('svg:marker')
+    @defs.append('svg:marker')
         .attr('id', 'arrow-start')
         .attr('class', 'arrow-marker')
         .attr('viewBox', '0 -10 8 20')
@@ -215,21 +216,48 @@ class VisualizationGraphCanvas extends Backbone.View
 
   updateLayout: ->
     console.log 'updateLayout'
+    @updateImages()
     @updateRelations()
     @updateRelationsLabels()
     @updateNodes()
     @updateNodesLabels()
     @updateForce()
 
+  updateImages: ->
+    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+
+    # DATA JOIN
+    console.log 'nodes with img', @data_nodes.filter (d) -> return d.image.url != null
+    patterns = @defs.selectAll('filter').data(@data_nodes.filter (d) -> return d.image.url != null)
+
+    # ENTER
+    patterns.enter().append('pattern')
+      .attr('x', '0')
+      .attr('y', '0')
+      .attr('width', '100%')
+      .attr('height', '100%')
+      .attr('viewBox', '0 0 30 30')
+      .append('image')
+        .attr('x', '0')
+        .attr('y', '0')
+        .attr('width', '30')
+        .attr('height', '30')
+
+    # ENTER + UPDATE
+    patterns.attr('id', (d) -> return 'node-pattern-'+d.id)
+      .selectAll('image')
+        .attr('xlink:href', (d) -> return d.image.small.url)
+
+    # EXIT
+    patterns.exit().remove()
+
   updateNodes: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    # Join new data with old elements, if any
     @nodes = @nodes_cont.selectAll('.node').data(@data_nodes)
 
     # ENTER
-    # Create new elements as needed.
     @nodes.enter().append('circle')
       .attr('class', 'node')
       .call(@forceDrag)
@@ -239,53 +267,41 @@ class VisualizationGraphCanvas extends Backbone.View
       .on('dblclick',   @onNodeDoubleClick)
 
     # ENTER + UPDATE
-    # Appending to the enter selection expands the update selection to include
-    # entering elements; so, operations on the update selection after appending to
-    # the enter selection will apply to both entering and updating nodes.
     @nodes.attr('id', (d) -> return 'node-'+d.id)
       # update node size
       .attr('r', @getNodeSize)
-      # set nodes color based on parameters.nodesColor value
-      .style('fill', @getNodeColor)
+      # set nodes color based on parameters.nodesColor value or image as pattern if defined
+      .style('fill', @getNodeFill)
       .style('stroke', @getNodeColor)
 
     # EXIT
-    # Remove old elements as needed.
     @nodes.exit().remove()
 
   updateRelations: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    # Join new data with old elements, if any
     @relations = @relations_cont.selectAll('.relation').data(@data_relations_visibles)
 
     # ENTER
-    # Create new elements as needed.
     @relations.enter().append('path')
       .attr('class', 'relation')
 
     # ENTER + UPDATE
-    # Appending to the enter selection expands the update selection to include
-    # entering elements; so, operations on the update selection after appending to
-    # the enter selection will apply to both entering and updating nodes.
     @relations.attr('id', (d) -> return 'relation-'+d.id)
       .attr('marker-end', @getRelationMarkerEnd)
       .attr('marker-start', @getRelationMarkerStart)
 
     # EXIT
-    # Remove old elements as needed.
     @relations.exit().remove()
 
   updateNodesLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    # Join new data with old elements, if any
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
 
     # ENTER
-    # Create new elements as needed.
     @nodes_labels.enter().append('text')
       .attr('id', (d,i) -> return 'node-label-'+d.id)
       .attr('class', if @parameters.showNodesLabel then 'node-label' else 'node-label hide')
@@ -293,25 +309,19 @@ class VisualizationGraphCanvas extends Backbone.View
       .attr('dy', @getNodeLabelYPos)
 
     # ENTER + UPDATE
-    # Appending to the enter selection expands the update selection to include
-    # entering elements; so, operations on the update selection after appending to
-    # the enter selection will apply to both entering and updating nodes.
     @nodes_labels.text (d) -> return d.name
     @nodes_labels.call @formatNodesLabels
 
     # EXIT
-    # Remove old elements as needed.
     @nodes_labels.exit().remove()
 
   updateRelationsLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    # Join new data with old elements, if any
     @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
 
     # ENTER
-    # Create new elements as needed.
     @relations_labels.enter()
       .append('text')
         .attr('id', (d) -> return 'relation-label-'+d.id)
@@ -325,13 +335,9 @@ class VisualizationGraphCanvas extends Backbone.View
         #.text((d) -> return d.relation_type)
 
     # ENTER + UPDATE
-    # Appending to the enter selection expands the update selection to include
-    # entering elements; so, operations on the update selection after appending to
-    # the enter selection will apply to both entering and updating nodes.
     @relations_labels.selectAll('textPath').text((d) -> return d.relation_type)
 
     # EXIT
-    # Remove old elements as needed.
     @relations_labels.exit().remove()
 
   updateForce: ->
@@ -487,7 +493,7 @@ class VisualizationGraphCanvas extends Backbone.View
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
     @nodes
-      .style('fill', @getNodeColor)
+      .style('fill', @getNodeFill)
       .style('stroke', @getNodeColor)
 
   updateNodesSize: (value) =>
@@ -708,13 +714,16 @@ class VisualizationGraphCanvas extends Backbone.View
     return parseInt(@svg.select('#node-'+d.id).attr('r'))+13
 
   getNodeColor: (d) =>
-    if @parameters.nodesColor == 'qualitative'
+   if @parameters.nodesColor == 'qualitative'
       color = @colorQualitativeScale d.node_type  
     else if @parameters.nodesColor == 'quantitative'
       color = @colorQuantitativeScale d.node_type
     else
       color = @COLORS[@parameters.nodesColor]
     return color
+
+  getNodeFill: (d) =>
+    return if d.image.url == null then @getNodeColor(d) else 'url(#node-pattern-'+d.id+')'
 
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
