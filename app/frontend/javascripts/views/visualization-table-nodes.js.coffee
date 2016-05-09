@@ -227,7 +227,9 @@ class VisualizationTableNodes extends VisualizationTableBase
           # Add Image Btn event handler
           $modal.find('.step-confirm #add-image').one 'click', (e) =>
             e.preventDefault()
-            @table.setDataAtRowProp index, 'image', image
+            @syncTable = false  # desactivate syncronization with DB for changes in table
+            @table.setDataAtRowProp index, 'image', image   # update image value in table
+            @syncTable = true  # activate again syncronization with DB for changes in table
             $modal.modal 'hide'
           # Change Image Btn event handler
           $modal.find('.step-confirm #change-image').one 'click', (e) =>

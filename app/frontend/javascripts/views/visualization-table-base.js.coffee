@@ -8,6 +8,7 @@ class VisualizationTableBase extends Backbone.View
   table_offset_top: null
   visualizationSync:false
   collectionSync:   false
+  syncTable:        true  # allow activate/desactivate onTableChangeRow listener
 
   constructor: (@model, @collection, table_type) ->
     super(@model, @collection)
@@ -59,7 +60,7 @@ class VisualizationTableBase extends Backbone.View
     @addModel index
 
   onTableChangeRow: (changes, source) =>
-    if source != 'loadData'
+    if @syncTable and source != 'loadData'
       for change in changes
         if change[2] != change[3]
           console.log 'onTableChangeRow', @table_type, changes, source
