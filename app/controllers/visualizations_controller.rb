@@ -28,9 +28,9 @@ class VisualizationsController < ApplicationController
         puts first_id
         # setup nodes sheet
         wb.add_worksheet(name: "nodes") do |sheet|
-          sheet.add_row ["id", "name", "type", "description", "visible", "custom_field"]
+          sheet.add_row ["id", "name", "type", "description", "visible", "custom_fields"]
           @nodes.each do |node|
-            sheet.add_row [node.id.to_i-first_id, node.name, node.node_type, node.description, node.visible ? 1 : 0, node.custom_field]
+            sheet.add_row [node.id.to_i-first_id, node.name, node.node_type, node.description, node.visible ? 1 : 0, node.custom_fields]
           end
         end
         # setup relations sheet
@@ -162,11 +162,11 @@ class VisualizationsController < ApplicationController
         #   description = row['Url']
         # end
         
-        # TODO!!! we suposse a format id,name,type,description,visible,custom_field
+        # TODO!!! we suposse a format id,name,type,description,visible,custom_fields
         Node.new( name:         row['name'],
                   description:  row['description'] ? row['description'] : '',
                   node_type:    row['type'],
-                  custom_field: row['custom_field'] ? row['custom_field'] : '',
+                  custom_fields: row['custom_fields'] ? row['custom_fields'] : '',
                   visible:      row['visible'] ? row['visible'] : true,
                   dataset:      dataset).save!
       end

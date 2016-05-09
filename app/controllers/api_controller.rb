@@ -124,7 +124,7 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_field, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_fields, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url) if params[:node]
     end
 
     def relation_params
