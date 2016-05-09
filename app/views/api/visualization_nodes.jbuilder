@@ -1,1 +1,1 @@
-json.merge! @nodes.as_json
+json.array! @nodes, partial: 'node', as: :node

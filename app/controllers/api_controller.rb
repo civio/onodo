@@ -4,7 +4,7 @@ class ApiController < ApplicationController
   # GET /api/visualizations/:visualization_id/nodes
   def nodes
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
-    @nodes = Node.where(dataset_id: dataset.id).order(:name)
+    @nodes = dataset.nodes.order(:name)
     render :visualization_nodes
   end
 
@@ -109,9 +109,8 @@ class ApiController < ApplicationController
   # Get a Visualization
   # GET /api/visualizations/:visualization_id/
   def visualization
-    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
-    @dataset_id = dataset.id
     @visualization = Visualization.find(params[:visualization_id])
+    @dataset_id = @visualization.dataset.id
     render :visualization
   end
 
