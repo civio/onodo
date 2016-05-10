@@ -3,7 +3,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :file
-  permissions 0600
+  permissions 0644
   # storage :fog
 
   version :huge do

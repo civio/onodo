@@ -35,8 +35,8 @@ describe ImageUploader do
     end
   end
 
-  it "makes the images readable only to the owner and not executable" do
-    expect(uploader).to have_permissions(0600)
+  it "makes the image writable only to the owner,readable for everybody and not executable" do
+    expect(uploader).to have_permissions(0644)
   end
 
   it "respects the image format" do
