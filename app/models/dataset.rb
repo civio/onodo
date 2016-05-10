@@ -4,5 +4,5 @@ class Dataset < ActiveRecord::Base
   has_many :nodes, dependent: :destroy
   has_many :relations, dependent: :destroy
 
-  validates :visualization, presence: true
+  validates :visualization, presence: true, uniqueness: true
 end

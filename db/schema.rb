@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160510081551) do
+ActiveRecord::Schema.define(version: 20160510084639) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20160510081551) do
     t.text     "custom_fields",    default: [],              array: true
   end
 
-  add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id", using: :btree
+  add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id", unique: true, using: :btree
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
