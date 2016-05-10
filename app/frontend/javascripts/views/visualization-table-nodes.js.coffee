@@ -1,5 +1,6 @@
-Handsontable            = require './../dist/handsontable.full.js'
-VisualizationTableBase  = require './visualization-table-base.js'
+Handsontable                = require './../dist/handsontable.full.js'
+VisualizationTableBase      = require './visualization-table-base.js'
+VisualizationModalNodeImage = require './visualization-modal-node-image.js'
 
 class VisualizationTableNodes extends VisualizationTableBase
 
@@ -21,6 +22,10 @@ class VisualizationTableNodes extends VisualizationTableBase
     # Override Table Options
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @getTableColumns()
+    # Add Image Modal View
+    @visualizationModalNodeImage = new VisualizationModalNodeImage
+    @visualizationModalNodeImage.on 'update', @onVisualizationModalNodeImageUpdate
+    # Custom Column Managment
     @$el.find('.add-custom-column').click @onShowAddCustomColumnModal
     $('#add-custom-column-form').submit   @onAddCustomColumn
 
@@ -206,51 +211,12 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Function to show modal with image edition
   showImageModal: (index) =>
-    console.log 'showImageModal', index
-    $modal = $('#table-image-modal')
-    # Load description edit form via ajax in modal
-    $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(index)+'/edit/image/', () =>
-      # Upload photo
-      if $modal.find('.step-upload').size() > 0
-        console.log 'Upload photo'
-        # Disable buttons on form submit
-        $modal.find('.form-default').on 'submit', (e) =>
-          $modal.find('.step-upload .actions a.btn-invert').hide()
-          $modal.find('.step-upload input[type="submit"]').addClass('disabled')
-        # Add on submit handler to save new description via model
-        $modal.find('#uploadTarget').on 'load',  (e) =>
-          e.preventDefault()
-          console.log 'onImageModalUploadConfirm'
-          image = $.parseJSON($(e.target).contents().text()).image
-          $modal = $('#table-image-modal')
-          # Hide Step Upload & Show Step Confirm
-          $modal.find('.step-upload').addClass('hide')
-          $modal.find('.step-confirm').removeClass('hide').children('#node-img').attr('src', image.big.url)
-          # Add Image Btn event handler
-          $modal.find('.step-confirm #add-image').one 'click', (e) =>
-            e.preventDefault()
-            #@syncTable = false  # desactivate syncronization with DB for changes in table
-            @table.setDataAtRowProp index, 'image', image   # update image value in table
-            #@syncTable = true  # activate again syncronization with DB for changes in table
-            $modal.modal 'hide'
-          # Change Image Btn event handler
-          $modal.find('.step-confirm #change-image').one 'click', (e) =>
-            e.preventDefault()
-            # Reset Step Upload btns
-            $modal.find('.step-upload .actions a.btn-invert').show()
-            $modal.find('.step-upload input[type="submit"]').removeClass('disabled')
-            # Hide Step Confirm & Show Step Upload
-            $modal.find('.step-confirm').addClass('hide')
-            $modal.find('.step-upload').removeClass('hide')
-      # Edit Photo
-      else
-        $modal.find('#delete-image').one 'click', (e) =>
-          e.preventDefault()
-          console.log 'Delete image'
-          @table.setDataAtRowProp index, 'image', null
-          $modal.modal 'hide'
-    # Show modal
-    $modal.modal 'show'
+    @visualizationModalNodeImage.show index, @getIdAtRow(index)
+
+  # Update listener for Image Edition Modal
+  onVisualizationModalNodeImageUpdate: (e) =>
+    console.log 'onVisualizationModalNodeImageUpdate', e
+    @table.setDataAtRowProp e.index, 'image', e.value   # update image value in table
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
