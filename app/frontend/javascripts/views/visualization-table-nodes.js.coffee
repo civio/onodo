@@ -24,7 +24,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     @table_options.columns     = @getTableColumns()
     # Add Image Modal View
     @visualizationModalNodeImage = new VisualizationModalNodeImage
-    @visualizationModalNodeImage.on 'update', @onVisualizationModalNodeImageUpdate
+    @visualizationModalNodeImage.on 'update',  @onVisualizationModalNodeImageUpdate
+    @visualizationModalNodeImage.on 'delete',  @onVisualizationModalNodeImageDelete
     # Custom Column Managment
     @$el.find('.add-custom-column').click @onShowAddCustomColumnModal
     $('#add-custom-column-form').submit   @onAddCustomColumn
@@ -215,8 +216,13 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Update listener for Image Edition Modal
   onVisualizationModalNodeImageUpdate: (e) =>
-    console.log 'onVisualizationModalNodeImageUpdate', e
     @table.setDataAtRowProp e.index, 'image', e.value   # update image value in table
+
+  # Method for deleting images on server when Image Modal is closed before confirm
+  onVisualizationModalNodeImageDelete: (e) =>
+    model = @collection.get e.id
+    # Save model with updated attributes in order to delegate in Collection trigger 'change' events
+    model.save { image: null }
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

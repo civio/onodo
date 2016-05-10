@@ -6,7 +6,7 @@
       %br
       %small
         2 MB max. jpg / png / gif
-    = form_for @node, url: api_node_path(@node), method: :patch, html: { class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
+    = form_for @node, url: api_node_path(@node), method: :patch, html: { id: 'node-image-form', class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
       %hr
       .row
         .col-sm-6
@@ -46,7 +46,7 @@
   .row
     .col-sm-12
       .actions
-        %a.btn.btn-primary{type: 'button'}
+        %a#change-image.btn.btn-primary{type: 'button'}
           Change
         %a#delete-image.btn.btn-danger{type: 'button'}
           Delete
