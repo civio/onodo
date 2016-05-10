@@ -115,6 +115,34 @@ button,
   }
 }
 
+.btn-file {
+  position: relative;
+  overflow: hidden;
+
+  input[type=file] {
+    display: block;
+    position: absolute;
+    top: -2px;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+  }
+
+  .glyphicon{
+    margin-right: 8px;
+    font-size: 1.125em;
+  }
+}
+.btn-file-output{
+  padding: $grid-gutter-width/3 0 0 $grid-gutter-width/2;
+}
+
 .btn-collapse{
   .collapsed-label{
     display: inline;

@@ -5,6 +5,7 @@ App.Trix = require 'script!trix'
 App.VisualizationShow = require './visualization-show.js'
 App.VisualizationEdit = require './visualization-edit.js'
 
+
 $(document).ready ->
 
   # Activate tooltips
@@ -32,3 +33,10 @@ $(document).ready ->
       e.preventDefault()
       $('.story-cover').fadeOut()
       $('.visualization-info').fadeIn()
+
+
+  # Add file input feedback 
+  # based on http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
+  $(document).on 'change', '.btn-file :file', () ->
+      label     = $(this).val().replace(/\\/g, '/').replace(/.*\//, '')
+      $(this).parent().siblings('.btn-file-output').html label

@@ -6,24 +6,29 @@
       %br
       %small
         2 MB max. jpg / png / gif
+    = form_for @node, url: api_node_path(@node), method: :patch, html: { class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
       %hr
-      = form_for @node, url: api_node_path(@node), method: :patch, html: { class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
-        .row
-          .col-sm-6
-            .form-group
-              %label Upload from your computer
+      .row
+        .col-sm-6
+          .form-group
+            %label Upload from your computer
+            %span.btn.btn-primary.btn-file
+              %i.glyphicon.glyphicon-folder-open
+              Browse
               = f.file_field :image, class: 'form-control'
-              = f.hidden_field :image_cache
-          .col-sm-6
-            .form-group
-              %label Choose it from internet
-              = f.text_field :remote_image_url, class: 'form-control'
-        .row
-          .col-sm-12
-            .actions
-              = f.submit "Upload Image", class: 'btn btn-default btn-primary'
-              %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} Cancel
-      %iframe#uploadTarget{name: 'uploadTarget', height: 0, width: 0, frameborder: 0, scrolling: 'no', style: 'display:none'}
+            = f.hidden_field :image_cache
+            %p.btn-file-output
+        .col-sm-6
+          .form-group
+            %label Choose it from internet
+            = f.text_field :remote_image_url, class: 'form-control'
+      %hr
+      .row
+        .col-sm-12
+          .actions
+            = f.submit "Upload Image", class: 'btn btn-default btn-primary'
+            %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} Cancel
+    %iframe#uploadTarget{name: 'uploadTarget', height: 0, width: 0, frameborder: 0, scrolling: 'no', style: 'display:none'}
   .step-confirm.hide
     %img#node-img
     .row
