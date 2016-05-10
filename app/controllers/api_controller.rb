@@ -1,5 +1,7 @@
 class ApiController < ApplicationController
 
+  protect_from_forgery with: :null_session
+
   # Get all Nodes (for a visualization)
   # GET /api/visualizations/:visualization_id/nodes
   def nodes
@@ -117,13 +119,6 @@ class ApiController < ApplicationController
     render :visualization
   end
 
-  # Update a Visualization attribute
-  # PATCH /api/visualizations/:visualization_id/
-  def visualization_update
-    Visualization.update(params[:visualization_id], visualization_params)
-    render json: {}
-  end
-
   # Update a Visualization
   # PUT /api/visualizations/:visualization_id/
   def visualization_update
@@ -135,9 +130,10 @@ class ApiController < ApplicationController
   # PATCH /api/visualizations/:visualization_id/
   def visualization_update_attr
     @visualization = Visualization.find(params[:id])
+    @dataset = @visualization.dataset
     if params[:visualization][:custom_fields]
-      @visualization.dataset.custom_fields = params[:visualization][:custom_fields]
-      @visualization.dataset.save
+      @dataset.custom_fields = params[:visualization][:custom_fields]
+      @dataset.save
     else
       @visualization.update_attributes(visualization_params)
     end
