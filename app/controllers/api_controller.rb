@@ -34,6 +34,9 @@ class ApiController < ApplicationController
   # Update a Node
   # PUT /api/nodes/:id
   def node_update
+    if params[:node][:image].nil? && params[:node][:remote_image_url].nil?
+      params[:node][:remove_image] = 1
+    end
     Node.update(params[:id], node_params)
     render json: {}
     #TODO! Add error validation
@@ -125,7 +128,7 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_fields, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_fields, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image) if params[:node]
     end
 
     def relation_params

@@ -247,8 +247,7 @@ class VisualizationTableNodes extends VisualizationTableBase
         $modal.find('#delete-image').one 'click', (e) =>
           e.preventDefault()
           console.log 'Delete image'
-          # !!! TODO - Delete image through CarrierWave
-          #@table.setDataAtRowProp index, 'image', null
+          @table.setDataAtRowProp index, 'image', null
           $modal.modal 'hide'
     # Show modal
     $modal.modal 'show'
