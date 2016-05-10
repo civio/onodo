@@ -113,8 +113,15 @@ class ApiController < ApplicationController
   # GET /api/visualizations/:visualization_id/
   def visualization
     @visualization = Visualization.find(params[:visualization_id])
-    @dataset_id = @visualization.dataset.id
+    @dataset = @visualization.dataset
     render :visualization
+  end
+
+  # Update a Visualization attribute
+  # PATCH /api/visualizations/:visualization_id/
+  def visualization_update
+    Visualization.update(params[:visualization_id], visualization_params)
+    render json: {}
   end
 
   # Update a Visualization
@@ -124,6 +131,19 @@ class ApiController < ApplicationController
     render json: {}
   end
 
+  # Update a Visualization attribute
+  # PATCH /api/visualizations/:visualization_id/
+  def visualization_update_attr
+    @visualization = Visualization.find(params[:id])
+    if params[:visualization][:custom_fields]
+      @visualization.dataset.custom_fields = params[:visualization][:custom_fields]
+      @visualization.dataset.save
+    else
+      @visualization.update_attributes(visualization_params)
+    end
+    render :visualization
+    #TODO! Add error validation
+  end
 
   private
 
@@ -136,7 +156,7 @@ class ApiController < ApplicationController
     end
 
     def visualization_params
-      params.require(:visualization).permit(:parameters) if params[:visualization]
+      params.require(:visualization).permit(:parameters, :custom_fields) if params[:visualization]
     end
 
 end
