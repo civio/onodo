@@ -31,6 +31,12 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   onSync: =>
     console.log 'onSync', @model
+    # add custom_fields to table if defined
+    if @model.get('custom_fields')
+      @model.get('custom_fields').forEach (custom_field) =>
+        @tableColHeaders.splice       @tableColHeaders.length-1, 0, custom_field
+        @table_options.columns.splice @tableColHeaders.length-1, 0, { data: custom_field }
+    # get node types
     @getNodesTypes()
 
   # Setup Handsontable columns options
