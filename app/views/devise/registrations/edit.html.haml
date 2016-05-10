@@ -14,8 +14,12 @@
             Your avatar photo should be about 500px wide 500px tall and under 1MB
             = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f|
               .form-group
-                = f.file_field :avatar
-                = f.hidden_field :avatar_cache
+                %span.btn.btn-primary.btn-file
+                  %i.glyphicon.glyphicon-folder-open
+                  Browse
+                  = f.file_field :avatar, class: 'form-control'
+                  = f.hidden_field :avatar_cache
+                %p.btn-file-output
               .actions
                 = f.submit "Upload Photo", class: "btn btn-default btn-primary"
 
