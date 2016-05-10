@@ -27,8 +27,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     @visualizationModalNodeImage.on 'update',  @onVisualizationModalNodeImageUpdate
     @visualizationModalNodeImage.on 'delete',  @onVisualizationModalNodeImageDelete
     # Custom Column Managment
-    @$el.find('.add-custom-column').click @onShowAddCustomColumnModal
-    $('#add-custom-column-form').submit   @onAddCustomColumn
+    $('#add-custom-column-form').submit @onAddCustomColumn
 
   onSync: =>
     console.log 'onSync', @model
@@ -148,29 +147,6 @@ class VisualizationTableNodes extends VisualizationTableBase
   setNodesTypesSource: ->
     @table_options.columns[ @columns.type ].source = @nodes_types
 
-  # Show Add Custom Column Modal handler
-  onShowAddCustomColumnModal: (e) ->
-    e.preventDefault()
-    
-  # Show Add Custom Column Modal handler
-  onAddCustomColumn: (e) =>
-    e.preventDefault()
-    # get column name from form input text
-    column_name = $(e.target).find('#add-custom-column-name').val()
-    # get penultimate position in tableColHeaders array
-    index = @tableColHeaders.length-1
-    # insert column name at penultimate position in tableColHeaders array
-    @tableColHeaders.splice index, 0, column_name
-    @table_options.colHeaders = @tableColHeaders
-    # insert new column data at penultimate position in columns array
-    @table_options.columns.splice index, 0, { data: column_name.replace(/\s+/g, '-').toLowerCase() } 
-    console.log 'onAddCustomColumn', e.target, @table_options
-    # update table options
-    if @table
-      @table.updateSettings @table_options
-    # hide modal
-    $('#table-add-column-modal').modal 'hide'
-
   onBeforeKeyDown: (e) =>
     selected = @table.getSelected()
     # ENTER or SPACE keys
@@ -223,6 +199,31 @@ class VisualizationTableNodes extends VisualizationTableBase
     model = @collection.get e.id
     # Save model with updated attributes in order to delegate in Collection trigger 'change' events
     model.save { image: null }
+
+  # Show Add Custom Column Modal handler
+  onAddCustomColumn: (e) =>
+    e.preventDefault()
+    # get column name from form input text
+    column_name = $(e.target).find('#add-custom-column-name').val()
+    # clear name input text value
+    $('#add-custom-column-name').val('')
+    # get penultimate position in tableColHeaders array
+    index = @tableColHeaders.length-1
+    # insert column name at penultimate position in tableColHeaders array
+    @tableColHeaders.splice index, 0, column_name
+    @table_options.colHeaders = @tableColHeaders
+    # insert new column data at penultimate position in columns array
+    @table_options.columns.splice index, 0, { data: column_name.replace(/\s+/g, '-').toLowerCase() } 
+    console.log 'onAddCustomColumn', e.target, @table_options
+    # update table options
+    if @table
+      @table.updateSettings @table_options
+    # update custom_fields in visualization model 
+    # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
+    console.log 'save ustom_fields in DB', @tableColHeaders.slice Object.keys(@columns).length, @tableColHeaders.length-1
+    @model.save {custom_fields: @tableColHeaders.slice(Object.keys(@columns).length, @tableColHeaders.length-1)}, {patch: true}
+    # hide modal
+    $('#table-add-column-modal').modal 'hide'
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

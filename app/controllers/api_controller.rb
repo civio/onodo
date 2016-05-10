@@ -129,7 +129,7 @@ class ApiController < ApplicationController
   # Update a Visualization attribute
   # PATCH /api/visualizations/:visualization_id/
   def visualization_update_attr
-    @visualization = Visualization.find(params[:id])
+    @visualization = Visualization.find(params[:visualization_id])
     @dataset = @visualization.dataset
     if params[:visualization][:custom_fields]
       @dataset.custom_fields = params[:visualization][:custom_fields]
@@ -137,7 +137,7 @@ class ApiController < ApplicationController
     else
       @visualization.update_attributes(visualization_params)
     end
-    render :visualization
+    render json: {}
     #TODO! Add error validation
   end
 
