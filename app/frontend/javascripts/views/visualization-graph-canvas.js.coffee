@@ -209,7 +209,10 @@ class VisualizationGraphCanvas extends Backbone.View
       # Add relation to data_relations_visibles array if both nodes exist and are visibles
       if d.source and d.target and d.source.visible and d.target.visible
         @data_relations_visibles.push d
-        @linkedByIndex[d.source_id+','+d.target_id] = true
+        @addRelationToLinkedByIndex d.source_id, d.target_id
+
+    # Add linkindex to relations
+    @setLinkIndex()
 
     console.log 'current nodes', @data_nodes
     console.log 'current relations', @data_relations_visibles
@@ -375,7 +378,8 @@ class VisualizationGraphCanvas extends Backbone.View
     if relation.source and relation.target and relation.source.visible and relation.target.visible
       console.log 'addRelationVisible'
       @data_relations_visibles.push relation
-      @linkedByIndex[relation.source_id+','+relation.target_id] = true
+      @addRelationToLinkedByIndex relation.source_id, relation.target_id
+      @setLinkIndex()
 
   # maybe we need to split removeVisibleRelationaData & removeRelationData
   removeRelationData: (relation) =>
@@ -393,6 +397,33 @@ class VisualizationGraphCanvas extends Backbone.View
     index = @data_relations_visibles.indexOf relation
     if index != -1
       @data_relations_visibles.splice index, 1
+
+  addRelationToLinkedByIndex: (source, target) ->
+    # count number of relations between 2 nodes
+    @linkedByIndex[source+','+target] = ++@linkedByIndex[source+','+target] || 1
+
+  # Add a linkindex property to relations
+  # Based on https://github.com/zhanghuancs/D3.js-Node-MultiLinks-Node
+  setLinkIndex: ->
+    # Sort relations
+    @data_relations_visibles.sort (a,b) ->
+      if a.source_id > b.source_id
+        return 1
+      else if a.source_id < b.source_id
+        return -1
+      else 
+        if a.target_id > b.target_id
+          return 1
+        else if a.target_id < b.target_id
+          return -1
+        else
+          return 0
+    # set linkindex attr
+    @data_relations_visibles.forEach (relation, i) =>
+      if i != 0 && @data_relations_visibles[i].source_id == @data_relations_visibles[i-1].source_id && @data_relations_visibles[i].target_id == @data_relations_visibles[i-1].target_id
+        @data_relations_visibles[i].linkindex = @data_relations_visibles[i-1].linkindex + 1
+      else
+        @data_relations_visibles[i].linkindex = 1
 
   addNode: (node) ->
     console.log 'addNode', node
@@ -665,7 +696,12 @@ class VisualizationGraphCanvas extends Backbone.View
 
     dx = d.target.x - d.source.x
     dy = d.target.y - d.source.y
-    dist = @parameters.relationsCurvature * Math.sqrt dx*dx + dy*dy  # Calculate distance between source & target positions
+    
+    # Calculate distance between source & target positions
+    dist = @parameters.relationsCurvature * Math.sqrt dx*dx + dy*dy  
+    # if there are multiple links between these two nodes, we need generate different dr for each path
+    if @linkedByIndex[d.source_id+','+d.target_id] > 1
+      dist = dist / (1 + (1/@linkedByIndex[d.source_id+','+d.target_id]) * (d.linkindex - 1))
 
     # Calculate relation angle in order to draw always convex arcs & avoid relation labels facing down
     d.angle = Math.atan2(dx,dy) # *(180/Math.PI) to convert to degrees
