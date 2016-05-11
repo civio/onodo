@@ -36,10 +36,19 @@ class ApiController < ApplicationController
   # Update a Node
   # PUT /api/nodes/:id
   def node_update
+    @node = Node.find(params[:id])
     if params[:node][:image].nil? && params[:node][:remote_image_url].nil?
       params[:node][:remove_image] = 1
     end
-    Node.update(params[:id], node_params)
+
+    @node.dataset.custom_fields.each do |cf|
+      data = params[:node][cf]
+      next if data.nil?
+      current_custom_fields = @node.custom_fields || {}
+      params[:node][:custom_fields] = current_custom_fields.merge({cf => data})
+    end
+
+    @node.update_attributes(node_params)
     render json: {}
     #TODO! Add error validation
   end
@@ -144,7 +153,7 @@ class ApiController < ApplicationController
   private
 
     def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :custom_fields, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image) if params[:node]
+      params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys)) if params[:node]
     end
 
     def relation_params
