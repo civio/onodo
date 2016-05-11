@@ -1214,3 +1214,15 @@ body.visualizations.edit{
     }
   }
 }
+
+#table-image-modal{
+  #upload-description{
+    padding-bottom: 2*$grid-gutter-width/3;
+  }
+  #node-image-form{
+    margin-bottom: 0;
+  }
+  .actions{
+    margin-bottom: 2*$grid-gutter-width/3;
+  }
+}
