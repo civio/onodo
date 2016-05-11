@@ -6,7 +6,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_types:      null
-  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image', '<a class="add-custom-column" href="#" data-toggle="modal" data-target="#table-add-column-modal" title="Add Custom Column"></a>']
+  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image']
   columns:          {
     'delete'      : 0
     'duplicate'   : 1
@@ -34,8 +34,9 @@ class VisualizationTableNodes extends VisualizationTableBase
     # add custom_fields to table if defined
     if @model.get('custom_fields')
       @model.get('custom_fields').forEach (custom_field) =>
-        @tableColHeaders.splice       @tableColHeaders.length-1, 0, custom_field
-        @table_options.columns.splice @tableColHeaders.length-1, 0, { data: custom_field }
+        @tableColHeaders.push       custom_field
+        @table_options.columns.push { data: custom_field }
+    console.log '!!! columns', @table_options.columns
     # get node types
     @getNodesTypes()
 
@@ -77,10 +78,6 @@ class VisualizationTableNodes extends VisualizationTableBase
         data: 'image'
         readOnly: true
         renderer: @rowImageRenderer
-      },
-      { 
-        data: ''
-        readOnly: true
       }
     ]
 
@@ -198,6 +195,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Update listener for Image Edition Modal
   onVisualizationModalNodeImageUpdate: (e) =>
+    console.log 'onVisualizationModalNodeImageUpdate'
     @table.setDataAtRowProp e.index, 'image', e.value   # update image value in table
 
   # Method for deleting images on server when Image Modal is closed before confirm
@@ -213,21 +211,19 @@ class VisualizationTableNodes extends VisualizationTableBase
     column_name = $(e.target).find('#add-custom-column-name').val()
     # clear name input text value
     $('#add-custom-column-name').val('')
-    # get penultimate position in tableColHeaders array
-    index = @tableColHeaders.length-1
-    # insert column name at penultimate position in tableColHeaders array
-    @tableColHeaders.splice index, 0, column_name
+    # push column name in tableColHeaders array
+    @tableColHeaders.push column_name
     @table_options.colHeaders = @tableColHeaders
-    # insert new column data at penultimate position in columns array
-    @table_options.columns.splice index, 0, { data: column_name.replace(/\s+/g, '-').toLowerCase() } 
+    # push new column data in columns array
+    @table_options.columns.push { data: column_name.replace(/\s+/g, '_').toLowerCase() } 
     console.log 'onAddCustomColumn', e.target, @table_options
     # update table options
     if @table
       @table.updateSettings @table_options
     # update custom_fields in visualization model 
     # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    console.log 'save ustom_fields in DB', @tableColHeaders.slice Object.keys(@columns).length, @tableColHeaders.length-1
-    @model.save {custom_fields: @tableColHeaders.slice(Object.keys(@columns).length, @tableColHeaders.length-1)}, {patch: true}
+    console.log 'save ustom_fields in DB', @tableColHeaders.slice Object.keys(@columns).length, @tableColHeaders.length
+    @model.save {custom_fields: @tableColHeaders.slice(Object.keys(@columns).length, @tableColHeaders.length)}, {patch: true}
     # hide modal
     $('#table-add-column-modal').modal 'hide'
 

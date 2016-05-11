@@ -86,8 +86,8 @@ class VisualizationEdit
     @setupAffix()   # setup affix bootstrap
     @resize()       # force resize
     # fetch model & collections
-    @visualization.fetch {url: '/api/visualizations/'+@id}
-    @nodes.fetch {url: '/api/visualizations/'+@id+'/nodes/'}
-    @relations.fetch {url: '/api/visualizations/'+@id+'/relations/'}
+    @visualization.fetch  {url: '/api/visualizations/'+@id}
+    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/'}
+    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/'}
 
 module.exports = VisualizationEdit;

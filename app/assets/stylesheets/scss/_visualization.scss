@@ -785,6 +785,23 @@ body.fullscreen{
       top: -1.5*$grid-gutter-width;
       right: 0;
     }
+
+    /*
+    .add-custom-column{
+      display: block;
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      @include retina-sprite( $icon-plus-circle-nofill-group );
+      background-color: $gray-blue-light;
+      border-radius: 11px;
+      z-index: 900;
+
+      &:hover{
+        background-color: white;
+      }
+    }
+    */
   }
 
   .handsontable{
