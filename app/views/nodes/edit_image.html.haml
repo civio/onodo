@@ -19,6 +19,8 @@
       .form-group
         %label Choose it from internet
         = f.text_field :remote_image_url, class: 'form-control'
+%p#upload-error-msg.hide.bg-danger
+  The URL is not a valid image
 %img#node-img{ src: (@node.image.huge.url unless @node.image.blank?)}
 %hr
 .row

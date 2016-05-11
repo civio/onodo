@@ -1222,6 +1222,11 @@ body.visualizations.edit{
   #node-image-form{
     margin-bottom: 0;
   }
+  #upload-error-msg{
+    padding: $grid-gutter-width/3 $grid-gutter-width/2;
+    font-size: 0.875em;
+    margin-bottom: 0;
+  }
   .actions{
     margin-bottom: 2*$grid-gutter-width/3;
   }

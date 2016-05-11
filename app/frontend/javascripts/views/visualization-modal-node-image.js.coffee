@@ -9,7 +9,6 @@ class VisualizationModalNodeImage extends Backbone.View
   show: (index, id) ->
     @index      = index
     @nodeId     = id
-    console.log 'showImageModal', index, @$el
     # Load description edit form via ajax in modal
     @$el.find('.modal-body').load '/nodes/'+@nodeId+'/edit/image/', @onModalLoaded
     # Show modal
@@ -18,37 +17,35 @@ class VisualizationModalNodeImage extends Backbone.View
   onModalLoaded: () =>
     # Get imageAdded based on src content of node-img
     @imageAdded = @$el.find('#node-img').attr('src') != undefined
-    console.log 'Upload photo', @imageAdded
-    @$el.find('#uploadTarget').on 'load', @onImageUploaded
+    @$el.find('#uploadTarget').on 'load',             @onImageUploaded
     # Add Image Btn event handler
-    @$el.find('#add-image').on 'click', @onAddImage
+    @$el.find('#add-image').on 'click',               @onAddImage
     # Change Image Btn event handler
-    @$el.find('#change-image').on 'click', @onChangeImage
+    @$el.find('#change-image').on 'click',            @onChangeImage
     # Delete Image Btn event handler
-    @$el.find('#delete-image').on 'click', @onDeleteImage
+    @$el.find('#delete-image').on 'click',            @onDeleteImage
     # Modal hidden event
-    @$el.on 'hide.bs.modal', @onModalHidden
+    @$el.on 'hide.bs.modal',                          @onModalHidden
     # Submit form when image selected in Browse btn
-    @$el.find('#node_image').on 'change', (e) =>
-      @$el.find('#node-image-form').submit()
+    @$el.find('#node_image').on 'change',             @onNodeImageUpdated
+    @$el.find('#node_remote_image_url').on 'change',  @onNodeImageURLUpdated
 
-  onModalHidden: (e) =>
-    # Remove Events Listeners
-    @$el.find('#uploadTarget').off    'load'
-    @$el.find('#add-image').off       'click'
-    @$el.find('#change-image').off    'click'
-    @$el.find('#delete-image').off    'click'
-    @$el.off                          'hide.bs.modal'
-    @$el.find('#node_image').off      'change'
-    # Delete image when modal hidden & image has not be confirmed
-    unless @imageAdded
-      console.log 'delete image'
-      @.trigger 'delete', {id: @nodeId}
+  onNodeImageUpdated: (e) =>
+    @$el.find('#upload-error-msg').addClass('hide')
+    @$el.find('#node_remote_image_url').val('')
+    @$el.find('#node-image-form').submit()
+
+  onNodeImageURLUpdated: (e) =>
+    console.log 'node_remote_image_url change!', $(e.target).val()
+    @$el.find('#upload-error-msg').addClass('hide')
+    @$el.find('#node-image-form').submit()
 
   onImageUploaded: (e) =>
     e.preventDefault()
-    console.log 'onImageModalUploadConfirm'
+    console.log 'onImageModalUploadConfirm', $.parseJSON($(e.target).contents().text())
     @image = $.parseJSON($(e.target).contents().text()).image
+    if @image == null
+      @$el.find('#upload-error-msg').removeClass('hide')
     # Show image preview & enable Add Image btn
     @$el.find('#node-img').attr('src', @image.big.url)
     @$el.find('#add-image').removeClass('disabled')
@@ -75,6 +72,19 @@ class VisualizationModalNodeImage extends Backbone.View
     console.log 'Delete image'
     @deleteImage()
     @$el.modal 'hide'
+
+  onModalHidden: (e) =>
+    # Remove Events Listeners
+    @$el.find('#uploadTarget').off    'load'
+    @$el.find('#add-image').off       'click'
+    @$el.find('#change-image').off    'click'
+    @$el.find('#delete-image').off    'click'
+    @$el.off                          'hide.bs.modal'
+    @$el.find('#node_image').off      'change'
+    # Delete image when modal hidden & image has not be confirmed
+    unless @imageAdded
+      console.log 'delete image'
+      @.trigger 'delete', {id: @nodeId}
 
   addImage: =>
     console.log 
