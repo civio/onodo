@@ -6,4 +6,6 @@ if node[:image].nil?
   json.image nil
 end
 
-json.merge! node[:custom_fields]
+if node[:custom_fields]
+  json.merge! node[:custom_fields]
+end
