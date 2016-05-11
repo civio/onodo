@@ -30,12 +30,12 @@
                 Edit #{item.class.to_s.downcase}
                 %i.icon-edit
           %li
-            %a{href: "#"} 
+            %a{href: new_visualization_path} 
               Duplicate #{item.class.to_s.downcase}
               %i.icon-duplicate
           - unless defined? story
             %li
-              %a{href: "#"} 
+              %a{href: new_story_path} 
                 Create story from visualization
                 %i.icon-story
           - if defined? story
