@@ -132,7 +132,7 @@ class ApiController < ApplicationController
     @visualization = Visualization.find(params[:visualization_id])
     @dataset = @visualization.dataset
     if params[:visualization][:custom_fields]
-      @dataset.custom_fields = params[:visualization][:custom_fields]
+      @dataset.custom_fields = params[:visualization][:custom_fields].map{ |cf| cf.downcase.gsub(' ', '_') }
       @dataset.save
     else
       @visualization.update_attributes(visualization_params)
