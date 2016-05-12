@@ -83,18 +83,20 @@ class VisualizationEdit
     @visualizationGraph.setOffsetY $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
 
   render: ->
-    @setupAffix()   # setup affix bootstrap
-    @resize()       # force resize
+    # setup affix bootstrap
+    @setupAffix()
+    # force resize
+    @resize()
     # fetch model & collections
-    $.when(
-      @visualization.fetch  {url: '/api/visualizations/'+@id},
-      @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/'},
-      @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/'},
-    ).done( () =>
-      # Render Tables & Graph when all collections ready
-      @visualizationTableNodes.render()
-      @visualizationTableRelations.render()
-      @visualizationGraph.render()
-    )
+    syncCounter = _.after 3, @onSync
+    @visualization.fetch  {url: '/api/visualizations/'+@id,               success: syncCounter}
+    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
+    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
+
+  onSync: =>
+    # Render Tables & Graph when all collections ready
+    @visualizationTableNodes.render()
+    @visualizationTableRelations.render()
+    @visualizationGraph.render()
 
 module.exports = VisualizationEdit;

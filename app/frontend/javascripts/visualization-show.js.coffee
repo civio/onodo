@@ -45,11 +45,15 @@ class VisualizationShow
     #$('.footer').css 'top', graphHeight+64
 
   render: ->
-    @resize()       # force resize
-    # fetch collections
-    @visualization.fetch {url: '/api/visualizations/'+@id}
-    @nodes.fetch {url: '/api/visualizations/'+@id+'/nodes/'}
-    @relations.fetch {url: '/api/visualizations/'+@id+'/relations/'}
+    # force resize
+    @resize()
+    # fetch model & collections
+    syncCounter = _.after 3, @onSync
+    @visualization.fetch  {url: '/api/visualizations/'+@id,               success: syncCounter}
+    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
+    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
 
+  onSync: =>
+    @visualizationGraph.render()
 
 module.exports = VisualizationShow
