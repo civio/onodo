@@ -7,6 +7,5 @@
     = render 'partials/item_share_panel', item: @story, story: true
     .visualization-graph-component
     = render 'partials/item_graph_info', edit: true
-    
-= render 'partials/item_table_edit'
-= render 'partials/item_delete_modal'
+
+= render 'partials/item_delete_modal', item: @story, story: true

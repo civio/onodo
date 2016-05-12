@@ -1,4 +1,5 @@
 - grid_class = (defined? story) ? 'col-sm-3' : 'col-sm-4'
+- controller = (defined? story) ? 'stories' : 'visualizations'
 .visualization-info
   .container
     .row
@@ -23,7 +24,7 @@
               .visualization-status-icon
                 %span.visualization-status-icon-sprite
               Draft
-            = link_to "Publish", {controller: "visualizations", action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
+            = link_to "Publish", {controller: controller, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
       %div{class: grid_class}
         %button.btn.btn-default.btn-invert.btn-collapse.collapsed.pull-right{ type: "button", "aria-controls" => "visualization-table-view", data: { toggle: "collapse", target: "#visualization-table-view" } }
           %span.collapsible-label

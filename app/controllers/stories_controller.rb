@@ -56,11 +56,15 @@ class StoriesController < ApplicationController
   # PATCH /stories/:id/
   def update
     @story = Story.find(params[:id])
+    @story.update_attributes( edit_info_params )
+    redirect_to story_path( @story )
   end
 
   # DELETE /stories/:id/
   def destroy
     @story = Story.find(params[:id])
+    @story.destroy
+    redirect_to user_path( current_user ), :flash => { :success => "Story deleted" }
   end
 
   # POST /stories/:id/publish
@@ -84,4 +88,9 @@ class StoriesController < ApplicationController
       redirect_to edit_story_path( @story )
     end
   end
+
+  private
+    def edit_info_params
+      params.require(:story).permit(:name)
+    end
 end

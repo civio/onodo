@@ -30,22 +30,22 @@
                 Edit #{item.class.to_s.downcase}
                 %i.icon-edit
           %li
-            %a{href: new_visualization_path} 
+            %a{href: (defined? story) ? new_story_path : new_visualization_path} 
               Duplicate #{item.class.to_s.downcase}
               %i.icon-duplicate
-          - unless defined? story
-            %li
-              %a{href: new_story_path} 
-                Create story from visualization
-                %i.icon-story
           - if defined? story
             %li
               %a{href: edit_visualization_path(item.visualization)} 
                 Edit visualization
                 %i.icon-edit
+          - else
+            %li
+              %a{href: new_story_path} 
+                Create story from visualization
+                %i.icon-story            
           - if defined? edit
             %li
-              %a.text-danger{ href: "#delete-visulization-modal", data: {toggle: "modal"} }
+              %a.text-danger{ href: "#item-delete-modal", data: {toggle: "modal"} }
                 Delete #{item.class.to_s.downcase}
                 %i.icon-trash
       .clearfix

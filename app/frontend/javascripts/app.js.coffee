@@ -11,28 +11,42 @@ $(document).ready ->
   # Activate tooltips
   $('[data-toggle="tooltip"]').tooltip()
 
-  # /visualizations/:id/edit
-  if $('body.visualizations.edit').length > 0
-    appVisualizationEdit = new App.VisualizationEdit $('body').data('visualization-id')
-    appVisualizationEdit.render()
-    $( window ).resize appVisualizationEdit.resize
+  $body = $('body')
 
-  # /visualizations/:id
-  else if $('body.visualizations.show').length > 0
-    appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
-    appVisualizationShow.render()
-    $( window ).resize appVisualizationShow.resize
+  # visualizations
+  if $body.hasClass 'visualizations'
 
-  # /stories/:id
-  else if $('body.stories.show').length > 0
-    appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
-    appVisualizationShow.render()
-    $( window ).resize appVisualizationShow.resize
-    # Setup 'Start reading' button interaction
-    $('.story-cover .btn-start-reading').click (e) ->
-      e.preventDefault()
-      $('.story-cover').fadeOut()
-      $('.visualization-info').fadeIn()
+    # /visualizations/:id
+    if $body.hasClass 'show'
+      appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
+      appVisualizationShow.render()
+      $( window ).resize appVisualizationShow.resize
+
+    # /visualizations/:id/edit
+    else if $body.hasClass 'edit'
+      appVisualizationEdit = new App.VisualizationEdit $('body').data('visualization-id')
+      appVisualizationEdit.render()
+      $( window ).resize appVisualizationEdit.resize
+
+  # stories
+  else if $body.hasClass 'stories'
+
+    # /stories/:id
+    if $body.hasClass 'show'
+      appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
+      appVisualizationShow.render()
+      $( window ).resize appVisualizationShow.resize
+      # Setup 'Start reading' button interaction
+      $('.story-cover .btn-start-reading').click (e) ->
+        e.preventDefault()
+        $('.story-cover').fadeOut()
+        $('.visualization-info').fadeIn()
+
+    # /stories/:id/edit
+    else if $body.hasClass 'edit'
+      appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
+      appVisualizationShow.render()
+      $( window ).resize appVisualizationShow.resize
 
 
   # Add file input feedback 

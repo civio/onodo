@@ -1,0 +1,11 @@
+.story-edit-info.container
+  .row
+    .page-header.text-center
+      %h2 Edit Story Info
+    .col-sm-6.col-sm-offset-3
+      = form_for @story, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
+        .form-group
+          = f.label "story-input-title", "Title"
+          = f.text_field :name, class: "form-control"
+        = f.submit "Save", class: "btn btn-default btn-primary"
+        %a.btn.btn-default{href: edit_story_path(@story)} Cancel

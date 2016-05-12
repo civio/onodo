@@ -107,7 +107,7 @@ class VisualizationsController < ApplicationController
   def destroy
     @visualization = Visualization.find(params[:id])
     @visualization.destroy
-    redirect_to user_path( current_user ), :flash => { :success => "Visualization destroyed" }
+    redirect_to user_path( current_user ), :flash => { :success => "Visualization deleted" }
   end
 
   # POST /visualizations/:id/publish
