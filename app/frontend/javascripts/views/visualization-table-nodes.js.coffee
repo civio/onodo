@@ -100,13 +100,13 @@ class VisualizationTableNodes extends VisualizationTableBase
       @addRow()
 
   # Method called from parent class `VisualizationTableBase`
-  addModel: (index) ->
+  createRow: (index) ->
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: @model.get('dataset_id'), 'visible': true, wait: true}
+    row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'visible': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
-      @table.setDataAtRowProp index, 'id', model.id
+      @table.setDataAtRowProp index, 'id', row_model.id
       # set duplicated values
       if @duplicate
         if @duplicate.get('name')
@@ -125,21 +125,21 @@ class VisualizationTableNodes extends VisualizationTableBase
     , @
           
   # Method called from parent class `VisualizationTableBase`
-  updateModel: (change) =>
+  updateCell: (change) =>
     index = change[0]
     key   = change[1]
     value = change[3]
     # Get model id in order to access to model in Collection
-    model_id = @getIdAtRow index
-    if model_id
-      model = @collection.get model_id
+    cell_id = @getIdAtRow index
+    if cell_id
+      cell_model = @collection.get cell_id
       # Add new node_type to nodes_types array
       if key == 'node_type' && !_.contains(@nodes_types, value)
         @addNodesType value
       obj = {}
       obj[ key ] = value
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-      model.save obj
+      cell_model.save obj
 
   addNodesType: (type) ->
     @nodes_types.push type

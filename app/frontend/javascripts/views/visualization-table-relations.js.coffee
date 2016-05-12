@@ -110,14 +110,14 @@ class VisualizationTableRelations extends VisualizationTableBase
       @addRow()
 
   # Method called from parent class `VisualizationTableBase`
-  addModel: (index) ->
-    console.log 'addModel', index
+  createRow: (index) ->
+    console.log 'createRow', index
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': true, wait: true}
+    row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
-      @table.setDataAtRowProp index, 'id', model.id
+      @table.setDataAtRowProp index, 'id', row_model.id
       # set duplicated values
       if @duplicate
         if @duplicate.get('source_name')
@@ -134,14 +134,14 @@ class VisualizationTableRelations extends VisualizationTableBase
     , @
 
   # Method called from parent class `VisualizationTableBase`  
-  updateModel: (change) =>
+  updateCell: (change) =>
     index = change[0]
     key   = change[1]
     value = change[3]
     # Get model id in order to acced to model in Collection
-    model_id = @table.getDataAtRowProp(index, 'id')
-    if model_id
-      model = @collection.get model_id
+    cell_id = @table.getDataAtRowProp(index, 'id')
+    if cell_id
+      cell_model = @collection.get cell_id
       # Add new node_type to nodes_types array
       if key == 'relation_type' && !_.contains(@relations_types, value)
         @addRelationsType value
@@ -162,9 +162,9 @@ class VisualizationTableRelations extends VisualizationTableBase
         obj.at = value
       else
         obj[ key ] = value
-      console.log 'updateModel', obj, model
+      console.log 'updateModel', obj, cell_model
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-      model.save obj
+      cell_model.save obj
 
   addRelationsType: (type) ->
     @relations_types.push type

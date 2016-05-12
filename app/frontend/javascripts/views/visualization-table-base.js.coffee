@@ -36,17 +36,18 @@ class VisualizationTableBase extends Backbone.View
   onTableCreateRow: (index, amount) =>
     console.log 'onTableCreateRow', @table_type, index, amount
     # Create a new model in collection
-    @addModel index
+    @createRow index
 
   onTableChangeRow: (changes, source) =>
     console.log 'onTableChangeRow', changes, source
     #if @syncTable and source != 'loadData'
-    if source != 'loadData'
+    if source != 'loadData' && source != 'external'
+      #console.log 'onTableChangeRow', changes, source
       for change in changes
         if change[2] != change[3]
           console.log 'onTableChangeRow', @table_type, changes, source
-          # updateModel must be defined in inherit Classes
-          @updateModel change
+          # updateCell must be defined in inherit Classes
+          @updateCell change
 
   onTableRemoveRow: (index, amount) =>
     # we need to get model id from row in order to remove the right model
@@ -78,13 +79,13 @@ class VisualizationTableBase extends Backbone.View
 
   # Duplicate row
   duplicateRow: (row) ->  
-    # store duplicate model in duplicate variable in order to add row values when model sync in addModel
-    model_id = @getIdAtRow row
-    model = @collection.get(model_id)
-    @duplicate = model
+    # store duplicate model in duplicate variable in order to add row values when model sync in createRow
+    row_id = @getIdAtRow row
+    row_model = @collection.get(row_id)
+    @duplicate = row_model
     # add new row after current one
     @table.alter('insert_row', row+1, 1 )
-    console.log 'duplicate row', row, model
+    console.log 'duplicate row', row, row_model
 
   getIdAtRow: (index) ->
     return @table.getDataAtRowProp(index, 'id')
