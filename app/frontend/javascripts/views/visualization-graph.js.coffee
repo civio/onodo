@@ -1,6 +1,3 @@
-#React     = require 'react'
-#ReactDOM  = require 'react-dom'
-#VisualizationGraphD3Component = require './../views/components/visualization-graph.cjsx'
 VisualizationGraphCanvas          = require './../views/visualization-graph-canvas.js'
 VisualizationGraphConfiguration   = require './../views/visualization-graph-configuration.js'
 VisualizationGraphNavigation      = require './../views/visualization-graph-navigation.js'
@@ -9,19 +6,12 @@ VisualizationGraphInfo            = require './../views/visualization-graph-info
 class VisualizationGraph extends Backbone.View
   
   el:                               '.visualization-graph-component'
-  visualizationSync:                false
-  nodesSync:                        false
-  relationsSync:                    false
   visualizationGraphCanvas:         null
   visualizationGraphConfiguration:  null
   visualizationGraphNavigation:     null
 
   initialize: ->
     console.log 'initialize Graph', @collection
-    # Setup Model & Colllection Events
-    @model.once                 'sync', @onVisualizationSync , @
-    @collection.nodes.once      'sync', @onNodesSync , @
-    @collection.relations.once  'sync', @onRelationsSync , @
     # Setup Configure Panel Show/Hide
     $('.visualization-graph-menu-actions .btn-configure').click @onPanelConfigureShow
     $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
@@ -46,24 +36,6 @@ class VisualizationGraph extends Backbone.View
   onPanelShareHide: ->
     $('#visualization-share').removeClass 'active'
 
-  onVisualizationSync: (visualization) ->
-    @visualizationSync = true
-    console.log 'onVisualizationSync'
-    if @visualizationSync and @nodesSync and @relationsSync
-      @render()
-
-  onNodesSync: (nodes) =>
-    @nodesSync = true
-    console.log 'onNodesSync'
-    if @visualizationSync and @nodesSync and @relationsSync
-      @render()
-
-  onRelationsSync: (relations) =>
-    @relationsSync = true
-    console.log 'onRelationsSync'
-    if @visualizationSync and @nodesSync and @relationsSync
-      @render()
-
   getDataFromCollection: ->
     data =
       nodes:      @collection.nodes.models.map((d) -> return d.attributes)
@@ -74,6 +46,7 @@ class VisualizationGraph extends Backbone.View
       d.target = d.target_id-1
     return data
 
+  # Render method called from VisualizationEdit when all collections synced
   render: ->
     console.log 'render Graph'
     # Setup Views

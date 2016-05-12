@@ -24,10 +24,10 @@ class VisualizationEdit
     console.log('setup visualization', _id);
     @id = _id
     # Setup Visualization Model
-    @visualization = new VisualizationModel()
+    @visualization  = new VisualizationModel()
     # Setup Collections
-    @nodes      = new NodesCollection()
-    @relations  = new RelationsCollection()
+    @nodes          = new NodesCollection()
+    @relations      = new RelationsCollection()
     # Setup Views
     @visualizationTableNodes      = new VisualizationTableNodes {model: @visualization, collection: @nodes}
     @visualizationTableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
@@ -86,8 +86,15 @@ class VisualizationEdit
     @setupAffix()   # setup affix bootstrap
     @resize()       # force resize
     # fetch model & collections
-    @visualization.fetch  {url: '/api/visualizations/'+@id}
-    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/'}
-    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/'}
+    $.when(
+      @visualization.fetch  {url: '/api/visualizations/'+@id},
+      @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/'},
+      @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/'},
+    ).done( () =>
+      # Render Tables & Graph when all collections ready
+      @visualizationTableNodes.render()
+      @visualizationTableRelations.render()
+      @visualizationGraph.render()
+    )
 
 module.exports = VisualizationEdit;

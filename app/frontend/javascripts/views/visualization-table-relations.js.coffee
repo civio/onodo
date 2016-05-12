@@ -22,7 +22,8 @@ class VisualizationTableRelations extends VisualizationTableBase
     @table_options.colHeaders  = @tableColHeaders
     @table_options.columns     = @getTableColumns()
 
-  onSync: =>
+  render: ->
+    console.log 'VisualizationTableRelations render'
     @getRelationsTypes()
 
   # Setup Handsontable columns options

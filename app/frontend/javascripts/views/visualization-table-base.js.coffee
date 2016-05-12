@@ -6,9 +6,7 @@ class VisualizationTableBase extends Backbone.View
   table_options:    null
   table_height:     null
   table_offset_top: null
-  visualizationSync:false
-  collectionSync:   false
-  syncTable:        true  # allow activate/desactivate onTableChangeRow listener
+  #syncTable:        true  # allow activate/desactivate onTableChangeRow listener
 
   constructor: (@model, @collection, table_type) ->
     super(@model, @collection)
@@ -27,27 +25,8 @@ class VisualizationTableBase extends Backbone.View
     @remove()
     Backbone.View.prototype.remove.call(@)
 
-  initialize: (obj) ->
-    @model.once      'sync', @onVisualizationSync , @
-    @collection.once 'sync', @onCollectionSync , @
-
-  onVisualizationSync: () ->
-    @visualizationSync = true
-    console.log 'onVisualizationSync'
-    if @visualizationSync and @collectionSync
-      @onSync()
-
-  onCollectionSync: =>
-    @collectionSync = true
-    console.log 'onCollectionSync'
-    @table_options.data = @collection.toJSON()
-    if @visualizationSync and @collectionSync
-      @onSync()
-
-  onSync: =>
-    return this
-
   setupTable: ->
+    @table_options.data              = @collection.toJSON()
     @table_options.afterCreateRow    = @onTableCreateRow
     @table_options.afterChange       = @onTableChangeRow
     @table_options.beforeRemoveRow   = @onTableRemoveRow  # important to listen before remove to avoid index problems
@@ -60,7 +39,9 @@ class VisualizationTableBase extends Backbone.View
     @addModel index
 
   onTableChangeRow: (changes, source) =>
-    if @syncTable and source != 'loadData'
+    console.log 'onTableChangeRow', changes, source
+    #if @syncTable and source != 'loadData'
+    if source != 'loadData'
       for change in changes
         if change[2] != change[3]
           console.log 'onTableChangeRow', @table_type, changes, source
@@ -91,9 +72,6 @@ class VisualizationTableBase extends Backbone.View
   resize: =>
     console.log 'resize table'
     @$el.height @table_height - (@$el.offset().top - @table_offset_top)
-
-  render: =>
-    return this
 
   addRow: ->
     @table.alter('insert_row', 0, 1 )

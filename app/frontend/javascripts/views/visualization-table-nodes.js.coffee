@@ -29,8 +29,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     # Custom Column Managment
     $('#add-custom-column-form').submit @onAddCustomColumn
 
-  onSync: =>
-    console.log 'onSync', @model
+  render: ->
+    console.log 'VisualizationTableNodes render'
     # add custom_fields to table if defined
     if @model.get('custom_fields')
       @model.get('custom_fields').forEach (custom_field) =>
