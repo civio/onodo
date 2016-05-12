@@ -103,7 +103,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @setupSlidersValues()
 
   updateParameters: ->
-    @model.save { parameters: JSON.stringify @parameters }
+    @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
   setupSlidersValues: ->
     @$el.find('#curvature').slider    'setValue', parseFloat @parameters.relationsCurvature
@@ -155,7 +155,6 @@ class VisualizationGraphConfiguration extends Backbone.View
   onDropboxSelectChange: (e) ->
     if $(this).data('value') == undefined 
       return
-    console.log 'onDropboxSelectChange', $(this),
     # clear active element
     $(this).parent().find('.active').removeClass 'active'
     $(this).addClass 'active'

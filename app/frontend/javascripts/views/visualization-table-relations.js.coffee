@@ -165,7 +165,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         obj[ key ] = value
       console.log 'updateModel', obj, cell_model
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-      cell_model.save obj
+      cell_model.save obj, {patch: true}
 
   addRelationsType: (type) ->
     @relations_types.push type

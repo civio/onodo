@@ -139,8 +139,9 @@ class VisualizationTableNodes extends VisualizationTableBase
         @addNodesType value
       obj = {}
       obj[ key ] = value
+      console.log 'updateCell', obj, cell_model
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-      cell_model.save obj
+      cell_model.save obj, {patch: true}
 
   addNodesType: (type) ->
     @nodes_types.push type
@@ -202,7 +203,7 @@ class VisualizationTableNodes extends VisualizationTableBase
   onVisualizationModalNodeImageDelete: (e) =>
     model = @collection.get e.id
     # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-    model.save { image: null }
+    model.save {image: null}, {patch: true}
 
   # Show Add Custom Column Modal handler
   onAddCustomColumn: (e) =>
