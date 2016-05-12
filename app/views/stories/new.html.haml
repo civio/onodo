@@ -6,7 +6,7 @@
       = form_for :story, url: stories_path , method: "post", html: {:id => 'form-story-new', :class => 'form-default'} do |f|
         .form-group
           = f.label :name, "Story title"
-          = f.text_field :name, class: "form-control"
+          = f.text_field :name, class: "form-control", :required => true
           = f.hidden_field :visualization 
         .story-new-selector
           %p.text-center
