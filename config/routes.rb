@@ -73,9 +73,10 @@ Rails.application.routes.draw do
       delete ':id' => 'api#node_destroy'
     end
     scope 'relations' do
-      post    ''   => 'api#relation_create',  as: :relations
+      post   ''    => 'api#relation_create',  as: :relations
       get    ':id' => 'api#relation',         as: :relation
       put    ':id' => 'api#relation_update'
+      patch  ':id' => 'api#relation_update'
       delete ':id' => 'api#relation_destroy'
     end
   end

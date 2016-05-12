@@ -99,6 +99,7 @@ class ApiController < ApplicationController
 
   # Update a Relation attribute
   # PUT /api/relations/:id
+  # PATCH /api/relations/:id
   def relation_update
     Relation.update(params[:id], relation_params)
     render json: {}
