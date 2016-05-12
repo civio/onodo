@@ -59,7 +59,7 @@ Rails.application.routes.draw do
     scope 'visualizations' do
       get ':visualization_id'                 => 'api#visualization',        as: :visualization
       put ':visualization_id'                 => 'api#visualization_update'
-      patch ':visualization_id'               => 'api#visualization_update_attr'
+      patch ':visualization_id'               => 'api#visualization_update'
       get ':visualization_id/nodes'           => 'api#nodes'
       get ':visualization_id/nodes/types'     => 'api#nodes_types'
       get ':visualization_id/relations'       => 'api#relations'
