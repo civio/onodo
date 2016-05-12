@@ -34,9 +34,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     # add custom_fields to table if defined
     if @model.get('custom_fields')
       @model.get('custom_fields').forEach (custom_field) =>
-        @tableColHeaders.push       custom_field
+        @tableColHeaders.push       custom_field.replace(/_+/g, ' ')
         @table_options.columns.push { data: custom_field }
-    console.log '!!! columns', @table_options.columns
     # get node types
     @getNodesTypes()
 
