@@ -13,19 +13,19 @@ $(document).ready ->
 
   # /visualizations/:id/edit
   if $('body.visualizations.edit').length > 0
-    appVisualizationEdit = new App.VisualizationEdit $('body').data('id')
+    appVisualizationEdit = new App.VisualizationEdit $('body').data('visualization-id')
     appVisualizationEdit.render()
     $( window ).resize appVisualizationEdit.resize
 
   # /visualizations/:id
   else if $('body.visualizations.show').length > 0
-    appVisualizationShow = new App.VisualizationShow $('body').data('id')
+    appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
     appVisualizationShow.render()
     $( window ).resize appVisualizationShow.resize
 
   # /stories/:id
   else if $('body.stories.show').length > 0
-    appVisualizationShow = new App.VisualizationShow $('body').data('id')
+    appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
     appVisualizationShow.render()
     $( window ).resize appVisualizationShow.resize
     # Setup 'Start reading' button interaction

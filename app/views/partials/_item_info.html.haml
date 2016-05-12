@@ -8,7 +8,7 @@
       - if defined? story
         %div{class: grid_class}
           %strong Based on
-          %a.visualization-based-on{href: visualization_path(item.visualization)}
+          %a.visualization-based-on{href: visualization_path(item.visualization), title: item.visualization.name, target: "_blank"}
             = item.visualization.name
       %div{class: grid_class}
         - if defined? current_user and current_user == item.author

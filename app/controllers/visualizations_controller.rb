@@ -7,6 +7,7 @@ class VisualizationsController < ApplicationController
   # GET /visualizations/:id
   def show
     @visualization  = Visualization.find(params[:id])
+    @visualization_id = @visualization.id
     dataset         = Dataset.find_by(visualization_id: params[:id])
     @nodes          = Node.where(dataset_id: dataset.id)
     @relations      = Relation.where(dataset_id: dataset.id).includes(:source, :target).order("nodes.name", "targets_relations.name")
@@ -82,6 +83,7 @@ class VisualizationsController < ApplicationController
       redirect_to new_user_session_path()
     else
       @visualization = Visualization.find(params[:id])
+      @visualization_id = @visualization.id
     end
   end
 

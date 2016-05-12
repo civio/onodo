@@ -84,7 +84,7 @@ class VisualizationTableNodes extends VisualizationTableBase
   getNodesTypes: =>
     #console.log 'getNodesTypes'
     $.ajax {
-      url: '/api/visualizations/'+$('body').data('id')+'/nodes/types.json'
+      url: '/api/visualizations/'+@model.id+'/nodes/types.json'
       dataType: 'json'
       success: @onNodesTypesSucess
     }

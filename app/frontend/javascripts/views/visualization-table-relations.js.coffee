@@ -94,7 +94,7 @@ class VisualizationTableRelations extends VisualizationTableBase
   getRelationsTypes: =>
     #console.log 'getRelationsTypes'
     $.ajax {
-      url: '/api/visualizations/'+$('body').data('id')+'/relations/types.json'
+      url: '/api/visualizations/'+@model.id+'/relations/types.json'
       dataType: 'json'
       success: @onRelationsTypesSucess
     }

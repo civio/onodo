@@ -3,8 +3,10 @@ class StoriesController < ApplicationController
   # GET /stories/:id
   def show
     @story = Story.find(params[:id])
-    @nodes = Node.where(dataset_id: @story.visualization.id)
-    @relations = Relation.where(dataset_id: @story.visualization.id)
+    @visualization_id = @story.visualization.id
+    @nodes = Node.where(dataset_id: @visualization_id)
+    @relations = Relation.where(dataset_id: @visualization_id)
+    # !!! TODO -> Modify related_items to get only related visualizations/stories
     @related_items = Visualization.all
   end
 
@@ -38,6 +40,7 @@ class StoriesController < ApplicationController
       redirect_to new_user_session_path()
     else
       @story = Story.find(params[:id])
+      @visualization_id = @story.visualization.id
     end
   end
 
