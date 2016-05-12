@@ -35,6 +35,7 @@ class ApiController < ApplicationController
 
   # Update a Node
   # PUT /api/nodes/:id
+  # PATCH /api/nodes/:id
   def node_update
     @node = Node.find(params[:id])
     if params[:node][:image].nil? && params[:node][:remote_image_url].nil?
@@ -49,14 +50,6 @@ class ApiController < ApplicationController
     end
 
     @node.update_attributes(node_params)
-    render json: {}
-    #TODO! Add error validation
-  end
-
-  # Update a Node attribute
-  # PATCH /api/nodes/:id/
-  def node_update_attr
-    @node = Node.update(params[:id], node_params)
     render :node
     #TODO! Add error validation
   end
@@ -130,6 +123,7 @@ class ApiController < ApplicationController
 
   # Update a Visualization
   # PUT /api/visualizations/:visualization_id/
+  # PATCH /api/visualizations/:visualization_id/
   def visualization_update
     @visualization = Visualization.find(params[:visualization_id])
     @dataset = @visualization.dataset
@@ -144,16 +138,16 @@ class ApiController < ApplicationController
 
   private
 
-    def node_params
-      params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys)) if params[:node]
-    end
+  def node_params
+    params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys)) if params[:node]
+  end
 
-    def relation_params
-      params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :visualization_id, :dataset_id) if params[:relation]
-    end
+  def relation_params
+    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :visualization_id, :dataset_id) if params[:relation]
+  end
 
-    def visualization_params
-      params.require(:visualization).permit(:parameters) if params[:visualization]
-    end
+  def visualization_params
+    params.require(:visualization).permit(:parameters) if params[:visualization]
+  end
 
 end
