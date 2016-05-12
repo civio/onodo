@@ -69,7 +69,7 @@ Rails.application.routes.draw do
       post   ''    => 'api#node_create',      as: :nodes
       get    ':id' => 'api#node',             as: :node
       put    ':id' => 'api#node_update'
-      patch  ':id' => 'api#node_update_attr'
+      patch  ':id' => 'api#node_update'
       delete ':id' => 'api#node_destroy'
     end
     scope 'relations' do
