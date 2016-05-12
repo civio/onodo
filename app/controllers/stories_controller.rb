@@ -91,6 +91,6 @@ class StoriesController < ApplicationController
 
   private
     def edit_info_params
-      params.require(:story).permit(:name)
+      params.require(:story).permit(:name, :description)
     end
 end

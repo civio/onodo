@@ -117,6 +117,7 @@
 }
 
 // Hide Visualization Info at Story Cover
-.stories.show .visualization-info{
+.stories.show .visualization-info,
+.stories.show .visualization-description{
   display: none;
 }

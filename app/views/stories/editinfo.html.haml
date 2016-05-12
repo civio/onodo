@@ -7,5 +7,10 @@
         .form-group
           = f.label "story-input-title", "Title"
           = f.text_field :name, class: "form-control"
+        .form-group
+          = f.label "story-input-description", "Description"
+          = f.text_field :description, type: "hidden"
+          %trix-toolbar{ id: "wysiwig-toolbar", input: "story_description" }
+          %trix-editor{ input: "story_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: edit_story_path(@story)} Cancel

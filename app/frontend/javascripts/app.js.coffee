@@ -40,7 +40,7 @@ $(document).ready ->
       $('.story-cover .btn-start-reading').click (e) ->
         e.preventDefault()
         $('.story-cover').fadeOut()
-        $('.visualization-info').fadeIn()
+        $('.visualization-info, .visualization-description').fadeIn()
 
     # /stories/:id/edit
     else if $body.hasClass 'edit'
