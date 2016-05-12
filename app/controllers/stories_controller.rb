@@ -18,9 +18,10 @@ class StoriesController < ApplicationController
 
   # POST /stories
   def create
-    story_params              = {}
-    story_params[:name]       = params[:story][:name]
-    story_params[:author_id]  = current_user.id
+    story_params                    = {}
+    story_params[:name]             = params[:story][:name]
+    story_params[:author_id]        = current_user.id
+    story_params[:visualization_id] = params[:story][:visualization]
     @story  = Story.new( story_params )
     #@story.visualization = Visualization.where(id: params[:story][:visualization])
 
