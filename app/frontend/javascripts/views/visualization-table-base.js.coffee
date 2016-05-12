@@ -25,8 +25,12 @@ class VisualizationTableBase extends Backbone.View
     @remove()
     Backbone.View.prototype.remove.call(@)
 
+  # Render base method override in Child Clases  
+  render: =>
+    # set table data
+    @table_options.data = @collection.toJSON()
+
   setupTable: ->
-    @table_options.data              = @collection.toJSON()
     @table_options.afterCreateRow    = @onTableCreateRow
     @table_options.afterChange       = @onTableChangeRow
     @table_options.beforeRemoveRow   = @onTableRemoveRow  # important to listen before remove to avoid index problems

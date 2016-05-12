@@ -23,6 +23,7 @@ class VisualizationTableRelations extends VisualizationTableBase
     @table_options.columns     = @getTableColumns()
 
   render: ->
+    super()
     console.log 'VisualizationTableRelations render'
     @getRelationsTypes()
 

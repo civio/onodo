@@ -30,6 +30,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     $('#add-custom-column-form').submit @onAddCustomColumn
 
   render: ->
+    super()
     console.log 'VisualizationTableNodes render'
     # add custom_fields to table if defined
     if @model.get('custom_fields')
