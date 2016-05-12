@@ -1,6 +1,7 @@
 require 'charlock_holmes'
 require 'csv'
 require 'axlsx'
+require 'roo'
 
 class VisualizationsController < ApplicationController
 
@@ -60,18 +61,14 @@ class VisualizationsController < ApplicationController
     dataset         = Dataset.new
     @visualization.dataset = dataset
 
-    unless params[:visualization][:nodes].nil?
-      import_nodes(params[:visualization][:nodes], dataset)
-    end
-
-    unless params[:visualization][:relations].nil?
-      import_relations(params[:visualization][:relations], dataset)
+    unless params[:visualization][:dataset].nil?
+      import_dataset(params[:visualization][:dataset], dataset)
     end
 
     if @visualization.save
       redirect_to visualization_path( @visualization ), :notice => "Your visualization was created!"
     else
-      render "new"
+      render :new
     end
   end
 
@@ -132,68 +129,53 @@ class VisualizationsController < ApplicationController
 
   private
 
-    # TODO: aqui deberíamos validar los parámetros que queremos recibir
+  # TODO: aqui deberíamos validar los parámetros que queremos recibir
 
-    def create_params
-      params.require(:visualization).permit(:name, :nodes, :relations)
+  def create_params
+    params.require(:visualization).permit(:name, :datasets)
+  end
+
+  def edit_info_params
+    params.require(:visualization).permit(:name, :description)
+  end
+
+  def import_dataset( file, dataset )
+    wb = Roo::Spreadsheet.open(file.path)
+
+    # nodes
+    sheet = wb.sheet('Nodes')
+    headers = sheet.row(1)
+    all_fields = headers.map{ |f| f.downcase.gsub(' ', '_').to_sym }
+    regular_fields = [:name, :type, :description, :visible]
+    custom_fields = all_fields - regular_fields
+    dataset.custom_fields = custom_fields
+    nodes = sheet.parse(header_search: headers, clean: true)[1..-1]
+    nodes = nodes.map do |h|
+      result = h.map { |k,v| [ !(k=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
+      result[:custom_fields] = custom_fields.map{ |cf| [cf, result[cf]] }.to_h
+      result[:visible] = result[:visible] == 0 ? false : true
+      result[:dataset] = dataset
+      result.except(*custom_fields)
+    end
+    ActiveRecord::Base.transaction do
+      Node.create(nodes)
     end
 
-    def edit_info_params
-      params.require(:visualization).permit(:name, :description)
+    # relations
+    sheet = wb.sheet('Relations')
+    headers = sheet.row(1)
+    relations = sheet.parse(header_search: headers, clean: true)[1..-1]
+    relations = relations.map do |h|
+      result = h.map { |k,v| [ (k=="Directed") ? :direction : (k=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
+      result[:source] = dataset.nodes.find_or_create_by(name: result[:source])
+      result[:target] = dataset.nodes.find_or_create_by(name: result[:target])
+      result[:direction] = result[:direction] == 0 ? false : true
+      result[:dataset] = dataset
+      result
     end
-
-    def import_nodes( file, dataset )
-      # We can't rely on the file encoding being correct, so find out which one we got...
-      content = File.read(file.path)
-      detection = CharlockHolmes::EncodingDetector.detect(content)
-      utf8_encoded_content = CharlockHolmes::Converter.convert content, detection[:encoding], 'UTF-8'
-     
-      CSV.parse(utf8_encoded_content, headers: true) do |row|
-        next if row.size == 0  # Skip empty lines
-    
-        
-        # if row['Actor']
-        #   if row['Url']
-        #     description = row['Actor'] + ' ' + row['Url']
-        #   else
-        #     description = row['Actor']
-        #   end
-        # elsif row['Url']
-        #   description = row['Url']
-        # end
-        
-        # TODO!!! we suposse a format id,name,type,description,visible,custom_fields
-        Node.new( name:         row['name'],
-                  description:  row['description'] ? row['description'] : '',
-                  node_type:    row['type'],
-                  custom_fields: row['custom_fields'] ? row['custom_fields'] : '',
-                  visible:      row['visible'] ? row['visible'] : true,
-                  dataset:      dataset).save!
-      end
+    ActiveRecord::Base.transaction do
+      Relation.create(relations)
     end
+  end
 
-    def import_relations( file, dataset )
-      # We can't rely on the file encoding being correct, so find out which one we got...
-      content = File.read(file.path)
-      detection = CharlockHolmes::EncodingDetector.detect(content)
-      utf8_encoded_content = CharlockHolmes::Converter.convert content, detection[:encoding], 'UTF-8'
-     
-      # Get id base
-      id_base = dataset.nodes.nil? || dataset.nodes.first.nil? ? 0 : dataset.nodes.first.id.to_i-1
-
-      CSV.parse(utf8_encoded_content, headers: true) do |row|
-        next if row.size == 0  # Skip empty lines
-
-        # TODO!!! we suposse a format source,source_name,target,target_name,type,date
-        Relation.new( source:         dataset.nodes.find( id_base+row['source'].to_i ),
-                      target:         dataset.nodes.find( id_base+row['target'].to_i ), 
-                      relation_type:  row['type'],
-                      at:             row['date'],
-                      direction:      row['direction'] ? row['direction'] : true,
-                      dataset:        dataset ).save!
-      end
-
-      puts '----- id_base'
-      puts id_base
-    end
 end
