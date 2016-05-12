@@ -5,5 +5,7 @@ class Visualization < ActiveRecord::Base
 
   has_many :stories, dependent: :destroy
 
+  scope :published, -> { where(published: true) }
+
   validates :name, presence: true, uniqueness: true
 end
