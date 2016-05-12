@@ -23,22 +23,20 @@ class VisualizationsController < ApplicationController
       format.xlsx do
         p = Axlsx::Package.new
         wb = p.workbook
+        bold = wb.styles.add_style b: true
         @nodes = @nodes.order(:id)
-        # get nodes lowest id
-        first_id        = @nodes.first.id - 1
-        puts first_id
         # setup nodes sheet
-        wb.add_worksheet(name: "nodes") do |sheet|
-          sheet.add_row ["id", "name", "type", "description", "visible", "custom_fields"]
+        wb.add_worksheet(name: "Nodes") do |sheet|
+          sheet.add_row ["Name", "Type", "Description", "Visible"] + (dataset.custom_fields || []).map{ |cf| cf.capitalize.gsub('_', ' ')}, style: bold
           @nodes.each do |node|
-            sheet.add_row [node.id.to_i-first_id, node.name, node.node_type, node.description, node.visible ? 1 : 0, node.custom_fields]
+            sheet.add_row [node.name, node.node_type, node.description, node.visible ? nil : 0] + (dataset.custom_fields || []).map{ |cf| custom_fields = (node.custom_fields || {}); custom_fields[cf] }
           end
         end
         # setup relations sheet
-        wb.add_worksheet(name: "relations") do |sheet|
-          sheet.add_row ["source", "source_name", "target", "target_name", "type", "date", "direction"]
+        wb.add_worksheet(name: "Relations") do |sheet|
+          sheet.add_row ["Source", "Type", "Target", "Directed"], style: bold
           @relations.each do |relation|
-            sheet.add_row [relation.source.id.to_i-first_id, relation.source.name, relation.target.id-first_id, relation.target.name, relation.relation_type, relation.at, relation.direction ? 1 : 0]
+            sheet.add_row [relation.source.name, relation.relation_type, relation.target.name, relation.direction ? nil : 0]
           end
         end
         send_data p.to_stream.read, type: "application/xlsx", filename: @visualization.name+".xlsx"
