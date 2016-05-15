@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     delete  'logout'   => 'devise/sessions#destroy',  as: :destroy_user_session
     get     'settings' => 'registrations#edit',       as: :edit_settings
   end
-  
+
   # Add user profile page & dashboard
   scope 'dashboard' do
     get ''               => 'users#show_dashboard',                as: :dashboard
@@ -23,29 +23,29 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do 
-    collection do 
+  resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do
+    collection do
       get  ':id/edit/info' => 'visualizations#editinfo'
       post 'publish'
       post 'unpublish'
-    end 
-  end 
+    end
+  end
 
-  resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy] do 
-    collection do 
+  resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy] do
+    collection do
       get  ':id/edit/info' => 'stories#editinfo'
       post 'publish'
       post 'unpublish'
-    end 
-  end 
+    end
+  end
 
   resources :datasets, :only => [:index]
 
   resources :nodes, :only => [:index, :edit, :update] do
-    collection do 
+    collection do
       get ':id/edit/description' => 'nodes#edit_description'
       get ':id/edit/image'       => 'nodes#edit_image'
-    end 
+    end
   end
 
   get '/explore'                 => 'pages#explore_stories'
@@ -55,30 +55,15 @@ Rails.application.routes.draw do
 
 
   # API routes
-  scope 'api', as: :api do
-    scope 'visualizations' do
-      get ':visualization_id'                 => 'api#visualization',        as: :visualization
-      put ':visualization_id'                 => 'api#visualization_update'
-      patch ':visualization_id'               => 'api#visualization_update'
-      get ':visualization_id/nodes'           => 'api#nodes'
-      get ':visualization_id/nodes/types'     => 'api#nodes_types'
-      get ':visualization_id/relations'       => 'api#relations'
-      get ':visualization_id/relations/types' => 'api#relations_types'
+  namespace :api, defaults: { format: :json } do
+    resources :visualizations, only: [ :show, :update ] do
+      get 'nodes', to: 'nodes#index'
+      get 'nodes/types', to: 'nodes#types'
+      get 'relations', to: 'relations#index'
+      get 'relations/types', to: 'relations#types'
     end
-    scope 'nodes' do
-      post   ''    => 'api#node_create',      as: :nodes
-      get    ':id' => 'api#node',             as: :node
-      put    ':id' => 'api#node_update'
-      patch  ':id' => 'api#node_update'
-      delete ':id' => 'api#node_destroy'
-    end
-    scope 'relations' do
-      post   ''    => 'api#relation_create',  as: :relations
-      get    ':id' => 'api#relation',         as: :relation
-      put    ':id' => 'api#relation_update'
-      patch  ':id' => 'api#relation_update'
-      delete ':id' => 'api#relation_destroy'
-    end
+    resources :nodes, except: [ :index, :new, :edit ]
+    resources :relations, except: [ :index, :new, :edit ]
   end
 
   # Example of regular route:
