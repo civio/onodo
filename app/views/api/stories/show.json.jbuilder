@@ -1,0 +1,1 @@
+json.merge! @story.as_json

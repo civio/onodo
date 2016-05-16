@@ -63,6 +63,9 @@ Rails.application.routes.draw do
       get 'relations', to: 'relations#index'
       get 'relations/types', to: 'relations#types'
     end
+    resources :stories, only: [ :show, :create ] do
+      resources :chapters, only: [ :index ]
+    end
     resources :nodes, except: [ :index, :new, :edit ]
     resources :relations, except: [ :index, :new, :edit ]
   end
