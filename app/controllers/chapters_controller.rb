@@ -1,15 +1,10 @@
 class ChaptersController < ApplicationController
-  before_action :set_chapter, only: [:show, :edit, :update, :destroy]
-
-  def index
-    @chapters = Chapter.all
-  end
-
-  def show
-  end
+  before_action :set_chapter, only: [:edit, :update, :destroy]
 
   def new
-    @chapter = Chapter.new
+    if current_user.nil?
+      redirect_to new_user_session_path()
+    end
   end
 
   def edit
