@@ -5,6 +5,7 @@ RelationsCollection           = require './collections/relations-collection.js'
 VisualizationGraph            = require './views/visualization-graph.js'
 VisualizationTableNodes       = require './views/visualization-table-nodes.js'
 VisualizationTableRelations   = require './views/visualization-table-relations.js'
+StoryIndex                    = require './views/story-index.js'
 
 class StoryShow
 
@@ -13,6 +14,7 @@ class StoryShow
   visualizationGraph:           null
   visualizationTableNodes:      null
   visualizationTableRelations:  null
+  storyIndex:                   null
 
   constructor: (_id) ->
     console.log('setup visualization', _id);
@@ -24,6 +26,8 @@ class StoryShow
     @relations  = new RelationsCollection()
     # Setup Views 
     @visualizationGraph = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
+    # Setup Story Index
+    @storyIndex = new StoryIndex
     # Setup 'Start reading' button interaction
     $('.story-cover .btn-start-reading').click (e) ->
       e.preventDefault()

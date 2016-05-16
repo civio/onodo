@@ -6,11 +6,12 @@ VisualizationGraph           = require './views/visualization-graph.js'
 VisualizationTableNodes      = require './views/visualization-table-nodes.js'
 VisualizationTableRelations  = require './views/visualization-table-relations.js'
 
-class VisualizationEdit
+class Visualization
 
   mainHeaderHeight:             84
   visualizationHeaderHeight:    91
   tableHeaderHeight:            42
+  edit:                         false
 
   id:                           null
   nodes:                        null
@@ -20,30 +21,33 @@ class VisualizationEdit
   visualizationTableRelations:  null
   $tableSelector:               null
 
-  constructor: (_id) ->
+  constructor: (_id, _edit) ->
     console.log('setup visualization', _id);
-    @id = _id
+    @id   = _id
+    @edit = _edit
     # Setup Visualization Model
     @visualization  = new VisualizationModel()
     # Setup Collections
     @nodes          = new NodesCollection()
     @relations      = new RelationsCollection()
-    # Setup Views
-    @visualizationTableNodes      = new VisualizationTableNodes {model: @visualization, collection: @nodes}
-    @visualizationTableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
+    # Setup Tables for Edit Mode
+    if @edit
+      @visualizationTableNodes      = new VisualizationTableNodes {model: @visualization, collection: @nodes}
+      @visualizationTableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
+      # Attach nodes to VisualizationTableRelations
+      @visualizationTableRelations.setNodes @nodes
+      # Setup visualization table
+      @visualizationTable = $('.visualization-table')
+      # Setup scrollbar link
+      $('.visualization-table-scrollbar a').click (e) ->
+        e.preventDefault()
+        $('html, body').animate { scrollTop: $(document).height() }, 1000
+      # Setup scroll handler
+      $(window).scroll @onScroll
+    # Setup Visualization Graph View
     @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
-    # Attach nodes to VisualizationTableRelations
-    @visualizationTableRelations.setNodes @nodes
     # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
-    # Setup visualization table
-    @visualizationTable = $('.visualization-table')
-    # Setup scrollbar link
-    $('.visualization-table-scrollbar a').click (e) ->
-      e.preventDefault()
-      $('html, body').animate { scrollTop: $(document).height() }, 1000
-    # Setup scroll handler
-    $(window).scroll @onScroll
 
   setupAffix: ->
     $('.visualization-graph').affix
@@ -59,32 +63,35 @@ class VisualizationEdit
     # Update table
     $('.visualization-table .tab-pane.active').removeClass('active');
     $('.visualization-table '+$(e.target).attr('href')).addClass('active')
-    if $(e.target).attr('href') == '#nodes'
-      @visualizationTableRelations.hide()
-      @visualizationTableNodes.show()
-    else
-      @visualizationTableNodes.hide()
-      @visualizationTableRelations.show()
+    if @edit
+      if $(e.target).attr('href') == '#nodes'
+        @visualizationTableRelations.hide()
+        @visualizationTableNodes.show()
+      else
+        @visualizationTableNodes.hide()
+        @visualizationTableRelations.show()
 
   resize: =>
     console.log 'resize!'
-    windowHeight = $(window).height()
-    graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
-    tableHeight = (windowHeight*0.5) + @tableHeaderHeight
-    @visualizationGraph.$el.height graphHeight
+    if @edit
+      windowHeight = $(window).height()
+      graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
+      tableHeight = (windowHeight*0.5) + @tableHeaderHeight
+      @visualizationTable.css 'top', graphHeight + @visualizationHeaderHeight
+      @visualizationTable.height tableHeight
+      @visualizationTableNodes.setSize tableHeight, @visualizationTable.offset().top
+      @visualizationTableRelations.setSize tableHeight, @visualizationTable.offset().top
+      @visualizationGraph.$el.height graphHeight
+      #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
     @visualizationGraph.resize()
-    @visualizationTable.css 'top', graphHeight + @visualizationHeaderHeight
-    @visualizationTable.height tableHeight
-    @visualizationTableNodes.setSize tableHeight, @visualizationTable.offset().top
-    @visualizationTableRelations.setSize tableHeight, @visualizationTable.offset().top
-    #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
 
   onScroll: =>
     @visualizationGraph.setOffsetY $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
 
   render: ->
-    # setup affix bootstrap
-    @setupAffix()
+    # Setup affix bootstrap in Edit Mode
+    if @edit
+      @setupAffix()
     # force resize
     @resize()
     # fetch model & collections
@@ -95,8 +102,9 @@ class VisualizationEdit
 
   onSync: =>
     # Render Tables & Graph when all collections ready
-    @visualizationTableNodes.render()
-    @visualizationTableRelations.render()
+    if @edit
+      @visualizationTableNodes.render()
+      @visualizationTableRelations.render()
     @visualizationGraph.render()
 
-module.exports = VisualizationEdit;
+module.exports = Visualization
