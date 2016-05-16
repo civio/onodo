@@ -38,7 +38,10 @@ Rails.application.routes.draw do
       post 'publish'
       post 'unpublish'
     end
+    resources :chapters, only: :index
   end
+
+  resources :chapters, except: :index
 
   resources :datasets, :only => [:index]
 
