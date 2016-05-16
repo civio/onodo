@@ -1,0 +1,10 @@
+.story-index.panel.panel-default.active
+  .panel-heading
+    Story Index
+    %button.close{type: "button", "aria-label" => "Close"}
+      %span{"aria-hidden" => "true"}
+        &times
+  .panel-body
+    /- if defined? edit
+    %a.btn.btn-default.btn-primary{ href: new_chapter_path(@story) }
+      Add Chapter

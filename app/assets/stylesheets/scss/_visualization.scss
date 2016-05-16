@@ -472,77 +472,77 @@ $node-color-12: #e0deda;
       }
     }
   }
+}
 
-  .visualization-graph-info{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: -350px;
-    width: 350px;
-    margin: 0;
+.visualization-graph-info{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -350px;
+  width: 350px;
+  margin: 0;
+  border-radius: 0;
+  color: $gray;
+  background: $gray-blue;
+  @include transition( right 0.5s ease-out );
+
+  &.active{
+    right: 0;
+  }
+
+  .panel-heading{
     border-radius: 0;
-    color: $gray;
-    background: $gray-blue;
-    @include transition( right 0.5s ease-out );
-
-    &.active{
-      right: 0;
-    }
-
-    .panel-heading{
-      border-radius: 0;
-      border: none;
-      padding: $grid-gutter-width/2;
-      background: $gray-blue-dark;
-      @include clearfix();
+    border: none;
+    padding: $grid-gutter-width/2;
+    background: $gray-blue-dark;
+    @include clearfix();
+    
+    .close{
+      border-radius: $grid-gutter-width/2;
+      text-indent: -9999px;
+      opacity: 1;
+      @include retina-sprite( $icon-close-white-group );
       
-      .close{
-        border-radius: $grid-gutter-width/2;
-        text-indent: -9999px;
-        opacity: 1;
-        @include retina-sprite( $icon-close-white-group );
-        
-        @include transition( background-color 0.3s ease-out );
+      @include transition( background-color 0.3s ease-out );
 
-        &:hover{
-          background-color: darken( $gray-blue-dark, 15% );
-        }
-      }
-
-      .btn-primary{
-        color: white;
-        border-color: white;
-        background: transparent;
-        min-width: auto;
-        padding: 0 $grid-gutter-width/2;
-
-        .btn-icon-pencil{
-          float: left;
-          margin-top: 5px;
-          margin-right: $grid-gutter-width/3;
-          @include retina-sprite( $icon-pencil-white-group );
-          
-        }
-
-        &:hover{
-          background: darken( $gray-blue-dark, 15% );
-        }
+      &:hover{
+        background-color: darken( $gray-blue-dark, 15% );
       }
     }
-  
-    .panel-body{
 
-      .name{
-        margin: 0 0 $grid-gutter-width/3;
+    .btn-primary{
+      color: white;
+      border-color: white;
+      background: transparent;
+      min-width: auto;
+      padding: 0 $grid-gutter-width/2;
+
+      .btn-icon-pencil{
+        float: left;
+        margin-top: 5px;
+        margin-right: $grid-gutter-width/3;
+        @include retina-sprite( $icon-pencil-white-group );
+        
       }
 
-      .description{
-        font-size: 0.857em;
+      &:hover{
+        background: darken( $gray-blue-dark, 15% );
+      }
+    }
+  }
 
-        del{
-          font-style: none;
-          text-decoration: underline;
-        }
+  .panel-body{
+
+    .name{
+      margin: 0 0 $grid-gutter-width/3;
+    }
+
+    .description{
+      font-size: 0.857em;
+
+      del{
+        font-style: none;
+        text-decoration: underline;
       }
     }
   }

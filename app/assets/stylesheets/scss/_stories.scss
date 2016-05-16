@@ -2,6 +2,7 @@
 @import '_variables';
 @import 'bootstrap/mixins/vendor-prefixes';
 @import 'scss/sprites';
+@import 'scss/visualization';
 
 // Story New
 .story-new{
@@ -114,6 +115,11 @@
       }
     }
   }
+}
+
+// Story Index
+.story-index{
+  @extend .visualization-graph-info; 
 }
 
 // Hide Visualization Info at Story Cover
