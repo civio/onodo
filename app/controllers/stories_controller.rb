@@ -58,7 +58,8 @@ class StoriesController < ApplicationController
     if current_user.nil?
       redirect_to new_user_session_path()
     else
-      @story = Story.find(params[:id])
+      @story = Story.find(params[:id]) 
+      @relations = Relation.where(dataset_id: @story.visualization.id)
     end
   end
 
