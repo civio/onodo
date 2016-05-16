@@ -139,6 +139,14 @@ class VisualizationsController < ApplicationController
     params.require(:visualization).permit(:name, :description)
   end
 
+  def node_attributes
+    [:name, :node_type, :description, :image, :custom_fields, :visible, :dataset]
+  end
+
+  def relation_attributes
+    [:source, :target, :relation_type, :direction, :dataset]
+  end
+
   def import_dataset( file, dataset )
     wb = Roo::Spreadsheet.open(file.path)
 
@@ -155,7 +163,7 @@ class VisualizationsController < ApplicationController
       result[:custom_fields] = custom_fields.map{ |cf| [cf, result[cf]] }.to_h
       result[:visible] = result[:visible] == 0 ? false : true
       result[:dataset] = dataset
-      result.except(*custom_fields)
+      result.slice(*node_attributes)
     end
     ActiveRecord::Base.transaction do
       Node.create(nodes)
@@ -164,6 +172,7 @@ class VisualizationsController < ApplicationController
     # relations
     sheet = wb.sheet('Relations')
     headers = sheet.row(1)
+    regular_fields = [:source, :relation_type, :target, :direction, :dataset]
     relations = sheet.parse(header_search: headers, clean: true)[1..-1]
     relations = relations.map do |h|
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
@@ -171,7 +180,7 @@ class VisualizationsController < ApplicationController
       result[:target] = dataset.nodes.find_or_create_by(name: result[:target])
       result[:direction] = result[:direction] == 0 ? false : true
       result[:dataset] = dataset
-      result
+      result.slice(*relation_attributes)
     end
     ActiveRecord::Base.transaction do
       Relation.create(relations)
