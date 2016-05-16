@@ -5,6 +5,7 @@ class ChaptersController < ApplicationController
     if current_user.nil?
       redirect_to new_user_session_path()
     end
+    @story = Story.find(params[:story_id])
   end
 
   def edit
