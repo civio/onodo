@@ -11,11 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512143128) do
+ActiveRecord::Schema.define(version: 20160516125055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "chapters", force: :cascade do |t|
+    t.string   "name",        null: false
+    t.text     "description"
+    t.integer  "number"
+    t.integer  "story_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "chapters", ["story_id"], name: "index_chapters_on_story_id", using: :btree
+
+  create_table "chapters_nodes", id: false, force: :cascade do |t|
+    t.integer "chapter_id", null: false
+    t.integer "node_id",    null: false
+  end
+
+  add_index "chapters_nodes", ["chapter_id", "node_id"], name: "index_chapters_nodes_on_chapter_id_and_node_id", unique: true, using: :btree
+
+  create_table "chapters_relations", id: false, force: :cascade do |t|
+    t.integer "chapter_id",  null: false
+    t.integer "relation_id", null: false
+  end
+
+  add_index "chapters_relations", ["chapter_id", "relation_id"], name: "index_chapters_relations_on_chapter_id_and_relation_id", unique: true, using: :btree
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
@@ -105,4 +130,5 @@ ActiveRecord::Schema.define(version: 20160512143128) do
 
   add_index "visualizations", ["author_id"], name: "index_visualizations_on_author_id", using: :btree
 
+  add_foreign_key "chapters", "stories"
 end
