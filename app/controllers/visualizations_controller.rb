@@ -147,11 +147,17 @@ class VisualizationsController < ApplicationController
     [:source, :target, :relation_type, :direction, :dataset]
   end
 
+  def select_sheet selector, workbook
+    workbook.sheets.grep(selector).first
+  end
+
   def import_dataset( file, dataset )
     wb = Roo::Spreadsheet.open(file.path)
+    nodes_sheet = select_sheet /nodes/i, wb
+    relations_sheet = select_sheet /relations/i, wb
 
     # nodes
-    sheet = wb.sheet('Nodes')
+    sheet = wb.sheet(nodes_sheet)
     headers = sheet.row(1)
     all_fields = headers.map{ |f| f.downcase.gsub(' ', '_').to_sym }
     regular_fields = [:name, :type, :description, :visible]
@@ -170,7 +176,7 @@ class VisualizationsController < ApplicationController
     end
 
     # relations
-    sheet = wb.sheet('Relations')
+    sheet = wb.sheet(relations_sheet)
     headers = sheet.row(1)
     regular_fields = [:source, :relation_type, :target, :direction, :dataset]
     relations = sheet.parse(header_search: headers, clean: true)[1..-1]
