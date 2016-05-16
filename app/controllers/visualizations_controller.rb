@@ -160,7 +160,7 @@ class VisualizationsController < ApplicationController
     nodes = sheet.parse(header_search: headers, clean: true)[1..-1]
     nodes = nodes.map do |h|
       result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
-      result[:custom_fields] = custom_fields.map{ |cf| [cf, result[cf]] }.to_h
+      result[:custom_fields] = custom_fields.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
       result[:visible] = result[:visible] == 0 ? false : true
       result[:dataset] = dataset
       result.slice(*node_attributes)
