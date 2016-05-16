@@ -38,10 +38,10 @@ Rails.application.routes.draw do
       post 'publish'
       post 'unpublish'
     end
-    resources :chapters, :only => [:edit, :new, :create]
+    resources :chapters, :only => [:new, :create]
   end
 
-  resources :chapters, :only => [:update, :destroy]
+  resources :chapters, :only => [:edit, :update, :destroy]
 
   resources :datasets, :only => [:index]
 
