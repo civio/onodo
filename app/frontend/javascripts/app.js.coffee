@@ -3,7 +3,8 @@ window.App ||= {}
 App.Trix = require 'script!trix'
 
 App.VisualizationShow = require './visualization-show.js'
-App.VisualizationEdit = require './visualization-edit.js'
+App.VisualizationShow = require './visualization-show.js'
+App.StoryShow         = require './story-show.js'
 
 
 $(document).ready ->
@@ -33,14 +34,9 @@ $(document).ready ->
 
     # /stories/:id
     if $body.hasClass 'show'
-      appVisualizationShow = new App.VisualizationShow $('body').data('visualization-id')
-      appVisualizationShow.render()
-      $( window ).resize appVisualizationShow.resize
-      # Setup 'Start reading' button interaction
-      $('.story-cover .btn-start-reading').click (e) ->
-        e.preventDefault()
-        $('.story-cover').fadeOut()
-        $('.visualization-info, .visualization-description').fadeIn()
+      appStoryShow = new App.StoryShow $('body').data('visualization-id')
+      appStoryShow.render()
+      $( window ).resize appStoryShow.resize
 
     # /stories/:id/edit
     else if $body.hasClass 'edit'
