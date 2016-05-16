@@ -52,17 +52,7 @@ class StoriesController < ApplicationController
       @story = Story.find(params[:id])
     end
   end
-
-  # GET /stories/:id/edit/chapter
-  def editchapter
-    if current_user.nil?
-      redirect_to new_user_session_path()
-    else
-      @story = Story.find(params[:id]) 
-      @relations = Relation.where(dataset_id: @story.visualization.id)
-    end
-  end
-
+  
   # PATCH /stories/:id/
   def update
     @story = Story.find(params[:id])

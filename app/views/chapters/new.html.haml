@@ -1,5 +1,33 @@
-%h1 New chapter
-
-= render 'form'
-
-= link_to 'Back', chapters_path
+.story-edit-chpater.container
+  .row
+    .page-header.text-center
+      %h2 New Story Chapter
+    .col-md-8.col-md-offset-2
+      = form_for :chapter, url: story_chapters_path , method: "post", html: {:class => 'form-default'} do |f|
+        .form-group
+          = f.label "story-chapter-input-title", "Chaper Title"
+          = f.text_field :name, class: "form-control"
+        .form-group
+          = f.label "story-chapter-input-description", "Description"
+          = f.text_field :description, type: "hidden"
+          %trix-toolbar{ id: "wysiwig-toolbar", input: "story_description" }
+          %trix-editor{ input: "story_description", toolbar: "wysiwig-toolbar", class: "form-control" }
+        %p
+          Choose the relationships that appear in this chapter.
+        / .visualization-table
+        /   %table.table
+        /     %thead
+        /       %tr
+        /         %th Source
+        /         %th Relationship
+        /         %th Target
+        /         %th Date
+        /     %tbody
+        /     - @relations.each do |relation|
+        /       %tr
+        /         %td= relation.source.name
+        /         %td= relation.relation_type
+        /         %td= relation.target.name
+        /         %td= relation.at
+        = f.submit "Save", class: "btn btn-default btn-primary"
+        /%a.btn.btn-default{href: edit_story_path(@story)} Cancel
