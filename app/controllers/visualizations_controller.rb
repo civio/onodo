@@ -151,7 +151,7 @@ class VisualizationsController < ApplicationController
     dataset.custom_fields = custom_fields
     nodes = sheet.parse(header_search: headers, clean: true)[1..-1]
     nodes = nodes.map do |h|
-      result = h.map { |k,v| [ !(k=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
+      result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
       result[:custom_fields] = custom_fields.map{ |cf| [cf, result[cf]] }.to_h
       result[:visible] = result[:visible] == 0 ? false : true
       result[:dataset] = dataset
@@ -166,7 +166,7 @@ class VisualizationsController < ApplicationController
     headers = sheet.row(1)
     relations = sheet.parse(header_search: headers, clean: true)[1..-1]
     relations = relations.map do |h|
-      result = h.map { |k,v| [ (k=="Directed") ? :direction : (k=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
+      result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
       result[:source] = dataset.nodes.find_or_create_by(name: result[:source])
       result[:target] = dataset.nodes.find_or_create_by(name: result[:target])
       result[:direction] = result[:direction] == 0 ? false : true
