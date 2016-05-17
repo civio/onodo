@@ -9,10 +9,11 @@
       %ul.chapters-list
         - @story.chapters.each_with_index do |chapter, index|
           %li
-            %span.index
-              = index
-            %span.title
-              = chapter.name
+            %a{ href: chapter.id, title: chapter.name }
+              %span.index
+                = index
+              %span.title
+                = chapter.name
     - if defined? edit
       %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(@story) }
         Add Chapter
