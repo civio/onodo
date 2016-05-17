@@ -4,14 +4,15 @@
       %h2 New Story Chapter
     .col-md-8.col-md-offset-2
       = form_for :chapter, url: story_chapters_path , method: "post", html: {:class => 'form-default'} do |f|
+        = f.hidden_field :story_id, value: @story.id
         .form-group
-          = f.label "story-chapter-input-title", "Chaper Title"
-          = f.text_field :name, class: "form-control"
+          = f.label "chapter-input-title", "Chaper Title"
+          = f.text_field :name, class: "form-control", required: true
         .form-group
-          = f.label "story-chapter-input-description", "Description"
+          = f.label "chapter-input-description", "Description"
           = f.text_field :description, type: "hidden"
-          %trix-toolbar{ id: "wysiwig-toolbar", input: "story_description" }
-          %trix-editor{ input: "story_description", toolbar: "wysiwig-toolbar", class: "form-control" }
+          %trix-toolbar{ id: "wysiwig-toolbar", input: "chapter_description" }
+          %trix-editor{ input: "chapter_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         %p
           Choose the relationships that appear in this chapter.
         .visualization-table

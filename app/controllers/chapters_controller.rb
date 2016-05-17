@@ -12,10 +12,15 @@ class ChaptersController < ApplicationController
   end
 
   def create
+    chapter_params               = {}
+    chapter_params[:name]        = params[:chapter][:name]
+    chapter_params[:description] = params[:chapter][:description]
+    chapter_params[:story_id]    = params[:chapter][:story_id]
     @chapter = Chapter.new(chapter_params)
 
     if @chapter.save
-      redirect_to @chapter, notice: 'Chapter was successfully created.'
+      @story = Story.find(params[:story_id])
+      redirect_to edit_story_path(@story), notice: 'Chapter was successfully created.'
     else
       render :new
     end
