@@ -29,7 +29,7 @@
               - @story.visualization.dataset.relations.each do |relation|
                 %tr
                   %td
-                    = f.check_box relation.id
+                    = f.check_box "relations[#{relation.id}]"
                   %td= relation.source.name
                   %td= relation.relation_type
                   %td= relation.target.name

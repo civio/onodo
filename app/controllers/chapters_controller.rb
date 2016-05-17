@@ -12,15 +12,17 @@ class ChaptersController < ApplicationController
   end
 
   def create
-    chapter_params               = {}
-    chapter_params[:name]        = params[:chapter][:name]
-    chapter_params[:description] = params[:chapter][:description]
-    chapter_params[:story_id]    = params[:chapter][:story_id]
     @chapter = Chapter.new(chapter_params)
+    @chapter.number = @chapter.story.chapters.count + 1  # TODO: concurrency scenarios
+
+    relation_ids = params[:chapter][:relations].select{ |_,v| v == "1" }.map{ |k,_| k.to_i }
+    @chapter.relations = Relation.find(relation_ids)
+
+    nodes_ids = @chapter.relations.flat_map{ |r|  [r.source_id, r.target_id] }.uniq
+    @chapter.nodes = Node.find(nodes_ids)
 
     if @chapter.save
-      @story = Story.find(params[:story_id])
-      redirect_to edit_story_path(@story), notice: 'Chapter was successfully created.'
+      redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully created.'
     else
       render :new
     end
@@ -28,7 +30,7 @@ class ChaptersController < ApplicationController
 
   def update
     if @chapter.update(chapter_params)
-      redirect_to @chapter, notice: 'Chapter was successfully updated.'
+      redirect_to @chapter.story, notice: 'Chapter was successfully updated.'
     else
       render :edit
     end
@@ -36,7 +38,7 @@ class ChaptersController < ApplicationController
 
   def destroy
     @chapter.destroy
-    redirect_to chapters_url, notice: 'Chapter was successfully destroyed.'
+    redirect_to @chapter.story, notice: 'Chapter was successfully destroyed.'
   end
 
   private
@@ -48,6 +50,6 @@ class ChaptersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def chapter_params
-    params[:chapter]
+    params.require(:chapter).permit(:name, :description, :story_id)
   end
 end
