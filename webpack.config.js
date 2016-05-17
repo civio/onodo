@@ -59,10 +59,12 @@ var config = module.exports = {
   },
   /*
   plugins: [
+    new webpack.optimize.UglifyJsPlugin()
+  ]
+    /*
     new webpack.ResolverPlugin(
       new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(".bower.json", ["main"])
     )
-    /*
     new webpack.ProvidePlugin({
       'React': 'react/addons',
       //'react-faux-dom': 'react-d3-core/react-faux-dom', //'react-d3-core/react-faux-dom',
