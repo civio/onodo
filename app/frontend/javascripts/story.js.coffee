@@ -1,6 +1,6 @@
 # Imports
 Visualization = require './visualization.js'
-StoryIndex    = require './views/story-index.js'
+StoryInfo     = require './views/story-info.js'
 
 class Story
 
@@ -14,7 +14,7 @@ class Story
     # Setup Visualization Model
     @visualization = new Visualization @id, false
     # Setup Story Index
-    @storyIndex = new StoryIndex
+    @storyInfo = new StoryInfo
     # Setup 'Start reading' button interaction
     $('.story-cover .btn-start-reading').click (e) ->
       e.preventDefault()
@@ -29,6 +29,5 @@ class Story
     @resize()
     # render views
     @visualization.render()
-    @storyIndex.render()
 
 module.exports = Story

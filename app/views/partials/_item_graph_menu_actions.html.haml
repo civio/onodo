@@ -11,7 +11,12 @@
     %span.title
       Share it
     %span.icon-share
-  - if defined? edit
+  - if defined? story
+    %button.btn.btn-default.btn-transparent.btn-story-info{type: "button"}
+      %span.title
+        Story Index
+      %span.icon-story-info
+  - elsif defined? edit
     %button.btn.btn-default.btn-transparent.btn-configure{type: "button"}
       %span.title
         Settings

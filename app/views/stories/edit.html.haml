@@ -2,10 +2,11 @@
   = render 'partials/item_header', item: @story, edit: true, story: true
   .visualization-graph-container
     = render 'partials/item_graph_menu_navigation'
-    = render 'partials/item_graph_menu_actions', edit: true
+    = render 'partials/item_graph_menu_actions', edit: true, story: true
     = render 'partials/item_graph_panel_configuration'
     = render 'partials/item_share_panel', item: @story, story: true
     .visualization-graph-component
     = render 'partials/item_graph_info', edit: true
+    = render 'partials/story_info'
 
 = render 'partials/item_delete_modal', item: @story, story: true
