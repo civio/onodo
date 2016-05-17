@@ -163,6 +163,7 @@ class VisualizationsController < ApplicationController
     regular_fields = [:name, :type, :description, :visible]
     custom_fields = all_fields - regular_fields
     dataset.custom_fields = custom_fields
+    dataset.save
     nodes = sheet.parse(header_search: headers, clean: true)[1..-1]
     nodes = nodes.map do |h|
       result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
