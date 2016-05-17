@@ -1,19 +1,36 @@
 .story-info.panel.panel-default.active
   .panel-heading
-    Story Index
+    .index-header
+      Story Index
+    .chapter-header.hide
+      %a.index-back-btn{ href: '#', title: 'Back to Story Index'}
+        %span.icon-story-index
+        Back to Story Index
+      .chapters-navigation
+        %a.chapter-navigation.chapter-navigation-prev{ href: '#', title: 'Previous Chapter' }
+          Previous Chapter
+          %span.prev-chapter-icon
+        .chapters-tracker
+          %span.chapter-index 
+          \/ #{@story.chapters.length}
+        %a.chapter-navigation.chapter-navigation-next{ href: '#', title: 'Next Chapter' }
+          Next Chapter
+          %span.next-chapter-icon
     %button.close{type: "button", "aria-label" => "Close"}
       %span{"aria-hidden" => "true"}
         &times
   .panel-body
-    - if @story.chapters
-      %ul.chapters-list
-        - @story.chapters.each_with_index do |chapter, index|
-          %li
-            %a{ href: chapter.id, title: chapter.name }
-              %span.index
-                = index
-              %span.title
-                = chapter.name
-    - if defined? edit
-      %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(@story) }
-        Add Chapter
+    .index-content
+      - if @story.chapters
+        %ul.chapters-list
+          - @story.chapters.each_with_index do |chapter, index|
+            %li
+              %a{ href: chapter.id, title: chapter.name }
+                %span.index
+                  = index+1
+                %span.title
+                  = chapter.name
+      - if defined? edit
+        %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(@story) }
+          Add Chapter
+    .chapter-content.hide

@@ -124,6 +124,81 @@
   .panel-heading{
     color: $gray;
     line-height: 30px;
+    text-align: center;
+
+    .close{
+      position: absolute;
+      right: $grid-gutter-width/3;
+      top: $grid-gutter-width/2;
+    }
+
+    .index-back-btn{
+      display: block;
+      position: absolute;
+      left: $grid-gutter-width/3;
+      top: $grid-gutter-width/2;
+      border: 2px solid $brand-primary;
+      width: $grid-gutter-width;
+      height: $grid-gutter-width;
+      border-radius: $grid-gutter-width/2;
+      text-indent: -9999px;
+      overflow: hidden;
+
+      .icon-story-index{
+        display: block;
+        margin-top: 7px;
+        margin-left: 3px;
+        @include retina-sprite( $icon-list-group );
+      }
+
+      &:hover{
+        background: mix( white, $gray-blue, 50% );
+      }
+    }
+
+    .chapters-navigation{
+      margin-top: -10px;
+
+      .chapters-tracker,
+      .chapter-navigation{
+        display: inline-block;
+      }
+
+      .chapter-navigation{
+        position: relative;
+        width: $grid-gutter-width;
+        height: $grid-gutter-width;
+        top: $grid-gutter-width/3;
+        margin: 0 $grid-gutter-width/6;
+        border-radius: $grid-gutter-width/2;
+        text-indent: -9999px;
+        overflow: hidden;
+      }
+
+      .prev-chapter-icon,
+      .next-chapter-icon{
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -3px;
+        margin-top: -6px;
+      }
+      
+      .prev-chapter-icon{
+        @include retina-sprite( $icon-carousel-left-group );
+      }
+      .next-chapter-icon{
+        @include retina-sprite( $icon-carousel-right-group );
+      }
+
+      .chapter-navigation-prev:hover .prev-chapter-icon{
+        @include retina-sprite( $icon-carousel-left-hover-group );
+      }
+      .chapter-navigation-next:hover .next-chapter-icon{
+        @include retina-sprite( $icon-carousel-right-hover-group );
+      }
+    }
   }
 
   .panel-body{
@@ -172,14 +247,12 @@
       }
     }
   }
-}
 
-// Sotry Edit
-.story-edit-chapter{
-  .visualization-table{
-
+  .chapter-content{
+    padding: $grid-gutter-width/6;
   }
 }
+
 
 // Hide Visualization Info at Story Cover
 .stories.show .visualization-info,
