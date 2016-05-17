@@ -11,6 +11,10 @@ class StoryInfo extends Backbone.View
     @$el.find('.close').click (e) =>
       e.preventDefault()
       @$el.removeClass 'active'
+    # Listen for click on chapter-ist items
+    @$el.find('.chapters-list a').click (e) ->
+      e.preventDefault()
+      Backbone.trigger 'story.info.showChapter', {id: $(this).attr('href')}
     @render()
 
   render: ->

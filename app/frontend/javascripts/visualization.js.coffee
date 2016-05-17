@@ -11,9 +11,9 @@ class Visualization
   mainHeaderHeight:             84
   visualizationHeaderHeight:    91
   tableHeaderHeight:            42
-  edit:                         false
 
   id:                           null
+  edit:                         false
   nodes:                        null
   visualizationGraph:           null
   visualizationTable:           null

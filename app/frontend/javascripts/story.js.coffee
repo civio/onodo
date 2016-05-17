@@ -1,20 +1,28 @@
 # Imports
-Visualization = require './visualization.js'
-StoryInfo     = require './views/story-info.js'
+ChaptersCollection  = require './collections/chapters-collection.js'
+Visualization       = require './visualization.js'
+StoryInfo           = require './views/story-info.js'
 
 class Story
 
-  id:   null
-  edit: null
+  id:             null
+  edit:           null
+  chapters:       null
+  visualization:  null
+  storyInfo:      null
 
   constructor: (_id, _edit) ->
     console.log 'setup story', _id, _edit
     @id   = _id
     @edit = _edit
-    # Setup Visualization Model
-    @visualization = new Visualization @id, false
+    # Setup Chapters Collection
+    @chapters       = new ChaptersCollection()
+    # Setup Visualization View
+    @visualization  = new Visualization @id, false
     # Setup Story Index
-    @storyInfo = new StoryInfo
+    @storyInfo      = new StoryInfo
+    # Listen for chapters navigation
+    Backbone.on 'story.info.showChapter', @onShowChapter, @
     # Setup 'Start reading' button interaction
     $('.story-cover .btn-start-reading').click (e) ->
       e.preventDefault()
@@ -29,5 +37,13 @@ class Story
     @resize()
     # render views
     @visualization.render()
+    # fetch collection
+    @chapters.fetch {url: '/api/stories/'+@id+'/chapters/', success: @onChaptersSync}
+
+  onChaptersSync: (e) =>
+    console.log 'chapters sync', @chapters
+
+  onShowChapter: (e) ->
+    console.log 'show chapter', e.id
 
 module.exports = Story
