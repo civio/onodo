@@ -1,3 +1,3 @@
 json.merge! chapter.as_json
-json.nodes chapter.nodes, partial: '/api/nodes/node', as: :node
-json.relations chapter.relations, partial: '/api/relations/relation', as: :relation
+json.node_ids chapter.nodes.pluck :id
+json.relation_ids chapter.relations.pluck :id
