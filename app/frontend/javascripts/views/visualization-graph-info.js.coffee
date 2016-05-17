@@ -8,7 +8,7 @@ class VisualizationGraphInfo extends Backbone.View
 
   show: (node) ->
     # We receive node as an object, so we need to convert into Node model
-    @node = new Node(node)
+    @model = new Node(node)
     @$el.addClass('active')
     @$el.find('.panel-heading > a.btn').attr('href','/nodes/'+node.id+'/edit/')
     @render()
@@ -26,16 +26,15 @@ class VisualizationGraphInfo extends Backbone.View
     @render()
 
   render: ->
-    # Update template & render if we have node info
-    if @node
+    # Update template & render if we have a model
+    if @model
       # Compile the template using Handlebars
-      @template = HandlebarsTemplate {
-        name: @node.get('name')
-        description: @node.get('description')
-        image: if @node.get('image') then @node.get('image').huge.url else null
+      template = HandlebarsTemplate {
+        name:         @model.get('name')
+        description:  @model.get('description')
+        image:        if @model.get('image') then @model.get('image').huge.url else null
       }
-      #console.log 'template', @template
-      @$el.find('.panel-body').html @template, @
+      @$el.find('.panel-body').html template
     return this
 
 module.exports = VisualizationGraphInfo
