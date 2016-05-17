@@ -1,10 +1,8 @@
 window.App ||= {}
 
-App.Trix = require 'script!trix'
-
-App.Visualization     = require './visualization.js'
-App.StoryShow         = require './story-show.js'
-
+App.Visualization = require './visualization.js'
+App.Story         = require './story.js'
+App.Trix          = require 'script!trix'
 
 $(document).ready ->
 
@@ -23,16 +21,10 @@ $(document).ready ->
   # stories
   else if $body.hasClass 'stories'
     # /stories/:id
-    if $body.hasClass 'show'
-      appStoryShow = new App.StoryShow $('body').data('visualization-id')
-      appStoryShow.render()
-      $( window ).resize appStoryShow.resize
     # /stories/:id/edit
-    else if $body.hasClass 'edit'
-      appVisualization = new App.Visualization $('body').data('visualization-id'), $body.hasClass('edit')
-      appVisualization.render()
-      $( window ).resize appVisualization.resize
-
+    appStory = new App.Story $('body').data('visualization-id'), $body.hasClass('edit')
+    appStory.render()
+    $( window ).resize appStory.resize
 
   # Add file input feedback 
   # based on http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
