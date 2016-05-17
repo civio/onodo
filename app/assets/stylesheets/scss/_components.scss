@@ -372,6 +372,29 @@
   }
 }
 
+// Table Fixed
+.table.table-fixed{
+  width: 100%;
+
+  tbody {
+    height: 300px;
+    overflow-y: auto;
+  }
+  thead, tbody, tr, td, th {
+    display: block;
+  }
+  tbody td, 
+  thead th {
+    float: left;
+    width: 20%; // Default width for 5 columns (100%/5)
+  }
+  tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+}
 
 // Panel Share
 

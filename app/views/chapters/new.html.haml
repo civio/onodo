@@ -1,4 +1,4 @@
-.story-edit-chpater.container
+.story-edit-chapter.container
   .row
     .page-header.text-center
       %h2 New Story Chapter
@@ -15,19 +15,23 @@
         %p
           Choose the relationships that appear in this chapter.
         .visualization-table
-          %table.table
+          %table.table.table-fixed
             %thead
               %tr
+                %th 
+                  = check_box_tag 'relations_select_all'
                 %th Source
                 %th Relationship
                 %th Target
                 %th Date
             %tbody
-            - @story.visualization.dataset.relations.each do |relation|
-              %tr
-                %td= relation.source.name
-                %td= relation.relation_type
-                %td= relation.target.name
-                %td= relation.at
+              - @story.visualization.dataset.relations.each do |relation|
+                %tr
+                  %td
+                    = f.check_box relation.id
+                  %td= relation.source.name
+                  %td= relation.relation_type
+                  %td= relation.target.name
+                  %td= relation.at
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: edit_story_path(@story)} Cancel
