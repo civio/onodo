@@ -6,10 +6,13 @@
         &times
   .panel-body
     - if @story.chapters
-      %ul
-        - @story.chapters.each do |chapter|
+      %ul.chapters-list
+        - @story.chapters.each_with_index do |chapter, index|
           %li
-            = chapter.name
+            %span.index
+              = index
+            %span.title
+              = chapter.name
     - if defined? edit
       %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(@story) }
         Add Chapter
