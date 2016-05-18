@@ -2,12 +2,13 @@ class StoriesController < ApplicationController
 
   # GET /stories/:id
   def show
-    @story = Story.find(params[:id])
+    @story            = Story.find(params[:id])
+    @story_id         = @story.id
     @visualization_id = @story.visualization.id
-    @nodes = Node.where(dataset_id: @visualization_id)
-    @relations = Relation.where(dataset_id: @visualization_id)
+    @nodes            = Node.where(dataset_id: @visualization_id)
+    @relations        = Relation.where(dataset_id: @visualization_id)
     # !!! TODO -> Modify related_items to get only related visualizations/stories
-    @related_items = Visualization.all
+    @related_items    = Visualization.published
   end
 
   # GET /stories/new
@@ -39,7 +40,8 @@ class StoriesController < ApplicationController
     if current_user.nil?
       redirect_to new_user_session_path()
     else
-      @story = Story.find(params[:id])
+      @story            = Story.find(params[:id])
+      @story_id         = @story.id
       @visualization_id = @story.visualization.id
     end
   end

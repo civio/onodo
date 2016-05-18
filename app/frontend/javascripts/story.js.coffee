@@ -5,24 +5,26 @@ StoryInfo           = require './views/story-info.js'
 
 class Story
 
-  id:               null
+  story_id:         null
+  visualization_id: null
   edit:             null
   chapters:         null
   visualization:    null
   storyInfo:        null
   currentChapterId: null
 
-  constructor: (_id, _edit) ->
-    @id   = _id
-    @edit = _edit
+  constructor: (_story_id, _visualization_id, _edit) ->
+    @story_id         = _story_id
+    @visualization_id = _visualization_id
+    @edit             = _edit
     # Setup Chapters Collection
-    @chapters       = new ChaptersCollection()
+    @chapters         = new ChaptersCollection()
     # Setup Visualization View
-    @visualization  = new Visualization @id, false
+    @visualization    = new Visualization @visualization_id, false
     # Setup Story Index
-    @storyInfo      = new StoryInfo {edit: @edit}
+    @storyInfo        = new StoryInfo {edit: @edit}
     # Listen for chapters navigation
-    Backbone.on 'story.info.showChapter', @onShowChapter, @
+    Backbone.on 'story.showChapter', @onShowChapter, @
     # Setup 'Start reading' button interaction
     $('.story-cover .btn-start-reading').click (e) ->
       e.preventDefault()
@@ -41,17 +43,20 @@ class Story
     @visualization.resize()
 
   render: ->
+    console.log '!!!render story', @story_id
     # force resize
     @resize()
     # render views
     @visualization.render()
     # fetch collection
-    @chapters.fetch {url: '/api/stories/'+@id+'/chapters/', success: @onChaptersSync}
+    @chapters.fetch {url: '/api/stories/'+@story_id+'/chapters/', success: @onChaptersSync}
 
   onChaptersSync: (e) =>
-    console.log 'chapters sync', @chapters
+    console.log 'chapters sync', @chapters, @edit, @chapters.length
+    if !@edit and @chapters.length > 0
+      Backbone.trigger 'story.showChapter', {id: @chapters.at(0).id}
 
-  onShowChapter: (e) ->
+  onShowChapter: (e) =>
     # Get current chapter
     chapter = @chapters.get(e.id)
     @storyInfo.showChapter chapter

@@ -22,7 +22,7 @@ $(document).ready ->
   else if $body.hasClass 'stories'
     # /stories/:id
     # /stories/:id/edit
-    appStory = new App.Story $('body').data('visualization-id'), $body.hasClass('edit')
+    appStory = new App.Story $('body').data('story-id'), $('body').data('visualization-id'), $body.hasClass('edit')
     appStory.render()
     $( window ).resize appStory.resize
 

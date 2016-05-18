@@ -19,7 +19,7 @@ class VisualizationsController < ApplicationController
         @nodes          = @nodes.order(:name)
         @relations      = @relations.includes(:source,:target).order("nodes.name")
         # !!!TODO -> we get all visualization for related_items; needs improvement
-        @related_items  = Visualization.all
+        @related_items  = Visualization.published
       end
       format.xlsx do
         p = Axlsx::Package.new

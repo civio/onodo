@@ -48,7 +48,7 @@ class StoryInfo extends Backbone.View
       @$el.find('.chapter-navigation').removeClass 'invisible'
       if @index == 1
          @$el.find('.chapter-navigation-prev').addClass 'invisible'
-      else if @index == @chaptersLength
+      if @index == @chaptersLength
          @$el.find('.chapter-navigation-next').addClass 'invisible'
     else
       @$el.find('.panel-body .index-content, .panel-heading .index-header').removeClass 'hide'
@@ -75,7 +75,7 @@ class StoryInfo extends Backbone.View
 
   onChaptersListClick: (e) ->
     e.preventDefault()
-    Backbone.trigger 'story.info.showChapter', {id: $(this).attr('href')}
+    Backbone.trigger 'story.showChapter', {id: $(this).attr('href')}
 
   onChapterNavigationClick: (e) =>
     e.preventDefault()
