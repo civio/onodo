@@ -221,7 +221,9 @@
       height: auto;
     }
   }
+}
 
+a.user-label{
   &:hover,
   &:focus{
     text-decoration: none;

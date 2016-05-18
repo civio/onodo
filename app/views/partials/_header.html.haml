@@ -25,7 +25,7 @@
             = link_to "Sign up", new_user_registration_path, class: "btn btn-primary"
         -else
           %li.dropdown
-            = render 'partials/user_label', :user => current_user
+            = render 'partials/user_label', :user => current_user, :header => true
             %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button", :title => "User settings"}
               %span.user-dropdown-icon
                 User settings
