@@ -19,6 +19,15 @@
   background: $gray-lighter;
   padding: $grid-gutter-width/2 0;
 
+  // No Visualizations Yet message
+  > .container > .text-center{
+    margin: $grid-gutter-width/2 0;
+
+    > p{
+      margin-bottom: $grid-gutter-width;
+    }
+  }
+
   .visualization-item{
     display: block;
     background: $gray-lighter;
