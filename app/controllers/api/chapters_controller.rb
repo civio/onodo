@@ -8,4 +8,10 @@ class Api::ChaptersController < ApiController
     @chapter = Chapter.find(params[:id])
   end
 
+  private
+
+  def chapter_params
+    params.require(:chapter).permit(:name, :description, :number, :story_id)
+  end
+
 end

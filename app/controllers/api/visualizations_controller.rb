@@ -13,12 +13,13 @@ class Api::VisualizationsController < ApiController
     @dataset.save
     params[:visualization].except!(:custom_fields)
     @visualization.update(visualization_params)
+    render :show
   end
 
   private
 
   def visualization_params
-    params.require(:visualization).permit(:parameters)
+    params.require(:visualization).permit(:name, :description, :published, :author_id, :parameters)
   end
 
 end

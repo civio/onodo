@@ -20,6 +20,7 @@ class Api::NodesController < ApiController
 
   def create
     @node = Node.create(node_params)
+    render :show
   end
 
   def update
@@ -37,16 +38,18 @@ class Api::NodesController < ApiController
     end
 
     @node.update(node_params)
+    render :show
   end
 
   def destroy
     Node.destroy(params[:id])
+    head :no_content
   end
 
   private
 
   def node_params
-    params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys)) if params[:node]
+    params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
   end
 
 end
