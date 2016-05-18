@@ -28,7 +28,7 @@ class StoriesController < ApplicationController
     #@story.visualization = Visualization.where(id: params[:story][:visualization])
 
     if @story.save
-      redirect_to story_path( @story ), :notice => "Your story was created!"
+      redirect_to edit_story_path( @story ), :notice => "Your story was created!"
     else
       render "new"
     end

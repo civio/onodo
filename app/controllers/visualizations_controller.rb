@@ -66,7 +66,7 @@ class VisualizationsController < ApplicationController
     end
 
     if @visualization.save
-      redirect_to visualization_path( @visualization ), :notice => "Your visualization was created!"
+      redirect_to edit_visualization_path( @visualization ), :notice => "Your visualization was created!"
     else
       render :new
     end
