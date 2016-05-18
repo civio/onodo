@@ -4,9 +4,12 @@ HandlebarsTemplate    = require './../templates/story-info.handlebars'
 
 class StoryInfo extends Backbone.View
 
-  el: '.story-info'
+  el:             '.story-info'
+  chaptersLength: null
 
   initialize: ->
+    # Get chapters list length
+    @chaptersLength = @$el.find('.chapters-list li').size()
     # Show panel when click story-info btn
     $('.visualization-graph-menu-actions .btn-story-info').click @onBtnStoryInfoClick
     # Hide panel when click close btn
@@ -29,10 +32,17 @@ class StoryInfo extends Backbone.View
         description:  @model.get('description')
         #image: if @node.get('image') then @node.get('image').huge.url else null
       }
+      index = parseInt @model.get('number')
       @$el.find('.panel-body .index-content, .panel-heading .index-header').addClass 'hide'
       @$el.find('.panel-body .chapter-content, .panel-heading .chapter-header').removeClass 'hide'
       @$el.find('.panel-body .chapter-content').html template
       @$el.find('.panel-heading .chapter-header .chapter-index').html @model.get('number')
+      # Show/hide prev/next arrows
+      @$el.find('.chapter-navigation').removeClass 'invisible'
+      if index == 1
+         @$el.find('.chapter-navigation-prev').addClass 'invisible'
+      else if index == @chaptersLength
+         @$el.find('.chapter-navigation-next').addClass 'invisible'
     else
       @$el.find('.panel-body .index-content, .panel-heading .index-header').removeClass 'hide'
       @$el.find('.panel-body .chapter-content, .panel-heading .chapter-header').addClass 'hide'
@@ -63,7 +73,6 @@ class StoryInfo extends Backbone.View
   onChapterNavigationClick: (e) =>
     e.preventDefault()
     index = if $(e.target).hasClass('chapter-navigation-next') then @model.get('number')+1 else @model.get('number')-1
-    console.log 'go to chapter', @model.get('number'), $(e.target).hasClass('chapter-navigation-next')
     @$el.find('.chapters-list li:nth-child('+index+') a').trigger 'click'
 
   onChapterNavigationChildrenClick: (e) ->
