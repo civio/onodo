@@ -3,6 +3,24 @@
     .page-header.text-center
       %h2 Edit Story Info
     .col-sm-6.col-sm-offset-3
+      / .profile-picture.media
+      /   .media-left
+      /     %img.img-circle.media-object{src: resource.avatar_url(:huge)}
+      /   .media-body
+      /     .media-heading
+      /       Cover photo
+      /     %p
+      /       Your cover photo should be about 1140px wide 480px tall and under 2MB
+      /       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f|
+      /         .form-group
+      /           %span.btn.btn-primary.btn-file
+      /             %i.glyphicon.glyphicon-folder-open
+      /             Browse
+      /             = f.file_field :avatar, class: 'form-control'
+      /             = f.hidden_field :avatar_cache
+      /           %p.btn-file-output
+      /         .actions
+      /           = f.submit "Upload Photo", class: "btn btn-default btn-primary"
       = form_for @story, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
         .form-group
           = f.label "story-input-title", "Title"
