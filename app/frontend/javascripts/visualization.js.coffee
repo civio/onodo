@@ -97,6 +97,9 @@ class Visualization
         @visualizationTableNodes.hide()
         @visualizationTableRelations.show()
 
+  showChapter: (nodes, relations) ->
+    @visualizationGraph.showChapter nodes, relations
+
   onScroll: =>
     @visualizationGraph.setOffsetY $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
 

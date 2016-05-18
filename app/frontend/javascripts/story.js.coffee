@@ -44,6 +44,8 @@ class Story
     console.log 'chapters sync', @chapters
 
   onShowChapter: (e) ->
-    @storyInfo.showChapter  @chapters.get(e.id)
+    chapter = @chapters.get(e.id)
+    @storyInfo.showChapter      chapter
+    @visualization.showChapter  chapter.get('node_ids'), chapter.get('relation_ids')
 
 module.exports = Story

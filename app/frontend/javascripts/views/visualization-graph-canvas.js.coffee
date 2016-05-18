@@ -108,28 +108,28 @@ class VisualizationGraphCanvas extends Backbone.View
     console.log 'initialize canvas', @parameters
 
     # Setup color scale
-    @colorQualitativeScale  = d3.scale.ordinal().range( @COLOR_QUALITATIVE )
-    @colorQuantitativeScale = d3.scale.ordinal().range( @COLOR_QUANTITATIVE )
+    @colorQualitativeScale  = d3.scale.ordinal().range @COLOR_QUALITATIVE
+    @colorQuantitativeScale = d3.scale.ordinal().range @COLOR_QUANTITATIVE
 
     # Setup Data
-    @initializeData( options.data )
+    @initializeData options.data
 
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
     @viewport.height    = @$el.height()
-    @viewport.center.x = @viewport.width*0.5
-    @viewport.center.y = @viewport.height*0.5
+    @viewport.center.x  = @viewport.width*0.5
+    @viewport.center.y  = @viewport.height*0.5
 
     # Setup force
     @force = d3.layout.force()
-      .linkDistance(@parameters.linkDistance)
-      .linkStrength(@parameters.linkStrength)
-      .friction(@parameters.friction)
-      .charge(@parameters.charge)
-      .theta(@parameters.theta)
-      .gravity(@parameters.gravity)
-      .size([@viewport.width, @viewport.height])
-      .on('tick', @onTick)
+      .linkDistance @parameters.linkDistance
+      .linkStrength @parameters.linkStrength
+      .friction     @parameters.friction
+      .charge       @parameters.charge
+      .theta        @parameters.theta
+      .gravity      @parameters.gravity
+      .size         [@viewport.width, @viewport.height]
+      .on           'tick', @onTick
 
     @forceDrag = @force.drag()
       .on('dragstart',  @onNodeDragStart)
@@ -196,8 +196,8 @@ class VisualizationGraphCanvas extends Backbone.View
         @addNodeData d
 
     # Setup color ordinal scale domain
-    @colorQualitativeScale.domain data.nodes.map( (d) -> d.node_type )
-    @colorQuantitativeScale.domain data.nodes.map( (d) -> d.node_type )
+    @colorQualitativeScale.domain   data.nodes.map( (d) -> d.node_type )
+    @colorQuantitativeScale.domain  data.nodes.map( (d) -> d.node_type )
 
     # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
     data.relations.forEach (d) =>
@@ -351,6 +351,16 @@ class VisualizationGraphCanvas extends Backbone.View
 
   # Nodes / Relations methods
   # --------------------------
+
+  updateData: (data) ->
+    console.log 'canvas updateData', data
+    # Reset data variables
+    @data_nodes              = []
+    @data_relations          = []
+    @data_relations_visibles = []
+    @linkedByIndex           = {}
+    # Initialize data
+    @initializeData data
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes

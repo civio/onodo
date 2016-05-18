@@ -36,10 +36,10 @@ class VisualizationGraph extends Backbone.View
   onPanelShareHide: ->
     $('#visualization-share').removeClass 'active'
 
-  getDataFromCollection: ->
+  getDataFromCollection: ( nodes, relations ) ->
     data =
-      nodes:      @collection.nodes.models.map((d) -> return d.attributes)
-      relations:  @collection.relations.models.map((d) -> return d.attributes)
+      nodes:      nodes.map     (d) -> return d.attributes
+      relations:  relations.map (d) -> return d.attributes
     # Fix relations source & target index (based on 1 instead of 0)
     data.relations.forEach (d) ->
       d.source = d.source_id-1
@@ -51,7 +51,7 @@ class VisualizationGraph extends Backbone.View
     console.log 'render Graph'
     # Setup Views
     @visualizationGraphConfiguration  = new VisualizationGraphConfiguration {model: @model}
-    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(), parameters: @visualizationGraphConfiguration.parameters}
+    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(@collection.nodes.models, @collection.relations.models), parameters: @visualizationGraphConfiguration.parameters}
     @visualizationGraphNavigation     = new VisualizationGraphNavigation
     @visualizationGraphInfo           = new VisualizationGraphInfo
     # Setup Events Listeners (only in edit mode)
@@ -216,6 +216,15 @@ class VisualizationGraph extends Backbone.View
     if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
       @visualizationGraphInfo.node = node
       @visualizationGraphInfo.render()
+
+  showChapter: (nodes, relations) ->
+    # Filter collection nodes & relations based on chapter nodes & relations
+    collectionNodes     = @collection.nodes.models.filter     (d) => return nodes.indexOf(d.id) != -1
+    collectionRelations = @collection.relations.models.filter (d) => return relations.indexOf(d.id) != -1
+    # Update VisualizationGraphCanvas data
+    @visualizationGraphCanvas.updateData @getDataFromCollection(collectionNodes, collectionRelations)
+    # Update VisualizationGraphCanvas layout
+    @visualizationGraphCanvas.updateLayout()
 
 
 module.exports = VisualizationGraph
