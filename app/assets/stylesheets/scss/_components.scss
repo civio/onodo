@@ -201,6 +201,7 @@
     vertical-align: top;
     line-height:$user-picture-size + (2*$user-picture-border);
     padding: 0 $grid-gutter-width/3;
+    @include transition( color, 0.3s, ease-out );
   }
 
   .user-picture{
@@ -210,10 +211,23 @@
     overflow: hidden;
     border-radius: $user-picture-border + ($user-picture-size/2);
     border: $user-picture-border solid $gray-lighter;
+    @include transition( border-color, 0.3s, ease-out );
 
     > img{
       width: 100%;
       height: auto;
+    }
+  }
+
+  &:hover,
+  &:focus{
+    text-decoration: none;
+
+    .user-name{
+      color: $brand-primary;
+    }
+    .user-picture{
+      border-color: $gray-light;
     }
   }
 }

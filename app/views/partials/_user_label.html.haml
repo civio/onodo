@@ -1,6 +1,5 @@
-.user-label
+%a.user-label{ href: user_path(user), title: user.name, target: '_blank' }
   - if defined? align and align == 'left'
-    -# TODO!!! Add user picture default
     .user-picture
       %img{ src: user.avatar_url(:small)}
     %span.user-name
@@ -8,6 +7,5 @@
   - else
     %span.user-name
       = user.name
-    -# TODO!!! Add user picture default
     .user-picture
       %img{ src: user.avatar_url(:small) }
