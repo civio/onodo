@@ -193,7 +193,7 @@ $node-color-12: #e0deda;
       //opacity: 0.4;
       stroke-width: 0;
       stroke-opacity: 0.4;
-      @include transition( stroke-width, 0.4s, ease-out );
+      //@include transition( stroke-width, 0.4s, ease-out );
      
       &.active{
         stroke-width: 20px !important;
@@ -524,7 +524,7 @@ $node-color-12: #e0deda;
   .panel-heading{
     border-radius: 0;
     border: none;
-    padding: $grid-gutter-width/2;
+    padding: $grid-gutter-width/2 $grid-gutter-width/3;
     background: $gray-blue-dark;
     @include clearfix();
     

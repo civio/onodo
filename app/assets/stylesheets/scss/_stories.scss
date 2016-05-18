@@ -130,6 +130,11 @@
       position: absolute;
       right: $grid-gutter-width/3;
       top: $grid-gutter-width/2;
+      @include retina-sprite( $icon-close-brand-group );
+
+      &:hover{
+        background-color: mix( white, $gray-blue, 50% );
+      }
     }
 
     .index-back-btn{
@@ -258,4 +263,12 @@
 .stories.show .visualization-info,
 .stories.show .visualization-description{
   display: none;
+}
+
+// Clear visualization-graph-info right transition
+.stories .visualization-graph-info{
+  @include transition( right 0s linear );
+}
+.stories .story-info{
+  @include transition( right 0.5s ease-out );
 }

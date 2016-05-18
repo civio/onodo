@@ -440,7 +440,6 @@
       text-indent: -9999px;
       opacity: 1;
       @include retina-sprite( $icon-close-white-group );
-      
       @include transition( background-color 0.3s ease-out );
 
       &:hover{
