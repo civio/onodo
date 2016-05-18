@@ -124,7 +124,6 @@
   .panel-heading{
     color: $gray;
     line-height: 30px;
-    text-align: center;
 
     .close{
       position: absolute;
@@ -135,6 +134,13 @@
       &:hover{
         background-color: mix( white, $gray-blue, 50% );
       }
+    }
+
+    .index-header{
+      padding-left: $grid-gutter-width/2;
+    }
+    .chapter-header{
+      text-align: center;
     }
 
     .index-back-btn{
@@ -214,16 +220,18 @@
     padding: 0;
 
     li{
+      position: relative;
       list-style: none;
 
-      a{
+      .chapter{
         display: block;
         color: $text-color;
         font-weight: 300;
         padding: $grid-gutter-width/3;
         margin-bottom: $grid-gutter-width/6;
-        background: $gray-blue-dark;
         border-left: 4px solid $brand-primary;
+        background: $gray-blue-dark;
+        @include transition( background 0.3s ease-out );
 
         .index{
           display: inline-block;
@@ -240,9 +248,9 @@
 
         &:hover,
         &:focus{
-          background: $brand-primary;
           color: white;
           text-decoration: none;
+          background: $brand-primary;
 
           .index{
             color: white;
@@ -255,6 +263,10 @@
 
   .chapter-content{
     padding: $grid-gutter-width/6;
+
+    .actions{
+      margin-top: $grid-gutter-width/2;
+    }
   }
 }
 

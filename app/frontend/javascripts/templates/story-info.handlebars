@@ -2,3 +2,13 @@
 <div class="description">
   {{{ description }}}
 </div>
+{{#if edit}} 
+  <div class="actions">
+    <a class="btn btn-default btn-primary" href="/chapters/{{ id }}/edit" title="Edit Chapter">
+      <span class="btn-icon-pencil"></span> Edit Chapter
+    </a>
+    <a class="btn btn-default btn-danger" href="#story-chapter-delete-modal" data-toggle="modal" title="Delete Chapter">
+      <span class="btn-icon-trash"></span> Delete Chapter
+    </a>
+  </div>
+{{/if}}
