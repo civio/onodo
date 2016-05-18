@@ -43,6 +43,11 @@
           }
         }
       }
+      
+      // Clear user-label padding
+      &.user-label{
+        padding: 0;
+      }
     }
   }
 }
