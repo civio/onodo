@@ -49,6 +49,32 @@ class Visualization
     # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
 
+  render: ->
+    # Setup affix bootstrap in Edit Mode
+    if @edit
+      @setupAffix()
+    # force resize
+    @resize()
+    # fetch model & collections
+    syncCounter = _.after 3, @onSync
+    @visualization.fetch  {url: '/api/visualizations/'+@id,               success: syncCounter}
+    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
+    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
+
+  resize: =>
+    console.log 'resize!'
+    if @edit
+      windowHeight = $(window).height()
+      graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
+      tableHeight = (windowHeight*0.5) + @tableHeaderHeight
+      @visualizationTable.css 'top', graphHeight + @visualizationHeaderHeight
+      @visualizationTable.height tableHeight
+      @visualizationTableNodes.setSize tableHeight, @visualizationTable.offset().top
+      @visualizationTableRelations.setSize tableHeight, @visualizationTable.offset().top
+      @visualizationGraph.$el.height graphHeight
+      #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
+    @visualizationGraph.resize()
+
   setupAffix: ->
     $('.visualization-graph').affix
       offset:
@@ -71,40 +97,14 @@ class Visualization
         @visualizationTableNodes.hide()
         @visualizationTableRelations.show()
 
-  resize: =>
-    console.log 'resize!'
-    if @edit
-      windowHeight = $(window).height()
-      graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
-      tableHeight = (windowHeight*0.5) + @tableHeaderHeight
-      @visualizationTable.css 'top', graphHeight + @visualizationHeaderHeight
-      @visualizationTable.height tableHeight
-      @visualizationTableNodes.setSize tableHeight, @visualizationTable.offset().top
-      @visualizationTableRelations.setSize tableHeight, @visualizationTable.offset().top
-      @visualizationGraph.$el.height graphHeight
-      #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
-    @visualizationGraph.resize()
-
   onScroll: =>
     @visualizationGraph.setOffsetY $(window).scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
-
-  render: ->
-    # Setup affix bootstrap in Edit Mode
-    if @edit
-      @setupAffix()
-    # force resize
-    @resize()
-    # fetch model & collections
-    syncCounter = _.after 3, @onSync
-    @visualization.fetch  {url: '/api/visualizations/'+@id,               success: syncCounter}
-    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
-    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
 
   onSync: =>
     # Render Tables & Graph when all collections ready
     if @edit
       @visualizationTableNodes.render()
       @visualizationTableRelations.render()
-    @visualizationGraph.render()
+    @visualizationGraph.render @edit
 
 module.exports = Visualization
