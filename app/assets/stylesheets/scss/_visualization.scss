@@ -576,6 +576,10 @@ $node-color-12: #e0deda;
         text-decoration: underline;
       }
     }
+
+    .picture{
+      margin: $grid-gutter-width/2 0;
+    }
   }
 }
 
