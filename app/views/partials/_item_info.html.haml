@@ -34,7 +34,7 @@
             %span.collapsed-label-icon
             Hide Data Table
 
-= render 'partials/item_table_view'
+= render 'partials/item_table_view', custom_fields: (defined? story) ? item.visualization.dataset.custom_fields : item.dataset.custom_fields
 
 - if item.description?
   .visualization-description

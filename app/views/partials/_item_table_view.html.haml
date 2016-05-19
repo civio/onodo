@@ -5,7 +5,7 @@
     /   %a.close.pull-right{:href => "#visualization-table-view", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "visualization-table-view"}
     /     %span{"aria-hidden" => "true"}
     /       &times;
-        
+
     .visualization-table-header
       %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
         %li.active{ role: "presentation" }
@@ -25,18 +25,19 @@
               %th Type
               %th Description
               %th Visible
+              - custom_fields.each do |field|
+                %th= field
           %tbody
           - @nodes.each do |node|
             %tr
               %td= node.name
               %td= node.node_type
-              - if node.description
-                %td= node.description.html_safe
-              - else
-                %td
+              %td= node.description.html_safe if node.description
               %td
                 %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
                   Node Visibility
+              - custom_fields.each do |field|
+                %td= node.custom_fields[field] if node.custom_fields[field]
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
           %thead
