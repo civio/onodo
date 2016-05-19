@@ -20,11 +20,13 @@ class Story
     # Setup Chapters Collection
     @chapters         = new ChaptersCollection()
     # Setup Visualization View
-    @visualization    = new Visualization @visualization_id, false
+    @visualization    = new Visualization @visualization_id, false, true
     # Setup Story Index
     @storyInfo        = new StoryInfo {edit: @edit}
     # Listen for chapters navigation
-    Backbone.on 'story.showChapter', @onShowChapter, @
+    Backbone.on 'story.showChapter',    @onShowChapter, @
+    # Listen for visualization syncronization
+    Backbone.on 'visualization.synced', @onVisualizationSynced, @
     # Setup 'Start reading' button interaction
     $('.story-cover .btn-start-reading').click (e) ->
       e.preventDefault()
@@ -38,16 +40,16 @@ class Story
     # Listen on click delete btn
     # Load chapters/delete/templates into #story-chapter-delete-modal
     # Show #story-chapter-delete-modal
+  
+  render: ->
+    console.log '!!!render story', @story_id
+    # render views
+    @visualization.render()
 
   resize: =>
     @visualization.resize()
 
-  render: ->
-    console.log '!!!render story', @story_id
-    # force resize
-    @resize()
-    # render views
-    @visualization.render()
+  onVisualizationSynced: (e) ->
     # fetch collection
     @chapters.fetch {url: '/api/stories/'+@story_id+'/chapters/', success: @onChaptersSync}
 
