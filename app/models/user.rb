@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  mount_uploader :avatar, AvatarUploader
+  mount_uploader :avatar, UserAvatarUploader
 
   has_many :visualizations, foreign_key: :author_id
   has_many :stories, foreign_key: :author_id

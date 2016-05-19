@@ -1,10 +1,10 @@
 require 'carrierwave/test/matchers'
 
-describe ImageUploader do
+describe NodeImageUploader do
   include CarrierWave::Test::Matchers
 
   let(:node) { double('node') }
-  let(:uploader) { ImageUploader.new(node, :image) }
+  let(:uploader) { NodeImageUploader.new(node, :image) }
 
   before do
     allow(node).to receive(:id).and_return(0)

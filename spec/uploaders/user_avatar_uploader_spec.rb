@@ -1,10 +1,10 @@
 require 'carrierwave/test/matchers'
 
-describe AvatarUploader do
+describe UserAvatarUploader do
   include CarrierWave::Test::Matchers
 
   let(:user) { double('user') }
-  let(:uploader) { AvatarUploader.new(user, :avatar) }
+  let(:uploader) { UserAvatarUploader.new(user, :avatar) }
 
   before do
     allow(user).to receive(:id).and_return(0)

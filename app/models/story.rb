@@ -6,4 +6,6 @@ class Story < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   validates :name, presence: true, uniqueness: true
+
+  mount_uploader :image, StoryImageUploader
 end
