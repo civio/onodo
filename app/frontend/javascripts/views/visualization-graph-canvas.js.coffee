@@ -103,16 +103,19 @@ class VisualizationGraphCanvas extends Backbone.View
       @COLORS['quantitative-10']
     ]
 
-    @parameters = options.parameters
-
-    console.log 'initialize canvas', @parameters
-
     # Setup color scale
     @colorQualitativeScale  = d3.scale.ordinal().range @COLOR_QUALITATIVE
     @colorQuantitativeScale = d3.scale.ordinal().range @COLOR_QUANTITATIVE
 
+
+  setData: (_data, _parameters) ->
+
+    console.log 'canvas set Data'
+
+    @parameters = _parameters
+
     # Setup Data
-    @initializeData options.data
+    @initializeData _data
 
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
@@ -492,6 +495,7 @@ class VisualizationGraphCanvas extends Backbone.View
   # ---------------
 
   resize: ->
+    console.log 'VisualizationGraphCanvas resize'
     # Update Viewport attributes
     @viewport.width     = @$el.width()
     @viewport.height    = @$el.height()

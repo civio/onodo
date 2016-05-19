@@ -12,52 +12,32 @@ class VisualizationGraph extends Backbone.View
   visualizationGraphNavigation:     null
   visualizationGraphInfo:           null
 
-  initialize: ->
+  initialize: ()->
     console.log 'initialize Graph', @collection
+
+    # Setup Views
+    #@visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(@collection.nodes.models, @collection.relations.models), parameters: @visualizationGraphConfiguration.parameters}
+    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el}
+    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration {model: @model}
+    @visualizationGraphNavigation     = new VisualizationGraphNavigation
+    @visualizationGraphInfo           = new VisualizationGraphInfo
+
     # Setup Configure Panel Show/Hide
     $('.visualization-graph-menu-actions .btn-configure').click @onPanelConfigureShow
     $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
     # Setup Share Panel Show/Hide
     $('.visualization-graph-menu-actions .btn-share').click     @onPanelShareShow
     $('#visualization-share .close').click                      @onPanelShareHide
-    # Initial setup size
-    @resize()
-
-  onPanelConfigureShow: =>
-    $('html, body').animate { scrollTop: 0 }, 600
-    @visualizationGraphConfiguration.$el.addClass 'active'
-    @visualizationGraphCanvas.setOffsetX 200 # half the width of Panel Configuration
-
-  onPanelConfigureHide: =>
-    @visualizationGraphConfiguration.$el.removeClass 'active'
-    @visualizationGraphCanvas.setOffsetX 0
-
-  onPanelShareShow: ->
-    $('#visualization-share').addClass 'active'
-
-  onPanelShareHide: ->
-    $('#visualization-share').removeClass 'active'
-
-  getDataFromCollection: ( nodes, relations ) ->
-    data =
-      nodes:      nodes.map     (d) -> return d.attributes
-      relations:  relations.map (d) -> return d.attributes
-    # Fix relations source & target index (based on 1 instead of 0)
-    data.relations.forEach (d) ->
-      d.source = d.source_id-1
-      d.target = d.target_id-1
-    return data
-
+   
   # Render method called from VisualizationEdit when all collections synced
   render: (edit) ->
-    console.log 'render Graph'
-    # Setup Views
-    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration {model: @model}
-    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(@collection.nodes.models, @collection.relations.models), parameters: @visualizationGraphConfiguration.parameters}
-    @visualizationGraphNavigation     = new VisualizationGraphNavigation
-    @visualizationGraphInfo           = new VisualizationGraphInfo
+    #console.log 'render Graph'
+
+    @visualizationGraphCanvas.setData @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
+
     # Setup Events Listeners (only in edit mode)
     if edit
+      
       # Subscribe Collection Events (handle Table changes)
       @collection.nodes.bind 'add',                 @onNodesAdd, @
       @collection.nodes.bind 'change:name',         @onNodeChangeName, @
@@ -89,17 +69,47 @@ class VisualizationGraph extends Backbone.View
     Backbone.on 'visualization.navigation.zoomin',      @onZoomIn, @
     Backbone.on 'visualization.navigation.zoomout',     @onZoomOut, @
     Backbone.on 'visualization.navigation.fullscreen',  @onFullscreen, @
+    
 
   resize: ->
     # update container height
     h = if $('body').hasClass('fullscreen') then $(window).height() else $(window).height() - 50 - 64 - 64
     @$el.height h
-    if @visualizationGraphCanvas
+    if @visualizationGraphCanvas and @visualizationGraphCanvas.svg
       @visualizationGraphCanvas.resize()
 
   setOffsetY: (offset) ->
     if @visualizationGraphCanvas
       @visualizationGraphCanvas.setOffsetY offset
+
+  
+  getDataFromCollection: ( nodes, relations ) ->
+    data =
+      nodes:      nodes.map     (d) -> return d.attributes
+      relations:  relations.map (d) -> return d.attributes
+    # Fix relations source & target index (based on 1 instead of 0)
+    data.relations.forEach (d) ->
+      d.source = d.source_id-1
+      d.target = d.target_id-1
+    return data
+
+
+  # Panel Events
+  onPanelConfigureShow: =>
+    $('html, body').animate { scrollTop: 0 }, 600
+    @visualizationGraphConfiguration.$el.addClass 'active'
+    @visualizationGraphCanvas.setOffsetX 200 # half the width of Panel Configuration
+
+  onPanelConfigureHide: =>
+    @visualizationGraphConfiguration.$el.removeClass 'active'
+    @visualizationGraphCanvas.setOffsetX 0
+
+  onPanelShareShow: ->
+    $('#visualization-share').addClass 'active'
+
+  onPanelShareHide: ->
+    $('#visualization-share').removeClass 'active'
+
 
   # Collections Events
   onNodesAdd: (node) ->

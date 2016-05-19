@@ -45,7 +45,7 @@ class Visualization
       # Setup scroll handler
       $(window).scroll @onScroll
     # Setup Visualization Graph View
-    @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
+    @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations}, edit: @edit}
     # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
 
