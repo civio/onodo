@@ -6,9 +6,6 @@ App.Trix          = require 'script!trix'
 
 $(document).ready ->
 
-  # Activate tooltips
-  $('[data-toggle="tooltip"]').tooltip()
-
   $body = $('body')
 
   # visualizations
@@ -25,6 +22,13 @@ $(document).ready ->
     appStory = new App.Story $('body').data('story-id'), $('body').data('visualization-id'), $body.hasClass('edit')
     appStory.render()
     $( window ).resize appStory.resize
+
+  # Activate tooltips
+  $('[data-toggle="tooltip"]').tooltip()
+
+  # Setup select-all checkbox in Chapter new/edit
+  $('#relations_select_all').change (e) ->
+    $('.table tbody input[type=checkbox]').prop 'checked', $(this).prop('checked')
 
   # Add file input feedback 
   # based on http://www.abeautifulsite.net/whipping-file-inputs-into-shape-with-bootstrap-3/
