@@ -108,7 +108,7 @@ class VisualizationGraphCanvas extends Backbone.View
     @colorQuantitativeScale = d3.scale.ordinal().range @COLOR_QUANTITATIVE
 
 
-  setData: (_data, _parameters) ->
+  setup: (_data, _parameters) ->
 
     console.log 'canvas set Data'
 
@@ -187,7 +187,6 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes_labels_cont    = @container.append('g').attr('class', 'nodes-labels-cont')
     
     @rescale()  # Translate svg
-    @updateLayout()
 
   initializeData: (data) ->
 
@@ -220,8 +219,8 @@ class VisualizationGraphCanvas extends Backbone.View
     console.log 'current nodes', @data_nodes
     console.log 'current relations', @data_relations_visibles
 
-  updateLayout: ->
-    console.log 'updateLayout'
+  render: ->
+    console.log 'render canvas'
     @updateImages()
     @updateRelations()
     @updateRelationsLabels()
@@ -356,7 +355,7 @@ class VisualizationGraphCanvas extends Backbone.View
   # Nodes / Relations methods
   # --------------------------
 
-  updateData: (data) ->
+  updateData: (nodes, realtions) ->
     console.log 'canvas current Data', @data_nodes, @data_relations
     # Reset data variables
     # @data_nodes              = []
@@ -365,10 +364,12 @@ class VisualizationGraphCanvas extends Backbone.View
     # @linkedByIndex           = {}
     # # Initialize data
     # @initializeData data
-    console.log 'canvas Data to update', data.nodes, data.relations
-    @data_nodes.forEach (node) -> node.disabled = true
+    #console.log 'canvas Data to update', data.nodes, data.relations
+    @data_nodes.forEach (node) ->
+      node.disabled = nodes.indexOf(node.id) == -1
     # Find node object in @data_nodes array by id
     console.log @data_nodes
+    
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes
@@ -577,7 +578,7 @@ class VisualizationGraphCanvas extends Backbone.View
       @data_nodes.forEach (d) =>
         if !@hasNodeRelations(d)
           @addNode d
-    @updateLayout()
+    @render()
 
   updateRelationsCurvature: (value) ->
     @parameters.relationsCurvature = value

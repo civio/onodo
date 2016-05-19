@@ -38,8 +38,9 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphConfiguration.render()
 
     # Setup visualizationGraphCanvas data if not a Story
-    unless story
-      @visualizationGraphCanvas.setData @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
+    #unless story
+    @visualizationGraphCanvas.setup @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
+    @visualizationGraphCanvas.render()
 
     # Setup Events Listeners (only in edit mode)
     if edit
@@ -123,7 +124,7 @@ class VisualizationGraph extends Backbone.View
     @collection.nodes.once 'sync', (model) =>
       console.log 'onNodesAdd', model.id, model
       @visualizationGraphCanvas.addNode model.attributes
-      @visualizationGraphCanvas.updateLayout()
+      @visualizationGraphCanvas.render()
     , @
 
   onNodeChangeName: (node) ->
@@ -147,7 +148,7 @@ class VisualizationGraph extends Backbone.View
       # Hide Panel Info if visible for current node
       if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
         @visualizationGraphInfo.hide()
-    @visualizationGraphCanvas.updateLayout()
+    @visualizationGraphCanvas.render()
 
   onNodeChangeImage: (node) ->
     console.log 'onNodeChangeImage', node
@@ -161,7 +162,7 @@ class VisualizationGraph extends Backbone.View
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name
     @visualizationGraphCanvas.removeNode node.attributes
-    @visualizationGraphCanvas.updateLayout()
+    @visualizationGraphCanvas.render()
     # Hide Panel Info if visible for current node
     if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
       @visualizationGraphInfo.hide()
@@ -174,7 +175,7 @@ class VisualizationGraph extends Backbone.View
       @visualizationGraphCanvas.removeVisibleRelationData relation.attributes
       # Add relation
       @visualizationGraphCanvas.addRelation relation.attributes
-      @visualizationGraphCanvas.updateLayout()
+      @visualizationGraphCanvas.render()
 
   onRelationsChangeType: (relation) ->
     console.log 'onRelationsChangeType', relation
@@ -185,7 +186,7 @@ class VisualizationGraph extends Backbone.View
 
   onRelationsRemove: (relation) ->
     @visualizationGraphCanvas.removeRelation relation.attributes
-    @visualizationGraphCanvas.updateLayout()
+    @visualizationGraphCanvas.render()
   
   # Canvas Events
   onNodeShowInfo: (e) ->
@@ -234,26 +235,25 @@ class VisualizationGraph extends Backbone.View
     $('body').toggleClass 'fullscreen'
     @resize()
 
-
   updateGraphInfoNode: (node) ->
     if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.model.id == node.id
       #@visualizationGraphInfo.model = node
       #@visualizationGraphInfo.render()
       @visualizationGraphInfo.show node, @model.get('custom_fields')
 
-
   showChapter: (nodes, relations) ->
-    # Filter collection nodes & relations based on chapter nodes & relations
-    collectionNodes     = @collection.nodes.models.filter     (d) => return nodes.indexOf(d.id) != -1
-    collectionRelations = @collection.relations.models.filter (d) => return relations.indexOf(d.id) != -1
     # We use svg to check if visualizationGraphCanvas has data initialized
     if @visualizationGraphCanvas.svg
       # Update VisualizationGraphCanvas data
-      @visualizationGraphCanvas.updateData @getDataFromCollection(collectionNodes, collectionRelations)
-      # Update VisualizationGraphCanvas layout
-      @visualizationGraphCanvas.updateLayout()
+      @visualizationGraphCanvas.updateData nodes, relations
     else
+      # Filter collection nodes & relations based on chapter nodes & relations
+      collectionNodes     = @collection.nodes.models.filter     (d) => return nodes.indexOf(d.id) != -1
+      collectionRelations = @collection.relations.models.filter (d) => return relations.indexOf(d.id) != -1  
       # Update VisualizationGraphCanvas data
-      @visualizationGraphCanvas.setData @getDataFromCollection(collectionNodes, collectionRelations), @visualizationGraphConfiguration.parameters
+      @visualizationGraphCanvas.setup @getDataFromCollection(collectionNodes, collectionRelations), @visualizationGraphConfiguration.parameters
+    # render VisualizationGraphCanvas
+    @visualizationGraphCanvas.render()
+
 
 module.exports = VisualizationGraph
