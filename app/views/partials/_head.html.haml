@@ -20,6 +20,9 @@
 %link{:rel => "icon", :type => "image/png", :sizes => "96x96", :href => "/images/favicon-96x96.png" }
 %link{:rel => "icon", :type => "image/png", :sizes => "16x16", :href => "/images/favicon-16x16.png" }
 %link{:rel => "manifest", :href => "/images/manifest.json" }
-= stylesheet_link_tag    'application', media: 'all'
+= stylesheet_link_tag 'application', media: 'all'
+= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.css', media: 'all'
 = javascript_include_tag 'application'
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.js'
+= javascript_include_tag *webpack_asset_paths('app')
 = csrf_meta_tags

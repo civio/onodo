@@ -41,4 +41,8 @@ Rails.application.configure do
 
   # Default mail domain
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
+  # Webpack dev server
+  config.webpack.dev_server.enabled = !ENV['DEBUG']
+  config.webpack.dev_server.port = 3080
 end

@@ -57,12 +57,17 @@ gem 'responders', '~> 2.0'
 # Pagination Gem
 gem 'kaminari'
 
+# Encoding detection
 gem 'charlock_holmes_bundle_icu'
 
 # Xlsx generation. Read more: https://github.com/randym/axlsx
 gem 'axlsx'
+
 # Xlsx parser. Read more: https://github.com/roo-rb/roo
 gem 'roo'
+
+# Webpack integration
+gem 'webpack-rails'
 
 # Uploaders
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
