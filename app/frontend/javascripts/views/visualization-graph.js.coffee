@@ -18,7 +18,7 @@ class VisualizationGraph extends Backbone.View
     # Setup Views
     #@visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(@collection.nodes.models, @collection.relations.models), parameters: @visualizationGraphConfiguration.parameters}
     @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el}
-    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration {model: @model}
+    @visualizationGraphConfiguration  = new VisualizationGraphConfiguration
     @visualizationGraphNavigation     = new VisualizationGraphNavigation
     @visualizationGraphInfo           = new VisualizationGraphInfo
 
@@ -30,14 +30,19 @@ class VisualizationGraph extends Backbone.View
     $('#visualization-share .close').click                      @onPanelShareHide
    
   # Render method called from VisualizationEdit when all collections synced
-  render: (edit) ->
-    #console.log 'render Graph'
+  render: (edit, story) ->
+    console.log 'render Graph', edit, story
 
-    @visualizationGraphCanvas.setData @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
+    # Setup visualizationGraphConfiguration model
+    @visualizationGraphConfiguration.model = @model
+    @visualizationGraphConfiguration.render()
+
+    # Setup visualizationGraphCanvas data if not a Story
+    unless story
+      @visualizationGraphCanvas.setData @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
 
     # Setup Events Listeners (only in edit mode)
     if edit
-      
       # Subscribe Collection Events (handle Table changes)
       @collection.nodes.bind 'add',                 @onNodesAdd, @
       @collection.nodes.bind 'change:name',         @onNodeChangeName, @
@@ -84,6 +89,7 @@ class VisualizationGraph extends Backbone.View
 
   
   getDataFromCollection: ( nodes, relations ) ->
+    console.log 'getDataFromCollection', nodes, relations
     data =
       nodes:      nodes.map     (d) -> return d.attributes
       relations:  relations.map (d) -> return d.attributes

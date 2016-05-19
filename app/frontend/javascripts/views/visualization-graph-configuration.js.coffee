@@ -114,9 +114,6 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#theta').slider        'setValue', parseFloat @parameters.theta
     @$el.find('#gravity').slider      'setValue', parseFloat @parameters.gravity
 
-  initialize: ->
-    @render()
-
   render: ->
     # Get parameters from model as JSON
     @parameters = $.parseJSON @model.get('parameters')
