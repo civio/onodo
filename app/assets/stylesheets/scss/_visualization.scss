@@ -200,7 +200,7 @@ $node-color-12: #e0deda;
       }
 
       &.disabled{
-        opacity: 0.5;
+        //opacity: 0.5;
       }
     }
 
@@ -210,7 +210,8 @@ $node-color-12: #e0deda;
       stroke-width: 1px;
       opacity: 0.9;
 
-      &.weaken{
+      &.weaken,
+      &.disabled{
         opacity: 0.4;
       }
 
@@ -240,10 +241,6 @@ $node-color-12: #e0deda;
       letter-spacing: 0;
       text-anchor: middle;
 
-      &.disabled{
-        visibility: hidden;
-      }
-
       tspan{
         opacity: 0;
       
@@ -253,7 +250,8 @@ $node-color-12: #e0deda;
         }
       }
 
-      &.weaken{
+      &.weaken,
+      &.disabled{
         opacity: 0;
       }
 

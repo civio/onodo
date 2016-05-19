@@ -289,12 +289,12 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     @relations.enter().append('path')
-      .attr('class', 'relation')
 
     # ENTER + UPDATE
     @relations.attr('id', (d) -> return 'relation-'+d.id)
-      .attr('marker-end', @getRelationMarkerEnd)
-      .attr('marker-start', @getRelationMarkerStart)
+      .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
+      .attr 'marker-end',   @getRelationMarkerEnd
+      .attr 'marker-start', @getRelationMarkerStart
 
     # EXIT
     @relations.exit().remove()
@@ -355,7 +355,7 @@ class VisualizationGraphCanvas extends Backbone.View
   # Nodes / Relations methods
   # --------------------------
 
-  updateData: (nodes, realtions) ->
+  updateData: (nodes, relations) ->
     console.log 'canvas current Data', @data_nodes, @data_relations
     # Reset data variables
     # @data_nodes              = []
@@ -364,12 +364,13 @@ class VisualizationGraphCanvas extends Backbone.View
     # @linkedByIndex           = {}
     # # Initialize data
     # @initializeData data
-    #console.log 'canvas Data to update', data.nodes, data.relations
+
+    # Setup disable values in nodes
     @data_nodes.forEach (node) ->
       node.disabled = nodes.indexOf(node.id) == -1
-    # Find node object in @data_nodes array by id
-    console.log @data_nodes
-    
+    # Setup disable values in relations
+    @data_relations_visibles.forEach (relation) ->
+      relation.disabled = relations.indexOf(relation.id) == -1    
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes
@@ -792,7 +793,9 @@ class VisualizationGraphCanvas extends Backbone.View
     return color
 
   getNodeFill: (d) =>
-    if @parameters.showNodesImage and d.image != null
+    if d.disabled
+      fill = '#d3d7db'
+    else if @parameters.showNodesImage and d.image != null
       fill = 'url(#node-pattern-'+d.id+')'
     else
       fill = @getNodeColor(d)
