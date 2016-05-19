@@ -264,21 +264,21 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     @nodes.enter().append('circle')
-      .attr('class', 'node')
-      .call(@forceDrag)
-      .on('mouseover',  @onNodeOver)
-      .on('mouseout',   @onNodeOut)
-      .on('click',      @onNodeClick)
-      .on('dblclick',   @onNodeDoubleClick)
+      .on   'mouseover',  @onNodeOver
+      .on   'mouseout',   @onNodeOut
+      .on   'click',      @onNodeClick
+      .on   'dblclick',   @onNodeDoubleClick
+      .call @forceDrag
 
     # ENTER + UPDATE
     @nodes.attr('id', (d) -> return 'node-'+d.id)
+      .attr 'class',    (d) -> return if d.disabled then 'node disabled' else 'node'
       # update node size
-      .attr('r', @getNodeSize)
+      .attr  'r',       @getNodeSize
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
-      .style('fill', @getNodeFill)
-      .style('stroke', @getNodeColor)
-
+      .style 'fill',    @getNodeFill
+      .style 'stroke',  @getNodeColor
+      
     # EXIT
     @nodes.exit().remove()
 
@@ -308,14 +308,15 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     @nodes_labels.enter().append('text')
-      .attr('id', (d,i) -> return 'node-label-'+d.id)
-      .attr('class', if @parameters.showNodesLabel then 'node-label' else 'node-label hide')
-      .attr('dx', 0)
-      .attr('dy', @getNodeLabelYPos)
+      .attr 'id',     (d,i) -> return 'node-label-'+d.id
+      .attr 'dx',     0
+      .attr 'dy',     @getNodeLabelYPos
 
     # ENTER + UPDATE
-    @nodes_labels.text (d) -> return d.name
-    @nodes_labels.call @formatNodesLabels
+    @nodes_labels
+      .attr 'class', @getNodeLabelClass
+      .text (d) -> return d.name
+      .call @formatNodesLabels
 
     # EXIT
     @nodes_labels.exit().remove()
@@ -356,14 +357,18 @@ class VisualizationGraphCanvas extends Backbone.View
   # --------------------------
 
   updateData: (data) ->
-    console.log 'canvas updateData', data
+    console.log 'canvas current Data', @data_nodes, @data_relations
     # Reset data variables
-    @data_nodes              = []
-    @data_relations          = []
-    @data_relations_visibles = []
-    @linkedByIndex           = {}
-    # Initialize data
-    @initializeData data
+    # @data_nodes              = []
+    # @data_relations          = []
+    # @data_relations_visibles = []
+    # @linkedByIndex           = {}
+    # # Initialize data
+    # @initializeData data
+    console.log 'canvas Data to update', data.nodes, data.relations
+    @data_nodes.forEach (node) -> node.disabled = true
+    # Find node object in @data_nodes array by id
+    console.log @data_nodes
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes
@@ -764,6 +769,14 @@ class VisualizationGraphCanvas extends Backbone.View
 
   areNodesRelated: (a, b) ->
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
+
+  getNodeLabelClass: (d) =>
+    str = 'node-label'
+    if !@parameters.showNodesLabel
+      str += ' hide'
+    if d.disabled
+      str += ' disabled'
+    return str
 
   getNodeLabelYPos: (d) =>
     return parseInt(@svg.select('#node-'+d.id).attr('r'))+13

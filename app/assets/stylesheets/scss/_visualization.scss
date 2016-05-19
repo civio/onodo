@@ -198,6 +198,10 @@ $node-color-12: #e0deda;
       &.active{
         stroke-width: 20px !important;
       }
+
+      &.disabled{
+        opacity: 0.5;
+      }
     }
 
     .relation {
@@ -235,6 +239,10 @@ $node-color-12: #e0deda;
       font-weight: 300;
       letter-spacing: 0;
       text-anchor: middle;
+
+      &.disabled{
+        visibility: hidden;
+      }
 
       tspan{
         opacity: 0;

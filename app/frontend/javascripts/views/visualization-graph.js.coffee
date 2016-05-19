@@ -246,10 +246,14 @@ class VisualizationGraph extends Backbone.View
     # Filter collection nodes & relations based on chapter nodes & relations
     collectionNodes     = @collection.nodes.models.filter     (d) => return nodes.indexOf(d.id) != -1
     collectionRelations = @collection.relations.models.filter (d) => return relations.indexOf(d.id) != -1
-    # Update VisualizationGraphCanvas data
-    @visualizationGraphCanvas.updateData @getDataFromCollection(collectionNodes, collectionRelations)
-    # Update VisualizationGraphCanvas layout
-    @visualizationGraphCanvas.updateLayout()
-
+    # We use svg to check if visualizationGraphCanvas has data initialized
+    if @visualizationGraphCanvas.svg
+      # Update VisualizationGraphCanvas data
+      @visualizationGraphCanvas.updateData @getDataFromCollection(collectionNodes, collectionRelations)
+      # Update VisualizationGraphCanvas layout
+      @visualizationGraphCanvas.updateLayout()
+    else
+      # Update VisualizationGraphCanvas data
+      @visualizationGraphCanvas.setData @getDataFromCollection(collectionNodes, collectionRelations), @visualizationGraphConfiguration.parameters
 
 module.exports = VisualizationGraph
