@@ -565,20 +565,36 @@ $node-color-12: #e0deda;
   .panel-body{
 
     .name{
-      margin: 0 0 $grid-gutter-width/3;
+      margin: 0 0 $grid-gutter-width/2;
     }
 
     .description{
-      font-size: 0.857em;
+      //font-size: 0.857em;
+      font-weight: 300;
+      margin-bottom: $grid-gutter-width/2;
 
       del{
         font-style: none;
         text-decoration: underline;
       }
+
+      strong{
+        font-weight: 400;
+      }
     }
 
     .picture{
       margin: $grid-gutter-width/2 0;
+    }
+
+    .custom-fields{
+      font-weight: 300;
+
+      strong{
+        font-size: 0.857em;
+        font-weight: 400;
+        text-transform: uppercase;
+      }
     }
   }
 }

@@ -1,3 +1,4 @@
+Node                              = require './../models/node.js'
 VisualizationGraphCanvas          = require './../views/visualization-graph-canvas.js'
 VisualizationGraphConfiguration   = require './../views/visualization-graph-configuration.js'
 VisualizationGraphNavigation      = require './../views/visualization-graph-navigation.js'
@@ -9,6 +10,7 @@ class VisualizationGraph extends Backbone.View
   visualizationGraphCanvas:         null
   visualizationGraphConfiguration:  null
   visualizationGraphNavigation:     null
+  visualizationGraphInfo:           null
 
   initialize: ->
     console.log 'initialize Graph', @collection
@@ -136,6 +138,10 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphCanvas.updateImages()
     @visualizationGraphCanvas.updateNodes()
 
+  onNodeChangeCustomField: (node) ->
+    # Update Panel Info description
+    @updateGraphInfoNode node
+
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name
     @visualizationGraphCanvas.removeNode node.attributes
@@ -168,8 +174,9 @@ class VisualizationGraph extends Backbone.View
   # Canvas Events
   onNodeShowInfo: (e) ->
     console.log 'show info', e.node
+    console.log 'show info model', @model
     @visualizationGraphCanvas.focusNode e.node
-    @visualizationGraphInfo.show e.node
+    @visualizationGraphInfo.show new Node(e.node), @model.get('custom_fields')
 
   onNodeHideInfo: (e) ->
     @visualizationGraphCanvas.unfocusNode()
@@ -213,9 +220,11 @@ class VisualizationGraph extends Backbone.View
 
 
   updateGraphInfoNode: (node) ->
-    if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
-      @visualizationGraphInfo.node = node
-      @visualizationGraphInfo.render()
+    if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.model.id == node.id
+      #@visualizationGraphInfo.model = node
+      #@visualizationGraphInfo.render()
+      @visualizationGraphInfo.show node, @model.get('custom_fields')
+
 
   showChapter: (nodes, relations) ->
     # Filter collection nodes & relations based on chapter nodes & relations
