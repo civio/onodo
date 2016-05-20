@@ -12,10 +12,7 @@
     .item-picture
       .item-picture-overlay-white
       .item-picture-overlay-black
-      - if defined? large
-        %img{src: "http://lorempixel.com/1140/400/"}
-      - else
-        %img{src: "http://lorempixel.com/250/300/"}
+        %img{src: (defined? large) ? item.image.huge.url : item.image.medium.url }
     .item-info-container
       .item-info-container-inner
         .item-info

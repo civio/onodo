@@ -62,6 +62,13 @@ class StoriesController < ApplicationController
     redirect_to story_path( @story )
   end
 
+  # PATCH /stories/:id/image
+  def update_image
+    @story = Story.find(params[:id])
+    @story.update_attributes( edit_info_params )
+    redirect_to edit_story_path( @story )+'/info'
+  end
+
   # DELETE /stories/:id/
   def destroy
     @story = Story.find(params[:id])

@@ -216,6 +216,8 @@
       float: left;
       position: relative;
       width: 50%;
+      height: 100%;
+      overflow: hidden;
       //top: 50%;
       //transform: translateY(-50%);
 
@@ -227,6 +229,10 @@
 
     .item-info-container{
       left: 50%;
+    }
+
+    .item-info-container-inner{
+      margin: 0;
     }
 
     .item-info{
@@ -259,6 +265,10 @@
 
     .item-info-container{
       left: 0;
+    }
+
+    .item-info-container-inner{
+      margin: 0 auto;
     }
 
     .item-info{

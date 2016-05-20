@@ -385,6 +385,37 @@ label{
 }
 
 
+// Media Upload
+.media-upload{
+  margin-bottom: 1.5*$grid-gutter-width;
+
+  .media-left{
+    padding-right: 1.5*$grid-gutter-width;
+  }
+
+  .media-object{
+    width: 128px;
+    height: 128px;
+    background: $gray-light;
+  }
+
+  .media-body{
+    font-size: 12px;
+
+    .media-heading{
+      margin: $grid-gutter-width/2 0;
+      text-transform: uppercase;
+    }
+
+    > p{
+      color: $gray-semi-light;
+      margin-right: $grid-gutter-width/2;
+      margin-bottom: $grid-gutter-width/2;
+    }
+  }
+}
+
+
 // Modal
 
 .modal{
