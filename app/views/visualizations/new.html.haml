@@ -8,8 +8,8 @@
           = f.label :name, "Visualization title"
           = f.text_field :name, class: "form-control", :required => true
         .form-group
-          = f.label :dataset, "Upload your XLSX File"
-          = f.file_field :dataset, accept: '.xlsx', :class => "form-control"
+          = f.label :xlsx_file, "Upload your XLSX File"
+          = f.file_field :xlsx_file, accept: '.xlsx', :class => "form-control"
         = f.submit "Create", class: "btn btn-default btn-primary"
       %a.btn-circle-lg.btn-circle-lg-table{ href: '#' }
         .btn-circle-lg-icon

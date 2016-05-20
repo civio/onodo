@@ -6,4 +6,12 @@ class Visualization < ActiveRecord::Base
   scope :published, -> { where(published: true) }
 
   validates :name, presence: true, uniqueness: true
+
+  def nodes
+    dataset.nodes
+  end
+
+  def relations
+    dataset.relations
+  end
 end

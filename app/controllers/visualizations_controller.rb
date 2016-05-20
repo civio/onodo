@@ -1,197 +1,106 @@
-require 'charlock_holmes'
-require 'csv'
-require 'axlsx'
-require 'roo'
-
 class VisualizationsController < ApplicationController
+
+  before_action :require_login, except: [:show]
+  before_action :set_visualization, except: [:new, :create]
+  before_action :require_visualization_ownership, except: [:show, :new, :create]
 
   # GET /visualizations/:id
   def show
-    @visualization  = Visualization.find(params[:id])
-    @visualization_id = @visualization.id
-    dataset         = Dataset.find_by(visualization_id: params[:id])
-    @nodes          = Node.where(dataset_id: dataset.id)
-    @relations      = Relation.where(dataset_id: dataset.id).includes(:source, :target).order("nodes.name", "targets_relations.name")
-    
-    respond_to do |format|
-      format.html do
-        # reorder nodes & relations
-        @nodes          = @nodes.order(:name)
-        @relations      = @relations.includes(:source,:target).order("nodes.name")
-        # !!!TODO -> we get all visualization for related_items; needs improvement
-        @related_items  = Visualization.published
-      end
-      format.xlsx do
-        p = Axlsx::Package.new
-        wb = p.workbook
-        bold = wb.styles.add_style b: true
-        @nodes = @nodes.order(:id)
-        # setup nodes sheet
-        wb.add_worksheet(name: "Nodes") do |sheet|
-          sheet.add_row ["Name", "Type", "Description", "Visible"] + (dataset.custom_fields || []).map{ |cf| cf.capitalize.gsub('_', ' ')}, style: bold
-          @nodes.each do |node|
-            sheet.add_row [node.name, node.node_type, node.description, node.visible ? nil : 0] + (dataset.custom_fields || []).map{ |cf| custom_fields = (node.custom_fields || {}); custom_fields[cf] }
-          end
-        end
-        # setup relations sheet
-        wb.add_worksheet(name: "Relations") do |sheet|
-          sheet.add_row ["Source", "Type", "Target", "Directed"], style: bold
-          @relations.each do |relation|
-            sheet.add_row [relation.source.name, relation.relation_type, relation.target.name, relation.direction ? nil : 0]
-          end
-        end
-        send_data p.to_stream.read, type: "application/xlsx", filename: @visualization.name+".xlsx"
-      end
-    end
+    @nodes          = @visualization.nodes.order(:name)
+    @relations      = @visualization.relations.includes(:source, :target).order('nodes.name', 'targets_relations.name')
+    @related_items  = Visualization.published
   end
 
   # GET /visualizations/new
   def new
-    if current_user.nil?
-      redirect_to new_user_session_path()
-    end
   end
 
   # POST /visualizations
   def create
-    visualization_params              = {}
-    visualization_params[:name]       = params[:visualization][:name]
-    visualization_params[:author_id]  = current_user.id
-    @visualization  = Visualization.new( visualization_params )
-    dataset         = Dataset.new
-    @visualization.dataset = dataset
+    @visualization  = Visualization.new(visualization_params)
 
-    unless params[:visualization][:dataset].nil?
-      import_dataset(params[:visualization][:dataset], dataset)
+    if dataset_provided?
+      importer = XlsxDatasetImporter.new(provided_dataset)
+      dataset = importer.import
     end
 
-    if @visualization.save
-      redirect_to edit_visualization_path( @visualization ), :notice => "Your visualization was created!"
-    else
-      render :new
+    if importer && importer.error_message
+      flash[:alert] = importer.error_message
+      render :new and return
     end
+
+    @visualization.dataset = dataset || Dataset.new
+    @visualization.author = current_user
+
+    unless @visualization.save
+      flash[:alert] = @visualization.errors.full_messages.to_sentence
+      render :new and return
+    end
+
+    redirect_to edit_visualization_path(@visualization), notice: "Your visualization was created!"
   end
 
   # GET /visualizations/:id/edit
   def edit
-    if current_user.nil?
-      redirect_to new_user_session_path()
-    else
-      @visualization = Visualization.find(params[:id])
-      @visualization_id = @visualization.id
-    end
+    @visualization_id = @visualization.id
   end
 
   # GET /visualizations/:id/edit/info
-  def editinfo
-    if current_user.nil?
-      redirect_to new_user_session_path()
-    else
-      @visualization = Visualization.find(params[:id])
-    end
+  def edit_info
   end
 
   # PATCH /visualizations/:id/
   def update
-    @visualization = Visualization.find(params[:id])
-    @visualization.update_attributes( edit_info_params )
-    redirect_to visualization_path( @visualization )
+    @visualization.update_attributes(edit_info_params)
+    redirect_to visualization_path(@visualization)
   end
 
   # DELETE /visualizations/:id/
   def destroy
-    @visualization = Visualization.find(params[:id])
     @visualization.destroy
-    redirect_to user_path( current_user ), :flash => { :success => "Visualization deleted" }
+    redirect_to user_path(current_user), notice: "Your visualization deleted."
   end
 
   # POST /visualizations/:id/publish
   def publish
-    @visualization = Visualization.find(params[:id])
-
-    if @visualization.update_attributes(:published => true)
-      redirect_to visualization_path( @visualization )
-    else
-      redirect_to edit_visualization_path( @visualization )
-    end
+    @visualization.update_attributes(published: true)
+    redirect_to visualization_path(@visualization)
   end
   
   # POST /visualizations/:id/unpublish
   def unpublish
-    @visualization = Visualization.find(params[:id])
-
-    if @visualization.update_attributes(:published => false)
-      redirect_to visualization_path( @visualization )
-    else
-      redirect_to edit_visualization_path( @visualization )
-    end
+    @visualization.update_attributes(:published => false)
+    redirect_to visualization_path(@visualization)
   end
 
   private
 
-  # TODO: aqui deberíamos validar los parámetros que queremos recibir
+  def set_visualization
+    @visualization = Visualization.find(params[:id])
+  end
+
+  def require_visualization_ownership
+    redirect_to visualization_path(@visualization) if @visualization.author != current_user
+  end
+
+  def provided_dataset
+    params[:visualization][:xlsx_file]
+  end
+
+  def dataset_provided?
+    !provided_dataset.nil?
+  end
+
+  def visualization_params
+    params.require(:visualization).permit(:name, :dataset)
+  end
 
   def create_params
-    params.require(:visualization).permit(:name, :datasets)
+    params.require(:visualization).permit(:name, :dataset)
   end
 
   def edit_info_params
     params.require(:visualization).permit(:name, :description)
-  end
-
-  def node_attributes
-    [:name, :node_type, :description, :image, :custom_fields, :visible, :dataset]
-  end
-
-  def relation_attributes
-    [:source, :target, :relation_type, :direction, :dataset]
-  end
-
-  def select_sheet selector, workbook
-    workbook.sheets.grep(selector).first
-  end
-
-  def import_dataset( file, dataset )
-    wb = Roo::Spreadsheet.open(file.path)
-    nodes_sheet = select_sheet /nodes/i, wb
-    relations_sheet = select_sheet /relations/i, wb
-
-    # nodes
-    sheet = wb.sheet(nodes_sheet)
-    headers = sheet.row(1)
-    all_fields = headers.map{ |f| f.downcase.gsub(' ', '_').to_sym }
-    regular_fields = [:name, :type, :description, :visible]
-    custom_fields = all_fields - regular_fields
-    dataset.custom_fields = custom_fields
-    dataset.save
-    nodes = sheet.parse(header_search: headers, clean: true)[1..-1]
-    nodes = nodes.map do |h|
-      result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
-      result[:custom_fields] = custom_fields.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
-      result[:visible] = result[:visible] == 0 ? false : true
-      result[:dataset] = dataset
-      result.slice(*node_attributes)
-    end
-    ActiveRecord::Base.transaction do
-      Node.create(nodes)
-    end
-
-    # relations
-    sheet = wb.sheet(relations_sheet)
-    headers = sheet.row(1)
-    regular_fields = [:source, :relation_type, :target, :direction, :dataset]
-    relations = sheet.parse(header_search: headers, clean: true)[1..-1]
-    relations = relations.map do |h|
-      result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
-      result[:source] = dataset.nodes.find_or_create_by(name: result[:source])
-      result[:target] = dataset.nodes.find_or_create_by(name: result[:target])
-      result[:direction] = result[:direction] == 0 ? false : true
-      result[:dataset] = dataset
-      result.slice(*relation_attributes)
-    end
-    ActiveRecord::Base.transaction do
-      Relation.create(relations)
-    end
   end
 
 end

@@ -25,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :visualizations, :only => [:show, :edit, :new, :create, :update, :destroy] do
     collection do
-      get  ':id/edit/info' => 'visualizations#editinfo'
+      get  ':id/edit/info' => 'visualizations#edit_info'
       post 'publish'
       post 'unpublish'
     end
@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :datasets, :only => [:index]
+  resources :datasets, only: [:show], defaults: { format: :xlsx }
 
   resources :nodes, :only => [:index, :edit, :update] do
     collection do
