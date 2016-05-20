@@ -4,4 +4,6 @@ class Chapter < ActiveRecord::Base
   has_and_belongs_to_many :relations
 
   validates :name, presence: true
+
+  mount_uploader :image, ChapterImageUploader
 end

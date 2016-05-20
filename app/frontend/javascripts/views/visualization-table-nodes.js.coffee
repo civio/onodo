@@ -1,4 +1,4 @@
-Handsontable                = require './../dist/handsontable.full.js'
+Handsontable                = require 'handsontable'
 VisualizationTableBase      = require './visualization-table-base.js'
 VisualizationModalNodeImage = require './visualization-modal-node-image.js'
 

@@ -23,7 +23,9 @@ module RailsRectTest
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    # Activate React Addons
-    # config.react.addons = true
+    # Webpack integrations
+    config.webpack.dev_server.enabled = false
+    config.webpack.output_dir = "#{Rails.root}/public/webpack"
+    config.webpack.manifest_filename = "manifest.json"
   end
 end

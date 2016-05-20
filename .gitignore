@@ -9,6 +9,7 @@
 
 # Ignore local bundle.
 /vendor/bundle
+/vendor/cache
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -26,13 +27,14 @@ app-bundle.js
 
 # Ignore node modules folder and nvm version
 .nvmrc
-node_modules/*
+/node_modules
 
 # Ignore half-sizer droplet
 /app/assets/images/half-sizer.app/Contents/*
 
 # Ignore compiled assets
 /public/assets
+/public/webpack
 
 #Ignore file uploads
 /public/uploads
