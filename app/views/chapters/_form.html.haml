@@ -1,10 +1,36 @@
-= form_for @chapter do |f|
-  - if @chapter.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@chapter.errors.count, "error")} prohibited this chapter from being saved:"
-      %ul
-        - @chapter.errors.full_messages.each do |msg|
-          %li= msg
-
-  .actions
-    = f.submit 'Save'
+- url     = (defined? edit) ? chapter_path(@chapter) : story_chapters_path
+- method  = (defined? edit) ? 'patch' : 'post'
+= form_for :chapter, url: url , method: method, html: {:class => 'form-default'} do |f|
+  = f.hidden_field :story_id, value: @story.id
+  .form-group
+    = f.label "chapter-input-title", "Chaper Title"
+    = f.text_field :name, class: "form-control", required: true
+  .form-group
+    = f.label "chapter-input-description", "Description"
+    = f.text_field :description, type: "hidden"
+    %trix-toolbar{ id: "wysiwig-toolbar", input: "chapter_description" }
+    %trix-editor{ input: "chapter_description", toolbar: "wysiwig-toolbar", class: "form-control" }
+  // Add Chapter Image Form
+  %p
+    Choose the relationships that appear in this chapter.
+  .visualization-table
+    %table.table.table-fixed
+      %thead
+        %tr
+          %th 
+            = check_box_tag 'relations_select_all'
+          %th Source
+          %th Relationship
+          %th Target
+          %th Date
+      %tbody
+        - @story.visualization.dataset.relations.each do |relation|
+          %tr
+            %td
+              = f.check_box "relations[#{relation.id}]"
+            %td= relation.source.name
+            %td= relation.relation_type
+            %td= relation.target.name
+            %td= relation.at
+  = f.submit "Save", class: "btn btn-default btn-primary"
+  %a.btn.btn-default{href: edit_story_path(@story)} Cancel

@@ -1,7 +1,6 @@
-%h1 Editing chapter
-
-= render 'form'
-
-= link_to 'Show', @chapter
-\|
-= link_to 'Back', story_chapters_path(@chapter.story)
+.story-edit-chapter.container
+  .row
+    .page-header.text-center
+      %h2 Edit Story Chapter
+    .col-md-8.col-md-offset-2
+      = render 'form', edit: true
