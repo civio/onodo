@@ -9,6 +9,7 @@ class ChaptersController < ApplicationController
   end
 
   def edit
+     @story = @chapter.story
   end
 
   def create
@@ -34,6 +35,11 @@ class ChaptersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def update_image
+    @chapter.update(chapter_params)
+    redirect_to edit_chapter_path(@chapter)
   end
 
   def destroy

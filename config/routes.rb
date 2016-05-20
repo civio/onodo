@@ -42,7 +42,11 @@ Rails.application.routes.draw do
     resources :chapters, :only => [:new, :create]
   end
 
-  resources :chapters, :only => [:edit, :update, :destroy]
+  resources :chapters, :only => [:edit, :update, :destroy] do
+    collection do
+      patch ':id/image' => 'chapters#update_image'
+    end
+  end
 
   resources :datasets, :only => [:index]
 
