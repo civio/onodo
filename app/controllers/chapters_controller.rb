@@ -16,9 +16,6 @@ class ChaptersController < ApplicationController
     @chapter = Chapter.new(chapter_params)
     @chapter.number = @chapter.story.chapters.count + 1  # TODO: concurrency scenarios
 
-    relation_ids = params[:chapter][:relations].select{ |_,v| v == "1" }.map{ |k,_| k.to_i }
-    @chapter.relations = Relation.find(relation_ids)
-
     nodes_ids = @chapter.relations.flat_map{ |r|  [r.source_id, r.target_id] }.uniq
     @chapter.nodes = Node.find(nodes_ids)
 
@@ -31,7 +28,7 @@ class ChaptersController < ApplicationController
 
   def update
     if @chapter.update(chapter_params)
-      redirect_to @chapter.story, notice: 'Chapter was successfully updated.'
+      redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully updated.'
     else
       render :edit
     end
@@ -56,6 +53,6 @@ class ChaptersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def chapter_params
-    params.require(:chapter).permit(:name, :description, :story_id, :image, :image_cache, :remote_image_url, :remove_image)
+    params.require(:chapter).permit(:name, :description, :story_id, :image, :image_cache, :remote_image_url, :remove_image, :relation_ids => [])
   end
 end

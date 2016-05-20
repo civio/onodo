@@ -24,13 +24,13 @@
           %th Target
           %th Date
       %tbody
-        - @story.visualization.dataset.relations.each do |relation|
+        = f.collection_check_boxes :relation_ids, @story.visualization.dataset.relations, :id, :to_s do |b|
           %tr
             %td
-              = f.check_box "relations[#{relation.id}]"
-            %td= relation.source.name
-            %td= relation.relation_type
-            %td= relation.target.name
-            %td= relation.at
+              = b.check_box
+            %td= b.object.source.name
+            %td= b.object.relation_type
+            %td= b.object.target.name
+            %td= b.object.at
   = f.submit "Save", class: "btn btn-default btn-primary"
   %a.btn.btn-default{href: edit_story_path(@story)} Cancel
