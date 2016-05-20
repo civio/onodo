@@ -103,16 +103,19 @@ class VisualizationGraphCanvas extends Backbone.View
       @COLORS['quantitative-10']
     ]
 
-    @parameters = options.parameters
-
-    console.log 'initialize canvas', @parameters
-
     # Setup color scale
     @colorQualitativeScale  = d3.scale.ordinal().range @COLOR_QUALITATIVE
     @colorQuantitativeScale = d3.scale.ordinal().range @COLOR_QUANTITATIVE
 
+
+  setup: (_data, _parameters) ->
+
+    console.log 'canvas set Data'
+
+    @parameters = _parameters
+
     # Setup Data
-    @initializeData options.data
+    @initializeData _data
 
     # Setup Viewport attributes
     @viewport.width     = @$el.width()
@@ -184,7 +187,6 @@ class VisualizationGraphCanvas extends Backbone.View
     @nodes_labels_cont    = @container.append('g').attr('class', 'nodes-labels-cont')
     
     @rescale()  # Translate svg
-    @updateLayout()
 
   initializeData: (data) ->
 
@@ -217,8 +219,8 @@ class VisualizationGraphCanvas extends Backbone.View
     console.log 'current nodes', @data_nodes
     console.log 'current relations', @data_relations_visibles
 
-  updateLayout: ->
-    console.log 'updateLayout'
+  render: ->
+    console.log 'render canvas'
     @updateImages()
     @updateRelations()
     @updateRelationsLabels()
@@ -261,21 +263,21 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     @nodes.enter().append('circle')
-      .attr('class', 'node')
-      .call(@forceDrag)
-      .on('mouseover',  @onNodeOver)
-      .on('mouseout',   @onNodeOut)
-      .on('click',      @onNodeClick)
-      .on('dblclick',   @onNodeDoubleClick)
+      .on   'mouseover',  @onNodeOver
+      .on   'mouseout',   @onNodeOut
+      .on   'click',      @onNodeClick
+      .on   'dblclick',   @onNodeDoubleClick
+      .call @forceDrag
 
     # ENTER + UPDATE
     @nodes.attr('id', (d) -> return 'node-'+d.id)
+      .attr 'class',    (d) -> return if d.disabled then 'node disabled' else 'node'
       # update node size
-      .attr('r', @getNodeSize)
+      .attr  'r',       @getNodeSize
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
-      .style('fill', @getNodeFill)
-      .style('stroke', @getNodeColor)
-
+      .style 'fill',    @getNodeFill
+      .style 'stroke',  @getNodeColor
+      
     # EXIT
     @nodes.exit().remove()
 
@@ -287,12 +289,12 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     @relations.enter().append('path')
-      .attr('class', 'relation')
 
     # ENTER + UPDATE
     @relations.attr('id', (d) -> return 'relation-'+d.id)
-      .attr('marker-end', @getRelationMarkerEnd)
-      .attr('marker-start', @getRelationMarkerStart)
+      .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
+      .attr 'marker-end',   @getRelationMarkerEnd
+      .attr 'marker-start', @getRelationMarkerStart
 
     # EXIT
     @relations.exit().remove()
@@ -305,14 +307,15 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # ENTER
     @nodes_labels.enter().append('text')
-      .attr('id', (d,i) -> return 'node-label-'+d.id)
-      .attr('class', if @parameters.showNodesLabel then 'node-label' else 'node-label hide')
-      .attr('dx', 0)
-      .attr('dy', @getNodeLabelYPos)
+      .attr 'id',     (d,i) -> return 'node-label-'+d.id
+      .attr 'dx',     0
+      .attr 'dy',     @getNodeLabelYPos
 
     # ENTER + UPDATE
-    @nodes_labels.text (d) -> return d.name
-    @nodes_labels.call @formatNodesLabels
+    @nodes_labels
+      .attr 'class', @getNodeLabelClass
+      .text (d) -> return d.name
+      .call @formatNodesLabels
 
     # EXIT
     @nodes_labels.exit().remove()
@@ -352,15 +355,22 @@ class VisualizationGraphCanvas extends Backbone.View
   # Nodes / Relations methods
   # --------------------------
 
-  updateData: (data) ->
-    console.log 'canvas updateData', data
+  updateData: (nodes, relations) ->
+    console.log 'canvas current Data', @data_nodes, @data_relations
     # Reset data variables
-    @data_nodes              = []
-    @data_relations          = []
-    @data_relations_visibles = []
-    @linkedByIndex           = {}
-    # Initialize data
-    @initializeData data
+    # @data_nodes              = []
+    # @data_relations          = []
+    # @data_relations_visibles = []
+    # @linkedByIndex           = {}
+    # # Initialize data
+    # @initializeData data
+
+    # Setup disable values in nodes
+    @data_nodes.forEach (node) ->
+      node.disabled = nodes.indexOf(node.id) == -1
+    # Setup disable values in relations
+    @data_relations_visibles.forEach (relation) ->
+      relation.disabled = relations.indexOf(relation.id) == -1    
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes
@@ -492,6 +502,7 @@ class VisualizationGraphCanvas extends Backbone.View
   # ---------------
 
   resize: ->
+    console.log 'VisualizationGraphCanvas resize'
     # Update Viewport attributes
     @viewport.width     = @$el.width()
     @viewport.height    = @$el.height()
@@ -568,7 +579,7 @@ class VisualizationGraphCanvas extends Backbone.View
       @data_nodes.forEach (d) =>
         if !@hasNodeRelations(d)
           @addNode d
-    @updateLayout()
+    @render()
 
   updateRelationsCurvature: (value) ->
     @parameters.relationsCurvature = value
@@ -761,6 +772,14 @@ class VisualizationGraphCanvas extends Backbone.View
   areNodesRelated: (a, b) ->
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
+  getNodeLabelClass: (d) =>
+    str = 'node-label'
+    if !@parameters.showNodesLabel
+      str += ' hide'
+    if d.disabled
+      str += ' disabled'
+    return str
+
   getNodeLabelYPos: (d) =>
     return parseInt(@svg.select('#node-'+d.id).attr('r'))+13
 
@@ -774,7 +793,9 @@ class VisualizationGraphCanvas extends Backbone.View
     return color
 
   getNodeFill: (d) =>
-    if @parameters.showNodesImage and d.image != null
+    if d.disabled
+      fill = '#d3d7db'
+    else if @parameters.showNodesImage and d.image != null
       fill = 'url(#node-pattern-'+d.id+')'
     else
       fill = @getNodeColor(d)

@@ -198,6 +198,10 @@ $node-color-12: #e0deda;
       &.active{
         stroke-width: 20px !important;
       }
+
+      &.disabled{
+        //opacity: 0.5;
+      }
     }
 
     .relation {
@@ -206,7 +210,8 @@ $node-color-12: #e0deda;
       stroke-width: 1px;
       opacity: 0.9;
 
-      &.weaken{
+      &.weaken,
+      &.disabled{
         opacity: 0.4;
       }
 
@@ -245,7 +250,8 @@ $node-color-12: #e0deda;
         }
       }
 
-      &.weaken{
+      &.weaken,
+      &.disabled{
         opacity: 0;
       }
 

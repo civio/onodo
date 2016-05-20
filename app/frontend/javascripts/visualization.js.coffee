@@ -14,6 +14,7 @@ class Visualization
 
   id:                           null
   edit:                         false
+  story:                        false
   nodes:                        null
   visualizationGraph:           null
   visualizationTable:           null
@@ -21,10 +22,11 @@ class Visualization
   visualizationTableRelations:  null
   $tableSelector:               null
 
-  constructor: (_id, _edit) ->
+  constructor: (_id, _edit, _story) ->
     console.log('setup visualization', _id);
-    @id   = _id
-    @edit = _edit
+    @id    = _id
+    @edit  = _edit
+    @story = _story || false
     # Setup Visualization Model
     @visualization  = new VisualizationModel()
     # Setup Collections
@@ -45,7 +47,7 @@ class Visualization
       # Setup scroll handler
       $(window).scroll @onScroll
     # Setup Visualization Graph View
-    @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations} }
+    @visualizationGraph           = new VisualizationGraph {model: @visualization, collection: {nodes: @nodes, relations: @relations}, edit: @edit}
     # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
 
@@ -108,6 +110,7 @@ class Visualization
     if @edit
       @visualizationTableNodes.render()
       @visualizationTableRelations.render()
-    @visualizationGraph.render @edit
+    @visualizationGraph.render @edit, @story
+    Backbone.trigger 'visualization.synced'
 
 module.exports = Visualization
