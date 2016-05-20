@@ -93,6 +93,6 @@ class StoriesController < ApplicationController
 
   private
     def edit_info_params
-      params.require(:story).permit(:name, :description)
+      params.require(:story).permit(:name, :description, :image, :image_cache, :remote_image_url, :remove_image)
     end
 end
