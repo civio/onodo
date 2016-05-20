@@ -1,8 +1,8 @@
 class StoriesController < ApplicationController
+  before_action :set_story, only: [:show, :edit, :editinfo, :update, :update_image, :destroy, :publish, :unpublish]
 
   # GET /stories/:id
   def show
-    @story            = Story.find(params[:id])
     @story_id         = @story.id
     @visualization_id = @story.visualization.id
     @nodes            = Node.where(dataset_id: @visualization_id)
@@ -40,7 +40,6 @@ class StoriesController < ApplicationController
     if current_user.nil?
       redirect_to new_user_session_path()
     else
-      @story            = Story.find(params[:id])
       @story_id         = @story.id
       @visualization_id = @story.visualization.id
     end
@@ -50,36 +49,29 @@ class StoriesController < ApplicationController
   def editinfo
     if current_user.nil?
       redirect_to new_user_session_path()
-    else
-      @story = Story.find(params[:id])
     end
   end
   
   # PATCH /stories/:id/
   def update
-    @story = Story.find(params[:id])
     @story.update_attributes( edit_info_params )
     redirect_to story_path( @story )
   end
 
   # PATCH /stories/:id/image
   def update_image
-    @story = Story.find(params[:id])
     @story.update_attributes( edit_info_params )
     redirect_to edit_story_path( @story )+'/info'
   end
 
   # DELETE /stories/:id/
   def destroy
-    @story = Story.find(params[:id])
     @story.destroy
     redirect_to user_path( current_user ), :flash => { :success => "Story deleted" }
   end
 
   # POST /stories/:id/publish
   def publish
-    @story = Story.find(params[:id])
-
     if @story.update_attributes(:published => true)
       redirect_to story_path( @story )
     else
@@ -89,8 +81,6 @@ class StoriesController < ApplicationController
   
   # POST /stories/:id/unpublish
   def unpublish
-    @story = Story.find(params[:id])
-
     if @story.update_attributes(:published => false)
       redirect_to story_path( @story )
     else
@@ -99,7 +89,13 @@ class StoriesController < ApplicationController
   end
 
   private
-    def edit_info_params
-      params.require(:story).permit(:name, :description, :image, :image_cache, :remote_image_url, :remove_image)
-    end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_story
+    @story = Story.find(params[:id])
+  end
+
+  def edit_info_params
+    params.require(:story).permit(:name, :description, :image, :image_cache, :remote_image_url, :remove_image)
+  end
 end
