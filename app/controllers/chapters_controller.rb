@@ -14,7 +14,7 @@ class ChaptersController < ApplicationController
 
   def create
     @chapter = Chapter.new(chapter_params)
-    @chapter.number = @chapter.story.chapters.count + 1  # TODO: concurrency scenarios
+    @chapter.number = @chapter.story.chapters.maximum(:number) + 1 if @chapter.number.nil? # TODO: concurrency scenarios
 
     nodes_ids = @chapter.relations.flat_map{ |r|  [r.source_id, r.target_id] }.uniq
     @chapter.nodes = Node.find(nodes_ids)
@@ -53,6 +53,6 @@ class ChaptersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def chapter_params
-    params.require(:chapter).permit(:name, :description, :story_id, :image, :image_cache, :remote_image_url, :remove_image, :relation_ids => [])
+    params.require(:chapter).permit(:name, :description, :number, :story_id, :image, :image_cache, :remote_image_url, :remove_image, :relation_ids => [])
   end
 end
