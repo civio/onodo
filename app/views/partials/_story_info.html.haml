@@ -25,7 +25,7 @@
         %ul.chapters-list
           - @story.chapters.each_with_index do |chapter, index|
             %li
-              %a.chapter{ href: chapter.id, title: chapter.name }
+              %a.chapter{ href: chapter_path(chapter), title: chapter.name }
                 %span.index
                   = index+1
                 %span.title
