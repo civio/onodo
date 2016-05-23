@@ -8,6 +8,7 @@ class StoriesController < ApplicationController
   def show
     # TODO: Implement related_items to get only related visualizations/stories
     @related_items    = Visualization.published
+    @visualization    = @story.visualization
   end
 
   # GET /stories/new
@@ -31,6 +32,7 @@ class StoriesController < ApplicationController
 
   # GET /stories/:id/edit
   def edit
+    @visualization    = @story.visualization
   end
 
   # GET /stories/:id/edit/info
