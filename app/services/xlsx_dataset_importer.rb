@@ -123,7 +123,7 @@ class XlsxDatasetImporter
     columns = sheet_columns(nodes_sheet_name)
     @custom_fields = columns.reject{ |f| node_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
 
-    nodes = nodes_sheet.parse(header_search: columns, clean: true)[1..-1]
+    nodes = nodes_sheet.parse(header_search: columns, clean: false)[1..-1]
     nodes.map do |h|
       result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v ] }.to_h
       result[:custom_fields] = @custom_fields.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
@@ -137,7 +137,7 @@ class XlsxDatasetImporter
 
     columns = sheet_columns(relations_sheet_name)
 
-    relations = relations_sheet.parse(header_search: columns, clean: true)[1..-1]
+    relations = relations_sheet.parse(header_search: columns, clean: false)[1..-1]
     relations.map do |h|
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
       result[:source] = @nodes.find{ |n| n.name == result[:source] } || (m = Node.new(name: result[:source]); @nodes << m; m)
