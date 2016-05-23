@@ -293,3 +293,13 @@
 .stories .story-info{
   @include transition( right 0.5s ease-out );
 }
+
+.stories .story-info,
+.stories .visualization-graph-info{
+  width: 460px;
+  right: -460px;
+
+  &.active{
+    right: 0;
+  }
+}
