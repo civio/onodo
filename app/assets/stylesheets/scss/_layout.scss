@@ -89,7 +89,8 @@
 
   .item-picture{
     .item-picture-overlay-white,
-    .item-picture-overlay-black{
+    .item-picture-overlay-black,
+    .item-picture-cover{
       position: absolute;
       top: 0;
       left: 0;
@@ -97,14 +98,26 @@
       bottom: 0;
     }
 
-    .item-picture-overlay-black{
+    .item-picture-overlay-white{
       background: #fff;
-      opacity: 0.18;
+      opacity: 0.1;
+      z-index: 59;
     }
 
     .item-picture-overlay-black{
       @include gradient-vertical(#bbb, #000, 0%, 100%);
       opacity: 0.56;
+      z-index: 58;
+    }
+
+    .item-picture-cover{
+      background-repeat: no-repeat;
+      background-position: center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      z-index: 57;
     }
   }
 
@@ -114,6 +127,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    z-index: 60;
   }
 
   .item-info-container-inner{

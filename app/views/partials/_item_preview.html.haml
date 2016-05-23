@@ -12,7 +12,7 @@
     .item-picture
       .item-picture-overlay-white
       .item-picture-overlay-black
-        %img{src: (defined? large) ? item.image.huge.url : item.image.medium.url }
+      .item-picture-cover{ :style => "background-image: url('#{(defined? large) ? item.image.huge.url : item.image.medium.url}')" }
     .item-info-container
       .item-info-container-inner
         .item-info
