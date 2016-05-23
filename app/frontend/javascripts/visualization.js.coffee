@@ -23,17 +23,17 @@ class Visualization
   $tableSelector:               null
 
   constructor: (_id, _edit, _story) ->
-    console.log('setup visualization', _id);
     @id    = _id
     @edit  = _edit
     @story = _story || false
+    console.log 'setup visualization', @story, @edit
     # Setup Visualization Model
     @visualization  = new VisualizationModel()
     # Setup Collections
     @nodes          = new NodesCollection()
     @relations      = new RelationsCollection()
     # Setup Tables for Edit Mode
-    if @edit
+    if !@story and @edit 
       @visualizationTableNodes      = new VisualizationTableNodes {model: @visualization, collection: @nodes}
       @visualizationTableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
       # Attach nodes to VisualizationTableRelations
@@ -53,7 +53,7 @@ class Visualization
 
   render: ->
     # Setup affix bootstrap in Edit Mode
-    if @edit
+    if !@story and @edit
       @setupAffix()
     # force resize
     @resize()
@@ -65,7 +65,7 @@ class Visualization
 
   resize: =>
     console.log 'resize!'
-    if @edit
+    if !@story and @edit
       windowHeight = $(window).height()
       graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
       tableHeight = (windowHeight*0.5) + @tableHeaderHeight
@@ -107,7 +107,7 @@ class Visualization
 
   onSync: =>
     # Render Tables & Graph when all collections ready
-    if @edit
+    if !@story and @edit
       @visualizationTableNodes.render()
       @visualizationTableRelations.render()
     @visualizationGraph.render @edit, @story

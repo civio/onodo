@@ -20,7 +20,7 @@ class Story
     # Setup Chapters Collection
     @chapters         = new ChaptersCollection()
     # Setup Visualization View
-    @visualization    = new Visualization @visualization_id, false, true
+    @visualization    = new Visualization @visualization_id, @edit, true
     # Setup Story Index
     @storyInfo        = new StoryInfo {edit: @edit}
     # Listen for chapters navigation

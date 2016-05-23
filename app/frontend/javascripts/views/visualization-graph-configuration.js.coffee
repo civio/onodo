@@ -117,7 +117,7 @@ class VisualizationGraphConfiguration extends Backbone.View
   render: ->
     # Get parameters from model as JSON
     @parameters = $.parseJSON @model.get('parameters')
-    console.log 'configuration model', @model.get('parameters'), @parameters
+    #console.log 'configuration model', @model.get('parameters'), @parameters
     # Setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch()
     @$el.find('#showNodesImage').bootstrapSwitch()

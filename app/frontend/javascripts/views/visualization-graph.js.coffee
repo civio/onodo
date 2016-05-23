@@ -38,12 +38,14 @@ class VisualizationGraph extends Backbone.View
     @visualizationGraphConfiguration.render()
 
     # Setup visualizationGraphCanvas data if not a Story
-    #unless story
-    @visualizationGraphCanvas.setup @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
+    #unless story and !edit
+    @visualizationGraphCanvas.setup      @getDataFromCollection(@collection.nodes.models, @collection.relations.models), @visualizationGraphConfiguration.parameters
+    if story
+      @visualizationGraphCanvas.setOffsetX 230 # translate left half the width of Story Info panel  
     @visualizationGraphCanvas.render()
 
     # Setup Events Listeners (only in edit mode)
-    if edit
+    if !story and edit 
       # Subscribe Collection Events (handle Table changes)
       @collection.nodes.bind 'add',                 @onNodesAdd, @
       @collection.nodes.bind 'change:name',         @onNodeChangeName, @
@@ -68,6 +70,7 @@ class VisualizationGraph extends Backbone.View
       Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
       Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
       Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
+
     # Subscribe Canvas Events
     Backbone.on 'visualization.node.showInfo',    @onNodeShowInfo, @
     Backbone.on 'visualization.node.hideInfo',    @onNodeHideInfo, @
@@ -252,6 +255,7 @@ class VisualizationGraph extends Backbone.View
       collectionRelations = @collection.relations.models.filter (d) => return relations.indexOf(d.id) != -1  
       # Update VisualizationGraphCanvas data
       @visualizationGraphCanvas.setup @getDataFromCollection(collectionNodes, collectionRelations), @visualizationGraphConfiguration.parameters
+      @visualizationGraphCanvas.setOffsetX 230 # translate left half the width of Story Info panel  
     # render VisualizationGraphCanvas
     @visualizationGraphCanvas.render()
 
