@@ -43,7 +43,7 @@
         .col-md-8.col-lg-9
           %h3 Description
           - if defined? current_user and current_user == item.author
-            %a.btn-edit-circle{ href: edit_visualization_path(item)+'/info', title: "Edit Visualization Info", data: {toggle: "tooltip", placement: "right"} }
+            %a.btn-edit-circle{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info', title: "Edit #{item.class.to_s.downcase} info", data: {toggle: "tooltip", placement: "right"} }
               .btn-edit-circle-icon
           .visualization-description-content= item.description.html_safe
         - if defined? current_user and current_user == item.author
@@ -61,10 +61,10 @@
                 %span.btn-icon-pencil
                 Edit Visualization
             %p
-              %a.btn.btn-default.btn-invert{ href: edit_visualization_path(item)+'/info' }
+              %a.btn.btn-default.btn-invert{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info' }
                 %span.btn-icon-pencil
                 Edit Description
-            %p
-              %a.btn.btn-default.btn-invert{ href: "#" }
-                %span.btn-icon-duplicate
-                Duplicate Visualization
+            / %p
+            /   %a.btn.btn-default.btn-invert{ href: "#" }
+            /     %span.btn-icon-duplicate
+            /     Duplicate Visualization

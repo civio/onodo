@@ -29,10 +29,10 @@
               %a.active{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item) }
                 Edit #{item.class.to_s.downcase}
                 %i.icon-edit
-          %li
-            %a{href: (defined? story) ? new_story_path : new_visualization_path} 
-              Duplicate #{item.class.to_s.downcase}
-              %i.icon-duplicate
+          / %li
+          /   %a{href: (defined? story) ? new_story_path : new_visualization_path} 
+          /     Duplicate #{item.class.to_s.downcase}
+          /     %i.icon-duplicate
           - if defined? story
             %li
               %a{href: edit_visualization_path(item.visualization)} 
