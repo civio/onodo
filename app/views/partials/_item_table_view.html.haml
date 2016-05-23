@@ -49,7 +49,7 @@
           %tbody
           - visualization.relations.each do |relation|
             %tr
-              %td= relation.source.name
+              %td= relation.source && relation.source.name
               %td= relation.relation_type
-              %td= relation.target.name
+              %td= relation.target && relation.target.name
               %td= relation.at
