@@ -385,6 +385,8 @@
 // Items List Header
 
 .items-preview-header{
+  margin-bottom: $grid-gutter-width;
+
   // Disable active buttons
   > .btn-primary{
     cursor: auto;
