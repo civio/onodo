@@ -6,8 +6,7 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/:id
   def show
-    @nodes          = @visualization.nodes.order(:name)
-    @relations      = @visualization.relations.includes(:source, :target).order('nodes.name', 'targets_relations.name')
+    # TODO: Implement related_items to get only related visualizations/stories
     @related_items  = Visualization.published
   end
 
@@ -42,7 +41,6 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/:id/edit
   def edit
-    @visualization_id = @visualization.id
   end
 
   # GET /visualizations/:id/edit/info
@@ -58,7 +56,7 @@ class VisualizationsController < ApplicationController
   # DELETE /visualizations/:id/
   def destroy
     @visualization.destroy
-    redirect_to user_path(current_user), notice: "Your visualization deleted."
+    redirect_to user_path(current_user), notice: "Your visualization has been deleted."
   end
 
   # POST /visualizations/:id/publish

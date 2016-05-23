@@ -12,7 +12,7 @@
           %span.prev-chapter-icon
         .chapters-tracker
           %span.chapter-index 
-          \/ #{@story.chapters.length}
+          \/ #{story.chapters.length}
         %a.chapter-navigation.chapter-navigation-next{ href: '#', title: 'Next Chapter' }
           Next Chapter
           %span.next-chapter-icon
@@ -21,9 +21,9 @@
         &times
   .panel-body
     .index-content
-      - if @story.chapters
+      - if story.chapters
         %ul.chapters-list
-          - @story.chapters.each_with_index do |chapter, index|
+          - story.chapters.each_with_index do |chapter, index|
             %li
               %a.chapter{ href: chapter.id, title: chapter.name }
                 %span.index
@@ -31,6 +31,6 @@
                 %span.title
                   = chapter.name
       - if defined? edit
-        %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(@story) }
+        %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(story) }
           Add Chapter
     .chapter-content.hide

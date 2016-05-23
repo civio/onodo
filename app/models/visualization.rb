@@ -8,10 +8,10 @@ class Visualization < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   def nodes
-    dataset.nodes
+    dataset.nodes.order(:name)
   end
 
   def relations
-    dataset.relations
+    dataset.relations.includes(:source, :target).order('nodes.name', 'targets_relations.name')
   end
 end

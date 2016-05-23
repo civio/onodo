@@ -10,7 +10,7 @@
     = render 'partials/item_graph_panel_configuration'
     = render 'partials/item_share_panel', item: @story, story: true
     .visualization-graph-component
-    = render 'partials/story_info'
+    = render 'partials/story_info', story: @story
     = render 'partials/item_graph_info'
 
 = render 'partials/item_info', item: @story, story: true
