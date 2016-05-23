@@ -140,8 +140,8 @@ class XlsxDatasetImporter
     relations = relations_sheet.parse(header_search: columns, clean: true)[1..-1]
     relations.map do |h|
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : k.downcase.gsub(' ', '_').to_sym, v ] }.to_h
-      result[:source] = @nodes.find{ |n| n.name == result[:source] } || Node.new(name: result[:source])
-      result[:target] = @nodes.find{ |n| n.name == result[:target] } || Node.new(name: result[:target])
+      result[:source] = @nodes.find{ |n| n.name == result[:source] } || (m = Node.new(name: result[:source]); @nodes << m; m)
+      result[:target] = @nodes.find{ |n| n.name == result[:target] } || (m = Node.new(name: result[:target]); @nodes << m; m)
       result[:direction] = result[:direction] == 0 ? false : true
       Relation.new(result.slice(*relation_attributes))
     end
