@@ -12,4 +12,12 @@ class Node < ActiveRecord::Base
     Relation.where('source_id = ? or target_id = ?', self, self)
             .includes(:relation_type, :source, :target)
   end
+
+  def visualization
+    dataset.visualization
+  end
+
+  def stories
+    dataset.visualization.stories
+  end
 end
