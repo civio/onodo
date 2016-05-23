@@ -32,7 +32,7 @@ class StoriesController < ApplicationController
 
   # GET /stories/:id/edit
   def edit
-    @visualization    = @story.visualization
+    @visualization = @story.visualization
   end
 
   # GET /stories/:id/edit/info

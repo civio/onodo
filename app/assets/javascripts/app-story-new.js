@@ -9,7 +9,7 @@ $(document).ready(function(){
       return;
     }
     // Store visualization id in hidden input
-    $('#story_visualization').val( $(this).attr('href') );
+    $('#story_visualization_id').val( $(this).attr('href') );
     // Submit form
     $('#form-story-new').submit();
   });
