@@ -94,11 +94,11 @@ class XlsxDatasetImporter
   end
 
   def mandatory_node_columns
-    [/^(name|nombre)$/i]
+    [/^name$/i]
   end
 
   def optional_node_columns
-    [/^(type|tipo)s?$/i, /^(descriptions?|descripci[oó]n(es)?)$/i, /^visibles?$/i]
+    [/^type$/i, /^description$/i, /^visible$/i]
   end
 
   def node_columns
@@ -106,11 +106,11 @@ class XlsxDatasetImporter
   end
 
   def mandatory_relation_columns
-    [/^(sources?|or[ií]gen(es)?)$/i, /^(target|destino)s?$/i]
+    [/^source$/i, /^target$/i]
   end
 
   def optional_relation_columns
-    [/^(type|tipo)s?$/i, /^(directed|dirigida)s?$/i]
+    [/^type$/i, /^directed$/i, /^date$/i]
   end
 
   def relations_columns
