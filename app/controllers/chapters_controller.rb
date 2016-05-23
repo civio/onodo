@@ -1,15 +1,11 @@
 class ChaptersController < ApplicationController
-  before_action :set_chapter, only: [:edit, :update, :destroy]
+
+  before_action :require_login, except: [:show]
+  before_action :set_chapter, except: [:new, :create]
+  before_action :require_story_ownership, except: [:show, :new, :create]
 
   def new
-    if current_user.nil?
-      redirect_to new_user_session_path()
-    end
     @story = Story.find(params[:story_id])
-  end
-
-  def edit
-     @story = @chapter.story
   end
 
   def create
@@ -24,6 +20,10 @@ class ChaptersController < ApplicationController
       flash[:alert] = @chapter.errors.full_messages.to_sentence
       render :new
     end
+  end
+
+  def edit
+    @story = @chapter.story
   end
 
   def update
@@ -58,6 +58,10 @@ class ChaptersController < ApplicationController
 
   def nodes_in(relations)
     relations.flat_map{ |r|  [r.source, r.target] }.uniq
+  end
+
+  def require_story_ownership
+    redirect_to story_path(@chapter.story) if @chapter.story.author != current_user
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
