@@ -54,7 +54,7 @@
     height: $item-type-icon-size;
     border-radius: $item-type-icon-size/2;
     background: $brand-primary;
-    z-index: 30;
+    z-index: 60;
 
     &:after{
       display: block;
@@ -73,7 +73,7 @@
     line-height: $item-author-picture-size - 2;
     text-align: right;
     text-transform: uppercase;
-    z-index: 60;
+    z-index: 61;
 
     .item-author-picture{
       float: right;
