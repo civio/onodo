@@ -28,9 +28,9 @@
           %tr
             %td
               = b.check_box
-            %td= b.object.source.name
+            %td= b.object.source && b.object.source.name
             %td= b.object.relation_type
-            %td= b.object.target.name
+            %td= b.object.target && b.object.target.name
             %td= b.object.at
   = f.submit "Save", class: "btn btn-default btn-primary"
   %a.btn.btn-default{href: edit_story_path(@story)} Cancel
