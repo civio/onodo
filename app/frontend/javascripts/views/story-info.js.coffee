@@ -83,6 +83,7 @@ class StoryInfo extends Backbone.View
     @$el.find('.chapters-list li:nth-child('+@index+') a.chapter').trigger 'click'
 
   onChapterNavigationChildrenClick: (e) ->
+    e.preventDefault()
     e.stopPropagation()
     $(this).parent().trigger 'click'
 
