@@ -396,7 +396,7 @@ a.user-label{
   width: 100%;
 
   tbody {
-    height: 300px;
+    max-height: 300px;
     overflow-y: auto;
   }
   thead, tbody, tr, td, th {
