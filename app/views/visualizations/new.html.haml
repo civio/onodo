@@ -7,31 +7,40 @@
         .form-group
           = f.label :name, "Visualization title"
           = f.text_field :name, class: "form-control", :required => true
-        .form-group
-          = f.label :xlsx_file, "Upload your XLSX File"
-          = f.file_field :xlsx_file, accept: '.xlsx', :class => "form-control"
-        = f.submit "Create", class: "btn btn-default btn-primary"
-      %a.btn-circle-lg.btn-circle-lg-table{ href: '#' }
-        .btn-circle-lg-icon
-          .btn-circle-lg-icon-sprite
-        .btn-circle-lg-title
-          Begin with an empty table
-        .btn.btn-primary.btn-invert
-          Create
+        / .form-group
+        /   = f.label :xlsx_file, "Upload your XLSX File"
+        /   = f.file_field :xlsx_file, accept: '.xlsx', :class => "form-control"
+        / = f.submit "Create", class: "btn btn-default btn-primary"
+        .btn-circle-lg.btn-circle-lg-table
+          .btn-circle-lg-icon
+            .btn-circle-lg-icon-sprite
+          .btn-circle-lg-title
+            Begin with an empty table
+          = f.submit "Create", class: "btn btn-primary"
+        %hr
+        .btn-circle-lg.btn-circle-lg-xls
+          .btn-circle-lg-icon
+            .btn-circle-lg-icon-sprite
+          .btn-circle-lg-title
+            /Drag & drop your XLSX file
+            Upload your XLSX File
+          .form-group
+            %span.btn.btn-primary.btn-file
+              %i.glyphicon.glyphicon-folder-open
+              Browse
+              = f.file_field :xlsx_file, accept: '.xlsx', class: 'form-control'
+            %p.btn-file-output
+          /= f.file_field :xlsx_file, accept: '.xlsx', :class => "form-control"
+          /.btn.btn-primary.btn-invert
+          /  Browse
+          = f.submit "Create", class: "btn btn-default btn-primary"
       %hr
-      %a.btn-circle-lg.btn-circle-lg-xls{ href: '#' }
-        .btn-circle-lg-icon
-          .btn-circle-lg-icon-sprite
-        .btn-circle-lg-title
-          Drag & drop your XLSX file
-        .btn.btn-primary.btn-invert
-          Browse
       .template-advice
         %p
           Don't know how to create the XLSX file?
-          %a{ href: '#' }
-            Use our template
-        %a.btn.btn-primary.btn-invert{ href: '#' }
-          Download
-        %a.btn.btn-primary.btn-invert{ href: '#' }
-          Tutorial
+          / %a{ href: '#' }
+          /   Use our template
+        %a.btn.btn-primary.btn-invert{ href: '/downloads/onodo_template.xlsx' }
+          Download our template
+        / %a.btn.btn-primary.btn-invert{ href: '#' }
+        /   Tutorial
