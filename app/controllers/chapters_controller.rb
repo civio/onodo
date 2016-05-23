@@ -16,20 +16,25 @@ class ChaptersController < ApplicationController
     @chapter = Chapter.new(chapter_params)
     @chapter.number = (@chapter.story.chapters.maximum(:number) || 0) + 1 if @chapter.number.nil? # TODO: concurrency scenarios
 
-    nodes_ids = @chapter.relations.flat_map{ |r|  [r.source_id, r.target_id] }.uniq
-    @chapter.nodes = Node.find(nodes_ids)
+    @chapter.nodes = nodes_in(@chapter.relations)
 
     if @chapter.save
       redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully created.'
     else
+      flash[:alert] = @chapter.errors.full_messages.to_sentence
       render :new
     end
   end
 
   def update
-    if @chapter.update(chapter_params)
+    @chapter.update(chapter_params)
+
+    @chapter.nodes = nodes_in(@chapter.relations)
+
+    if @chapter.save
       redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully updated.'
     else
+      flash[:alert] = @chapter.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -49,6 +54,10 @@ class ChaptersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_chapter
     @chapter = Chapter.find(params[:id])
+  end
+
+  def nodes_in(relations)
+    relations.flat_map{ |r|  [r.source, r.target] }.uniq
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
