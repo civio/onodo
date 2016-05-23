@@ -5,7 +5,8 @@ class Visualization < ActiveRecord::Base
 
   scope :published, -> { where(published: true) }
 
-  validates :name, presence: true, uniqueness: true
+  validates_presence_of :name
+  validates_uniqueness_of :name, scope: :author
 
   def nodes
     dataset.nodes.order(:name)

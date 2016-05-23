@@ -1,5 +1,5 @@
 class Api::NodesController < ApiController
-  
+
   def index
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
     @nodes = dataset.nodes.order(:name)
