@@ -1253,6 +1253,14 @@ body.visualizations.edit{
     text-align: center;
   }
 
+  hr{
+    margin-bottom: $grid-gutter-width;
+  }
+
+  .form-default{
+    margin-bottom: 0;
+  }
+
   .btn-circle-lg .btn{
     margin: $grid-gutter-width/2 0;
   }
@@ -1266,6 +1274,10 @@ body.visualizations.edit{
       margin: 0 $grid-gutter-width/4;
     }
   }
+}
+
+#visualization_name{
+  margin-bottom: $grid-gutter-width;
 }
 
 #table-image-modal{

@@ -74,14 +74,14 @@
     border-style: dashed;
   }
 
-  &:hover{
-    color: $brand-primary;
-    text-decoration: none;
+  // &:hover{
+  //   color: $brand-primary;
+  //   text-decoration: none;
 
-    .btn-circle-lg-icon{
-      background: mix($brand-primary, white, 25%);
-    }
-  }
+  //   .btn-circle-lg-icon{
+  //     background: mix($brand-primary, white, 25%);
+  //   }
+  // }
 }
 
 
