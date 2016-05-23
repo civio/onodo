@@ -4,6 +4,19 @@
 @import '_variables';
 @import 'scss/sprites';
 
+// Alerts
+
+.alerts-container{
+  position: relative;
+
+  > p{
+    position: absolute;
+    padding: 2px $grid-gutter-width/3;
+    top: -12px;
+    z-index: 99;
+  }
+}
+
 // Item preview
 
 .item-preview{
