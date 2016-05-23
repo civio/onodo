@@ -48,7 +48,7 @@ class XlsxDatasetExporter
   end
 
   def relations_row(relation)
-    [relation.source.name, relation.relation_type, relation.target.name, relation.direction ? nil : 0]
+    [relation.source && relation.source.name, relation.relation_type, relation.target && relation.target.name, relation.direction ? nil : 0]
   end
 
 end
