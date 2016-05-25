@@ -3,24 +3,32 @@
     .page-header.text-center
       %h2 Edit Story Info
     .col-sm-6.col-sm-offset-3
-      .media-upload.media
-        .media-left
-          %img.img-circle.media-object{src: @story.image.small.url }
-        .media-body
-          .media-heading
-            Cover photo
-          %p
-            Your cover photo should be about 1140px wide 480px tall and under 2MB
+      = form_for @story, url: story_path(@story)+'/image', html: { class: 'media-upload', method: :patch, multipart: true } do |f|
+        %p.media-upload-title
+          Cover photo
+        %p.media-upload-description
+          Your cover photo should be about 1140px wide 480px tall and under 2MB
+        .media
+          .media-left
+            %img.img-circle.media-object{src: @story.image.small.url }
+          .media-body
+            /Your cover photo should be about 1140px wide 480px tall and under 2MB
             = form_for @story, url: story_path(@story)+'/image', html: { method: :patch, multipart: true } do |f|
               .form-group
+                = f.label :image, "Upload from your computer"
                 %span.btn.btn-primary.btn-file
                   %i.glyphicon.glyphicon-folder-open
                   Browse
                   = f.file_field :image, class: 'form-control'
                   = f.hidden_field :image_cache
                 %p.btn-file-output
-              .actions
-                = f.submit "Upload Photo", class: "btn btn-default btn-primary"
+                .clearfix
+              .form-group
+                = f.label :remote_image_url, "Or choose it from internet"
+                = f.text_field :remote_image_url, class: 'form-control'
+          .actions
+            = f.submit "Upload Photo", class: "btn btn-default btn-primary"
+          %hr
       = form_for @story, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
         .form-group
           = f.label "story-input-title", "Title"

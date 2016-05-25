@@ -4,6 +4,7 @@
 @import 'bootstrap/mixins/clearfix';
 @import '_variables';
 @import 'scss/sprites';
+@import 'scss/common';
 
 
 // Boton Circle LG
@@ -388,6 +389,56 @@ a.user-label{
     }
   }
 }
+
+// Media Upload
+.media-upload{
+  margin-bottom: $grid-gutter-width;
+
+  .media-upload-title{
+    @extend .label;
+    margin-bottom: $grid-gutter-width/3; 
+  }
+
+  .media-upload-description{
+    font-size: 0.857em;
+    color: $gray;
+    margin-right: $grid-gutter-width/2;
+    margin-bottom: $grid-gutter-width/2;
+    font-weight: 300;
+  }
+
+  .media{
+    margin-top: 2*$grid-gutter-width/3;
+  }
+
+  .media-left{
+    padding-top: $grid-gutter-width/6;
+    padding-right: $grid-gutter-width;
+  }
+
+  .media-object{
+    width: 128px;
+    height: 128px;
+    background: $gray-light;
+  }
+
+  .media-body{
+    label{
+      width: 100%;
+    }
+
+    .btn-file{
+      float: left;
+      margin-right: $grid-gutter-width/3;
+    }
+    .btn-file-output{
+      font-weight: 300;
+      padding-top: 8px;
+      padding-bottom: 0;
+    }
+  }
+}
+
 
 // Table Fixed
 .table.table-fixed{
