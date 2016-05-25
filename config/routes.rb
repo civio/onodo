@@ -54,6 +54,7 @@ Rails.application.routes.draw do
     collection do
       get ':id/edit/description' => 'nodes#edit_description'
       get ':id/edit/image'       => 'nodes#edit_image'
+      patch':id/image'           => 'nodes#update_image'
     end
   end
 
