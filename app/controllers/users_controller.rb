@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
 
-  PAGE_SIZE = 2
+  PAGE_SIZE = 4
 
   # GET /users/:id
   def show
     @user = user_for params[:id]
-    @items = visualizations_for @user, params[:page]
+    # Get published visualizations from user
+    @items = visualizations_for @user, true, params[:page]
     @visualizations = true
     render :show
   end
@@ -16,7 +17,7 @@ class UsersController < ApplicationController
   # GET /users/:id/stories
   def show_stories
     @user = user_for params[:id]
-    @items = stories_for @user, params[:page]
+    @items = stories_for @user, true, params[:page]
     render :show
   end
 
@@ -24,7 +25,8 @@ class UsersController < ApplicationController
   def show_dashboard
     return unless current_user
     @user = current_user
-    @items = visualizations_for @user, params[:page]
+    # Get all visualizations from user
+    @items = visualizations_for @user, false, params[:page]
     @visualizations = true
     render :show
   end
@@ -36,7 +38,7 @@ class UsersController < ApplicationController
   def show_dashboard_stories
     return unless current_user
     @user = current_user
-    @items = stories_for @user, params[:page]
+    @items = stories_for @user, false, params[:page]
     render :show
   end
 
@@ -46,12 +48,20 @@ class UsersController < ApplicationController
     User.find(user_id)
   end
 
-  def visualizations_for user, page=nil
-    user.visualizations.page(page).per(PAGE_SIZE)
+  def visualizations_for user, published, page=nil
+    if published
+      user.visualizations.published.page(page).per(PAGE_SIZE)
+    else
+      user.visualizations.page(page).per(PAGE_SIZE)
+    end  
   end
 
-  def stories_for user, page=nil
-    user.stories.page(page).per(PAGE_SIZE)
+  def stories_for user, published, page=nil
+    if published
+      user.stories.published.page(page).per(PAGE_SIZE)
+    else
+      user.stories.page(page).per(PAGE_SIZE)
+    end
   end
 
 end
