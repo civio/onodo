@@ -29,6 +29,11 @@
               %a.active{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item) }
                 Edit #{item.class.to_s.downcase}
                 %i.icon-edit
+            %li
+              - if item.published?
+                = link_to raw('Unpublish <i class="icon-unpublish"></i>'), {controller: controller.controller_name, action: "unpublish", id: item.id}, {method: :post, class: "active"}
+              - else
+                = link_to raw('Publish <i class="icon-publish"></i>'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "active"}
           / %li
           /   %a{href: (defined? story) ? new_story_path : new_visualization_path} 
           /     Duplicate #{item.class.to_s.downcase}
