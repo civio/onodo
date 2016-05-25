@@ -14,10 +14,19 @@ class Node < ActiveRecord::Base
   end
 
   def visualization
-    dataset.visualization
+    dataset.visualization if dataset
   end
 
   def stories
-    dataset.visualization.stories
+    dataset.visualization.stories if dataset && dataset.visualization
+  end
+
+  def custom_fields
+    fields = dataset ? dataset.custom_fields || [] : []
+    result = read_attribute(:custom_fields) || {}
+    fields.each do |f|
+      result[f] ||= ""
+    end
+    result
   end
 end
