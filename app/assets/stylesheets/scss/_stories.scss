@@ -104,10 +104,12 @@
         font-size: 3.429em;
         margin: 0;
       }
-      p{
-        font-size: 1em;
+      .item-description{
         color: white;
-      }
+        font-size: 1em;
+        margin-top: $grid-gutter-width;
+        font-style: normal;
+      }        
     }
 
     .item-type-icon{
