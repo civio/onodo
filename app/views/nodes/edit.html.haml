@@ -13,4 +13,4 @@
           %trix-toolbar{ id: "wysiwig-toolbar", input: "node_description" }
           %trix-editor{ input: "node_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         = f.submit "Save", class: "btn btn-default btn-primary"
-        %a.btn.btn-default{href: "#"} Cancel
+        %a.btn.btn-default{href: edit_visualization_path(@node.visualization) } Cancel
