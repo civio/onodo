@@ -8,6 +8,10 @@ class NodeImageUploader < BasePictureUploader
     process :resize_to_fit => [160, nil]
   end
 
+  version :medium, :from_version => :huge do
+    process :resize_to_fill => [128, 128]
+  end
+
   version :small, :from_version => :big do
     process :resize_to_fill => [30, 30]
   end
