@@ -3,14 +3,46 @@
     .page-header.text-center
       %h2 Edit Node
     .col-sm-6.col-sm-offset-3
+      = form_for @node, url: node_path(@node)+'/image', html: { class: 'media-upload', method: :patch, multipart: true } do |f|
+        %p.media-upload-title
+          Node photo
+        %p.media-upload-description
+          Your node photo should be about 320px wide and under 1MB
+        .media
+          .media-left
+            %img.img-circle.media-object{src: @node.image.medium.url }
+          .media-body
+            .form-group
+              = f.label :image, "Upload from your computer"
+              %span.btn.btn-primary.btn-file
+                %i.glyphicon.glyphicon-folder-open
+                Browse
+                = f.file_field :image, class: 'form-control'
+                = f.hidden_field :image_cache
+              %p.btn-file-output
+              .clearfix
+            .form-group
+              = f.label :remote_image_url, "Or choose it from internet"
+              = f.text_field :remote_image_url, class: 'form-control'
+          .actions
+            = f.submit "Upload Photo", class: "btn btn-default btn-primary"
+          %hr
       = form_for @node, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
         .form-group
-          = f.label "node-input-name", "Name"
+          = f.label      :name, "Name"
           = f.text_field :name, class: "form-control"
         .form-group
-          = f.label "node-input-description", "Description"
+          = f.label      :description, "Description"
           = f.text_field :description, type: "hidden"
           %trix-toolbar{ id: "wysiwig-toolbar", input: "node_description" }
           %trix-editor{ input: "node_description", toolbar: "wysiwig-toolbar", class: "form-control" }
+        .form-group
+          = f.label      :node_type, "Type"
+          = f.text_field :node_type, class: "form-control"
+        - if @node.dataset.custom_fields
+          - @node.dataset.custom_fields.each do |custom_field|
+            .form-group
+              = f.label "node-input-custom-field-"+custom_field, custom_field
+              /= f.text_field :"custom_fields[:#{custom_field}]", class: "form-control"
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: edit_visualization_path(@node.visualization) } Cancel
