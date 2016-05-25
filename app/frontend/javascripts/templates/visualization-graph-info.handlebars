@@ -8,6 +8,9 @@
   {{{ description }}}
 </div>
 <div class="custom-fields">
+{{#if type}}
+  <p><strong>Type</strong>: {{{ type }}}</p>
+{{/if}}
 {{#each custom_fields}}
   <p><strong>{{key}}</strong>: {{value}}</p>
 {{/each}}

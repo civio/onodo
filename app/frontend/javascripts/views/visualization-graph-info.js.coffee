@@ -35,6 +35,7 @@ class VisualizationGraphInfo extends Backbone.View
       templateAttr = {
         name:         @model.get('name')
         description:  @model.get('description')
+        type:         @model.get('node_type')
         image:        if @model.get('image') then @model.get('image').huge.url else null
       }
       # if available custom_fields, add to templateAttr.custom_fields object
