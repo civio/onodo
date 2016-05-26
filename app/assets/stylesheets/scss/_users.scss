@@ -22,7 +22,7 @@
     }
 
     .actions{
-      margin-top: $grid-gutter-width;
+      //margin-top: $grid-gutter-width;
 
       .devise-links{
         font-size: 12px;
@@ -38,10 +38,6 @@
       font-style: normal;
     }
   }
-}
-
-.user-settings{
-  padding-bottom: 3*$grid-gutter-width;
 }
 
 .user-dashboard{
