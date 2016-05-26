@@ -32,6 +32,9 @@ class StoryInfo extends Backbone.View
       console.log 'render', @model.get('id')
       # Get chapter index
       @index = parseInt @model.get('number')
+      # Set current chapter active in chapters-list
+      @$el.find('.chapters-list li .active').removeClass('active')
+      @$el.find('.chapters-list li:eq('+(@index-1)+') a').addClass('active')
       # Compile the template using Handlebars
       template = HandlebarsTemplate {
         id:           @model.get('id')
