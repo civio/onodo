@@ -77,15 +77,15 @@ class VisualizationGraphCanvas extends Backbone.View
 
     # setup colors scales
     @COLOR_QUALITATIVE = [
-      @COLORS['solid-1']
-      @COLORS['solid-2']
       @COLORS['solid-3']
-      @COLORS['solid-4']
-      @COLORS['solid-5']
-      @COLORS['solid-6']
       @COLORS['solid-7']
+      @COLORS['solid-1']
+      @COLORS['solid-5']
+      @COLORS['solid-2']
       @COLORS['solid-8']
+      @COLORS['solid-4']
       @COLORS['solid-9']
+      @COLORS['solid-6']
       @COLORS['solid-10']
       @COLORS['solid-11']
       @COLORS['solid-12']
