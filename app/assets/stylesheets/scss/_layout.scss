@@ -125,6 +125,16 @@
   }
 
   .item-picture{
+    background: $brand-primary; 
+
+    .item-picture-default{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -35px;
+      margin-top: -30px;
+      @include retina-sprite( $icon-story-big-group );
+    }
     .item-picture-overlay-white,
     .item-picture-overlay-black,
     .item-picture-cover{
@@ -346,6 +356,10 @@
       margin: 0 auto;
     }
 
+    .item-picture .item-picture-default{
+      display: none;
+    }
+  
     .item-info{
       //position: absolute;
       //width: 460px;

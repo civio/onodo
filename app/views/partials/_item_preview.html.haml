@@ -3,9 +3,9 @@
   - unless defined? cover
     .item-type
       = item.class.to_s
-  - unless item.published
+  - if controller_name == 'users' and !item.published
     .item-status
-      = (item.published) ? 'Public' : 'Draft'
+      Draft
       .item-status-icon
   .item-author
     %a{href: user_path(item.author_id), title: item.author.name}
@@ -14,9 +14,12 @@
         %img{src: item.author.avatar_url(:medium)}
   -if item.class.to_s.downcase == 'story'
     .item-picture
-      .item-picture-overlay-white
-      .item-picture-overlay-black
-      .item-picture-cover{ :style => "background-image: url('#{(defined? large) ? item.image.huge.url : item.image.medium.url}')" }
+      -if item.image.medium.blank?
+        .item-picture-default
+      -else
+        .item-picture-overlay-white
+        .item-picture-overlay-black
+        .item-picture-cover{ :style => "background-image: url('#{(defined? large) ? item.image.huge.url : item.image.medium.url}')" }
     .item-info-container
       .item-info-container-inner
         .item-info
