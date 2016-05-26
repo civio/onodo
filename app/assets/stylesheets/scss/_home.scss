@@ -12,10 +12,15 @@
 .home{
 
   .home-icon{
-    width: 217px;
-    height: 216px;
-    margin: $grid-gutter-width auto 2*$grid-gutter-width;
+    width: 360px;
+    height: 174px;
+    margin: $grid-gutter-width/2 auto 1.5*$grid-gutter-width;
     background: url('/images/home-icon.png') no-repeat 0 0 transparent;
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      background-image: url('/images/home-icon@2x.png');
+      background-size: 360px 174px;
+    }
   }
 
   // Jumbotron
