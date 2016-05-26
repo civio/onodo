@@ -3,6 +3,10 @@
   - unless defined? cover
     .item-type
       = item.class.to_s
+  - unless item.published
+    .item-status
+      = (item.published) ? 'Public' : 'Draft'
+      .item-status-icon
   .item-author
     %a{href: user_path(item.author_id), title: item.author.name}
       = item.author.name
