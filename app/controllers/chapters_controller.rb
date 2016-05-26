@@ -44,9 +44,13 @@ class ChaptersController < ApplicationController
     redirect_to edit_chapter_path(@chapter)
   end
 
+  def delete
+    render layout: false
+  end
+
   def destroy
     @chapter.destroy
-    redirect_to @chapter.story, notice: 'Chapter was successfully destroyed.'
+    redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully destroyed.'
   end
 
   private

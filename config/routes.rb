@@ -44,7 +44,8 @@ Rails.application.routes.draw do
 
   resources :chapters, :only => [:edit, :update, :destroy] do
     collection do
-      patch ':id/image' => 'chapters#update_image'
+      patch ':id/image'   => 'chapters#update_image'
+      get   ':id/delete'  => 'chapters#delete'
     end
   end
 

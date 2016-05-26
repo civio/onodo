@@ -33,13 +33,9 @@ class Story
       $('.story-cover').fadeOut()
       $('.visualization-info, .visualization-description').fadeIn()
     # Event listener for Chapter delete Modal
-    #$('#story-chapter-delete-modal').on 'show.bs.modal', (e) ->
-    #  console.log 'on story chapter delete modal'
-    #  $('#story-chapter-delete-modal .modal-body').load '/nodes/1/edit/description/', () =>
-    #
-    # Listen on click delete btn
-    # Load chapters/delete/templates into #story-chapter-delete-modal
-    # Show #story-chapter-delete-modal
+    $('#story-chapter-delete-modal').on 'show.bs.modal', (e) =>
+      # Load chapter/:id/delete template into story-chapter-delete-modal
+      $('#story-chapter-delete-modal .modal-content').load '/chapters/'+@currentChapterId+'/delete/'
   
   render: ->
     console.log '!!!render story', @story_id
