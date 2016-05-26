@@ -39,6 +39,11 @@
           /     Duplicate #{item.class.to_s.downcase}
           /     %i.icon-duplicate
           - if defined? story
+            - if defined? edit
+              %li
+                %a{href: new_story_chapter_path(item)} 
+                  Add Chapter to Story
+                  %i.icon-edit
             %li
               %a{href: edit_visualization_path(item.visualization)} 
                 Edit visualization
