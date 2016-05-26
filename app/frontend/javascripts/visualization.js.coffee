@@ -9,7 +9,7 @@ VisualizationTableRelations  = require './views/visualization-table-relations.js
 class Visualization
 
   mainHeaderHeight:             84
-  visualizationHeaderHeight:    91
+  visualizationHeaderHeight:    null
   tableHeaderHeight:            42
 
   id:                           null
@@ -52,11 +52,11 @@ class Visualization
     $('#visualization-table-selector > li > a').click @updateTable
 
   render: ->
-    # Setup affix bootstrap in Edit Mode
-    if !@story and @edit
-      @setupAffix()
     # force resize
     @resize()
+    # Setup affix bootstrap
+    if !@story and @edit
+      @setupAffix()
     # fetch model & collections
     syncCounter = _.after 3, @onSync
     @visualization.fetch  {url: '/api/visualizations/'+@id,               success: syncCounter}
@@ -67,6 +67,7 @@ class Visualization
     console.log 'resize!'
     if !@story and @edit
       windowHeight = $(window).height()
+      @visualizationHeaderHeight = $('.visualization-graph .visualization-header').outerHeight()
       graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
       tableHeight = (windowHeight*0.5) + @tableHeaderHeight
       @visualizationTable.css 'top', graphHeight + @visualizationHeaderHeight
