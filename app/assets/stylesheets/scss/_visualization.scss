@@ -521,6 +521,8 @@ $node-color-12: #e0deda;
   border-radius: 0;
   color: $gray;
   background: $gray-blue;
+  overflow-y: auto;
+  overflow-x: hidden;
   @include transition( right 0.5s ease-out );
 
   &.active{
@@ -1227,6 +1229,10 @@ body.visualizations.edit{
       position: fixed;
       top: -91px;
     }
+  }
+
+  .visualization-graph-info{
+    bottom: 45px;
   }
 
   .visualization-graph-container.affix{
