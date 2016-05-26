@@ -115,7 +115,7 @@ class VisualizationTableRelations extends VisualizationTableBase
     console.log 'createRow', index
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
-    row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': true, wait: true}
+    row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': false, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
       @table.setDataAtRowProp index, 'id', row_model.id
@@ -131,7 +131,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         console.log 'now set duplicate values'
         @duplicate = null
       else
-        @table.setDataAtRowProp index, 'direction', true
+        @table.setDataAtRowProp index, 'direction', false
     , @
 
   # Method called from parent class `VisualizationTableBase`  
