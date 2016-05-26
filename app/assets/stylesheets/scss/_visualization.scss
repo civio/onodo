@@ -777,7 +777,7 @@ body.fullscreen{
   }
 
   .visualization-table-scrollbar{
-    height: 42px;
+    height: 40px;
     color: white;
     background: $brand-yellow;
     text-align: center;
@@ -1214,6 +1214,14 @@ body.fullscreen{
 body.visualizations.show{
   .visualization-table-relations{
     display: none;
+  }
+}
+body.show{
+  // Setup scroll for visualization table view
+  .visualization-table .tab-content .tab-pane{
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 480px;
   }
 }
 

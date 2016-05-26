@@ -28,16 +28,16 @@
               - custom_fields.each do |field|
                 %th= field
           %tbody
-          - visualization.nodes.each do |node|
-            %tr
-              %td= node.name
-              %td= node.node_type
-              %td= node.description.html_safe if node.description
-              %td
-                %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
-                  Node Visibility
-              - custom_fields.each do |field|
-                %td= node.custom_fields[field] if node.custom_fields[field]
+            - visualization.nodes.each do |node|
+              %tr
+                %td= node.name
+                %td= node.node_type
+                %td= node.description.html_safe if node.description
+                %td
+                  %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
+                    Node Visibility
+                - custom_fields.each do |field|
+                  %td= node.custom_fields[field] if node.custom_fields[field]
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
           %thead
@@ -47,9 +47,9 @@
               %th Target
               %th Date
           %tbody
-          - visualization.relations.each do |relation|
-            %tr
-              %td= relation.source && relation.source.name
-              %td= relation.relation_type
-              %td= relation.target && relation.target.name
-              %td= relation.at
+            - visualization.relations.each do |relation|
+              %tr
+                %td= relation.source && relation.source.name
+                %td= relation.relation_type
+                %td= relation.target && relation.target.name
+                %td= relation.at
