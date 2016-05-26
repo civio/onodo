@@ -31,9 +31,7 @@ class NodesController < ApplicationController
   # PATCH /nodes/:id/
   def update
     @node.update_attributes( node_params )
-    # TODO!!! Redirect to visualization that contain the node
-    #redirect_to edit_node_path( @node )
-    render nothing: true, head: :ok, content_type: 'text/html'
+    redirect_to edit_visualization_path(@node.visualization)
   end
 
   # PATCH /nodes/:id/image
