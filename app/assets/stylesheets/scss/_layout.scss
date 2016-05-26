@@ -303,6 +303,8 @@
         font-style: italic;
         margin: $grid-gutter-width/2 $grid-gutter-width;
         font-weight: 300;
+        max-height: 160px;
+        overflow: hidden;
       }
     }
     .item-author a{
