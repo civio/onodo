@@ -40,9 +40,10 @@
           = f.label      :node_type, "Type"
           = f.text_field :node_type, class: "form-control"
         - if @node.dataset.custom_fields
-          - @node.dataset.custom_fields.each do |custom_field|
+          = f.fields_for :custom_fields, OpenStruct.new(f.object.custom_fields) do |cf|
             .form-group
-              = f.label "node-input-custom-field-"+custom_field, custom_field
-              /= f.text_field :"custom_fields[:#{custom_field}]", class: "form-control"
+              - @node.dataset.custom_fields.each do |custom_field|
+                = cf.label custom_field
+                = cf.text_field :"#{custom_field}", class: "form-control"
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: edit_visualization_path(@node.visualization) } Cancel
