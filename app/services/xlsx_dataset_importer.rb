@@ -142,7 +142,7 @@ class XlsxDatasetImporter
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : (k.capitalize=="Date") ? :at : k.downcase.gsub(' ', '_').to_sym, v.is_a?(String) ? v.strip : v ] }.to_h
       result[:source] = @nodes.find{ |n| n.name == result[:source] } || (m = Node.new(name: result[:source]); @nodes << m; m)
       result[:target] = @nodes.find{ |n| n.name == result[:target] } || (m = Node.new(name: result[:target]); @nodes << m; m)
-      result[:direction] = result[:direction] == 0 ? false : true
+      result[:direction] = result[:direction] == 1 ? true : false
       result[:at] = result[:at].to_s
       Relation.new(result.slice(*relation_attributes))
     end
