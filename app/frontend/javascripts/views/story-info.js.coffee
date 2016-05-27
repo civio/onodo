@@ -40,6 +40,7 @@ class StoryInfo extends Backbone.View
         id:           @model.get('id')
         name:         @model.get('name')
         description:  @model.get('description')
+        image:        @model.get('image').huge.url
         edit:         @edit
         #image: if @node.get('image') then @node.get('image').huge.url else null
       }
