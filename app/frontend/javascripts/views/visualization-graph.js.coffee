@@ -3,6 +3,7 @@ VisualizationGraphCanvas          = require './../views/visualization-graph-canv
 VisualizationGraphConfiguration   = require './../views/visualization-graph-configuration.js'
 VisualizationGraphNavigation      = require './../views/visualization-graph-navigation.js'
 VisualizationGraphInfo            = require './../views/visualization-graph-info.js'
+BootstrapSwitch                   = require 'bootstrap-switch'
 
 class VisualizationGraph extends Backbone.View
   
@@ -46,6 +47,8 @@ class VisualizationGraph extends Backbone.View
 
     # Setup Events Listeners (only in edit mode)
     if !story and edit 
+      # Setup Network Analysis modal switches
+      $('#network-analysis-modal .switch').bootstrapSwitch()
       # Subscribe Collection Events (handle Table changes)
       @collection.nodes.bind 'add',                 @onNodesAdd, @
       @collection.nodes.bind 'change:name',         @onNodeChangeName, @

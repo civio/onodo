@@ -1310,3 +1310,40 @@ body.visualizations.edit{
     margin-bottom: 2*$grid-gutter-width/3;
   }
 }
+
+// Network Analysis Modal
+#network-analysis-modal{
+
+  .modal-title{
+    color: $gray;
+    font-size: 1em;
+    font-weight: 300;
+    line-height: 1.75em;
+    text-transform: uppercase;
+  }
+
+  .modal-description{
+    color: $gray;
+    font-weight: 300;
+    margin-bottom: $grid-gutter-width/2;
+  }
+
+  .icon-question{
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    left: 0;
+    @include retina-sprite( $icon-question-group );
+    cursor: pointer;
+  }
+
+  label{
+    padding-right: $grid-gutter-width/6;
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+
+  .bootstrap-switch{
+    margin-bottom: 2*$grid-gutter-width/3;
+  }
+}
