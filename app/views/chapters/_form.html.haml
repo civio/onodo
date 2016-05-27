@@ -1,5 +1,29 @@
-- url     = (defined? edit) ? chapter_path(@chapter) : story_chapters_path
-- method  = (defined? edit) ? 'patch' : 'post'
+- url       = (defined? edit) ? chapter_path(@chapter) : story_chapters_path
+- method    = (defined? edit) ? 'patch' : 'post'
+= form_for :chapter, url: url, html: { class: 'media-upload', method: method, multipart: true } do |f|
+  %p.media-upload-title
+    Chapter photo
+  %p.media-upload-description
+    Your chapter photo should be about 320px wide and under 1MB
+  .media
+    .media-left
+      %img.img-circle.media-object{src: (@chapter and @chapter.image) ? @chapter.image.medium.url : '' }
+    .media-body
+      .form-group
+        = f.label :image, "Upload from your computer"
+        %span.btn.btn-primary.btn-file
+          %i.glyphicon.glyphicon-folder-open
+          Browse
+          = f.file_field :image, class: 'form-control'
+          = f.hidden_field :image_cache
+        %p.btn-file-output
+        .clearfix
+      .form-group
+        = f.label :remote_image_url, "Or choose it from internet"
+        = f.text_field :remote_image_url, class: 'form-control'
+    .actions
+      = f.submit "Upload Photo", class: "btn btn-default btn-primary"
+    %hr
 = form_for :chapter, url: url , method: method, html: {:class => 'form-default'} do |f|
   = f.hidden_field :story_id, value: @story.id
   .form-group
@@ -10,7 +34,6 @@
     = f.text_field :description, type: "hidden"
     %trix-toolbar{ id: "wysiwig-toolbar", input: "chapter_description" }
     %trix-editor{ input: "chapter_description", toolbar: "wysiwig-toolbar", class: "form-control" }
-  // Add Chapter Image Form
   %p
     Choose the relationships that appear in this chapter.
   .visualization-table
