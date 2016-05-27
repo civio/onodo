@@ -20,3 +20,5 @@
     Related visualizations & stories
   .container
     = render 'partials/item_preview_carousel', items: @related_items
+
+= render 'partials/item_delete_modal', item: @story, story: true

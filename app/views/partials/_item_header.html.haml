@@ -15,35 +15,29 @@
               %a.active{ href: (defined? story) ? story_path(item) : visualization_path(item) } 
                 Preview #{item.class.to_s.downcase}
                 %i.icon-preview
-            %li
-              - if item.published?
-                = link_to raw('Unpublish <i class="icon-unpublish"></i>'), {controller: controller.controller_name, action: "unpublish", id: item.id}, {method: :post, class: "active"}
-              - else
-                = link_to raw('Publish <i class="icon-publish"></i>'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "active"}
-            %li
-              %a.active{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info' }
-                Edit #{item.class.to_s.downcase} info
-                %i.icon-edit
           - else
             %li
               %a.active{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item) }
                 Edit #{item.class.to_s.downcase}
-                %i.icon-edit
-            %li
-              - if item.published?
-                = link_to raw('Unpublish <i class="icon-unpublish"></i>'), {controller: controller.controller_name, action: "unpublish", id: item.id}, {method: :post, class: "active"}
-              - else
-                = link_to raw('Publish <i class="icon-publish"></i>'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "active"}
+                %i.icon-edit  
+          %li
+            - if item.published?
+              = link_to raw('Unpublish <i class="icon-unpublish"></i>'), {controller: controller.controller_name, action: "unpublish", id: item.id}, {method: :post, class: "active"}
+            - else
+              = link_to raw('Publish <i class="icon-publish"></i>'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "active"}
+          %li
+            %a.active{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info' }
+              Edit #{item.class.to_s.downcase} info
+              %i.icon-edit
           / %li
           /   %a{href: (defined? story) ? new_story_path : new_visualization_path} 
           /     Duplicate #{item.class.to_s.downcase}
           /     %i.icon-duplicate
           - if defined? story
-            - if defined? edit
-              %li
-                %a{href: new_story_chapter_path(item)} 
-                  Add Chapter to Story
-                  %i.icon-edit
+            %li
+              %a{href: new_story_chapter_path(item)} 
+                Add Chapter to Story
+                %i.icon-edit
             %li
               %a{href: edit_visualization_path(item.visualization)} 
                 Edit visualization
@@ -52,10 +46,9 @@
             %li
               %a{href: new_story_path} 
                 Create story from visualization
-                %i.icon-story            
-          - if defined? edit
-            %li
-              %a.text-danger{ href: "#item-delete-modal", data: {toggle: "modal"} }
-                Delete #{item.class.to_s.downcase}
-                %i.icon-trash
+                %i.icon-story
+          %li
+            %a.text-danger{ href: "#item-delete-modal", data: {toggle: "modal"} }
+              Delete #{item.class.to_s.downcase}
+              %i.icon-trash
       .clearfix
