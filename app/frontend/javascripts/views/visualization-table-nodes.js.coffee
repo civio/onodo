@@ -209,24 +209,29 @@ class VisualizationTableNodes extends VisualizationTableBase
   onAddCustomColumn: (e) =>
     e.preventDefault()
     # get column name from form input text
-    column_name = $(e.target).find('#add-custom-column-name').val()
+    column_name           = $(e.target).find('#add-custom-column-name').val()
+    column_name_formatted = column_name.replace(/\s+/g, '_').toLowerCase()
     # clear name input text value
     $('#add-custom-column-name').val('')
     # push column name in tableColHeaders array
     @tableColHeaders.push column_name
     @table_options.colHeaders = @tableColHeaders
     # push new column data in columns array
-    @table_options.columns.push { data: column_name.replace(/\s+/g, '_').toLowerCase() } 
+    @table_options.columns.push { data: column_name_formatted } 
     console.log 'onAddCustomColumn', e.target, @table_options
     # update table options
     if @table
       @table.updateSettings @table_options
     # update custom_fields in visualization model 
+    custom_fields = @model.get('custom_fields')
+    custom_fields.push column_name_formatted
     # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    console.log 'save ustom_fields in DB', @tableColHeaders.slice Object.keys(@columns).length, @tableColHeaders.length
-    @model.save {custom_fields: @tableColHeaders.slice(Object.keys(@columns).length, @tableColHeaders.length)}, {patch: true}
+    console.log 'save custom_fields in DB', custom_fields
+    @model.save {custom_fields: custom_fields}, {patch: true}
+    # trigger events for visualization configuration panel
+    @model.trigger 'change:custom_fields'
     # hide modal
-    $('#table-add-column-modal').modal 'hide'
+    $('#table-add-column-nodes-modal').modal 'hide'
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

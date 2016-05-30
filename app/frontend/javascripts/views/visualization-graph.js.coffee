@@ -66,6 +66,7 @@ class VisualizationGraph extends Backbone.View
       @collection.relations.bind 'remove',                @onRelationsRemove, @
       # Subscribe Config Panel Events
       Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
+      Backbone.on 'visualization.config.updateNodesColorColumn',      @onUpdateNodesColorColumn, @
       Backbone.on 'visualization.config.updateNodesSize',             @onUpdateNodesSize, @
       Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabel, @
       Backbone.on 'visualization.config.toogleNodesImage',            @onToogleNodesImage, @
@@ -208,6 +209,10 @@ class VisualizationGraph extends Backbone.View
   # Config Panel Events
   onUpdateNodesColor: (e) ->
     @visualizationGraphCanvas.updateNodesColor e.value
+
+  onUpdateNodesColorColumn: (e) ->
+    # TODO!!! Add updateNodesColorColumn method in VisualizationGraphCanvas
+    #@visualizationGraphCanvas.updateNodesColorColumn e.value
 
   onUpdateNodesSize: (e) ->
     @visualizationGraphCanvas.updateNodesSize e.value
