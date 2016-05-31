@@ -170,7 +170,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#reset-defaults').click        @onResetDefaults
 
     # Add new custom fields to nodes-color-column select when created
-    @model.on 'change:custom_fields', onCustomFieldAdded
+    @model.on 'change:custom_fields', @onCustomFieldAdded
 
     return this
 
