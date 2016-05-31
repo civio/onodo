@@ -1,6 +1,34 @@
-d3 = require 'd3'
+d3       = require 'd3'
 
 class VisualizationGraphCanvasTest extends Backbone.View
+
+  COLORS: {
+    'solid-1': '#ef9387'
+    'solid-2': '#fccf80'
+    'solid-3': '#fee378'
+    'solid-4': '#d9d070'
+    'solid-5': '#82a389'
+    'solid-6': '#87948f'
+    'solid-7': '#89b5df'
+    'solid-8': '#aebedf'
+    'solid-9': '#c6a1bc'
+    'solid-10': '#f1b6ae'
+    'solid-11': '#a8a6a0'
+    'solid-12': '#e0deda'
+    'quantitative-1': '#382759'
+    'quantitative-2': '#31458f'
+    'quantitative-3': '#2b64c5'
+    'quantitative-4': '#2482fb'
+    'quantitative-5': '#6d9ebb'
+    'quantitative-6': '#b5ba7c'
+    'quantitative-7': '#fed63c'
+    'quantitative-8': '#fedf69'
+    'quantitative-9': '#ffe795'
+    'quantitative-10': '#fff0c2'
+  }
+
+  COLOR_QUALITATIVE:  null
+  COLOR_QUANTITATIVE: null
 
   svg:                    null
   defs:                   null
@@ -47,6 +75,37 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   initialize: (options) ->
 
+    # setup colors scales
+    @COLOR_QUALITATIVE = [
+      @COLORS['solid-3']
+      @COLORS['solid-7']
+      @COLORS['solid-1']
+      @COLORS['solid-5']
+      @COLORS['solid-2']
+      @COLORS['solid-8']
+      @COLORS['solid-4']
+      @COLORS['solid-9']
+      @COLORS['solid-6']
+      @COLORS['solid-10']
+      @COLORS['solid-11']
+      @COLORS['solid-12']
+    ]
+    @COLOR_QUANTITATIVE = [
+      @COLORS['quantitative-1']
+      @COLORS['quantitative-2']
+      @COLORS['quantitative-3']
+      @COLORS['quantitative-4']
+      @COLORS['quantitative-5']
+      @COLORS['quantitative-6']
+      @COLORS['quantitative-7']
+      @COLORS['quantitative-8']
+      @COLORS['quantitative-9']
+      @COLORS['quantitative-10']
+    ]
+
+    # Setup color scale
+    @colorQualitativeScale  = d3.scaleOrdinal().range @COLOR_QUALITATIVE
+    @colorQuantitativeScale = d3.scaleOrdinal().range @COLOR_QUANTITATIVE
 
   setup: (_data, _parameters) ->
 
@@ -63,7 +122,19 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @viewport.center.x  = @viewport.width*0.5
     @viewport.center.y  = @viewport.height*0.5
 
-    # # Setup force
+    # Setup force
+    forceLink = d3.forceLink()
+      .id       (d) -> return d.id
+      .distance ()  => return @parameters.linkDistance
+
+    @force = d3.forceSimulation()
+      .force 'link',    forceLink
+      .force 'charge',  d3.forceManyBody()
+      .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
+      .on    'tick',    @onTick
+
+    #@force.alphaDecay 0.03
+
     # @force = d3.layout.force()
     #   .linkDistance @parameters.linkDistance
     #   .linkStrength @parameters.linkStrength
@@ -74,9 +145,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
     #   .size         [@viewport.width, @viewport.height]
     #   .on           'tick', @onTick
 
-    # @forceDrag = @force.drag()
-    #   .on('dragstart',  @onNodeDragStart)
-    #   .on('dragend',    @onNodeDragEnd)
+    @forceDrag = d3.drag()
+      .on('start',  @onNodeDragStart)
+      .on('drag',   @onNodeDragged)
+      .on('end',    @onNodeDragEnd)
 
     # Setup SVG
     @svg = d3.select('svg')
@@ -110,8 +182,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
         @addNodeData d
 
     # Setup color ordinal scale domain
-    #@colorQualitativeScale.domain   data.nodes.map( (d) -> d.node_type )
-    #@colorQuantitativeScale.domain  data.nodes.map( (d) -> d.node_type )
+    @colorQualitativeScale.domain   data.nodes.map( (d) -> d.node_type )
+    @colorQuantitativeScale.domain  data.nodes.map( (d) -> d.node_type )
 
     # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
     data.relations.forEach (d) =>
@@ -134,106 +206,133 @@ class VisualizationGraphCanvasTest extends Backbone.View
   render: ->
     console.log 'render canvas'
     @updateRelations()
-    @updateRelationsLabels()
+    #@updateRelationsLabels()
     @updateNodes()
     @updateNodesLabels()
     @updateForce()
 
   updateNodes: ->
-    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+    # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
-    # DATA JOIN
+    # JOIN new data with old elements
     @nodes = @nodes_cont.selectAll('.node').data(@data_nodes)
 
-    # ENTER
+    console.log 'nodes after join', @nodes
+
+    # EXIT old elements not present in new data
+    @nodes.exit().remove()
+
+    # UPDATE old elements present in new data
+    #@nodes
+      #.attr('id', (d) -> return 'node-'+d.id)
+      #.attr 'class',    (d) -> console.log('node update', d); return if d.disabled then 'node disabled' else 'node'
+      # update node size
+      #.attr  'r',       @getNodeSize
+      # set nodes color based on parameters.nodesColor value or image as pattern if defined
+      #.style 'fill',    @getNodeFill
+      #.style 'stroke',  @getNodeColor
+
+    # ENTER new elements present in new data.
     @nodes.enter().append('circle')
+      .attr  'id',      (d) -> return 'node-'+d.id
+      .attr  'class',   (d) -> console.log('node enter', d); return if d.disabled then 'node disabled' else 'node'
+      # update node size
+      .attr  'r',       @getNodeSize
+      # set position at viewport center
+      #.attr  'cx',      @viewport.center.x
+      #.attr  'cy',      @viewport.center.y
+      # set nodes color based on parameters.nodesColor value or image as pattern if defined
+      .style 'fill',    @getNodeFill
+      .style 'stroke',  @getNodeColor
       # .on   'mouseover',  @onNodeOver
       # .on   'mouseout',   @onNodeOut
       # .on   'click',      @onNodeClick
       # .on   'dblclick',   @onNodeDoubleClick
-      # .call @forceDrag
+      .call @forceDrag
 
-    # ENTER + UPDATE
-    @nodes.attr('id', (d) -> return 'node-'+d.id)
-      .attr 'class',    (d) -> return if d.disabled then 'node disabled' else 'node'
-      # update node size
-      .attr  'r',       @getNodeSize
-      # set nodes color based on parameters.nodesColor value or image as pattern if defined
-      .style 'fill',    @getNodeFill
-      .style 'stroke',  @getNodeColor
-      
-    # EXIT
-    @nodes.exit().remove()
+    @nodes = @nodes_cont.selectAll('.node')
+
+    console.log 'nodes after enter', @nodes
 
   updateRelations: ->
-    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+    # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
-    # DATA JOIN
+    # JOIN new data with old elements
     @relations = @relations_cont.selectAll('.relation').data(@data_relations_visibles)
 
-    # ENTER
-    @relations.enter().append('path')
-
-    # ENTER + UPDATE
-    @relations.attr('id', (d) -> return 'relation-'+d.id)
-      .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
-      .attr 'marker-end',   @getRelationMarkerEnd
-      .attr 'marker-start', @getRelationMarkerStart
-
-    # EXIT
+    # EXIT old elements not present in new data
     @relations.exit().remove()
+
+    # UPDATE old elements present in new data
+    @relations
+      .attr('id', (d) -> return 'relation-'+d.id)
+      .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
+      #.attr 'marker-end',   @getRelationMarkerEnd
+      #.attr 'marker-start', @getRelationMarkerStart
+
+    # ENTER new elements present in new data.
+    @relations.enter().append('path')
+      .attr('id', (d) -> return 'relation-'+d.id)
+      .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
+
+    @relations = @relations_cont.selectAll('.relation')
+
 
   updateNodesLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
+    # @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
 
-    # ENTER
-    @nodes_labels.enter().append('text')
-      .attr 'id',     (d,i) -> return 'node-label-'+d.id
-      .attr 'dx',     0
-      .attr 'dy',     @getNodeLabelYPos
+    # # ENTER
+    # @nodes_labels.enter().append('text')
+    #   .attr 'id',     (d,i) -> return 'node-label-'+d.id
+    #   .attr 'dx',     0
+    #   .attr 'dy',     @getNodeLabelYPos
 
-    # ENTER + UPDATE
-    @nodes_labels
-      .attr 'class', @getNodeLabelClass
-      .text (d) -> return d.name
-      .call @formatNodesLabels
+    # # ENTER + UPDATE
+    # @nodes_labels
+    #   .attr 'class', @getNodeLabelClass
+    #   .text (d) -> return d.name
+    #   .call @formatNodesLabels
 
-    # EXIT
-    @nodes_labels.exit().remove()
+    # # EXIT
+    # @nodes_labels.exit().remove()
 
   updateRelationsLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
+    # @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
 
-    # ENTER
-    @relations_labels.enter()
-      .append('text')
-        .attr('id', (d) -> return 'relation-label-'+d.id)
-        .attr('class', 'relation-label')
-        .attr('x', 0)
-        .attr('dy', -4)
-      .append('textPath')
-        .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
-        .style('text-anchor', 'middle')
-        .attr('startOffset', '50%') 
-        #.text((d) -> return d.relation_type)
+    # # ENTER
+    # @relations_labels.enter()
+    #   .append('text')
+    #     .attr('id', (d) -> return 'relation-label-'+d.id)
+    #     .attr('class', 'relation-label')
+    #     .attr('x', 0)
+    #     .attr('dy', -4)
+    #   .append('textPath')
+    #     .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
+    #     .style('text-anchor', 'middle')
+    #     .attr('startOffset', '50%') 
+    #     #.text((d) -> return d.relation_type)
 
-    # ENTER + UPDATE
-    @relations_labels.selectAll('textPath').text((d) -> return d.relation_type)
+    # # ENTER + UPDATE
+    # @relations_labels.selectAll('textPath').text((d) -> return d.relation_type)
 
-    # EXIT
-    @relations_labels.exit().remove()
+    # # EXIT
+    # @relations_labels.exit().remove()
 
   updateForce: ->
-    @force
-      .nodes(@data_nodes)
-      .links(@data_relations_visibles)
-      .start()
+    @force.nodes(@data_nodes)
+    @force.force('link').links(@data_relations_visibles)
+    @force.restart()
+    
+    # @force
+    #   .nodes(@data_nodes)
+    #   .links(@data_relations_visibles)
+    #   .start()
 
 
   # Nodes / Relations methods
@@ -398,7 +497,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @svg.attr   'height', @viewport.height
     @rescale()
     # Update force size
-    @force.size [@viewport.width, @viewport.height]
+    #@force.size [@viewport.width, @viewport.height]
 
   rescale: ->
     @container.attr 'transform', @getContainerTransform()
@@ -417,7 +516,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   setOffsetY: (offset) ->
     @viewport.offsety = if offset < 0 then 0 else offset
-    @container.attr 'transform', @getContainerTransform()
+    if @container
+      @container.attr 'transform', @getContainerTransform()
 
    getContainerTransform: ->
     return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
@@ -449,16 +549,25 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   # Nodes drag events
   onNodeDragStart: (d) =>
-    d3.event.sourceEvent.stopPropagation() # silence other listeners
-    @viewport.drag.x = d.x
-    @viewport.drag.y = d.y
+    # d3.event.sourceEvent.stopPropagation() # silence other listeners
+    # @viewport.drag.x = d.x
+    # @viewport.drag.y = d.y
+    if !d3.event.active
+      @force.alphaTarget(0.1).restart()
+    @force.fix(d)
   
+  onNodeDragged: (d) =>
+    @force.fix d, d3.event.x, d3.event.y
+
   onNodeDragEnd: (d) =>
-    d3.event.sourceEvent.stopPropagation() # silence other listeners
-    if @viewport.drag.x == d.x and @viewport.drag.y == d.y
-      return  # Skip if has no translation
-    # fix the node position when the node is dragged
-    d.fixed = true;
+    # d3.event.sourceEvent.stopPropagation() # silence other listeners
+    # if @viewport.drag.x == d.x and @viewport.drag.y == d.y
+    #   return  # Skip if has no translation
+    # # fix the node position when the node is dragged
+    # d.fixed = true;
+    if !d3.event.active
+      @force.alphaTarget(0)
+    #@force.unfix d
 
   onNodeOver: (d) =>
     #@nodes.select('circle')
@@ -495,17 +604,22 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   # Tick Function
   onTick: =>
+    console.log 'on tick'
     # Set relations path & arrow markers
     @relations
-      .attr('d', @drawRelationPath)
+      .attr 'd', @drawRelationPath
       #.attr('marker-end', @getRelationMarkerEnd)
       #.attr('marker-start', @getRelationMarkerStart)
     # Set nodes & labels position
-    @nodes.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
-    @nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
+    @nodes
+      .attr 'cx', (d) -> return d.x
+      .attr 'cy', (d) -> return d.y
+      #.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
+    #@nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
   
   drawRelationPath: (d) =>
-  
+    return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+
 
   # Auxiliar Methods
   # ----------------
@@ -539,13 +653,12 @@ class VisualizationGraphCanvasTest extends Backbone.View
     return parseInt(@svg.select('#node-'+d.id).attr('r'))+13
 
   getNodeColor: (d) =>
-    # if @parameters.nodesColor == 'qualitative'
-    #    color = @colorQualitativeScale d.node_type  
-    #  else if @parameters.nodesColor == 'quantitative'
-    #    color = @colorQuantitativeScale d.node_type
-    #  else
-    #    color = @COLORS[@parameters.nodesColor]
-    color = '#333'
+    if @parameters.nodesColor == 'qualitative'
+       color = @colorQualitativeScale d.node_type  
+     else if @parameters.nodesColor == 'quantitative'
+       color = @colorQuantitativeScale d.node_type
+     else
+       color = @COLORS[@parameters.nodesColor]
     return color
 
   getNodeFill: (d) =>
