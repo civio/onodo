@@ -279,6 +279,13 @@
     .actions{
       margin-top: $grid-gutter-width/2;
     }
+
+    .picture{
+      float: left;
+      width: 50%;
+      margin-right: $grid-gutter-width/2;
+      margin-top: $grid-gutter-width/6;
+    }
   }
 }
 
