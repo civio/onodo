@@ -43,6 +43,19 @@
                 %li.color-qualitative{ 'data-value': 'qualitative' }
                   %p
                     Qualitative
+        .row.nodes-color-column-container.hide
+          .col-sm-5
+            %p.configuration-label
+              Based on column
+          .col-sm-7.text-right
+            #nodes-color-column.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                %span.caret
+              %ul.dropdown-menu
+                %li{ 'data-value': 'type' }
+                  %p
+                    Type
         %hr
         .row
           .col-sm-5

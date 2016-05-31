@@ -508,6 +508,15 @@ $node-color-12: #e0deda;
         margin-bottom: $grid-gutter-width/6;
       }
     }
+  
+    .dropdown .dropdown-menu li,
+    .dropdown .dropdown-toggle .text{
+      text-transform: capitalize;
+    }
+
+    .nodes-color-column-container{
+      margin-top: $grid-gutter-width/3; 
+    }
   }
 }
 
