@@ -52,6 +52,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   linkedByIndex:          {}
   parameters:             null
   nodes_relations_size:   null
+  node_active:            null
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -246,7 +247,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     console.log 'render canvas'
     @updateImages()
     @updateRelations()
-    #@updateRelationsLabels()
+    @updateRelationsLabels()
     @updateNodes()
     @updateNodesLabels()
     @updateForce restarForce
@@ -372,29 +373,39 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
 
   updateRelationsLabels: ->
-    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+    # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
-    # DATA JOIN
-    # @relations_labels = @container_inner.selectAll('.relation-label').data(@data_relations_visibles)
+    # JOIN new data with old elements
+    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
 
-    # # ENTER
-    # @relations_labels.enter()
-    #   .append('text')
-    #     .attr('id', (d) -> return 'relation-label-'+d.id)
-    #     .attr('class', 'relation-label')
-    #     .attr('x', 0)
-    #     .attr('dy', -4)
-    #   .append('textPath')
-    #     .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
-    #     .style('text-anchor', 'middle')
-    #     .attr('startOffset', '50%') 
-    #     #.text((d) -> return d.relation_type)
+    # EXIT old elements not present in new data
+    @relations_labels.exit().remove()
 
-    # # ENTER + UPDATE
-    # @relations_labels.selectAll('textPath').text((d) -> return d.relation_type)
+    # UPDATE old elements present in new data
+    @relations_labels.text((d) -> return d.relation_type)
+    #@relations_labels.selectAll('textPath').text((d) -> return d.relation_type)
 
-    # # EXIT
-    # @relations_labels.exit().remove()
+    # ENTER new elements present in new data.
+    @relations_labels.enter()
+      .append('text')
+        .attr('id', (d) -> return 'relation-label-'+d.id)
+        .attr('class', 'relation-label')
+        .style('text-anchor', 'middle')
+        .text((d) -> return d.relation_type)
+
+      # .append('text')
+      #   .attr('id', (d) -> return 'relation-label-'+d.id)
+      #   .attr('class', 'relation-label')
+      #   .attr('x', 0)
+      #   .attr('dy', -4)
+      # .append('textPath')
+      #   .attr('xlink:href',(d) -> return '#relation-'+d.id) # link textPath to label relation
+      #   .style('text-anchor', 'middle')
+      #   .attr('startOffset', '50%') 
+      #   .text((d) -> return d.relation_type)
+
+    @relations_labels = @relations_labels_cont.selectAll('.relation-label')
+
 
   updateForce: (restarForce) ->
     @force.nodes(@data_nodes)
@@ -513,7 +524,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
   removeNode: (node) ->
     console.log 'removeNode', node
     # unfocus node to remove
-    @nodes.selectAll('#node-'+node.id).classed('active', false)
+    if @node_active == node.id
+      @unfocusNode()
     @removeNodeData node
     @removeNodeRelations node
     @render true
@@ -553,12 +565,17 @@ class VisualizationGraphCanvasTest extends Backbone.View
   hideNode: (node) ->
     @removeNode node
 
-  focusNode: (node)->
-    @unfocusNode()
+  focusNode: (node) ->
+    @node_active = node.id
+    console.log 'focus node', @node_active
+    @container.selectAll('.node.active').classed('active', false)
     @container.selectAll('#node-'+node.id).classed('active', true)
 
   unfocusNode: ->
+    @node_active = null
+    console.log 'unfocus node', @node_active
     @container.selectAll('.node.active').classed('active', false)
+    @onNodeOut()
 
 
   # Resize Methods
@@ -738,6 +755,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
       @force.alphaTarget(0)
 
   onNodeOver: (d) =>
+    # skip if any node is active
+    if @node_active
+      return
     #@nodes.select('circle')
     #  .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
     #
@@ -748,9 +768,13 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
     # highlight node relation labels
-    #@relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+    @relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
+    console.log 'nodeout', @node_active
+    # skip if any node is active
+    if @node_active
+      return
     #@nodes.select('circle')
     #  .style('fill', (o) => return @color(o.node_type))
     #
@@ -758,7 +782,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
-    #@relations_labels.classed 'highlighted', false
+    @relations_labels.classed 'highlighted', false
 
   onNodeClick: (d) =>
     # Avoid trigger click on dragEnd
@@ -783,9 +807,13 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes
       .attr 'cx', (d) -> return d.x
       .attr 'cy', (d) -> return d.y
-      #.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
+    # Set nodes labels position
     @nodes_labels
       .attr 'transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')'
+    # Set relation labels position
+    @relations_labels
+      .attr 'x', (d) -> return d.source.x
+      .attr 'y', (d) -> return d.source.y
   
   drawRelationPath: (d) =>
     return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
