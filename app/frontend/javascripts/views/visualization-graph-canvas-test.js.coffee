@@ -150,14 +150,16 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .on('drag',   @onNodeDragged)
       .on('end',    @onNodeDragEnd)
 
+    svgDrag = d3.drag()
+      .on('start',  @onCanvasDragStart)
+      .on('drag',   @onCanvasDragged)
+      .on('end',    @onCanvasDragEnd)
+
     # Setup SVG
     @svg = d3.select('svg')
-        .attr('width',  @viewport.width)
-        .attr('height', @viewport.height)
-        #.call(d3.behavior.drag()
-        #  .on('drag',       @onCanvasDrag)
-        #  .on('dragstart',  @onCanvasDragStart)
-        #  .on('dragend',    @onCanvasDragEnd))
+      .attr 'width',  @viewport.width
+      .attr 'height', @viewport.height
+      .call svgDrag
 
     # if nodesSize = 1, set nodes size based on its number of relations
     if @parameters.nodesSize == 1
@@ -244,10 +246,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
       .style 'fill',    @getNodeFill
       .style 'stroke',  @getNodeColor
-      # .on   'mouseover',  @onNodeOver
-      # .on   'mouseout',   @onNodeOut
-      # .on   'click',      @onNodeClick
-      # .on   'dblclick',   @onNodeDoubleClick
+      .on   'mouseover',  @onNodeOver
+      .on   'mouseout',   @onNodeOut
+      .on   'click',      @onNodeClick
+      .on   'dblclick',   @onNodeDoubleClick
       .call @forceDrag
 
     @nodes = @nodes_cont.selectAll('.node')
@@ -523,11 +525,31 @@ class VisualizationGraphCanvasTest extends Backbone.View
     return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
 
 
+  # Navigation Methods
+  # ---------------
+
+  zoomIn: ->
+    @zoom @viewport.scale*1.2
+    
+  zoomOut: ->
+    @zoom @viewport.scale/1.2
+  
+  zoom: (value) ->
+    @viewport.scale = value
+    @container
+      .transition()
+        .duration(500)
+        .attr 'transform', @getContainerTransform()
+
+
   # Events Methods
   # ---------------
 
   # Canvas Drag Events
-  onCanvasDrag: =>
+  onCanvasDragStart: =>
+    @svg.style('cursor','move')
+
+  onCanvasDragged: =>
     @viewport.x  += d3.event.dx
     @viewport.y  += d3.event.dy
     @viewport.dx += d3.event.dx
@@ -535,18 +557,15 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @rescale()
     d3.event.sourceEvent.stopPropagation()  # silence other listeners
 
-  onCanvasDragStart: =>
-    @svg.style('cursor','move')
-
   onCanvasDragEnd: =>
+    @svg.style('cursor','default')
     # Skip if viewport has no translation
     if @viewport.dx == 0 and @viewport.dy == 0
       Backbone.trigger 'visualization.node.hideInfo'
       return
     # TODO! Add viewportMove action to history
     @viewport.dx = @viewport.dy = 0;
-    @svg.style('cursor','default')
-
+   
   # Nodes drag events
   onNodeDragStart: (d) =>
     # d3.event.sourceEvent.stopPropagation() # silence other listeners
@@ -600,7 +619,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   onNodeDoubleClick: (d) =>
     # unfix the node position when the node is double clicked
-    d.fixed = false
+    @force.unfix d
+    #d.fixed = false
 
   # Tick Function
   onTick: =>
