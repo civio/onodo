@@ -131,7 +131,6 @@ class VisualizationGraph extends Backbone.View
     @collection.nodes.once 'sync', (model) =>
       console.log 'onNodesAdd', model.id, model
       @visualizationGraphCanvas.addNode model.attributes
-      @visualizationGraphCanvas.render()
     , @
 
   onNodeChangeName: (node) ->
@@ -155,7 +154,6 @@ class VisualizationGraph extends Backbone.View
       # Hide Panel Info if visible for current node
       if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
         @visualizationGraphInfo.hide()
-    @visualizationGraphCanvas.render()
 
   onNodeChangeImage: (node) ->
     console.log 'onNodeChangeImage', node
@@ -169,7 +167,6 @@ class VisualizationGraph extends Backbone.View
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name
     @visualizationGraphCanvas.removeNode node.attributes
-    @visualizationGraphCanvas.render()
     # Hide Panel Info if visible for current node
     if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
       @visualizationGraphInfo.hide()
@@ -182,7 +179,6 @@ class VisualizationGraph extends Backbone.View
       @visualizationGraphCanvas.removeVisibleRelationData relation.attributes
       # Add relation
       @visualizationGraphCanvas.addRelation relation.attributes
-      @visualizationGraphCanvas.render()
 
   onRelationsChangeType: (relation) ->
     console.log 'onRelationsChangeType', relation
@@ -193,7 +189,6 @@ class VisualizationGraph extends Backbone.View
 
   onRelationsRemove: (relation) ->
     @visualizationGraphCanvas.removeRelation relation.attributes
-    @visualizationGraphCanvas.render()
   
   # Canvas Events
   onNodeShowInfo: (e) ->

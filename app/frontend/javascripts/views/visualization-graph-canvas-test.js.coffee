@@ -39,6 +39,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
   data_nodes_map:         d3.map()
   data_relations:         []
   data_relations_visibles:[]
+  nodes_cont:             null
+  nodes_labels_cont:      null
+  relations_cont:         null
+  relations_labels_cont:  null
   nodes:                  null
   nodes_labels:           null
   relations:              null
@@ -123,12 +127,21 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .id       (d) -> return d.id
       .distance ()  => return @parameters.linkDistance
 
+    forceManyBody = d3.forceManyBody()
+      # (https://github.com/d3/d3-force#manyBody_strength)
+      .strength -> return -20
+      # set maximum distance between nodes over which this force is considered
+      # (https://github.com/d3/d3-force#manyBody_distanceMax)
+      .distanceMax 500
+      #.theta        @parameters.theta
+
     @force = d3.forceSimulation()
       .force 'link',    forceLink
-      .force 'charge',  d3.forceManyBody()
+      .force 'charge',  forceManyBody
       .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
       .on    'tick',    @onTick
 
+    #@force.alphaDecay 0
     #@force.alphaDecay 0.03
 
     # @force = d3.layout.force()
@@ -157,13 +170,43 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .attr 'height', @viewport.height
       .call svgDrag
 
+    # Define Arrow Markers
+    @defs = @svg.append('svg:defs')
+    # Setup arrow end
+    @defs.append('svg:marker')
+        .attr 'id', 'arrow-end'
+        .attr 'class', 'arrow-marker'
+        .attr 'viewBox', '-8 -10 8 20'
+        .attr 'refX', 2
+        .attr 'refY', 0
+        .attr 'markerWidth', 10
+        .attr 'markerHeight', 10
+        .attr 'orient', 'auto'
+      .append 'svg:path'
+        .attr 'd', 'M -10 -8 L 0 0 L -10 8'
+    # Setup arrow start
+    @defs.append('svg:marker')
+        .attr 'id', 'arrow-start'
+        .attr 'class', 'arrow-marker'
+        .attr 'viewBox', '0 -10 8 20'
+        .attr 'refX', -2
+        .attr 'refY', 0
+        .attr 'markerWidth', 10
+        .attr 'markerHeight', 10
+        .attr 'orient', 'auto'
+      .append 'svg:path'
+        .attr 'd', 'M 10 -8 L 0 0 L 10 8'
+
     # if nodesSize = 1, set nodes size based on its number of relations
     if @parameters.nodesSize == 1
       @setNodesRelationsSize()  # initialize nodes_relations_size array
 
     # Setup containers
     @container             = @svg.append('g')
-    @container_inner       = @container.append('g')
+    @relations_cont        = @container.append('g').attr('class', 'relations-cont '+@getRelationsLineStyle(@parameters.relationsLineStyle))
+    @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
+    @relations_labels_cont = @container.append('g').attr('class', 'relations-labels-cont')
+    @nodes_labels_cont     = @container.append('g').attr('class', 'nodes-labels-cont')
     
     # Translate svg
     @rescale()
@@ -199,44 +242,72 @@ class VisualizationGraphCanvasTest extends Backbone.View
     console.log 'current nodes', @data_nodes
     console.log 'current relations', @data_relations_visibles
 
-  render: ->
+  render: ( restarForce ) ->
     console.log 'render canvas'
+    @updateImages()
     @updateRelations()
     #@updateRelationsLabels()
     @updateNodes()
     @updateNodesLabels()
-    @updateForce()
+    @updateForce restarForce
+
+  updateImages: ->
+    # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
+
+    # JOIN new data with old elements
+    patterns = @defs.selectAll('filter').data(@data_nodes.filter (d) -> return d.image != null)
+
+    # EXIT old elements not present in new data
+    patterns.exit().remove()
+
+    # UPDATE old elements present in new data
+    patterns.attr('id', (d) -> return 'node-pattern-'+d.id)
+      .selectAll('image')
+        .attr('xlink:href', (d) -> return d.image.small.url)
+    
+    # ENTER new elements present in new data.
+    patterns.enter().append('pattern')
+      .attr('id', (d) -> return 'node-pattern-'+d.id)
+      .attr('x', '0')
+      .attr('y', '0')
+      .attr('width', '100%')
+      .attr('height', '100%')
+      .attr('viewBox', '0 0 30 30')
+      .append('image')
+        .attr('x', '0')
+        .attr('y', '0')
+        .attr('width', '30')
+        .attr('height', '30')
+        .attr('xlink:href', (d) -> return d.image.small.url)
 
   updateNodes: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
-    @nodes = @container_inner.selectAll('.node').data(@data_nodes)
-
-    console.log 'nodes after join', @nodes
+    @nodes = @nodes_cont.selectAll('.node').data(@data_nodes)
 
     # EXIT old elements not present in new data
     @nodes.exit().remove()
 
     # UPDATE old elements present in new data
-    #@nodes
-      #.attr('id', (d) -> return 'node-'+d.id)
-      #.attr 'class',    (d) -> console.log('node update', d); return if d.disabled then 'node disabled' else 'node'
+    @nodes
+      .attr 'id',       (d) -> return 'node-'+d.id
+      .attr 'class',    (d) -> return if d.disabled then 'node disabled' else 'node'
       # update node size
-      #.attr  'r',       @getNodeSize
+      .attr  'r',       @getNodeSize
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
-      #.style 'fill',    @getNodeFill
-      #.style 'stroke',  @getNodeColor
+      .style 'fill',    @getNodeFill
+      .style 'stroke',  @getNodeColor
 
     # ENTER new elements present in new data.
     @nodes.enter().append('circle')
       .attr  'id',      (d) -> return 'node-'+d.id
-      .attr  'class',   (d) -> console.log('node enter', d); return if d.disabled then 'node disabled' else 'node'
+      .attr  'class',   (d) -> return if d.disabled then 'node disabled' else 'node'
       # update node size
       .attr  'r',       @getNodeSize
       # set position at viewport center
-      #.attr  'cx',      @viewport.center.x
-      #.attr  'cy',      @viewport.center.y
+      .attr  'cx',      @viewport.center.x
+      .attr  'cy',      @viewport.center.y
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
       .style 'fill',    @getNodeFill
       .style 'stroke',  @getNodeColor
@@ -246,44 +317,45 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .on   'dblclick',   @onNodeDoubleClick
       .call @forceDrag
 
-    @nodes = @container_inner.selectAll('.node')
-
-    console.log 'nodes after enter', @nodes
+    @nodes = @nodes_cont.selectAll('.node')
 
   updateRelations: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
-    @relations = @container_inner.selectAll('.relation').data(@data_relations_visibles)
+    @relations = @relations_cont.selectAll('.relation').data(@data_relations_visibles)
 
     # EXIT old elements not present in new data
     @relations.exit().remove()
 
     # UPDATE old elements present in new data
-    @relations
-      .attr('id', (d) -> return 'relation-'+d.id)
-      .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
+    #@relations
+      #.attr 'id',           (d) -> return 'relation-'+d.id
+      #.attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
       #.attr 'marker-end',   @getRelationMarkerEnd
       #.attr 'marker-start', @getRelationMarkerStart
 
     # ENTER new elements present in new data.
     @relations.enter().append('path')
-      .attr('id', (d) -> return 'relation-'+d.id)
+      .attr 'id',           (d) -> return 'relation-'+d.id
       .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
+      #.attr 'marker-end',   @getRelationMarkerEnd
+      #.attr 'marker-start', @getRelationMarkerStart
 
-    @relations = @container_inner.selectAll('.relation')
+    @relations = @relations_cont.selectAll('.relation')
 
   updateNodesLabels: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
-    @nodes_labels = @container_inner.selectAll('.node-label').data(@data_nodes)
+    @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
 
     # EXIT old elements not present in new data
     @nodes_labels.exit().remove()
 
     # UPDATE old elements present in new data
     @nodes_labels
+      #.attr 'id',    (d,i) -> return 'node-label-'+d.id
       .attr 'class', @getNodeLabelClass
       .text (d) -> return d.name
       .call @formatNodesLabels
@@ -297,7 +369,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .text (d) -> return d.name
       .call @formatNodesLabels
 
-    @nodes_labels = @container_inner.selectAll('.node-label')
+    @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
 
   updateRelationsLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
@@ -324,10 +396,13 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # # EXIT
     # @relations_labels.exit().remove()
 
-  updateForce: ->
+  updateForce: (restarForce) ->
     @force.nodes(@data_nodes)
     @force.force('link').links(@data_relations_visibles)
-    @force.restart()
+    #@force.restart()
+
+    if restarForce
+      @force.alpha(0.5).restart()
     
     # @force
     #   .nodes(@data_nodes)
@@ -432,6 +507,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   addNode: (node) ->
     console.log 'addNode', node
     @addNodeData node
+    @render true
     # !!! We need to check if this node has some relation
 
   removeNode: (node) ->
@@ -440,6 +516,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes.selectAll('#node-'+node.id).classed('active', false)
     @removeNodeData node
     @removeNodeRelations node
+    @render true
 
   removeNodeRelations: (node) =>
     # update data_relations_visibles removing relations with removed node
@@ -452,6 +529,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # update nodes relations size if needed to take into acount the added relation
     if @parameters.nodesSize == 1
       @setNodesRelationsSize()
+    @render true
 
   removeRelation: (relation) ->
     console.log 'removeRelation', relation
@@ -459,6 +537,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # update nodes relations size if needed to take into acount the removed relation
     if @parameters.nodesSize == 1
       @setNodesRelationsSize()
+    @render true
 
   showNode: (node) ->
     console.log 'show node', node
@@ -469,6 +548,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       # if node is present in some relation we add it to data_relations and/or data_relations_visibles array
       if relation.source_id  == node.id or relation.target_id == node.id
         @addRelationData relation   
+    @render true
 
   hideNode: (node) ->
     @removeNode node
@@ -501,8 +581,12 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   rescale: ->
     @container.attr       'transform', @getContainerTransform()
-    @container_inner.attr 'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
- 
+    translateStr = 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
+    @relations_cont.attr        'transform', translateStr
+    @relations_labels_cont.attr 'transform', translateStr
+    @nodes_cont.attr            'transform', translateStr
+    @nodes_labels_cont.attr     'transform', translateStr
+
   setOffsetX: (offset) ->
     @viewport.offsetx = if offset < 0 then 0 else offset
     @container.transition()
@@ -517,6 +601,79 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
    getContainerTransform: ->
     return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
+
+
+  # Config Methods
+  # ---------------
+
+  # updateNodesColor: (value) =>
+  #   @parameters.nodesColor = value
+  #   @nodes
+  #     .style('fill', @getNodeFill)
+  #     .style('stroke', @getNodeColor)
+
+  # updateNodesSize: (value) =>
+  #   console.log 'updateNodesSize', value
+  #   @parameters.nodesSize = parseInt(value)
+  #   # if nodesSize = 1, set nodes size based on its number of relations
+  #   if @parameters.nodesSize == 1
+  #     @setNodesRelationsSize()
+  #   # update nodes radius
+  #   @nodes.attr('r', @getNodeSize)
+  #   # update nodes labels position
+  #   @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
+  #   # update relations arrows position
+  #   @relations.attr 'd', @drawRelationPath
+
+  # toogleNodesLabel: (value) =>
+  #   @nodes_labels.classed 'hide', !value
+
+  # toogleNodesImage: (value) =>
+  #   @parameters.showNodesImage = value
+  #   console.log 'toogleNodesImage',  @parameters
+  #   @updateNodes()
+  
+  # toogleNodesWithoutRelation: (value) =>
+  #   if value
+  #     @data_nodes.forEach (d) =>
+  #       if !@hasNodeRelations(d)
+  #         @removeNode d
+  #   else
+  #     # TODO!!! Check visibility before add a node
+  #     @data_nodes.forEach (d) =>
+  #       if !@hasNodeRelations(d)
+  #         @addNode d
+  #   @render()
+
+  # updateRelationsCurvature: (value) ->
+  #   @parameters.relationsCurvature = value
+  #   @onTick()
+
+  # updateRelationsLineStyle: (value) ->
+  #   @relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
+
+  getRelationsLineStyle: (value) ->
+    lineStyle = switch
+      when value == 0 then 'line-solid'
+      when value == 1 then 'line-dashed'
+      else 'line-dotted' 
+    return lineStyle
+
+  # updateForceLayoutParameter: (param, value) ->
+  #   @force.stop()
+  #   if param == 'linkDistance'
+  #     @force.linkDistance value
+  #   else if param == 'linkStrength'
+  #     @force.linkStrength value
+  #   else if param == 'friction'
+  #     @force.friction value
+  #   else if param == 'charge'
+  #     @force.charge value
+  #   else if param == 'theta'
+  #     @force.theta value
+  #   else if param == 'gravity'
+  #     @force.gravity value
+  #   @force.start()
 
 
   # Navigation Methods
@@ -566,7 +723,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # @viewport.drag.x = d.x
     # @viewport.drag.y = d.y
     if !d3.event.active
-      @force.alphaTarget(0.1).restart()
+      @force.alphaTarget(0.2).restart()
   
   onNodeDragged: (d) =>
     @force.fix d, d3.event.x, d3.event.y
@@ -579,7 +736,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # d.fixed = true;
     if !d3.event.active
       @force.alphaTarget(0)
-    #@force.unfix d
 
   onNodeOver: (d) =>
     #@nodes.select('circle')
@@ -726,7 +882,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       while word = words.pop()
         line.push word
         tspan.text line.join(' ')
-        if tspan.node().getComputedTextLength() > 100
+        if tspan.node().getComputedTextLength() > 120
           line.pop()
           tspan.text line.join(' ')
           line = [word]
