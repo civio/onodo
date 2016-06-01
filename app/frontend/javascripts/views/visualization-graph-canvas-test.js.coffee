@@ -39,10 +39,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
   data_nodes_map:         d3.map()
   data_relations:         []
   data_relations_visibles:[]
-  nodes_cont:             null
-  nodes_labels_cont:      null
-  relations_cont:         null
-  relations_labels_cont:  null
   nodes:                  null
   nodes_labels:           null
   relations:              null
@@ -166,13 +162,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
       @setNodesRelationsSize()  # initialize nodes_relations_size array
 
     # Setup containers
-    @container            = @svg.append('g')
-    @relations_cont       = @container.append('g').attr('class', 'relations-cont')
-    @nodes_cont           = @container.append('g').attr('class', 'nodes-cont')
-    @relations_labels_cont= @container.append('g').attr('class', 'relations-labels-cont')
-    @nodes_labels_cont    = @container.append('g').attr('class', 'nodes-labels-cont')
+    @container             = @svg.append('g')
+    @container_inner       = @container.append('g')
     
-    @rescale()  # Translate svg
+    # Translate svg
+    @rescale()
 
   initializeData: (data) ->
 
@@ -217,7 +211,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
-    @nodes = @nodes_cont.selectAll('.node').data(@data_nodes)
+    @nodes = @container_inner.selectAll('.node').data(@data_nodes)
 
     console.log 'nodes after join', @nodes
 
@@ -252,7 +246,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .on   'dblclick',   @onNodeDoubleClick
       .call @forceDrag
 
-    @nodes = @nodes_cont.selectAll('.node')
+    @nodes = @container_inner.selectAll('.node')
 
     console.log 'nodes after enter', @nodes
 
@@ -260,7 +254,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
-    @relations = @relations_cont.selectAll('.relation').data(@data_relations_visibles)
+    @relations = @container_inner.selectAll('.relation').data(@data_relations_visibles)
 
     # EXIT old elements not present in new data
     @relations.exit().remove()
@@ -277,35 +271,39 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .attr('id', (d) -> return 'relation-'+d.id)
       .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
 
-    @relations = @relations_cont.selectAll('.relation')
-
+    @relations = @container_inner.selectAll('.relation')
 
   updateNodesLabels: ->
-    # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
+    # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
-    # DATA JOIN
-    # @nodes_labels = @nodes_labels_cont.selectAll('.node-label').data(@data_nodes)
+    # JOIN new data with old elements
+    @nodes_labels = @container_inner.selectAll('.node-label').data(@data_nodes)
 
-    # # ENTER
-    # @nodes_labels.enter().append('text')
-    #   .attr 'id',     (d,i) -> return 'node-label-'+d.id
-    #   .attr 'dx',     0
-    #   .attr 'dy',     @getNodeLabelYPos
+    # EXIT old elements not present in new data
+    @nodes_labels.exit().remove()
 
-    # # ENTER + UPDATE
-    # @nodes_labels
-    #   .attr 'class', @getNodeLabelClass
-    #   .text (d) -> return d.name
-    #   .call @formatNodesLabels
+    # UPDATE old elements present in new data
+    @nodes_labels
+      .attr 'class', @getNodeLabelClass
+      .text (d) -> return d.name
+      .call @formatNodesLabels
 
-    # # EXIT
-    # @nodes_labels.exit().remove()
+    # ENTER new elements present in new data.
+    @nodes_labels.enter().append('text')
+      .attr 'id',     (d,i) -> return 'node-label-'+d.id
+      .attr 'class',  @getNodeLabelClass
+      .attr 'dx',     0
+      .attr 'dy',     @getNodeLabelYPos
+      .text (d) -> return d.name
+      .call @formatNodesLabels
+
+    @nodes_labels = @container_inner.selectAll('.node-label')
 
   updateRelationsLabels: ->
     # Use General Update Pattern I (https://bl.ocks.org/mbostock/3808218)
 
     # DATA JOIN
-    # @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
+    # @relations_labels = @container_inner.selectAll('.relation-label').data(@data_relations_visibles)
 
     # # ENTER
     # @relations_labels.enter()
@@ -477,10 +475,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   focusNode: (node)->
     @unfocusNode()
-    @nodes_cont.selectAll('#node-'+node.id).classed('active', true)
+    @container.selectAll('#node-'+node.id).classed('active', true)
 
   unfocusNode: ->
-    @nodes_cont.selectAll('.active').classed('active', false)
+    @container.selectAll('.node.active').classed('active', false)
 
 
   # Resize Methods
@@ -502,12 +500,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
     #@force.size [@viewport.width, @viewport.height]
 
   rescale: ->
-    @container.attr 'transform', @getContainerTransform()
-    translateStr = 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
-    @relations_cont.attr        'transform', translateStr
-    @relations_labels_cont.attr 'transform', translateStr
-    @nodes_cont.attr            'transform', translateStr
-    @nodes_labels_cont.attr     'transform', translateStr
+    @container.attr       'transform', @getContainerTransform()
+    @container_inner.attr 'transform', 'translate(' + (-@viewport.center.x) + ',' + (-@viewport.center.y) + ')'
  
   setOffsetX: (offset) ->
     @viewport.offsetx = if offset < 0 then 0 else offset
@@ -573,7 +567,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # @viewport.drag.y = d.y
     if !d3.event.active
       @force.alphaTarget(0.1).restart()
-    @force.fix(d)
   
   onNodeDragged: (d) =>
     @force.fix d, d3.event.x, d3.event.y
@@ -599,7 +592,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
     # highlight node relation labels
-    @relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+    #@relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
 
   onNodeOut: (d) =>
     #@nodes.select('circle')
@@ -609,7 +602,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
-    @relations_labels.classed 'highlighted', false
+    #@relations_labels.classed 'highlighted', false
 
   onNodeClick: (d) =>
     # Avoid trigger click on dragEnd
@@ -635,7 +628,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .attr 'cx', (d) -> return d.x
       .attr 'cy', (d) -> return d.y
       #.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
-    #@nodes_labels.attr('transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')')
+    @nodes_labels
+      .attr 'transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')'
   
   drawRelationPath: (d) =>
     return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
