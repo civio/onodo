@@ -19,3 +19,4 @@
 //= require backbone_datalink
 //= require bootstrap-slider
 //= require app-story-new
+//= require dropzone

@@ -42,6 +42,9 @@ gem 'devise', '~> 3.4.0'
 # Use Twitter Bootstrap
 gem 'bootstrap-sass', '~> 3.3.5'
 
+# Use Dropzone.js
+gem 'dropzonejs-rails'
+
 # Use HAML as templating engine
 gem "haml-rails", "~> 0.9"
 
