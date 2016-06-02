@@ -3,6 +3,7 @@ window.App ||= {}
 App.Visualization = require './visualization.js'
 App.Story         = require './story.js'
 App.Trix          = require 'script!trix'
+App.Dropzone      = require 'dropzone'
 
 $(document).ready ->
 
