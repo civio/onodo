@@ -97,6 +97,13 @@ group :development do
   # Manage Procfile-based applications http://ddollar.github.com/foreman
   gem 'foreman'
 
-  #Simple script to bulk covert ERB files in a Rails app to Haml: https://github.com/dhl/erb2haml
+  # Simple script to bulk covert ERB files in a Rails app to Haml: https://github.com/dhl/erb2haml
   gem "erb2haml"
+
+  # Capistrano, for deployments
+  gem 'capistrano', '~> 3.5'
+  gem 'capistrano-nvm'
+  gem 'capistrano-npm'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails', '~> 1.1'
 end
