@@ -19,24 +19,15 @@
     "exports-loader": "~0.6.2",
     "script-loader": "~0.6.1",
     "grunt": "~0.4.5",
-<<<<<<< HEAD
     "grunt-spritesmith": "~6.3.1"
-=======
-    "grunt-spritesmith": "~6.3.1",
-    "handsontable": "0.24.3",
-    "dropzone": "~4.3.0"
-  },
-  "peerDependencies": {
-    "d3": "*",
-    "handlebars": "*"
->>>>>>> master
   },
   "dependencies": {
-    "handlebars-loader": "~1.1.4",
     "trix": "~0.9.4",
     "bootstrap-switch": "~3.3.2",
+    "handlebars-loader": "~1.1.4",
     "handlebars": "~4.0.5",
     "handsontable": "0.24.3",
+    "dropzone": "~4.3.0",
     "d3": "4.0.0-alpha.44"
   }
 }
