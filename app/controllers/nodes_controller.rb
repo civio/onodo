@@ -1,6 +1,8 @@
 class NodesController < ApplicationController
 
+  before_action :authenticate_user!
   before_action :set_node
+  before_action :require_node_ownership!
 
   # GET /nodes/:id/edit
   def edit
@@ -45,6 +47,10 @@ class NodesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_node
     @node = Node.find(params[:id])
+  end
+
+  def require_node_ownership!
+    redirect_to visualization_path(@node.visualization) if @node.visualization.author != current_user
   end
 
   def node_params

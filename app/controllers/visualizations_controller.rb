@@ -2,7 +2,7 @@ class VisualizationsController < ApplicationController
 
   before_action :authenticate_user!, except: [:show]
   before_action :set_visualization, except: [:new, :create]
-  before_action :require_visualization_ownership, except: [:show, :new, :create]
+  before_action :require_visualization_ownership!, except: [:show, :new, :create]
 
   # GET /visualizations/:id
   def show
@@ -77,7 +77,7 @@ class VisualizationsController < ApplicationController
     @visualization = Visualization.find(params[:id])
   end
 
-  def require_visualization_ownership
+  def require_visualization_ownership!
     redirect_to visualization_path(@visualization) if @visualization.author != current_user
   end
 
