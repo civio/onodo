@@ -6,6 +6,7 @@ class ChaptersController < ApplicationController
 
   def new
     @story = Story.find(params[:story_id])
+    @chapter = Chapter.new
   end
 
   def create

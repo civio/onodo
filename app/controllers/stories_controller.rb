@@ -33,6 +33,7 @@ class StoriesController < ApplicationController
   # GET /stories/:id/edit
   def edit
     @visualization = @story.visualization
+    render json: { location: request.fullpath } if xhr_request?
   end
 
   # GET /stories/:id/edit/info
@@ -92,5 +93,9 @@ class StoriesController < ApplicationController
 
   def edit_info_params
     params.require(:story).permit(:name, :description, :image, :image_cache, :remote_image_url, :remove_image)
+  end
+
+  def xhr_request?
+    request.headers['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
   end
 end
