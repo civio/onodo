@@ -272,15 +272,19 @@ $node-color-12: #e0deda;
       }
 
       &.size-1{
+        fill: lighten( $gray-dark, 10% );
         font-size: 0.786em;
       }
       &.size-2{
+        fill: lighten( $gray-dark, 5% );
         font-size: 0.857em;
       }
       &.size-3{
+        fill: $gray-dark;
         font-size: 0.929em;
       }
       &.size-4{
+        fill: darken( $gray-dark, 5% );
         font-size: 1.071em;
       }
     }
