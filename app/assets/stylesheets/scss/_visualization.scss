@@ -270,6 +270,19 @@ $node-color-12: #e0deda;
           }
         }
       }
+
+      &.size-1{
+        font-size: 0.786em;
+      }
+      &.size-2{
+        font-size: 0.857em;
+      }
+      &.size-3{
+        font-size: 0.929em;
+      }
+      &.size-4{
+        font-size: 1.071em;
+      }
     }
 
     .relations-labels-cont,

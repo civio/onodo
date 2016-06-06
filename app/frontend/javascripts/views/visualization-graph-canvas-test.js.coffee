@@ -55,7 +55,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
   parameters:             null
   nodes_relations_size:   null
   node_active:            null
-  sizeScale:              null
+  scaleNodeSize:          null
+  scaleLabelSize:         null
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -361,16 +362,16 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels
       .attr 'id',    (d,i) -> return 'node-label-'+d.id
       .attr 'class', @getNodeLabelClass
-      .attr 'dy',     @getNodeLabelYPos
+      .attr 'dy',    @getNodeLabelYPos
       .text (d) -> return d.name
       .call @formatNodesLabels
 
-    # ENTER new elements present in new data.
+    # ENTER new elements present in new data
     @nodes_labels.enter().append('text')
-      .attr 'id',     (d,i) -> return 'node-label-'+d.id
-      .attr 'class',  @getNodeLabelClass
-      .attr 'dx',     0
-      .attr 'dy',     @getNodeLabelYPos
+      .attr 'id',    (d,i) -> return 'node-label-'+d.id
+      .attr 'class', @getNodeLabelClass
+      .attr 'dx',    0
+      .attr 'dy',    @getNodeLabelYPos
       .text (d) -> return d.name
       .call @formatNodesLabels
 
@@ -657,7 +658,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # update nodes radius
     @nodes.attr('r', @getNodeSize)
     # update nodes labels position
-    @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
+    @nodes_labels.attr 'class', @getNodeLabelClass
+    @nodes_labels.selectAll('.first-line')
+      .attr 'dy', @getNodeLabelYPos
     # update relations arrows position
     #@relations.attr 'd', @drawRelationPath
 
@@ -867,16 +870,14 @@ class VisualizationGraphCanvasTest extends Backbone.View
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
   getNodeLabelClass: (d) =>
+    console.log 'getNodeLabelClass', @parameters.nodesSize 
     str = 'node-label'
     if !@parameters.showNodesLabel
       str += ' hide'
     if d.disabled
       str += ' disabled'
-
-    # if @parameters.nodesSize == 1
-    #   size = if @nodes_relations_size[d.id] then 5+15*(@nodes_relations_size[d.id]/@nodes_relations_size.max) else 5
-    #   str += ' disabled'
-
+    if @parameters.nodesSize == 1
+      str += ' size-'+@scaleLabelSize(@nodes_relations_size[d.id])
     return str
 
   getNodeLabelYPos: (d) =>
@@ -903,7 +904,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
     if @parameters.nodesSize == 1
-      size = @sizeScale @nodes_relations_size[d.id]
+      size = @scaleNodeSize @nodes_relations_size[d.id]
     else
       size = @parameters.nodesSize
     return size
@@ -924,10 +925,15 @@ class VisualizationGraphCanvasTest extends Backbone.View
       @nodes_relations_size[d.source_id] += 1
       @nodes_relations_size[d.target_id] += 1
     #@nodes_relations_size.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
-    # set size scale
-    @sizeScale = d3.scaleLinear()
-      .domain [0, d3.max(d3.entries(@nodes_relations_size), (d) -> return d.value)]
+    # set node size scale
+    maxValue = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
+    @scaleNodeSize = d3.scaleLinear()
+      .domain [0, maxValue]
       .range [5, 20]
+    # set label size scale
+    @scaleLabelSize = d3.scaleQuantize()
+      .domain [0, maxValue]
+      .range [1, 2, 3, 4]
     #console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
 
   formatNodesLabels: (nodes) ->
