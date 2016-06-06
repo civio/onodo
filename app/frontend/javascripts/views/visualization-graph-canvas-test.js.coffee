@@ -642,11 +642,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
   # Config Methods
   # ---------------
 
-  # updateNodesColor: (value) =>
-  #   @parameters.nodesColor = value
-  #   @nodes
-  #     .style('fill', @getNodeFill)
-  #     .style('stroke', @getNodeColor)
+  updateNodesColor: (value) =>
+    @parameters.nodesColor = value
+    @nodes
+      .style 'fill', @getNodeFill
+      .style 'stroke', @getNodeColor
 
   updateNodesSize: (value) =>
     console.log 'updateNodesSize', value
