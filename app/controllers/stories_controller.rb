@@ -94,8 +94,4 @@ class StoriesController < ApplicationController
   def edit_info_params
     params.require(:story).permit(:name, :description, :image, :image_cache, :remote_image_url, :remove_image)
   end
-
-  def xhr_request?
-    request.headers['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'
-  end
 end
