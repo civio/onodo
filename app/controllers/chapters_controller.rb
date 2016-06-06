@@ -1,8 +1,8 @@
 class ChaptersController < ApplicationController
 
-  before_action :require_login, except: [:show]
+  before_action :authenticate_user!, except: [:show]
   before_action :set_chapter, except: [:new, :create]
-  before_action :require_story_ownership, except: [:show, :new, :create]
+  before_action :require_story_ownership!, except: [:show, :new, :create]
 
   def new
     @story = Story.find(params[:story_id])
@@ -65,7 +65,7 @@ class ChaptersController < ApplicationController
     relations.flat_map{ |r|  [r.source, r.target] }.uniq
   end
 
-  def require_story_ownership
+  def require_story_ownership!
     redirect_to story_path(@chapter.story) if @chapter.story.author != current_user
   end
 
