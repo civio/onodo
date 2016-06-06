@@ -49,10 +49,13 @@ class VisualizationGraphCanvasTest extends Backbone.View
   relations_labels:       null
   force:                  null
   forceDrag:              null
+  forceLink:              null
+  forceManyBody:          null
   linkedByIndex:          {}
   parameters:             null
   nodes_relations_size:   null
   node_active:            null
+  sizeScale:              null
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -124,11 +127,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @viewport.center.y  = @viewport.height*0.5
 
     # Setup force
-    forceLink = d3.forceLink()
+    @forceLink = d3.forceLink()
       .id       (d) -> return d.id
       .distance ()  => return @parameters.linkDistance
 
-    forceManyBody = d3.forceManyBody()
+    @forceManyBody = d3.forceManyBody()
       # (https://github.com/d3/d3-force#manyBody_strength)
       .strength () => console.log('strength', @parameters.linkStrength); return @parameters.linkStrength
       # set maximum distance between nodes over which this force is considered
@@ -137,8 +140,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
       #.theta        @parameters.theta
 
     @force = d3.forceSimulation()
-      .force 'link',    forceLink
-      .force 'charge',  forceManyBody
+      .force 'link',    @forceLink
+      .force 'charge',  @forceManyBody
       .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
       .on    'tick',    @onTick
 
@@ -356,8 +359,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
     # UPDATE old elements present in new data
     @nodes_labels
-      #.attr 'id',    (d,i) -> return 'node-label-'+d.id
+      .attr 'id',    (d,i) -> return 'node-label-'+d.id
       .attr 'class', @getNodeLabelClass
+      .attr 'dy',     @getNodeLabelYPos
       .text (d) -> return d.name
       .call @formatNodesLabels
 
@@ -416,7 +420,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     #@force.restart()
 
     if restarForce
-      @force.alpha(0.5).restart()
+      @force.alpha(0.3).restart()
     
     # @force
     #   .nodes(@data_nodes)
@@ -537,6 +541,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
       @unfocusNode()
     @removeNodeData node
     @removeNodeRelations node
+    if @parameters.nodesSize == 1
+      @setNodesRelationsSize()
     @render true
 
   removeNodeRelations: (node) =>
@@ -569,7 +575,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @data_relations.forEach (relation) =>
       # if node is present in some relation we add it to data_relations and/or data_relations_visibles array
       if relation.source_id  == node.id or relation.target_id == node.id
-        @addRelationData relation   
+        @addRelationData relation
+    if @parameters.nodesSize == 1
+      @setNodesRelationsSize()
     @render true
 
   hideNode: (node) ->
@@ -618,9 +626,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
   setOffsetX: (offset) ->
     @viewport.offsetx = if offset < 0 then 0 else offset
     @container.transition()
-      .duration(400)
-      .ease('ease-out')
-      .attr('transform', @getContainerTransform())
+      .duration 400
+      .ease     d3.easeQuadOut
+      .attr     'transform', @getContainerTransform()
 
   setOffsetY: (offset) ->
     @viewport.offsety = if offset < 0 then 0 else offset
@@ -640,26 +648,26 @@ class VisualizationGraphCanvasTest extends Backbone.View
   #     .style('fill', @getNodeFill)
   #     .style('stroke', @getNodeColor)
 
-  # updateNodesSize: (value) =>
-  #   console.log 'updateNodesSize', value
-  #   @parameters.nodesSize = parseInt(value)
-  #   # if nodesSize = 1, set nodes size based on its number of relations
-  #   if @parameters.nodesSize == 1
-  #     @setNodesRelationsSize()
-  #   # update nodes radius
-  #   @nodes.attr('r', @getNodeSize)
-  #   # update nodes labels position
-  #   @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
-  #   # update relations arrows position
-  #   @relations.attr 'd', @drawRelationPath
+  updateNodesSize: (value) =>
+    console.log 'updateNodesSize', value
+    @parameters.nodesSize = parseInt(value)
+    # if nodesSize = 1, set nodes size based on its number of relations
+    if @parameters.nodesSize == 1
+      @setNodesRelationsSize()
+    # update nodes radius
+    @nodes.attr('r', @getNodeSize)
+    # update nodes labels position
+    @nodes_labels.selectAll('.first-line').attr('dy', @getNodeLabelYPos)
+    # update relations arrows position
+    #@relations.attr 'd', @drawRelationPath
 
-  # toogleNodesLabel: (value) =>
-  #   @nodes_labels.classed 'hide', !value
+  toogleNodesLabel: (value) =>
+    @nodes_labels.classed 'hide', !value
 
-  # toogleNodesImage: (value) =>
-  #   @parameters.showNodesImage = value
-  #   console.log 'toogleNodesImage',  @parameters
-  #   @updateNodes()
+  toogleNodesImage: (value) =>
+    @parameters.showNodesImage = value
+    console.log 'toogleNodesImage',  @parameters
+    @updateNodes()
   
   # toogleNodesWithoutRelation: (value) =>
   #   if value
@@ -677,8 +685,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
   #   @parameters.relationsCurvature = value
   #   @onTick()
 
-  # updateRelationsLineStyle: (value) ->
-  #   @relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
+  updateRelationsLineStyle: (value) ->
+    @relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
 
   getRelationsLineStyle: (value) ->
     lineStyle = switch
@@ -687,21 +695,27 @@ class VisualizationGraphCanvasTest extends Backbone.View
       else 'line-dotted' 
     return lineStyle
 
-  # updateForceLayoutParameter: (param, value) ->
-  #   @force.stop()
-  #   if param == 'linkDistance'
-  #     @force.linkDistance value
-  #   else if param == 'linkStrength'
-  #     @force.linkStrength value
-  #   else if param == 'friction'
-  #     @force.friction value
-  #   else if param == 'charge'
-  #     @force.charge value
-  #   else if param == 'theta'
-  #     @force.theta value
-  #   else if param == 'gravity'
-  #     @force.gravity value
-  #   @force.start()
+  updateForceLayoutParameter: (param, value) ->
+
+    console.log 'updateForceLayoutParameter', param, value
+
+    #@force.stop()
+    if param == 'linkDistance'
+      @forceLink.distance () -> return value
+      @force.force 'link', @forceLink
+    else if param == 'linkStrength'
+      @forceManyBody.strength () -> return value
+      @force.force 'charge', @forceManyBody
+
+    # else if param == 'friction'
+    #   @force.friction value
+    # else if param == 'charge'
+    #   @force.charge value
+    # else if param == 'theta'
+    #   @force.theta value
+    # else if param == 'gravity'
+    #  @force.gravity value
+    @force.alpha(0.15).restart()
 
 
   # Navigation Methods
@@ -717,8 +731,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @viewport.scale = value
     @container
       .transition()
-        .duration(500)
-        .attr 'transform', @getContainerTransform()
+        .duration 500
+        .attr     'transform', @getContainerTransform()
 
 
   # Events Methods
@@ -858,10 +872,15 @@ class VisualizationGraphCanvasTest extends Backbone.View
       str += ' hide'
     if d.disabled
       str += ' disabled'
+
+    # if @parameters.nodesSize == 1
+    #   size = if @nodes_relations_size[d.id] then 5+15*(@nodes_relations_size[d.id]/@nodes_relations_size.max) else 5
+    #   str += ' disabled'
+
     return str
 
   getNodeLabelYPos: (d) =>
-    return parseInt(@svg.select('#node-'+d.id).attr('r'))+13
+    return parseInt(@nodes_cont.select('#node-'+d.id).attr('r'))+13
 
   getNodeColor: (d) =>
     if @parameters.nodesColor == 'qualitative'
@@ -884,7 +903,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
     if @parameters.nodesSize == 1
-      size = if @nodes_relations_size[d.id] then 5+15*(@nodes_relations_size[d.id]/@nodes_relations_size.max) else 5
+      size = @sizeScale @nodes_relations_size[d.id]
     else
       size = @parameters.nodesSize
     return size
@@ -904,7 +923,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @data_relations_visibles.forEach (d) =>
       @nodes_relations_size[d.source_id] += 1
       @nodes_relations_size[d.target_id] += 1
-    @nodes_relations_size.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
+    #@nodes_relations_size.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
+    # set size scale
+    @sizeScale = d3.scaleLinear()
+      .domain [0, d3.max(d3.entries(@nodes_relations_size), (d) -> return d.value)]
+      .range [5, 20]
     #console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
 
   formatNodesLabels: (nodes) ->

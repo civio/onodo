@@ -208,7 +208,7 @@ $node-color-12: #e0deda;
       fill: none;
       stroke: lighten( $gray-semi-light, 10% );
       stroke-width: 1px;
-      opacity: 0.9;
+      opacity: 0.8;
 
       &.weaken,
       &.disabled{
@@ -234,12 +234,12 @@ $node-color-12: #e0deda;
     }
 
     .node-label{
-      text-shadow: 0px 1px 0 white;
       fill: $gray-dark;
       font-size: 0.857em;
       font-weight: 300;
       letter-spacing: 0;
       text-anchor: middle;
+      text-shadow: 1px 1px 1px white, -1px -1px 1px white;
 
       tspan{
         opacity: 0;
@@ -278,10 +278,10 @@ $node-color-12: #e0deda;
     }
 
     .relation-label{
-      fill: $gray-semi-light;
+      fill: mix( $gray, $gray-semi-light, 50% );
       font-size: 0.786em;
       font-weight: 300;
-      text-shadow: 2px 2px 0 white, -2px -2px 0 white, 0 0 6px white;
+      text-shadow: 2px 0 1px white, -2px 0 1px white;
       letter-spacing: 0;
     }
 
