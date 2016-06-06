@@ -1,5 +1,8 @@
 class Api::NodesController < ApiController
 
+  before_action :set_node, except: [:index, :types, :create]
+  before_action :require_node_ownership!, except: [:index, :types, :create, :show]
+
   def index
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
     @nodes = dataset.nodes.order(:name)
@@ -14,18 +17,15 @@ class Api::NodesController < ApiController
                       .uniq
   end
 
-  def show
-    @node = Node.find(params[:id])
-  end
-
   def create
     @node = Node.create(node_params)
     render :show
   end
 
-  def update
-    @node = Node.find(params[:id])
+  def show
+  end
 
+  def update
     if params[:node][:image].nil? && params[:node][:remote_image_url].nil?
       params[:node][:remove_image] = 1
     end
@@ -42,11 +42,19 @@ class Api::NodesController < ApiController
   end
 
   def destroy
-    Node.destroy(params[:id])
+    @node.destroy
     head :no_content
   end
 
   private
+
+  def set_node
+    @node = Node.find(params[:id])
+  end
+
+  def require_node_ownership!
+    render :show and return if @node.visualization.author != current_user
+  end
 
   def node_params
     params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
