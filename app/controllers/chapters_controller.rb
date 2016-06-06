@@ -19,6 +19,8 @@ class ChaptersController < ApplicationController
       redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully created.'
     else
       flash[:alert] = @chapter.errors.full_messages.to_sentence
+      flash[:alert] = "Error processing chapter image." if @chapter.errors.include? :image
+      render json: { location: "#{request.fullpath}/new" } and return if xhr_request?
       render :new
     end
   end
@@ -36,6 +38,8 @@ class ChaptersController < ApplicationController
       redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully updated.'
     else
       flash[:alert] = @chapter.errors.full_messages.to_sentence
+      flash[:alert] = "Error processing chapter image." if @chapter.errors.include? :image
+      render json: { location: "#{request.fullpath}/edit" } and return if xhr_request?
       render :edit
     end
   end
