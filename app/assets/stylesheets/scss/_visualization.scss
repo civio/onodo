@@ -281,14 +281,8 @@ $node-color-12: #e0deda;
       fill: $gray-semi-light;
       font-size: 0.786em;
       font-weight: 300;
-      text-shadow: 0px 1px 0 white;
+      text-shadow: 2px 2px 0 white, -2px -2px 0 white, 0 0 6px white;
       letter-spacing: 0;
-      opacity: 0;
-      @include transition( opacity, 0.3s, ease-out );
-
-      &.highlighted{
-        opacity: 1;
-      }
     }
 
     .arrow-marker{

@@ -130,7 +130,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
     forceManyBody = d3.forceManyBody()
       # (https://github.com/d3/d3-force#manyBody_strength)
-      .strength -> return -20
+      .strength () => console.log('strength', @parameters.linkStrength); return @parameters.linkStrength
       # set maximum distance between nodes over which this force is considered
       # (https://github.com/d3/d3-force#manyBody_distanceMax)
       .distanceMax 500
@@ -142,8 +142,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
       .on    'tick',    @onTick
 
-    #@force.alphaDecay 0
-    #@force.alphaDecay 0.03
+    # Reduce number of force ticks until the system freeze
+    # (https://github.com/d3/d3-force#simulation_alphaDecay)
+    @force.alphaDecay 0.03
 
     # @force = d3.layout.force()
     #   .linkDistance @parameters.linkDistance
@@ -247,7 +248,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
     console.log 'render canvas'
     @updateImages()
     @updateRelations()
-    @updateRelationsLabels()
     @updateNodes()
     @updateNodesLabels()
     @updateForce restarForce
@@ -372,11 +372,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
 
-  updateRelationsLabels: ->
+  updateRelationsLabels: (data) ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
-    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(@data_relations_visibles)
+    @relations_labels = @relations_labels_cont.selectAll('.relation-label').data(data)
 
     # EXIT old elements not present in new data
     @relations_labels.exit().remove()
@@ -388,10 +388,13 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # ENTER new elements present in new data.
     @relations_labels.enter()
       .append('text')
-        .attr('id', (d) -> return 'relation-label-'+d.id)
-        .attr('class', 'relation-label')
-        .style('text-anchor', 'middle')
-        .text((d) -> return d.relation_type)
+        .attr  'id', (d) -> return 'relation-label-'+d.id
+        .attr  'class', 'relation-label'
+        .attr  'x', (d) -> return (d.source.x+d.target.x)*0.5
+        .attr  'y', (d) -> return (d.source.y+d.target.y)*0.5
+        .attr  'dy', '0.5em'
+        .style 'text-anchor', 'middle'
+        .text  (d) -> return d.relation_type
 
       # .append('text')
       #   .attr('id', (d) -> return 'relation-label-'+d.id)
@@ -492,6 +495,12 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # count number of relations between 2 nodes
     @linkedByIndex[source+','+target] = ++@linkedByIndex[source+','+target] || 1
 
+  
+
+  updateRelationsLabelsData: ->
+    if @node_active
+      @updateRelationsLabels @getNodeRelations(@node_active )
+
   # Add a linkindex property to relations
   # Based on https://github.com/zhanghuancs/D3.js-Node-MultiLinks-Node
   setLinkIndex: ->
@@ -546,6 +555,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   removeRelation: (relation) ->
     console.log 'removeRelation', relation
     @removeRelationData relation
+    @updateRelationsLabelsData()
     # update nodes relations size if needed to take into acount the removed relation
     if @parameters.nodesSize == 1
       @setNodesRelationsSize()
@@ -570,6 +580,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     console.log 'focus node', @node_active
     @container.selectAll('.node.active').classed('active', false)
     @container.selectAll('#node-'+node.id).classed('active', true)
+    @updateRelationsLabelsData()
 
   unfocusNode: ->
     @node_active = null
@@ -740,7 +751,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # @viewport.drag.x = d.x
     # @viewport.drag.y = d.y
     if !d3.event.active
-      @force.alphaTarget(0.2).restart()
+      @force.alphaTarget(0.1).restart()
   
   onNodeDragged: (d) =>
     @force.fix d, d3.event.x, d3.event.y
@@ -758,6 +769,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # skip if any node is active
     if @node_active
       return
+
+    # add relations labels  
+    @updateRelationsLabels @getNodeRelations(d.id)
+
     #@nodes.select('circle')
     #  .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
     #
@@ -766,15 +781,17 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
     # highlight node relations
     @relations.classed 'weaken', true
-    @relations.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
-    # highlight node relation labels
-    @relations_labels.classed 'highlighted', (o) => return o.source.index == d.index || o.target.index == d.index
+    @relations.classed 'highlighted', (o) => return o.source_id == d.id || o.target_id == d.id
 
   onNodeOut: (d) =>
     console.log 'nodeout', @node_active
     # skip if any node is active
     if @node_active
       return
+
+    # clear relations labels
+    @updateRelationsLabels {}
+
     #@nodes.select('circle')
     #  .style('fill', (o) => return @color(o.node_type))
     #
@@ -782,7 +799,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
-    @relations_labels.classed 'highlighted', false
 
   onNodeClick: (d) =>
     # Avoid trigger click on dragEnd
@@ -811,9 +827,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @nodes_labels
       .attr 'transform', (d) -> return 'translate(' + d.x + ',' + d.y + ')'
     # Set relation labels position
-    @relations_labels
-      .attr 'x', (d) -> return d.source.x
-      .attr 'y', (d) -> return d.source.y
+    if @relations_labels
+      @relations_labels
+        .attr 'x', (d) -> return (d.source.x+d.target.x)*0.5
+        .attr 'y', (d) -> return (d.source.y+d.target.y)*0.5
   
   drawRelationPath: (d) =>
     return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
@@ -824,13 +841,9 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   getNodeById: (id) ->
     return @data_nodes_map.get id
-  
-  getNodeRelations: (node) ->
-    arr = []
-    @data_relations_visibles.forEach (d) ->
-      if d.source_id == node.id || d.target_id == node.id
-        arr.push d
-    return arr
+
+  getNodeRelations: (id) ->
+    return @data_relations_visibles.filter (d) => return d.source_id == id || d.target_id == id
 
   hasNodeRelations: (node) ->
     return @data_relations_visibles.some (d) ->

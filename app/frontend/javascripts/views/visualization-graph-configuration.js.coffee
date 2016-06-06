@@ -13,7 +13,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     relationsCurvature: 1
     relationsLineStyle: 0
     linkDistance:       100
-    linkStrength:       1
+    linkStrength:       -30
     friction:           0.9
     charge:             -150
     theta:              0.8

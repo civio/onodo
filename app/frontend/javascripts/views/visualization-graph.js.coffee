@@ -182,7 +182,7 @@ class VisualizationGraph extends Backbone.View
 
   onRelationsChangeType: (relation) ->
     console.log 'onRelationsChangeType', relation
-    @visualizationGraphCanvas.updateRelationsLabels()
+    @visualizationGraphCanvas.updateRelationsLabelsData()
 
   onRelationsChangeDirection: (relation) ->
     @visualizationGraphCanvas.updateRelations()
