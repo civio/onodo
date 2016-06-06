@@ -11,6 +11,14 @@ class Relation < ActiveRecord::Base
               inverse_of: :relations_as_target, 
               touch: true
 
+  def visualization
+    dataset.visualization if dataset
+  end
+
+  def stories
+    dataset.visualization.stories if dataset && dataset.visualization
+  end
+
   # Override `at` getter & setter
   def at=(at)
     begin
