@@ -108,9 +108,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
       @COLORS['quantitative-10']
     ]
 
-    # Setup color scale
-    @colorQualitativeScale  = d3.scaleOrdinal().range @COLOR_QUALITATIVE
-    @colorQuantitativeScale = d3.scaleOrdinal().range @COLOR_QUANTITATIVE
 
   setup: (_data, _parameters) ->
 
@@ -226,9 +223,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
       if d.visible
         @addNodeData d
 
-    # Setup color ordinal scale domain
-    @colorQualitativeScale.domain   data.nodes.map( (d) -> d.node_type )
-    @colorQuantitativeScale.domain  data.nodes.map( (d) -> d.node_type )
+    # Setup color scale
+    @setColorScale()
 
     # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
     data.relations.forEach (d) =>
@@ -638,6 +634,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
   # Config Methods
   # ---------------
 
+  setColorScale: ->
+    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      @colorScale = d3.scaleOrdinal().range if @parameters.nodesColor == 'qualitative' then @COLOR_QUALITATIVE else @COLOR_QUANTITATIVE
+      @colorScale.domain @data_nodes.map( (d) -> return d.node_type )
+
   updateNodesType: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       console.log 'updateNodesType'
@@ -647,6 +648,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
+    @setColorScale()
     @nodes
       .style 'fill',   @getNodeFill
       .style 'stroke', @getNodeColor
@@ -867,12 +869,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
     return parseInt(@nodes_cont.select('#node-'+d.id).attr('r'))+13
 
   getNodeColor: (d) =>
-    if @parameters.nodesColor == 'qualitative'
-       color = @colorQualitativeScale d.node_type  
-     else if @parameters.nodesColor == 'quantitative'
-       color = @colorQuantitativeScale d.node_type
-     else
-       color = @COLORS[@parameters.nodesColor]
+    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      color = @colorScale d.node_type  
+    else
+      color = @COLORS[@parameters.nodesColor]
     return color
 
   getNodeFill: (d) =>
