@@ -1,14 +1,13 @@
 class Api::StoriesController < ApiController
 
-    def show
-      @story = Story.find(params[:id])
-    end
+  def show
+    @story = Story.find(params[:id])
+  end
 
-    def update
-      @story = Story.find(params[:id])
-      @story.update(story_params)
-      render :show
-    end
+  def create
+    @story = Story.create(story_params)
+    render :show
+  end
 
   private
 

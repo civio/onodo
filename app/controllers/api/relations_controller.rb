@@ -1,5 +1,8 @@
 class Api::RelationsController < ApiController
 
+  before_action :set_relation, except: [:index, :types, :create]
+  before_action :require_relation_ownership!, except: [:index, :types, :create, :show]
+
   def index
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
     @relations = dataset.relations
@@ -16,26 +19,33 @@ class Api::RelationsController < ApiController
                  .uniq
   end
 
-  def show
-    @relation = Relation.find(params[:id])
-  end
-
   def create
     @relation = Relation.create(relation_params)
     render :show
   end
 
+  def show
+  end
+
   def update
-    @relation = Relation.update(params[:id], relation_params)
+    @relation.update(relation_params)
     render :show
   end
 
   def destroy
-    Relation.destroy(params[:id])
+    @relation.destroy
     head :no_content
   end
 
   private
+
+  def set_relation
+    @relation = Relation.find(params[:id])
+  end
+
+  def require_relation_ownership!
+    render :show and return if @relation.visualization.author != current_user
+  end
 
   def relation_params
     params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :dataset_id)
