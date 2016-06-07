@@ -814,10 +814,7 @@ body.fullscreen{
   }
 
   .visualization-table-header{
-    margin-top: 20px;
-    //padding: 15px 0;
-    //height: 64px;
-    //background: mix( $gray-light, $gray-lighter, 40% );
+    margin-top: $grid-gutter-width/2;
 
     .nav-tabs{
       border: none;
@@ -861,7 +858,7 @@ body.fullscreen{
 
     .btn-toolbar{
       position: absolute;
-      top: -1.5*$grid-gutter-width;
+      top: -44px;
       right: 0;
     }
 
