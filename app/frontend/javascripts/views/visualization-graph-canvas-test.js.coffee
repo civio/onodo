@@ -134,7 +134,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
     @forceManyBody = d3.forceManyBody()
       # (https://github.com/d3/d3-force#manyBody_strength)
-      .strength () => console.log('strength', @parameters.linkStrength); return @parameters.linkStrength
+      .strength () => return @parameters.linkStrength
       # set maximum distance between nodes over which this force is considered
       # (https://github.com/d3/d3-force#manyBody_distanceMax)
       .distanceMax 500
@@ -416,17 +416,12 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
 
   updateForce: (restarForce) ->
+    # update force nodes & links
     @force.nodes(@data_nodes)
     @force.force('link').links(@data_relations_visibles)
-    #@force.restart()
-
+    # restart force
     if restarForce
       @force.alpha(0.3).restart()
-    
-    # @force
-    #   .nodes(@data_nodes)
-    #   .links(@data_relations_visibles)
-    #   .start()
 
 
   # Nodes / Relations methods
@@ -643,10 +638,17 @@ class VisualizationGraphCanvasTest extends Backbone.View
   # Config Methods
   # ---------------
 
+  updateNodesType: ->
+    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      console.log 'updateNodesType'
+      @nodes
+        .style 'fill',   @getNodeFill
+        .style 'stroke', @getNodeColor
+
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
     @nodes
-      .style 'fill', @getNodeFill
+      .style 'fill',   @getNodeFill
       .style 'stroke', @getNodeColor
 
   updateNodesSize: (value) =>
@@ -764,9 +766,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
    
   # Nodes drag events
   onNodeDragStart: (d) =>
-    # d3.event.sourceEvent.stopPropagation() # silence other listeners
-    # @viewport.drag.x = d.x
-    # @viewport.drag.y = d.y
     if !d3.event.active
       @force.alphaTarget(0.1).restart()
   
@@ -774,11 +773,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @force.fix d, d3.event.x, d3.event.y
 
   onNodeDragEnd: (d) =>
-    # d3.event.sourceEvent.stopPropagation() # silence other listeners
-    # if @viewport.drag.x == d.x and @viewport.drag.y == d.y
-    #   return  # Skip if has no translation
-    # # fix the node position when the node is dragged
-    # d.fixed = true;
     if !d3.event.active
       @force.alphaTarget(0)
 
@@ -786,13 +780,8 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # skip if any node is active
     if @node_active
       return
-
     # add relations labels  
     @updateRelationsLabels @getNodeRelations(d.id)
-
-    #@nodes.select('circle')
-    #  .style('fill', (o) => return if @areNodesRelated(d, o) then @color(o.node_type) else @mixColor(@color(o.node_type), '#ffffff') )
-    #
     # highlight related nodes labels
     @nodes_labels.classed 'weaken', true
     @nodes_labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
@@ -801,17 +790,12 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @relations.classed 'highlighted', (o) => return o.source_id == d.id || o.target_id == d.id
 
   onNodeOut: (d) =>
-    console.log 'nodeout', @node_active
     # skip if any node is active
     if @node_active
       return
-
     # clear relations labels
     @updateRelationsLabels {}
-
-    #@nodes.select('circle')
-    #  .style('fill', (o) => return @color(o.node_type))
-    #
+    # clear nodes & relations classes
     @nodes_labels.classed 'weaken', false
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
@@ -826,7 +810,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
   onNodeDoubleClick: (d) =>
     # unfix the node position when the node is double clicked
     @force.unfix d
-    #d.fixed = false
 
   # Tick Function
   onTick: =>
@@ -904,7 +887,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   getNodeSize: (d) =>
     # if nodesSize = 1, set size based on node relations
     if @parameters.nodesSize == 1
-      size = @scaleNodeSize @nodes_relations_size[d.id]
+      size = if @nodes_relations_size[d.id] then @scaleNodeSize @nodes_relations_size[d.id] else 5
     else
       size = @parameters.nodesSize
     return size

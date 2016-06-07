@@ -52,13 +52,11 @@ class VisualizationGraph extends Backbone.View
       # Subscribe Collection Events (handle Table changes)
       @collection.nodes.bind 'add',                 @onNodesAdd, @
       @collection.nodes.bind 'change:name',         @onNodeChangeName, @
+      @collection.nodes.bind 'change:node_type',    @onNodeChangeType, @
       @collection.nodes.bind 'change:description',  @onNodeChangeDescription, @
       @collection.nodes.bind 'change:visible',      @onNodeChangeVisible, @
       @collection.nodes.bind 'change:image',        @onNodeChangeImage, @
       @collection.nodes.bind 'remove',              @onNodesRemove, @
-      #!!! We need to arr node_type changes
-      #@collection.nodes.bind 'change:node_type',   @onNodeChangeType, @
-      #@collection.relations.bind 'add',             @onRelationsChange, @
       @collection.relations.bind 'change:source_id',      @onRelationsChangeNode, @
       @collection.relations.bind 'change:target_id',      @onRelationsChangeNode, @
       @collection.relations.bind 'change:relation_type',  @onRelationsChangeType, @
@@ -138,6 +136,11 @@ class VisualizationGraph extends Backbone.View
     # Update nodes labels
     @visualizationGraphCanvas.updateNodesLabels()
     # Update Panel Info name
+    @updateGraphInfoNode node
+
+  onNodeChangeType: (node) ->
+    console.log 'onNodeChangeType', node.attributes.name
+    @visualizationGraphCanvas.updateNodesType()
     @updateGraphInfoNode node
 
   onNodeChangeDescription: (node) ->
