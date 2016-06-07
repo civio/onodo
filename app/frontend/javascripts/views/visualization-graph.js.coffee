@@ -1,5 +1,5 @@
 Node                              = require './../models/node.js'
-VisualizationGraphCanvasTest      = require './../views/visualization-graph-canvas-test.js'
+VisualizationGraphCanvas          = require './../views/visualization-graph-canvas.js'
 VisualizationGraphConfiguration   = require './../views/visualization-graph-configuration.js'
 VisualizationGraphNavigation      = require './../views/visualization-graph-navigation.js'
 VisualizationGraphInfo            = require './../views/visualization-graph-info.js'
@@ -18,7 +18,7 @@ class VisualizationGraph extends Backbone.View
 
     # Setup Views
     #@visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el, data: @getDataFromCollection(@collection.nodes.models, @collection.relations.models), parameters: @visualizationGraphConfiguration.parameters}
-    @visualizationGraphCanvas         = new VisualizationGraphCanvasTest {el: @$el}
+    @visualizationGraphCanvas         = new VisualizationGraphCanvas {el: @$el}
     @visualizationGraphConfiguration  = new VisualizationGraphConfiguration
     @visualizationGraphNavigation     = new VisualizationGraphNavigation
     @visualizationGraphInfo           = new VisualizationGraphInfo

@@ -28,7 +28,7 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   onChangeNodesColor: (e) =>
     @parameters.nodesColor = $(e.target).find('.active').data('value')
-    console.log 'onChangeNodesColor', @parameters.nodesColor
+    #console.log 'onChangeNodesColor', @parameters.nodesColor
     Backbone.trigger 'visualization.config.updateNodesColor', {value: @parameters.nodesColor}
     @updateParameters()
     @updateNodesColorColumn()
@@ -41,25 +41,25 @@ class VisualizationGraphConfiguration extends Backbone.View
 
   onChangeNodesColorColumn: (e) =>
     @parameters.nodesColorColumn = $(e.target).find('.active').data('value')
-    console.log 'onChangeNodesColorColumn', @parameters.nodesColorColumn
+    #console.log 'onChangeNodesColorColumn', @parameters.nodesColorColumn
     Backbone.trigger 'visualization.config.updateNodesColorColumn', {value: @parameters.nodesColorColumn}
     @updateParameters() 
   
   onChangeNodesSize: (e) =>
     @parameters.nodesSize = parseInt $(e.target).find('.active').data('value')
-    console.log 'onChangeNodesSize', @parameters.nodesSize
+    #console.log 'onChangeNodesSize', @parameters.nodesSize
     Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
     @updateParameters()
 
   onToogleNodesLabel: (e, state) =>
     @parameters.showNodesLabel = state
-    console.log 'onToogleNodesLabel', @parameters.showNodesLabel
+    #console.log 'onToogleNodesLabel', @parameters.showNodesLabel
     Backbone.trigger 'visualization.config.toogleNodesLabel', {value: @parameters.showNodesLabel}
     @updateParameters()
 
   onToogleNodesImage: (e, state) =>
     @parameters.showNodesImage = state
-    console.log 'onToogleNodesImage', @parameters.showNodesImage
+    #console.log 'onToogleNodesImage', @parameters.showNodesImage
     Backbone.trigger 'visualization.config.toogleNodesImage', {value: @parameters.showNodesImage}
     @updateParameters()
 
@@ -181,7 +181,7 @@ class VisualizationGraphConfiguration extends Backbone.View
         $nodesColorColumn.append '<li data-value="'+field+'"><p>'+field.replace(/_+/g,' ')+'</p></li>'
 
   onDropdownSelectChange: (e) ->
-    console.log 'onDropdownSelectChange', e
+    #console.log 'onDropdownSelectChange', e
     if $(this).data('value') == undefined 
       return
     # clear active element
