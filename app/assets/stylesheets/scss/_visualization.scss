@@ -191,12 +191,15 @@ $node-color-12: #e0deda;
     .node{
       cursor: pointer;
       //opacity: 0.4;
-      stroke-width: 0;
-      stroke-opacity: 0.4;
+      //stroke-width: 0;
+      //stroke: white;
+      stroke-width: 2px;
+      //stroke-opacity: 0.4;
       //@include transition( stroke-width, 0.4s, ease-out );
      
       &.active{
         stroke-width: 20px !important;
+        stroke-opacity: 0.4;
       }
 
       &.disabled{
@@ -208,11 +211,11 @@ $node-color-12: #e0deda;
       fill: none;
       stroke: lighten( $gray-semi-light, 10% );
       stroke-width: 1px;
-      opacity: 0.9;
+      opacity: 0.8;
 
       &.weaken,
       &.disabled{
-        opacity: 0.4;
+        opacity: 0.3;
       }
 
       &.highlighted,
@@ -234,12 +237,12 @@ $node-color-12: #e0deda;
     }
 
     .node-label{
-      text-shadow: 0px 1px 0 white;
       fill: $gray-dark;
       font-size: 0.857em;
       font-weight: 300;
       letter-spacing: 0;
       text-anchor: middle;
+      text-shadow: 1px 1px 1px white, -1px -1px 1px white;
 
       tspan{
         opacity: 0;
@@ -270,6 +273,23 @@ $node-color-12: #e0deda;
           }
         }
       }
+
+      &.size-1{
+        fill: lighten( $gray-dark, 10% );
+        font-size: 0.786em;
+      }
+      &.size-2{
+        fill: lighten( $gray-dark, 5% );
+        font-size: 0.857em;
+      }
+      &.size-3{
+        fill: $gray-dark;
+        font-size: 0.929em;
+      }
+      &.size-4{
+        fill: darken( $gray-dark, 5% );
+        font-size: 1.071em;
+      }
     }
 
     .relations-labels-cont,
@@ -278,17 +298,11 @@ $node-color-12: #e0deda;
     }
 
     .relation-label{
-      fill: $gray-semi-light;
-      font-size: 0.786em;
+      fill: lighten( $gray, 10% );
+      font-size: 0.714em;
       font-weight: 300;
-      text-shadow: 0px 1px 0 white;
+      //text-shadow: 2px 0 1px white, -2px 0 1px white;
       letter-spacing: 0;
-      opacity: 0;
-      @include transition( opacity, 0.3s, ease-out );
-
-      &.highlighted{
-        opacity: 1;
-      }
     }
 
     .arrow-marker{
@@ -803,10 +817,7 @@ body.fullscreen{
   }
 
   .visualization-table-header{
-    margin-top: 20px;
-    //padding: 15px 0;
-    //height: 64px;
-    //background: mix( $gray-light, $gray-lighter, 40% );
+    margin-top: $grid-gutter-width/2;
 
     .nav-tabs{
       border: none;
@@ -850,7 +861,7 @@ body.fullscreen{
 
     .btn-toolbar{
       position: absolute;
-      top: -1.5*$grid-gutter-width;
+      top: -44px;
       right: 0;
     }
 
