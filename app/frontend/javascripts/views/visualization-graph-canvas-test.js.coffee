@@ -57,6 +57,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   node_active:            null
   scaleNodeSize:          null
   scaleLabelSize:         null
+  degrees_const:          180 / Math.PI
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -110,8 +111,6 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
 
   setup: (_data, _parameters) ->
-
-    console.log 'canvas set Data'
 
     @parameters = _parameters
 
@@ -241,11 +240,11 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # Add linkindex to relations
     #@setLinkIndex()
 
-    console.log 'current nodes', @data_nodes
-    console.log 'current relations', @data_relations_visibles
+    #console.log 'current nodes', @data_nodes
+    #console.log 'current relations', @data_relations_visibles
 
   render: ( restarForce ) ->
-    console.log 'render canvas'
+    #console.log 'render canvas'
     @updateImages()
     @updateRelations()
     @updateNodes()
@@ -298,7 +297,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .attr  'r',       @getNodeSize
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
       .style 'fill',    @getNodeFill
-      .style 'stroke',  @getNodeColor
+      .style 'stroke',  @getNodeStroke
 
     # ENTER new elements present in new data.
     @nodes.enter().append('circle')
@@ -311,7 +310,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .attr  'cy',      @viewport.center.y
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
       .style 'fill',    @getNodeFill
-      .style 'stroke',  @getNodeColor
+      .style 'stroke',  @getNodeStroke
       .on   'mouseover',  @onNodeOver
       .on   'mouseout',   @onNodeOut
       .on   'click',      @onNodeClick
@@ -357,7 +356,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # UPDATE old elements present in new data
     @nodes_labels
       .attr 'id',    (d,i) -> return 'node-label-'+d.id
-      .attr 'class', @getNodeLabelClass
+      .attr 'class', 'node-label'
       .attr 'dy',    @getNodeLabelYPos
       .text (d) -> return d.name
       .call @formatNodesLabels
@@ -365,13 +364,17 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # ENTER new elements present in new data
     @nodes_labels.enter().append('text')
       .attr 'id',    (d,i) -> return 'node-label-'+d.id
-      .attr 'class', @getNodeLabelClass
+      .attr 'class', 'node-label'
       .attr 'dx',    0
       .attr 'dy',    @getNodeLabelYPos
       .text (d) -> return d.name
       .call @formatNodesLabels
 
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
+
+    # we need to update labels class after call to formatNodesLabels
+    # in order to use same font-size for getComputedTextLength
+    @nodes_labels.attr 'class', @getNodeLabelClass
 
   updateRelationsLabels: (data) ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
@@ -391,9 +394,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .append('text')
         .attr  'id', (d) -> return 'relation-label-'+d.id
         .attr  'class', 'relation-label'
-        .attr  'x', (d) -> return (d.source.x+d.target.x)*0.5
-        .attr  'y', (d) -> return (d.source.y+d.target.y)*0.5
-        .attr  'dy', '0.5em'
+        #.attr  'x', (d) -> return (d.source.x+d.target.x)*0.5
+        #.attr  'y', (d) -> return (d.source.y+d.target.y)*0.5
+        .attr  'dy', '-0.3em'
+        .attr  'transform', @getRelationLabelTransform
         .style 'text-anchor', 'middle'
         .text  (d) -> return d.relation_type
 
@@ -495,7 +499,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   updateRelationsLabelsData: ->
     if @node_active
-      @updateRelationsLabels @getNodeRelations(@node_active )
+      @updateRelationsLabels @getNodeRelations(@node_active.id)
 
   # Add a linkindex property to relations
   # Based on https://github.com/zhanghuancs/D3.js-Node-MultiLinks-Node
@@ -576,16 +580,30 @@ class VisualizationGraphCanvasTest extends Backbone.View
     @removeNode node
 
   focusNode: (node) ->
-    @node_active = node.id
+    # clear previous focused nodes
+    if @node_active
+      @node_active.active = false
+      @nodes_cont.selectAll('#node-'+@node_active.id)
+        .style 'stroke',  @getNodeStroke
+    # set node active    
+    @node_active = node
     console.log 'focus node', @node_active
-    @container.selectAll('.node.active').classed('active', false)
-    @container.selectAll('#node-'+node.id).classed('active', true)
+    node.active = true
+    @nodes_cont.selectAll('.node.active')
+      .classed 'active', false
+    @nodes_cont.selectAll('#node-'+node.id)
+      .classed 'active', true
+      .style   'stroke', @getNodeStroke
     @updateRelationsLabelsData()
 
   unfocusNode: ->
-    @node_active = null
     console.log 'unfocus node', @node_active
-    @container.selectAll('.node.active').classed('active', false)
+    @node_active.active = false
+    @nodes_cont.selectAll('#node-'+@node_active.id)
+      .style 'stroke',  @getNodeStroke
+    @nodes_cont.selectAll('.node.active')
+      .classed 'active', false
+    @node_active = null
     @onNodeOut()
 
 
@@ -593,7 +611,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
   # ---------------
 
   resize: ->
-    console.log 'VisualizationGraphCanvas resize'
+    #console.log 'VisualizationGraphCanvas resize'
     # Update Viewport attributes
     @viewport.width     = @$el.width()
     @viewport.height    = @$el.height()
@@ -641,17 +659,16 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   updateNodesType: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      console.log 'updateNodesType'
       @nodes
         .style 'fill',   @getNodeFill
-        .style 'stroke', @getNodeColor
+        .style 'stroke', @getNodeStroke
 
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
     @setColorScale()
     @nodes
       .style 'fill',   @getNodeFill
-      .style 'stroke', @getNodeColor
+      .style 'stroke', @getNodeStroke
 
   updateNodesSize: (value) =>
     console.log 'updateNodesSize', value
@@ -815,7 +832,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
 
   # Tick Function
   onTick: =>
-    console.log 'on tick'
+    #console.log 'on tick'
     # Set relations path & arrow markers
     @relations
       .attr 'd', @drawRelationPath
@@ -831,8 +848,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     # Set relation labels position
     if @relations_labels
       @relations_labels
-        .attr 'x', (d) -> return (d.source.x+d.target.x)*0.5
-        .attr 'y', (d) -> return (d.source.y+d.target.y)*0.5
+        .attr 'transform', @getRelationLabelTransform
   
   drawRelationPath: (d) =>
     return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
@@ -855,7 +871,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
 
   getNodeLabelClass: (d) =>
-    console.log 'getNodeLabelClass', @parameters.nodesSize 
+    #console.log 'getNodeLabelClass', @parameters.nodesSize 
     str = 'node-label'
     if !@parameters.showNodesLabel
       str += ' hide'
@@ -868,11 +884,14 @@ class VisualizationGraphCanvasTest extends Backbone.View
   getNodeLabelYPos: (d) =>
     return parseInt(@nodes_cont.select('#node-'+d.id).attr('r'))+13
 
-  getNodeColor: (d) =>
-    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      color = @colorScale d.node_type  
+  getNodeStroke: (d) =>
+    if d.active
+      if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+        color = @colorScale d.node_type  
+      else
+        color = @COLORS[@parameters.nodesColor]
     else
-      color = @COLORS[@parameters.nodesColor]
+      color = '#fff'
     return color
 
   getNodeFill: (d) =>
@@ -880,8 +899,10 @@ class VisualizationGraphCanvasTest extends Backbone.View
       fill = '#d3d7db'
     else if @parameters.showNodesImage and d.image != null
       fill = 'url(#node-pattern-'+d.id+')'
+    else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      fill = @colorScale d.node_type  
     else
-      fill = @getNodeColor(d)
+      fill = @COLORS[@parameters.nodesColor]
     return fill
 
   getNodeSize: (d) =>
@@ -891,6 +912,14 @@ class VisualizationGraphCanvasTest extends Backbone.View
     else
       size = @parameters.nodesSize
     return size
+
+  getRelationLabelTransform: (d) =>
+    x = (d.source.x+d.target.x)*0.5
+    y = (d.source.y+d.target.y)*0.5
+    angle = @getAngleBetweenPoints(d.source, d.target)
+    if angle > 90 or angle < -90
+      angle += 180
+    return "translate(#{ x },#{ y }) rotate(#{ angle })"
 
   getRelationMarkerEnd: (d) -> 
     return if d.direction and d.angle >= 0 then 'url(#arrow-end)' else ''
@@ -919,9 +948,12 @@ class VisualizationGraphCanvasTest extends Backbone.View
       .range [1, 2, 3, 4]
     #console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
 
+  getAngleBetweenPoints: (p1, p2) ->
+    return Math.atan2(p2.y - p1.y, p2.x - p1.x) * @degrees_const
+    #return Math.acos( (p1.x * p2.x + p1.y * p2.y) / ( Math.sqrt(p1.x*p1.x + p1.y*p1.y) * Math.sqrt(p2.x*p2.x + p2.y*p2.y) ) ) * 180 / Math.PI
+
   formatNodesLabels: (nodes) ->
     nodes.each () ->
-      #console.log 'formatNodesLabels 2', @parameters.nodesSize
       node = d3.select(this)
       words = node.text().split(/\s+/).reverse()
       line = []
@@ -935,7 +967,7 @@ class VisualizationGraphCanvasTest extends Backbone.View
       while word = words.pop()
         line.push word
         tspan.text line.join(' ')
-        if tspan.node().getComputedTextLength() > 120
+        if tspan.node().getComputedTextLength() > 130
           line.pop()
           tspan.text line.join(' ')
           line = [word]

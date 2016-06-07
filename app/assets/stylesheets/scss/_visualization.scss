@@ -191,12 +191,15 @@ $node-color-12: #e0deda;
     .node{
       cursor: pointer;
       //opacity: 0.4;
-      stroke-width: 0;
-      stroke-opacity: 0.4;
+      //stroke-width: 0;
+      //stroke: white;
+      stroke-width: 2px;
+      //stroke-opacity: 0.4;
       //@include transition( stroke-width, 0.4s, ease-out );
      
       &.active{
         stroke-width: 20px !important;
+        stroke-opacity: 0.4;
       }
 
       &.disabled{
@@ -212,7 +215,7 @@ $node-color-12: #e0deda;
 
       &.weaken,
       &.disabled{
-        opacity: 0.4;
+        opacity: 0.3;
       }
 
       &.highlighted,
@@ -295,10 +298,10 @@ $node-color-12: #e0deda;
     }
 
     .relation-label{
-      fill: mix( $gray, $gray-semi-light, 50% );
-      font-size: 0.786em;
+      fill: lighten( $gray, 10% );
+      font-size: 0.714em;
       font-weight: 300;
-      text-shadow: 2px 0 1px white, -2px 0 1px white;
+      //text-shadow: 2px 0 1px white, -2px 0 1px white;
       letter-spacing: 0;
     }
 
