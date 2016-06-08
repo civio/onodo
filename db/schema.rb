@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519223729) do
+ActiveRecord::Schema.define(version: 20160606182433) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 20160519223729) do
   end
 
   add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id", unique: true, using: :btree
+
+  create_table "galleries", force: :cascade do |t|
+    t.integer  "visualization_ids", default: [],              array: true
+    t.integer  "story_ids",         default: [],              array: true
+    t.integer  "user_ids",          default: [],              array: true
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"

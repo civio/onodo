@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-
   # GET /explore
   def explore_visualizations
     @items = Visualization.published
@@ -17,9 +16,7 @@ class PagesController < ApplicationController
 
   # GET /gallery
   def gallery
-    visualizations = Visualization.published
-    stories = Story.published
-    @items = (visualizations + stories).sort_by(&:created_at).reverse
+    gallery = Gallery.instance
+    @items = (gallery.visualizations + gallery.stories).sort_by(&:created_at).reverse
   end
-  
 end

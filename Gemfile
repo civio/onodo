@@ -43,10 +43,10 @@ gem 'devise', '~> 3.4.0'
 gem 'bootstrap-sass', '~> 3.3.5'
 
 # Use HAML as templating engine
-gem "haml-rails", "~> 0.9"
+gem 'haml-rails', '~> 0.9'
 
 # Backbone.js for Rails. Read more: https://github.com/codebrew/backbone-rails
-gem "rails-backbone"
+gem 'rails-backbone'
 
 # Handsontable for rails. Browser base Excel In rails. Read more: https://github.com/mahinder/rails_handsontable
 # gem 'rails_handsontable'
@@ -73,6 +73,9 @@ gem 'webpack-rails'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'mini_magick'
 
+# ActiveRecord singleton support
+gem 'acts_as_singleton'
+
 # Serve assets in Heroku and handle logging
 gem 'rails_12factor', group: :production
 
@@ -98,7 +101,7 @@ group :development do
   gem 'foreman'
 
   # Simple script to bulk covert ERB files in a Rails app to Haml: https://github.com/dhl/erb2haml
-  gem "erb2haml"
+  gem 'erb2haml'
 
   # Capistrano, for deployments
   gem 'capistrano', '~> 3.5'

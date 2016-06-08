@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   get '/explore/stories/'        => 'pages#explore_stories'
   get '/gallery'                 => 'pages#gallery'
 
+  get   '/gallery/edit', to: 'galleries#edit', as: :edit_gallery
+  patch '/gallery',      to: 'galleries#update'
+  put   '/gallery',      to: 'galleries#update'
 
   # API routes
   namespace :api, defaults: { format: :json } do

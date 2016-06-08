@@ -34,6 +34,9 @@
                 = link_to "Dashboard", dashboard_path
               %li
                 = link_to "Settings", edit_settings_path
+              - if gallery_editor_role?
+                %li
+                  = link_to "Configure gallery", edit_gallery_path
               %li
                 = link_to "Create visualization", new_visualization_path, :class => 'active'
               %li

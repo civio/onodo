@@ -2,6 +2,7 @@ class HomeController < ApplicationController
 
   # GET /
   def index
-    @gallery_items = Visualization.published + Story.published
+    gallery = Gallery.instance
+    @gallery_items = gallery.visualizations + gallery.stories
   end
 end
