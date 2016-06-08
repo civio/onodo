@@ -13,7 +13,8 @@ var production = process.env.TARGET === 'production';
 
 var config = {
   entry: {
-    'app': './app/frontend/javascripts/app.js'
+    'app':        './app/frontend/javascripts/app.js',
+    'app-embed':  './app/frontend/javascripts/app-embed.js'
   },
 
   output: {

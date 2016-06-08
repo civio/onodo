@@ -25,8 +25,11 @@
 - unless defined? embed
   = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.css', media: 'all'
 = javascript_include_tag 'application'
-- unless defined? embed
-  = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.js'
-= javascript_include_tag *webpack_asset_paths('app')
+-# unless defined? embed
+= javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.js'
+- if defined? embed
+  = javascript_include_tag *webpack_asset_paths('app-embed')
+- else
+  = javascript_include_tag *webpack_asset_paths('app')
 - unless defined? embed
   = csrf_meta_tags
