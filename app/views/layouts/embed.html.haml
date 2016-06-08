@@ -1,0 +1,6 @@
+!!!
+%html
+  %head
+    = render 'partials/head', embed: true
+  %body{ :class => controller.controller_path+' '+controller.action_name, "data-visualization-id": (@visualization.id unless @visualization.nil?), "data-story-id": (@story.id unless @story.nil?) }
+    = yield

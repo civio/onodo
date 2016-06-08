@@ -10,8 +10,9 @@ $(document).ready ->
   $body = $('body')
 
   # visualizations
-  if $body.hasClass('visualizations') and ($body.hasClass('show') or $body.hasClass('edit'))
+  if $body.hasClass('visualizations') and ($body.hasClass('show') or $body.hasClass('embed') or $body.hasClass('edit'))
     # /visualizations/:id
+    # /visualizations/:id/embed
     # /visualizations/:id/edit
     appVisualization = new App.Visualization $('body').data('visualization-id'), $body.hasClass('edit')
     appVisualization.render()

@@ -10,6 +10,11 @@ class VisualizationsController < ApplicationController
     @related_items  = Visualization.published
   end
 
+  # GET /visualizations/:id/embed
+  def embed
+    render layout: 'embed'
+  end
+
   # GET /visualizations/new
   def new
   end
