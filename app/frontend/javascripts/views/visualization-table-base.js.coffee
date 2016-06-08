@@ -14,7 +14,7 @@ class VisualizationTableBase extends Backbone.View
     console.log 'VisualizationTableBase', table_type
     @table_options =
       #minSpareRows: 1
-      contextMenu: null #[ 'row_above', 'row_below', 'undo', 'redo' ]
+      contextMenu: [ 'row_above', 'row_below', 'undo', 'redo' ]
       height: 360
       stretchH: 'all'
       columnSorting: true

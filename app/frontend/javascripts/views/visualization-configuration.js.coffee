@@ -1,8 +1,9 @@
 BootstrapSwitch = require 'bootstrap-switch'
 
-class VisualizationGraphConfiguration extends Backbone.View
+class VisualizationConfiguration extends Backbone.View
 
   el: '.visualization-graph-panel-configuration'
+  
   parameters: null
   parametersDefault: {
     nodesColor:         'solid-1'
@@ -201,4 +202,4 @@ class VisualizationGraphConfiguration extends Backbone.View
     $el.click @onDropdownSelectChange
     $('#nodes-color-column .dropdown-menu').append $el
 
-module.exports = VisualizationGraphConfiguration
+module.exports = VisualizationConfiguration

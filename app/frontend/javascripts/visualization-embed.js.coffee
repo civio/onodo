@@ -1,8 +1,8 @@
 VisualizationBase = require './visualization-base.js'
 
-class Visualization extends VisualizationBase
+class VisualizationEmbed extends VisualizationBase
 
-  constructor: (_id, _edit, _story) ->
+  constructor: (_id) ->
     super _id
 
 module.exports = Visualization

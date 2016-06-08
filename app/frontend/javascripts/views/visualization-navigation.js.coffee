@@ -1,4 +1,4 @@
-class VisualizationGraphNavigation extends Backbone.View
+class VisualizationNavigation extends Backbone.View
 
   el: '.visualization-graph-menu-navigation'
 
@@ -17,4 +17,4 @@ class VisualizationGraphNavigation extends Backbone.View
       Backbone.trigger 'visualization.navigation.fullscreen'
     return this
 
-module.exports = VisualizationGraphNavigation
+module.exports = VisualizationNavigation

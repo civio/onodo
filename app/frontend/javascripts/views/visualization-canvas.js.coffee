@@ -1,6 +1,8 @@
 d3 = require 'd3'
 
-class VisualizationGraphCanvas extends Backbone.View
+class VisualizationCanvas extends Backbone.View
+
+  el: '.visualization-graph-component' 
 
   COLORS: {
     'solid-1': '#ef9387'
@@ -981,4 +983,4 @@ class VisualizationGraphCanvas extends Backbone.View
         tspan.attr('dx', 0)
 
 
-module.exports = VisualizationGraphCanvas
+module.exports = VisualizationCanvas
