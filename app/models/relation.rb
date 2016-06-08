@@ -20,18 +20,16 @@ class Relation < ActiveRecord::Base
   end
 
   # Override `at` getter & setter
-  def at=(at)
-    begin
-      write_attribute(:at, Date.strptime(at, '%Y'))
-    rescue
-      return
-    end
-  end
-
+  # def at=(at)
+  #   begin
+  #     write_attribute(:at, Date.strptime(at, '%Y'))
+  #   rescue
+  #     return
+  #   end
+  # end
+  #
   def at
-    if !read_attribute(:at).nil?
-      read_attribute(:at).strftime('%Y')
-    end
+    read_attribute(:at).strftime('%d/%m/%Y') unless read_attribute(:at).nil?
   end
 
 end
