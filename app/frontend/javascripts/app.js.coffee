@@ -1,20 +1,23 @@
 window.App ||= {}
 
-App.Visualization = require './visualization.js'
-App.Story         = require './story.js'
-App.Trix          = require 'script!trix'
-Dropzone          = require 'dropzone'
+App.Visualization     = require './visualization.js'
+App.VisualizationEdit = require './visualization-edit.js'
+App.Story             = require './story.js'
+App.Trix              = require 'script!trix'
+Dropzone              = require 'dropzone'
 
 $(document).ready ->
 
   $body = $('body')
 
   # visualizations
-  if $body.hasClass('visualizations') and ($body.hasClass('show') or $body.hasClass('embed') or $body.hasClass('edit'))
+  if $body.hasClass('visualizations') 
     # /visualizations/:id
-    # /visualizations/:id/embed
+    if $body.hasClass('show')
+      appVisualization = new App.Visualization $('body').data('visualization-id')
     # /visualizations/:id/edit
-    appVisualization = new App.Visualization $('body').data('visualization-id'), $body.hasClass('edit')
+    else if $body.hasClass('edit')
+      appVisualization = new App.VisualizationEdit $('body').data('visualization-id')
     appVisualization.render()
     $( window ).resize appVisualization.resize
   # stories

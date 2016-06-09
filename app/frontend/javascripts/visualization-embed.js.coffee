@@ -5,4 +5,4 @@ class VisualizationEmbed extends VisualizationBase
   constructor: (_id) ->
     super _id
 
-module.exports = Visualization
+module.exports = VisualizationEmbed

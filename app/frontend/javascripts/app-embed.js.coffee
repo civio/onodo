@@ -1,7 +1,7 @@
 window.App ||= {}
 
-App.Visualization = require './visualization.js'
-App.Story         = require './story.js'
+App.VisualizationEmbed = require './visualization-embed.js'
+App.Story              = require './story.js'
 
 $(document).ready ->
 
@@ -10,7 +10,7 @@ $(document).ready ->
   # visualizations
   if $body.hasClass('visualizations')
     # /visualizations/:id/embed
-    appVisualization = new App.Visualization $('body').data('visualization-id'), false
+    appVisualization = new App.VisualizationEmbed $('body').data('visualization-id')
     appVisualization.render()
     $( window ).resize appVisualization.resize
   # stories
