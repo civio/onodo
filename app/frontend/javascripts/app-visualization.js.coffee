@@ -3,9 +3,9 @@ Visualization = require './visualization.js'
 $(document).ready ->
 
   # /visualizations/:id
-  appVisualization = new Visualization $('body').data('visualization-id')
-  appVisualization.render()
-  $( window ).resize appVisualization.resize
+  visualization = new Visualization $('body').data('visualization-id')
+  visualization.render()
+  $( window ).resize visualization.resize
   
   # Activate tooltips
   $('[data-toggle="tooltip"]').tooltip()

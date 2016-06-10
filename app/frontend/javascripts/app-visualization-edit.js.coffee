@@ -4,9 +4,9 @@ Trix              = require 'script!trix'
 $(document).ready ->
 
   # /visualizations/:id/edit
-  appVisualization = new VisualizationEdit $('body').data('visualization-id')
-  appVisualization.render()
-  $( window ).resize appVisualization.resize
+  visualization = new VisualizationEdit $('body').data('visualization-id')
+  visualization.render()
+  $( window ).resize visualization.resize
   
   # Activate tooltips
   $('[data-toggle="tooltip"]').tooltip()
