@@ -391,6 +391,9 @@ $node-color-12: #e0deda;
       float: right;
       background-color: white;
       min-width: 0;
+      border-radius: 4px;
+      padding: 0 $grid-gutter-width/6;
+      line-height: 2*$grid-gutter-width/3;
       @include clearfix;
 
       .title{
@@ -418,7 +421,6 @@ $node-color-12: #e0deda;
       position: relative;
       top: 2px;
       right: -1px;
-      margin-left: $grid-gutter-width/3;
     }
 
     .btn-configure .icon-configure{
@@ -443,6 +445,7 @@ $node-color-12: #e0deda;
         position: absolute;
         top: 6px;
         left: -92px;
+        margin-right: $grid-gutter-width/3;
       }
 
       .icon-story-info{

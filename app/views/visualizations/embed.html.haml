@@ -6,7 +6,6 @@
     = render 'partials/item_graph_menu_navigation'
     = render 'partials/item_graph_menu_actions'
     = render 'partials/item_graph_panel_configuration'
-    = render 'partials/item_share_panel', item: @visualization
     .visualization-graph-component
       %svg
     
@@ -15,3 +14,5 @@
 = render 'partials/user_label', :user => @visualization.author, :align => 'left'
 
 = render 'partials/embed_icon', item: @visualization
+
+= render 'partials/item_share_panel', item: @visualization

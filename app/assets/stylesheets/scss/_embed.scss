@@ -9,7 +9,7 @@ body.embed{
     position: absolute;
     top: 2*$grid-gutter-width/3;
     left: $grid-gutter-width/3;
-    padding: 0 $grid-gutter-width/6;
+    padding: 0;
     background: transparent;
     z-index: 90;
 
@@ -17,6 +17,8 @@ body.embed{
       color: $brand-primary;
       font-size: 2em;
       background: white;
+      padding: 0 $grid-gutter-width/6;
+      border-radius: 4px;
     }
   }
 
@@ -62,5 +64,9 @@ body.embed{
     text-indent: -9999px;
     overflow: hidden;
     @include retina-sprite( $logo-embed-group );
+  }
+
+  .panel.panel-share{
+    z-index: 99;
   }
 }
