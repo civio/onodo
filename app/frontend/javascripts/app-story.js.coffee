@@ -6,9 +6,6 @@ $(document).ready ->
   story = new Story $('body').data('story-id'), $('body').data('visualization-id')
   story.render()
   $( window ).resize story.resize
-  
-  # Activate tooltips
-  $('[data-toggle="tooltip"]').tooltip()
 
   # Setup 'Start reading' button interaction
   $('.story-cover .btn-start-reading').click (e) ->

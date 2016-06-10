@@ -6,6 +6,3 @@ $(document).ready ->
   story = new StoryEdit $('body').data('story-id'), $('body').data('visualization-id')
   story.render()
   $( window ).resize story.resize
-  
-  # Activate tooltips
-  $('[data-toggle="tooltip"]').tooltip()

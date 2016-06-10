@@ -7,6 +7,3 @@ $(document).ready ->
   visualization = new VisualizationEdit $('body').data('visualization-id')
   visualization.render()
   $( window ).resize visualization.resize
-  
-  # Activate tooltips
-  $('[data-toggle="tooltip"]').tooltip()
