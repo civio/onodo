@@ -198,7 +198,37 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.removeRelation relation.attributes
 
 
+  # Config Panel Events
+  onUpdateNodesColor: (e) ->
+    @visualizationCanvas.updateNodesColor e.value
 
+  onUpdateNodesColorColumn: (e) ->
+    # TODO!!! Add updateNodesColorColumn method in VisualizationCanvas
+    #@visualizationCanvas.updateNodesColorColumn e.value
+
+  onUpdateNodesSize: (e) ->
+    @visualizationCanvas.updateNodesSize e.value
+
+  onToogleNodesLabel: (e) ->
+    @visualizationCanvas.toogleNodesLabel e.value
+
+  onToogleNodesImage: (e) ->
+    @visualizationCanvas.toogleNodesImage e.value
+  
+  onToogleNodesWithoutRelation: (e) ->
+    @visualizationCanvas.toogleNodesWithoutRelation e.value
+
+  onUpdateRelationsCurvature: (e) ->
+    @visualizationCanvas.updateRelationsCurvature e.value
+
+  onUpdateRelationsLineStyle: (e) ->
+    @visualizationCanvas.updateRelationsLineStyle e.value
+
+  onUpdateForceLayoutParam: (e) ->
+    @visualizationCanvas.updateForceLayoutParameter e.name, e.value
+
+
+  # Auxiliar Info Node method
   updateInfoNode: (node) ->
     if @visualizationInfo.isVisible() and @visualizationInfo.model.id == node.id
       #@visualizationInfo.model = node
