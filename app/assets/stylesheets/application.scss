@@ -1,4 +1,5 @@
 /*
-*= require_self
-*= require_tree .
+*= require _app-bootstrap
+*= require_tree ./dist/
+*= require_tree ./scss/
 */

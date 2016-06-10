@@ -401,6 +401,7 @@ $node-color-12: #e0deda;
         position: relative;
         top: -1px;
         font-weight: normal;
+        margin-right: $grid-gutter-width/6;
       }
 
       &:hover,
