@@ -693,9 +693,9 @@ class VisualizationCanvas extends Backbone.View
   #         @addNode d
   #   @render()
 
-  # updateRelationsCurvature: (value) ->
-  #   @parameters.relationsCurvature = value
-  #   @onTick()
+  updateRelationsCurvature: (value) ->
+    @parameters.relationsCurvature = value
+    #@onTick()
 
   updateRelationsLineStyle: (value) ->
     @relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
