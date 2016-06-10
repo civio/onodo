@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+  // Activate tooltips
+  $('[data-toggle="tooltip"]').tooltip();
+
   // Listen click on Visualization Select Item to store visualization id & submit form
   $('.story-select-visualization-list .visualization-item').click(function(e){
     e.preventDefault();
