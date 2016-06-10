@@ -1,3 +1,5 @@
+Handsontable = require './../dist/handsontable.full.js'
+
 # Base Class for VisualizationTableNodes & VisualizationTableRelations
 class VisualizationTableBase extends Backbone.View
 

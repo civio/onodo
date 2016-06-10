@@ -13,8 +13,9 @@ var production = process.env.TARGET === 'production';
 
 var config = {
   entry: {
-    'app':        './app/frontend/javascripts/app.js',
-    'app-embed':  './app/frontend/javascripts/app-embed.js'
+    'app-visualization':        './app/frontend/javascripts/app-visualization.js',
+    'app-visualization-edit':   './app/frontend/javascripts/app-visualization-edit.js',
+    'app-visualization-embed':  './app/frontend/javascripts/app-visualization-embed.js'
   },
 
   output: {
@@ -35,10 +36,6 @@ var config = {
     alias: {
       'handlebars': 'handlebars/runtime.js'
     }
-  },
-  
-  externals: {
-    handsontable: 'Handsontable'
   },
 
   module: {
