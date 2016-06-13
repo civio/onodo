@@ -160,6 +160,10 @@ class VisualizationCanvas extends Backbone.View
     # Translate svg
     @rescale()
 
+    # Remove loading class
+    @$el.removeClass 'loading'  
+
+
   initializeData: (data) ->
 
     console.log 'initializeData'

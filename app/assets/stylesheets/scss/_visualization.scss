@@ -186,7 +186,10 @@ $node-color-12: #e0deda;
     height: 100%;
     border-top: 1px solid $gray-lighter;
     border-bottom: 1px solid $gray-lighter;
-    //background: $gray-lighter;
+
+    &.loading{
+      background: url(/images/loader.gif) no-repeat center center transparent;
+    }
    
     .node{
       cursor: pointer;
