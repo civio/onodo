@@ -1,7 +1,7 @@
 Handlebars            = require 'handlebars'
 HandlebarsTemplate    = require './../templates/visualization-graph-info.handlebars'
 
-class VisualizationGraphInfo extends Backbone.View
+class VisualizationInfo extends Backbone.View
 
   el:             '.visualization-graph-info'
   custom_fields:  null
@@ -49,4 +49,4 @@ class VisualizationGraphInfo extends Backbone.View
       @$el.find('.panel-body').html template
     return this
 
-module.exports = VisualizationGraphInfo
+module.exports = VisualizationInfo

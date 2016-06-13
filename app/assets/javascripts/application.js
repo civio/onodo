@@ -17,5 +17,4 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
-//= require bootstrap-slider
-//= require app-story-new
+//= require scripts

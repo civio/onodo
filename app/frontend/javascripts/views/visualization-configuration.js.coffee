@@ -1,30 +1,10 @@
-BootstrapSwitch = require 'bootstrap-switch'
+Handsontable  = require './../dist/handsontable.full.js'
+Slider        = require 'bootstrap-slider'
+Switch        = require 'bootstrap-switch'
 
-class VisualizationGraphConfiguration extends Backbone.View
+class VisualizationConfiguration extends Backbone.View
 
   el: '.visualization-graph-panel-configuration'
-  parameters: null
-  parametersDefault: {
-    nodesColor:         'solid-1'
-    nodesColorColumn:   'type'
-    nodesSize:          11
-    showNodesLabel:     1
-    showNodesImage:     1
-    relationsCurvature: 1
-    relationsLineStyle: 0
-    linkDistance:       100
-    linkStrength:       -30
-    friction:           0.9
-    charge:             -150
-    theta:              0.8
-    gravity:            0.1
-  }
-
-  onChangeValue: (e) =>
-    key = $(e.target).attr('name')
-    value = $(e.target).val()
-    @parameters[ key ] = value
-    Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: key, value: value}
 
   onChangeNodesColor: (e) =>
     @parameters.nodesColor = $(e.target).find('.active').data('value')
@@ -64,6 +44,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @updateParameters()
 
   onChangeRelationsCurvature: (e) =>
+    #console.log 'onChangeRelationsCurvature', e
     @parameters.relationsCurvature = $(e.target).val()
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
 
@@ -72,58 +53,50 @@ class VisualizationGraphConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.updateRelationsLineStyle', {value: @parameters.relationsLineStyle}
     @updateParameters()
 
-  onUpdateVisualizationParemeters: (e) =>
-    # we update parameters from bootstrap-slider only when slideStop event is triggeres
-    # in order to avoid redundancy
-    @updateParameters()
+  onChangeLinkdistance: (e) =>
+    @parameters.linkDistance = e.newValue
+    Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: 'linkDistance', value: e.newValue}
+
+  onChangeLinkstrength: (e) =>
+    @parameters.linkStrength = e.newValue
+    Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: 'linkStrength', value: e.newValue}
+
 
   onResetDefaults: (e) =>
     e.preventDefault()
     $(e.target).blur()
     # we only reset force layout params
-    @parameters.linkDistance        = @parametersDefault.linkDistance
-    @parameters.linkStrength        = @parametersDefault.linkStrength
-    @parameters.friction            = @parametersDefault.friction
-    @parameters.charge              = @parametersDefault.charge
-    @parameters.theta               = @parametersDefault.theta
-    @parameters.gravity             = @parametersDefault.gravity
+    @parameters.linkDistance = @parametersDefault.linkDistance
+    @parameters.linkStrength = @parametersDefault.linkStrength
     @setupSlidersValues()
+    Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: 'linkDistance', value: @parameters.linkDistance}
+    Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: 'linkStrength', value: @parameters.linkStrength}
     @updateParameters()
-
-  setupParameters: ->
-    @parameters = @parameters || {}
-    # setup parameters
-    @parameters.nodesColor          = @parameters.nodesColor || @parametersDefault.nodesColor
-    @parameters.nodesColorColumn    = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
-    @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
-    @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
-    @parameters.showNodesImage      = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
-    @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
-    @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
-    @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
-    @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
-    @parameters.friction            = @parameters.friction || @parametersDefault.friction
-    @parameters.charge              = @parameters.charge || @parametersDefault.charge
-    @parameters.theta               = @parameters.theta || @parametersDefault.theta
-    @parameters.gravity             = @parameters.gravity || @parametersDefault.gravity
-
-  updateParameters: ->
+  
+  updateParameters: =>
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
+  setupSliders: ->
+    # Initialize sliders
+    @sliderCurvature    = new Slider '#curvature'
+    @sliderLinkdistance = new Slider '#linkdistance'
+    @sliderLinkstrength = new Slider '#linkstrength'
+    # Listen to slideStop value tu sync model
+    @sliderCurvature.on    'slideStop', @updateParameters
+    @sliderLinkdistance.on 'slideStop', @updateParameters
+    @sliderLinkstrength.on 'slideStop', @updateParameters
+    # Listen slide event to trigger visualization.config events
+    @sliderCurvature.on    'change', @onChangeRelationsCurvature
+    @sliderLinkdistance.on 'change', @onChangeLinkdistance
+    @sliderLinkstrength.on 'change', @onChangeLinkstrength
+
   setupSlidersValues: ->
-    @$el.find('#curvature').slider    'setValue', parseFloat @parameters.relationsCurvature
-    @$el.find('#linkdistance').slider 'setValue', parseFloat @parameters.linkDistance
-    @$el.find('#linkstrength').slider 'setValue', parseFloat @parameters.linkStrength
-    @$el.find('#friction').slider     'setValue', parseFloat @parameters.friction
-    @$el.find('#charge').slider       'setValue', parseFloat @parameters.charge
-    @$el.find('#theta').slider        'setValue', parseFloat @parameters.theta
-    @$el.find('#gravity').slider      'setValue', parseFloat @parameters.gravity
+    @sliderCurvature.setValue    parseFloat(@parameters.relationsCurvature)
+    @sliderLinkdistance.setValue parseFloat(@parameters.linkDistance)
+    @sliderLinkstrength.setValue parseFloat(@parameters.linkStrength)
 
-  render: ->
-    # Get parameters from model as JSON & setup
-    @parameters = $.parseJSON @model.get('parameters')
-    @setupParameters()
-
+  render: (_parameters) ->
+    @parameters = _parameters
     # Add custom field to nodes color column selector
     @setCustomFields()
     @updateNodesColorColumn()
@@ -146,9 +119,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#showNodesImage').bootstrapSwitch 'state', @parameters.showNodesImage
     
     # Setup sliders
-    $sliders = @$el.find('.slider')
-    $sliders.slider()
-    $sliders.on 'slideStop', @onUpdateVisualizationParemeters
+    @setupSliders()
     @setupSlidersValues()
 
     # Visualization Styles
@@ -157,15 +128,7 @@ class VisualizationGraphConfiguration extends Backbone.View
     @$el.find('#nodes-size').change           @onChangeNodesSize
     @$el.find('#showNodesLabel').on           'switchChange.bootstrapSwitch', @onToogleNodesLabel
     @$el.find('#showNodesImage').on           'switchChange.bootstrapSwitch', @onToogleNodesImage
-    @$el.find('#curvature').change            @onChangeRelationsCurvature
     @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
-    # Force Layout Parameters
-    @$el.find('#linkdistance').change         @onChangeValue
-    @$el.find('#linkstrength').change         @onChangeValue
-    @$el.find('#friction').change             @onChangeValue
-    @$el.find('#charge').change               @onChangeValue
-    @$el.find('#theta').change                @onChangeValue
-    @$el.find('#gravity').change              @onChangeValue
     # Handle reset defaults
     @$el.find('#reset-defaults').click        @onResetDefaults
 
@@ -201,4 +164,4 @@ class VisualizationGraphConfiguration extends Backbone.View
     $el.click @onDropdownSelectChange
     $('#nodes-color-column .dropdown-menu').append $el
 
-module.exports = VisualizationGraphConfiguration
+module.exports = VisualizationConfiguration

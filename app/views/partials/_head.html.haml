@@ -21,12 +21,22 @@
   %link{:rel => "icon", :type => "image/png", :sizes => "96x96", :href => "/images/favicon-96x96.png" }
   %link{:rel => "icon", :type => "image/png", :sizes => "16x16", :href => "/images/favicon-16x16.png" }
   %link{:rel => "manifest", :href => "/images/manifest.json" }
-= stylesheet_link_tag 'application', media: 'all'
-- unless defined? embed
-  = stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.css', media: 'all'
+- if defined? embed
+  = stylesheet_link_tag 'application-embed', media: 'all'
+- else
+  = stylesheet_link_tag 'application', media: 'all'
 = javascript_include_tag 'application'
-- unless defined? embed
-  = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.24.3/handsontable.full.min.js'
-= javascript_include_tag *webpack_asset_paths('app')
+- if controller.controller_name == 'visualizations'
+  - if controller.action_name == 'show'
+    = javascript_include_tag *webpack_asset_paths('app-visualization')
+  - elsif controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-visualization-edit')
+  - elsif controller.action_name == 'embed'
+    = javascript_include_tag *webpack_asset_paths('app-visualization-embed')
+- elsif controller.controller_name == 'stories'
+  - if controller.action_name == 'show'
+    = javascript_include_tag *webpack_asset_paths('app-story')
+  - elsif controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-story-edit')
 - unless defined? embed
   = csrf_meta_tags

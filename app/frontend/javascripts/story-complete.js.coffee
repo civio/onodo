@@ -1,29 +1,37 @@
+# Imports
 ChaptersCollection  = require './collections/chapters-collection.js'
-VisualizationStory  = require './visualization-story.js'
+Visualization       = require './visualization.js'
 StoryInfo           = require './views/story-info.js'
 
 class Story
 
   story_id:         null
   visualization_id: null
+  edit:             null
   chapters:         null
   visualization:    null
   storyInfo:        null
   currentChapterId: null
 
-  constructor: (_story_id, _visualization_id) ->
+  constructor: (_story_id, _visualization_id, _edit) ->
     @story_id         = _story_id
     @visualization_id = _visualization_id
+    @edit             = _edit
     # Setup Chapters Collection
     @chapters         = new ChaptersCollection()
     # Setup Visualization View
-    @visualization    = new VisualizationStory @visualization_id
+    @visualization    = new Visualization @visualization_id, @edit, true
     # Setup Story Index
-    @storyInfo        = new StoryInfo
+    @storyInfo        = new StoryInfo {edit: @edit}
     # Listen for chapters navigation
     Backbone.on 'story.showChapter',    @onShowChapter, @
     # Listen for visualization syncronization
     Backbone.on 'visualization.synced', @onVisualizationSynced, @
+    # Setup 'Start reading' button interaction
+    $('.story-cover .btn-start-reading').click (e) ->
+      e.preventDefault()
+      $('.story-cover').fadeOut()
+      $('.visualization-info, .visualization-description').fadeIn()
     # Event listener for Chapter delete Modal
     $('#story-chapter-delete-modal').on 'show.bs.modal', (e) =>
       # Load chapter/:id/delete template into story-chapter-delete-modal
@@ -42,8 +50,8 @@ class Story
     @chapters.fetch {url: '/api/stories/'+@story_id+'/chapters/', success: @onChaptersSync}
 
   onChaptersSync: (e) =>
-    console.log 'chapters sync', @chapters
-    if @chapters.length > 0
+    console.log 'chapters sync', @chapters, @edit, @chapters.length
+    if !@edit and @chapters.length > 0
       Backbone.trigger 'story.showChapter', {id: @chapters.at(0).id}
 
   onShowChapter: (e) =>

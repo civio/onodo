@@ -6,11 +6,10 @@ class StoryInfo extends Backbone.View
 
   el:             '.story-info'
   index:          null
-  edit:           null
+  edit:           false
   chaptersLength: null
 
-  initialize: (options) ->
-    @edit = options.edit
+  initialize: ->
     # Get chapters list length
     @chaptersLength = @$el.find('.chapters-list li').size()
     # Show panel when click story-info btn

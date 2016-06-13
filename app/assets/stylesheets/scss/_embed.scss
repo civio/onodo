@@ -1,0 +1,72 @@
+@import 'bootstrap/variables';
+@import '_variables';
+@import 'scss/sprites';
+
+body.embed{
+  overflow: hidden;
+  
+  .visualization-header {
+    position: absolute;
+    top: 2*$grid-gutter-width/3;
+    left: $grid-gutter-width/3;
+    padding: 0;
+    background: transparent;
+    z-index: 90;
+
+    h2{
+      color: $brand-primary;
+      font-size: 2em;
+      background: white;
+      padding: 0 $grid-gutter-width/6;
+      border-radius: 4px;
+    }
+  }
+
+  .visualization-graph{
+
+    .visualization-graph-menu-navigation,
+    .visualization-graph-menu-actions{
+      top: 2.5*$grid-gutter-width;
+    }
+
+    .visualization-graph-container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+
+    .visualization-graph-component{
+      height: 100%;
+    }
+  }
+
+  .visualization-graph-info{
+    z-index: 99;
+  }
+
+  .user-label,
+  .onodo-icon{
+    position: absolute;
+    display: inline-block;
+    z-index: 90;
+  }
+
+  .user-label{
+    left: $grid-gutter-width/3;
+    bottom: $grid-gutter-width/6;
+  }
+
+  .onodo-icon{
+    right: $grid-gutter-width/2;
+    bottom: $grid-gutter-width/2;
+    text-indent: -9999px;
+    overflow: hidden;
+    @include retina-sprite( $logo-embed-group );
+  }
+
+  .panel.panel-share{
+    z-index: 99;
+  }
+}
