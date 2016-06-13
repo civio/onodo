@@ -4,7 +4,6 @@ Node                         = require './models/node.js'
 NodesCollection              = require './collections/nodes-collection.js'
 RelationsCollection          = require './collections/relations-collection.js'
 VisualizationCanvas          = require './views/visualization-canvas.js'
-VisualizationConfiguration   = require './views/visualization-configuration.js'
 VisualizationNavigation      = require './views/visualization-navigation.js'
 VisualizationInfo            = require './views/visualization-info.js'
 
@@ -14,9 +13,20 @@ class VisualizationBase
   edit:                       false
   nodes:                      null
   visualizationCanvas:        null
-  visualizationConfiguration: null
   visualizationNavigation:    null
   visualizationInfo:          null
+  parameters: null
+  parametersDefault: {
+    nodesColor:         'solid-1'
+    nodesColorColumn:   'type'
+    nodesSize:          11
+    showNodesLabel:     1
+    showNodesImage:     1
+    relationsCurvature: 1
+    relationsLineStyle: 0
+    linkDistance:       100
+    linkStrength:       -30
+  }
 
   constructor: (_id) ->
     console.log 'setup visualization base'
@@ -28,12 +38,8 @@ class VisualizationBase
     @relations          = new RelationsCollection()
     # Setup Views
     @visualizationCanvas         = new VisualizationCanvas()
-    @visualizationConfiguration  = new VisualizationConfiguration()
     @visualizationNavigation     = new VisualizationNavigation()
     @visualizationInfo           = new VisualizationInfo()
-    # Setup Configure Panel Show/Hide
-    $('.visualization-graph-menu-actions .btn-configure').click @onPanelConfigureShow
-    $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
     # Setup Share Panel Show/Hide
     $('.visualization-graph-menu-actions .btn-share').click     @onPanelShareShow
     $('#visualization-share .close').click                      @onPanelShareHide
@@ -52,11 +58,11 @@ class VisualizationBase
       @visualizationCanvas.resize()
 
   onSync: =>
-    # Setup visualizationConfiguration model
-    @visualizationConfiguration.model = @visualization
-    @visualizationConfiguration.render()
+    # Setup visualization parameters
+    @parameters = $.parseJSON @visualization.get('parameters')
+    @setupParameters()
     # Setup VisualizationCanvas
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @visualizationConfiguration.parameters
+    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
     @visualizationCanvas.render()
     # Subscribe VisualizationCanvas Events
     Backbone.on 'visualization.node.showInfo',         @onNodeShowInfo, @
@@ -79,6 +85,20 @@ class VisualizationBase
       d.target = d.target_id-1
     return data
 
+  # Parameters methods
+  setupParameters: ->
+    @parameters = @parameters || {}
+    # setup parameters
+    @parameters.nodesColor          = @parameters.nodesColor || @parametersDefault.nodesColor
+    @parameters.nodesColorColumn    = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
+    @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
+    @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
+    @parameters.showNodesImage      = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
+    @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
+    @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
+    @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
+    @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
+
   # Canvas Events
   onNodeShowInfo: (e) ->
     #console.log 'show info', e.node, @visualization
@@ -90,15 +110,6 @@ class VisualizationBase
     @visualizationInfo.hide()
 
   # Panel Events
-  onPanelConfigureShow: =>
-    $('html, body').animate { scrollTop: 0 }, 600
-    @visualizationConfiguration.$el.addClass 'active'
-    @visualizationCanvas.setOffsetX 200 # half the width of Panel Configuration
-
-  onPanelConfigureHide: =>
-    @visualizationConfiguration.$el.removeClass 'active'
-    @visualizationCanvas.setOffsetX 0
-
   onPanelShareShow: ->
     $('#visualization-share').addClass 'active'
 

@@ -1,4 +1,5 @@
 VisualizationBase            = require './visualization-base.js'
+VisualizationConfiguration   = require './views/visualization-configuration.js'
 VisualizationTableNodes      = require './views/visualization-table-nodes.js'
 VisualizationTableRelations  = require './views/visualization-table-relations.js'
 BootstrapSwitch              = require 'bootstrap-switch'
@@ -8,6 +9,8 @@ class VisualizationEdit extends VisualizationBase
   mainHeaderHeight:             84
   visualizationHeaderHeight:    null
   tableHeaderHeight:            42
+
+  visualizationConfiguration:   null
 
   tableNodes:      null
   tableRelations:  null
@@ -29,6 +32,11 @@ class VisualizationEdit extends VisualizationBase
     @tableRelations.setNodes @nodes
     # Setup visualization table
     @$table = $('.visualization-table')
+    # Setup Visualization Configuration panel
+    @visualizationConfiguration = new VisualizationConfiguration()
+    # Setup Visualization Configuration panel Show/Hide
+    $('.visualization-graph-menu-actions .btn-configure').click @onPanelConfigureShow
+    $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
     # Setup scrollbar link
     $('.visualization-table-scrollbar a').click (e) ->
       e.preventDefault()
@@ -68,6 +76,9 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
     super()
+    # Setup Visualization Configuration
+    @visualizationConfiguration.model = @visualization
+    @visualizationConfiguration.render @parameters
 
   resize: =>
     # setup container height
@@ -198,7 +209,16 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.removeRelation relation.attributes
 
 
-  # Config Panel Events
+  # Panel Events
+  onPanelConfigureShow: =>
+    $('html, body').animate { scrollTop: 0 }, 600
+    @visualizationConfiguration.$el.addClass 'active'
+    @visualizationCanvas.setOffsetX 200 # half the width of Panel Configuration
+
+  onPanelConfigureHide: =>
+    @visualizationConfiguration.$el.removeClass 'active'
+    @visualizationCanvas.setOffsetX 0
+
   onUpdateNodesColor: (e) ->
     @visualizationCanvas.updateNodesColor e.value
 

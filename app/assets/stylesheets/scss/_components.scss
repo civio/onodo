@@ -529,6 +529,10 @@ a.user-label{
       margin: -96px auto 0;
       text-align: center;
     }
+
+    .form-group {
+      padding-top: $grid-gutter-width/2;
+    }
   }
 }
 

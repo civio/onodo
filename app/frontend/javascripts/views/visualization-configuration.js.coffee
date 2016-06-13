@@ -5,19 +5,6 @@ Switch        = require 'bootstrap-switch'
 class VisualizationConfiguration extends Backbone.View
 
   el: '.visualization-graph-panel-configuration'
-  
-  parameters: null
-  parametersDefault: {
-    nodesColor:         'solid-1'
-    nodesColorColumn:   'type'
-    nodesSize:          11
-    showNodesLabel:     1
-    showNodesImage:     1
-    relationsCurvature: 1
-    relationsLineStyle: 0
-    linkDistance:       100
-    linkStrength:       -30
-  }
 
   onChangeNodesColor: (e) =>
     @parameters.nodesColor = $(e.target).find('.active').data('value')
@@ -84,22 +71,8 @@ class VisualizationConfiguration extends Backbone.View
     @setupSlidersValues()
     Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: 'linkDistance', value: @parameters.linkDistance}
     Backbone.trigger 'visualization.config.updateForceLayoutParam', {name: 'linkStrength', value: @parameters.linkStrength}
-
     @updateParameters()
-    
-  setupParameters: ->
-    @parameters = @parameters || {}
-    # setup parameters
-    @parameters.nodesColor          = @parameters.nodesColor || @parametersDefault.nodesColor
-    @parameters.nodesColorColumn    = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
-    @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
-    @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
-    @parameters.showNodesImage      = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
-    @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
-    @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
-    @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
-    @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
-
+  
   updateParameters: =>
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
@@ -122,11 +95,8 @@ class VisualizationConfiguration extends Backbone.View
     @sliderLinkdistance.setValue parseFloat(@parameters.linkDistance)
     @sliderLinkstrength.setValue parseFloat(@parameters.linkStrength)
 
-  render: ->
-    # Get parameters from model as JSON & setup
-    @parameters = $.parseJSON @model.get('parameters')
-    @setupParameters()
-
+  render: (_parameters) ->
+    @parameters = _parameters
     # Add custom field to nodes color column selector
     @setCustomFields()
     @updateNodesColorColumn()
