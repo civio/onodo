@@ -4,7 +4,7 @@ class VisualizationCanvas extends Backbone.View
 
   el: '.visualization-graph-component' 
 
-  COLORS: {
+  COLOR_SOLID:
     'solid-1': '#ef9387'
     'solid-2': '#fccf80'
     'solid-3': '#fee378'
@@ -17,20 +17,8 @@ class VisualizationCanvas extends Backbone.View
     'solid-10': '#f1b6ae'
     'solid-11': '#a8a6a0'
     'solid-12': '#e0deda'
-    'quantitative-1': '#382759'
-    'quantitative-2': '#31458f'
-    'quantitative-3': '#2b64c5'
-    'quantitative-4': '#2482fb'
-    'quantitative-5': '#6d9ebb'
-    'quantitative-6': '#b5ba7c'
-    'quantitative-7': '#fed63c'
-    'quantitative-8': '#fedf69'
-    'quantitative-9': '#ffe795'
-    'quantitative-10': '#fff0c2'
-  }
-
-  COLOR_QUALITATIVE:  null
-  COLOR_QUANTITATIVE: null
+  COLOR_QUALITATIVE:  ['#88b5df', '#fbcf80', '#82a288','#ffebad', '#c5a0bb', '#dfdeda', '#a8a69f', '#ee9286', '#d9d06f', '#f0b6ad']
+  COLOR_QUANTITATIVE: ['#382759', '#31458f', '#2b64c5', '#2482fb', '#6d9ebb', '#b5ba7c', '#fed63c', '#fedf69', '#ffe795', '#fff0c2']
 
   svg:                    null
   defs:                   null
@@ -80,37 +68,6 @@ class VisualizationCanvas extends Backbone.View
       x: 0
       y: 0
     scale: 1
-
-  initialize: (options) ->
-
-    # setup colors scales
-    @COLOR_QUALITATIVE = [
-      @COLORS['solid-3']
-      @COLORS['solid-7']
-      @COLORS['solid-1']
-      @COLORS['solid-5']
-      @COLORS['solid-2']
-      @COLORS['solid-8']
-      @COLORS['solid-4']
-      @COLORS['solid-9']
-      @COLORS['solid-6']
-      @COLORS['solid-10']
-      @COLORS['solid-11']
-      @COLORS['solid-12']
-    ]
-    @COLOR_QUANTITATIVE = [
-      @COLORS['quantitative-1']
-      @COLORS['quantitative-2']
-      @COLORS['quantitative-3']
-      @COLORS['quantitative-4']
-      @COLORS['quantitative-5']
-      @COLORS['quantitative-6']
-      @COLORS['quantitative-7']
-      @COLORS['quantitative-8']
-      @COLORS['quantitative-9']
-      @COLORS['quantitative-10']
-    ]
-
 
   setup: (_data, _parameters) ->
 
@@ -891,7 +848,7 @@ class VisualizationCanvas extends Backbone.View
       if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
         color = @colorScale d.node_type  
       else
-        color = @COLORS[@parameters.nodesColor]
+        color = @COLOR_SOLID[@parameters.nodesColor]
     else
       color = '#fff'
     return color
@@ -904,7 +861,7 @@ class VisualizationCanvas extends Backbone.View
     else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       fill = @colorScale d.node_type  
     else
-      fill = @COLORS[@parameters.nodesColor]
+      fill = @COLOR_SOLID[@parameters.nodesColor]
     return fill
 
   getNodeSize: (d) =>
