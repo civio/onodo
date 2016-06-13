@@ -169,8 +169,8 @@ class VisualizationEdit extends VisualizationBase
     else
       @visualizationCanvas.hideNode node.attributes
       # Hide Panel Info if visible for current node
-      if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
-        @visualizationGraphInfo.hide()
+      if @visualizationInfo.isVisible() and @visualizationInfo.node.id == node.id
+        @visualizationInfo.hide()
 
   onNodeChangeImage: (node) ->
     console.log 'onNodeChangeImage', node
@@ -185,8 +185,8 @@ class VisualizationEdit extends VisualizationBase
     console.log 'onNodesRemove', node.attributes.name
     @visualizationCanvas.removeNode node.attributes
     # Hide Panel Info if visible for current node
-    if @visualizationGraphInfo.isVisible() and @visualizationGraphInfo.node.id == node.id
-      @visualizationGraphInfo.hide()
+    if @visualizationInfo.isVisible() and @visualizationInfo.node.id == node.id
+      @visualizationInfo.hide()
 
   # Relations Collection Events
   onRelationsChangeNode: (relation) ->
