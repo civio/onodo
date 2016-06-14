@@ -153,8 +153,8 @@ class VisualizationCanvas extends Backbone.View
     # Setup containers
     @container             = @svg.append('g')
     @relations_cont        = @container.append('g').attr('class', 'relations-cont '+@getRelationsLineStyle(@parameters.relationsLineStyle))
-    @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
     @relations_labels_cont = @container.append('g').attr('class', 'relations-labels-cont')
+    @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
     @nodes_labels_cont     = @container.append('g').attr('class', 'nodes-labels-cont')
     
     # Translate svg

@@ -212,7 +212,7 @@ $node-color-12: #e0deda;
 
     .relation {
       fill: none;
-      stroke: lighten( $gray-semi-light, 10% );
+      stroke: lighten( desaturate( $brand-primary, 80% ), 15% ); //mix(  $brand-primary, $gray-light, 25% ); // lighten( $gray-semi-light, 10% );
       stroke-width: 1px;
       opacity: 0.8;
 
@@ -301,7 +301,7 @@ $node-color-12: #e0deda;
     }
 
     .relation-label{
-      fill: lighten( $gray, 10% );
+      fill: lighten( desaturate( $brand-primary, 80% ), 8% ); //lighten( $gray, 10% );
       font-size: 0.714em;
       font-weight: 300;
       //text-shadow: 2px 0 1px white, -2px 0 1px white;
