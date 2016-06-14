@@ -51,9 +51,10 @@
             #nodes-color-column.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
                 %span.text
+                  Type
                 %span.caret
               %ul.dropdown-menu
-                %li{ 'data-value': 'node_type' }
+                %li.active{ 'data-value': 'node_type' }
                   %p
                     Type
         %hr
@@ -81,7 +82,21 @@
                     Extra Large
                 %li.size-relations{ 'data-value': 1 }
                   %p
-                    Based on number of relations
+                    Based on column
+        .row.nodes-size-column-container.hide
+          .col-sm-5
+            %p.configuration-label
+              Based on column
+          .col-sm-7.text-right
+            #nodes-size-column.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                  Number of relations
+                %span.caret
+              %ul.dropdown-menu
+                %li.active{ 'data-value': 'relations' }
+                  %p
+                    Number of relations
         %hr
         .row
           .col-sm-6
@@ -97,10 +112,10 @@
           .col-sm-6.text-right
             = check_box_tag :showNodesImage, 1, false, data: { "size" => "small" }
       #relations.tab-pane.fade{ role: "tabpanel" }
-        .form-group
-          %label{ for: "curvature"}
-            Relations curvature
-          %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
+        / .form-group
+        /   %label{ for: "curvature"}
+        /     Relations curvature
+        /   %input#curvature.form-control.slider{name: "curvature", type: "text", "data-slider-min": "0.5", "data-slider-max": "10", "data-slider-step": "0.001", "data-slider-scale": "logarithmic"}
         .row
           .col-sm-6
             %p.configuration-label

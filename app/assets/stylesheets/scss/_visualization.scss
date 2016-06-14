@@ -534,7 +534,8 @@ $node-color-12: #e0deda;
       text-transform: capitalize;
     }
 
-    .nodes-color-column-container{
+    .nodes-color-column-container,
+    .nodes-size-column-container{
       margin-top: $grid-gutter-width/3; 
     }
   }
