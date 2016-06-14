@@ -124,12 +124,13 @@ class XlsxDatasetImporter
     @custom_fields = columns.reject{ |f| node_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
 
     nodes = nodes_sheet.parse(header_search: columns, clean: false)[1..-1]
-    nodes.map do |h|
+    nodes = nodes.map do |h|
       result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v.is_a?(String) ? v.strip : v ] }.to_h
       result[:custom_fields] = @custom_fields.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
       result[:visible] = result[:visible] == 0 ? false : true
       Node.new(result.slice(*node_attributes))
     end
+    deduplicate_nodes(nodes)
   end
 
   def create_relations
@@ -145,6 +146,30 @@ class XlsxDatasetImporter
       result[:direction] = result[:direction] == 1 ? true : false
       result[:at] = result[:at].to_s
       Relation.new(result.slice(*relation_attributes))
+    end
+  end
+
+  def deduplicate_nodes(nodes)
+    result = []
+    nodes.each do |node|
+      n = result.find{ |n| n[:name] == node[:name] }
+      if n
+        merge_nodes(n, node)
+        next
+      else
+        result << node
+      end
+    end
+    result
+  end
+
+  def merge_nodes(existing, duplicated)
+    editable_attributes = [:description, :visible, :node_type]
+    editable_attributes.each do |attr|
+      existing[attr] = duplicated[attr] unless duplicated[attr].nil?
+    end
+    duplicated[:custom_fields].keys.each do |cf|
+      existing[:custom_fields][cf] = duplicated[:custom_fields][cf] unless duplicated[:custom_fields][cf].nil?
     end
   end
 end
