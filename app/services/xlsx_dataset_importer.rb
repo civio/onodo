@@ -139,7 +139,7 @@ class XlsxDatasetImporter
     columns = sheet_columns(relations_sheet_name)
 
     relations = relations_sheet.parse(header_search: columns, clean: false)[1..-1]
-    relations.map do |h|
+    relations = relations.map do |h|
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : (k.capitalize=="Date") ? :at : k.downcase.gsub(' ', '_').to_sym, v.is_a?(String) ? v.strip : v ] }.to_h
       result[:source] = @nodes.find{ |n| n.name == result[:source] } || (m = Node.new(name: result[:source]); @nodes << m; m)
       result[:target] = @nodes.find{ |n| n.name == result[:target] } || (m = Node.new(name: result[:target]); @nodes << m; m)
@@ -147,6 +147,7 @@ class XlsxDatasetImporter
       result[:at] = result[:at].to_s
       Relation.new(result.slice(*relation_attributes))
     end
+    deduplicate_relations(relations)
   end
 
   def deduplicate_nodes(nodes)
@@ -171,5 +172,18 @@ class XlsxDatasetImporter
     duplicated[:custom_fields].keys.each do |cf|
       existing[:custom_fields][cf] = duplicated[:custom_fields][cf] unless duplicated[:custom_fields][cf].nil?
     end
+  end
+
+  def deduplicate_relations(relations)
+    result = []
+    relations.each do |relation|
+      r = result.find{ |r| r.source == relation.source && r.target == relation.target && r.relation_type == relation.relation_type }
+      if r
+        next
+      else
+        result << relation
+      end
+    end
+    result
   end
 end
