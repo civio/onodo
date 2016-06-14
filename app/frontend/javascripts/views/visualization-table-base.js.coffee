@@ -45,13 +45,13 @@ class VisualizationTableBase extends Backbone.View
     @createRow index
 
   onTableChangeRow: (changes, source) =>
-    console.log 'onTableChangeRow', changes, source
+    #console.log 'onTableChangeRow', changes, source
     #if @syncTable and source != 'loadData'
     if source != 'loadData' && source != 'external'
       #console.log 'onTableChangeRow', changes, source
       for change in changes
         if change[2] != change[3]
-          console.log 'onTableChangeRow', @table_type, changes, source
+          #console.log 'onTableChangeRow', @table_type, changes, source
           # updateCell must be defined in inherit Classes
           @updateCell change
 

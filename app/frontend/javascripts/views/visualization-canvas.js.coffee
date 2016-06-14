@@ -231,7 +231,11 @@ class VisualizationCanvas extends Backbone.View
         .attr('height', '30')
         .attr('xlink:href', (d) -> return d.image.small.url)
 
+
   updateNodes: ->
+    # Set nodes size
+    @setNodesSize()
+
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
     # JOIN new data with old elements
@@ -245,7 +249,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'id',       (d) -> return 'node-'+d.id
       .attr 'class',    (d) -> return if d.disabled then 'node disabled' else 'node'
       # update node size
-      .attr  'r',       @getNodeSize
+      .attr  'r',       (d) -> return d.size
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
       .style 'fill',    @getNodeFill
       .style 'stroke',  @getNodeStroke
@@ -255,7 +259,7 @@ class VisualizationCanvas extends Backbone.View
       .attr  'id',      (d) -> return 'node-'+d.id
       .attr  'class',   (d) -> return if d.disabled then 'node disabled' else 'node'
       # update node size
-      .attr  'r',       @getNodeSize
+      .attr  'r',       (d) -> return d.size
       # set position at viewport center
       .attr  'cx',      @viewport.center.x
       .attr  'cy',      @viewport.center.y
@@ -444,8 +448,6 @@ class VisualizationCanvas extends Backbone.View
     # count number of relations between 2 nodes
     @linkedByIndex[source+','+target] = ++@linkedByIndex[source+','+target] || 1
 
-  
-
   updateRelationsLabelsData: ->
     if @node_active
       @updateRelationsLabels @getNodeRelations(@node_active.id)
@@ -555,6 +557,13 @@ class VisualizationCanvas extends Backbone.View
     @node_active = null
     @onNodeOut()
 
+  sortNodes: (a, b) ->
+    if a.size > b.size
+      return 1
+    else if a.size > b.size
+      return -1
+    return 0
+
 
   # Resize Methods
   # ---------------
@@ -604,7 +613,7 @@ class VisualizationCanvas extends Backbone.View
   setColorScale: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       @colorScale = d3.scaleOrdinal().range if @parameters.nodesColor == 'qualitative' then @COLOR_QUALITATIVE else @COLOR_QUANTITATIVE
-      color_scale_domain = @data_nodes.map( (d) => console.log(d,d[@parameters.nodesColorColumn]); return d[@parameters.nodesColorColumn] )
+      color_scale_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
       color_scale_domain = color_scale_domain.sort()
       @colorScale.domain color_scale_domain
 
@@ -631,12 +640,17 @@ class VisualizationCanvas extends Backbone.View
   updateNodesSize: (value) =>
     console.log 'updateNodesSize', value
     @parameters.nodesSize = parseInt(value)
+    
     # if nodesSize = 1, set nodes size based on its number of relations
     if @parameters.nodesSize == 1
       @setNodesRelationsSize()
-    # update nodes radius
-    @nodes.attr('r', @getNodeSize)
-    # update nodes labels position
+      @updateNodes()
+      @updateForce()
+    else
+      # set nodes size & update nodes radius
+      @setNodesSize()
+      @nodes.attr 'r', (d) -> return d.size
+    # # update nodes labels position
     @nodes_labels.attr 'class', @getNodeLabelClass
     @nodes_labels.selectAll('.first-line')
       .attr 'dy', @getNodeLabelYPos
@@ -820,11 +834,12 @@ class VisualizationCanvas extends Backbone.View
     free    = ([coord1, coord2]) -> diff(coord2, coord1)  
 
     if d.direction
-      v2 = scale free([d.source, d.target]), @getNodeSize(d.target)
+      v2 = scale free([d.source, d.target]), d.target.size
       p2 = diff d.target, v2
       return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + p2.x + ' ' + p2.y
     else
       return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+
 
   # Auxiliar Methods
   # ----------------
@@ -877,13 +892,17 @@ class VisualizationCanvas extends Backbone.View
       fill = @COLOR_SOLID[@parameters.nodesColor]
     return fill
 
-  getNodeSize: (d) =>
-    # if nodesSize = 1, set size based on node relations
+  setNodesSize: =>
+    # set size in nodes data
+    @data_nodes.forEach (d) =>
+      # if nodesSize = 1, set size based on node relations
+      if @parameters.nodesSize == 1
+        d.size = if @nodes_relations_size[d.id] then @scaleNodeSize @nodes_relations_size[d.id] else 5
+      else
+        d.size = @parameters.nodesSize
+    # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
-      size = if @nodes_relations_size[d.id] then @scaleNodeSize @nodes_relations_size[d.id] else 5
-    else
-      size = @parameters.nodesSize
-    return size
+      @data_nodes = @data_nodes.sort @sortNodes
 
   getRelationLabelTransform: (d) =>
     x = (d.source.x+d.target.x)*0.5

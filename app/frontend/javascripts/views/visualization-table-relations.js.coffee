@@ -24,7 +24,7 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   render: ->
     super()
-    console.log 'VisualizationTableRelations render'
+    #console.log 'VisualizationTableRelations render'
     @getRelationsTypes()
 
   # Setup Handsontable columns options

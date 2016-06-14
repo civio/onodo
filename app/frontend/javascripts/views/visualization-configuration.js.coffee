@@ -30,6 +30,13 @@ class VisualizationConfiguration extends Backbone.View
     #console.log 'onChangeNodesSize', @parameters.nodesSize
     Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
     @updateParameters()
+    @updateNodesSizeColumn()
+
+  updateNodesSizeColumn: ->
+    if @parameters.nodesSize == 1
+        @$el.find('.nodes-size-column-container').removeClass 'hide'
+    else
+        @$el.find('.nodes-size-column-container').addClass 'hide'
 
   onToogleNodesLabel: (e, state) =>
     @parameters.showNodesLabel = state
@@ -78,20 +85,20 @@ class VisualizationConfiguration extends Backbone.View
 
   setupSliders: ->
     # Initialize sliders
-    @sliderCurvature    = new Slider '#curvature'
+    #@sliderCurvature    = new Slider '#curvature'
     @sliderLinkdistance = new Slider '#linkdistance'
     @sliderLinkstrength = new Slider '#linkstrength'
     # Listen to slideStop value tu sync model
-    @sliderCurvature.on    'slideStop', @updateParameters
+    #@sliderCurvature.on    'slideStop', @updateParameters
     @sliderLinkdistance.on 'slideStop', @updateParameters
     @sliderLinkstrength.on 'slideStop', @updateParameters
     # Listen slide event to trigger visualization.config events
-    @sliderCurvature.on    'change', @onChangeRelationsCurvature
+    #@sliderCurvature.on    'change', @onChangeRelationsCurvature
     @sliderLinkdistance.on 'change', @onChangeLinkdistance
     @sliderLinkstrength.on 'change', @onChangeLinkstrength
 
   setupSlidersValues: ->
-    @sliderCurvature.setValue    parseFloat(@parameters.relationsCurvature)
+    #@sliderCurvature.setValue    parseFloat(@parameters.relationsCurvature)
     @sliderLinkdistance.setValue parseFloat(@parameters.linkDistance)
     @sliderLinkstrength.setValue parseFloat(@parameters.linkStrength)
 
@@ -100,6 +107,7 @@ class VisualizationConfiguration extends Backbone.View
     # Add custom field to nodes color column selector
     @setCustomFields()
     @updateNodesColorColumn()
+    @updateNodesSizeColumn()
 
     # Setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch()
@@ -160,8 +168,9 @@ class VisualizationConfiguration extends Backbone.View
 
   onCustomFieldAdded: (e) =>
     field = @model.get('custom_fields').slice(-1)[0]
-    $el = $('<li data-value="'+field+'"><p>'+field.replace(/_+/g,' ')+'</p></li>')
-    $el.click @onDropdownSelectChange
-    $('#nodes-color-column .dropdown-menu').append $el
+    if field
+      $el = $('<li data-value="'+field+'"><p>'+field.replace(/_+/g,' ')+'</p></li>')
+      $el.click @onDropdownSelectChange
+      $('#nodes-color-column .dropdown-menu').append $el
 
 module.exports = VisualizationConfiguration

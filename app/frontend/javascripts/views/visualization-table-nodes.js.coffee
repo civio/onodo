@@ -31,7 +31,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   render: ->
     super()
-    console.log 'VisualizationTableNodes render'
+    #console.log 'VisualizationTableNodes render'
     # add custom_fields to table if defined
     if @model.get('custom_fields')
       @model.get('custom_fields').forEach (custom_field) =>
