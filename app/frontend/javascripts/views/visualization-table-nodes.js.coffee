@@ -210,6 +210,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     e.preventDefault()
     # get column name from form input text
     column_name           = $(e.target).find('#add-custom-column-name').val()
+    column_type           = $(e.target).find('#add-custom-column-type').val()
     column_name_formatted = column_name.replace(/\s+/g, '_').toLowerCase()
     # clear name input text value
     $('#add-custom-column-name').val('')
@@ -224,7 +225,7 @@ class VisualizationTableNodes extends VisualizationTableBase
       @table.updateSettings @table_options
     # update custom_fields in visualization model 
     custom_fields = @model.get('custom_fields')
-    custom_fields.push column_name_formatted
+    custom_fields.push {'name': column_name_formatted, 'type': column_type}
     # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
     console.log 'save custom_fields in DB', custom_fields
     @model.save {custom_fields: custom_fields}, {patch: true}
