@@ -23,7 +23,6 @@ class VisualizationCanvas extends Backbone.View
   svg:                    null
   defs:                   null
   container:              null
-  color:                  null
   data:                   null
   data_nodes:             []
   data_nodes_map:         d3.map()
@@ -43,6 +42,7 @@ class VisualizationCanvas extends Backbone.View
   forceManyBody:          null
   linkedByIndex:          {}
   parameters:             null
+  colorScale:             null
   nodes_relations_size:   null
   node_active:            null
   scaleNodeSize:          null
@@ -307,7 +307,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'id',    (d,i) -> return 'node-label-'+d.id
       .attr 'class', 'node-label'
       .attr 'dy',    @getNodeLabelYPos
-      .text (d) -> return d.name
+      .text (d) -> return d.name.trim()
       .call @formatNodesLabels
 
     # ENTER new elements present in new data
@@ -316,7 +316,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'class', 'node-label'
       .attr 'dx',    0
       .attr 'dy',    @getNodeLabelYPos
-      .text (d) -> return d.name
+      .text (d) -> return d.name.trim()
       .call @formatNodesLabels
 
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
@@ -604,7 +604,9 @@ class VisualizationCanvas extends Backbone.View
   setColorScale: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       @colorScale = d3.scaleOrdinal().range if @parameters.nodesColor == 'qualitative' then @COLOR_QUALITATIVE else @COLOR_QUANTITATIVE
-      @colorScale.domain @data_nodes.map( (d) -> return d.node_type )
+      color_scale_domain = @data_nodes.map( (d) => console.log(d,d[@parameters.nodesColorColumn]); return d[@parameters.nodesColorColumn] )
+      color_scale_domain = color_scale_domain.sort()
+      @colorScale.domain color_scale_domain
 
   updateNodesType: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
@@ -614,6 +616,13 @@ class VisualizationCanvas extends Backbone.View
 
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
+    @setColorScale()
+    @nodes
+      .style 'fill',   @getNodeFill
+      .style 'stroke', @getNodeStroke
+
+  updateNodesColorColumn: (value) =>
+    console.log 'updateNodesColorColumn', value, @parameters.nodesColorColumn
     @setColorScale()
     @nodes
       .style 'fill',   @getNodeFill
@@ -850,7 +859,7 @@ class VisualizationCanvas extends Backbone.View
   getNodeStroke: (d) =>
     if d.active
       if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-        color = @colorScale d.node_type  
+        color = @colorScale d[@parameters.nodesColorColumn]
       else
         color = @COLOR_SOLID[@parameters.nodesColor]
     else
@@ -863,7 +872,7 @@ class VisualizationCanvas extends Backbone.View
     else if @parameters.showNodesImage and d.image != null
       fill = 'url(#node-pattern-'+d.id+')'
     else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      fill = @colorScale d.node_type  
+      fill = @colorScale d[@parameters.nodesColorColumn] 
     else
       fill = @COLOR_SOLID[@parameters.nodesColor]
     return fill

@@ -83,7 +83,7 @@ class VisualizationEdit extends VisualizationBase
   resize: =>
     # setup container height
     #h = if $('body').hasClass('fullscreen') then @$window.height() else @$window.height() - 178 # -50-64-64
-    console.log 'resize'
+    #console.log 'resize'
     windowHeight = $(window).height()
     @visualizationHeaderHeight = $('.visualization-graph .visualization-header').outerHeight()
     graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
@@ -224,7 +224,7 @@ class VisualizationEdit extends VisualizationBase
 
   onUpdateNodesColorColumn: (e) ->
     # TODO!!! Add updateNodesColorColumn method in VisualizationCanvas
-    #@visualizationCanvas.updateNodesColorColumn e.value
+    @visualizationCanvas.updateNodesColorColumn e.value
 
   onUpdateNodesSize: (e) ->
     @visualizationCanvas.updateNodesSize e.value

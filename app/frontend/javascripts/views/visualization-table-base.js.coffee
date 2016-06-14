@@ -77,7 +77,7 @@ class VisualizationTableBase extends Backbone.View
     @resize()
 
   resize: =>
-    console.log 'resize table'
+    #console.log 'resize table'
     @$el.height @table_height - (@$el.offset().top - @table_offset_top)
 
   addRow: ->
