@@ -33,10 +33,15 @@
     = javascript_include_tag *webpack_asset_paths('app-visualization-edit')
   - elsif controller.action_name == 'embed'
     = javascript_include_tag *webpack_asset_paths('app-visualization-embed')
+  - elsif controller.action_name == 'edit_info'
+    = javascript_include_tag *webpack_asset_paths('app-text-editor')
 - elsif controller.controller_name == 'stories'
   - if controller.action_name == 'show'
     = javascript_include_tag *webpack_asset_paths('app-story')
   - elsif controller.action_name == 'edit'
     = javascript_include_tag *webpack_asset_paths('app-story-edit')
+- elsif controller.controller_name == 'nodes'
+  - if controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-text-editor')
 - unless defined? embed
   = csrf_meta_tags

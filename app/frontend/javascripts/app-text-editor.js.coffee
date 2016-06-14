@@ -1,0 +1,1 @@
+Trix = require 'script!trix'
