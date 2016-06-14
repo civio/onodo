@@ -1267,7 +1267,7 @@ body.visualizations.edit{
   }
 
   .visualization-graph-info{
-    bottom: 45px;
+    bottom: $grid-gutter-width/6;
   }
 
   .visualization-graph-container.affix{
