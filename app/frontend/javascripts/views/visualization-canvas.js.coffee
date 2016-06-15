@@ -531,11 +531,14 @@ class VisualizationCanvas extends Backbone.View
     @removeNode node
 
   focusNode: (node) ->
-    # clear previous focused nodes
     if @node_active
+      # clear previous focused nodes
       @node_active.active = false
       @nodes_cont.selectAll('#node-'+@node_active.id)
         .style 'stroke',  @getNodeStroke
+      @node_active = null
+      # force node over
+      @onNodeOver node
     # set node active    
     @node_active = node
     console.log 'focus node', @node_active
