@@ -26,6 +26,7 @@
     "trix": "~0.9.4",
     "bootstrap-slider": "~7.0.1",
     "bootstrap-switch": "~3.3.2",
+    "bootstrap-datepicker": "~1.6.1",
     "handlebars-loader": "~1.1.4",
     "handlebars": "~4.0.5",
     "handsontable": "0.24.3",
