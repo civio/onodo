@@ -1,4 +1,6 @@
 class Node < ActiveRecord::Base
+  include TypeUtil
+
   belongs_to :dataset
   has_many :relations_as_source, foreign_key: :source_id, class_name: Relation, inverse_of: :source
   has_many :relations_as_target, foreign_key: :target_id, class_name: Relation, inverse_of: :target
@@ -22,10 +24,20 @@ class Node < ActiveRecord::Base
   end
 
   def custom_fields
-    fields = dataset ? dataset.custom_fields || [] : []
+    fields = dataset ? dataset.node_custom_fields || [] : []
     result = read_attribute(:custom_fields) || {}
     fields.each do |f|
-      result[f] ||= ""
+      key  = f["name"]
+      type = f["type"]
+
+      value = result[key]
+
+      unless value.nil?
+        value = cast_to_number(value)  if type == "number"
+        value = cast_to_boolean(value) if type == "boolean"
+      end
+
+      result[key] = value
     end
     result
   end

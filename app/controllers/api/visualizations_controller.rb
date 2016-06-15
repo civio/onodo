@@ -7,10 +7,10 @@ class Api::VisualizationsController < ApiController
   end
 
   def update
-    custom_fields = params[:visualization][:custom_fields] || []
-    @dataset.custom_fields = custom_fields.map{ |cf| cf.downcase.gsub(' ', '_') }
+    node_custom_fields = params[:visualization][:node_custom_fields] || []
+    @dataset.node_custom_fields = node_custom_fields.map{ |cf| { "name" => cf["name"].downcase.gsub(' ', '_'), "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string" } }
     @dataset.save
-    params[:visualization].except!(:custom_fields)
+    params[:visualization].except!(:node_custom_fields)
     @visualization.update(visualization_params)
     render :show
   end
