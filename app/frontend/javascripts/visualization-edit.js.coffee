@@ -176,6 +176,7 @@ class VisualizationEdit extends VisualizationBase
     console.log 'onNodeChangeImage', node
     @visualizationCanvas.updateImages()
     @visualizationCanvas.updateNodes()
+    @visualizationCanvas.updateForce true
 
   onNodeChangeCustomField: (node) ->
     # Update Panel Info description
