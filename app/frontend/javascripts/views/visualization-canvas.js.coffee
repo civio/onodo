@@ -311,7 +311,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'id',    (d,i) -> return 'node-label-'+d.id
       .attr 'class', 'node-label'
       .attr 'dy',    @getNodeLabelYPos
-      .text (d) -> return d.name.trim()
+      .text (d) -> return if d.name then d.name.trim() else ''
       .call @formatNodesLabels
 
     # ENTER new elements present in new data
@@ -320,7 +320,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'class', 'node-label'
       .attr 'dx',    0
       .attr 'dy',    @getNodeLabelYPos
-      .text (d) -> return d.name.trim()
+      .text (d) -> return if d.name then d.name.trim() else ''
       .call @formatNodesLabels
 
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
