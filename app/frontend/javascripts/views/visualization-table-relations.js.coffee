@@ -59,6 +59,7 @@ class VisualizationTableRelations extends VisualizationTableBase
       },
       { 
         data: 'direction'
+        type: 'checkbox'
         renderer: @rowDirectionRenderer
       },
       { 
