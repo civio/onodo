@@ -562,3 +562,18 @@ a.user-label{
     border-radius: 0;
   }
 }
+
+// Override Bootstrap Switch styles 
+.bootstrap-switch{
+  .bootstrap-switch-handle-on.bootstrap-switch-primary, 
+  .bootstrap-switch-handle-off.bootstrap-switch-primary{
+    background: $brand-primary;
+  }
+}
+
+// Datepicker
+
+.datepicker{
+  padding: $grid-gutter-width/6;
+  background: white;
+}

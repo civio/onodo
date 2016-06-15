@@ -1,4 +1,21 @@
 = form_for @relation, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
+  .row
+    .col-sm-6
+      .form-group
+        = f.label "relation-label-from", "From"
+        #date-from.input-group.date
+          = f.text_field :at, class: 'form-control'
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-calendar
+    .col-sm-6
+      .form-group
+        = f.label "relation-label-to", "To"
+        #date-to.input-group.date
+          = f.text_field :at, class: 'form-control'
+          %span.input-group-addon
+            %span.glyphicon.glyphicon-calendar
   = f.submit "Save", class: "btn btn-primary"
   %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
     Cancel
+
+= javascript_include_tag *webpack_asset_paths('app-date-editor')

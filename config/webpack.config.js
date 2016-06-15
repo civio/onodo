@@ -19,6 +19,7 @@ var config = {
     'app-story':                './app/frontend/javascripts/app-story.js',
     'app-story-edit':           './app/frontend/javascripts/app-story-edit.js',
     'app-text-editor':          './app/frontend/javascripts/app-text-editor.js',
+    'app-date-editor':          './app/frontend/javascripts/app-date-editor.js',
     'app-upload':               './app/frontend/javascripts/app-upload.js'
   },
 
@@ -44,8 +45,14 @@ var config = {
 
   module: {
     loaders: [
-      { test: /\.coffee$/,     loader: 'coffee-loader' },
-      { test: /\.handlebars$/, loader: 'handlebars-loader' }
+      {
+        test:   /\.coffee$/,
+        loader: 'coffee-loader'
+      },
+      {
+        test:   /\.handlebars$/,
+        loader: 'handlebars-loader'
+      }
     ]
   },
 
@@ -58,7 +65,13 @@ var config = {
       chunks: false,
       modules: false,
       assets: true
-    })]
+    })
+  ],
+
+  externals: {
+    // require("jquery") is external (from jquery-rails gem) & available on the global var jQuery
+    "jquery": "jQuery"
+  }
 };
 
 if (production) {
