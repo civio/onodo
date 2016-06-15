@@ -1,0 +1,4 @@
+= form_for @relation, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
+  = f.submit "Save", class: "btn btn-primary"
+  %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+    Cancel

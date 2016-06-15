@@ -56,6 +56,8 @@ class VisualizationTableRelations extends VisualizationTableBase
       },
       { 
         data: 'at' 
+        readOnly: true
+        renderer: @rowDateRenderer
       },
       { 
         data: 'direction'
@@ -197,6 +199,34 @@ class VisualizationTableRelations extends VisualizationTableBase
         e.stopImmediatePropagation()
         e.preventDefault()
         @duplicateRow selected[0]
+
+  # Function to show modal with date edit form
+  showDateModal: (index) =>
+    console.log 'showDateModal', index
+    $modal = $('#table-date-modal')
+    # Load description edit form via ajax in modal
+    $modal.find('.modal-body').load '/relations/'+@getIdAtRow(index)+'/edit/date/', () =>
+      # Add on submit handler to save new description via model
+      # $modal.find('.form-default').on 'submit', (e) =>
+      #   e.preventDefault()
+      #   @table.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
+      #   $modal.modal 'hide'
+    # Show modal
+    $modal.modal 'show'
+
+  # Custom Renderer for date cells
+  rowDateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
+    # Add delete icon
+    link = document.createElement('A')
+    link.className = if value then 'icon-table' else 'icon-plus'
+    link.innerHTML = link.title = 'Edit Date'
+    Handsontable.Dom.empty(td)
+    td.appendChild(link)
+    # Add description modal on click event or keydown (enter or space)
+    Handsontable.Dom.addEvent link, 'click', (e) =>
+      e.preventDefault()
+      @showDateModal row
+    return td
 
   # Custom Renderer for direction cells
   rowDirectionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
