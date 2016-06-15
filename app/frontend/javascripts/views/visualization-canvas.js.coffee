@@ -311,7 +311,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'id',    (d,i) -> return 'node-label-'+d.id
       .attr 'class', 'node-label'
       .attr 'dy',    @getNodeLabelYPos
-      .text (d) -> return if d.name then d.name.trim() else ''
+      .text (d) -> return d.name
       .call @formatNodesLabels
 
     # ENTER new elements present in new data
@@ -320,7 +320,7 @@ class VisualizationCanvas extends Backbone.View
       .attr 'class', 'node-label'
       .attr 'dx',    0
       .attr 'dy',    @getNodeLabelYPos
-      .text (d) -> return if d.name then d.name.trim() else ''
+      .text (d) -> return d.name
       .call @formatNodesLabels
 
     @nodes_labels = @nodes_labels_cont.selectAll('.node-label')
@@ -548,14 +548,15 @@ class VisualizationCanvas extends Backbone.View
     @updateRelationsLabelsData()
 
   unfocusNode: ->
-    console.log 'unfocus node', @node_active
-    @node_active.active = false
-    @nodes_cont.selectAll('#node-'+@node_active.id)
-      .style 'stroke',  @getNodeStroke
-    @nodes_cont.selectAll('.node.active')
-      .classed 'active', false
-    @node_active = null
-    @onNodeOut()
+    if @node_active
+      console.log 'unfocus node', @node_active
+      @node_active.active = false
+      @nodes_cont.selectAll('#node-'+@node_active.id)
+        .style 'stroke',  @getNodeStroke
+      @nodes_cont.selectAll('.node.active')
+        .classed 'active', false
+      @node_active = null
+      @onNodeOut()
 
   sortNodes: (a, b) ->
     if a.size > b.size
@@ -940,36 +941,38 @@ class VisualizationCanvas extends Backbone.View
   formatNodesLabels: (nodes) ->
     nodes.each () ->
       node = d3.select(this)
-      words = node.text().split(/\s+/).reverse()
-      line = []
-      i = 0
-      dy = parseFloat node.attr('dy')
-      tspan = node.text(null).append('tspan')
-        .attr('class', 'first-line')
-        .attr('x', 0)
-        .attr('dx', 5)
-        .attr('dy', dy)
-      while word = words.pop()
-        line.push word
-        tspan.text line.join(' ')
-        if tspan.node().getComputedTextLength() > 130
-          line.pop()
+      name = node.text()
+      if name != null and name != ''
+        words = name.trim().split(/\s+/).reverse()
+        line = []
+        i = 0
+        dy = parseFloat node.attr('dy')
+        tspan = node.text(null).append('tspan')
+          .attr('class', 'first-line')
+          .attr('x', 0)
+          .attr('dx', 5)
+          .attr('dy', dy)
+        while word = words.pop()
+          line.push word
           tspan.text line.join(' ')
-          line = [word]
-          # if firs tspan, we add ellipsis
-          if i == 0
-            node.append('tspan')
-              .attr('class', 'ellipsis')
-              .attr('dx', 2)
-              .text('...')
-          tspan = node.append('tspan')
-            .attr('x', 0)
-            .attr('dy', 13)
-            .text(word)
-          i++
-      # reset dx if label is not multiline
-      if i == 0
-        tspan.attr('dx', 0)
+          if tspan.node().getComputedTextLength() > 130
+            line.pop()
+            tspan.text line.join(' ')
+            line = [word]
+            # if firs tspan, we add ellipsis
+            if i == 0
+              node.append('tspan')
+                .attr('class', 'ellipsis')
+                .attr('dx', 2)
+                .text('...')
+            tspan = node.append('tspan')
+              .attr('x', 0)
+              .attr('dy', 13)
+              .text(word)
+            i++
+        # reset dx if label is not multiline
+        if i == 0
+          tspan.attr('dx', 0)
 
 
 module.exports = VisualizationCanvas
