@@ -204,6 +204,7 @@ class VisualizationEdit extends VisualizationBase
 
   onRelationsChangeDirection: (relation) ->
     @visualizationCanvas.updateRelations()
+    @visualizationCanvas.updateForce true
 
   onRelationsRemove: (relation) ->
     @visualizationCanvas.removeRelation relation.attributes
