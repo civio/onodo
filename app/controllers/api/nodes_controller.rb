@@ -30,12 +30,15 @@ class Api::NodesController < ApiController
       params[:node][:remove_image] = 1
     end
 
-    @node.dataset.custom_fields.each do |cf|
-      data = params[:node][cf]
+    current_custom_fields = @node.custom_fields || {}
+    @node.dataset.node_custom_fields.each do |cf|
+      field = cf["name"]
+      data = params[:node][field]
       next if data.nil?
-      current_custom_fields = @node.custom_fields || {}
-      params[:node][:custom_fields] = current_custom_fields.merge({cf => data})
+      current_custom_fields = current_custom_fields.merge({cf["name"] => data})
+      next
     end
+    params[:node][:custom_fields] = current_custom_fields
 
     @node.update(node_params)
     render :show

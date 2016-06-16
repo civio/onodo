@@ -1,6 +1,7 @@
 require 'roo'
 
 class XlsxDatasetImporter
+  include TypeUtil
 
   def initialize(xlsx_file)
     @workbook = Roo::Spreadsheet.open(xlsx_file.path)
@@ -25,7 +26,9 @@ class XlsxDatasetImporter
     @nodes = create_nodes || []
     @relations = create_relations || []
 
-    Dataset.new(nodes: @nodes, relations: @relations, custom_fields: @custom_fields)
+    node_custom_fields = @node_custom_field_names.map{ |cfn| { "name" => cfn.to_s, "type" => type_for(@nodes.map{ |n| n.custom_fields[cfn.to_s] }) } }
+
+    Dataset.new(nodes: @nodes, relations: @relations, node_custom_fields: node_custom_fields)
   end
 
   def error_message
@@ -121,12 +124,12 @@ class XlsxDatasetImporter
     return unless nodes_sheet?
 
     columns = sheet_columns(nodes_sheet_name)
-    @custom_fields = columns.reject{ |f| node_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
+    @node_custom_field_names = columns.reject{ |f| node_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
 
     nodes = nodes_sheet.parse(header_search: columns, clean: false)[1..-1]
     nodes = nodes.map do |h|
       result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v.is_a?(String) ? v.strip : v ] }.to_h
-      result[:custom_fields] = @custom_fields.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
+      result[:custom_fields] = @node_custom_field_names.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
       result[:visible] = result[:visible] == 0 ? false : true
       Node.new(result.slice(*node_attributes))
     end

@@ -5,7 +5,7 @@ class XlsxDatasetExporter
   def initialize(dataset)
     @nodes = dataset.nodes.order(:name)
     @relations = dataset.relations.includes(:source, :target).order('nodes.name', 'targets_relations.name')
-    @custom_fields = dataset.custom_fields
+    @node_custom_fields = dataset.node_custom_fields
   end
 
   def export
@@ -36,11 +36,11 @@ class XlsxDatasetExporter
   private
 
   def nodes_header
-    ["Name", "Type", "Description", "Visible"] + (@custom_fields || []).map { |cf| cf.capitalize.gsub('_', ' ') }
+    ["Name", "Type", "Description", "Visible"] + (@node_custom_fields || []).map { |cf| cf["name"].capitalize.gsub('_', ' ') }
   end
 
   def nodes_row(node)
-    [node.name, node.node_type, node.description, node.visible ? nil : 0] + (@custom_fields || []).map { |cf| custom_fields = (node.custom_fields || {}); custom_fields[cf] }
+    [node.name, node.node_type, node.description, node.visible ? nil : 0] + (@node_custom_fields || []).map { |cf| custom_fields = (node.custom_fields || {}); custom_fields[cf["name"]] }
   end
 
   def relations_header

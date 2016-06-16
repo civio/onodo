@@ -146,10 +146,10 @@ class VisualizationConfiguration extends Backbone.View
     return this
 
   setCustomFields: ->
-    if @model.get('custom_fields')
+    if @model.get('node_custom_fields')
       $nodesColorColumn = $('#nodes-color-column .dropdown-menu')
-      @model.get('custom_fields').forEach (field) ->
-        $nodesColorColumn.append '<li data-value="'+field+'"><p>'+field.replace(/_+/g,' ')+'</p></li>'
+      @model.get('node_custom_fields').forEach (field) ->
+        $nodesColorColumn.append '<li data-value="'+field.name+'"><p>'+field.name.replace(/_+/g,' ')+'</p></li>'
 
   onDropdownSelectChange: (e) ->
     #console.log 'onDropdownSelectChange', e
@@ -167,7 +167,7 @@ class VisualizationConfiguration extends Backbone.View
     $(this).parent().parent().trigger 'change'
 
   onCustomFieldAdded: (e) =>
-    field = @model.get('custom_fields').slice(-1)[0]
+    field = @model.get('node_custom_fields').slice(-1)[0].name
     if field
       $el = $('<li data-value="'+field+'"><p>'+field.replace(/_+/g,' ')+'</p></li>')
       $el.click @onDropdownSelectChange

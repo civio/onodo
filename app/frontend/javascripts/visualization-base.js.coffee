@@ -103,7 +103,7 @@ class VisualizationBase
   onNodeShowInfo: (e) ->
     #console.log 'show info', e.node, @visualization
     @visualizationCanvas.focusNode e.node
-    @visualizationInfo.show new Node(e.node), @visualization.get('custom_fields')
+    @visualizationInfo.show new Node(e.node), @visualization.get('node_custom_fields')
 
   onNodeHideInfo: (e) ->
     @visualizationCanvas.unfocusNode()
