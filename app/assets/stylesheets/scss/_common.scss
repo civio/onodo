@@ -383,9 +383,9 @@ label{
 
 .input-group-addon{
   font-size: 12px;
-  color: $gray-semi-light;
-  border-color: $gray-lighter;
-  background: $gray-lighter;
+  color: $gray;
+  border-color: mix( $gray-light, $gray-lighter, 50% );
+  background: mix( $gray-light, $gray-lighter, 50% );
 }
 
 

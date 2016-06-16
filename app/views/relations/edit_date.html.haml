@@ -1,21 +1,35 @@
-= form_for @relation, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
-  .row
-    .col-sm-6
-      .form-group
-        = f.label "relation-label-from", "From"
-        #date-from.input-group.date
-          = f.text_field :at, class: 'form-control'
-          %span.input-group-addon
-            %span.glyphicon.glyphicon-calendar
-    .col-sm-6
-      .form-group
-        = f.label "relation-label-to", "To"
-        #date-to.input-group.date
-          = f.text_field :at, class: 'form-control'
-          %span.input-group-addon
-            %span.glyphicon.glyphicon-calendar
-  = f.submit "Save", class: "btn btn-primary"
-  %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
-    Cancel
+.date-type-selector.form-inline
+  .radio.form-group
+    %label
+      %input{type: "radio", name: "date-type-selector", value: "date-at", checked: "checked"}
+        Specific date
+  .radio.form-group
+    %label
+      %input{type: "radio", name: "date-type-selector", value: "date-from-to"}
+        Date range
+
+.date-forms.clearfix
+  = form_for @relation, url: {action: "update"} , method: "patch", html: {id: 'date-at', class: 'form-default'} do |f|
+    .form-group
+      #datepicker-at.input-group.date
+        %input.form-control{type: "text", required: "required"}
+        %span.input-group-addon
+          %i.glyphicon.glyphicon-calendar
+    = f.submit "Save", class: "btn btn-primary"
+    %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+      Cancel
+
+  = form_for @relation, url: {action: "update"} , method: "patch", html: {id: 'date-from-to', class: 'form-default hide'} do |f|
+    .form-group
+      #datepicker-from-to.input-group.input-daterange
+        %span.input-group-addon from
+        %input.form-control{type: "text", required: "required", name: "start"}
+        %span.input-group-addon to
+        %input.form-control{type: "text", required: "required", name: "end"}
+    = f.submit "Save", class: "btn btn-primary"
+    %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+      Cancel
+
+  
 
 = javascript_include_tag *webpack_asset_paths('app-date-editor')
