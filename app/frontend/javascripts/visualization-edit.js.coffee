@@ -255,6 +255,6 @@ class VisualizationEdit extends VisualizationBase
     if @visualizationInfo.isVisible() and @visualizationInfo.model.id == node.id
       #@visualizationInfo.model = node
       #@visualizationInfo.render()
-      @visualizationInfo.show node, @visualization.get('custom_fields')
+      @visualizationInfo.show node, @visualization.get('node_custom_fields')
   
 module.exports = VisualizationEdit

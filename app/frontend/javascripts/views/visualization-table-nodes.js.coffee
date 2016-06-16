@@ -33,10 +33,10 @@ class VisualizationTableNodes extends VisualizationTableBase
     super()
     #console.log 'VisualizationTableNodes render'
     # add custom_fields to table if defined
-    if @model.get('custom_fields')
-      @model.get('custom_fields').forEach (custom_field) =>
-        @tableColHeaders.push       custom_field.replace(/_+/g, ' ')
-        @table_options.columns.push { data: custom_field }
+    if @model.get('node_custom_fields')
+      @model.get('node_custom_fields').forEach (custom_field) =>
+        @tableColHeaders.push       custom_field.name.replace(/_+/g, ' ')
+        @table_options.columns.push { data: custom_field.name }
     # get node types
     @getNodesTypes()
 
@@ -224,11 +224,11 @@ class VisualizationTableNodes extends VisualizationTableBase
     if @table
       @table.updateSettings @table_options
     # update custom_fields in visualization model 
-    custom_fields = @model.get('custom_fields')
+    custom_fields = @model.get('node_custom_fields')
     custom_fields.push {'name': column_name_formatted, 'type': column_type}
     # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
     console.log 'save custom_fields in DB', custom_fields
-    @model.save {custom_fields: custom_fields}, {patch: true}
+    @model.save {node_custom_fields: custom_fields}, {patch: true}
     # trigger events for visualization configuration panel
     @model.trigger 'change:custom_fields'
     # hide modal

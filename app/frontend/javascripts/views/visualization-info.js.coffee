@@ -4,11 +4,11 @@ HandlebarsTemplate    = require './../templates/visualization-graph-info.handleb
 class VisualizationInfo extends Backbone.View
 
   el:             '.visualization-graph-info'
-  custom_fields:  null
+  node_custom_fields:  null
 
-  show: (node, custom_fields) ->
+  show: (node, node_custom_fields) ->
     @model         = node
-    @custom_fields = custom_fields
+    @node_custom_fields = node_custom_fields
     # Show panel if is not active
     unless @$el.hasClass 'active'
       @$el.addClass 'active'
@@ -31,19 +31,19 @@ class VisualizationInfo extends Backbone.View
   render: ->
     # Update template & render if we have a model
     if @model
-      # set temaplate attributes
+      # set template attributes
       templateAttr = {
         name:         @model.get('name')
         description:  @model.get('description')
         type:         @model.get('node_type')
         image:        if @model.get('image') then @model.get('image').huge.url else null
       }
-      # if available custom_fields, add to templateAttr.custom_fields object
-      if @custom_fields and @custom_fields.length > 0
+      # if available node_custom_fields, add to templateAttr.node_custom_fields object
+      if @node_custom_fields and @node_custom_fields.length > 0
         templateAttr.custom_fields = []
-        @custom_fields.forEach (field) =>
-          if @model.get(field)
-            templateAttr.custom_fields.push {key: field, value: @model.get(field)}
+        @node_custom_fields.forEach (field) =>
+          if @model.get(field.name)
+            templateAttr.custom_fields.push {key: field.name, value: @model.get(field.name)}
       # Compile the template using Handlebars
       template = HandlebarsTemplate templateAttr
       @$el.find('.panel-body').html template
