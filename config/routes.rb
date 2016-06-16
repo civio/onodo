@@ -60,6 +60,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :relations, :only => [:update] do
+    collection do
+      get ':id/edit/date' => 'relations#edit_date'
+    end
+  end
+
   get '/explore'                 => 'pages#explore_stories'
   get '/explore/visualizations/' => 'pages#explore_visualizations'
   get '/explore/stories/'        => 'pages#explore_stories'

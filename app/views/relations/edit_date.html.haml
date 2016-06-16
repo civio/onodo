@@ -1,0 +1,33 @@
+.date-type-selector.form-inline
+  .radio.form-group
+    %label
+      %input{type: "radio", name: "date-type-selector", value: "date-at", checked: @relation.to.nil? }
+        Specific date
+  .radio.form-group
+    %label
+      %input{type: "radio", name: "date-type-selector", value: "date-from-to", checked: !@relation.to.nil? }
+        Date range
+
+.date-forms.clearfix
+  = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-at', class: (@relation.to.nil?) ? 'form-default' : 'form-default hide' } do |f|
+    .form-group
+      #datepicker-at.input-group.date
+        = f.text_field :from, type: "text", class: "form-control"
+        %span.input-group-addon
+          %i.glyphicon.glyphicon-calendar
+    = f.submit "Save", class: "btn btn-primary"
+    %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+      Cancel
+
+  = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-from-to', class: (!@relation.to.nil?) ? 'form-default' : 'form-default hide' } do |f|
+    .form-group
+      #datepicker-from-to.input-group.input-daterange
+        %span.input-group-addon from
+        = f.text_field :from, type: "text", class: "form-control"
+        %span.input-group-addon to
+        = f.text_field :to, type: "text", class: "form-control"
+    = f.submit "Save", class: "btn btn-primary"
+    %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+      Cancel
+
+= javascript_include_tag *webpack_asset_paths('app-date-editor')

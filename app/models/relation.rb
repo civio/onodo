@@ -19,17 +19,14 @@ class Relation < ActiveRecord::Base
     dataset.visualization.stories if dataset && dataset.visualization
   end
 
-  # Override `at` getter & setter
-  # def at=(at)
-  #   begin
-  #     write_attribute(:at, Date.strptime(at, '%Y'))
-  #   rescue
-  #     return
-  #   end
-  # end
-  #
-  def at
-    read_attribute(:at).strftime('%d/%m/%Y') unless read_attribute(:at).nil?
+  def from
+    read_attribute(:from).strftime('%d/%m/%Y') unless read_attribute(:from).nil?
+  end
+
+  alias_method :at, :from
+
+  def to
+    read_attribute(:to).strftime('%d/%m/%Y') unless read_attribute(:to).nil?
   end
 
 end

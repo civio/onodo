@@ -1286,6 +1286,23 @@ body.visualizations.edit{
   }
 }
 
+// Date Selector
+.date-type-selector{
+  height: 2*$grid-gutter-width;
+
+  .radio{
+    margin-right: $grid-gutter-width/3;
+    label{
+      text-transform: uppercase;
+    }
+  }
+}
+.date-forms{
+  .form-group{
+    margin-bottom: 2*$grid-gutter-width/3;
+  }
+}
+
 // Visualization New
 .visualization-new{
   margin-bottom: 2*$grid-gutter-width;

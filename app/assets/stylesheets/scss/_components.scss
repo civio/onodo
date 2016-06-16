@@ -562,3 +562,52 @@ a.user-label{
     border-radius: 0;
   }
 }
+
+// Override Bootstrap Switch styles 
+.bootstrap-switch{
+  .bootstrap-switch-handle-on.bootstrap-switch-primary, 
+  .bootstrap-switch-handle-off.bootstrap-switch-primary{
+    background: $brand-primary;
+  }
+}
+
+// Datepicker
+
+.datepicker{
+  padding: $grid-gutter-width/6;
+  background: white;
+
+  &.datepicker-dropdown.datepicker-orient-bottom:before{
+    display: none;
+  }
+  &.dropdown-menu{
+    margin-top: 0;
+  }
+
+  th{
+    font-weight: 400;
+  }
+
+  table tr th.dow{
+    color: $gray;
+    font-size: 0.786em;
+    font-weight: 300;
+  }
+
+  table tr .old,
+  table tr .new{
+    color: $gray-semi-light;
+    font-weight: 300;
+  }
+
+  table tr td.active{
+    &:hover,
+    &:active, 
+    &.highlighted:active, 
+    &.active, 
+    &.highlighted.active{
+      background: $brand-primary !important;
+      border-color: $brand-primary !important;
+    }
+  }
+}
