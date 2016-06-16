@@ -9,11 +9,13 @@ class VisualizationTableRelations extends VisualizationTableBase
   tableColHeaders:  ['', '', 'Source', 'Relationship', 'Target', 'Date', 'Direction', '<a class="add-custom-column" title="Create Custom Column" href="#"></a>']
   duplicate:        null
   columns:          {
-    'delete'    : 0,
-    'duplicate' : 1,
-    'source'    : 2,
-    'type'      : 3,
+    'delete'    : 0
+    'duplicate' : 1
+    'source'    : 2
+    'type'      : 3
     'target'    : 4
+    'date'      : 5
+    'direction' : 6
   }
 
   constructor: (@model, @collection) ->
@@ -55,7 +57,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         type: 'dropdown'
       },
       { 
-        data: 'at' 
+        data: 'date' 
         readOnly: true
         renderer: @rowDateRenderer
       },
@@ -199,6 +201,11 @@ class VisualizationTableRelations extends VisualizationTableBase
         e.stopImmediatePropagation()
         e.preventDefault()
         @duplicateRow selected[0]
+      # In Date column launch date modal
+      else if selected[1] == @columns.date and selected[3] == @columns.date
+        e.stopImmediatePropagation()
+        e.preventDefault()
+        @showDateModal selected[0]
 
   # Function to show modal with date edit form
   showDateModal: (index) =>
@@ -207,23 +214,28 @@ class VisualizationTableRelations extends VisualizationTableBase
     # Load description edit form via ajax in modal
     $modal.find('.modal-body').load '/relations/'+@getIdAtRow(index)+'/edit/date/', () =>
       # Add on submit handler to save new description via model
-      # $modal.find('.form-default').on 'submit', (e) =>
-      #   e.preventDefault()
-      #   @table.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
-      #   $modal.modal 'hide'
+      #$modal.find('.form-default').on 'submit', (e) =>
+        #e.preventDefault()
+        #@table.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
+        #$modal.modal 'hide'
     # Show modal
     $modal.modal 'show'
 
   # Custom Renderer for date cells
   rowDateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
-    # Add delete icon
-    link = document.createElement('A')
-    link.className = if value then 'icon-table' else 'icon-plus'
-    link.innerHTML = link.title = 'Edit Date'
     Handsontable.Dom.empty(td)
-    td.appendChild(link)
+    if value
+      console.log 'rowDateRenderer', value
+      link = document.createElement('DIV')
+      link.innerHTML = value
+      td.appendChild(link)
+    else
+      link = document.createElement('A')
+      link.className = 'icon-plus'
+      link.innerHTML = link.title = 'Edit Date'
+      td.appendChild(link)
     # Add description modal on click event or keydown (enter or space)
-    Handsontable.Dom.addEvent link, 'click', (e) =>
+    Handsontable.Dom.addEvent td, 'click', (e) =>
       e.preventDefault()
       @showDateModal row
     return td
