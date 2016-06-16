@@ -37,7 +37,7 @@
                   %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
                     Node Visibility
                 - node_custom_fields.each do |field|
-                  %td= node.custom_fields[field["name"]].to_s if node.custom_fields[field["name"]]
+                  %td= node.custom_fields[field["name"]].to_s
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
           %thead
