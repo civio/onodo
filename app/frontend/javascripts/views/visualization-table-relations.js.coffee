@@ -214,10 +214,23 @@ class VisualizationTableRelations extends VisualizationTableBase
     # Load description edit form via ajax in modal
     $modal.find('.modal-body').load '/relations/'+@getIdAtRow(index)+'/edit/date/', () =>
       # Add on submit handler to save new description via model
-      #$modal.find('.form-default').on 'submit', (e) =>
-        #e.preventDefault()
-        #@table.setDataAtRowProp index, 'description', $modal.find('#node_description').val()
-        #$modal.modal 'hide'
+      $modal.find('.form-default').on 'submit', (e) =>
+        e.preventDefault()
+        $relation_to = $(e.target).find('#relation_to')
+        model_id     = @getIdAtRow index
+        model        = @collection.get model_id
+        model_date   = {
+          'from': $(e.target).find('#relation_from').val()
+          'to':   if $relation_to.length > 0 then $relation_to.val() else null
+        }
+        # update date value in table when change is available
+        model.once 'change:date', (model) =>
+          @table.setDataAtRowProp index, 'date', model.get('date')
+        # update model
+        model.save model_date, {patch: true}
+        # hide modal
+        $modal.modal 'hide'
+        return
     # Show modal
     $modal.modal 'show'
 
