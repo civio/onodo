@@ -12,9 +12,10 @@
   = form_for @relation, url: {action: "update"} , method: "patch", html: {id: 'date-at', class: 'form-default'} do |f|
     .form-group
       #datepicker-at.input-group.date
-        = f.text_field :at, type: "text", required: "required", class: "form-control"
+        = f.text_field :from, type: "text", required: "required", class: "form-control"
         %span.input-group-addon
           %i.glyphicon.glyphicon-calendar
+        %input{type: "hidden", name: "to", value: "null" }
     = f.submit "Save", class: "btn btn-primary"
     %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
       Cancel
@@ -23,9 +24,9 @@
     .form-group
       #datepicker-from-to.input-group.input-daterange
         %span.input-group-addon from
-        = f.text_field :from, type: "text", required: "required", class: "form-control", name: "start"
+        = f.text_field :from, type: "text", required: "required", class: "form-control"
         %span.input-group-addon to
-        = f.text_field :to, type: "text", required: "required", class: "form-control", name: "end"
+        = f.text_field :to, type: "text", required: "required", class: "form-control"
     = f.submit "Save", class: "btn btn-primary"
     %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
       Cancel
