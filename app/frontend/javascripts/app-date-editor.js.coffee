@@ -4,9 +4,10 @@ $(document).ready ->
   
   # Setup datepickers
   $('#datepicker-from-to, #datepicker-at').datepicker {
-    format: 'dd/mm/yyyy'
+    format:    'dd/mm/yyyy'
     autoclose: true
-    language: 'en'
+    clearBtn:  true
+    language:  'en'
   }
   
   # Setup data type selector
