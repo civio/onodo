@@ -15,8 +15,8 @@ class RelationsController < ApplicationController
 
   # PATCH /relations/:id/
   def update
-    #@node.update_attributes( node_params )
-    #redirect_to edit_visualization_path(@node.visualization)
+    @relation.update_attributes( relation_params )
+    redirect_to edit_visualization_path(@relation.visualization)
   end
 
   private
