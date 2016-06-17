@@ -29,4 +29,8 @@ class Relation < ActiveRecord::Base
     read_attribute(:to).strftime('%d/%m/%Y') unless read_attribute(:to).nil?
   end
 
+  def at=(date)
+    write_attribute(:from, date)
+    write_attribute(:to, nil)
+  end
 end
