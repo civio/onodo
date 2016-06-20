@@ -1,15 +1,17 @@
+- date_at = (@relation.to == @relation.from)
+
 .date-type-selector.form-inline
   .radio.form-group
     %label
-      %input{type: "radio", name: "date-type-selector", value: "date-at", checked: @relation.to.nil? }
+      %input{type: "radio", name: "date-type-selector", value: "date-at", checked: date_at }
         Specific date
   .radio.form-group
     %label
-      %input{type: "radio", name: "date-type-selector", value: "date-from-to", checked: !@relation.to.nil? }
+      %input{type: "radio", name: "date-type-selector", value: "date-from-to", checked: !date_at }
         Date range
 
 .date-forms.clearfix
-  = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-at', class: (@relation.to.nil?) ? 'form-default' : 'form-default hide' } do |f|
+  = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-at', class: date_at ? 'form-default' : 'form-default hide' } do |f|
     .form-group
       #datepicker-at.input-group.date
         = f.text_field :from, type: "text", class: "form-control"
@@ -19,7 +21,7 @@
     %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
       Cancel
 
-  = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-from-to', class: (!@relation.to.nil?) ? 'form-default' : 'form-default hide' } do |f|
+  = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-from-to', class: (!date_at) ? 'form-default' : 'form-default hide' } do |f|
     .form-group
       #datepicker-from-to.input-group.input-daterange
         %span.input-group-addon from

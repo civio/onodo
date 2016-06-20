@@ -1,7 +1,7 @@
 module RelationsHelper
 
   def format_date_for(relation)
-    if relation.to.nil?
+    if relation.from == relation.to
       return "#{relation.from}"
     else
       return "#{relation.from} - #{relation.to}"

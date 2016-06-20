@@ -221,7 +221,7 @@ class VisualizationTableRelations extends VisualizationTableBase
         model        = @collection.get model_id
         model_date   = {
           'from': $(e.target).find('#relation_from').val()
-          'to':   if $relation_to.length > 0 then $relation_to.val() else null
+          'to':   if $(e.target).attr('id') == 'date-at' then $(e.target).find('#relation_from').val() else $(e.target).find('#relation_to').val()
         }
         # update date value in table when change is available
         model.once 'change:date', (model) =>
