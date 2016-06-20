@@ -48,7 +48,8 @@ class Api::RelationsController < ApiController
   end
 
   def relation_params
-    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :from, :to, :at, :dataset_id)
+    # order of :at, :from and :to is important, as the latter take precedence over the first
+    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :at, :from, :to, :dataset_id)
   end
 
 end
