@@ -1,4 +1,4 @@
-fields = relation.attributes.keys.map(&:to_sym) - [:at, :from, :to]
+fields = relation.attributes.keys.map(&:to_sym)
 
 json.extract! relation, *fields
 
