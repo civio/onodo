@@ -8,8 +8,11 @@
   border-color: transparent;
   z-index: 92;
 
+  .navbar-collapse {
+    border-bottom: 1px solid $gray-light;
+  }
+
   .navbar-nav{
-    margin-left: $grid-gutter-width/2;
 
     > li > a{
       color: $text-color;
@@ -50,6 +53,14 @@
       }
     }
   }
+  @media (min-width: $screen-sm-min) {
+    .navbar-nav {
+      margin-left: $grid-gutter-width/2;
+    }
+    .navbar-collapse {
+      border-bottom: 0;
+    }
+  }
 }
 
 .navbar-brand{
@@ -57,8 +68,9 @@
   padding: 0;
   width: 109px;
   height: 51px;
-  margin-left: 0 !important;
-  margin-right: grid-gutter-width/2;
+  margin-left: $grid-gutter-width/2;
+  margin-right: $grid-gutter-width/2;
+  margin-bottom: $grid-gutter-width/3;
 
   &:before{
     content: "";
@@ -96,6 +108,10 @@
     display: none;
     margin: 0;
   }
+  @media (min-width: $screen-sm-min) {
+    margin-left: 0 !important;
+    margin-bottom: 0;
+  }
 }
 
 .navbar-right{
@@ -131,6 +147,64 @@
         text-indent: -9999px;
         @include retina-sprite( $icon-settings-group );
       }
+    }
+    .dropdown-menu {
+      margin-top: 0 !important;
+    }
+  }
+  @media (max-width: $screen-sm-min) {
+    margin: 0px -15px;
+    padding: 0 $grid-gutter-width/2;
+    .dropdown {
+      border-top: 1px solid $gray-light;
+      padding-top: $grid-gutter-width/3;
+      position: relative;
+      #user-dropdown {
+        position: absolute;
+        top: $grid-gutter-width/3;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: none;
+        span {
+          position: absolute;
+          right: $grid-gutter-width/3;
+        }
+      }
+    }
+    .open {
+      .dropdown-menu {
+        li {
+          a {
+            padding: $grid-gutter-width/3 $grid-gutter-width/2;
+          }
+        }
+        a,
+        a.active {
+          background: none;
+          border-left: 0;
+          border-right: 0;
+          border-color: $gray-light;
+          &:hover {
+            border-color: $gray-light;
+          }
+        }
+        li:first-child,
+        li:last-child {
+          a {
+            border-color: $gray-light;
+            border-radius: 0;
+          }
+        }
+        li:last-child {
+          a {
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+    .dropdown-menu-right:before {
+      display: none;
     }
   }
 }
