@@ -216,12 +216,12 @@ class VisualizationTableRelations extends VisualizationTableBase
       # Add on submit handler to save new description via model
       $modal.find('.form-default').on 'submit', (e) =>
         e.preventDefault()
-        $relation_to = $(e.target).find('#relation_to')
-        model_id     = @getIdAtRow index
-        model        = @collection.get model_id
-        model_date   = {
+        date_at    = $(e.target).attr('id') == 'date-at'
+        model_id   = @getIdAtRow index
+        model      = @collection.get model_id
+        model_date = {
           'from': $(e.target).find('#relation_from').val()
-          'to':   if $(e.target).attr('id') == 'date-at' then $(e.target).find('#relation_from').val() else $(e.target).find('#relation_to').val()
+          'to':   if date_at then $(e.target).find('#relation_from').val() else $(e.target).find('#relation_to').val()
         }
         # update date value in table when change is available
         model.once 'change:date', (model) =>
