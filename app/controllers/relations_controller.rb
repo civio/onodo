@@ -6,10 +6,6 @@ class RelationsController < ApplicationController
 
   # GET /relations/:id/edit/date
   def edit_date
-    # TODO!!! Check if current_user is the owner of this node
-    if current_user.nil?
-      #redirect_to new_user_session_path()
-    end
     render layout: false
   end 
 
