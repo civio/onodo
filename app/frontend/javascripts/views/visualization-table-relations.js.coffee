@@ -144,6 +144,9 @@ class VisualizationTableRelations extends VisualizationTableBase
     index = change[0]
     key   = change[1]
     value = change[3]
+    # we don't need to update model for date column
+    if key == 'date'
+      return
     # Get model id in order to acced to model in Collection
     cell_id = @table.getDataAtRowProp(index, 'id')
     if cell_id
@@ -165,7 +168,6 @@ class VisualizationTableRelations extends VisualizationTableBase
             obj.target_name = node[0].get('name')
       else
         obj[ key ] = value
-      console.log 'updateModel', obj, cell_model
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
       cell_model.save obj, {patch: true}
 
@@ -206,7 +208,7 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   # Function to show modal with date edit form
   showDateModal: (index) =>
-    console.log 'showDateModal', index
+    #console.log 'showDateModal', index
     $modal = $('#table-date-modal')
     # Load description edit form via ajax in modal
     $modal.find('.modal-body').load '/relations/'+@getIdAtRow(index)+'/edit/date/', () =>
@@ -235,7 +237,6 @@ class VisualizationTableRelations extends VisualizationTableBase
   rowDateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     Handsontable.Dom.empty(td)
     if value
-      console.log 'rowDateRenderer', value
       link = document.createElement('DIV')
       link.innerHTML = value
       td.appendChild(link)
