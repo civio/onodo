@@ -5,16 +5,16 @@
   .panel-body
     %ul#visualization-graph-panel-configuration-tabs.nav.nav-tabs{ role: "tablist" }
       %li.active{ role: "presentation" }
-        %a#nodes-tab{ href: "#nodes", role: "tab", "data-toggle": "tab" }
+        %a#nodes-tab{ href: "#settings-nodes", role: "tab", "data-toggle": "tab" }
           Nodes
       %li{ role: "presentation" }
-        %a#relations-tab{ href: "#relations", role: "tab", "data-toggle": "tab" }
+        %a#relations-tab{ href: "#settings-relations", role: "tab", "data-toggle": "tab" }
           Relations
       %li{ role: "presentation" }
-        %a#advanced-tab{ href: "#advanced", role: "tab", "data-toggle": "tab" }
+        %a#advanced-tab{ href: "#settings-advanced", role: "tab", "data-toggle": "tab" }
           Advanced
     #visualization-graph-panel-configuration-tab-content.tab-content
-      #nodes.tab-pane.fade.in.active{ role: "tabpanel" }
+      #settings-nodes.tab-pane.fade.in.active{ role: "tabpanel" }
         .row
           .col-sm-5
             %p.configuration-label
@@ -111,7 +111,7 @@
               Show Nodes Image
           .col-sm-6.text-right
             = check_box_tag :showNodesImage, 1, false, data: { "size" => "small" }
-      #relations.tab-pane.fade{ role: "tabpanel" }
+      #settings-relations.tab-pane.fade{ role: "tabpanel" }
         / .form-group
         /   %label{ for: "curvature"}
         /     Relations curvature
@@ -128,7 +128,7 @@
                 Dashed
               %option{ value: 2 }
                 Dotted
-      #advanced.tab-pane.fade{ role: "tabpanel" }
+      #settings-advanced.tab-pane.fade{ role: "tabpanel" }
         -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
         .form-group
           %label{ for: "linkdistante"}
