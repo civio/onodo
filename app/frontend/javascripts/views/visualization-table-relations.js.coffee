@@ -117,7 +117,7 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   # Method called from parent class `VisualizationTableBase`
   createRow: (index) ->
-    console.log 'createRow', index
+    #console.log 'createRow', index
     # We need to set `wait = true` to wait for the server before adding the new model to the collection
     # http://backbonejs.org/#Collection-create
     row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': false, wait: true}
@@ -132,8 +132,11 @@ class VisualizationTableRelations extends VisualizationTableBase
           @table.setDataAtRowProp index, 'target_name', @duplicate.get('target_name')
         if @duplicate.get('relation_type')
           @table.setDataAtRowProp index, 'relation_type', @duplicate.get('relation_type')
+        @table.setDataAtRowProp index, 'from', @duplicate.get('from')
+        @table.setDataAtRowProp index, 'to', @duplicate.get('to')
+        @table.setDataAtRowProp index, 'date', @duplicate.get('date')
         @table.setDataAtRowProp index, 'direction', @duplicate.get('direction')
-        console.log 'now set duplicate values'
+        #console.log 'now set duplicate values'
         @duplicate = null
       else
         @table.setDataAtRowProp index, 'direction', false
@@ -235,18 +238,17 @@ class VisualizationTableRelations extends VisualizationTableBase
 
   # Custom Renderer for date cells
   rowDateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
-    Handsontable.Dom.empty(td)
+    Handsontable.Dom.empty td
     if value
       link = document.createElement('DIV')
       link.innerHTML = value
-      td.appendChild(link)
     else
       link = document.createElement('A')
       link.className = 'icon-plus'
       link.innerHTML = link.title = 'Edit Date'
-      td.appendChild(link)
+    td.appendChild link
     # Add description modal on click event or keydown (enter or space)
-    Handsontable.Dom.addEvent td, 'click', (e) =>
+    Handsontable.Dom.addEvent link, 'click',  (e) =>
       e.preventDefault()
       @showDateModal row
     return td
