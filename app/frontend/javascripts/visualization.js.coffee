@@ -5,6 +5,10 @@ class Visualization extends VisualizationBase
   constructor: (_id) ->
     console.log 'Visualization'
     super _id
+    # activate table tabs selector
+    $('#visualization-table-selector a').click (e) ->
+      e.preventDefault()
+      $(this).tab 'show'
 
   resize: =>
     # setup container height
