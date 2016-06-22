@@ -6,4 +6,16 @@ class Chapter < ActiveRecord::Base
   validates :name, presence: true
 
   mount_uploader :image, ChapterImageUploader
+
+  def date_from
+    format read_attribute(:date_from)
+  end
+
+  def date_to
+    format read_attribute(:date_to)
+  end
+
+  def format date
+    date.strftime('%d/%m/%Y') if date
+  end
 end
