@@ -189,6 +189,7 @@
   .item-info{
     display: table-cell;
     vertical-align: middle;
+    text-align: center;
     // position: relative;
     //top: -50%;
     
@@ -300,6 +301,7 @@
       //width: 50%;
       //float: right;
       vertical-align: top;
+      text-align: left;
 
       h3{
         color: $gray;
