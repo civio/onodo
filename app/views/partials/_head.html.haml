@@ -43,5 +43,8 @@
 - elsif controller.controller_name == 'nodes'
   - if controller.action_name == 'edit'
     = javascript_include_tag *webpack_asset_paths('app-text-editor')
+- elsif controller.controller_name == 'chapters'
+  - if controller.action_name == 'new' or controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-story-chapter')
 - unless defined? embed
   = csrf_meta_tags

@@ -27,15 +27,22 @@
           = f.text_field :remote_image_url, class: 'form-control'
       %hr
   .form-group
-    = f.label "chapter-input-title", "Chapter Title"
+    = f.label "name", "Title"
     = f.text_field :name, class: "form-control", required: true
   .form-group
-    = f.label "chapter-input-description", "Description"
+    = f.label "description", "Description"
     = f.text_field :description, type: "hidden"
     %trix-toolbar{ id: "wysiwig-toolbar", input: "chapter_description" }
     %trix-editor{ input: "chapter_description", toolbar: "wysiwig-toolbar", class: "form-control" }
+  .form-group
+    = f.label "date", "Date"
+    #datepicker-from-to.input-group.input-daterange
+      %span.input-group-addon from
+      = f.text_field :date_from, type: "text", class: "form-control"
+      %span.input-group-addon to
+      = f.text_field :date_to, type: "text", class: "form-control"
   %p
-    Choose the relationships that appear in this chapter.
+    Choose the relationships that appear in this chapter
   .visualization-table
     %table.table.table-fixed
       %thead

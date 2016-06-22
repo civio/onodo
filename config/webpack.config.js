@@ -18,6 +18,7 @@ var config = {
     'app-visualization-embed':  './app/frontend/javascripts/app-visualization-embed.js',
     'app-story':                './app/frontend/javascripts/app-story.js',
     'app-story-edit':           './app/frontend/javascripts/app-story-edit.js',
+    'app-story-chapter':        './app/frontend/javascripts/app-story-chapter.js',
     'app-text-editor':          './app/frontend/javascripts/app-text-editor.js',
     'app-date-editor':          './app/frontend/javascripts/app-date-editor.js',
     'app-upload':               './app/frontend/javascripts/app-upload.js'
