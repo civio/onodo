@@ -17,7 +17,7 @@ class VisualizationCanvas extends Backbone.View
     'solid-10': '#f1b6ae'
     'solid-11': '#a8a6a0'
     'solid-12': '#e0deda'
-  COLOR_QUALITATIVE:  ['#f0b6ad', '#d9d06f', '#ee9286', '#a8a69f', '#dfdeda', '#c5a0bb', '#ffebad', '#82a288', '#fbcf80', '#88b5df']
+  COLOR_QUALITATIVE:  ['#88b5df', '#fbcf80', '#82a288','#ffebad', '#c5a0bb', '#dfdeda', '#a8a69f', '#ee9286', '#d9d06f', '#f0b6ad']
   COLOR_QUANTITATIVE: ['#fff0c2', '#ffe795', '#fedf69', '#fed63c', '#b5ba7c', '#6d9ebb', '#2482fb', '#2b64c5', '#31458f', '#382759']
 
   svg:                    null
@@ -618,9 +618,15 @@ class VisualizationCanvas extends Backbone.View
 
   setColorScale: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      @color_scale = d3.scaleQuantize().range if @parameters.nodesColor == 'qualitative' then @COLOR_QUALITATIVE else @COLOR_QUANTITATIVE
       color_scale_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
-      @color_scale.domain [0, d3.max(color_scale_domain)]
+      if @parameters.nodesColor == 'qualitative' 
+        @color_scale = d3.scaleOrdinal().range @COLOR_QUALITATIVE
+        @color_scale.domain _.uniq(color_scale_domain)
+        #console.log 'color_scale_domain', _.uniq(color_scale_domain)
+      else
+        @color_scale = d3.scaleQuantize().range @COLOR_QUANTITATIVE
+        @color_scale.domain [0, d3.max(color_scale_domain)]
+        #console.log 'color_scale_domain', d3.max(color_scale_domain)
       # @color_scale = d3.scaleViridis()
       #   .domain([d3.max(color_scale_domain), 0])
     
