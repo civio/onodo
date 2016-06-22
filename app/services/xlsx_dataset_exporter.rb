@@ -44,11 +44,11 @@ class XlsxDatasetExporter
   end
 
   def relations_header
-    ["Source", "Type", "Target", "Directed"]
+    ["Source", "Type", "Target", "Directed", "At", "From", "To"]
   end
 
   def relations_row(relation)
-    [relation.source && relation.source.name, relation.relation_type, relation.target && relation.target.name, relation.direction ? nil : 0]
+    [relation.source && relation.source.name, relation.relation_type, relation.target && relation.target.name, relation.direction ? 1 : nil, relation.transient? ? (relation.at && relation.at.to_date) : nil, relation.transient? ? nil : (relation.from && relation.from.to_date), relation.transient? ? nil : (relation.to && relation.to.to_date)]
   end
 
 end
