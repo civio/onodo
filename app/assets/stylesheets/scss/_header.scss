@@ -152,7 +152,7 @@
       margin-top: 0 !important;
     }
   }
-  @media (max-width: $screen-sm-min) {
+  @media (max-width: $screen-sm-min - 1) {
     margin: 0px -15px;
     padding: 0 $grid-gutter-width/2;
     .dropdown {
