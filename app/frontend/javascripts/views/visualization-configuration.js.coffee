@@ -20,17 +20,26 @@ class VisualizationConfiguration extends Backbone.View
         @$el.find('.nodes-color-column-container').addClass 'hide'
 
   onChangeNodesColorColumn: (e) =>
-    @parameters.nodesColorColumn = $(e.target).find('.active').data('value')
-    #console.log 'onChangeNodesColorColumn', @parameters.nodesColorColumn
+    value = $(e.target).find('.active').data('value')
+    if value == @parameters.nodesColorColumn
+      return
+    @parameters.nodesColorColumn = value
     Backbone.trigger 'visualization.config.updateNodesColorColumn', {value: @parameters.nodesColorColumn}
     @updateParameters() 
   
   onChangeNodesSize: (e) =>
     @parameters.nodesSize = parseInt $(e.target).find('.active').data('value')
-    #console.log 'onChangeNodesSize', @parameters.nodesSize
     Backbone.trigger 'visualization.config.updateNodesSize', {value: @parameters.nodesSize}
     @updateParameters()
     @updateNodesSizeColumn()
+
+  onChangeNodesSizeColumn: (e) =>
+    value = $(e.target).find('.active').data('value')
+    if value == @parameters.nodesSizeColumn
+      return
+    @parameters.nodesSizeColumn = value
+    Backbone.trigger 'visualization.config.updateNodesSizeColumn', {value: @parameters.nodesSizeColumn}
+    @updateParameters() 
 
   updateNodesSizeColumn: ->
     if @parameters.nodesSize == 1
@@ -40,18 +49,15 @@ class VisualizationConfiguration extends Backbone.View
 
   onToogleNodesLabel: (e, state) =>
     @parameters.showNodesLabel = state
-    #console.log 'onToogleNodesLabel', @parameters.showNodesLabel
     Backbone.trigger 'visualization.config.toogleNodesLabel', {value: @parameters.showNodesLabel}
     @updateParameters()
 
   onToogleNodesImage: (e, state) =>
     @parameters.showNodesImage = state
-    #console.log 'onToogleNodesImage', @parameters.showNodesImage
     Backbone.trigger 'visualization.config.toogleNodesImage', {value: @parameters.showNodesImage}
     @updateParameters()
 
   onChangeRelationsCurvature: (e) =>
-    #console.log 'onChangeRelationsCurvature', e
     @parameters.relationsCurvature = $(e.target).val()
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
 
@@ -118,6 +124,7 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#nodes-color .dropdown-menu li[data-value="' + @parameters.nodesColor + '"]').trigger 'click'
     @$el.find('#nodes-color-column .dropdown-menu li[data-value="' + @parameters.nodesColorColumn + '"]').trigger 'click'
     @$el.find('#nodes-size .dropdown-menu li[data-value="' + @parameters.nodesSize + '"]').trigger 'click'
+    @$el.find('#nodes-size-column .dropdown-menu li[data-value="' + @parameters.nodesSizeColumn + '"]').trigger 'click'
     
     # Setup relations-line-style selectors
     @$el.find('#relations-line-style').val @parameters.relationsLineStyle
@@ -134,6 +141,7 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#nodes-color').change          @onChangeNodesColor
     @$el.find('#nodes-color-column').change   @onChangeNodesColorColumn
     @$el.find('#nodes-size').change           @onChangeNodesSize
+    @$el.find('#nodes-size-column').change    @onChangeNodesSizeColumn
     @$el.find('#showNodesLabel').on           'switchChange.bootstrapSwitch', @onToogleNodesLabel
     @$el.find('#showNodesImage').on           'switchChange.bootstrapSwitch', @onToogleNodesImage
     @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
@@ -148,8 +156,11 @@ class VisualizationConfiguration extends Backbone.View
   setCustomFields: ->
     if @model.get('node_custom_fields')
       $nodesColorColumn = $('#nodes-color-column .dropdown-menu')
+      $nodesSizeColumn = $('#nodes-size-column .dropdown-menu')
       @model.get('node_custom_fields').forEach (field) ->
-        $nodesColorColumn.append '<li data-value="'+field.name+'"><p>'+field.name.replace(/_+/g,' ')+'</p></li>'
+        str = '<li data-value="'+field.name+'"><p>'+field.name.replace(/_+/g,' ')+'</p></li>'
+        $nodesColorColumn.append str
+        $nodesSizeColumn.append str
 
   onDropdownSelectChange: (e) ->
     #console.log 'onDropdownSelectChange', e

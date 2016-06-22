@@ -69,6 +69,7 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesColorColumn',      @onUpdateNodesColorColumn, @
     Backbone.on 'visualization.config.updateNodesSize',             @onUpdateNodesSize, @
+    Backbone.on 'visualization.config.updateNodesSizeColumn',       @onUpdateNodesSizeColumn, @
     Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabel, @
     Backbone.on 'visualization.config.toogleNodesImage',            @onToogleNodesImage, @
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
@@ -225,11 +226,13 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateNodesColor e.value
 
   onUpdateNodesColorColumn: (e) ->
-    # TODO!!! Add updateNodesColorColumn method in VisualizationCanvas
     @visualizationCanvas.updateNodesColorColumn e.value
 
   onUpdateNodesSize: (e) ->
     @visualizationCanvas.updateNodesSize e.value
+
+  onUpdateNodesSizeColumn: (e) ->
+    @visualizationCanvas.updateNodesSizeColumn e.value
 
   onToogleNodesLabel: (e) ->
     @visualizationCanvas.toogleNodesLabel e.value

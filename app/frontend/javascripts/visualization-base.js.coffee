@@ -20,6 +20,7 @@ class VisualizationBase
     nodesColor:         'solid-1'
     nodesColorColumn:   'type'
     nodesSize:          11
+    nodesSizeColumn:    'relations'
     showNodesLabel:     1
     showNodesImage:     1
     relationsCurvature: 1
@@ -92,6 +93,7 @@ class VisualizationBase
     @parameters.nodesColor          = @parameters.nodesColor || @parametersDefault.nodesColor
     @parameters.nodesColorColumn    = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
     @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
+    @parameters.nodesSizeColumn     = @parameters.nodesSizeColumn || @parametersDefault.nodesSizeColumn
     @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
     @parameters.showNodesImage      = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
     @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature

@@ -17,8 +17,8 @@ class VisualizationCanvas extends Backbone.View
     'solid-10': '#f1b6ae'
     'solid-11': '#a8a6a0'
     'solid-12': '#e0deda'
-  COLOR_QUALITATIVE:  ['#88b5df', '#fbcf80', '#82a288','#ffebad', '#c5a0bb', '#dfdeda', '#a8a69f', '#ee9286', '#d9d06f', '#f0b6ad']
-  COLOR_QUANTITATIVE: ['#382759', '#31458f', '#2b64c5', '#2482fb', '#6d9ebb', '#b5ba7c', '#fed63c', '#fedf69', '#ffe795', '#fff0c2']
+  COLOR_QUALITATIVE:  ['#f0b6ad', '#d9d06f', '#ee9286', '#a8a69f', '#dfdeda', '#c5a0bb', '#ffebad', '#82a288', '#fbcf80', '#88b5df']
+  COLOR_QUANTITATIVE: ['#fff0c2', '#ffe795', '#fedf69', '#fed63c', '#b5ba7c', '#6d9ebb', '#2482fb', '#2b64c5', '#31458f', '#382759']
 
   svg:                    null
   defs:                   null
@@ -42,11 +42,10 @@ class VisualizationCanvas extends Backbone.View
   forceManyBody:          null
   linkedByIndex:          {}
   parameters:             null
-  colorScale:             null
-  nodes_relations_size:   null
+  color_scale:            null
   node_active:            null
-  scaleNodeSize:          null
-  scaleLabelSize:         null
+  scale_nodes_size:       null
+  scale_labels_size:      null
   degrees_const:          180 / Math.PI
   # Viewport object to store drag/zoom values
   viewport:
@@ -146,9 +145,12 @@ class VisualizationCanvas extends Backbone.View
       .append 'path'
         .attr 'd', 'M -10 -8 L 0 0 L -10 8'
 
-    # if nodesSize = 1, set nodes size based on its number of relations
+    # if nodesSize = 1, set nodes size
     if @parameters.nodesSize == 1
-      @setNodesRelationsSize()  # initialize nodes_relations_size array
+      # set relations attribute in nodes
+      if @parameters.nodesSizeColumn == 'relations'
+        @setNodesRelations()
+      @setScaleNodesSize()
 
     # Setup containers
     @container             = @svg.append('g')
@@ -488,8 +490,8 @@ class VisualizationCanvas extends Backbone.View
       @unfocusNode()
     @removeNodeData node
     @removeNodeRelations node
-    if @parameters.nodesSize == 1
-      @setNodesRelationsSize()
+    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
+      @setNodesRelations()
     @render true
 
   removeNodeRelations: (node) =>
@@ -501,8 +503,8 @@ class VisualizationCanvas extends Backbone.View
     console.log 'addRelation', relation
     @addRelationData relation
     # update nodes relations size if needed to take into acount the added relation
-    if @parameters.nodesSize == 1
-      @setNodesRelationsSize()
+    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
+      @setNodesRelations()
     @render true
 
   removeRelation: (relation) ->
@@ -510,8 +512,8 @@ class VisualizationCanvas extends Backbone.View
     @removeRelationData relation
     @updateRelationsLabelsData()
     # update nodes relations size if needed to take into acount the removed relation
-    if @parameters.nodesSize == 1
-      @setNodesRelationsSize()
+    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
+      @setNodesRelations()
     @render true
 
   showNode: (node) ->
@@ -523,8 +525,8 @@ class VisualizationCanvas extends Backbone.View
       # if node is present in some relation we add it to data_relations and/or data_relations_visibles array
       if relation.source_id  == node.id or relation.target_id == node.id
         @addRelationData relation
-    if @parameters.nodesSize == 1
-      @setNodesRelationsSize()
+    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
+      @setNodesRelations()
     @render true
 
   hideNode: (node) ->
@@ -616,11 +618,12 @@ class VisualizationCanvas extends Backbone.View
 
   setColorScale: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      @colorScale = d3.scaleOrdinal().range if @parameters.nodesColor == 'qualitative' then @COLOR_QUALITATIVE else @COLOR_QUANTITATIVE
+      @color_scale = d3.scaleQuantize().range if @parameters.nodesColor == 'qualitative' then @COLOR_QUALITATIVE else @COLOR_QUANTITATIVE
       color_scale_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
-      color_scale_domain = color_scale_domain.sort()
-      @colorScale.domain color_scale_domain
-
+      @color_scale.domain [0, d3.max(color_scale_domain)]
+      # @color_scale = d3.scaleViridis()
+      #   .domain([d3.max(color_scale_domain), 0])
+    
   updateNodesType: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       @nodes
@@ -629,27 +632,32 @@ class VisualizationCanvas extends Backbone.View
 
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
-    @setColorScale()
-    @nodes
-      .style 'fill',   @getNodeFill
-      .style 'stroke', @getNodeStroke
+    @updateNodesColorValue()
 
   updateNodesColorColumn: (value) =>
-    console.log 'updateNodesColorColumn', value, @parameters.nodesColorColumn
+    @updateNodesColorValue()
+
+  updateNodesColorValue: =>
     @setColorScale()
     @nodes
       .style 'fill',   @getNodeFill
       .style 'stroke', @getNodeStroke
 
   updateNodesSize: (value) =>
-    console.log 'updateNodesSize', value
     @parameters.nodesSize = parseInt(value)
-    
+    @updateNodesSizeValue()
+
+  updateNodesSizeColumn: (value) =>
+    @updateNodesSizeValue()
+
+  updateNodesSizeValue: =>
     # if nodesSize = 1, set nodes size based on its number of relations
     if @parameters.nodesSize == 1
-      @setNodesRelationsSize()
+      if @parameters.nodesSizeColumn == 'relations'
+        @setNodesRelations()
+      @setScaleNodesSize()
       @updateNodes()
-      @updateForce()
+      @updateForce true
     else
       # set nodes size & update nodes radius
       @setNodesSize()
@@ -666,7 +674,6 @@ class VisualizationCanvas extends Backbone.View
 
   toogleNodesImage: (value) =>
     @parameters.showNodesImage = value
-    console.log 'toogleNodesImage',  @parameters
     @updateNodes()
   
   # toogleNodesWithoutRelation: (value) =>
@@ -697,7 +704,7 @@ class VisualizationCanvas extends Backbone.View
 
   updateForceLayoutParameter: (param, value) ->
 
-    console.log 'updateForceLayoutParameter', param, value
+    #console.log 'updateForceLayoutParameter', param, value
 
     #@force.stop()
     if param == 'linkDistance'
@@ -869,7 +876,7 @@ class VisualizationCanvas extends Backbone.View
     if d.disabled
       str += ' disabled'
     if @parameters.nodesSize == 1
-      str += ' size-'+@scaleLabelSize(@nodes_relations_size[d.id])
+      str += ' size-'+@scale_labels_size(d[@parameters.nodesSizeColumn])
     return str
 
   getNodeLabelYPos: (d) =>
@@ -878,7 +885,7 @@ class VisualizationCanvas extends Backbone.View
   getNodeStroke: (d) =>
     if d.active
       if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-        color = @colorScale d[@parameters.nodesColorColumn]
+        color = @color_scale d[@parameters.nodesColorColumn]
       else
         color = @COLOR_SOLID[@parameters.nodesColor]
     else
@@ -891,7 +898,7 @@ class VisualizationCanvas extends Backbone.View
     else if @parameters.showNodesImage and d.image != null
       fill = 'url(#node-pattern-'+d.id+')'
     else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      fill = @colorScale d[@parameters.nodesColorColumn] 
+      fill = @color_scale d[@parameters.nodesColorColumn] 
     else
       fill = @COLOR_SOLID[@parameters.nodesColor]
     return fill
@@ -899,11 +906,13 @@ class VisualizationCanvas extends Backbone.View
   setNodesSize: =>
     # set size in nodes data
     @data_nodes.forEach (d) =>
-      # if nodesSize = 1, set size based on node relations
-      if @parameters.nodesSize == 1
-        d.size = if @nodes_relations_size[d.id] then @scaleNodeSize @nodes_relations_size[d.id] else 5
-      else
+      # fixed nodes size 
+      if @parameters.nodesSize != 1
         d.size = @parameters.nodesSize
+      # nodes size based on number of relations or custom_fields
+      else
+        val = if d[@parameters.nodesSizeColumn] then d[@parameters.nodesSizeColumn] else 0
+        d.size = @scale_nodes_size val
     # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
       @data_nodes = @data_nodes.sort @sortNodes
@@ -916,26 +925,25 @@ class VisualizationCanvas extends Backbone.View
       angle += 180
     return "translate(#{ x },#{ y }) rotate(#{ angle })"
 
-  setNodesRelationsSize: =>
-    @nodes_relations_size = {}
-    # initialize nodes_relations_size object with all nodes with zero value
+  setNodesRelations: =>
+    # initialize relations attribute for each node with zero value
     @data_nodes.forEach (d) =>
-      @nodes_relations_size[d.id] = 0
-    # increment each node value which has a relation
+      d.relations = 0
+    # increment relation attributes for each relation
     @data_relations_visibles.forEach (d) =>
-      @nodes_relations_size[d.source_id] += 1
-      @nodes_relations_size[d.target_id] += 1
-    #@nodes_relations_size.max = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
+      d.source.relations += 1
+      d.target.relations += 1
+    
+  setScaleNodesSize: =>
     # set node size scale
-    maxValue = d3.max d3.entries(@nodes_relations_size), (d) -> return d.value
-    @scaleNodeSize = d3.scaleLinear()
+    maxValue = d3.max @data_nodes, (d) => return d[@parameters.nodesSizeColumn]
+    @scale_nodes_size = d3.scaleLinear()
       .domain [0, maxValue]
       .range [5, 20]
     # set label size scale
-    @scaleLabelSize = d3.scaleQuantize()
+    @scale_labels_size = d3.scaleQuantize()
       .domain [0, maxValue]
       .range [1, 2, 3, 4]
-    #console.log 'setNodesRelationsSize', @nodes_relations_size, @data_nodes
 
   getAngleBetweenPoints: (p1, p2) ->
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * @degrees_const
