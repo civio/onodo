@@ -26,24 +26,24 @@
             %li
               = link_to "Sign up", new_user_registration_path
       %section.col-sm-4
-        %p.pull-left
-          %strong
-            Follow us:
-          %ul.social-icons
+        .social-icons
+          %p
+            %strong
+              Follow us:
+          %ul
             %li
               %a.twitter{href: 'https://twitter.com/Onodo_', title: 'Twitter Onodo', target: '_blank'}
                 Twitter
             / %li
             /   %a.facebook{href: '#'}
             /     Facebook
-        %p
-          %form#mc-embedded-subscribe-form.form-inline{name: "mc-embedded-subscribe-form", method: "post", action: "http://civio.us4.list-manage1.com/subscribe/post?u=9416fe6b76f2c3f985c1f8e0f&amp;id=9d5b4c8cda", target: "_blank"}
-            .form-group 
-              %label{for: "mce-EMAIL"}
-                Subscribe:
-              %input#mce-EMAIL.email{type: "email", required: "require", placeholder: "Email", name: "EMAIL"}
-              %button.btn.btn-sm.btn-default{type: "submit"}
-                Send
-        %p
+        %form#mc-embedded-subscribe-form.form-inline{name: "mc-embedded-subscribe-form", method: "post", action: "http://civio.us4.list-manage1.com/subscribe/post?u=9416fe6b76f2c3f985c1f8e0f&amp;id=9d5b4c8cda", target: "_blank"}
+          .form-group 
+            %label{for: "mce-EMAIL"}
+              Subscribe:
+            %input#mce-EMAIL.email{type: "email", required: "require", placeholder: "Email", name: "EMAIL"}
+            %button.btn.btn-sm.btn-default{type: "submit"}
+              Send
+        %p.footer-info
           %span.eu-icon
           This project has received funds from the 7th European Union Programme for research, technology development and demonstration, under the grant num. 61133
