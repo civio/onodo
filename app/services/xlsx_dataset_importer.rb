@@ -26,7 +26,7 @@ class XlsxDatasetImporter
     @nodes = create_nodes || []
     @relations = create_relations || []
 
-    node_custom_fields = @node_custom_field_names.map{ |cfn| { "name" => cfn.to_s, "type" => type_for(@nodes.map{ |n| n.custom_fields[cfn.to_s] }) } }
+    node_custom_fields = @node_custom_field_names && @node_custom_field_names.map{ |cfn| { "name" => cfn.to_s, "type" => type_for(@nodes.map{ |n| n.custom_fields[cfn.to_s] }) } }
 
     Dataset.new(nodes: @nodes, relations: @relations, node_custom_fields: node_custom_fields)
   end
