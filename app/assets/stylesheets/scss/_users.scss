@@ -26,7 +26,6 @@
 
       .devise-links{
         font-size: 12px;
-        padding: 8px 0;
       }
     }
   }
@@ -36,6 +35,15 @@
       font-size: 12px;
       font-weight: 300;
       font-style: normal;
+    }
+  }
+  @media (min-width: $screen-sm-min) {
+    form{
+      .actions {
+        .devise-links {
+          padding: 8px 0;
+        }
+      }
     }
   }
 }

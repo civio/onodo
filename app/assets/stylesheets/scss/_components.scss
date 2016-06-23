@@ -412,14 +412,18 @@ a.user-label{
   }
 
   .media-left{
+    display: block;
+    padding-right: 0;
+    padding-bottom: $grid-gutter-width/3;
+    width: 100%;
     padding-top: $grid-gutter-width/6;
-    padding-right: $grid-gutter-width;
   }
 
   .media-object{
     width: 128px;
     height: 128px;
     background: $gray-light;
+    margin: 0 auto;
   }
 
   .media-body{
@@ -435,6 +439,17 @@ a.user-label{
       font-weight: 300;
       padding-top: 8px;
       padding-bottom: 0;
+    }
+  }
+  @media (min-width: 500px) {
+    .media-left{
+      display: table-cell;
+      width: auto;
+      padding-top: $grid-gutter-width/6;
+      padding-right: $grid-gutter-width;
+    }
+    .media-object {
+      margin: 0;
     }
   }
 }
