@@ -38,3 +38,6 @@ app-bundle.js
 
 #Ignore file uploads
 /public/uploads
+
+#Ignore procfile for crossbrowsing tests
+Procfile-tests.dev
