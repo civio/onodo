@@ -329,7 +329,8 @@ button,
 // Form
 
 .form-default {
-  margin-bottom: 2*$grid-gutter-width;
+  margin: 0 auto 2*$grid-gutter-width;
+  max-width: 560px;
   .actions {
     @include clearfix();
     .pull-right {
@@ -337,8 +338,8 @@ button,
     }
   }
   @media (min-width: $screen-sm-min) {
-    margin-bottom: 3*$grid-gutter-width;
-    margin-top: -$grid-gutter-width;
+    max-width: none;
+    margin: -$grid-gutter-width 0 3*$grid-gutter-width;
   }
 }
 
