@@ -54,7 +54,7 @@ class XlsxDatasetImporter
   end
 
   def relation_attributes
-    [:source, :target, :relation_type, :direction, :at]
+    [:source, :target, :relation_type, :direction, :at, :from, :to]
   end
 
   def nodes_sheet_name
@@ -113,7 +113,7 @@ class XlsxDatasetImporter
   end
 
   def optional_relation_columns
-    [/^type$/i, /^directed$/i, /^date$/i]
+    [/^type$/i, /^directed$/i, /(^at$)|(^date)/i, /^from$/i, /^to$/i]
   end
 
   def relations_columns
@@ -148,6 +148,8 @@ class XlsxDatasetImporter
       result[:target] = @nodes.find{ |n| n.name == result[:target] } || (m = Node.new(name: result[:target]); @nodes << m; m)
       result[:direction] = result[:direction] == 1 ? true : false
       result[:at] = result[:at].to_s
+      result[:from] = result[:from].to_s
+      result[:to] = result[:to].to_s
       Relation.new(result.slice(*relation_attributes))
     end
     deduplicate_relations(relations)
