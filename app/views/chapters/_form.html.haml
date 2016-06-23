@@ -55,13 +55,13 @@
           %th Date
       %tbody
         = f.collection_check_boxes :relation_ids, @story.visualization.dataset.relations, :id, :to_s do |b|
-          %tr
+          %tr{ 'data-date-at': b.object.at, 'data-date-from': (b.object.from != b.object.to) ? b.object.from : '', 'data-date-to': (b.object.from != b.object.to) ? b.object.to : '' }
             %td
               = b.check_box
             %td= b.object.source && b.object.source.name
             %td= b.object.relation_type
             %td= b.object.target && b.object.target.name
-            %td= b.object.at
+            %td= format_date_for(b.object)
   = f.submit "Save", class: "btn btn-default btn-primary"
   %a.btn.btn-default{href: edit_story_path(@story)} Cancel
 
