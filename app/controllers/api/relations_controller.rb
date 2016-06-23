@@ -48,7 +48,7 @@ class Api::RelationsController < ApiController
   end
 
   def relation_params
-    # order of :at, :from and :to is important, as the latter take precedence over the first
+    # order of :at, :from and :to is important, as the latter should take precedence over the first
     params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :at, :from, :to, :dataset_id)
   end
 
