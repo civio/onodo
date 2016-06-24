@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622120114) do
+ActiveRecord::Schema.define(version: 20160624145535) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,10 +84,10 @@ ActiveRecord::Schema.define(version: 20160622120114) do
     t.integer  "target_id"
     t.date     "from"
     t.date     "to"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "dataset_id"
-    t.boolean  "direction",     default: true
+    t.boolean  "direction",     default: false
   end
 
   add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id", using: :btree
