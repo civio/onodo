@@ -134,7 +134,7 @@
   }
 
   .item-picture{
-    background: $brand-primary; 
+    background: $brand-primary;
 
     .item-picture-default{
       position: absolute;
@@ -204,7 +204,7 @@
     padding: 0 $grid-gutter-width/3;
     // position: relative;
     //top: -50%;
-    
+
     h3{
       margin: 0;
       font-weight: normal;
@@ -279,7 +279,7 @@
       //transform: translateY(-50%);
 
       h3{
-        font-size: 2.143em;
+        font-size: 1.6em;
       }
     }
   }
@@ -345,13 +345,13 @@
       top: auto;
       left: 120px;
       bottom: 14px;
-      
+
       .item-status-icon{
         float: left;
         margin-left: 0;
         margin-right: 8px;
         background: $brand-primary;
-      
+
         &:after{
           @include retina-sprite( $icon-table-white-group );
         }
@@ -373,7 +373,7 @@
     .item-picture .item-picture-default{
       display: none;
     }
-  
+
     .item-info{
       //position: absolute;
       //width: 460px;
@@ -413,11 +413,20 @@
       margin: 12px 9px;
     }
   }
+  @media (min-width: $screen-sm-min) {
+    &.item-visualization {
+      .item-info {
+        h3{
+          font-size: 2.143em;
+        }
+      }
+    }
+  }
 }
 
 // Items Carousel
 .items-carousel{
-  
+
   .carousel-nav{
     text-align: center;
     margin-top: 25px;
@@ -440,14 +449,14 @@
       top: 7px;
       left: 9px;
       @include retina-sprite( $icon-carousel-left-group );
-      
+
     }
     .right-icon{
       position: absolute;
       top: 7px;
       right: 9px;
       @include retina-sprite( $icon-carousel-right-group );
-      
+
     }
 
     &:hover{
@@ -521,7 +530,7 @@
 
   // Explore tooltips
   .tooltip{
-    
+
     .tooltip-inner{
       text-align: left;
       border-radius: 5px;
@@ -562,6 +571,17 @@
         bottom: auto;
         a {
           color: white;
+        }
+      }
+      .item-info {
+        .item-description {
+          color: white;
+          margin: $grid-gutter-width/3 0;
+          text-align: center;
+          div {
+            text-align: left;
+            display: inline-block;
+          }
         }
       }
     }
@@ -610,7 +630,7 @@
   }
 
   .explore-navbar{
-    
+
   }
 
   &.gallery{

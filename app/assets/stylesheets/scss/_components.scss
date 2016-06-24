@@ -94,7 +94,8 @@
   width: $grid-gutter-width;
   height: $grid-gutter-width;
   border-radius: $grid-gutter-width/2;
-  margin-top: 12px;
+  margin-top: 2px;
+  margin-bottom: $grid-gutter-width/2;
   margin-left: $grid-gutter-width/2;
   background: $gray-blue-dark;
   @include transition( background 0.3s ease-out );
@@ -107,6 +108,9 @@
 
   &:hover{
     background: $brand-primary;
+  }
+  @media (min-width: $screen-sm-min) {
+    margin-top: 12px;
   }
 }
 
@@ -496,13 +500,14 @@ a.user-label{
 
   &.active{
     display: block;
+    overflow: auto;
   }
 
   .panel-heading{
     padding: 0;
 
     .close{
-      margin: $grid-gutter-width/2;
+      margin: $grid-gutter-width/2 $grid-gutter-width/2 0 0;
       border-radius: $grid-gutter-width/2;
       text-indent: -9999px;
       opacity: 1;
@@ -516,8 +521,8 @@ a.user-label{
   }
 
   .panel-body{
-    padding: 0;
-    width: 360px;
+    padding: 1.5*$grid-gutter-width $grid-gutter-width/3;
+    max-width: 380px;
     margin: 0 auto;
 
     .form-inline label{

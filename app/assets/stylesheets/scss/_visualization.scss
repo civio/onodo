@@ -26,12 +26,12 @@ $node-color-12: #e0deda;
   //@include box-shadow( 0px 0 12px 0px rgba(0,0,0,0.5) );
 
   h2{
-    font-size: 3em;
-    margin: 0;
+    font-size: 2em;
+    margin: 0 0 $grid-gutter-width/2;
   }
 
   .dropdown{
-    margin-top: 8px;
+    margin-top: 2px;
 
     .icon-tool{
       float: right;
@@ -135,6 +135,14 @@ $node-color-12: #e0deda;
       background: $brand-success;
     }
   } */
+  @media (min-width: $screen-sm-min) {
+    h2 {
+      font-size: 3em;
+    }
+    .dropdown {
+      margin-top: 8px;
+    }
+  }
 }
 
 .visualization-graph{
@@ -142,7 +150,7 @@ $node-color-12: #e0deda;
   //display: none;
   width: 100%;
   background: white;
-  
+
   .visualization-header{
     z-index: 90;
 
@@ -170,7 +178,6 @@ $node-color-12: #e0deda;
 
   .visualization-graph-container{
     position: relative;
-    height: 100%;
     overflow: hidden;
     z-index: 60;
 
@@ -190,7 +197,7 @@ $node-color-12: #e0deda;
     &.loading{
       background: url(/images/loader.gif) no-repeat center center transparent;
     }
-   
+
     .node{
       cursor: pointer;
       //opacity: 0.4;
@@ -199,7 +206,7 @@ $node-color-12: #e0deda;
       stroke-width: 2px;
       //stroke-opacity: 0.4;
       //@include transition( stroke-width, 0.4s, ease-out );
-     
+
       &.active{
         stroke-width: 20px !important;
         stroke-opacity: 0.4;
@@ -227,7 +234,7 @@ $node-color-12: #e0deda;
         stroke-dasharray: none;
       }
     }
-    
+
     .relations-cont.line-dashed .relation{
       stroke: $gray-semi-light;
       stroke-linecap: square;
@@ -249,7 +256,7 @@ $node-color-12: #e0deda;
 
       tspan{
         opacity: 0;
-      
+
         &.first-line,
         &.ellipsis{
           opacity: 1;
@@ -358,7 +365,7 @@ $node-color-12: #e0deda;
   .visualization-graph-menu-actions{
     right: $grid-gutter-width/2;
     width: 45px;
-    
+
     .btn-search{
       position: relative;
       padding: 8px 15px;
@@ -528,7 +535,7 @@ $node-color-12: #e0deda;
         margin-bottom: $grid-gutter-width/6;
       }
     }
-  
+
     .dropdown .dropdown-menu li,
     .dropdown .dropdown-toggle .text{
       text-transform: capitalize;
@@ -536,7 +543,7 @@ $node-color-12: #e0deda;
 
     .nodes-color-column-container,
     .nodes-size-column-container{
-      margin-top: $grid-gutter-width/3; 
+      margin-top: $grid-gutter-width/3;
     }
   }
 }
@@ -546,7 +553,7 @@ $node-color-12: #e0deda;
   top: 0;
   bottom: 0;
   right: -350px;
-  width: 350px;
+  max-width: 350px;
   margin: 0;
   border-radius: 0;
   color: $gray;
@@ -565,13 +572,13 @@ $node-color-12: #e0deda;
     padding: $grid-gutter-width/2 $grid-gutter-width/3;
     background: $gray-blue-dark;
     @include clearfix();
-    
+
     .close{
       border-radius: $grid-gutter-width/2;
       text-indent: -9999px;
       opacity: 1;
       @include retina-sprite( $icon-close-white-group );
-      
+
       @include transition( background-color 0.3s ease-out );
 
       &:hover{
@@ -591,7 +598,7 @@ $node-color-12: #e0deda;
         margin-top: 5px;
         margin-right: $grid-gutter-width/3;
         @include retina-sprite( $icon-pencil-white-group );
-        
+
       }
 
       &:hover{
@@ -639,7 +646,7 @@ $node-color-12: #e0deda;
 
 body.fullscreen{
   overflow: hidden;
-  
+
   .visualization-graph{
     position: fixed;
     top: 0;
@@ -650,13 +657,23 @@ body.fullscreen{
 
     .visualization-graph-menu-navigation .btn.fullscreen{
       @include retina-sprite( $icon-fullscreen-back-group );
-      
+
     }
   }
 }
 
 .visualization-info{
   padding: $grid-gutter-width 0;
+
+  .col-sm-4 {
+    margin-bottom: 5+$grid-gutter-width/2;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    @media (min-width: $screen-sm-min) {
+      margin-bottom: 0;
+    }
+  }
 
   strong{
     display: block;
@@ -704,7 +721,10 @@ body.fullscreen{
   }
 
   .btn-collapse{
-    margin-top: 1.5*$grid-gutter-width;
+    margin-top: $grid-gutter-width/2;
+    @media (min-width: $screen-sm-min) {
+      margin-top: 1.5*$grid-gutter-width;
+    }
   }
 
   .collapsed-label-icon,
@@ -752,7 +772,7 @@ body.fullscreen{
       text-decoration: underline;
     }
   }
-  
+
   .visualization-description-buttons{
     margin-top: 25px + (2*$grid-gutter-width);
 
@@ -776,22 +796,22 @@ body.fullscreen{
     .btn-icon-story{
       top: 5px;
       @include retina-sprite( $icon-story-brand-group );
-      
-    } 
+
+    }
     .btn-icon-visualization{
       top: 5px;
       @include retina-sprite( $icon-visualization-brand-group );
-      
-    }        
+
+    }
     .btn-icon-pencil{
       top: 5px;
       @include retina-sprite( $icon-pencil-group );
-      
+
     }
     .btn-icon-duplicate{
       top: 6px;
       @include retina-sprite( $icon-duplicate-group );
-      
+
     }
   }
 }
@@ -826,6 +846,10 @@ body.fullscreen{
   .visualization-table-header{
     margin-top: $grid-gutter-width/2;
 
+    .btn.pull-right {
+      margin-bottom: $grid-gutter-width/3;
+    }
+
     .nav-tabs{
       border: none;
 
@@ -850,8 +874,8 @@ body.fullscreen{
         }
       }
 
-      > li.active > a, 
-      > li.active > a:hover, 
+      > li.active > a,
+      > li.active > a:hover,
       > li.active > a:focus{
         color: $brand-primary;
         background: $gray-blue-light;
@@ -907,7 +931,7 @@ body.fullscreen{
       margin-right: $grid-gutter-width/3;
       @include retina-sprite( $icon-plus-circle-nofill-group );
     }
-      
+
     .icon-trash{
       @include handsontable-icon( $icon-trash-group, 4px );
       @include transition( opacity 0.3s ease-out );
@@ -983,11 +1007,11 @@ body.fullscreen{
     color: $gray;
     font-size: 0.857em;
 
-    > thead > tr > th, 
-    > thead > tr > td, 
-    > tbody > tr > th, 
-    > tbody > tr > td, 
-    > tfoot > tr > th, 
+    > thead > tr > th,
+    > thead > tr > td,
+    > tbody > tr > th,
+    > tbody > tr > td,
+    > tfoot > tr > th,
     > tfoot > tr > td{
       padding: $grid-gutter-width/3;
     }
@@ -1006,18 +1030,18 @@ body.fullscreen{
 }
 
 // Share & Embed Panel
-#visualization-share{
+#visualization-share {
 
   h4{
-    font-size: 28px;
+    font-size: 1.4em;
     line-height: 1.375em;
     font-weight: 300;
-    margin: $grid-gutter-width 0 $grid-gutter-width/2;
+    margin: 0 0 $grid-gutter-width/2;
   }
 
   .social-networks-btns{
     width: 138px;
-    margin: $grid-gutter-width/2 auto;
+    margin: $grid-gutter-width/2 auto $grid-gutter-width;
 
     li{
       margin: 0 7px;
@@ -1027,11 +1051,11 @@ body.fullscreen{
 
         &.twitter .icon{
           @include retina-sprite( $social-icon-twitter-group );
-          
+
         }
         &.facebook .icon{
           @include retina-sprite( $social-icon-facebook-group );
-          
+
         }
 
         &:hover{
@@ -1066,6 +1090,12 @@ body.fullscreen{
     border-color: white;
     margin: $grid-gutter-width auto;
   }
+  @media (min-width: $screen-sm-min) {
+    h4 {
+      font-size: 28px;
+      margin: $grid-gutter-width 0 $grid-gutter-width/2;
+    }
+  }
 }
 
 .visualization-related-items{
@@ -1081,7 +1111,7 @@ body.fullscreen{
 #visualization-table-view{
   position: relative;
   background: $gray-lighter;
-  padding-top: $grid-gutter-width;
+  padding-top: $grid-gutter-width/3;
 
   table{
     border-bottom: 1px solid $gray-light;
@@ -1100,7 +1130,7 @@ body.fullscreen{
   }
 
   // .title{
-  //   padding-bottom: 10px;  
+  //   padding-bottom: 10px;
 
   //   .close{
   //     position: absolute;
@@ -1108,6 +1138,9 @@ body.fullscreen{
   //     right: 15px;
   //   }
   // }
+  @media (min-width: $screen-sm-min) {
+    padding-top: $grid-gutter-width;
+  }
 }
 
 #visualization-graph-panel-configuration-tab-content{
@@ -1117,7 +1150,7 @@ body.fullscreen{
     text-transform: uppercase;
     line-height: 32px;
     margin-bottom: 0;
-   
+
     &.configuration-switch-label{
       padding-top: 5px;
     }

@@ -108,5 +108,12 @@
     h2 {
       font-size: 3em;
     }
+    .user-actions {
+      &>div {
+        width: 33.333333333%;
+        margin: 0;
+        display: block;
+      }
+    }
   }
 }

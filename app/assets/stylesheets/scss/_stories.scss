@@ -2,7 +2,6 @@
 @import '_variables';
 @import 'bootstrap/mixins/vendor-prefixes';
 @import 'scss/sprites';
-@import 'scss/visualization';
 
 // Story New
 .story-new{
@@ -130,13 +129,33 @@
 
 // Story Info
 .story-info{
-  @extend .visualization-graph-info;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: 0;
+  border-radius: 0;
+  color: $gray;
+  background: $gray-blue;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include transition( right 0.5s ease-out );
+
+  &.active{
+    right: 0;
+  }
 
   .panel-heading{
     color: $gray;
     line-height: 30px;
+    border-radius: 0;
+    border: none;
+    padding: $grid-gutter-width/2 $grid-gutter-width/3;
+    background: $gray-blue-dark;
 
     .close{
+      border-radius: $grid-gutter-width/2;
+      text-indent: -9999px;
+      opacity: 1;
       position: absolute;
       right: $grid-gutter-width/3;
       top: $grid-gutter-width/2;
@@ -306,7 +325,8 @@
 
 .stories .story-info,
 .stories .visualization-graph-info{
-  width: 460px;
+  width: 100%;
+  max-width: 460px;
   right: -460px;
 
   &.active{
