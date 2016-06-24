@@ -25,8 +25,8 @@
               %th Type
               %th Description
               %th Visible
-              - node_custom_fields.each do |field|
-                %th= field["name"]
+              - node_custom_fields && node_custom_fields.each do |field|
+                %th= field["name"].gsub('_', ' ').capitalize
           %tbody
             - visualization.nodes.each do |node|
               %tr
@@ -36,7 +36,7 @@
                 %td
                   %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
                     Node Visibility
-                - node_custom_fields.each do |field|
+                - node_custom_fields && node_custom_fields.each do |field|
                   %td= node.custom_fields[field["name"]].to_s
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
@@ -46,6 +46,8 @@
               %th Relationship
               %th Target
               %th Date
+              - relation_custom_fields && relation_custom_fields.each do |field|
+                %th= field["name"].gsub('_', ' ').capitalize
           %tbody
             - visualization.relations.each do |relation|
               %tr
@@ -53,3 +55,5 @@
                 %td= relation.relation_type
                 %td= relation.target && relation.target.name
                 %td= format_date_for(relation)
+                - relation_custom_fields && relation_custom_fields.each do |field|
+                  %td= relation.custom_fields[field["name"]].to_s
