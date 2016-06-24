@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624145535) do
+ActiveRecord::Schema.define(version: 20160624164550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,10 +47,11 @@ ActiveRecord::Schema.define(version: 20160624145535) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "visualization_id"
-    t.hstore   "node_custom_fields", default: [],              array: true
+    t.hstore   "node_custom_fields",     default: [],              array: true
+    t.hstore   "relation_custom_fields", default: [],              array: true
   end
 
   add_index "datasets", ["visualization_id"], name: "index_datasets_on_visualization_id", unique: true, using: :btree
@@ -88,8 +89,10 @@ ActiveRecord::Schema.define(version: 20160624145535) do
     t.datetime "updated_at",                    null: false
     t.integer  "dataset_id"
     t.boolean  "direction",     default: false
+    t.hstore   "custom_fields"
   end
 
+  add_index "relations", ["custom_fields"], name: "index_relations_on_custom_fields", using: :gist
   add_index "relations", ["dataset_id"], name: "index_relations_on_dataset_id", using: :btree
 
   create_table "stories", force: :cascade do |t|

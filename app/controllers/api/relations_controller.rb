@@ -28,6 +28,16 @@ class Api::RelationsController < ApiController
   end
 
   def update
+    current_custom_fields = @relation.custom_fields || {}
+    @relation.dataset.relation_custom_fields.each do |cf|
+      field = cf["name"]
+      data = params[:relation][field]
+      next if data.nil?
+      current_custom_fields = current_custom_fields.merge({cf["name"] => data})
+      next
+    end
+    params[:relation][:custom_fields] = current_custom_fields
+
     @relation.update(relation_params)
     render :show
   end
@@ -48,7 +58,7 @@ class Api::RelationsController < ApiController
   end
 
   def relation_params
-    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :at, :from, :to, :dataset_id)
+    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :at, :from, :to, :dataset_id, custom_fields: params[:relation][:custom_fields].try(:keys))
   end
 
 end

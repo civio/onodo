@@ -27,7 +27,7 @@ class RelationsController < ApplicationController
   end
 
   def relation_params
-    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :at, :from, :to, :dataset_id)
+    params.require(:relation).permit(:source_id, :target_id, :relation_type, :direction, :at, :from, :to, :dataset_id, custom_fields: params[:relation][:custom_fields].try(:keys))
   end
 
 end

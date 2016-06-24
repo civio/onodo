@@ -27,8 +27,9 @@ class XlsxDatasetImporter
     @relations = create_relations || []
 
     node_custom_fields = @node_custom_field_names && @node_custom_field_names.map{ |cfn| { "name" => cfn.to_s, "type" => type_for(@nodes.map{ |n| n.custom_fields[cfn.to_s] }) } }
+    relation_custom_fields = @relation_custom_field_names && @relation_custom_field_names.map{ |cfn| { "name" => cfn.to_s, "type" => type_for(@relations.map{ |n| n.custom_fields[cfn.to_s] }) } }
 
-    Dataset.new(nodes: @nodes, relations: @relations, node_custom_fields: node_custom_fields)
+    Dataset.new(nodes: @nodes, relations: @relations, node_custom_fields: node_custom_fields, relation_custom_fields: relation_custom_fields)
   end
 
   def error_message
@@ -54,7 +55,7 @@ class XlsxDatasetImporter
   end
 
   def relation_attributes
-    [:source, :target, :relation_type, :direction, :at, :from, :to]
+    [:source, :target, :relation_type, :direction, :custom_fields, :at, :from, :to]
   end
 
   def nodes_sheet_name
@@ -116,7 +117,7 @@ class XlsxDatasetImporter
     [/^type$/i, /^directed$/i, /(^at$)|(^date)/i, /^from$/i, /^to$/i]
   end
 
-  def relations_columns
+  def relation_columns
     mandatory_relation_columns + optional_relation_columns
   end
 
@@ -140,12 +141,14 @@ class XlsxDatasetImporter
     return unless relations_sheet?
 
     columns = sheet_columns(relations_sheet_name)
+    @relation_custom_field_names = columns.reject{ |f| relation_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
 
     relations = relations_sheet.parse(header_search: columns, clean: false)[1..-1]
     relations = relations.map do |h|
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : (k.capitalize=="Date") ? :at : k.downcase.gsub(' ', '_').to_sym, v.is_a?(String) ? v.strip : v ] }.to_h
       result[:source] = @nodes.find{ |n| n.name == result[:source] } || (m = Node.new(name: result[:source]); @nodes << m; m)
       result[:target] = @nodes.find{ |n| n.name == result[:target] } || (m = Node.new(name: result[:target]); @nodes << m; m)
+      result[:custom_fields] = @relation_custom_field_names.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
       result[:direction] = result[:direction] == 1 ? true : false
       result[:at] = result[:at].to_s
       result[:from] = result[:from].to_s

@@ -1,4 +1,6 @@
 class Relation < ActiveRecord::Base
+  include TypeUtil
+
   belongs_to :dataset
   belongs_to :source, 
               foreign_key: :source_id, 
@@ -13,12 +15,33 @@ class Relation < ActiveRecord::Base
 
   before_validation :ensure_interval_order
 
+  store_accessor :custom_fields
+
   def visualization
     dataset.visualization if dataset
   end
 
   def stories
     dataset.visualization.stories if dataset && dataset.visualization
+  end
+
+  def custom_fields
+    fields = dataset ? dataset.relation_custom_fields || [] : []
+    result = read_attribute(:custom_fields) || {}
+    fields.each do |f|
+      key  = f["name"]
+      type = f["type"]
+
+      value = result[key]
+
+      unless value.nil?
+        value = cast_to_number(value)  if type == "number"
+        value = cast_to_boolean(value) if type == "boolean"
+      end
+
+      result[key] = value
+    end
+    result
   end
 
   def from
