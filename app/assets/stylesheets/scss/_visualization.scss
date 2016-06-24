@@ -178,6 +178,7 @@ $node-color-12: #e0deda;
 
   .visualization-graph-container{
     position: relative;
+    height: 100%;
     overflow: hidden;
     z-index: 60;
 
@@ -665,7 +666,7 @@ body.fullscreen{
 .visualization-info{
   padding: $grid-gutter-width 0;
 
-  .col-sm-4 {
+  .row > div {
     margin-bottom: 5+$grid-gutter-width/2;
     &:last-child {
       margin-bottom: 0;
@@ -679,8 +680,11 @@ body.fullscreen{
     display: block;
     margin-bottom: $grid-gutter-width/2;
     color: $gray;
-    font-size: 1.571em;
+    font-size: 1.3em;
     font-weight: 300;
+    @media (min-width: $screen-sm-min) {
+      font-size: 1.571em;
+    }
   }
 
   .user-label{
@@ -891,9 +895,15 @@ body.fullscreen{
     margin-bottom: $grid-gutter-width;
 
     .btn-toolbar{
-      position: absolute;
-      top: -44px;
-      right: 0;
+      background: $gray-blue-light;
+      padding: $grid-gutter-width/3;
+      margin:0;
+      .btn {
+        float: none;
+        display: inline-block;
+        vertical-align: bottom;
+        margin: $grid-gutter-width/6;
+      }
     }
 
     /*
@@ -912,6 +922,18 @@ body.fullscreen{
       }
     }
     */
+    @media (min-width: $screen-sm-min) {
+      .btn-toolbar {
+        position: absolute;
+        top: -44px;
+        right: 0;
+        background: none;
+        padding: 0;
+        .btn {
+          margin:0;
+        }
+      }
+    }
   }
 
   .handsontable{

@@ -84,12 +84,12 @@
 // Story Cover
 .story-cover{
   position: absolute;
-  top: 82px;
-  bottom: 0;
+  top: 92px;
+  height: 100%;
   left: 0;
   right: 0;
   z-index: 70;
-  
+
   .item-preview{
     border-radius: 0;
     height: 100%;
@@ -100,7 +100,7 @@
 
     .item-info{
       .item-title h3{
-        font-size: 3.429em;
+        font-size: 1.8em;
         margin: 0;
       }
       .item-description{
@@ -108,7 +108,7 @@
         font-size: 1em;
         margin-top: $grid-gutter-width;
         font-style: normal;
-      }        
+      }
     }
 
     .item-type-icon{
@@ -122,6 +122,16 @@
       > img{
         height: 100%;
         width: auto;
+      }
+    }
+  }
+  @media (min-width: $screen-sm-min) {
+    top: 82px;
+    .item-preview{
+      .item-info{
+        .item-title h3{
+          font-size: 3.429em;
+        }
       }
     }
   }
@@ -225,7 +235,7 @@
         margin-left: -3px;
         margin-top: -6px;
       }
-      
+
       .prev-chapter-icon{
         @include retina-sprite( $icon-carousel-left-group );
       }

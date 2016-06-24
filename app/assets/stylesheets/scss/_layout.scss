@@ -593,11 +593,13 @@
 .page-header{
   border: none;
   margin: $grid-gutter-width 0 1.5*$grid-gutter-width;
-  padding: 0;
+  padding: 0 $grid-gutter-width/3;
 
   h2{
     font-size: 2em;
     margin: 0 0 $grid-gutter-width/2;
+    text-align: left;
+    display: inline-block;
   }
 
   .lead{
@@ -606,6 +608,7 @@
   }
   @media (min-width: $screen-sm-min) {
     margin: 2*$grid-gutter-width 0 3*$grid-gutter-width;
+    padding: 0;
     h2 {
       font-size: 3em;
     }
