@@ -39,8 +39,8 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # Default mail domain
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  # Do not ignore bad email addresses and do raise email delivery errors.
+  config.action_mailer.raise_delivery_errors = true
 
   # Webpack dev server
   config.webpack.dev_server.enabled = !ENV['DEBUG']
