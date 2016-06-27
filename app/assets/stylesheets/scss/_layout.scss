@@ -564,11 +564,16 @@
           text-align: center;
         }
       }
-      .item-author{
+      .item-status{
         right: 20px;
         top: 20px;
         left: auto;
         bottom: auto;
+        a {
+          color: white;
+        }
+      }
+      .item-author {
         a {
           color: white;
         }
