@@ -36,7 +36,8 @@ $node-color-12: #e0deda;
     margin-top: 2px;
 
     .icon-tool{
-      float: right;
+      display: inline-block;
+      vertical-align: top;
       margin-top: 4px;
       margin-left: 4px;
       @include retina-sprite( $icon-tool-group );
