@@ -700,11 +700,21 @@ body.fullscreen{
 
   .row > div {
     margin-bottom: 5+$grid-gutter-width/2;
+    display: inline-block;
+    vertical-align: top;
     &:last-child {
       margin-bottom: 0;
+      display: block;
     }
     @media (min-width: $screen-sm-min) {
       margin-bottom: 0;
+    }
+    @media (max-width: $screen-sm-min - 1) {
+      &:last-child {
+        button {
+          float: none !important;
+        }
+      }
     }
   }
 
@@ -736,6 +746,7 @@ body.fullscreen{
     text-transform: uppercase;
     margin-top: 1px;
     margin-right: $grid-gutter-width/2;
+    margin-bottom: $grid-gutter-width/3;
     line-height: $grid-gutter-width;
   }
 
