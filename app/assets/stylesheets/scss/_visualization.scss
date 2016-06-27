@@ -190,6 +190,18 @@ $node-color-12: #e0deda;
     &.loading{
       background: url(/images/loader.gif) no-repeat center center transparent;
     }
+
+    .visualization-empty-msg{
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      margin-top: -3em;
+      color: $gray;
+      font-weight: 300;
+      text-align: center;
+    }
    
     .node{
       cursor: pointer;

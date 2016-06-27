@@ -7,6 +7,11 @@
     = render 'partials/item_share_panel', item: @visualization
     .visualization-graph-component.loading
       %svg
+      .visualization-empty-msg
+        %p
+          This visualization is empty
+        %a{ href: '#' }
+          Start creating nodes & relations
     = render 'partials/item_graph_info', edit: true
 = render 'partials/item_table_edit'
 = render 'partials/item_table_description_modal'

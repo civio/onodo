@@ -38,9 +38,7 @@ class VisualizationEdit extends VisualizationBase
     $('.visualization-graph-menu-actions .btn-configure').click @onPanelConfigureShow
     $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
     # Setup scrollbar link
-    $('.visualization-table-scrollbar a').click (e) ->
-      e.preventDefault()
-      $('html, body').animate { scrollTop: $(document).height() }, 1000
+    $('.visualization-table-scrollbar a').click @scrollToEdit 
     # Setup scroll handler
     @$window.scroll @onScroll
     # Setup Table Tab Selector
@@ -59,6 +57,7 @@ class VisualizationEdit extends VisualizationBase
     @nodes.bind 'change:description',       @onNodeChangeDescription, @
     @nodes.bind 'change:visible',           @onNodeChangeVisible, @
     @nodes.bind 'change:image',             @onNodeChangeImage, @
+    #@nodes.bind 'change:image',             @onNodeChangeCustomField, @
     @nodes.bind 'remove',                   @onNodesRemove, @
     @relations.bind 'change:source_id',     @onRelationsChangeNode, @
     @relations.bind 'change:target_id',     @onRelationsChangeNode, @
@@ -80,6 +79,12 @@ class VisualizationEdit extends VisualizationBase
     # Setup Visualization Configuration
     @visualizationConfiguration.model = @visualization
     @visualizationConfiguration.render @parameters
+    # Show visualization empty msg if there is no nodes or relations
+    if @nodes.models.length == 0 and @relations.models.length == 0
+      $('.visualization-graph-component .visualization-empty-msg').fadeIn().find('a').click @scrollToEdit
+      @nodes.once 'add', ->
+        $('.visualization-graph-component .visualization-empty-msg').fadeOut()
+
 
   resize: =>
     # setup container height
@@ -109,6 +114,12 @@ class VisualizationEdit extends VisualizationBase
     $('.visualization-graph').affix
       offset:
         top: @mainHeaderHeight + @visualizationHeaderHeight
+
+  # On Scroll to edit click Event Handler
+  scrollToEdit: (e) ->
+    e.preventDefault()
+    $(e.target).trigger 'blur'
+    $('html, body').animate { scrollTop: $(document).height() }, 1000
 
   # Scroll Event Handler
   onScroll: =>
@@ -147,7 +158,7 @@ class VisualizationEdit extends VisualizationBase
     , @
 
   onNodeChangeName: (node) ->
-    console.log 'onNodeChangeName', node.attributes.name
+    console.log 'onNodeChangeName', node
     # Update nodes labels
     @visualizationCanvas.updateNodesLabels()
     # Update Panel Info name
