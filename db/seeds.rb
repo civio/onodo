@@ -6,12 +6,14 @@
 admin = User.create!( name: 'Admin',
                     email: 'admin@onodo.org', 
                     password: 'password', 
-                    password_confirmation: 'password' )
+                    password_confirmation: 'password',
+                    confirmed_at: DateTime.now )
 
 user = User.create!( name: 'A user', 
                     email: 'user@example.com', 
                     password: 'password', 
-                    password_confirmation: 'password' )
+                    password_confirmation: 'password',
+                    confirmed_at: DateTime.now )
 
 
 ### Miles Davis Relations
