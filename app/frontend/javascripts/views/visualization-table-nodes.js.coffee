@@ -6,7 +6,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   el:               '.visualization-table-nodes'
   nodes_types:      null
-  tableColHeaders:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image']
+  table_col_headers:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image']
   columns:          {
     'delete'      : 0
     'duplicate'   : 1
@@ -18,25 +18,18 @@ class VisualizationTableNodes extends VisualizationTableBase
   }
 
   constructor: (@model, @collection) ->
-    super @model, @collection, 'node'
-    # Override Table Options
-    @table_options.colHeaders  = @tableColHeaders
-    @table_options.columns     = @getTableColumns()
-    # Add Image Modal View
+    super @model, @collection, 'node'    # Add Image Modal View
     @visualizationModalNodeImage = new VisualizationModalNodeImage
     @visualizationModalNodeImage.on 'update',  @onVisualizationModalNodeImageUpdate
     @visualizationModalNodeImage.on 'delete',  @onVisualizationModalNodeImageDelete
     # Custom Column Managment
-    $('#add-custom-column-form').submit @onAddCustomColumn
+    $('#add-custom-column-nodes-form').submit @onAddCustomColumn
 
   render: ->
     super()
     #console.log 'VisualizationTableNodes render'
     # add custom_fields to table if defined
-    if @model.get('node_custom_fields')
-      @model.get('node_custom_fields').forEach (custom_field) =>
-        @tableColHeaders.push       custom_field.name.replace(/_+/g, ' ')
-        @table_options.columns.push { data: custom_field.name }
+    @setupCustomFields @model.get('node_custom_fields')
     # get node types
     @getNodesTypes()
 
@@ -214,12 +207,12 @@ class VisualizationTableNodes extends VisualizationTableBase
     column_name_formatted = column_name.replace(/\s+/g, '_').toLowerCase()
     # clear name input text value
     $('#add-custom-column-name').val('')
-    # push column name in tableColHeaders array
-    @tableColHeaders.push column_name
-    @table_options.colHeaders = @tableColHeaders
+    # push column name in table_col_headers array
+    @table_col_headers.push column_name
+    @table_options.colHeaders = @table_col_headers
     # push new column data in columns array
     @table_options.columns.push { data: column_name_formatted } 
-    console.log 'onAddCustomColumn', e.target, @table_options
+    #console.log 'onAddCustomColumn', e.target, @table_options
     # update table options
     if @table
       @table.updateSettings @table_options
@@ -227,7 +220,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     custom_fields = @model.get('node_custom_fields')
     custom_fields.push {'name': column_name_formatted, 'type': column_type}
     # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    console.log 'save custom_fields in DB', custom_fields
+    #console.log 'save custom_fields in DB', custom_fields
     @model.save {node_custom_fields: custom_fields}, {patch: true}
     # trigger events for visualization configuration panel
     @model.trigger 'change:custom_fields'

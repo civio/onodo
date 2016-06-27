@@ -7,10 +7,12 @@ class Api::VisualizationsController < ApiController
   end
 
   def update
-    node_custom_fields = params[:visualization][:node_custom_fields] || []
-    @dataset.node_custom_fields = node_custom_fields.map{ |cf| { "name" => cf["name"].downcase.gsub(' ', '_'), "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string" } }
+    node_custom_fields     = params[:visualization][:node_custom_fields] || []
+    relation_custom_fields = params[:visualization][:relation_custom_fields] || []
+    @dataset.node_custom_fields     = node_custom_fields.map{ |cf| { "name" => cf["name"].downcase.gsub(' ', '_'), "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string" } }
+    @dataset.relation_custom_fields = relation_custom_fields.map{ |cf| { "name" => cf["name"].downcase.gsub(' ', '_'), "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string" } }
     @dataset.save
-    params[:visualization].except!(:node_custom_fields)
+    params[:visualization].except!(:node_custom_fields, :relation_custom_fields)
     @visualization.update(visualization_params)
     render :show
   end

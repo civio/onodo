@@ -3,11 +3,12 @@ Handsontable = require './../dist/handsontable.full.js'
 # Base Class for VisualizationTableNodes & VisualizationTableRelations
 class VisualizationTableBase extends Backbone.View
 
-  table:            null
-  table_type:       null
-  table_options:    null
-  table_height:     null
-  table_offset_top: null
+  table:             null
+  table_type:        null
+  table_options:     null
+  table_height:      null
+  table_offset_top:  null
+  table_col_headers: null
   #syncTable:        true  # allow activate/desactivate onTableChangeRow listener
 
   constructor: (@model, @collection, table_type) ->
@@ -20,6 +21,8 @@ class VisualizationTableBase extends Backbone.View
       height: 360
       stretchH: 'all'
       columnSorting: true
+    @table_options.colHeaders  = @table_col_headers
+    @table_options.columns     = @getTableColumns()
 
   destroy: ->
     @undelegateEvents()
@@ -38,6 +41,15 @@ class VisualizationTableBase extends Backbone.View
     @table_options.beforeRemoveRow   = @onTableRemoveRow  # important to listen before remove to avoid index problems
     @table = new Handsontable @$el.get(0), @table_options
     @resize()
+
+  setupCustomFields: (custom_fields) => 
+    if custom_fields
+      custom_fields.forEach (custom_field) =>
+        @table_col_headers.push       custom_field.name.replace(/_+/g, ' ')
+        @table_options.columns.push { data: custom_field.name }
+
+  getTableColumns: =>
+    return []
 
   onTableCreateRow: (index, amount) =>
     console.log 'onTableCreateRow', @table_type, index, amount

@@ -6,11 +6,21 @@
           Add Custom Column To Relations
         %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
       .modal-body
-        %form#add-custom-column-form
+        %form#add-custom-column-relations-form
           .form-group
             %label
               Custom Column Name
             %input#add-custom-column-name.form-control{type: "text"}
+          .form-group
+            %label
+              Custom Column Type
+            %select.form-control#add-custom-column-type
+              %option{ value: 'string' }
+                String
+              %option{ value: 'number' }
+                Number
+              %option{ value: 'boolean' }
+                Boolean
           %button.btn.btn-primary{ type: "submit" }
             Add Column
 
