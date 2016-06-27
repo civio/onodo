@@ -341,7 +341,7 @@
         background: $brand-primary;
       
         &:after{
-          @include retina-sprite( $icon-table-white-group );
+          @include retina-sprite( $icon-table-white-small-group );
         }
       }
     }
