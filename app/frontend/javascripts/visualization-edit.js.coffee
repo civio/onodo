@@ -57,13 +57,16 @@ class VisualizationEdit extends VisualizationBase
     @nodes.bind 'change:description',       @onNodeChangeDescription, @
     @nodes.bind 'change:visible',           @onNodeChangeVisible, @
     @nodes.bind 'change:image',             @onNodeChangeImage, @
-    #@nodes.bind 'change:image',             @onNodeChangeCustomField, @
     @nodes.bind 'remove',                   @onNodesRemove, @
     @relations.bind 'change:source_id',     @onRelationsChangeNode, @
     @relations.bind 'change:target_id',     @onRelationsChangeNode, @
     @relations.bind 'change:relation_type', @onRelationsChangeType, @
     @relations.bind 'change:direction',     @onRelationsChangeDirection, @
     @relations.bind 'remove',               @onRelationsRemove, @
+    @visualization.bind 'change:node_custom_fields', @onVisualizationChangeNodeCustomField, @
+    # Add event handler for each custom_field
+    @visualization.get('node_custom_fields').forEach (custom_field) =>
+      @nodes.bind 'change:'+custom_field.name, @onNodeChangeCustomField, @
     # Listen to Config Panel events
     Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesColorColumn',      @onUpdateNodesColorColumn, @
@@ -84,7 +87,6 @@ class VisualizationEdit extends VisualizationBase
       $('.visualization-graph-component .visualization-empty-msg').fadeIn().find('a').click @scrollToEdit
       @nodes.once 'add', ->
         $('.visualization-graph-component .visualization-empty-msg').fadeOut()
-
 
   resize: =>
     # setup container height
@@ -193,6 +195,11 @@ class VisualizationEdit extends VisualizationBase
   onNodeChangeCustomField: (node) ->
     # Update Panel Info description
     @updateInfoNode node
+
+  # When a node_custom_field is added, we add a listener to new custom_field
+  onVisualizationChangeNodeCustomField: (visualization) =>
+    field = @visualization.get('node_custom_fields').slice(-1)[0]
+    @nodes.bind 'change:'+field.name, @onNodeChangeCustomField, @
 
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name

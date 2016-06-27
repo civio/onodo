@@ -257,7 +257,7 @@ class VisualizationTableRelations extends VisualizationTableBase
     #console.log 'save custom_fields in DB', custom_fields
     @model.save {relation_custom_fields: custom_fields}, {patch: true}
     # trigger events for visualization configuration panel
-    # @model.trigger 'change:custom_fields' # we don't need to listen to relations custom fields
+    # @model.trigger 'change:relation_custom_fields' # we don't need to listen to relations custom fields
     # hide modal
     $('#table-add-column-relations-modal').modal 'hide'
 

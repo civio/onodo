@@ -223,7 +223,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     #console.log 'save custom_fields in DB', custom_fields
     @model.save {node_custom_fields: custom_fields}, {patch: true}
     # trigger events for visualization configuration panel
-    @model.trigger 'change:custom_fields'
+    @model.trigger 'change:node_custom_fields'
     # hide modal
     $('#table-add-column-nodes-modal').modal 'hide'
 
