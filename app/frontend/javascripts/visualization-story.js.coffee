@@ -2,25 +2,22 @@ Visualization = require './visualization.js'
 
 class VisualizationStory extends Visualization
 
-  # Override onSync method to set Visualization Canvas offset x
+  # Override onSync method to set Visualization Canvas offset x & use render(false)
   onSync: =>
-    super()
-    @visualizationCanvas.setOffsetX 230 # translate left half the width of Story Info panel
-    
+    # Setup visualization parameters
+    @parameters = $.parseJSON @visualization.get('parameters')
+    @setupParameters()
+    # Setup VisualizationCanvas
+    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
+    @visualizationCanvas.setOffsetX 230 # translate left half the width of Story Info panel 
+    @visualizationCanvas.render false
+    # Setup Visualization Events
+    @setupVisualizationEvents()
+
   # Setup a chapter nodes & relations in Visualization Canvas
   showChapter: (nodes, relations) ->
-    # We use svg to check if visualizationCanvas has data initialized
-    if @visualizationCanvas.svg
-      # Update VisualizationCanvas data
-      @visualizationCanvas.updateData nodes, relations
-    else
-      # Filter collection nodes & relations based on chapter nodes & relations
-      chapterNodes     = @nodes.models.filter     (d) => return nodes.indexOf(d.id) != -1
-      chapterRelations = @relations.models.filter (d) => return relations.indexOf(d.id) != -1  
-      # Update VisualizationCanvas data
-      @visualizationCanvas.setup @getVisualizationCanvasData(chapterNodes, chapterRelations), @visualizationConfiguration.parameters
-      @visualizationCanvas.setOffsetX 230 # translate left half the width of Story Info panel  
-    # render VisualizationCanvas
+    # Update VisualizationCanvas data based on chapter nodes & relations
+    @visualizationCanvas.updateData nodes, relations
     @visualizationCanvas.render()
 
 module.exports = VisualizationStory

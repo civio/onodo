@@ -168,7 +168,7 @@ class VisualizationCanvas extends Backbone.View
 
   initializeData: (data) ->
 
-    console.log 'initializeData'
+    # console.log 'initializeData'
 
     # Setup Nodes
     data.nodes.forEach (d) =>
@@ -197,7 +197,6 @@ class VisualizationCanvas extends Backbone.View
     #console.log 'current relations', @data_relations_visibles
 
   render: ( restarForce ) ->
-    #console.log 'render canvas'
     @updateImages()
     @updateRelations()
     @updateNodes()
@@ -383,21 +382,13 @@ class VisualizationCanvas extends Backbone.View
   # --------------------------
 
   updateData: (nodes, relations) ->
-    console.log 'canvas current Data', @data_nodes, @data_relations
-    # Reset data variables
-    # @data_nodes              = []
-    # @data_relations          = []
-    # @data_relations_visibles = []
-    # @linkedByIndex           = {}
-    # # Initialize data
-    # @initializeData data
-
+    # console.log 'canvas current Data', @data_nodes, @data_relations
     # Setup disable values in nodes
-    # @data_nodes.forEach (node) ->
-    #   node.disabled = nodes.indexOf(node.id) == -1
-    # # Setup disable values in relations
-    # @data_relations_visibles.forEach (relation) ->
-    #   relation.disabled = relations.indexOf(relation.id) == -1    
+    @data_nodes.forEach (node) ->
+      node.disabled = nodes.indexOf(node.id) == -1
+    # Setup disable values in relations
+    @data_relations_visibles.forEach (relation) ->
+      relation.disabled = relations.indexOf(relation.id) == -1    
 
   addNodeData: (node) ->
     # check if node is present in @data_nodes
@@ -848,7 +839,7 @@ class VisualizationCanvas extends Backbone.View
     div     = ({x,y}, scalar) -> {x:x/scalar, y:y/scalar}
     unit    = (vector) -> div(vector, length(vector))
     scale   = (vector, scalar) -> prod(unit(vector), scalar)
-    free    = ([coord1, coord2]) -> diff(coord2, coord1)  
+    free    = ([coord1, coord2]) -> diff(coord2, coord1)
 
     if d.direction
       v2 = scale free([d.source, d.target]), d.target.size

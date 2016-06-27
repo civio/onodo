@@ -65,15 +65,8 @@ class VisualizationBase
     # Setup VisualizationCanvas
     @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
     @visualizationCanvas.render()
-    # Subscribe VisualizationCanvas Events
-    Backbone.on 'visualization.node.showInfo',         @onNodeShowInfo, @
-    Backbone.on 'visualization.node.hideInfo',         @onNodeHideInfo, @
-    # Subscribe Navigation Events
-    Backbone.on 'visualization.navigation.zoomin',     @onZoomIn, @
-    Backbone.on 'visualization.navigation.zoomout',    @onZoomOut, @
-    Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
-    # Trigger synced event for Stories
-    Backbone.trigger 'visualization.synced'
+    # Setup Visualization Events
+    @setupVisualizationEvents()
 
   # Format data from nodes & relations collections for VisualizationCanvas
   getVisualizationCanvasData: ( nodes, relations ) ->
@@ -100,6 +93,17 @@ class VisualizationBase
     @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
     @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
+
+  setupVisualizationEvents: ->
+    # Subscribe VisualizationCanvas Events
+    Backbone.on 'visualization.node.showInfo',         @onNodeShowInfo, @
+    Backbone.on 'visualization.node.hideInfo',         @onNodeHideInfo, @
+    # Subscribe Navigation Events
+    Backbone.on 'visualization.navigation.zoomin',     @onZoomIn, @
+    Backbone.on 'visualization.navigation.zoomout',    @onZoomOut, @
+    Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
+    # Trigger synced event for Stories
+    Backbone.trigger 'visualization.synced'
 
   # Canvas Events
   onNodeShowInfo: (e) ->

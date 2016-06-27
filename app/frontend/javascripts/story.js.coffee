@@ -30,7 +30,6 @@ class Story
       $('#story-chapter-delete-modal .modal-content').load '/chapters/'+@currentChapterId+'/delete/'
   
   render: ->
-    console.log '!!!render story', @story_id
     # render views
     @visualization.render()
 
@@ -42,7 +41,7 @@ class Story
     @chapters.fetch {url: '/api/stories/'+@story_id+'/chapters/', success: @onChaptersSync}
 
   onChaptersSync: (e) =>
-    console.log 'chapters sync', @chapters
+    # console.log 'chapters sync', @chapters
     if @chapters.length > 0
       Backbone.trigger 'story.showChapter', {id: @chapters.at(0).id}
 
