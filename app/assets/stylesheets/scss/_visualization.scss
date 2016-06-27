@@ -28,6 +28,8 @@ $node-color-12: #e0deda;
   h2{
     font-size: 2em;
     margin: 0 0 $grid-gutter-width/2;
+    padding-left: 40px;
+    width: 100%;
   }
 
   .dropdown{
@@ -39,8 +41,15 @@ $node-color-12: #e0deda;
       margin-left: 4px;
       @include retina-sprite( $icon-tool-group );
     }
+    button[aria-expanded="true"],
+    button[aria-expanded="true"]:focus:hover {
+      .icon-tool{
+        @include retina-sprite( $icon-tool-group );
+      }
+    }
 
-    &:hover{
+    button:hover,
+    button[aria-expanded="false"]:focus {
       .icon-tool{
         @include retina-sprite( $icon-tool-brand-group );
       }
@@ -138,9 +147,32 @@ $node-color-12: #e0deda;
   @media (min-width: $screen-sm-min) {
     h2 {
       font-size: 3em;
+      width: auto;
+      padding-left: 0;
     }
     .dropdown {
       margin-top: 8px;
+    }
+  }
+  @media (max-width: $screen-sm-min - 1) {
+    .btn-edit-circle {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      margin: 0;
+    }
+    .dropdown {
+      float: none !important;
+      margin-left: 40px;
+      clear: both;
+      .dropdown-menu {
+        left: 0;
+        right: auto;
+        &:before {
+          left: 15px;
+          margin-left: 0;
+        }
+      }
     }
   }
 }
