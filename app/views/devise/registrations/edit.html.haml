@@ -4,29 +4,27 @@
       .page-header.text-center
         %h2 Settings
         %p.lead Edit your profile settings
-      = form_for resource, as: resource_name, url: registration_path(resource_name), html: { class: 'media-upload',method: :put, multipart: true } do |f|
-        .media
-          .media-left
-            %img.img-circle.media-object{src: resource.avatar_url(:huge) }
-          .media-body
-            %p.media-upload-title
-              Profile avatar
-            %p.media-upload-description
-              Your avatar photo should be about 500px wide 500px tall and under 1MB
-            .form-group
-              = f.label :avatar, "Upload from your computer"
-              %span.btn.btn-primary.btn-file
-                %i.glyphicon.glyphicon-folder-open
-                Browse
-                = f.file_field :avatar, class: 'form-control'
-                = f.hidden_field :avatar_cache
-              %p.btn-file-output
-              .clearfix
-          .actions
-            = f.submit "Upload Photo", class: "btn btn-default btn-primary"
-          %hr
-      = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-default', method: :put }) do |f|
+      = form_for resource, as: resource_name, url: registration_path(resource_name), html: { id: 'user-dropzone', class: 'form-default dropzone',method: :patch, multipart: true } do |f|
         = devise_error_messages!
+        .media-upload
+          .media
+            .media-left.dropzone-previews{ data: { image: "#{resource.avatar_url(:huge)}" } }
+            .media-body
+              %p.media-upload-title
+                Profile avatar
+              %p.media-upload-description
+                Your avatar photo should be about 500px wide 500px tall and under 1MB
+              .form-group
+                %p.dz-message{style: 'display: none;'} Drop your photo here to upload
+                = f.label :avatar, "Upload from your computer"
+                %span.btn.btn-primary.btn-file
+                  %i.glyphicon.glyphicon-folder-open
+                  Browse
+                  = f.file_field :avatar, class: 'form-control'
+                  = f.hidden_field :avatar_cache
+                %p.btn-file-output
+                .clearfix
+          %hr
         .form-group
           = f.label :name
           = f.text_field :name, autofocus: true, class: "form-control"
@@ -72,3 +70,19 @@
         = link_to "Cancel", :back, class: "btn btn-default btn-invert"
         /= link_to "Delete my account", "#", class: "btn btn-default btn-danger pull-right"
         / = button_to( "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete )
+
+#dropzone-preview-template{style: 'display: none;'}
+  .dz-preview.dz-file-preview
+    .dz-details
+      -#.dz-filename
+      -#  %span.data-dz-name
+      -#.dz-size{"data-dz-size": ""}
+      %img.img-circle.media-object{"data-dz-thumbnail": ""}
+        -#.dz-progress
+        -#  %span.dz-upload{"data-dz-uploadprogress": ""}
+        -#.dz-success-mark
+        -#  %span ✔
+        -#.dz-error-mask
+        -#  %span ✘
+        -#.dz-error-message
+        -#  %span{"data-dz-errormessage": ""}

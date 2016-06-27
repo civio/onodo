@@ -1,11 +1,24 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  def update
+    begin
+      super
+    # needed to manage responses to dropzone XHR submissions
+    rescue ActionController::UnknownFormat
+      render json: { location: after_update_path_for(resource) } and return if xhr_request?
+    end
+  end
+
   protected
 
   # Allow users to edit their account without providing a password 
   # (https://github.com/plataformatec/devise/wiki/How-To:-Allow-users-to-edit-their-account-without-providing-a-password)
   def update_resource(resource, params)
     resource.update_without_password(params)
+  end
+
+  def after_update_path_for(resource)
+    dashboard_path
   end
 
   # Add custom fields to registration
