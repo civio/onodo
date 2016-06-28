@@ -26,6 +26,18 @@
       font-weight: 300;
     }
   }
+
+  .changeType {
+    line-height: 9px;
+    margin-top: 8px;
+    margin-right: 2px; 
+  }
+
+  // Hide checkbox in visible & direction column
+  .htDirection .htCheckboxRendererInput,
+  .htVisible .htCheckboxRendererInput{
+    display: none;
+  }
 }
 
 .ht_master{

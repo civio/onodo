@@ -9,18 +9,24 @@ class VisualizationTableBase extends Backbone.View
   table_height:      null
   table_offset_top:  null
   table_col_headers: null
+  cell_types:
+    'string':   'text'
+    'number':   'numeric'
+    'boolean':  'checkbox'
   #syncTable:        true  # allow activate/desactivate onTableChangeRow listener
 
   constructor: (@model, @collection, table_type) ->
     super(@model, @collection)
     @table_type = table_type
-    console.log 'VisualizationTableBase', table_type
+    #console.log 'VisualizationTableBase', table_type
     @table_options =
       #minSpareRows: 1
       contextMenu: [ 'row_above', 'row_below', 'undo', 'redo' ]
       height: 360
       stretchH: 'all'
       columnSorting: true
+      filters: true
+      dropdownMenu: ['remove_col', '---------', 'filter_by_condition', 'filter_action_bar']
     @table_options.colHeaders  = @table_col_headers
     @table_options.columns     = @getTableColumns()
 
@@ -46,7 +52,7 @@ class VisualizationTableBase extends Backbone.View
     if custom_fields
       custom_fields.forEach (custom_field) =>
         @table_col_headers.push       custom_field.name.replace(/_+/g, ' ')
-        @table_options.columns.push { data: custom_field.name }
+        @table_options.columns.push { data: custom_field.name, type: @cell_types[custom_field.type] }
 
   getTableColumns: =>
     return []

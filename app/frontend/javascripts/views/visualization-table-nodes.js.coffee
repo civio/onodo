@@ -245,6 +245,8 @@ class VisualizationTableNodes extends VisualizationTableBase
   rowVisibleRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # We keep checkbox render in order to toogle value with enter key
     Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
+    # Add htVisible class in order to hide checkbox via css
+    $(td).addClass 'htVisible'
     # Add visible icon link
     link = document.createElement('A')
     link.className = if value then 'icon-visible active' else 'icon-visible'

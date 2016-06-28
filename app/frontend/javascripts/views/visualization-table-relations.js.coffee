@@ -282,6 +282,8 @@ class VisualizationTableRelations extends VisualizationTableBase
   rowDirectionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # We keep checkbox render in order to toogle value with enter key
     Handsontable.renderers.CheckboxRenderer.apply(this, arguments)
+    # Add htDirection class in order to hide checkbox via css
+    $(td).addClass 'htDirection'
     # Add visible icon link
     link = document.createElement('A');
     link.className = if value then 'icon-direction active' else 'icon-direction'
