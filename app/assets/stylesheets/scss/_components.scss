@@ -120,7 +120,7 @@
 .social-networks-btns{
   padding: 0;
   @include clearfix();
-  
+  list-style: none;
   li{
     float: left;
     margin-right: $grid-gutter-width/2;
