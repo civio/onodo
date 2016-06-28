@@ -39,5 +39,8 @@ app-bundle.js
 /public/assets
 /public/webpack
 
-#Ignore file uploads
+# Ignore file uploads
 /public/uploads
+
+# Ignore .DS_Store files
+.DS_Store
