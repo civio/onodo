@@ -39,9 +39,9 @@
         .form-group
           = f.label      :node_type, "Type"
           = f.text_field :node_type, class: "form-control"
-        - if @node.dataset.custom_fields
+        - if @node.dataset.node_custom_fields
           = f.fields_for :custom_fields, OpenStruct.new(f.object.custom_fields) do |cf|
-            - @node.dataset.custom_fields.each do |custom_field|
+            - @node.dataset.node_custom_fields.each do |custom_field|
               .form-group
                 = cf.label custom_field
                 = cf.text_field :"#{custom_field}", class: "form-control"
