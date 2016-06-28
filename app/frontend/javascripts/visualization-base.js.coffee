@@ -5,6 +5,7 @@ NodesCollection              = require './collections/nodes-collection.js'
 RelationsCollection          = require './collections/relations-collection.js'
 VisualizationCanvas          = require './views/visualization-canvas.js'
 VisualizationNavigation      = require './views/visualization-navigation.js'
+VisualizationActions         = require './views/visualization-actions.js'
 VisualizationInfo            = require './views/visualization-info.js'
 
 class VisualizationBase
@@ -14,6 +15,7 @@ class VisualizationBase
   nodes:                      null
   visualizationCanvas:        null
   visualizationNavigation:    null
+  visualizationActions:       null
   visualizationInfo:          null
   parameters: null
   parametersDefault: {
@@ -40,10 +42,8 @@ class VisualizationBase
     # Setup Views
     @visualizationCanvas         = new VisualizationCanvas()
     @visualizationNavigation     = new VisualizationNavigation()
+    @visualizationActions        = new VisualizationActions()
     @visualizationInfo           = new VisualizationInfo()
-    # Setup Share Panel Show/Hide
-    $('.visualization-graph-menu-actions .btn-share').click     @onPanelShareShow
-    $('#visualization-share .close').click                      @onPanelShareHide
 
   render: ->
     # force resize
@@ -114,13 +114,6 @@ class VisualizationBase
   onNodeHideInfo: (e) ->
     @visualizationCanvas.unfocusNode()
     @visualizationInfo.hide()
-
-  # Panel Events
-  onPanelShareShow: ->
-    $('#visualization-share').addClass 'active'
-
-  onPanelShareHide: ->
-    $('#visualization-share').removeClass 'active'
 
   # Navigation Events
   onZoomIn: (e) ->
