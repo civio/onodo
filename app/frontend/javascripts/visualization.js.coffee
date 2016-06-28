@@ -12,8 +12,8 @@ class Visualization extends VisualizationBase
 
   resize: =>
     # setup container height
-    h = if $('body').hasClass('fullscreen') then $(window).height() else $(window).height() - 178 # -50-64-64
-    console.log 'resize', h
+    h = if $('body').hasClass('fullscreen') then $(window).height() else $(window).height()-$('.visualization-header').outerHeight()-86 # navbar-default height -> 86px
+    #console.log 'resize', h
     @visualizationCanvas.$el.height h
     super()
 

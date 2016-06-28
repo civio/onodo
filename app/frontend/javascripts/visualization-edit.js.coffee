@@ -6,9 +6,9 @@ BootstrapSwitch              = require 'bootstrap-switch'
 
 class VisualizationEdit extends VisualizationBase
 
-  mainHeaderHeight:             84
+  mainHeaderHeight:             86
   visualizationHeaderHeight:    null
-  tableHeaderHeight:            42
+  tableHeaderHeight:            40
 
   visualizationConfiguration:   null
 
