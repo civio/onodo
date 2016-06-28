@@ -10,5 +10,6 @@ $(document).ready ->
   # Setup 'Start reading' button interaction
   $('.story-cover .btn-start-reading').click (e) ->
     e.preventDefault()
+    $('.visualization-graph').removeClass 'invisible'
     $('.story-cover').fadeOut()
     $('.visualization-info, .visualization-description').fadeIn()
