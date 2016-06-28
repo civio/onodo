@@ -1,0 +1,55 @@
+@import 'bootstrap/variables';
+@import 'bootstrap/mixins';
+@import '_variables';
+
+#cookie-bar {
+  background: $gray-dark;
+  height:auto;
+  line-height:24px;
+  color:#eeeeee;
+  text-align:center;
+  padding: $grid-gutter-width/3 0;
+}
+#cookie-bar.fixed {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+}
+#cookie-bar.fixed.bottom {
+  bottom:0;
+  top:auto;
+}
+#cookie-bar p {
+  margin:0;
+  padding:0;
+}
+#cookie-bar a {
+  color: $btn-primary-color;
+  display:inline-block;
+  border: 2px solid $btn-primary-border;
+  border-radius: 16px;
+  text-decoration:none;
+  padding:0 $grid-gutter-width/2;
+  margin-left:8px;
+  transition: background-color 0.3s ease-out;
+}
+#cookie-bar .cb-enable {
+  background: $btn-transparent-bg;
+}
+#cookie-bar .cb-enable:hover {
+  color: $gray-dark;
+  background: white;
+}
+#cookie-bar .cb-disable {
+  background: $btn-danger-bg;
+}
+#cookie-bar .cb-disable:hover {
+  background:#bb0000;
+}
+#cookie-bar .cb-policy {
+  background: $btn-primary-bg;
+}
+#cookie-bar .cb-policy:hover {
+  background:#0055dd;
+}
