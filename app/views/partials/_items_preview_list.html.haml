@@ -5,15 +5,24 @@
         = render 'partials/item_preview', :item => item
     .col-sm-12.text-center
       = paginate items
-  -else
-    .text-center
-      - if defined? visualizations
-        %p
-          You haven't create any visualization yet
-        %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}
-          Start creating one
-      - else
-        %p
-          You haven't create any story yet
-        %a.btn.btn-default.btn-primary{href: new_story_path(), title: 'Start creating one'}
-          Start creating one
+  - else
+    - if @user == current_user
+      .text-center
+        - if show_visualizations
+          %p
+            You haven't created any visualization yet
+          %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}
+            Start creating one
+        - else
+          %p
+            You haven't created any story yet
+          %a.btn.btn-default.btn-primary{href: new_story_path(), title: 'Start creating one'}
+            Start creating one
+    - else
+      .text-center
+        - if show_visualizations
+          %p
+            This user hasn't created any visualization yet
+        - else
+          %p
+            This user hasn't created any story yet

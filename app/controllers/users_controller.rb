@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   # GET /users/:id
   def show
     @items = visualizations_for @user, published: true, page: params[:page]
-    @visualizations = true
+    @show_visualizations = true
     render :show
   end
 
@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   # GET /users/:id/stories
   def show_stories
     @items = stories_for @user, published: true, page: params[:page]
+    @show_visualizations = false
     render :show
   end
 
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
   def show_dashboard
     @user = current_user
     @items = visualizations_for @user, published: false, page: params[:page]
-    @visualizations = true
+    @show_visualizations = true
     render :show
   end
 
@@ -36,6 +37,7 @@ class UsersController < ApplicationController
   def show_dashboard_stories
     @user = current_user
     @items = stories_for @user, published: false, page: params[:page]
+    @show_visualizations = false
     render :show
   end
 

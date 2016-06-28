@@ -23,7 +23,7 @@
                     = @user.name + ' at Facebook'
 
   .explore-navbar.container
-    = render 'partials/items_preview_header', :visualizations => @visualizations
+    = render 'partials/items_preview_header', :show_visualizations => @show_visualizations
 
   .dashboard-items
     .container
@@ -52,4 +52,4 @@
                     .btn-circle-lg-icon-sprite
                   .btn-circle-lg-title
                     Edit your settings
-      = render 'partials/items_preview_list', :items => @items, :visualizations => @visualizations
+      = render 'partials/items_preview_list', :items => @items, :show_visualizations => @show_visualizations

@@ -1,6 +1,6 @@
 .items-preview-header
   - unless defined? hide_selector
-    - if visualizations
+    - if show_visualizations
       %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/stories' : params[:action] =~ /dashboard/ ? stories_dashboard_path : stories_users_path(@user)}" }
         Stories
       .btn.btn-default.btn-primary
