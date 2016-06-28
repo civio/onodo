@@ -33,7 +33,9 @@ class NodesController < ApplicationController
   # PATCH /nodes/:id/
   def update
     @node.update_attributes( node_params )
-    redirect_to edit_visualization_path(@node.visualization)
+    location = edit_visualization_path(@node.visualization)
+    render json: { location: location } and return if xhr_request?
+    redirect_to location
   end
 
   # PATCH /nodes/:id/image

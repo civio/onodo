@@ -52,6 +52,10 @@ $(document).ready ->
   if $('#chapter-dropzone').size() > 0
     Dropzone.options.chapterDropzone = image_options_with('chapter[image]')
 
+  # node
+  if $('#node-dropzone').size() > 0
+    Dropzone.options.nodeDropzone = image_options_with('node[image]')
+
   # user
   if $('#user-dropzone').size() > 0
     Dropzone.options.userDropzone = image_options_with('user[avatar]')
