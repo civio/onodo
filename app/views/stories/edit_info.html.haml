@@ -3,31 +3,31 @@
     .page-header.text-center
       %h2 Edit Story Info
     .col-sm-6.col-sm-offset-3
-      = form_for @story, url: story_path(@story)+'/image', html: { class: 'media-upload', method: :patch, multipart: true } do |f|
-        %p.media-upload-title
-          Cover photo
-        %p.media-upload-description
-          Your cover photo should be about 1140px wide 480px tall and under 2MB
-        .media
-          .media-left
-            %img.img-circle.media-object{src: @story.image.small.url }
-          .media-body
-            .form-group
-              = f.label :image, "Upload from your computer"
-              %span.btn.btn-primary.btn-file
-                %i.glyphicon.glyphicon-folder-open
-                Browse
-                = f.file_field :image, class: 'form-control'
-                = f.hidden_field :image_cache
-              %p.btn-file-output
-              .clearfix
-            .form-group
-              = f.label :remote_image_url, "Or choose it from internet"
-              = f.text_field :remote_image_url, class: 'form-control'
-          .actions
-            = f.submit "Upload Photo", class: "btn btn-default btn-primary"
-          %hr
-      = form_for @story, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
+      = form_for @story, url: story_path(@story), html: { id: 'story-dropzone', class: 'form-default dropzone', method: :patch, multipart: true } do |f|
+        .media-upload
+          %p.media-upload-title
+            Cover photo
+          %p.media-upload-description
+            Your cover photo should be about 1140px wide 480px tall and under 2MB
+          .media
+            .media-left.dropzone-previews{ data: { image: "#{@story.image_url(:small)}" } }
+              - unless @story.image_url(:medium)
+                %img#placeholder.img-circle.media-object
+            .media-body
+              .form-group
+                %p.dz-message{style: 'display: none;'} Drop your photo here to upload
+                = f.label :image, "Upload from your computer"
+                %span.btn.btn-primary.btn-file
+                  %i.glyphicon.glyphicon-folder-open
+                  Browse
+                  = f.file_field :image, class: 'form-control'
+                  = f.hidden_field :image_cache
+                %p.btn-file-output
+                .clearfix
+              .form-group
+                = f.label :remote_image_url, "Or choose it from internet"
+                = f.text_field :remote_image_url, class: 'form-control'
+            %hr
         .form-group
           = f.label "story-input-title", "Title"
           = f.text_field :name, class: "form-control"
@@ -38,3 +38,19 @@
           %trix-editor{ input: "story_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         = f.submit "Save", class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: edit_story_path(@story)} Cancel
+
+#dropzone-preview-template{style: 'display: none;'}
+  .dz-preview.dz-file-preview
+    .dz-details
+      -#.dz-filename
+      -#  %span.data-dz-name
+      -#.dz-size{"data-dz-size": ""}
+      %img.img-circle.media-object{"data-dz-thumbnail": ""}
+        -#.dz-progress
+        -#  %span.dz-upload{"data-dz-uploadprogress": ""}
+        -#.dz-success-mark
+        -#  %span ✔
+        -#.dz-error-mask
+        -#  %span ✘
+        -#.dz-error-message
+        -#  %span{"data-dz-errormessage": ""}

@@ -43,13 +43,8 @@ class StoriesController < ApplicationController
   # PATCH /stories/:id/
   def update
     @story.update_attributes(edit_info_params)
+    render json: { location: "#{request.fullpath}/edit" } and return if xhr_request?
     redirect_to story_path(@story)
-  end
-
-  # PATCH /stories/:id/image
-  def update_image
-    @story.update_attributes(edit_info_params)
-    redirect_to edit_story_path(@story) << '/info'
   end
 
   # DELETE /stories/:id/

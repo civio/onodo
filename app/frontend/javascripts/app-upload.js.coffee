@@ -44,6 +44,10 @@ image_options_with = (param_name) ->
     return
 
 $(document).ready ->
+  # story
+  if $('#story-dropzone').size() > 0
+    Dropzone.options.storyDropzone = image_options_with('story[image]')
+
   # chapter
   if $('#chapter-dropzone').size() > 0
     Dropzone.options.chapterDropzone = image_options_with('chapter[image]')

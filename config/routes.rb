@@ -36,7 +36,6 @@ Rails.application.routes.draw do
     collection do
       get  ':id/edit/info'    => 'stories#edit_info'
       get  ':id/edit/chapter' => 'stories#editchapter'
-      patch':id/image'        => 'stories#update_image'
       post 'publish'
       post 'unpublish'
     end
