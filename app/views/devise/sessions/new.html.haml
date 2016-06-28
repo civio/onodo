@@ -20,7 +20,8 @@
           = link_to "Did you forget your password?", new_password_path(resource_name)
         .actions
           = f.submit "Log in", class: "btn btn-default btn-primary"
-          .devise-links.pull-right
+          %hr
+          .devise-links
             = render "devise/shared/links"
       
       
