@@ -313,7 +313,6 @@
       //width: 50%;
       //float: right;
       vertical-align: top;
-      text-align: left;
 
       h3{
         color: $gray;
@@ -583,10 +582,6 @@
           color: white;
           margin: $grid-gutter-width/3 0;
           text-align: center;
-          div {
-            text-align: left;
-            display: inline-block;
-          }
         }
       }
     }
