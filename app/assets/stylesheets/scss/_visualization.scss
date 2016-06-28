@@ -428,7 +428,7 @@ $node-color-12: #e0deda;
         @include retina-sprite( $icon-search-group );
       }
 
-      .search-input{
+      .search-form{
         position: absolute;
         right: 0;
         top: 0;
@@ -438,13 +438,13 @@ $node-color-12: #e0deda;
           display: block;
         }
 
-        .input-group .form-control{
+        .form-control{
           font-size: 0.786em;
         }
       }
 
       &:hover{
-        .search-input{
+        .search-form{
           display: block;
         }
       }

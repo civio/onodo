@@ -245,17 +245,17 @@ a.user-label{
 
 // Search Input
 
-.search-input{
+.search-form{
   width: 180px;
   margin-left: $grid-gutter-width;
 
   // Search box styles
-  .input-group .form-control,
-  .input-group-btn > .btn{
+  .form-control,
+  .btn{
     border-color: $brand-primary;
   }
 
-  .input-group .form-control{
+  .form-control{
     padding: 2px 5px 0 10px;
     font-size: 12px;
     line-height: -2px + $btn-line-height;
@@ -263,6 +263,7 @@ a.user-label{
     color: $brand-primary;
     border-width: 2px;
     border-right: none;
+    border-radius: 0;
     border-top-left-radius: 2px + $btn-line-height/2;
     border-bottom-left-radius: 2px + $btn-line-height/2;
 
@@ -285,28 +286,23 @@ a.user-label{
     }
   }
 
-  .input-group-btn{
-    top: 1px;
+  .btn{
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 4px + $btn-line-height;
+    width: 40px;
+    min-width: 0;
+    padding: 0 10px 0 5px;
+    color: $brand-primary;
+    border-left: none;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: transparent;
 
-    > .btn{
-      display: block;
-      position: relative;
-      height: 4px + $btn-line-height;
-      min-width: 0;
-      top: -1px;
-      padding: 0 10px 0 5px;
-      color: $brand-primary;
-      border-left: none;
-
-      &:hover{
-        color: $text-color;
-        background: #fff;
-      }
-
-      .search-icon{
-        display: block;
-        @include retina-sprite( $icon-search-group );
-      }
+    &:hover{
+      color: $text-color;
     }
   }
 }

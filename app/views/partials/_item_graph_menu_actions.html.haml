@@ -1,12 +1,10 @@
 .visualization-graph-menu-actions
   .btn-search
     %span.search-icon
-    .search-input
-      .input-group
+    %form.form-inline.search-form
+      .form-group
         %input.form-control{type: "text", placeholder: "SEARCH NODE" }
-        %span.input-group-btn
-          %button.btn.btn-default{type: "button"}
-            %span.search-icon
+      %button.btn.btn-default{type: "submit"}
   %button.btn.btn-default.btn-transparent.btn-share{type: "button"}
     %span.title
       Share it

@@ -102,6 +102,8 @@ class VisualizationBase
     Backbone.on 'visualization.navigation.zoomin',     @onZoomIn, @
     Backbone.on 'visualization.navigation.zoomout',    @onZoomOut, @
     Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
+    # Subscribe Actions Events
+    Backbone.on 'visualization.actions.search',        @onNodeSearch, @
     # Trigger synced event for Stories
     Backbone.trigger 'visualization.synced'
 
@@ -125,5 +127,9 @@ class VisualizationBase
   onFullscreen: (e) ->
     $('body').toggleClass 'fullscreen'
     @resize()
+
+  # Actions Events
+  onNodeSearch: (e) ->
+    console.log 'onNodeSearch', e.value
 
 module.exports = VisualizationBase
