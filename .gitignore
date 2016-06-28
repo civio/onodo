@@ -44,3 +44,7 @@ app-bundle.js
 
 # Ignore .DS_Store files
 .DS_Store
+
+#Ignore procfile for crossbrowsing tests
+Procfile-tests.dev
+

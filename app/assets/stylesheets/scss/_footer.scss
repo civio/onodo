@@ -5,15 +5,16 @@
 
 .footer{
   position: relative;
-  padding: 10px+$grid-gutter-width 0 $grid-gutter-width;
+  padding: $grid-gutter-width 0 $grid-gutter-width;
   z-index: 100;
   color: $gray-light;
   background: $gray-dark;
   font-weight: 300;
+  
 
   .logo-icon,
   .civio-icon{
-    float: left;
+    display: inline-block;
     margin: $grid-gutter-width/2 $grid-gutter-width 0 0;
     text-indent: -9999px;
     opacity: 0.5;
@@ -26,19 +27,32 @@
 
   .logo-icon{
     @include retina-sprite( $icon-logo-footer-group );
-    
+
   }
   .civio-icon{
     margin-top: 20px;
     @include retina-sprite( $icon-civio-footer-group );
-    
+
   }
-  
+
   .social-icons{
-    float: left;
-    padding: 0;
-    margin: 0 0 $grid-gutter-width/2 $grid-gutter-width/2;
-  
+    @include clearfix();
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 2px;
+    p {
+      float: left;
+      font-size: 0.857em;
+      strong {
+        font-weight: 500;
+      }
+    }
+    ul {
+      float: left;
+      padding: 0;
+      margin: 2px 0 $grid-gutter-width/2 $grid-gutter-width/2;
+    }
+
     li{
       list-style: none;
       float: left;
@@ -52,11 +66,11 @@
 
         &.twitter{
           @include retina-sprite( $social-icon-twitter-group );
-          
+
         }
         &.facebook{
           @include retina-sprite( $social-icon-facebook-group );
-          
+
         }
 
         &:hover{
@@ -67,12 +81,8 @@
   }
 
   section{
-    min-height: 120px;
-
-    &.bordered{
-      border-right: 1px solid $gray;
-      border-left: 1px solid $gray;
-    }
+    text-align: center;
+    margin-bottom: $grid-gutter-width/2;
 
     > p{
       font-size: 0.714em;
@@ -82,24 +92,15 @@
         font-weight: normal;
       }
     }
-
-    .eu-icon{
-      float: left;
-      margin-right: $grid-gutter-width/2;
-      @include retina-sprite( $icon-eu-footer-group );
-      
-    }
   }
 
-  ul{
-    &:first-child li{
-      margin-left: $grid-gutter-width;
-    }
 
+  ul{
     li{
+      display: inline-block;
       list-style: none;
       font-size: 0.857em;
-      margin-bottom: $grid-gutter-width/2;
+      margin: 0 $grid-gutter-width/3;
 
       a:hover{
         text-decoration: none;
@@ -114,14 +115,16 @@
   }
 
   .form-inline{
-    margin-bottom: $grid-gutter-width/2;
-
+    display: inline-block;
+    vertical-align: middle;
+    .form-group {
+      margin: 0;
+    }
     label{
       font-size: 0.857em;
       font-weight: normal;
       text-transform: none;
     }
-
     .email{
       border: none;
       min-width: 160px;
@@ -132,8 +135,8 @@
       color: $gray;
       line-height: 28px;
       font-size: 0.714em;
+      margin: 0 0 $grid-gutter-width/3 6px;
     }
-
     .btn-default{
       font-size: 0.714em;
       background: transparent;
@@ -149,6 +152,51 @@
         color: $gray-dark;
         background: #fff;
       }
+    }
+  }
+
+  .footer-info {
+    @include clearfix();
+    text-align: justify;
+    margin: 5px+$grid-gutter-width/2 0 0;
+    .eu-icon{
+      float: left;
+      margin-right: $grid-gutter-width/2;
+      @include retina-sprite( $icon-eu-footer-group );
+    }
+  }
+
+  @media (min-width: $screen-sm-min) {
+    padding: 10px+$grid-gutter-width 0 $grid-gutter-width;
+    .logo-icon,
+    .civio-icon {
+      float: left;
+    }
+    section {
+      text-align: left;
+      margin-bottom: 0;
+      &.bordered{
+        border-right: 1px solid $gray;
+        border-left: 1px solid $gray;
+      }
+    }
+    .social-links {
+      margin-top:0;
+    }
+    ul{
+      li {
+        display: block;
+        margin: 0 0 $grid-gutter-width/2;
+      }
+      &:first-child li{
+        margin-left: $grid-gutter-width;
+      }
+    }
+    .form-inline {
+      margin-bottom: $grid-gutter-width/2;
+    }
+    .footer-info {
+      margin: 0;
     }
   }
 }

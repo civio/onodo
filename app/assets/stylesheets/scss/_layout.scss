@@ -8,12 +8,21 @@
 
 .alerts-container{
   position: relative;
+  padding: 0;
 
   > p{
     position: absolute;
     padding: 2px $grid-gutter-width/3;
     top: -12px;
     z-index: 99;
+    width: 100%;
+  }
+  @media (min-width: $screen-sm-min) {
+    padding: 0 $grid-gutter-width/2;
+    margin-left: 0 !important;
+    > p {
+      width: auto;
+    }
   }
 }
 
@@ -38,7 +47,7 @@
     position: absolute;
     font-size: 0.786em;
     text-transform: uppercase;
-    z-index: 60;
+    z-index: 61;
   }
 
   .item-type{
@@ -125,7 +134,7 @@
   }
 
   .item-picture{
-    background: $brand-primary; 
+    background: $brand-primary;
 
     .item-picture-default{
       position: absolute;
@@ -180,19 +189,22 @@
   .item-info-container-inner{
     display: table;
     height: 100%;
-    max-width: 500px;
     margin: 0 auto;
     //position: absolute;
     //top: 50%;
+    @media (min-width: $screen-sm-min) {
+      max-width: 500px;
+    }
   }
 
   .item-info{
     display: table-cell;
     vertical-align: middle;
     text-align: center;
+    padding: 0 $grid-gutter-width/3;
     // position: relative;
     //top: -50%;
-    
+
     h3{
       margin: 0;
       font-weight: normal;
@@ -267,7 +279,7 @@
       //transform: translateY(-50%);
 
       h3{
-        font-size: 2.143em;
+        font-size: 1.6em;
       }
     }
   }
@@ -333,13 +345,13 @@
       top: auto;
       left: 120px;
       bottom: 14px;
-      
+
       .item-status-icon{
         float: left;
         margin-left: 0;
         margin-right: 8px;
         background: $brand-primary;
-      
+
         &:after{
           @include retina-sprite( $icon-table-white-small-group );
         }
@@ -361,7 +373,7 @@
     .item-picture .item-picture-default{
       display: none;
     }
-  
+
     .item-info{
       //position: absolute;
       //width: 460px;
@@ -401,11 +413,20 @@
       margin: 12px 9px;
     }
   }
+  @media (min-width: $screen-sm-min) {
+    &.item-visualization {
+      .item-info {
+        h3{
+          font-size: 2.143em;
+        }
+      }
+    }
+  }
 }
 
 // Items Carousel
 .items-carousel{
-  
+
   .carousel-nav{
     text-align: center;
     margin-top: 25px;
@@ -428,14 +449,14 @@
       top: 7px;
       left: 9px;
       @include retina-sprite( $icon-carousel-left-group );
-      
+
     }
     .right-icon{
       position: absolute;
       top: 7px;
       right: 9px;
       @include retina-sprite( $icon-carousel-right-group );
-      
+
     }
 
     &:hover{
@@ -509,7 +530,7 @@
 
   // Explore tooltips
   .tooltip{
-    
+
     .tooltip-inner{
       text-align: left;
       border-radius: 5px;
@@ -520,27 +541,86 @@
 
 // Items List
 
-.items-preview-list{
-
+.items-preview-list {
+  .item-story {
+    @media (max-width: $screen-md-min - 1) {
+      .item-picture {
+        width: 100%;
+      }
+      .item-picture-default {
+        display: none;
+      }
+      .item-info-container {
+        left: 0;
+      }
+      .item-info-container-inner {
+        width: 100%;
+      }
+      .item-info {
+        vertical-align: middle;
+        h3 {
+          margin: 0;
+          color: white;
+          text-align: center;
+        }
+      }
+      .item-status{
+        right: 20px;
+        top: 20px;
+        left: auto;
+        bottom: auto;
+        a {
+          color: white;
+        }
+      }
+      .item-author {
+        a {
+          color: white;
+        }
+      }
+      .item-info {
+        .item-description {
+          color: white;
+          margin: $grid-gutter-width/3 0;
+          text-align: center;
+          div {
+            text-align: left;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
 }
 
 // Pages
 
 .page-header{
   border: none;
-  margin: 2*$grid-gutter-width 0 3*$grid-gutter-width;
-  padding: 0;
+  margin: $grid-gutter-width 0 1.5*$grid-gutter-width;
+  padding: 0 $grid-gutter-width/3;
 
   h2{
-    font-size: 3em;
+    font-size: 2em;
     margin: 0 0 $grid-gutter-width/2;
+    text-align: left;
+    display: inline-block;
   }
 
   .lead{
     font-size: 1em;
     color: mix( $gray, $gray-light, 45% );
   }
+  @media (min-width: $screen-sm-min) {
+    margin: 2*$grid-gutter-width 0 3*$grid-gutter-width;
+    padding: 0;
+    h2 {
+      font-size: 3em;
+    }
+  }
 }
+
+
 
 .pages{
 
@@ -558,7 +638,7 @@
   }
 
   .explore-navbar{
-    
+
   }
 
   &.gallery{

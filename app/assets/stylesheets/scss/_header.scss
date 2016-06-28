@@ -1,4 +1,5 @@
 @import 'bootstrap/variables';
+@import 'bootstrap/mixins';
 @import 'bootstrap/mixins/vendor-prefixes';
 @import 'scss/sprites';
 @import '_variables';
@@ -8,8 +9,11 @@
   border-color: transparent;
   z-index: 92;
 
+  .navbar-collapse {
+    border-bottom: 1px solid $gray-light;
+  }
+
   .navbar-nav{
-    margin-left: $grid-gutter-width/2;
 
     > li > a{
       color: $text-color;
@@ -50,6 +54,14 @@
       }
     }
   }
+  @media (min-width: $screen-sm-min) {
+    .navbar-nav {
+      margin-left: $grid-gutter-width/2;
+    }
+    .navbar-collapse {
+      border-bottom: 0;
+    }
+  }
 }
 
 .navbar-brand{
@@ -57,8 +69,9 @@
   padding: 0;
   width: 109px;
   height: 51px;
-  margin-left: 0 !important;
-  margin-right: grid-gutter-width/2;
+  margin-left: $grid-gutter-width/2;
+  margin-right: $grid-gutter-width/2;
+  margin-bottom: $grid-gutter-width/3;
 
   &:before{
     content: "";
@@ -96,6 +109,10 @@
     display: none;
     margin: 0;
   }
+  @media (min-width: $screen-sm-min) {
+    margin-left: 0 !important;
+    margin-bottom: 0;
+  }
 }
 
 .navbar-right{
@@ -132,6 +149,79 @@
         @include retina-sprite( $icon-settings-group );
       }
     }
+    .dropdown-menu {
+      margin-top: 0 !important;
+    }
+  }
+  @media (max-width: $screen-sm-min - 1) {
+    margin: 0px -15px;
+    padding: 0 $grid-gutter-width/2;
+    .dropdown {
+      border-top: 1px solid $gray-light;
+      padding-top: $grid-gutter-width/3;
+      position: relative;
+      #user-dropdown {
+        position: absolute;
+        top: $grid-gutter-width/3;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: none;
+        &:focus {
+          opacity: 1;
+        }
+        .user-dropdown-icon {
+          position: absolute;
+          right: $grid-gutter-width/3;
+          background-color: transparent;
+          border: 11px solid white;
+          box-sizing: content-box;
+          padding: 0;
+          border-radius: 18%;
+          margin: 3px 0 0;
+        }
+      }
+    }
+    .open {
+      .dropdown-menu {
+        li {
+          a {
+            padding: $grid-gutter-width/3 $grid-gutter-width/2;
+          }
+        }
+        a,
+        a.active {
+          background: none;
+          border-left: 0;
+          border-right: 0;
+          border-color: $gray-light;
+          &:hover {
+            border-color: $gray-light;
+          }
+        }
+        li:first-child,
+        li:last-child {
+          a {
+            border-color: $gray-light;
+            border-radius: 0;
+          }
+        }
+        li:last-child {
+          a {
+            border-bottom: 0;
+          }
+        }
+      }
+      #user-dropdown {
+        .user-dropdown-icon {
+          background-color: #f2f2f2;
+          border-color: #f2f2f2;
+        }
+      }
+    }
+    .dropdown-menu-right:before {
+      display: none;
+    }
   }
 }
 
@@ -146,8 +236,33 @@
     background: $brand-primary;
     border-radius: 0;
     border: none;
-    padding: 2*$grid-gutter-width $grid-gutter-width;
+    padding: $grid-gutter-width;
     font-weight: 300;
+
+    .col-sm-4 {
+      margin-bottom: $grid-gutter-width/2;
+    }
+    .col-sm-5 {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .col-sm-6 {
+      margin-top: $grid-gutter-width/3;
+      margin-bottom: $grid-gutter-width/3;
+      margin-right: $grid-gutter-width;
+      display: inline-block;
+      vertical-align: top;
+      p {
+        @include clearfix();
+        position: relative;
+        padding-left: $grid-gutter-width;
+      }
+    }
+    .col-sm-3 {
+      margin-top: $grid-gutter-width/3;
+      display: inline-block;
+      vertical-align: top;
+    }
 
     h3{
       color: mix( $brand-primary, white, 44% );
@@ -172,26 +287,26 @@
       font-weight: normal;
     }
 
-    .border{
-      border-right: 1px solid mix( $brand-primary, white, 80% );
+    .icon-email,
+    .icon-maps {
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
     }
 
-    .icon-email{
-      display: block;
-      margin-top: 8px;
-      margin-bottom: $grid-gutter-width/2;
+    .icon-email {
+      margin-top: 2px;
       @include retina-sprite( $icon-mail-group );
     }
-    .icon-maps{
-      display: block;
-      margin-top: 2px;
-      margin-bottom: $grid-gutter-width/2;
+    .icon-maps {
       @include retina-sprite( $icon-location-group );
     }
 
     .social-links{
+      @include clearfix();
       padding: 0;
-      margin-top: 42px;
+      list-style: none;
 
       li{
         float: left;
@@ -230,17 +345,66 @@
     .close{
       display: block;
       position: absolute;
-      top: $grid-gutter-width;
-      right: $grid-gutter-width;
+      top: $grid-gutter-width/2;
+      right: $grid-gutter-width/2;
       opacity: 0.5;
       overflow: hidden;
       text-indent: -9999px;
       @include retina-sprite( $icon-close-white-group );
-      
       @include transition( opacity 0.3s ease-out );
 
       &:hover{
         opacity: 1;
+      }
+    }
+  }
+  @media (min-width: $screen-sm-min) {
+    .well {
+      padding: 2*$grid-gutter-width $grid-gutter-width;
+      .border{
+        border-right: 1px solid mix( $brand-primary, white, 80% );
+      }
+      .col-sm-5,
+      .col-sm-4,
+      .col-sm-6,
+      .col-sm-3 {
+        min-height: 150px;
+      }
+      .col-sm-5 {
+        display: block;
+      }
+      .col-sm-4 {
+        margin-bottom: 0;
+      }
+      .col-sm-6 {
+        margin: 0;
+        margin-bottom: 0;
+        display: block;
+        p {
+          padding-left: 0;
+        }
+      }
+      .col-sm-3 {
+        margin-top: 0;
+        display: block;
+      }
+      .icon-email,
+      .icon-maps{
+        position: relative;
+        margin-bottom: $grid-gutter-width/2;
+      }
+      .icon-email {
+        margin-top: 8px;
+      }
+      .icon-maps {
+        margin-top: 2px;
+      }
+      .social-links {
+        margin-top: 42px;
+      }
+      .close {
+        top: $grid-gutter-width;
+        right: $grid-gutter-width;
       }
     }
   }
