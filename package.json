@@ -31,8 +31,7 @@
     "moment-range": "~2.2.0",
     "handlebars-loader": "~1.1.4",
     "handlebars": "~4.0.5",
-    "handsontable": "0.24.3",
     "dropzone": "~4.3.0",
-    "d3": "4.0.0-alpha.44"
+    "d3": "~4.0.0"
   }
 }
