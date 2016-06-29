@@ -7,7 +7,7 @@ class VisualizationInfo extends Backbone.View
   node_custom_fields:  null
 
   show: (node, node_custom_fields) ->
-    @model         = node
+    @model              = node
     @node_custom_fields = node_custom_fields
     # Show panel if is not active
     unless @$el.hasClass 'active'

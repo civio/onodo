@@ -42,7 +42,7 @@ class VisualizationBase
     # Setup Views
     @visualizationCanvas         = new VisualizationCanvas()
     @visualizationNavigation     = new VisualizationNavigation()
-    @visualizationActions        = new VisualizationActions()
+    @visualizationActions        = new VisualizationActions {collection: @nodes}
     @visualizationInfo           = new VisualizationInfo()
 
   render: ->
@@ -65,6 +65,7 @@ class VisualizationBase
     # Setup VisualizationCanvas
     @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
     @visualizationCanvas.render()
+    @visualizationActions.render()
     # Setup Visualization Events
     @setupVisualizationEvents()
 
@@ -109,9 +110,10 @@ class VisualizationBase
 
   # Canvas Events
   onNodeShowInfo: (e) ->
-    #console.log 'show info', e.node, @visualization
-    @visualizationCanvas.focusNode e.node
-    @visualizationInfo.show new Node(e.node), @visualization.get('node_custom_fields')
+    console.log 'onNodeShowInfo', typeof e.node
+    node = @nodes.get(e.node)
+    @visualizationCanvas.focusNode node
+    @visualizationInfo.show node, @visualization.get('node_custom_fields')
 
   onNodeHideInfo: (e) ->
     @visualizationCanvas.unfocusNode()
@@ -129,7 +131,7 @@ class VisualizationBase
     @resize()
 
   # Actions Events
-  onNodeSearch: (e) ->
-    console.log 'onNodeSearch', e.value
+  onNodeSearch: (e) =>
+    @visualizationCanvas.onNodeOver  e.node
 
 module.exports = VisualizationBase

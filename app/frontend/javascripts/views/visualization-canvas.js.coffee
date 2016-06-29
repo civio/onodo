@@ -532,7 +532,7 @@ class VisualizationCanvas extends Backbone.View
       @node_active = null
       # force node over
       @onNodeOver node
-    # set node active    
+    # set node active
     @node_active = node
     console.log 'focus node', @node_active
     node.active = true
@@ -804,7 +804,7 @@ class VisualizationCanvas extends Backbone.View
     # Avoid trigger click on dragEnd
     if d3.event.defaultPrevented 
       return
-    Backbone.trigger 'visualization.node.showInfo', {node: d}
+    Backbone.trigger 'visualization.node.showInfo', {node: d.id}
 
   onNodeDoubleClick: (d) =>
     # unfix the node position when the node is double clicked

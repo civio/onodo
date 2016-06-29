@@ -439,7 +439,10 @@ $node-color-12: #e0deda;
         }
 
         .form-control{
-          font-size: 0.786em;
+          max-width: 145px;
+        }
+        .btn{
+          cursor: auto;
         }
       }
 
@@ -447,6 +450,13 @@ $node-color-12: #e0deda;
         .search-form{
           display: block;
         }
+      }
+
+      span.twitter-typeahead .tt-menu{
+        font-size: 0.857em;
+        margin-left: 2+$grid-gutter-width/3;
+        width: 156px;
+        min-width: 156px;
       }
     }
 
@@ -458,6 +468,8 @@ $node-color-12: #e0deda;
       min-width: 0;
       border-radius: 4px;
       padding: 0 $grid-gutter-width/6;
+      margin: 2px 0;
+      font-size: 0.857em;
       line-height: 2*$grid-gutter-width/3;
       @include clearfix;
 
@@ -495,7 +507,6 @@ $node-color-12: #e0deda;
       position: relative;
       top: 2px;
       right: 0px;
-      margin-left: $grid-gutter-width/3;
     }
 
     .btn-story-info{
