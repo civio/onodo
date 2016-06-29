@@ -1,22 +1,22 @@
 .story-edit-info.container
   .row
     .page-header.text-center
-      %h2 Edit Story Info
+      %h2= t '.title'
     .col-sm-6.col-sm-offset-3
       = form_for @story, url: story_path(@story)+'/image', html: { class: 'media-upload', method: :patch, multipart: true } do |f|
         %p.media-upload-title
-          Cover photo
+          = t '.field.cover.title'
         %p.media-upload-description
-          Your cover photo should be about 1140px wide 480px tall and under 2MB
+          = t '.field.cover.description'
         .media
           .media-left
             %img.img-circle.media-object{src: @story.image.small.url }
           .media-body
             .form-group
-              = f.label :image, "Upload from your computer"
+              = f.label :image, t('.field.cover.upload_from_computer')
               %span.btn.btn-primary.btn-file
                 %i.glyphicon.glyphicon-folder-open
-                Browse
+                = t '.field.cover.browse'
                 = f.file_field :image, class: 'form-control'
                 = f.hidden_field :image_cache
               %p.btn-file-output
@@ -25,16 +25,16 @@
               = f.label :remote_image_url, "Or choose it from internet"
               = f.text_field :remote_image_url, class: 'form-control'
           .actions
-            = f.submit "Upload Photo", class: "btn btn-default btn-primary"
+            = f.submit t('.submit'), class: "btn btn-default btn-primary"
           %hr
       = form_for @story, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
         .form-group
-          = f.label "story-input-title", "Title"
+          = f.label "story-input-title", t('.field.title')
           = f.text_field :name, class: "form-control"
         .form-group
-          = f.label "story-input-description", "Description"
+          = f.label "story-input-description", t('.field.description')
           = f.text_field :description, type: "hidden"
           %trix-toolbar{ id: "wysiwig-toolbar", input: "story_description" }
           %trix-editor{ input: "story_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         = f.submit "Save", class: "btn btn-default btn-primary"
-        %a.btn.btn-default{href: edit_story_path(@story)} Cancel
+        %a.btn.btn-default{href: edit_story_path(@story)}= t 'common.cancel'

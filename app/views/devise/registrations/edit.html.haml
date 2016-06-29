@@ -2,19 +2,19 @@
   .row
     .col-sm-6.col-sm-offset-3
       .page-header.text-center
-        %h2 Settings
-        %p.lead Edit your profile settings
+        %h2= t '.title'
+        %p.lead= t '.lead'
       = form_for resource, as: resource_name, url: registration_path(resource_name), html: { class: 'media-upload',method: :put, multipart: true } do |f|
         .media
           .media-left
             %img.img-circle.media-object{src: resource.avatar_url(:huge) }
           .media-body
             %p.media-upload-title
-              Profile avatar
+              = t '.field.media.title'
             %p.media-upload-description
-              Your avatar photo should be about 500px wide 500px tall and under 1MB
+              = t '.field.media.description'
             .form-group
-              = f.label :avatar, "Upload from your computer"
+              = f.label :avatar, t('.field.media.upload')
               %span.btn.btn-primary.btn-file
                 %i.glyphicon.glyphicon-folder-open
                 Browse
@@ -23,7 +23,7 @@
               %p.btn-file-output
               .clearfix
           .actions
-            = f.submit "Upload Photo", class: "btn btn-default btn-primary"
+            = f.submit t('.field.media.submit'), class: "btn btn-default btn-primary"
           %hr
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-default', method: :put }) do |f|
         = devise_error_messages!
@@ -58,17 +58,17 @@
           = f.url_field :website, class: "form-control"
         .form-group
           %label
-            Social Networks
-          %em (Optional)
+            = t '.field.social_networks.title'
+          %em= t '.field.social_networks.options'
           %p
-            Make it easy for your visitors to connect with you by integrating your social network profiles
+            = t '.field.social_networks.description'
         .form-group
-          = f.label :facebook, "Facebook Username", class: "lowcase"
+          = f.label :facebook, t('.field.social_networks.facebook_username'), class: "lowcase"
           = f.text_field :facebook, class: "form-control"
         .form-group
-          = f.label :twitter, "Twitter Username", class: "lowcase"
+          = f.label :twitter, t('.field.social_networks.twitter_username'), class: "lowcase"
           = f.text_field :twitter, class: "form-control"
-        = f.submit "Save profile", class: "btn btn-default btn-primary"
-        = link_to "Cancel", :back, class: "btn btn-default btn-invert"
+        = f.submit t('.submit'), class: "btn btn-default btn-primary"
+        = link_to t('common.cancel'), :back, class: "btn btn-default btn-invert"
         /= link_to "Delete my account", "#", class: "btn btn-default btn-danger pull-right"
         / = button_to( "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete )

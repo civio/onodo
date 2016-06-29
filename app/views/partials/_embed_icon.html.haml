@@ -1,2 +1,2 @@
-%a.onodo-icon{ href: visualization_path(item), title: '#{item.name} in Onodo', target: '_blank' }
-  #{item.name} in Onodo
+%a.onodo-icon{ href: visualization_path(item), title: t('.in_onodo', item_name: item.name), target: '_blank' }
+  = t '.in_onodo', item_name: item.name

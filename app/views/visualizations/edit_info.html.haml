@@ -1,16 +1,16 @@
 .visualization-edit-info.container
   .row
     .page-header.text-center
-      %h2 Edit Visualization Info
+      %h2= t '.title'
     .col-sm-6.col-sm-offset-3
       = form_for @visualization, url: {action: "update"} , method: "patch", html: {:class => 'form-default'} do |f|
         .form-group
-          = f.label "visualization-input-title", "Title"
+          = f.label "visualization-input-title", t('.field.title')
           = f.text_field :name, class: "form-control"
         .form-group
-          = f.label "visualization-input-description", "Description"
+          = f.label "visualization-input-description", t('.field.description')
           = f.text_field :description, type: "hidden"
           %trix-toolbar{ id: "wysiwig-toolbar", input: "visualization_description" }
           %trix-editor{ input: "visualization_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         = f.submit "Save", class: "btn btn-default btn-primary"
-        %a.btn.btn-default{href: edit_visualization_path(@visualization)} Cancel
+        %a.btn.btn-default{href: edit_visualization_path(@visualization)}= t 'common.cancel'

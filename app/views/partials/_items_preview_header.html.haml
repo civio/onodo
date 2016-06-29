@@ -2,14 +2,14 @@
   - unless defined? hide_selector
     - if visualizations
       %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/stories' : params[:action] =~ /dashboard/ ? stories_dashboard_path : stories_users_path(@user)}" }
-        Stories
+        = t 'common.stories'
       .btn.btn-default.btn-primary
-        Visualizations
+        = t 'common.visualizations'
     - else
       .btn.btn-default.btn-primary
-        Stories
+        = t 'common.stories'
       %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/visualizations' : params[:action] =~ /dashboard/ ? visualizations_dashboard_path : visualizations_users_path(@user)}" }
-        Visualizations  
+        = t 'common.visualizations'
   / .search-input.pull-right
   /   .input-group
   /     %input.form-control{:type => "text"}

@@ -3,46 +3,46 @@
   .container-fluid
     .navbar-header
       %button.navbar-toggle.collapsed{"aria-controls" => "navbar", "aria-expanded" => "false", "data-target" => "#navbar", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only =t(:toggle)
+        %span.sr-only= t '.toggle'
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand{:href => "/"} 
+      %a.navbar-brand{:href => "/"}
         %h1 Onodo
     #navbar.navbar-collapse.collapse
       %ul.nav.navbar-nav
         %li
           %a{:href => "/explore", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'explore')}
-            =t(:explore)
+            =t 'common.explore'
         %li
           %a{:href => "/gallery", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'gallery')}
-            =t(:gallery)
+            =t 'common.gallery'
         %li
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
-            =t(:contact)
+            =t 'common.contact'
       %ul.nav.navbar-nav.navbar-right
         -if current_user.nil?
           %li
-            = link_to t(:login), new_user_session_path, class: "btn btn-transparent"
+            = link_to t('common.login'), new_user_session_path, class: "btn btn-transparent"
           %li
-            = link_to t(:signup), new_user_registration_path, class: "btn btn-primary"
+            = link_to t('common.signup'), new_user_registration_path, class: "btn btn-primary"
         -else
           %li.dropdown
             = render 'partials/user_label', :user => current_user, :header => true
             %a#user-dropdown.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button", :title => "User settings"}
               %span.user-dropdown-icon
-                =t(:user_settings)
+                =t'.user_settings'
             %ul.dropdown-menu.dropdown-menu-right.dropdown-menu-primary{"aria-labelledby" => "user-dropdown"}
               %li
-                = link_to t(:dashboard), dashboard_path
+                = link_to t('.dashboard'), dashboard_path
               %li
-                = link_to t(:settings), edit_settings_path
+                = link_to t('.settings'), edit_settings_path
               - if gallery_editor_role?
                 %li
-                  = link_to t(:configure_gallery), edit_gallery_path
+                  = link_to t('.configure_gallery'), edit_gallery_path
               %li
-                = link_to t(:create_visualization), new_visualization_path, :class => 'active'
+                = link_to t('common.create_visualization'), new_visualization_path, :class => 'active'
               %li
-                = link_to t(:create_story), new_story_path, :class => 'active'
+                = link_to t('common.create_story'), new_story_path, :class => 'active'
               %li
-                = link_to t(:logout), destroy_user_session_path, :method => 'delete'
+                = link_to t('.logout'), destroy_user_session_path, :method => 'delete'

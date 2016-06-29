@@ -1,0 +1,19 @@
+en:
+  devise:
+    registrations:
+      edit:
+        title: Settings
+        lead: Edit your profile settings
+        field:
+          media:
+            title: Profile avatar
+            description: Your avatar photo should be about 500px wide 500px tall and under 1MB
+            upload: Upload from your computer
+            submit: Upload Photo
+          social_networks:
+            title: Social Networks
+            options: (Optional)
+            description: Make it easy for your visitors to connect with you by integrating your social network profiles
+            facebook_username: Facebook Username
+            twitter_username: Twitter Username
+        submit: Save profile

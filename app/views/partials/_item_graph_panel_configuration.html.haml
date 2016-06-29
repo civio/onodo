@@ -1,24 +1,24 @@
 .visualization-graph-panel-configuration.panel.panel-default
   .panel-heading
-    %h4 Settings
-    %button.close{type: "button", "aria-label" => "Close"}
+    %h4= t '.title'
+    %button.close{type: "button", "aria-label" => t('common.close')}
   .panel-body
     %ul#visualization-graph-panel-configuration-tabs.nav.nav-tabs{ role: "tablist" }
       %li.active{ role: "presentation" }
         %a#nodes-tab{ href: "#settings-nodes", role: "tab", "data-toggle": "tab" }
-          Nodes
+          = t 'common.nodes'
       %li{ role: "presentation" }
         %a#relations-tab{ href: "#settings-relations", role: "tab", "data-toggle": "tab" }
-          Relations
+          = t '.relations'
       %li{ role: "presentation" }
         %a#advanced-tab{ href: "#settings-advanced", role: "tab", "data-toggle": "tab" }
-          Advanced
+          = t '.advanced'
     #visualization-graph-panel-configuration-tab-content.tab-content
       #settings-nodes.tab-pane.fade.in.active{ role: "tabpanel" }
         .row
           .col-sm-5
             %p.configuration-label
-              Nodes Color
+              = t '.nodes_color'
           .col-sm-7.text-right
             #nodes-color.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
@@ -27,7 +27,7 @@
               %ul.dropdown-menu
                 %li.color-solid
                   %p
-                    Solid
+                    = t '.colors.solid'
                   %ul.color-solid-selector
                     %li.color.color-1{ 'data-value': 'solid-1' }
                     %li.color.color-2{ 'data-value': 'solid-2' }
@@ -39,29 +39,29 @@
                     %li.color.color-8{ 'data-value': 'solid-10' }
                 %li.color-quantitative{ 'data-value': 'quantitative' }
                   %p
-                    Quantitative
+                    = t '.colors.quantitative'
                 %li.color-qualitative{ 'data-value': 'qualitative' }
                   %p
-                    Qualitative
+                    = t '.colors.qualitative'
         .row.nodes-color-column-container.hide
           .col-sm-5
             %p.configuration-label
-              Based on column
+              = t '.based_on_column'
           .col-sm-7.text-right
             #nodes-color-column.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
                 %span.text
-                  Type
+                  = t 'common.type'
                 %span.caret
               %ul.dropdown-menu
                 %li.active{ 'data-value': 'node_type' }
                   %p
-                    Type
+                    = t 'common.type'
         %hr
         .row
           .col-sm-5
             %p.configuration-label
-              Nodes Size
+              = t '.nodes_size'
           .col-sm-7.text-right
             #nodes-size.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
@@ -70,45 +70,45 @@
               %ul.dropdown-menu
                 %li.size-s{ 'data-value': 6 }
                   %p
-                    Small
+                    = t '.sizes.small'
                 %li.size-m{ 'data-value': 11 }
                   %p
-                    Medium
+                    = t '.sizes.medium'
                 %li.size-l{ 'data-value': 14 }
                   %p
-                    Large
+                    = t '.sizes.large'
                 %li.size-xl{ 'data-value': 18 }
                   %p
-                    Extra Large
+                    = t '.sizes.extra_large'
                 %li.size-relations{ 'data-value': 1 }
                   %p
-                    Based on column
+                    = t '.based_on_column'
         .row.nodes-size-column-container.hide
           .col-sm-5
             %p.configuration-label
-              Based on column
+              = t '.based_on_column'
           .col-sm-7.text-right
             #nodes-size-column.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
                 %span.text
-                  Number of relations
+                  = t '.number_of_relations'
                 %span.caret
               %ul.dropdown-menu
                 %li.active{ 'data-value': 'relations' }
                   %p
-                    Number of relations
+                    = t '.number_of_relations'
         %hr
         .row
           .col-sm-6
             %p.configuration-label.configuration-switch-label
-              Show Nodes Label
+              = t '.show_nodes_label'
           .col-sm-6.text-right
             = check_box_tag :showNodesLabel, 1, false, data: { "size" => "small" }
         %hr
         .row
           .col-sm-6
             %p.configuration-label.configuration-switch-label
-              Show Nodes Image
+              = t '.show_nodes_image'
           .col-sm-6.text-right
             = check_box_tag :showNodesImage, 1, false, data: { "size" => "small" }
       #settings-relations.tab-pane.fade{ role: "tabpanel" }
@@ -119,25 +119,24 @@
         .row
           .col-sm-6
             %p.configuration-label
-              Relations line style
+              = t '.relations_line_style'
           .col-sm-6.text-right
             %select#relations-line-style.form-control
               %option{ value: 0 }
-                Solid
+                = t '.line_styles.solid'
               %option{ value: 1 }
-                Dashed
+                = t '.line_styles.dashed'
               %option{ value: 2 }
-                Dotted
+                = t '.line_styles.dotted'
       #settings-advanced.tab-pane.fade{ role: "tabpanel" }
         -# Attributes from https://github.com/mbostock/d3/wiki/Force-Layout
         .form-group
           %label{ for: "linkdistante"}
-            Link Distance
+            = t '.link_distance'
           %input#linkdistance.form-control.slider{name: "linkDistance", type: "text", "data-slider-min": "10", "data-slider-max": "200"}
         .form-group
           %label{ for: "linkstrengh"}
-            Link Strength
+            = t '.link_strength'
           %input#linkstrength.form-control.slider{name: "linkStrength", type: "text", "data-slider-min": "-60", "data-slider-max": "-10"}
         %button#reset-defaults.btn.tbn-sm.btn-primary.btn-invert
-          Reset defaults
-
+          = t '.reset_defaults'

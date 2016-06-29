@@ -1,0 +1,12 @@
+es:
+  nodes:
+    edit_image:
+      field:
+        image:
+          text: This is the image used to display in the visualization
+          conditions: 2 MB max. jpg / png / gif
+          upload: Upload from your computer
+          browse: Browse
+          internet: Choose it from internet
+          error: The URL is not a valid image
+      add_image: Add Image

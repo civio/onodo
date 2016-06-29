@@ -1,0 +1,10 @@
+es:
+  partials:
+    item_info:
+      created_by: Created by
+      status:  Status
+      public: Public
+      publish: Publish
+      view_data_table: View Data Table
+      hide_data_table: Hide Data Table
+      edit_info: 'Edit %{class_name} info'

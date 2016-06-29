@@ -2,20 +2,20 @@
   .modal-dialog{role: "document"}
     .modal-content
       .modal-header
-        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
         %h4.modal-title
           - if defined? story
-            Do you want to delete this story?
+            = t '.confirm.title_story'
           - else
-            Do you want to delete this visualization?
+            = t '.confirm.title_visualization'
       .modal-body
         -# TODO! Add stories where appear the current visualization
         -# %p This visualization appears also in:
-        %p Be careful, deleting can't be undone.
+        %p= t '.confirm.body'
         %p
           %strong
-            Are you sure?
+            = t '.confirm.question'
       .modal-footer
-        = button_to "Yes", item, :method => :delete, :class => "btn btn-danger"
-        %button.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
-          Cancel
+        = button_to t('common.confirm'), item, :method => :delete, :class => "btn btn-danger"
+        %button.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
+          = t 'common.cancel'

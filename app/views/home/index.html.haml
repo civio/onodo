@@ -3,35 +3,35 @@
     -#.home-background
     .jumbotron.text-center
       .home-icon
-      %h2 Relationships are complicated
-      %p.lead Let's create visualizations to understand them
+      %h2= t '.titles.main'
+      %p.lead= t '.titles.lead'
       %hr.separator.separator-white.separator-small
       - if current_user.nil?
-        %a.btn.btn-primary{:href => new_user_registration_path, :title => "Sign Up"} Sign Up
+        %a.btn.btn-primary{:href => new_user_registration_path, :title => t(:signup)}= t :signup
       - else
-        %a.btn.btn-primary{:href => new_visualization_path, :title => "Create visualization"} Create visualization
-      %a.btn.btn-primary{:href => "/explore", :title => "Explore"} Explore
-      /%a.btn.btn-primary{:href => "#", :title => "Demo"} Demo
-      %a.btn.btn-primary{:href => "/gallery", :title => "Gallery"} Gallery
+        %a.btn.btn-primary{:href => new_visualization_path, :title => t(:create_visualization)}= t :create_visualization
+      %a.btn.btn-primary{:href => "/explore", :title => t(:explore)}= t :explore
+      /%a.btn.btn-primary{:href => "#", :title => t(:demo)}= t :demo
+      %a.btn.btn-primary{:href => "/gallery", :title => t(:gallery)}= t :gallery
   .row.features.features-easey.text-center
-    %h3 We make it easy
+    %h3= t 'titles.features'
     .container
       .row
         .feature.col-sm-4
           .feature-icon
             %span.feature-icon-creation
-          %h4 1. Quick creation
-          %p Using our node & relationship table template, you are ready to go. Import it, duplicate it from another visualization or create it from scratch
+          %h4= t '.features.easey.first.title'
+          %p= t '.features.easey.first.text'
         .feature.col-sm-4
           .feature-icon
             %span.feature-icon-information
-          %h4 2. Rich information
-          %p You can add to each node all the data you need (text, media & links)
+          %h4= t '.features.easey.second.title'
+          %p= t '.features.easey.second.text'
         .feature.col-sm-4
           .feature-icon
             %span.feature-icon-share
-          %h4 3. Share it anywhere
-          %p Share & embed the visualization or story wherever you want. We provide you some stats to track it
+          %h4= t '.features.easey.third.title'
+          %p= t '.features.easey.third.text'
   .row.features.features-great.text-center
     %h3 We make it great
     .container
@@ -39,28 +39,28 @@
         .feature.col-sm-4
           .feature-icon
             %span.feature-icon-collaboration
-          %h4 Collaborations
-          %p You can add collaborators to your visualization o duplicate the users visualizations to start your own
+          %h4= t '.features.great.first.title'
+          %p= t '.features.great.first.text'
         .feature.col-sm-4
           .feature-icon
             %span.feature-icon-preview
-          %h4 Live preview
-          %p View the final result of the visualization as you edit the nodes & relationships
+          %h4= t '.features.great.second.title'
+          %p= t '.features.great.second.text'
         .feature.col-sm-4
           .feature-icon
             %span.feature-icon-story
-          %h4 Do you want to tell a story?
-          %p You can create your own story with chapters that reveal how the relationship network developed
+          %h4= t '.features.great.third.title'
+          %p= t '.features.great.third.text'
   #gallery-carousel.row
-    %p.section-title 
-      These are the latest additions to our gallery
-    -#%a.btn.btn-default.btn-primary{:href => '/gallery'} 
+    %p.section-title
+      =t '.titles.gallery'
+    -#%a.btn.btn-default.btn-primary{:href => '/gallery'}
     -#  %i.glyphicon.glyphicon-plus
     -#    View More
     .gallery-carousel-container.container
       = render 'partials/item_preview_carousel', :items => @gallery_items
   / .brands.container
-  /   %p.section-title 
+  /   %p.section-title
   /     The are using Onodo
   /     %ul
   /       %li

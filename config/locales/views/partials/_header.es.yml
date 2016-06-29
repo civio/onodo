@@ -1,0 +1,9 @@
+es:
+  partials:
+    header:
+      toggle: Toggle navigation
+      user_settings: User settings
+      dashboard: Dashboard
+      settings: Settings
+      configure_gallery: Configure gallery
+      logout: Logout

@@ -1,7 +1,7 @@
 .password-edit.devise-page.container
   .row
     .page-header.text-center
-      %h2 Change your password
+      %h2= t '.change_your_password'
       %p.lead This will be your Onodo password from now on
     .col-sm-6.col-sm-offset-3
       = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put, class: 'form-default' }) do |f|

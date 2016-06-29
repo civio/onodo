@@ -2,10 +2,10 @@
   .container
     .row
       %section.col-sm-4
-        %p 
-          =t(:copywrite_notice)
+        %p
+          =t '.copywrite_notice'
         %a.logo-icon{href: "/", title: "Onodo"}
-          Onodo 
+          Onodo
         %a.civio-icon{href: "http://www.civio.es/", target: "_blank", title: "Fundación Ciudadana Civio"}
           Civio
       %section.bordered.col-sm-4
@@ -13,22 +13,22 @@
           %ul.col-sm-6
             %li
               %a{href: "/explore"}
-                =t(:explore)
+                = t 'common.explore'
             %li
               %a{href: "/gallery"}
-                =t(:gallery)
+                = t 'common.gallery'
             %li
               %a{href: "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
-                =t(:contact)
+                = t 'common.contact'
           %ul.col-sm-6
             %li
-              = link_to t(:login), new_user_session_path
+              = link_to t('common.login'), new_user_session_path
             %li
-              = link_to t(:signup), new_user_registration_path
+              = link_to t('common.signup'), new_user_registration_path
       %section.col-sm-4
         %p.pull-left
           %strong
-            =t(:follow_us)
+            =t '.follow_us'
           %ul.social-icons
             %li
               %a.twitter{href: 'https://twitter.com/Onodo_', title: 'Twitter Onodo', target: '_blank'}
@@ -38,12 +38,12 @@
             /     Facebook
         %p
           %form#mc-embedded-subscribe-form.form-inline{name: "mc-embedded-subscribe-form", method: "post", action: "http://civio.us4.list-manage1.com/subscribe/post?u=9416fe6b76f2c3f985c1f8e0f&amp;id=9d5b4c8cda", target: "_blank"}
-            .form-group 
+            .form-group
               %label{for: "mce-EMAIL"}
-                =t(:subscribe)
+                =t '.subscribe'
               %input#mce-EMAIL.email{type: "email", required: "require", placeholder: "Email", name: "EMAIL"}
               %button.btn.btn-sm.btn-default{type: "submit"}
-                =t(:send)
+                =t '.send'
         %p
           %span.eu-icon
-          This project has received funds from the 7th European Union Programme for research, technology development and demonstration, under the grant num. 61133
+          = t '.funding_notice'

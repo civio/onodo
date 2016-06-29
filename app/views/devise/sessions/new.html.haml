@@ -1,8 +1,8 @@
 .login.devise-page.container
   .row
     .page-header.text-center
-      %h2 Login
-      %p.lead Create your relationships visualizations & tell meaningful stories through them
+      %h2= t '.sign_in'
+      %p.lead= t '.lead'
     .col-sm-6.col-sm-offset-3
       = form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => 'form-default'}) do |f|
         .form-group
@@ -13,14 +13,12 @@
           = f.password_field :password, autocomplete: "off", class: "form-control"
         - if devise_mapping.rememberable?
           .checkbox
-            %label{ :for => "remember_me" }
+            %label
               = f.check_box :remember_me
-              Remember
+              = t '.remember_me'
         %p
-          = link_to "Did you forget your password?", new_password_path(resource_name)
+          = link_to t('devise.shared.links.forgot_your_password'), new_password_path(resource_name)
         .actions
-          = f.submit "Log in", class: "btn btn-default btn-primary"
+          = f.submit t('.sign_in'), class: "btn btn-default btn-primary"
           .devise-links.pull-right
             = render "devise/shared/links"
-      
-      

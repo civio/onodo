@@ -3,57 +3,57 @@
     .modal-content
       .modal-header
         %h4.modal-title
-          Network Analysis
+          = t '.title'
         %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
       .modal-body
         .row.modal-description
           .col-sm-8.col-sm-offset-2
             %p.text-center
-              You can add custom columns based on Network Analysis metrics to your nodes table & use this metrics as nodes color or size
+              = t '.description'
         .row
           .col-sm-4
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Clusters human explanation ..."} }
-                = label_tag :clusters, "Clusters"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.clusters_explanation')} }
+                = label_tag :clusters, t('.clusters')
                 %span.icon-question
             = check_box_tag :clusters, 'clusters', true, class: 'switch', data: { "size" => "small" }
           .col-sm-4
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Degree human explanation ..."} }
-                = label_tag :degree, "Degree"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.degree_explanation')} }
+                = label_tag :degree, t('.degree')
                 %span.icon-question
             = check_box_tag :degree, 'degree', true, class: 'switch', data: { "size" => "small" }
           .col-sm-4
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Relevance human explanation ..."} }
-                = label_tag :relevance, "Relevance"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.relevance_explanation')} }
+                = label_tag :relevance, t('.relevance')
                 %span.icon-question
             = check_box_tag :relevance, 'relevance', true, class: 'switch', data: { "size" => "small" }
           .col-sm-4
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Betweenness human explanation ..."} }
-                = label_tag :betweenness, "Betweenness"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.betweenness_explanation')} }
+                = label_tag :betweenness, t('.betweenness')
                 %span.icon-question
             = check_box_tag :betweenness, 'betweenness', true, class: 'switch', data: { "size" => "small" }
           .col-sm-4
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Closeness human explanation ..."} }
-                = label_tag :closeness, "Closeness"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.closeness_explanation')} }
+                = label_tag :closeness, t('.closeness')
                 %span.icon-question
             = check_box_tag :closeness, 'closeness', true, class: 'switch', data: { "size" => "small" }
           .col-sm-4
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Coreness (k-index) human explanation ..."} }
-                = label_tag :coreness, "Coreness (k-index)"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.coreness_explanation')} }
+                = label_tag :coreness, t('.coreness')
                 %span.icon-question
             = check_box_tag :coreness, 'coreness', true, class: 'switch', data: { "size" => "small" }
           .col-sm-12
             %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": "Distance from specific node human explanation ..."} }
-                = label_tag :distance, "Distance from specific node"
+              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.distance_explanation')} }
+                = label_tag :distance, t('.distance')
                 %span.icon-question
             = check_box_tag :distance, 'distance', true, class: 'switch', data: { "size" => "small" }
       .modal-footer
         %button.btn.btn-primary{ type: "submit" }
-          Calculate
-        %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} Cancel
+          = t '.submit'
+        %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}= t 'common.cancel'

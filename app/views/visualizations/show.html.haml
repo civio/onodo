@@ -14,8 +14,8 @@
 
 .visualization-related-items
   %p.section-title
-    Related visualizations & stories
+    = t '.relateds'
   .container
     = render 'partials/item_preview_carousel', items: @related_items
 
-= render 'partials/item_delete_modal', item: @visualization 
+= render 'partials/item_delete_modal', item: @visualization

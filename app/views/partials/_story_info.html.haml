@@ -1,20 +1,20 @@
 .story-info.panel.panel-default.active
   .panel-heading
     .index-header
-      Story Index
+      = t '.index'
     .chapter-header.hide
-      %a.index-back-btn{ href: '#', title: 'Back to Story Index'}
+      %a.index-back-btn{ href: '#', title: t('.back')}
         %span.icon-story-index
-        Back to Story Index
+        = t '.back'
       .chapters-navigation
-        %a.chapter-navigation.chapter-navigation-prev{ href: '#', title: 'Previous Chapter' }
-          Previous Chapter
+        %a.chapter-navigation.chapter-navigation-prev{ href: '#', title: t('.previous_chapter') }
+          = t '.previous_chapter'
           %span.prev-chapter-icon
         .chapters-tracker
-          %span.chapter-index 
+          %span.chapter-index
           \/ #{story.chapters.length}
-        %a.chapter-navigation.chapter-navigation-next{ href: '#', title: 'Next Chapter' }
-          Next Chapter
+        %a.chapter-navigation.chapter-navigation-next{ href: '#', title: t('.next_chapter') }
+          = t '.next_chapter'
           %span.next-chapter-icon
     %button.close{type: "button", "aria-label" => "Close"}
       %span{"aria-hidden" => "true"}
@@ -32,5 +32,5 @@
                   = chapter.name
       - if defined? edit
         %a.btn.btn-default.btn-primary{ href: new_story_chapter_path(story) }
-          Add Chapter
+          = t '.add_chapter'
     .chapter-content.hide

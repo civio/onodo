@@ -1,12 +1,12 @@
 .container-fluid
-  %h3 Datasets list
+  %h3= t '.title'
   %table.table.table-striped
     %thead
       %tr
         %th #
-        %th Visualization
-        %th Nodes
-        %th Relations
+        %th= t 'common.visualization'
+        %th= t 'common.nodes'
+        %th= t 'common.relations'
     %tbody
       - @datasets.each do |dataset|
         %tr

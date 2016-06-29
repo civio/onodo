@@ -3,8 +3,8 @@
     - if defined? edit
       %a.btn.btn-default.btn-primary
         %span.btn-icon-pencil
-        Edit
-    %button.close{type: "button", "aria-label" => "Close"}
+        = t 'common.edit'
+    %button.close{type: "button", "aria-label" => t('common.close')}
       %span{"aria-hidden" => "true"}
         &times
   .panel-body

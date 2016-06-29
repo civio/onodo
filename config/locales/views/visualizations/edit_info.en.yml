@@ -1,0 +1,7 @@
+en:
+  visualizations:
+    edit_info:
+      title: Edit Visualization Info
+      field:
+        title: Title
+        description: Description

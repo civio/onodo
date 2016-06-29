@@ -2,8 +2,8 @@
   .well.container-fluid
     .row
       .col-sm-4.border
-        %h3 Contact us
-        %p If you need help or have any inquires, you can contact us using our different channels
+        %h3= t '.title'
+        %p= t '.text'
       .col-sm-5
         %row
           .col-sm-6.border
@@ -20,8 +20,8 @@
               %br
               28003 Madrid
             %p
-              %a{href: 'https://goo.gl/maps/mYJ1FtPNRd22', title: 'View in Google Maps', target: '_blank'} 
-                View in Google Maps
+              %a{href: 'https://goo.gl/maps/mYJ1FtPNRd22', title: t('.view_in_google_maps'), target: '_blank'}
+                = t '.view_in_google_maps'
       .col-sm-3
         %ul.social-links
           %li
@@ -32,7 +32,7 @@
           /   %a.facebook{href: '#'}
           /     %span.icon
           /       Facebook
-        
+
     %a.close{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
       %span{"aria-hidden" => "true"}
-        Close
+        = t 'common.close'

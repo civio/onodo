@@ -1,0 +1,5 @@
+en:
+  visualizations:
+    edit:
+      empty: This visualization is empty
+      start_creating: Start creating nodes & relations

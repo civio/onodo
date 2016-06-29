@@ -1,0 +1,60 @@
+# This file consolidates all the localized strings for the 'en' language with the exception of
+# devise messages. It may be splitted in several files if it starts growing excessively.
+
+# Already included pages:
+# - partials/header
+# - partials/footer
+
+
+es:
+  # common strings
+  common:
+    explore: Explorar
+    gallery: Galeria
+    contact: Contacto
+    login: Login
+    signup: Registro
+
+    story: Historia
+    stories: Historias
+    create_story: Crear Historia
+    edit_story: Editar Historia
+    visualization: Visualización
+    visualizations: Visualizaciones
+    create_visualization: Crear Visualización
+    edit_visualization: Editar Visualización
+    edit_description: Editar Descripción
+    node: Nodo
+    nodes: Nodos
+    relationship: Relación
+    relationships: Relaciones
+
+    cancel: Cancelar
+    close: Cerrar
+    draft: Borrador
+    create: Crear
+    created_by: Creado Por
+    save: Guardar
+    update: Actualizar
+    change: Cambiar
+    delete: Borrar
+    edit: Editar
+    download: Descargar
+    from: desde
+    to: hasta
+    type: Tipo
+    description: Descripción
+    visible: Visible
+    source: Origen
+    target: Destino
+    custom_column_name: Nombre de columna personalizado
+    custom_column_type: Tipo de columna personalizado
+    add_column: Añadir columna
+    date: Fecha
+    visibility: Visibilidad
+    string: Texto
+    number: Numbero
+    boolean: Booleano
+    previous: Anterior
+    next: Siguiente
+    confirm: "Si"
