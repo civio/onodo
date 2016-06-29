@@ -112,3 +112,9 @@
     }
   }
 }
+
+#terms-of-service-modal .terms-of-service-modal-content{
+  max-height: 380px;
+  overflow-y: auto;
+  padding-right: 2*$grid-gutter-width/3; 
+}

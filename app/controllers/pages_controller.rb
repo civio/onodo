@@ -20,4 +20,10 @@ class PagesController < ApplicationController
     gallery = Gallery.instance
     @items = (gallery.visualizations + gallery.stories).sort_by(&:created_at).reverse
   end
+
+  # GET /terms-of-service/modal
+  def terms_of_service_modal
+    render :layout => false
+  end
+  
 end

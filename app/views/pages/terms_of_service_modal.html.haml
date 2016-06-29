@@ -1,0 +1,10 @@
+.modal-header
+  %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+  %h4.modal-title        
+    Terms & conditions
+.modal-body
+  .terms-of-service-modal-content
+    = render 'terms_of_service_content'
+.modal-footer
+  %button.btn.btn-primary{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+    Ok

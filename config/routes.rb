@@ -73,6 +73,10 @@ Rails.application.routes.draw do
   patch '/gallery',      to: 'galleries#update'
   put   '/gallery',      to: 'galleries#update'
 
+  get '/terms-of-service'        => 'pages#terms_of_service'
+  get '/terms-of-service/modal'  => 'pages#terms_of_service_modal'
+  get '/privacy-policy'          => 'pages#privacy_policy'
+
   # API routes
   namespace :api, defaults: { format: :json } do
     resources :visualizations, only: [ :show, :update ] do

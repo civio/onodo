@@ -27,10 +27,15 @@
             %label{ :for => "terms_of_service" }
               = f.check_box :terms_of_service
               I accept the 
-              %a{href: "#"}
+              %a{ href: "/terms-of-service/modal", data: {toggle: "modal", target: "#terms-of-service-modal"} }
                 terms & conditions
         .actions
           = f.submit "Sign up", class: "btn btn-default btn-primary"
           %hr
           .devise-links
             = render "devise/shared/links"
+
+#terms-of-service-modal.delete-modal.modal.fade{ tabindex: "-1", role: "dialog"}
+  .modal-dialog.modal-lg{role: "document"}
+    .modal-content
+      
