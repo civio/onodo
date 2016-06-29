@@ -5,6 +5,7 @@ class ChangeCustomFieldsForNodesInDataset < ActiveRecord::Migration
     add_column :datasets, :node_custom_fields, :hstore, array: true, default: []
 
     Dataset.find_each do |dataset|
+      dataset.custom_fields ||= []
       node_custom_fields = dataset.custom_fields.map{ |cf| { "name" => cf, "type" => type_for(dataset.nodes.map{ |n| n.custom_fields[cf] }) } }
       dataset.update_attribute(:node_custom_fields, node_custom_fields)
     end
