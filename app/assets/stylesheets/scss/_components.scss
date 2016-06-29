@@ -257,7 +257,7 @@ a.user-label{
 
   .form-control{
     padding: 2px 5px 0 10px;
-    font-size: 12px;
+    font-size: 0.857em;
     line-height: -2px + $btn-line-height;
     height: auto;
     color: $brand-primary;
@@ -626,4 +626,65 @@ a.user-label{
       border-color: $brand-primary !important;
     }
   }
+}
+
+// Typeahead
+// from https://github.com/bassjobsen/typeahead.js-bootstrap-css/blob/master/typeaheadjs.css
+span.twitter-typeahead{
+  width: 100%;
+
+  .tt-menu,
+  .tt-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid $gray-light;
+  }
+  .tt-suggestion {
+    display: block;
+    padding: 3px $grid-gutter-width/3;
+    clear: both;
+    font-weight: normal;
+    cursor: pointer;
+  }
+  .tt-suggestion.tt-cursor,
+  .tt-suggestion:hover,
+  .tt-suggestion:focus {
+    color: #ffffff;
+    text-decoration: none;
+    outline: 0;
+    background-color: $brand-primary;
+  }
+}
+
+.input-group span.twitter-typeahead {
+  display: block !important;
+  height: 34px;
+}
+.input-group span.twitter-typeahead .tt-menu,
+.input-group span.twitter-typeahead .tt-dropdown-menu {
+  top: 32px !important;
+}
+.input-group.input-group-sm span.twitter-typeahead {
+  height: 30px;
+}
+.input-group.input-group-sm span.twitter-typeahead .tt-menu,
+.input-group.input-group-sm span.twitter-typeahead .tt-dropdown-menu {
+  top: 30px !important;
+}
+.input-group.input-group-lg span.twitter-typeahead {
+  height: 46px;
+}
+.input-group.input-group-lg span.twitter-typeahead .tt-menu,
+.input-group.input-group-lg span.twitter-typeahead .tt-dropdown-menu {
+  top: 46px !important;
 }
