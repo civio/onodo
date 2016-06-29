@@ -4,8 +4,8 @@
     %p.lead Take a look to the visualizations & stories Onodo users are creating
 
 .container
-  = render 'partials/items_preview_header', :visualizations => @visualizations
+  = render 'partials/items_preview_header', :show_visualizations => @show_visualizations
 
 .page-items
   .container
-    = render 'partials/items_preview_list', :items => @items, :visualizations => @visualizations, :paginate => true
+    = render 'partials/items_preview_list', :items => @items, :show_visualizations => @show_visualizations, :paginate => true
