@@ -18,32 +18,27 @@
   form{
 
     > p > a{
-      font-size: 12px;
+      font-size: 0.857em;
     }
 
     .actions{
       //margin-top: $grid-gutter-width;
 
       .devise-links{
-        font-size: 12px;
+        font-size: 0.857em;
+
+        p{
+          margin-bottom: $grid-gutter-width/6;
+        }
       }
     }
   }
 
   .form-group{
     em{
-      font-size: 12px;
+      font-size: 0.857em;
       font-weight: 300;
       font-style: normal;
-    }
-  }
-  @media (min-width: $screen-sm-min) {
-    form{
-      .actions {
-        .devise-links {
-          padding: 8px 0;
-        }
-      }
     }
   }
 }

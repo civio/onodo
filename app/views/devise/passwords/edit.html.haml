@@ -15,5 +15,6 @@
           = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
         .actions
           = f.submit "Change my password", class: "btn btn-default btn-primary"
-          .pull-right
+          %hr
+          .devise-links
             = render "devise/shared/links"
