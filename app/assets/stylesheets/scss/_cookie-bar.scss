@@ -6,9 +6,11 @@
   background: $gray-dark;
   height:auto;
   line-height:24px;
-  color:#eeeeee;
+  color: $gray-lighter;
   text-align:center;
   padding: $grid-gutter-width/3 0;
+  font-size: 0.857em;
+  font-weight: 300;
 }
 #cookie-bar.fixed {
   position:fixed;
