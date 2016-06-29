@@ -1,8 +1,8 @@
 class VisualizationsController < ApplicationController
 
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:show, :embed]
   before_action :set_visualization, except: [:new, :create]
-  before_action :require_visualization_ownership!, except: [:show, :new, :create]
+  before_action :require_visualization_ownership!, except: [:show, :embed, :new, :create]
 
   # GET /visualizations/:id
   def show
