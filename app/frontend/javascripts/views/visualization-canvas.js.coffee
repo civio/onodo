@@ -769,7 +769,8 @@ class VisualizationCanvas extends Backbone.View
       @force.alphaTarget(0.1).restart()
   
   onNodeDragged: (d) =>
-    @force.fix d, d3.event.x, d3.event.y
+    d.fx = d3.event.x
+    d.fy = d3.event.y
 
   onNodeDragEnd: (d) =>
     if !d3.event.active
