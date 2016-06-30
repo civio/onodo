@@ -12,6 +12,9 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/:id/embed
   def embed
+    # # Set response headers to allow iframe being embedded cross-domain
+    # http://stackoverflow.com/questions/16561066/ruby-on-rails-4-app-does-not-work-in-iframe
+    response.headers['X-Frame-Options'] = 'ALLOWALL'
     render layout: 'embed'
   end
 
