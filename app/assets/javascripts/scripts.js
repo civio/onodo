@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
   //Cookie bar activate
-
   $.cookieBar();
 
   // Activate tooltips
