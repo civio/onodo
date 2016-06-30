@@ -1,0 +1,32 @@
+= javascript_include_tag 'application'
+- if controller.controller_name == 'visualizations'
+  - if controller.action_name == 'show'
+    = javascript_include_tag *webpack_asset_paths('app-visualization')
+  - elsif controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-visualization-edit')
+  - elsif controller.action_name == 'embed'
+    = javascript_include_tag *webpack_asset_paths('app-visualization-embed')
+  - elsif controller.action_name == 'edit_info'
+    = javascript_include_tag *webpack_asset_paths('app-text-editor')
+- elsif controller.controller_name == 'stories'
+  - if controller.action_name == 'show'
+    = javascript_include_tag *webpack_asset_paths('app-story')
+  - elsif controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-story-edit')
+- elsif controller.controller_name == 'nodes'
+  - if controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-text-editor')
+- elsif controller.controller_name == 'chapters'
+  - if controller.action_name == 'new' or controller.action_name == 'edit'
+    = javascript_include_tag *webpack_asset_paths('app-story-chapter')
+- unless defined? embed
+  = javascript_include_tag *webpack_asset_paths('app-upload')
+
+- if Rails.env.production? and ENV['ANALYTICS_ID']
+  :javascript
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+     ga('create', #{ENV['ANALYTICS_ID']}, 'auto');
+     ga('send', 'pageview');

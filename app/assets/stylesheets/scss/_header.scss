@@ -5,12 +5,16 @@
 @import '_variables';
 
 .navbar-default{
-  padding: $grid-gutter-width/2 0;
+  padding: $grid-gutter-width/2 0 0;
   border-color: transparent;
   z-index: 92;
 
   .navbar-collapse {
     border-bottom: 1px solid $gray-light;
+  }
+
+  .navbar-header{
+    padding-bottom: $grid-gutter-width/6;
   }
 
   .navbar-nav{
@@ -55,8 +59,14 @@
     }
   }
   @media (min-width: $screen-sm-min) {
+    padding-bottom: $grid-gutter-width/2;
+
+    .navbar-header{
+      padding-bottom: 0;
+    }
     .navbar-nav {
       margin-left: $grid-gutter-width/2;
+      height: $navbar-height;
     }
     .navbar-collapse {
       border-bottom: 0;
@@ -119,7 +129,7 @@
   margin-right: 0;
 
   .dropdown{
-    margin-top: 4px;
+    margin-top: 5px;
 
     .user-label{
       display: inline-block;

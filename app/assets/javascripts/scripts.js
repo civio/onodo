@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
   //Cookie bar activate
-
   $.cookieBar({
     //Configuration
     message: 'We use cookies to track usage and preferences.', //Message displayed on bar
