@@ -12,14 +12,13 @@
 
   > p{
     position: absolute;
-    padding: 2px $grid-gutter-width/3;
-    top: -12px;
-    z-index: 99;
-    width: 100%;
+    padding: 3px $grid-gutter-width/3;
+    top: 0;
+    right: $grid-gutter-width/2;
+    left: $grid-gutter-width/2;
+    z-index: 90;
   }
   @media (min-width: $screen-sm-min) {
-    padding: 0 $grid-gutter-width/2;
-    margin-left: 0 !important;
     > p {
       width: auto;
     }
