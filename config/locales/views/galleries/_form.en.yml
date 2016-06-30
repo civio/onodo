@@ -1,0 +1,9 @@
+en:
+  galleries:
+    form:
+      visualizations:
+        title: Visualizations
+      stories:
+        title: Stories
+      name: Name
+      author: Author

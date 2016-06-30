@@ -1,6 +1,6 @@
 #visualization-share.panel.panel-default.panel-share
   .panel-heading
-    %button.close{type: "button", "aria-label" => "Close"}
+    %button.close{type: "button", "aria-label" => t('common.close')}
       %span{"aria-hidden" => "true"}
         &times
   - if item.published?
@@ -9,20 +9,20 @@
         Share
       %ul.social-networks-btns
         %li
-          %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+' - made with Onodo'+'&url='+request.original_url, title: 'Share your Visualization in Twitter', target: '_blank'}
+          %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+' - made with Onodo'+'&url='+request.original_url, title: t('.share_in', network_name: 'Twitter'), target: '_blank'}
             %span.icon
               Twitter
         %li
-          %a.facebook{href: 'https://www.facebook.com/dialog/share?app_id=1541273426175561&display=popup&href='+request.original_url+'&redirect_uri='+request.original_url, title: 'Share your Visualization in Facebook', target: '_blank'}
+          %a.facebook{href: 'https://www.facebook.com/dialog/share?app_id=1541273426175561&display=popup&href='+request.original_url+'&redirect_uri='+request.original_url, title: t('.share_in', network_name: 'Facebook'), target: '_blank'}
             %span.icon
               Facebook
         %li
-          %a.gplus{href: 'https://plus.google.com/share?url='+request.original_url, title: 'Share your Visualization in Google +', target: '_blank'}
+          %a.gplus{href: 'https://plus.google.com/share?url='+request.original_url, title: t('.share_in', network_name: 'Google +'), target: '_blank'}
             %span.icon
               Google +
       - unless defined? story
         %h4.text-center
-          Embed this #{item.class.to_s.downcase}
+          = t '.embed_this', class_name: item.class.to_s.downcase
         / %p.text-center
         /   Size
         /   %small
@@ -40,17 +40,17 @@
         /       Height
         / .checkbox
         /   %label
-        /     %input{ type: "checkbox", checked: "checked" } 
+        /     %input{ type: "checkbox", checked: "checked" }
         /       Show controls in embed window
         / .checkbox
         /   %label
-        /     %input{ type: "checkbox", checked: "checked" } 
+        /     %input{ type: "checkbox", checked: "checked" }
         /       Show title in embed window
         %textarea.form-control{ rows: 5 }
           <iframe src="#{request.base_url}#{visualization_path(item)}/embed/" width="100%" height="450px" scrolling="no" marginheight="0" frameborder="0"></iframe>
       .form-group
         %label{ for: "" }
-          Permalink
+          = t '.permalink'
         - if defined? story
           %input.form-control{ type: "text", value: request.base_url+story_path(item)+'/' }
         - else
@@ -59,5 +59,5 @@
     .panel-body.draft
       .panel-body-draft-container
         %h4
-          The #{item.class.to_s.downcase} has to be public to embed or share it
-        = link_to "Publish Now", {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
+          = t '.public_to_share', class_name: item.class.to_s.downcase
+        = link_to t('.publish_now'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}

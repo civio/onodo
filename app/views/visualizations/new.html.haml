@@ -1,11 +1,11 @@
 .visualization-new.container
   .row
     .page-header.text-center
-      %h2 Create Visualization
+      %h2= t 'common.create_visualization'
     .col-sm-6.col-sm-offset-3
       = form_for :visualization, url: visualizations_path , method: "post", html: {:class => 'form-default'} do |f|
         .form-group
-          = f.label :name, "Visualization title"
+          = f.label :name, t('.field.name')
           = f.text_field :name, class: "form-control", :required => true
         / .form-group
         /   = f.label :xlsx_file, "Upload your XLSX File"
@@ -15,32 +15,32 @@
           .btn-circle-lg-icon
             .btn-circle-lg-icon-sprite
           .btn-circle-lg-title
-            Begin with an empty table
-          = f.submit "Create", class: "btn btn-primary"
+            = t '.begin_empty_table'
+          = f.submit t('.submit'), class: "btn btn-primary"
         %hr
         .btn-circle-lg.btn-circle-lg-xls
           .btn-circle-lg-icon
             .btn-circle-lg-icon-sprite
           .btn-circle-lg-title
             /Drag & drop your XLSX file
-            Upload your XLSX File
+            = t '.upload_xlsx'
           .form-group
             %span.btn.btn-primary.btn-file
               %i.glyphicon.glyphicon-folder-open
-              Browse
+              = t '.browse'
               = f.file_field :xlsx_file, accept: '.xlsx', class: 'form-control'
             %p.btn-file-output
           /= f.file_field :xlsx_file, accept: '.xlsx', :class => "form-control"
           /.btn.btn-primary.btn-invert
           /  Browse
-          = f.submit "Create", class: "btn btn-default btn-primary"
+          = f.submit t('.submit'), class: "btn btn-default btn-primary"
       %hr
       .template-advice
         %p
-          Don't know how to create the XLSX file?
+          = t '.template_advice'
           / %a{ href: '#' }
           /   Use our template
         %a.btn.btn-primary.btn-invert{ href: '/downloads/onodo_template.xlsx' }
-          Download our template
+          = t '.download_template'
         / %a.btn.btn-primary.btn-invert{ href: '#' }
         /   Tutorial

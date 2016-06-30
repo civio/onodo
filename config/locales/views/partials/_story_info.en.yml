@@ -1,0 +1,8 @@
+en:
+  partials:
+    story_info:
+      index: Story Index
+      back: Back to Story Index
+      previous_chapter: Previous Chapter
+      next_chapter: Next Chapter
+      add_chapter: Add Chapter

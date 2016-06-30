@@ -1,7 +1,7 @@
 .container
   .page-header
-    %h2 Gallery
-    %p.lead Amazing relationship visualization & stories curated by the Onodo Team
+    %h2= t '.title'
+    %p.lead= t '.lead'
 .page-items
   .container
     - @items.each do |item|

@@ -1,0 +1,4 @@
+es:
+  partials:
+    item_table_image_modal:
+      node_image: Node Image

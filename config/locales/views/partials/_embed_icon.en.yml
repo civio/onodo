@@ -1,0 +1,4 @@
+en:
+  partials:
+    embed_icon:
+      in_onodo: '%{item_name} in Onodo'

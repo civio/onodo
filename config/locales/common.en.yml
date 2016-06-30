@@ -1,0 +1,60 @@
+# This file consolidates all the localized strings for the 'en' language with the exception of
+# devise messages. It may be splitted in several files if it starts growing excessively.
+
+# Already included pages:
+# - partials/header
+# - partials/footer
+
+
+en:
+  # common strings
+  common:
+    explore: Explore
+    gallery: Gallery
+    contact: Contact
+    login: Login
+    signup: Sign up
+
+    story: Story
+    stories: Stories
+    create_story: Create Story
+    edit_story: Edit Story
+    visualization: Visualization
+    visualizations: Visualizations
+    create_visualization: Create Visualization
+    edit_visualization: Edit Visualization
+    edit_description: Edit Description
+    node: Node
+    nodes: Nodes
+    relationship: Relationship
+    relationships: Relationships
+
+    cancel: Cancel
+    close: Close
+    draft: Draft
+    create: Create
+    created_by: Created By
+    save: Save
+    update: Update
+    change: Change
+    delete: Delete
+    edit: Edit
+    download: Download
+    from: from
+    to: to
+    type: Type
+    description: Description
+    visible: Visible
+    source: Source
+    target: Target
+    custom_column_name: Custom Column Name
+    custom_column_type: Custom Column Type
+    add_column: Add Column
+    date: Date
+    visibility: Visibility
+    string: String
+    number: Number
+    boolean: Boolean
+    previous: Previous
+    next: Next
+    confirm: "Yes"

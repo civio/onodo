@@ -1,35 +1,35 @@
 / data offset top: 74 (viz-graph-header) + 500 (viz-graph)
 .visualization-table.container-fluid
-  
+
   .visualization-table-scrollbar.row
-    %p 
+    %p
       %a{ href: "#" }
-        Scroll to Edit
+        = t '.scroll'
     %i.icon-arrow-down
 
   .visualization-table-header
     %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
       %li.active{ role: "presentation" }
-        %a{ href: "#nodes", role: "tab", "data-toogle": "tab" } Nodes
+        %a{ href: "#nodes", role: "tab", "data-toogle": "tab" }= t 'common.nodes'
       %li{ role: "presentation" }
-        %a{ href: "#relations", role: "tab", "data-toogle": "tab" } Relationships
-   
+        %a{ href: "#relations", role: "tab", "data-toogle": "tab" }= t 'common.relationships'
+
   .tab-content
     #nodes.tab-pane.active{ role: "tabpanel" }
       .btn-toolbar{ role: "group" }
         %a#visualization-add-node-btn.btn.btn-primary{ href: "#" }
-          Add Node
+          = t '.add_node'
         %button#add-nodes-custom-column.btn.btn-primary.btn-invert{ type: "button", 'data-toggle': 'modal', 'data-target': '#table-add-column-nodes-modal'}
-          Add Custom Column
+          = t '.add_custom_column'
         %button.btn.btn-primary.btn-invert{ type: "button", 'data-toggle': 'modal', 'data-target': '#network-analysis-modal' }
-          Network Analysis
+          = t '.network_analysis'
       .visualization-table-nodes
     #relations.tab-pane{ role: "tabpanel" }
       .btn-toolbar{ role: "group" }
         %a#visualization-add-relation-btn.btn.btn-primary{ href: "#" }
-          Add Relationship
+          = t '.add_relationship'
         %button#add-relations-custom-column.btn.btn-primary.btn-invert{ type: "button", 'data-toggle': 'modal', 'data-target': '#table-add-column-relations-modal'}
-          Add Custom Column
+          = t '.add_custom_column'
         %button.btn.btn-primary.btn-invert{ type: "button", 'data-toggle': 'modal', 'data-target': '#network-analysis-modal' }
-          Network Analysis
+          = t '.network_analysis'
       .visualization-table-relations

@@ -1,26 +1,26 @@
 %p#upload-description{ class: ('hide' unless @node.image.blank?) }
-  This is the image used to display in the visualization
+  = t '.field.image.text'
   %br
   %small
-    2 MB max. jpg / png / gif
+    = t '.field.image.conditions'
 = form_for @node, url: api_node_path(@node), method: :patch, html: { id: 'node-image-form', class: 'form-default', multipart: true, target: 'uploadTarget'} do |f|
   %hr
   .row#upload-btns{ class: ('hide' unless @node.image.blank?) }
     .col-sm-6
       .form-group
-        %label Upload from your computer
+        %label= t '.field.image.upload'
         %span.btn.btn-primary.btn-file
           %i.glyphicon.glyphicon-folder-open
-          Browse
+          = t '.field.image.browse'
           = f.file_field :image, class: 'form-control'
           = f.hidden_field :image_cache
         %p.btn-file-output
     .col-sm-6
       .form-group
-        %label Choose it from internet
+        %label= t '.field.image.internet'
         = f.text_field :remote_image_url, class: 'form-control'
 %p#upload-error-msg.hide.bg-danger
-  The URL is not a valid image
+  = t '.field.image.error'
 %img#node-img{ src: (@node.image.huge.url unless @node.image.blank?)}
 %hr
 .row
@@ -28,13 +28,13 @@
     .actions
       - if @node.image.blank?
         %a#add-image.disabled.btn.btn-primary{type: 'button'}
-          Add Image
+          = t '.add_image'
       - else
         %a#add-image.hide.disabled.btn.btn-primary{type: 'button'}
-          Add Image
+          = t '.add_image'
         %a#change-image.btn.btn-invert{type: 'button'}
-          Change
+          = t 'common.change'
         %a#delete-image.btn.btn-danger{type: 'button'}
-          Delete
-      %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'} Cancel
+          = t 'common.delete'
+      %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => t('common.close')}= t 'common.cancel'
 %iframe#uploadTarget{name: 'uploadTarget', height: 0, width: 0, frameborder: 0, scrolling: 'no', style: 'display:none'}

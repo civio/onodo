@@ -3,24 +3,23 @@
     .modal-content
       .modal-header
         %h4.modal-title
-          Add Custom Column To Nodes
-        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+          = t '.add_custom_column'
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
       .modal-body
         %form#add-custom-column-nodes-form
           .form-group
             %label
-              Custom Column Name
+              = t 'common.custom_column_name'
             %input#add-custom-column-name.form-control{type: "text"}
           .form-group
             %label
-              Custom Column Type
+              = t 'common.custom_column_type'
             %select.form-control#add-custom-column-type
               %option{ value: 'string' }
-                String
+                = t 'common.string'
               %option{ value: 'number' }
-                Number
+                = t 'common.number'
               %option{ value: 'boolean' }
-                Boolean
+                = t 'common.boolean'
           %button.btn.btn-primary{ type: "submit" }
-            Add Column
-
+            = t 'common.add_column'

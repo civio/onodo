@@ -15,11 +15,11 @@
         %a.left.carousel-control{href: "#items-carousel", role: "button", data: {slide: "prev"}}
           %span.left-icon{aria: {hidden: "true"}}
           %span.sr-only
-            Previous
+            = t 'common.previous'
         %ol.carousel-indicators
           - 0.upto(carousel_iterations) do |i|
             %li{class: (i != 0) ? '' : 'active', data: {target: '#items-carousel', slide: {to: i}}}
         %a.right.carousel-control{href: "#items-carousel", role: "button", data: {slide: "next"}}
           %span.right-icon{aria: {hidden: "true"}}
           %span.sr-only
-            Next
+            = t 'common.next'

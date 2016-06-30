@@ -7,15 +7,15 @@
       %button.btn.btn-default{type: "button"}
   %button.btn.btn-default.btn-transparent.btn-share{type: "button"}
     %span.title
-      Share it
+      = t '.share'
     %span.icon-share
   - if defined? story
     %button.btn.btn-default.btn-transparent.btn-story-info{type: "button"}
       %span.title
-        Story Index
+        = t '.story_index'
       %span.icon-story-info
   - elsif defined? edit
     %button.btn.btn-default.btn-transparent.btn-configure{type: "button"}
       %span.title
-        Settings
+        = t '.settings'
       %span.icon-configure

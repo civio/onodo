@@ -2,10 +2,10 @@
   .container
     .row
       %section.col-sm-4
-        %p 
-          =t(:copywrite_notice)
+        %p
+          =t '.copywrite_notice'
         %a.logo-icon{href: "/", title: "Onodo"}
-          Onodo 
+          Onodo
         %a.civio-icon{href: "http://www.civio.es/", target: "_blank", title: "Fundación Ciudadana Civio"}
           Civio
       %section.bordered.col-sm-4
@@ -13,23 +13,23 @@
           %ul.col-sm-6
             %li
               %a{href: "/explore"}
-                =t(:explore)
+                = t 'common.explore'
             %li
               %a{href: "/gallery"}
-                =t(:gallery)
+                = t 'common.gallery'
             %li
               %a{href: "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
-                =t(:contact)
+                = t 'common.contact'
           %ul.col-sm-6
             %li
-              = link_to t(:login), new_user_session_path
+              = link_to t('common.login'), new_user_session_path
             %li
-              = link_to t(:signup), new_user_registration_path
+              = link_to t('common.signup'), new_user_registration_path
       %section.col-sm-4
         .social-icons
           %p
             %strong
-              =t(:follow_us)
+              =t '.follow_us'
           %ul
             %li
               %a.twitter{href: 'https://twitter.com/Onodo_', title: 'Twitter Onodo', target: '_blank'}
@@ -47,4 +47,4 @@
               =t(:send)
         %p.footer-info
           %span.eu-icon
-          This project has received funds from the 7th European Union Programme for research, technology development and demonstration, under the grant num. 61133
+          = t '.funding_notice'

@@ -12,19 +12,19 @@
         %i.glyphicon.glyphicon-save
       %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
         %li.active{ role: "presentation" }
-          %a{ href: "#nodes", role: "tab", "data-toogle": "tab" } Nodes
+          %a{ href: "#nodes", role: "tab", "data-toogle": "tab" }= t 'common.nodes'
         %li{ role: "presentation" }
-          %a{ href: "#relations", role: "tab", "data-toogle": "tab" } Relationships
+          %a{ href: "#relations", role: "tab", "data-toogle": "tab" }= t 'common.relationships'
 
     .tab-content
       #nodes.tab-pane.active{ role: "tabpanel" }
         %table.table
           %thead
             %tr
-              %th Node
-              %th Type
-              %th Description
-              %th Visible
+              %th= t 'common.node'
+              %th= t 'common.type'
+              %th= t 'common.description'
+              %th= t 'common.visible'
               - node_custom_fields && node_custom_fields.each do |field|
                 %th= field["name"].gsub('_', ' ').capitalize
           %tbody
@@ -35,17 +35,17 @@
                 %td= node.description.html_safe if node.description
                 %td
                   %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
-                    Node Visibility
+                    = t 'common.visibility'
                 - node_custom_fields && node_custom_fields.each do |field|
                   %td= node.custom_fields[field["name"]].to_s
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
           %thead
             %tr
-              %th Source
-              %th Relationship
-              %th Target
-              %th Date
+              %th= t 'common.source'
+              %th= t 'common.relationship'
+              %th= t 'common.target'
+              %th= t 'common.date'
               - relation_custom_fields && relation_custom_fields.each do |field|
                 %th= field["name"].gsub('_', ' ').capitalize
           %tbody

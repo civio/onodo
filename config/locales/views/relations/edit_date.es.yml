@@ -1,0 +1,5 @@
+es:
+  relations:
+    edit_date:
+      specific_date: Specific date
+      date_range: Date range

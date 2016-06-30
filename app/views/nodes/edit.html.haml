@@ -1,14 +1,14 @@
 .node-edit.container
   .row
     .page-header.text-center
-      %h2 Edit Node
+      %h2= t '.title'
     .col-sm-6.col-sm-offset-3
       = form_for @node, url: node_path(@node), html: { id: 'node-dropzone', class: 'form-default dropzone', method: :patch, multipart: true } do |f|
         .media-upload
           %p.media-upload-title
-            Node photo
+            = t '.field.media.title'
           %p.media-upload-description
-            Your node photo should be about 320px wide and under 1MB
+            = t '.field.media.description'
           .media
             .media-left.dropzone-previews{ data: { image: "#{@node.image_url(:medium)}" } }
               - unless @node.image_url(:medium)
@@ -16,7 +16,7 @@
             .media-body
               .form-group
                 %p.dz-message{style: 'display: none;'} Drop your photo here to upload
-                = f.label :image, "Upload from your computer"
+                = f.label :image, t('.field.media.upload')
                 %span.btn.btn-primary.btn-file
                   %i.glyphicon.glyphicon-folder-open
                   Browse
@@ -25,19 +25,19 @@
                 %p.btn-file-output
                 .clearfix
               .form-group
-                = f.label :remote_image_url, "Or choose it from internet"
+                = f.label :remote_image_url, t('.field.media.internet')
                 = f.text_field :remote_image_url, class: 'form-control'
             %hr
         .form-group
-          = f.label      :name, "Name"
+          = f.label      :name, t('.field.name.title')
           = f.text_field :name, class: "form-control"
         .form-group
-          = f.label      :description, "Description"
+          = f.label      :description, t('.field.description.title')
           = f.text_field :description, type: "hidden"
           %trix-toolbar{ id: "wysiwig-toolbar", input: "node_description" }
           %trix-editor{ input: "node_description", toolbar: "wysiwig-toolbar", class: "form-control" }
         .form-group
-          = f.label      :node_type, "Type"
+          = f.label      :node_type, t('.field.type.title')
           = f.text_field :node_type, class: "form-control"
           - if @node.dataset.node_custom_fields
             .form-group
@@ -46,8 +46,9 @@
                 .form-group
                   = cf.label custom_field['name']
                   = cf.text_field "#{custom_field['name']}", class: "form-control"
-        = f.submit "Save", class: "btn btn-default btn-primary"
-        %a.btn.btn-default{href: edit_visualization_path(@node.visualization) } Cancel
+        = f.submit t('.field.media.submit'), class: "btn btn-default btn-primary"
+        %a.btn.btn-default{href: edit_visualization_path(@node.visualization) }
+          = t 'common.cancel'
 
 #dropzone-preview-template{style: 'display: none;'}
   .dz-preview.dz-file-preview

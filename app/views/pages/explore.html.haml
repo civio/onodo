@@ -1,7 +1,7 @@
 .container
   .page-header
-    %h2 Explore
-    %p.lead Take a look to the visualizations & stories Onodo users are creating
+    %h2= t '.title'
+    %p.lead= t '.lead'
 
 .container
   = render 'partials/items_preview_header', :show_visualizations => @show_visualizations

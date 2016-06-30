@@ -1,12 +1,12 @@
 = form_for @gallery, url: gallery_path, html: {class: 'form-default'} do |f|
   .visualization_table
-    %h3 Visualizations
+    %h3= t '.visualizations.title'
     %table.table.table-fixed
       %thead
         %tr
           %th{style: 'width:  5em;'} &nbsp;
-          %th{style: 'width: 30em;'} Name
-          %th{style: 'width: 20em;'} Author
+          %th{style: 'width: 30em;'}= t '.name'
+          %th{style: 'width: 20em;'}= t '.author'
       %tbody
         = f.collection_check_boxes :visualization_ids, @visualizations, :id, :to_s do |b|
           %tr
@@ -14,13 +14,13 @@
             %td{style: 'width: 30em;'}= b.object.name
             %td{style: 'width: 20em;'}= b.object.author.email
   .visualization_table
-    %h3 Stories
+    %h3= t '.stories.title'
     %table.table.table-fixed
       %thead
         %tr
           %th{style: 'width:  5em;'} &nbsp;
-          %th{style: 'width: 30em;'} Name
-          %th{style: 'width: 20em;'} Author
+          %th{style: 'width: 30em;'}= t '.name'
+          %th{style: 'width: 20em;'}= t '.author'
       %tbody
         = f.collection_check_boxes :story_ids, @stories, :id, :to_s do |b|
           %tr
@@ -28,4 +28,4 @@
             %td{style: 'width: 30em;'}= b.object.name
             %td{style: 'width: 20em;'}= b.object.author.email
   .actions
-    = f.submit 'Update', class: 'btn btn-default btn-primary'
+    = f.submit t('common.update'), class: 'btn btn-default btn-primary'

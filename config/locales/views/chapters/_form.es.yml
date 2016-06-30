@@ -1,0 +1,14 @@
+es:
+  chapters:
+    form:
+      field:
+        media:
+          title: Chapter photo
+          description: Your chapter photo should be about 320px wide and under 1MB
+          drop: Drop your photo here to upload
+          upload: Upload from your computer
+          browse: Browse
+          internet: Or choose it from internet
+        title:
+          title: Title
+      choose_relation: Choose the relationships that appear in this chapter

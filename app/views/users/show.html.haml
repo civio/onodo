@@ -15,12 +15,12 @@
               %li
                 %a.twitter{href: 'https://twitter.com/'+@user.twitter, target: '_blank'}
                   %span.icon
-                    = @user.name + ' at Twitter'
+                    = t '.user_at_twitter', account: @user.name
             -if !@user.facebook.blank?
               %li
                 %a.facebook{href: 'https://www.facebook.com/'+@user.facebook, target: '_blank'}
                   %span.icon
-                    = @user.name + ' at Facebook'
+                    = t '.user_at_facebook', account: @user.name
 
   .explore-navbar.container
     = render 'partials/items_preview_header', :show_visualizations => @show_visualizations
@@ -37,19 +37,19 @@
                     .btn-circle-lg-icon-detail
                     .btn-circle-lg-icon-sprite
                   .btn-circle-lg-title
-                    Create New Visualization
+                    = t '.create_new_visualization'
               .col-sm-4.text-center
                 %a.btn-circle-lg.btn-circle-lg-story{href: new_story_path}
                   .btn-circle-lg-icon
                     .btn-circle-lg-icon-detail
                     .btn-circle-lg-icon-sprite
                   .btn-circle-lg-title
-                    Create New Story
+                    = t '.create_new_story'
               .col-sm-4.text-center
                 %a.btn-circle-lg.btn-circle-lg-settings{href: edit_user_registration_path(@user)}
                   .btn-circle-lg-icon
                     .btn-circle-lg-icon-detail
                     .btn-circle-lg-icon-sprite
                   .btn-circle-lg-title
-                    Edit your settings
+                    = t '.edit_your_settings'
       = render 'partials/items_preview_list', :items => @items, :show_visualizations => @show_visualizations

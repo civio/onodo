@@ -1,0 +1,29 @@
+en:
+  partials:
+    item_graph_panel_configuration:
+      title: Settings
+      relations: Relations
+      advanced: Advanced
+      nodes_color: Nodes Color
+      colors:
+        solid: Solid
+        quantitative: Quantitative
+        qualitative: Qualitative
+      based_on_column: Based on column
+      nodes_size: Nodes Size
+      sizes:
+        small: Small
+        medium: Medium
+        large: Large
+        extra_large: Extra Large
+      number_of_relations: Number of relations
+      show_nodes_label: Show Nodes Label
+      show_nodes_image: Show Nodes Image
+      relations_line_style: Relations line style
+      line_styles:
+        solid: Solid
+        dashed: Dashed
+        dotted: Dotted
+      link_distance: Link Distance
+      link_strength: Link Strength
+      reset_defaults: Reset Defaults

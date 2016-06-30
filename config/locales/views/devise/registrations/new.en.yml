@@ -1,0 +1,7 @@
+en:
+  devise:
+    registrations:
+      new:
+        lead: Create your relationships visualizations & tell meaningful stories through them
+        accept: I accept the
+        terms_and_conditions: terms & conditions

@@ -1,0 +1,11 @@
+en:
+  visualizations:
+    new:
+      field:
+        name: Visualization title
+      submit: Create
+      begin_empty_table: Begin with an empty table
+      upload_xlsx: Upload your XLSX File
+      browse: Browse
+      template_advice: Don't know how to create the XLSX file?
+      download_template: Download our template

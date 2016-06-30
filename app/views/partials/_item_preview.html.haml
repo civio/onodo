@@ -5,7 +5,7 @@
       = item.class.to_s
   - if controller_name == 'users' and !item.published
     .item-status
-      Draft
+      = t 'common.draft'
       .item-status-icon
   .item-author
     %a{href: user_path(item.author_id), title: item.author.name}
@@ -27,12 +27,12 @@
             .item-title
               %h3= item.name
           - else
-            %a.item-title{:href => story_path(item), :title => item.name} 
+            %a.item-title{:href => story_path(item), :title => item.name}
               %h3= item.name
               -if defined? large
                 .btn-start-reading
                   %span
-                    Start reading
+                    = t '.start_reading'
           -if defined? large
             - if defined? cover
               - if item.description?
@@ -40,7 +40,7 @@
                   = item.description.html_safe
               .btn-start-reading
                 %span
-                  Start reading
+                  = t '.start_reading'
           - elsif item.description?
             .item-description
               = item.description.html_safe
@@ -48,9 +48,9 @@
     .item-info-container
       .item-info-container-inner
         .item-info
-          %a.item-title{:href => visualization_path(item), :title => item.name} 
+          %a.item-title{:href => visualization_path(item), :title => item.name}
             %h3= item.name
             -if defined? large
               .btn-start-reading
                 %span
-                  Start reading
+                  = t '.start_reading'

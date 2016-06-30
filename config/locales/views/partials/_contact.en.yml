@@ -1,0 +1,6 @@
+en:
+  partials:
+    contact:
+      title: Contact us
+      text:  If you need help or have any inquires, you can contact us using our different channels
+      view_in_google_maps: View in Google Maps

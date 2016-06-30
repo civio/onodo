@@ -4,11 +4,11 @@
   .radio.form-group
     %label
       %input{type: "radio", name: "date-type-selector", value: "date-at", checked: date_at }
-        Specific date
+        = t '.specific_date'
   .radio.form-group
     %label
       %input{type: "radio", name: "date-type-selector", value: "date-from-to", checked: !date_at }
-        Date range
+        = t '.date_range'
 
 .date-forms.clearfix
   = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-at', class: date_at ? 'form-default' : 'form-default hide' } do |f|
@@ -17,19 +17,19 @@
         = f.text_field :from, type: "text", class: "form-control"
         %span.input-group-addon
           %i.glyphicon.glyphicon-calendar
-    = f.submit "Save", class: "btn btn-primary"
-    %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
-      Cancel
+    = f.submit t('common.save'), class: "btn btn-primary"
+    %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
+      = t 'common.cancel'
 
   = form_for @relation, url: {action: "update"}, method: "patch", html: {id: 'date-from-to', class: (!date_at) ? 'form-default' : 'form-default hide' } do |f|
     .form-group
       #datepicker-from-to.input-group.input-daterange
-        %span.input-group-addon from
+        %span.input-group-addon= t 'common.from'
         = f.text_field :from, type: "text", class: "form-control"
-        %span.input-group-addon to
+        %span.input-group-addon= t 'common.to'
         = f.text_field :to, type: "text", class: "form-control"
-    = f.submit "Save", class: "btn btn-primary"
+    = f.submit t('common.save'), class: "btn btn-primary"
     %a.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
-      Cancel
+      = t 'common.save'
 
 = javascript_include_tag *webpack_asset_paths('app-date-editor')

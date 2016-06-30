@@ -9,9 +9,9 @@
       %svg
       .visualization-empty-msg
         %p
-          This visualization is empty
+          = t '.empty'
         %a{ href: '#' }
-          Start creating nodes & relations
+          = t '.start_creating'
     = render 'partials/item_graph_info', edit: true
 = render 'partials/item_table_edit'
 = render 'partials/item_table_description_modal'
@@ -19,7 +19,7 @@
 = render 'partials/item_table_date_modal'
 = render 'partials/item_table_add_column_nodes_modal'
 = render 'partials/item_table_add_column_relations_modal'
-= render 'partials/item_delete_modal', item: @visualization 
+= render 'partials/item_delete_modal', item: @visualization
 = render 'partials/item_delete_node_modal'
 = render 'partials/item_delete_relation_modal'
 = render 'partials/network_analysis_modal'

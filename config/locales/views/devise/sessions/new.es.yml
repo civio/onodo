@@ -1,0 +1,6 @@
+es:
+  devise:
+    sessions:
+      new:
+        lead: Create your relationships visualizations & tell meaningful stories through them
+        remember_me: Remember Me

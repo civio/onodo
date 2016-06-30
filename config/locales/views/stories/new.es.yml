@@ -1,0 +1,8 @@
+es:
+  stories:
+    new:
+      field:
+        title: Story title
+      create_from_visualization: Create a story from one of your visualizations
+      no_visualization_yet: You haven't create any visualization yet
+      start_creating: Start creating one

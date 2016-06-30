@@ -1,0 +1,18 @@
+en:
+  nodes:
+    edit:
+      title: Edit Node
+      field:
+        media:
+          title: Node photo
+          description: Your node photo should be about 320px wide and under 1MB
+          upload: Upload from your computer
+          browse: Browse
+          internet: Or choose it from internet
+          submit: Upload Photo
+        name:
+          title: Name
+        description:
+          title: Description
+        type:
+          title: Type

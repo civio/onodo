@@ -2,7 +2,7 @@
   .row
     .col-sm-6.col-sm-offset-3
       .page-header.text-center
-        %h2 Resend confirmation instructions
+        %h2= t '.resend_confirmation_instructions'
     .col-sm-6.col-sm-offset-3
       = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
         = devise_error_messages!
@@ -11,7 +11,7 @@
           %br/
           = f.email_field :email, autofocus: true
         .actions
-          = f.submit "Resend confirmation instructions"
+          = f.submit t('.resend_confirmation_instructions')
           %hr
           .devise-links
             = render "devise/shared/links"

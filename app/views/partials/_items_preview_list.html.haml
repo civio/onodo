@@ -1,6 +1,6 @@
 .items-preview-list.row
   -unless items.blank?
-    - items.each do |item| 
+    - items.each do |item|
       .col-sm-6
         = render 'partials/item_preview', :item => item
     .col-sm-12.text-center
@@ -10,14 +10,14 @@
       .text-center
         - if show_visualizations
           %p
-            You haven't created any visualization yet
-          %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: 'Start creating one'}
-            Start creating one
+            = t :no_visualizations_yet
+          %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: t('.start_creating_one')}
+            = t :start_creating_one
         - else
           %p
-            You haven't created any story yet
-          %a.btn.btn-default.btn-primary{href: new_story_path(), title: 'Start creating one'}
-            Start creating one
+            = t :no_stories_yet
+          %a.btn.btn-default.btn-primary{href: new_story_path(), title: t('.start_creating_one')}
+            = t :start_creating_one
     - else
       .text-center
         - if show_visualizations

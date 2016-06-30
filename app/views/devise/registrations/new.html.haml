@@ -2,8 +2,8 @@
   .row
     .col-sm-6.col-sm-offset-3
       .page-header.text-center
-        %h2 Sign Up
-        %p.lead Create your relationships visualizations & tell meaningful stories through them
+        %h2= t '.sign_up'
+        %p.lead= t '.lead'
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {:class => 'form-default'}) do |f|
         = devise_error_messages!
         .form-group
@@ -26,11 +26,11 @@
           .checkbox
             %label{ :for => "terms_of_service" }
               = f.check_box :terms_of_service
-              I accept the 
+              = t '.accept'
               %a{ href: "/terms-of-service/modal", data: {toggle: "modal", target: "#terms-of-service-modal"} }
-                terms & conditions
+                = t '.terms_and_conditions'
         .actions
-          = f.submit "Sign up", class: "btn btn-default btn-primary"
+          = f.submit t('.sign_up'), class: "btn btn-default btn-primary"
           %hr
           .devise-links
             = render "devise/shared/links"

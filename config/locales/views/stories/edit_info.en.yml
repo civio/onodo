@@ -1,0 +1,13 @@
+en:
+  stories:
+    edit_info:
+      title: Edit Story Info
+      field:
+        cover:
+          title: Cover photo
+          description: Your cover photo should be about 1140px wide 480px tall and under 2MB
+          upload_from_computer: Upload from your computer
+          browse: Browse
+        title: Title
+        description: Description
+      submit: Upload Photo
