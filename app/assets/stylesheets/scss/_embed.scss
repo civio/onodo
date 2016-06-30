@@ -40,6 +40,13 @@ body.embed{
     .visualization-graph-component{
       height: 100%;
     }
+
+    &.notitle{
+      .visualization-graph-menu-navigation,
+      .visualization-graph-menu-actions{
+        top: $grid-gutter-width/2;
+      }
+    }
   }
 
   .visualization-graph-info{

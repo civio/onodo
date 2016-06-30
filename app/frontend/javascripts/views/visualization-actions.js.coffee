@@ -16,8 +16,7 @@ class VisualizationActions extends Backbone.View
     # Setup Search Input Events
     @search_form.find('input').focusin( @onSearchNodeFocus ).focusout( @onSearchNodeUnfocus )
 
-  render: -> 
-    console.log 'render actions', @collection.models.map((d) -> return d.get('name'))
+  render: ->
     # constructs typeahead suggestion engine
     bloodhound = new Bloodhound {
       datumTokenizer: Bloodhound.tokenizers.whitespace

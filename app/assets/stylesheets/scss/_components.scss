@@ -517,8 +517,8 @@ a.user-label{
   }
 
   .panel-body{
-    padding: 1.5*$grid-gutter-width $grid-gutter-width/3;
-    max-width: 380px;
+    padding: 1.5*$grid-gutter-width $grid-gutter-width/3 0;
+    max-width: 420px;
     margin: 0 auto;
 
     .form-inline label{

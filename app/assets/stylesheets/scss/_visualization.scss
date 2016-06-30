@@ -1163,16 +1163,13 @@ body.fullscreen{
     }
   }
 
-  .form-inline{
-    text-align: center;
-
-    .form-group{
-      margin: 0 $grid-gutter-width/6;
+  .embed-form{
+    label{
+      margin-bottom: $grid-gutter-width/6;
     }
-  }
-
-  .checkbox{
-    margin-left: 2*$grid-gutter-width;
+    .checkbox label{
+      text-transform: uppercase;
+    }
   }
 
   .form-control{
@@ -1190,8 +1187,7 @@ body.fullscreen{
   }
   @media (min-width: $screen-sm-min) {
     h4 {
-      font-size: 28px;
-      margin: $grid-gutter-width 0 $grid-gutter-width/2;
+      font-size: 1.714em;
     }
   }
 }

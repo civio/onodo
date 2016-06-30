@@ -6,6 +6,7 @@ RelationsCollection          = require './collections/relations-collection.js'
 VisualizationCanvas          = require './views/visualization-canvas.js'
 VisualizationNavigation      = require './views/visualization-navigation.js'
 VisualizationActions         = require './views/visualization-actions.js'
+VisualizationShare           = require './views/visualization-share.js'
 VisualizationInfo            = require './views/visualization-info.js'
 
 class VisualizationBase
@@ -16,6 +17,7 @@ class VisualizationBase
   visualizationCanvas:        null
   visualizationNavigation:    null
   visualizationActions:       null
+  visualizationShare:         null
   visualizationInfo:          null
   parameters: null
   parametersDefault: {
@@ -43,6 +45,7 @@ class VisualizationBase
     @visualizationCanvas         = new VisualizationCanvas()
     @visualizationNavigation     = new VisualizationNavigation()
     @visualizationActions        = new VisualizationActions {collection: @nodes}
+    @visualizationShare          = new VisualizationShare()
     @visualizationInfo           = new VisualizationInfo()
 
   render: ->

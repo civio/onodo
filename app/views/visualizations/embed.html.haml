@@ -1,7 +1,8 @@
-.visualization-header
-  %h2.pull-left= @visualization.name 
-
-.visualization-graph
+- unless params.has_key?(:notitle)
+  .visualization-header
+    %h2.pull-left 
+      = @visualization.name
+%div{ class: params.has_key?(:notitle) ? 'visualization-graph notitle' : 'visualization-graph' }
   .visualization-graph-container
     = render 'partials/item_graph_menu_navigation'
     = render 'partials/item_graph_menu_actions'
