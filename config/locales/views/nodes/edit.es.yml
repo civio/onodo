@@ -9,7 +9,7 @@ es:
           upload: Sube una imagen desde tu ordenador
           browse: Cargar
           internet: O elige una de Internet
-          submit: Subir imagen
+          submit: Guardar
         name:
           title: Nombre
         description:

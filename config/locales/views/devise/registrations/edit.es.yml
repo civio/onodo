@@ -8,6 +8,7 @@ es:
           media:
             title: Imagen de perfil
             description: Tu imagen de perfil debería medir 500px por 500px y pesar menos de 1MB
+            browse: Cargar
             upload: Subir desde mi ordenador
             submit: Cargar imagen
           social_networks:

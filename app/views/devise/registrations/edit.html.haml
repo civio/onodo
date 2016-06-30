@@ -19,7 +19,7 @@
                 = f.label :avatar, t('.field.media.upload')
                 %span.btn.btn-primary.btn-file
                   %i.glyphicon.glyphicon-folder-open
-                  Browse
+                  = t '.field.media.browse'
                   = f.file_field :avatar, class: 'form-control'
                   = f.hidden_field :avatar_cache
                 %p.btn-file-output

@@ -19,7 +19,7 @@
                 = f.label :image, t('.field.media.upload')
                 %span.btn.btn-primary.btn-file
                   %i.glyphicon.glyphicon-folder-open
-                  Browse
+                  = t '.field.media.browse'
                   = f.file_field :image, class: 'form-control'
                   = f.hidden_field :image_cache
                 %p.btn-file-output
