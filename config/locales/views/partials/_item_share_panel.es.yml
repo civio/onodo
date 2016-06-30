@@ -1,8 +1,12 @@
 es:
   partials:
     item_share_panel:
-      share_in: 'Share your Visualization in %{network_name}'
-      embed_this: 'Embed this %{class_name}'
-      permalink: Permalink
-      public_to_share: 'The %{class_name} has to be public to embed or share it'
-      publish_now: Publish Now
+      share: 'Compartir' 
+      share_in: 'Comparte tu visualización en %{network_name}'
+      share_twitter_msg: ' - made with @Onodo_ (a tool by @civio)'
+      embed_this: 'Inserta esta %{class_name}'
+      permalink: Enlace permanente
+      public_to_share: 'La %{class_name} debe ser pública para insertarla o compartirla'
+      publish_now: 'Publicar ahora'
+      embed_height: 'Altura de la visualización'
+      embed_show_title: 'Mostrar título de la visualización'

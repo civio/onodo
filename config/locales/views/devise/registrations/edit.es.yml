@@ -2,18 +2,18 @@ es:
   devise:
     registrations:
       edit:
-        title: Settings
-        lead: Edit your profile settings
+        title: Configuración
+        lead: Edita tu perfil de usuario
         field:
           media:
-            title: Profile avatar
-            description: Your avatar photo should be about 500px wide 500px tall and under 1MB
-            upload: Upload from your computer
-            submit: Upload Photo
+            title: Imagen de perfil
+            description: Tu imagen de perfil debería medir 500px por 500px y pesar menos de 1MB
+            upload: Subir desde mi ordenador
+            submit: Cargar imagen
           social_networks:
-            title: Social Networks
-            options: (Optional)
-            description: Make it easy for your visitors to connect with you by integrating your social network profiles
-            facebook_username: Facebook Username
-            twitter_username: Twitter Username
-        submit: Save profile
+            title: Redes sociales
+            options: (Opcional)
+            description: Conecta con otros usuarios a través de tus perfiles en redes sociales
+            facebook_username: Cuenta de Facebook
+            twitter_username: Cuenta de Twitter
+        submit: Guardar perfil

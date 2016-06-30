@@ -1,6 +1,6 @@
 es:
   partials:
     items_preview_list:
-      no_visualizations_yet: You haven't create any visualization yet
-      no_stories_yet: You haven't create any story yet
-      start_creating_one: Start creating one
+      no_visualizations_yet: No has creado ninguna visualización aún
+      no_stories_yet: No has creado ninguna historia aún
+      start_creating_one: Empezar

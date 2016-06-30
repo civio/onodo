@@ -1,8 +1,8 @@
 es:
   partials:
     footer:
-      copywrite_notice: © 2015 | Onodo is a proyect by Fundación Ciudadana Civio
-      follow_us: 'Follow us:'
-      subscribe: 'Subscribe:'
-      send: Send
-      funding_notice: This project has received funds from the 7th European Union Programme for research, technology development and demonstration, under the grant num. 61133
+      copywrite_notice: © 2015 | Onodo es un proyecto de la Fundación Ciudadana Civio
+      follow_us: 'Síguenos:'
+      subscribe: 'Suscríbete:'
+      send: Enviar
+      funding_notice: Este proyecto ha recibido financiación del Séptimo Programa Marco de la Unión Europea para investigación, desarrollo tecnológico y demostración bajo el acuerdo de subvención no. 611333.

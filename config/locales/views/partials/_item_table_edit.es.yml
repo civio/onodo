@@ -1,8 +1,8 @@
 es:
   partials:
     item_table_edit:
-      scroll: Scroll to Edit
-      add_node: Add Node
-      add_custom_column: Add Custom Column
-      add_relationship: Add Relationship
-      network_analysis: Network Analysis
+      scroll: Haz scroll para editar
+      add_node: Añadir nodo
+      add_custom_column: Añadir nueva columna
+      add_relationship: Añadir relación
+      network_analysis: Análisis de redes

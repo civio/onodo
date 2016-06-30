@@ -10,20 +10,20 @@ es:
   # common strings
   common:
     explore: Explorar
-    gallery: Galeria
+    gallery: Galería
     contact: Contacto
-    login: Login
-    signup: Registro
+    login: Iniciar sesión
+    signup: Regístrate
 
     story: Historia
     stories: Historias
-    create_story: Crear Historia
-    edit_story: Editar Historia
+    create_story: Crear historia
+    edit_story: Editar historia
     visualization: Visualización
     visualizations: Visualizaciones
-    create_visualization: Crear Visualización
-    edit_visualization: Editar Visualización
-    edit_description: Editar Descripción
+    create_visualization: Crear visualización
+    edit_visualization: Editar visualización
+    edit_description: Editar descripción
     node: Nodo
     nodes: Nodos
     relationship: Relación
@@ -33,28 +33,28 @@ es:
     close: Cerrar
     draft: Borrador
     create: Crear
-    created_by: Creado Por
+    created_by: Creado por
     save: Guardar
     update: Actualizar
     change: Cambiar
     delete: Borrar
     edit: Editar
     download: Descargar
-    from: desde
+    from: Desde
     to: hasta
     type: Tipo
     description: Descripción
     visible: Visible
     source: Origen
     target: Destino
-    custom_column_name: Nombre de columna personalizado
-    custom_column_type: Tipo de columna personalizado
+    custom_column_name: Nombre de columna
+    custom_column_type: Tipo de columna
     add_column: Añadir columna
     date: Fecha
     visibility: Visibilidad
     string: Texto
-    number: Numbero
+    number: Número
     boolean: Booleano
     previous: Anterior
     next: Siguiente
-    confirm: "Si"
+    confirm: Confirmar

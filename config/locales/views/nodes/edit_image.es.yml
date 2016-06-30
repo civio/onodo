@@ -3,10 +3,10 @@ es:
     edit_image:
       field:
         image:
-          text: This is the image used to display in the visualization
+          text: Esta es la imagen que se mostrará de tu visualización 
           conditions: 2 MB max. jpg / png / gif
-          upload: Upload from your computer
-          browse: Browse
-          internet: Choose it from internet
-          error: The URL is not a valid image
-      add_image: Add Image
+          upload: Súbela desde tu ordenador
+          browse: Cargar
+          internet: Elige una imagen de Internet
+          error: La URL de esta imagen no es válida
+      add_image: Añadir imagen

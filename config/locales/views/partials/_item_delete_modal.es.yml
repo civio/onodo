@@ -2,7 +2,7 @@ es:
   partials:
     item_delete_modal:
       confirm:
-        title_story: Do you want to delete this story?
-        title_visualization: Do you want to delete this visualization?
-        body: Be careful, deleting can't be undone.
-        question: Are you sure?
+        title_story: ¿Quieres eliminar esta historia?
+        title_visualization: ¿Quieres eliminar esta visualización?
+        body: Ten cuidado, después no podrás volver a recuperarla.
+        question: ¿Estás seguro?

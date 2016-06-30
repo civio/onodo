@@ -1,13 +1,13 @@
 es:
   stories:
     edit_info:
-      title: Edit Story Info
+      title: Editar información de esta historia
       field:
         cover:
-          title: Cover photo
-          description: Your cover photo should be about 1140px wide 480px tall and under 2MB
-          upload_from_computer: Upload from your computer
-          browse: Browse
-        title: Title
-        description: Description
-      submit: Upload Photo
+          title: Imagen de portada
+          description: Tu imagen de portada debería medir unos 1140px de ancho por 480px de alto, y pesar menos de 2MB
+          upload_from_computer: Sube una imagen desde tu ordenador
+          browse: Seleccionar
+        title: Título
+        description: Descripción
+      submit: Subir foto

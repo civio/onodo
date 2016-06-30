@@ -1,29 +1,29 @@
 es:
   partials:
     item_graph_panel_configuration:
-      title: Settings
-      relations: Relations
-      advanced: Advanced
-      nodes_color: Nodes Color
+      title: Configuración
+      relations: Relaciones
+      advanced: Advanzado
+      nodes_color: Color de nodos
       colors:
-        solid: Solid
-        quantitative: Quantitative
-        qualitative: Qualitative
-      based_on_column: Based on column
-      nodes_size: Nodes Size
+        solid: Sólido
+        quantitative: Cuantitativo
+        qualitative: Cualitativo
+      based_on_column: En base a una columna
+      nodes_size: Tamaño de nodos
       sizes:
-        small: Small
-        medium: Medium
-        large: Large
-        extra_large: Extra Large
-      number_of_relations: Number of relations
-      show_nodes_label: Show Nodes Label
-      show_nodes_image: Show Nodes Image
-      relations_line_style: Relations line style
+        small: Pequeño
+        medium: Mediano
+        large: Grande
+        extra_large: Muy grande
+      number_of_relations: Número de relaciones
+      show_nodes_label: Mostrar nombre de nodo
+      show_nodes_image: Mostrar imágenes de nodo
+      relations_line_style: Estilo de líneas de relaciones
       line_styles:
-        solid: Solid
-        dashed: Dashed
-        dotted: Dotted
-      link_distance: Link Distance
-      link_strength: Link Strength
-      reset_defaults: Reset Defaults
+        solid: Solido
+        dashed: Discontinuo
+        dotted: Punteado
+      link_distance: Distancia de relación
+      link_strength: Fuerza de relación
+      reset_defaults: Restablecer valores por defecto

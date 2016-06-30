@@ -2,8 +2,8 @@ es:
   galleries:
     form:
       visualizations:
-        title: Visualizations
+        title: Visualizaciones
       stories:
-        title: Stories
-      name: Name
-      author: Author
+        title: Historias
+      name: Título
+      author: Autor

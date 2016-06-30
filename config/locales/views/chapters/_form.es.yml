@@ -3,12 +3,12 @@ es:
     form:
       field:
         media:
-          title: Chapter photo
-          description: Your chapter photo should be about 320px wide and under 1MB
-          drop: Drop your photo here to upload
-          upload: Upload from your computer
-          browse: Browse
-          internet: Or choose it from internet
+          title: Imagen del capítulo
+          description: La imagen debería tener unos 320px de ancho y pesar menos de 1MB
+          drop: Arrastra hasta aquí una imagen para cargarla
+          upload: Sube una imagen desde tu ordenador
+          browse: Selecciona
+          internet: O elige una desde Internet
         title:
-          title: Title
-      choose_relation: Choose the relationships that appear in this chapter
+          title: Título
+      choose_relation: Marca las relaciones que aparecerán en este capítulo

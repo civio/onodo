@@ -1,18 +1,18 @@
 es:
   nodes:
     edit:
-      title: Edit Node
+      title: Editar nodo
       field:
         media:
-          title: Node photo
-          description: Your node photo should be about 320px wide and under 1MB
-          upload: Upload from your computer
-          browse: Browse
-          internet: Or choose it from internet
-          submit: Upload Photo
+          title: Imagen del nodo
+          description: La imagen debería tener 320px de ancho y pesar menos de 1MB
+          upload: Sube una imagen desde tu ordenador
+          browse: Cargar
+          internet: O elige una de Internet
+          submit: Subir imagen
         name:
-          title: Name
+          title: Nombre
         description:
-          title: Description
+          title: Descripción
         type:
-          title: Type
+          title: Tipo

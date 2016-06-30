@@ -1,9 +1,9 @@
 es:
   partials:
     header:
-      toggle: Toggle navigation
-      user_settings: User settings
-      dashboard: Dashboard
-      settings: Settings
-      configure_gallery: Configure gallery
-      logout: Logout
+      toggle: Mostrar menú
+      user_settings: Usuario
+      dashboard: Panel de control
+      settings: Configuración
+      configure_gallery: Ajustes de galería
+      logout: Cerrar sesión

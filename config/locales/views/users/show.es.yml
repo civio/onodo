@@ -1,8 +1,8 @@
 es:
   users:
     show:
-      user_at_twitter: '%{account} at Twitter'
-      user_at_facebook: '%{account} at Facebook'
-      edit_your_settings: Edit Your Settings
-      create_new_visualization: Create new visualization
-      create_new_story: Create new story
+      user_at_twitter: '%{account} en Twitter'
+      user_at_facebook: '%{account} en Facebook'
+      edit_your_settings: Edita tu configuración
+      create_new_visualization: Crear nueva visualización
+      create_new_story: Crear nueva historia

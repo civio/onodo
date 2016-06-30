@@ -2,10 +2,10 @@ es:
   visualizations:
     new:
       field:
-        name: Visualization title
-      submit: Create
-      begin_empty_table: Begin with an empty table
-      upload_xlsx: Upload your XLSX File
-      browse: Browse
-      template_advice: Don't know how to create the XLSX file?
-      download_template: Download our template
+        name: Título de la visualización
+      submit: Crear
+      begin_empty_table: Empezar con una tabla vacía
+      upload_xlsx: Subir un fichero XLSX
+      browse: Seleccionar
+      template_advice: ¿No sabes cómo crear un fichero XLSX?
+      download_template: Descarga nuestro modelo

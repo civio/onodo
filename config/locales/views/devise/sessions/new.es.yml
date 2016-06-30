@@ -2,5 +2,5 @@ es:
   devise:
     sessions:
       new:
-        lead: Create your relationships visualizations & tell meaningful stories through them
-        remember_me: Remember Me
+        lead: Crea tus propios gráficos y mapas de relaciones, y cuenta historias interesantes con ellos
+        remember_me: Recuérdame

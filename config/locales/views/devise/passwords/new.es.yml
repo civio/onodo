@@ -2,4 +2,4 @@ es:
   devise:
     passwords:
       new:
-        lead: Enter the email you registered & we will send you a link to restore it
+        lead: Introduce tu dirección de correo y recibirás un enlace para restaurar tu constraseña

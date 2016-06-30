@@ -1,6 +1,6 @@
 es:
   partials:
     item_graph_menu_actions:
-      share: Share it
-      story_index: Story Index
-      settings: Settings
+      share: Comparte
+      story_index: Índice
+      settings: Configuración

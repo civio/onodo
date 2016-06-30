@@ -1,5 +1,5 @@
 es:
   visualizations:
     edit:
-      empty: This visualization is empty
-      start_creating: Start creating nodes & relations
+      empty: Esta visualización está vacía
+      start_creating: Empieza a crear nodos y relaciones
