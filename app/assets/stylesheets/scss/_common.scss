@@ -337,7 +337,7 @@ button,
       margin-top: $grid-gutter-width/3;
     }
   }
-  .error_explanation {
+  #error_explanation {
     h2 {
       font-size: 1.2em;
       color: $brand-danger;
