@@ -84,7 +84,7 @@
 // Story Cover
 .story-cover{
   position: absolute;
-  top: 92px;
+  top: 84px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -126,7 +126,6 @@
     }
   }
   @media (min-width: $screen-sm-min) {
-    top: 82px;
     .item-preview{
       .item-info{
         .item-title h3{
