@@ -3,7 +3,7 @@
 @import '_variables';
 
 #cookie-bar {
-  background: $gray-dark;
+  background: rgba($gray-dark,0.9);
   height:auto;
   line-height:24px;
   color: $gray-lighter;
@@ -11,6 +11,7 @@
   padding: $grid-gutter-width/3 0;
   font-size: 0.857em;
   font-weight: 300;
+  z-index: 10000;
 }
 #cookie-bar.fixed {
   position:fixed;
