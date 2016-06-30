@@ -6,10 +6,10 @@
   - if item.published?
     .panel-body
       %h4.text-center
-        Share
+        = t '.share'
       %ul.social-networks-btns
         %li
-          %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+' - made with Onodo'+'&url='+request.original_url, title: t('.share_in', network_name: 'Twitter'), target: '_blank'}
+          %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+t('.share_twitter_msg')+'&url='+request.original_url, title: t('.share_in', network_name: 'Twitter'), target: '_blank'}
             %span.icon
               Twitter
         %li
@@ -28,12 +28,12 @@
         %form.embed-form
           .form-group
             %label{ for: "embed-height" }
-              Embed height
+              = t '.embed_height'
             %input#embed-height.form-control{ type: "number", value: 450 }
           .checkbox
             %label
               %input{ type: "checkbox", checked: "checked" }
-                Show title in embed window
+                = t '.embed_show_title'
       .form-group
         %label{ for: "" }
           = t '.permalink'
