@@ -3,7 +3,7 @@ es:
     item_share_panel:
       share: 'Compartir' 
       share_in: 'Comparte tu visualización en %{network_name}'
-      share_twitter_msg: ' - made with @Onodo_ (a tool by @civio)'
+      share_twitter_msg: ' - hecho con @Onodo_ (una herramienta de @civio)'
       embed_this: 'Inserta esta %{class_name}'
       permalink: Enlace permanente
       public_to_share: 'La %{class_name} debe ser pública para insertarla o compartirla'
