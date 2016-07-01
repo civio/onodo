@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+  // Activate tooltips
+  $('[data-toggle="tooltip"]').tooltip();
+
+  // Skip if layout is embed
+  if ($('body').hasClass('embed')) return;
+
   //Cookie bar activate
   $.cookieBar({
     //Configuration
@@ -29,9 +35,6 @@ $(document).ready(function(){
     //domain: String(window.location.hostname), //Location of privacy policy
     //referrer: String(document.referrer) //Where visitor has come from
   });
-
-  // Activate tooltips
-  $('[data-toggle="tooltip"]').tooltip();
 
   // Setup select-all checkbox in Chapter new/edit
   $('#relations_select_all').change(function(e){
