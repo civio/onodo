@@ -36,7 +36,7 @@
           = f.text_field :description, type: "hidden"
           %trix-toolbar{ id: "wysiwig-toolbar", input: "story_description" }
           %trix-editor{ input: "story_description", toolbar: "wysiwig-toolbar", class: "form-control" }
-        = f.submit t('.common.save'), class: "btn btn-default btn-primary"
+        = f.submit t('common.save'), class: "btn btn-default btn-primary"
         %a.btn.btn-default{href: edit_story_path(@story)}= t 'common.cancel'
 
 #dropzone-preview-template{style: 'display: none;'}
