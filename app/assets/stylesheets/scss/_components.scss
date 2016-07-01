@@ -23,6 +23,15 @@
     @include transition( background 0.3s ease-out );
   }
 
+  &:hover{
+    color: $brand-primary;
+    text-decoration: none;
+
+    .btn-circle-lg-icon{
+      background: mix($brand-primary, white, 25%);
+    }
+  }
+  
   .btn-circle-lg-icon-sprite{
     margin: 34px auto 0;
   }
