@@ -19,7 +19,8 @@
     box-sizing: border-box;
   }
 
-  img {
+  .logo {
+    text-align: center;
     margin: 15px auto;
     display: block;
   }
@@ -56,7 +57,7 @@
     text-decoration: underline;
   }
   @media (min-width: 760px) {
-    img {
+    .logo {
       margin: 30px auto;
     }
     .text {
@@ -78,7 +79,11 @@
 <body>
   <!-- This file lives in public/404.html -->
   <div class="main">
-    <img src="/images/onodo.png" alt="Onodo" />
+    <div class="logo">
+      <a href="/">
+        <img src="/images/onodo.png" alt="Onodo" />
+      </a>
+    </div>
     <div class="text">
       <div class="title">
         <h1>We're sorry - something has gone wrong on our end.</h1>
