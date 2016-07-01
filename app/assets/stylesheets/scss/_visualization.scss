@@ -611,38 +611,42 @@ $node-color-12: #e0deda;
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -350px;
+  right: -360px;
   width: 100%;
   max-width: 350px;
   margin: 0;
   border-radius: 0;
+  border-color: $gray-lighter;
   color: $gray;
-  background: $gray-blue;
+  //background:  $gray-blue;
+  background: white;
+  background: rgba(255, 255, 255, 0.9);
   overflow-y: auto;
   overflow-x: hidden;
-  @include transition( right 0.5s ease-out );
+  @include transition( right 0.4s ease-out );
+  @include box-shadow( 0 0 10px rgba(0, 0, 0, 0.2) );
 
   &.active{
     right: 0;
   }
 
   .panel-heading{
+    color: $gray;
     border-radius: 0;
     border: none;
     padding: $grid-gutter-width/2 $grid-gutter-width/3;
-    background: $gray-blue-dark;
+    background: $gray-lighter;  // $gray-blue-dark;
     @include clearfix();
 
     .close{
       border-radius: $grid-gutter-width/2;
       text-indent: -9999px;
       opacity: 1;
-      @include retina-sprite( $icon-close-white-group );
-
+      @include retina-sprite( $icon-close-brand-group );
       @include transition( background-color 0.3s ease-out );
 
       &:hover{
-        background-color: darken( $gray-blue-dark, 15% );
+        background-color: white;
       }
     }
 

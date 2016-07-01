@@ -144,10 +144,14 @@
   margin: 0;
   border-radius: 0;
   color: $gray;
-  background: $gray-blue;
+  border-color: $gray-lighter;
+  //background: $gray-blue;
+  background: white;
+  background: rgba(255, 255, 255, 0.9);
   overflow-y: auto;
   overflow-x: hidden;
-  @include transition( right 0.5s ease-out );
+  @include transition( right 0.4s ease-out );
+  @include box-shadow( 0 0 10px rgba(0, 0, 0, 0.2) );
 
   &.active{
     right: 0;
@@ -159,7 +163,9 @@
     border-radius: 0;
     border: none;
     padding: $grid-gutter-width/2 $grid-gutter-width/3;
-    background: $gray-blue-dark;
+    background: $gray-lighter;  // $gray-blue-dark;
+    //background: rgba(255, 255, 255, 0.8);
+    //border-bottom: 1px solid $gray-lighter;
 
     .close{
       border-radius: $grid-gutter-width/2;
@@ -264,12 +270,12 @@
 
       .chapter{
         display: block;
-        color: $text-color;
+        //color: $text-color;
         font-weight: 300;
         padding: $grid-gutter-width/3;
         margin-bottom: $grid-gutter-width/6;
         border-left: 4px solid $brand-primary;
-        background: $gray-blue-dark;
+        background: $gray-lighter;  // $gray-blue-dark;
         @include transition( background 0.3s ease-out );
 
         .index{
@@ -314,6 +320,14 @@
       margin-right: $grid-gutter-width/2;
       margin-top: $grid-gutter-width/6;
     }
+
+    .description{
+      font-weight: 300;
+
+      strong{
+        font-weight: 400;    
+      }
+    }
   }
 }
 
@@ -336,7 +350,7 @@
 .stories .visualization-graph-info{
   width: 100%;
   max-width: 460px;
-  right: -460px;
+  right: -470px;
 
   &.active{
     right: 0;
