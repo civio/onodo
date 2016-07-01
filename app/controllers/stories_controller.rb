@@ -23,7 +23,7 @@ class StoriesController < ApplicationController
 
 
     if @story.save
-      redirect_to edit_story_path(@story), :notice => "Your story was created!"
+      redirect_to edit_story_path(@story), notice: t('.success')
     else
       flash[:alert] = @story.errors.full_messages.to_sentence
       render :new
@@ -50,7 +50,7 @@ class StoriesController < ApplicationController
   # DELETE /stories/:id/
   def destroy
     @story.destroy
-    redirect_to user_path(current_user), notice: "Your story has been deleted."
+    redirect_to user_path(current_user), notice: t('.success')
   end
 
   # POST /stories/:id/publish

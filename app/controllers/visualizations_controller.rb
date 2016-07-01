@@ -44,7 +44,7 @@ class VisualizationsController < ApplicationController
       render :new and return
     end
 
-    redirect_to edit_visualization_path(@visualization), notice: "Your visualization was created!"
+    redirect_to edit_visualization_path(@visualization), notice: t('.success')
   end
 
   # GET /visualizations/:id/edit
@@ -64,7 +64,7 @@ class VisualizationsController < ApplicationController
   # DELETE /visualizations/:id/
   def destroy
     @visualization.destroy
-    redirect_to user_path(current_user), notice: "Your visualization has been deleted."
+    redirect_to user_path(current_user), notice: t('.success')
   end
 
   # POST /visualizations/:id/publish

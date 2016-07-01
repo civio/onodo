@@ -14,7 +14,7 @@ class GalleriesController < ApplicationController
     story_ids = gallery_params[:story_ids].reject(&:empty?).map{|id| id.to_i}
 
     if @gallery.update(visualization_ids: visualization_ids, story_ids: story_ids)
-      flash[:notice] =  'Gallery was successfully updated.'
+      flash[:notice] =  t('.success')
     else
       flash[:alert] = @gallery.errors.full_messages.to_sentence
     end

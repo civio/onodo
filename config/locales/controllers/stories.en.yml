@@ -1,0 +1,7 @@
+es:
+  stories:
+    create:
+      success: Your story was created!
+
+    destroy:
+      success: Your story has been deleted.
