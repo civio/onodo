@@ -33,7 +33,7 @@
   //text-align: left;
   position: relative;
   height: 300px;
-  margin-bottom: 15px;
+  margin-bottom: $grid-gutter-width/2;
   background: white;
   text-align: left;
   overflow: hidden;
@@ -50,7 +50,7 @@
   }
 
   .item-type{
-    left: 2*$grid-gutter-width/3;
+    left: $grid-gutter-width/2;
     bottom: $grid-gutter-width/2;
     color: white;
     background: $brand-primary;
@@ -61,8 +61,8 @@
 
   .item-type-icon{
     $item-type-icon-size: 42px;
-    left: 2*$grid-gutter-width/3;
-    top: 2*$grid-gutter-width/3;
+    left: $grid-gutter-width/2;
+    top: $grid-gutter-width/2;
     width: $item-type-icon-size;
     height: $item-type-icon-size;
     border-radius: $item-type-icon-size/2;
@@ -76,8 +76,8 @@
   }
 
   .item-status{
-    right: 2*$grid-gutter-width/3;
-    top: 2*$grid-gutter-width/3;
+    right: $grid-gutter-width/2;
+    top: $grid-gutter-width/2;
     color: white;
     line-height: 2+$item-preview-padding;
 
@@ -102,7 +102,7 @@
 
   .item-author{
     $item-author-picture-size: 44px;
-    right: 2*$grid-gutter-width/3;
+    right: $grid-gutter-width/2;
     bottom: $grid-gutter-width/2;
     line-height: $item-author-picture-size - 2;
     text-align: right;
