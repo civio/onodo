@@ -526,7 +526,6 @@ class VisualizationCanvas extends Backbone.View
   focusNode: (node) ->
     if @node_active
       # clear previous focused nodes
-      @node_active.active = false
       @nodes_cont.selectAll('#node-'+@node_active.id)
         .style 'stroke',  @getNodeStroke
       @node_active = null
@@ -535,7 +534,6 @@ class VisualizationCanvas extends Backbone.View
     # set node active
     @node_active = node
     console.log 'focus node', @node_active
-    node.active = true
     @nodes_cont.selectAll('.node.active')
       .classed 'active', false
     @nodes_cont.selectAll('#node-'+node.id)
@@ -546,7 +544,6 @@ class VisualizationCanvas extends Backbone.View
   unfocusNode: ->
     if @node_active
       console.log 'unfocus node', @node_active
-      @node_active.active = false
       @nodes_cont.selectAll('#node-'+@node_active.id)
         .style 'stroke',  @getNodeStroke
       @nodes_cont.selectAll('.node.active')
@@ -881,13 +878,13 @@ class VisualizationCanvas extends Backbone.View
     return parseInt(@nodes_cont.select('#node-'+d.id).attr('r'))+13
 
   getNodeStroke: (d) =>
-    if d.active
+    if @node_active and d.id == @node_active.id
       if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
         color = @color_scale d[@parameters.nodesColorColumn]
       else
         color = @COLOR_SOLID[@parameters.nodesColor]
     else
-      color = '#fff'
+      color = 'transparent'
     return color
 
   getNodeFill: (d) =>

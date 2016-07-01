@@ -250,20 +250,12 @@ $node-color-12: #e0deda;
    
     .node{
       cursor: pointer;
-      //opacity: 0.4;
-      //stroke-width: 0;
-      //stroke: white;
-      stroke-width: 2px;
-      //stroke-opacity: 0.4;
-      //@include transition( stroke-width, 0.4s, ease-out );
-
+      stroke-width: 20px;
+      stroke-opacity: 0;
+      paint-order: stroke;
+     
       &.active{
-        stroke-width: 20px !important;
         stroke-opacity: 0.4;
-      }
-
-      &.disabled{
-        //opacity: 0.5;
       }
     }
 
