@@ -4,5 +4,5 @@ es:
       user_at_twitter: '%{account} en Twitter'
       user_at_facebook: '%{account} en Facebook'
       edit_your_settings: Edita tu configuración
-      create_new_visualization: Crear nueva visualización
-      create_new_story: Crear nueva historia
+      create_new_visualization: Crea una visualización
+      create_new_story: Crea una historia

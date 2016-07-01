@@ -7,8 +7,8 @@
     /       &times;
 
     .visualization-table-header
-      %a.btn.btn-default.btn-primary.pull-right{ href: dataset_path(visualization.dataset, format: "xlsx") }
-        Download
+      %a.btn.btn-default.btn-primary.pull-right{ href: dataset_path(visualization.dataset, format: "xlsx"), title: t('common.download') }
+        = t 'common.download'
         %i.glyphicon.glyphicon-save
       %ul#visualization-table-selector.nav.nav-tabs.pull-left{ role: "tablist" }
         %li.active{ role: "presentation" }

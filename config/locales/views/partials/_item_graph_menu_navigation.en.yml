@@ -1,0 +1,6 @@
+en:
+  partials:
+    item_graph_menu_navigation:
+      zoom_in: Zoom In
+      zoom_out: Zoom Out
+      fullscreen: Fullscreen

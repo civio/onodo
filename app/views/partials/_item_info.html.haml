@@ -8,7 +8,7 @@
         = render 'partials/user_label', :user => item.author, :align => 'left'
       - if defined? story
         %div{class: grid_class}
-          %strong Based on
+          %strong= t '.based_on'
           %a.visualization-based-on{href: visualization_path(item.visualization), title: item.visualization.name, target: "_blank"}
             = item.visualization.name
       %div{class: grid_class}

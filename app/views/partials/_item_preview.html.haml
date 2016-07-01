@@ -2,7 +2,7 @@
   .item-type-icon
   - unless defined? cover
     .item-type
-      = item.class.to_s
+      = t('common.'+item.class.to_s.downcase)
   - if controller_name == 'users' and !item.published
     .item-status
       = t 'common.draft'

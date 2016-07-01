@@ -8,3 +8,4 @@ es:
       view_data_table: Ver tabla de datos
       hide_data_table: Ocultar tabla de datos
       edit_info: 'Editar %{class_name}'
+      based_on: Basada en

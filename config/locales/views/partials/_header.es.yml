@@ -3,7 +3,7 @@ es:
     header:
       toggle: Mostrar menú
       user_settings: Usuario
-      dashboard: Panel de control
+      dashboard: Panel de usuario
       settings: Configuración
       configure_gallery: Ajustes de galería
       logout: Cerrar sesión

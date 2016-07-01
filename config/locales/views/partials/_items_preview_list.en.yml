@@ -3,4 +3,6 @@ en:
     items_preview_list:
       no_visualizations_yet: You haven't create any visualization yet
       no_stories_yet: You haven't create any story yet
+      user_no_visualizations_yet: This user hasn't created any visualization yet
+      user_no_stories_yet: This user hasn't created any story yet
       start_creating_one: Start creating one

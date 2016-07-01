@@ -1,12 +1,12 @@
 es:
   partials:
     item_header:
-      edit_info: 'Editar información de %{class_name}'
-      preview: 'Vista previa de %{class_name}'
-      edit: 'Editar %{class_name}'
-      delete: 'Eliminar %{class_name}'
+      edit_info: 'Editar información'
+      preview: 'Vista previa'
+      edit: 'Editar'
+      delete: 'Eliminar'
       actions: Acciones
       publish: Publicar
       unpublish: Despublicar
-      add_chapter_to_story: Añadir un capítulo a esta historia
+      add_chapter_to_story: Añadir un capítulo
       create_story_from_visualization: Crear una historia con esta visualización

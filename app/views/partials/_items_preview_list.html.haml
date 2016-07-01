@@ -10,19 +10,19 @@
       .text-center
         - if show_visualizations
           %p
-            = t :no_visualizations_yet
+            = t '.no_visualizations_yet'
           %a.btn.btn-default.btn-primary{href: new_visualization_path(), title: t('.start_creating_one')}
-            = t :start_creating_one
+            = t '.start_creating_one'
         - else
           %p
-            = t :no_stories_yet
+            = t '.no_stories_yet'
           %a.btn.btn-default.btn-primary{href: new_story_path(), title: t('.start_creating_one')}
-            = t :start_creating_one
+            = t '.start_creating_one'
     - else
       .text-center
         - if show_visualizations
           %p
-            This user hasn't created any visualization yet
+            = t '.user_no_visualizations_yet'
         - else
           %p
-            This user hasn't created any story yet
+            = t '.user_no_stories_yet'

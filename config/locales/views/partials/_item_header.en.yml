@@ -1,12 +1,12 @@
 en:
   partials:
     item_header:
-      edit_info: 'Edit %{class_name} Info'
-      preview: 'Preview %{class_name}'
-      edit: 'Edit %{class_name}'
-      delete: 'Delete %{class_name}'
+      edit_info: 'Edit Info'
+      preview: 'Preview'
+      edit: 'Edit'
+      delete: 'Delete'
       actions: Actions
       publish: Publish
       unpublish: Unpublish
-      add_chapter_to_story: Add Chapter to Story
+      add_chapter_to_story: Add Chapter
       create_story_from_visualization: Create story from visualization

@@ -28,6 +28,7 @@ en:
     nodes: Nodes
     relationship: Relationship
     relationships: Relationships
+    civio_foundation: Civio Citizen Foundation
 
     cancel: Cancel
     close: Close
@@ -58,3 +59,5 @@ en:
     previous: Previous
     next: Next
     confirm: "Yes"
+    download: Download
+    terms_of_service: Terms of service

@@ -28,6 +28,7 @@ es:
     nodes: Nodos
     relationship: Relación
     relationships: Relaciones
+    civio_foundation: Fundación Ciudadana Civio
 
     cancel: Cancelar
     close: Cerrar
@@ -58,3 +59,6 @@ es:
     previous: Anterior
     next: Siguiente
     confirm: Confirmar
+    download: Descargar
+    terms_of_service: Términos y condiciones
+
