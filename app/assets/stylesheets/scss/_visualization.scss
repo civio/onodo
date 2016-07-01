@@ -28,7 +28,6 @@ $node-color-12: #e0deda;
   h2{
     font-size: 2em;
     margin: 0 0 $grid-gutter-width/2;
-    padding-left: 40px;
     width: 100%;
   }
 
@@ -161,14 +160,10 @@ $node-color-12: #e0deda;
   }
   @media (max-width: $screen-sm-min - 1) {
     .btn-edit-circle {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      margin: 0;
+      display: none;
     }
     .dropdown {
       float: none !important;
-      margin-left: 40px;
       clear: both;
       .dropdown-menu {
         left: 0;

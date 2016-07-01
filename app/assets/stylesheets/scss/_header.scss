@@ -72,6 +72,21 @@
       border-bottom: 0;
     }
   }
+
+  .navbar-toggle{
+    border: none;
+
+    &:hover,
+    &:focus{
+      background-color: $gray-lighter;
+    }
+
+    .icon-bar{
+      width: 24px;
+      height: 3px;
+      background-color: $gray-darker;
+    }
+  }
 }
 
 .navbar-brand{
@@ -182,7 +197,7 @@
         }
         .user-dropdown-icon {
           position: absolute;
-          right: $grid-gutter-width/3;
+          right: 0;
           background-color: transparent;
           border: 11px solid white;
           box-sizing: content-box;
