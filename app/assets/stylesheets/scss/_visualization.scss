@@ -1395,6 +1395,10 @@ body.visualizations.edit{
   &.fullscreen {
     overflow: hidden;
 
+    .visualization-header {
+      display: none;
+    }
+
     .visualization-graph{
       position: fixed;
       top: 0;
