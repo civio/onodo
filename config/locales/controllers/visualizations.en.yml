@@ -1,0 +1,7 @@
+es:
+  visualizations:
+    create:
+      success: Your visualization was created!
+
+    destroy:
+      success: Your visualization has been deleted.

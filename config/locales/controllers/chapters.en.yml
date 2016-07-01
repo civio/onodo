@@ -1,0 +1,12 @@
+es:
+  chapters:
+    create:
+      success: Chapter was successfully created.
+      image_error: Error processing chapter image.
+
+    update:
+      success: Chapter was successfully updated.
+      image_error: Error processing chapter image.
+
+    destroy:
+      success: Chapter was successfully destroyed.

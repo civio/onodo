@@ -1,0 +1,7 @@
+es:
+  stories:
+    create:
+      success: La historia se ha creado.
+
+    destroy:
+      success: Se ha eliminado la historia.

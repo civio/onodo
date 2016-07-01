@@ -16,10 +16,10 @@ class ChaptersController < ApplicationController
     @chapter.nodes = nodes_in(@chapter.relations)
 
     if @chapter.save
-      redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully created.'
+      redirect_to edit_story_path(@chapter.story), notice: t('.success')
     else
       flash[:alert] = @chapter.errors.full_messages.to_sentence
-      flash[:alert] = "Error processing chapter image." if @chapter.errors.include? :image
+      flash[:alert] = t('.image_error') if @chapter.errors.include? :image
       render json: { location: "#{request.fullpath}/new" } and return if xhr_request?
       render :new
     end
@@ -35,10 +35,10 @@ class ChaptersController < ApplicationController
     @chapter.nodes = nodes_in(@chapter.relations)
 
     if @chapter.save
-      redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully updated.'
+      redirect_to edit_story_path(@chapter.story), notice: t('.success')
     else
       flash[:alert] = @chapter.errors.full_messages.to_sentence
-      flash[:alert] = "Error processing chapter image." if @chapter.errors.include? :image
+      flash[:alert] = t('.image_error') if @chapter.errors.include? :image
       render json: { location: "#{request.fullpath}/edit" } and return if xhr_request?
       render :edit
     end
@@ -55,7 +55,7 @@ class ChaptersController < ApplicationController
 
   def destroy
     @chapter.destroy
-    redirect_to edit_story_path(@chapter.story), notice: 'Chapter was successfully destroyed.'
+    redirect_to edit_story_path(@chapter.story), notice: t('.success')
   end
 
   private

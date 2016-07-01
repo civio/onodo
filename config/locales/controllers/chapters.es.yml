@@ -1,0 +1,12 @@
+es:
+  chapters:
+    create:
+      success: El capítulo se ha creado.
+      image_error: Error porcesando la imagen.
+
+    update:
+      success: El capítulo se ha actualizado.
+      image_error: Error porcesando la imagen.
+
+    destroy:
+      success: Se ha eliminado el capítulo.
