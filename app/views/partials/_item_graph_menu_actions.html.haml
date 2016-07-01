@@ -1,4 +1,9 @@
 .visualization-graph-menu-actions
+  - if defined? story
+    %button.btn.btn-default.btn-transparent.btn-story-info{type: "button"}
+      %span.title
+        = t '.story_index'
+      %span.icon-story-info
   .btn-search
     %span.search-icon
     %form.form-inline.search-form
@@ -9,12 +14,7 @@
     %span.title
       = t '.share'
     %span.icon-share
-  - if defined? story
-    %button.btn.btn-default.btn-transparent.btn-story-info{type: "button"}
-      %span.title
-        = t '.story_index'
-      %span.icon-story-info
-  - elsif defined? edit
+  - if !defined? story and defined? edit
     %button.btn.btn-default.btn-transparent.btn-configure{type: "button"}
       %span.title
         = t '.settings'

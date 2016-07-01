@@ -418,8 +418,9 @@ $node-color-12: #e0deda;
 
     .btn-search{
       position: relative;
+      float: right;
       right: -6px;
-      padding: 8px 15px;
+      padding: 8px 12px;
       background: white;
 
       > .search-icon{
@@ -511,9 +512,11 @@ $node-color-12: #e0deda;
 
     .btn-story-info{
       position: relative;
+      top: -2px;
+      right: -5px;
       width: 40px;
       height: 40px;
-      margin-top: 4px;
+      margin-bottom: 5px;
       border-radius: 20px;
       border: none;
       background: $brand-primary;
@@ -521,7 +524,7 @@ $node-color-12: #e0deda;
       .title{
         position: absolute;
         top: 10px;
-        left: -92px;
+        right: 38px;
         margin-right: $grid-gutter-width/3;
       }
 
