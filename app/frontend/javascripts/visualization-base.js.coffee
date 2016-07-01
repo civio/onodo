@@ -135,6 +135,7 @@ class VisualizationBase
 
   # Actions Events
   onNodeSearch: (e) =>
-    @visualizationCanvas.onNodeOver  e.node
+    @visualizationCanvas.onNodeOver e.node
+    #@visualizationCanvas.centerNode e.node
 
 module.exports = VisualizationBase

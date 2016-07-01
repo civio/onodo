@@ -63,6 +63,9 @@ class VisualizationCanvas extends Backbone.View
     dy: 0
     offsetx: 0
     offsety: 0
+    offsetnode:
+      x: 0
+      y: 0
     drag:
       x: 0
       y: 0
@@ -540,6 +543,8 @@ class VisualizationCanvas extends Backbone.View
       .classed 'active', true
       .style   'stroke', @getNodeStroke
     @updateRelationsLabelsData()
+    # center viewport in node
+    @centerNode node
 
   unfocusNode: ->
     if @node_active
@@ -550,6 +555,16 @@ class VisualizationCanvas extends Backbone.View
         .classed 'active', false
       @node_active = null
       @onNodeOut()
+      # center viewport
+      @centerNode null
+
+  centerNode: (node) ->
+    if node
+      @viewport.offsetnode.x = (@viewport.scale * (node.get('x') - @viewport.center.x)) + @viewport.x + 175 # 175 = $('.visualization-graph-info').height() / 2
+      @viewport.offsetnode.y = (@viewport.scale * (node.get('y') - @viewport.center.y)) + @viewport.y
+    else
+      @viewport.offsetnode.x = @viewport.offsetnode.y = 0
+    @rescaleTransition()
 
   sortNodes: (a, b) ->
     if a.size > b.size
@@ -575,7 +590,7 @@ class VisualizationCanvas extends Backbone.View
     @svg.attr   'height', @viewport.height
     @rescale()
     # Update force size
-    #@force.size [@viewport.width, @viewport.height]
+    #@force.size [@viewport.width, @viewport.height] 
 
   rescale: ->
     @container.attr       'transform', @getContainerTransform()
@@ -585,12 +600,15 @@ class VisualizationCanvas extends Backbone.View
     @nodes_cont.attr            'transform', translateStr
     @nodes_labels_cont.attr     'transform', translateStr
 
-  setOffsetX: (offset) ->
-    @viewport.offsetx = if offset < 0 then 0 else offset
+  rescaleTransition: ->
     @container.transition()
-      .duration 400
+      .duration 500
       .ease     d3.easeQuadOut
       .attr     'transform', @getContainerTransform()
+
+  setOffsetX: (offset) ->
+    @viewport.offsetx = if offset < 0 then 0 else offset
+    @rescaleTransition()
 
   setOffsetY: (offset) ->
     @viewport.offsety = if offset < 0 then 0 else offset
@@ -598,7 +616,7 @@ class VisualizationCanvas extends Backbone.View
       @container.attr 'transform', @getContainerTransform()
 
    getContainerTransform: ->
-    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety) + ')scale(' + @viewport.scale + ')'
+    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx-@viewport.offsetnode.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety-@viewport.offsetnode.y) + ')scale(' + @viewport.scale + ')'
 
 
   # Config Methods
