@@ -15,6 +15,9 @@ es:
     login: Iniciar sesión
     signup: Regístrate
 
+    meta_description: Relationships are complicated
+    meta_keywords: "onodo, visualización, redes"
+
     story: Historia
     stories: Historias
     create_story: Crear historia
