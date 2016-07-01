@@ -1392,6 +1392,25 @@ body.visualizations.edit{
       top: -86px;
     }
   }
+  &.fullscreen {
+    overflow: hidden;
+
+    .visualization-header {
+      display: none;
+    }
+
+    .visualization-graph{
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 999;
+      &.affix {
+        top: 0;
+      }
+    }
+  }
 
   .visualization-graph-info{
     bottom: $grid-gutter-width/6;

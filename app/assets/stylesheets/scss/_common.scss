@@ -337,6 +337,15 @@ button,
       margin-top: $grid-gutter-width/3;
     }
   }
+  #error_explanation {
+    h2 {
+      font-size: 1.2em;
+      color: $brand-danger;
+    }
+    ul {
+      font-size: 0.87em;
+    }
+  }
   @media (min-width: $screen-sm-min) {
     max-width: none;
     margin: -$grid-gutter-width 0 3*$grid-gutter-width;

@@ -6,7 +6,7 @@ BootstrapSwitch              = require 'bootstrap-switch'
 
 class VisualizationEdit extends VisualizationBase
 
-  mainHeaderHeight:             86
+  mainHeaderHeight:             82
   visualizationHeaderHeight:    null
   tableHeaderHeight:            40
 
@@ -89,19 +89,20 @@ class VisualizationEdit extends VisualizationBase
         $('.visualization-graph-component .visualization-empty-msg').fadeOut()
 
   resize: =>
-    # setup container height
-    #h = if $('body').hasClass('fullscreen') then @$window.height() else @$window.height() - 178 # -50-64-64
     #console.log 'resize'
     windowHeight = $(window).height()
-    @visualizationHeaderHeight = $('.visualization-graph .visualization-header').outerHeight()
-    graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
-    tableHeight = (windowHeight*0.5) + @tableHeaderHeight
-    @$table.css 'top', graphHeight + @visualizationHeaderHeight
-    @$table.height tableHeight
-    @tableNodes.setSize tableHeight, @$table.offset().top
-    @tableRelations.setSize tableHeight, @$table.offset().top
-    @visualizationCanvas.$el.height graphHeight
-    #$('.footer').css 'top', graphHeight + @visualizationHeaderHeight
+    if !$('body').hasClass('fullscreen')
+      @visualizationHeaderHeight = $('.visualization-graph .visualization-header').outerHeight()
+      graphHeight = windowHeight - @mainHeaderHeight - @visualizationHeaderHeight - @tableHeaderHeight
+      tableHeight = (windowHeight*0.5) + @tableHeaderHeight
+      @$table.css 'top', graphHeight + @visualizationHeaderHeight
+      @$table.height tableHeight
+      @tableNodes.setSize tableHeight, @$table.offset().top
+      @tableRelations.setSize tableHeight, @$table.offset().top
+      @visualizationCanvas.$el.height graphHeight
+    else 
+      graphHeight = windowHeight
+      @visualizationCanvas.$el.height graphHeight
     super()
 
   render: ->
