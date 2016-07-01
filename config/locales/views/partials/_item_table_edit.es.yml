@@ -3,6 +3,6 @@ es:
     item_table_edit:
       scroll: Haz scroll para editar
       add_node: Añadir nodo
-      add_custom_column: Añadir nueva columna
+      add_custom_column: Añadir columna
       add_relationship: Añadir relación
       network_analysis: Análisis de redes

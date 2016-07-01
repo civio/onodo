@@ -1,8 +1,8 @@
 es:
   partials:
     story_info:
-      index: Índice de la historia
-      back: Volver al índice de la historia
+      index: Índice
+      back: Volver al índice
       previous_chapter: Capítulo anterior
       next_chapter: Siguiente capítulo
       add_chapter: Añadir capítulo

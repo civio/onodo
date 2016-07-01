@@ -6,6 +6,6 @@ es:
       submit: Crear
       begin_empty_table: Empezar con una tabla vacía
       upload_xlsx: Subir un fichero XLSX
-      browse: Seleccionar
+      browse: Cargar fichero
       template_advice: ¿No sabes cómo crear un fichero XLSX?
       download_template: Descarga nuestro modelo

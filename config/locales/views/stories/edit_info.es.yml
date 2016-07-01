@@ -5,9 +5,9 @@ es:
       field:
         cover:
           title: Imagen de portada
-          description: Tu imagen de portada debería medir unos 1140px de ancho por 480px de alto, y pesar menos de 2MB
+          description: Tu imagen de portada debe medir unos 1140px de ancho por 480px de alto y pesar menos de 2MB
           upload_from_computer: Sube una imagen desde tu ordenador
           browse: Seleccionar
         title: Título
         description: Descripción
-      submit: Subir foto
+      submit: Cargar foto

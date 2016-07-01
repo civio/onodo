@@ -1,5 +1,5 @@
 es:
   relations:
     edit_date:
-      specific_date: Fecha específica
+      specific_date: Fecha
       date_range: Rango de fechas

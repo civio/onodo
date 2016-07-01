@@ -7,6 +7,6 @@ es:
       delete: 'Eliminar'
       actions: Acciones
       publish: Publicar
-      unpublish: Despublicar
+      unpublish: Deshacer publicar
       add_chapter_to_story: Añadir un capítulo
       create_story_from_visualization: Crear una historia con esta visualización

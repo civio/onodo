@@ -2,5 +2,5 @@ es:
   devise:
     sessions:
       new:
-        lead: Crea tus propios gráficos y mapas de relaciones, y cuenta historias interesantes con ellos
+        lead: Crea tus propios gráficos de redes y cuenta historias interesantes con ellos
         remember_me: Recuérdame

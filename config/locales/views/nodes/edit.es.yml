@@ -5,7 +5,7 @@ es:
       field:
         media:
           title: Imagen del nodo
-          description: La imagen debería tener 320px de ancho y pesar menos de 1MB
+          description: La imagen debe tener 320px de ancho y pesar menos de 1MB
           upload: Sube una imagen desde tu ordenador
           browse: Cargar
           internet: O elige una de Internet

@@ -2,29 +2,29 @@ es:
   home:
     index:
       titles:
-        main: Relationships are complicated
-        lead: Let's create visualizations to understand them
-        features: We make it easy
-        great: We make it great
-        gallery: These are the latest additions to our gallery
+        main: Cada red cuenta una historia
+        lead: Crea visualizaciones para contar la tuya
+        features: Fa-ci-lí-si-mo
+        great: y resultón
+        gallery: Lo más nuevo de nuestra galería
       features:
         easey:
           first:
-            title: 1. Quick creation
-            text: Using our node & relationship table template, you are ready to go. Import it, duplicate it from another visualization or create it from scratch
+            title: 1. En un pim pam
+            text: Empieza a rellenar la tabla y las relaciones aparecerán ante tus ojos. O importa tu propio archivo y en dos pasos tendrás lista la red.
           second:
-            title: 2. Rich information
-            text: You can add to each node all the data you need (text, media & links)
+            title: 2. Personalizada
+            text: Dale color a tu visualización. Añade a cada nodo fotos, texto o información extra. Personaliza tus redes.
           third:
-            title: 3. Share it anywhere
-            text: Share & embed the visualization or story wherever you want. We provide you some stats to track it
+            title: 3. Lista para llevar
+            text: Inserta tu proyecto en cualquier web o compártela con quien quieras.
         great:
           first:
-            title: Collaborations
-            text: You can add collaborators to your visualization o duplicate the users visualizations to start your own
+            title: En vivo
+            text: Mientras editas, ves el resultado. La mejor forma de asegurarte, en tiempo real, de que vas por buen camino.
           second:
-            title: Live preview
-            text: View the final result of the visualization as you edit the nodes & relationships
+            title: Cuenta una historia
+            text: Crea capítulos y deja que las redes te ayuden a narrar las mejores historias.
           third:
-            title: Do you want to tell a story?
-            text: You can create your own story with chapters that reveal how the relationship network developed
+            title: Analiza
+            text: ¿Qué o quién es el centro de tu red? ¿Cómo se relacionan los nodos? Da un paso más y saca conclusiones de tus datos.

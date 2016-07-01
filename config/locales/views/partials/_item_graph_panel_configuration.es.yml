@@ -3,13 +3,13 @@ es:
     item_graph_panel_configuration:
       title: Configuración
       relations: Relaciones
-      advanced: Advanzado
+      advanced: Avanzado
       nodes_color: Color de nodos
       colors:
         solid: Sólido
         quantitative: Cuantitativo
         qualitative: Cualitativo
-      based_on_column: En base a una columna
+      based_on_column: según columna
       nodes_size: Tamaño de nodos
       sizes:
         small: Pequeño
@@ -17,11 +17,11 @@ es:
         large: Grande
         extra_large: Muy grande
       number_of_relations: Número de relaciones
-      show_nodes_label: Mostrar nombre de nodo
-      show_nodes_image: Mostrar imágenes de nodo
+      show_nodes_label: Nombres de nodos
+      show_nodes_image: Imágenes de nodos
       relations_line_style: Estilo de líneas de relaciones
       line_styles:
-        solid: Solido
+        solid: Sólido
         dashed: Discontinuo
         dotted: Punteado
       link_distance: Distancia de relación

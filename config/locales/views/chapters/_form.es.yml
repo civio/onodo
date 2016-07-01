@@ -4,11 +4,11 @@ es:
       field:
         media:
           title: Imagen del capítulo
-          description: La imagen debería tener unos 320px de ancho y pesar menos de 1MB
+          description: La imagen debe tener unos 320px de ancho y pesar menos de 1MB
           drop: Arrastra hasta aquí una imagen para cargarla
-          upload: Sube una imagen desde tu ordenador
+          upload: Sube una foto desde tu ordenador
           browse: Selecciona
           internet: O elige una desde Internet
         title:
           title: Título
-      choose_relation: Marca las relaciones que aparecerán en este capítulo
+      choose_relation: Selecciona las relaciones que aparecerán en este capítulo

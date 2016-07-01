@@ -3,6 +3,6 @@ es:
     new:
       field:
         title: Título de la historia
-      create_from_visualization: Crear historia con una de tus visualizaciones
+      create_from_visualization: Crea una historia con una de tus visualizaciones
       no_visualization_yet: No has creado ninguna visualización aún
       start_creating: Empezar ahora

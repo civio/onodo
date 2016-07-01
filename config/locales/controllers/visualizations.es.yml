@@ -1,7 +1,7 @@
 es:
   visualizations:
     create:
-      success: La visualización ha sido creada
+      success: Visualización creada
 
     destroy:
-      success: Se ha eliminado la visualización.
+      success: Visualización eliminada

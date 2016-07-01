@@ -5,7 +5,7 @@ es:
         image:
           text: Esta es la imagen que se mostrará de tu visualización 
           conditions: 2 MB max. jpg / png / gif
-          upload: Súbela desde tu ordenador
+          upload: Subir imagen desde tu ordenador
           browse: Cargar
           internet: Elige una imagen de Internet
           error: La URL de esta imagen no es válida

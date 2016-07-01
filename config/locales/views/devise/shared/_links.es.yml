@@ -3,4 +3,6 @@ es:
     shared:
       links:
         already_user: ¿Ya eres usuario de Onodo? Solo tienes que
+        sign_in: iniciar sesión 
         not_user: ¿No estás en Onodo aún? Te proponemos
+        sign_in: registrarte ahora 
