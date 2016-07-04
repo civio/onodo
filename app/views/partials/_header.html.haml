@@ -21,8 +21,6 @@
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
             =t 'common.contact'
       %ul.nav.navbar-nav.navbar-right
-        %li
-          = link_to('ES', change_locale_path(locale: 'ES')) + " | " + link_to('EN', change_locale_path(locale: 'EN'))
         -if current_user.nil?
           %li
             = link_to t('common.login'), new_user_session_path, class: "btn btn-transparent"
@@ -48,3 +46,10 @@
                 = link_to t('common.create_story'), new_story_path, :class => 'active'
               %li
                 = link_to t('.logout'), destroy_user_session_path, :method => 'delete'
+        %ul#lang-selector.nav.navbar-nav
+          %li
+            = link_to('ES', change_locale_path(locale: 'ES'))
+          %li.divider
+          %li
+            = link_to('EN', change_locale_path(locale: 'EN'))
+      
