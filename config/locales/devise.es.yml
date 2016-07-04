@@ -52,8 +52,8 @@ es:
         message: ¡Ups! Tu cuenta ha sido bloqueada después de demasiados intentos fallidos para acceder
         subject: Instrucciones para desbloquear tu cuenta
     omniauth_callbacks:
-      failure: No has podido acceder a la cuenta %{kind} porque "%{reason}"
-      success: ¡Bien! Puedes acceder la cuenta %{kind}
+      failure: No has podido acceder a tu cuenta %{kind} porque "%{reason}"
+      success: ¡Bien! Puedes acceder a tu cuenta %{kind}
     passwords:
       no_token: No puedes acceder a esta página si no es a través de un enlace para restablecer tu contraseña. Si has llegado hasta aquí desde el email para modificar tu contraseña, por favor asegúrate de que la URL introducida estaba completa.
       send_instructions: En pocos minutos recibirás un correo con instrucciones para modificar tu contraseña. "1234" ya está cogida, estás avisado.

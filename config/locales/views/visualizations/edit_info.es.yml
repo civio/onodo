@@ -1,7 +1,7 @@
 es:
   visualizations:
     edit_info:
-      title: Editar información de esta visualización
+      title: Editar visualización
       field:
         title: Título
         description: Descripción

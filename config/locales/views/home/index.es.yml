@@ -3,15 +3,15 @@ es:
     index:
       titles:
         main: Cada red cuenta una historia
-        lead: Crea visualizaciones para contar la tuya
-        features: Fa-ci-lí-si-mo
-        great: y resultón
-        gallery: Lo más nuevo de nuestra galería
+        lead: Crea mapas de relaciones de forma rápida y sencilla para contar la tuya
+        features: Te lo ponemos fácil
+        great: Sube de nivel
+        gallery: Las mejores visualizaciones
       features:
         easey:
           first:
             title: 1. En un pim pam
-            text: Empieza a rellenar la tabla y las relaciones aparecerán ante tus ojos. O importa tu propio archivo y en dos pasos tendrás lista la red.
+            text: Rellena la tabla y las relaciones aparecerán ante tus ojos. O importa tu archivo y en dos pasos tendrás lista la red.
           second:
             title: 2. Personalizada
             text: Dale color a tu visualización. Añade a cada nodo fotos, texto o información extra. Personaliza tus redes.
@@ -27,4 +27,4 @@ es:
             text: Crea capítulos y deja que las redes te ayuden a narrar las mejores historias.
           third:
             title: Analiza
-            text: ¿Qué o quién es el centro de tu red? ¿Cómo se relacionan los nodos? Da un paso más y saca conclusiones de tus datos.
+            text: ¿Quién es el centro de tu red? ¿Cómo se relacionan los nodos? Da un paso más y saca conclusiones de tus datos.

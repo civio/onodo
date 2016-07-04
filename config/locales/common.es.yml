@@ -9,10 +9,10 @@
 es:
   # common strings
   common:
-    explore: Explorar
+    explore: Buscador
     gallery: Galería
     contact: Contacto
-    login: Iniciar sesión
+    login: Inicia sesión
     signup: Regístrate
 
     meta_description: Todas las redes cuentan una historia
