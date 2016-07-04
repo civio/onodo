@@ -420,6 +420,8 @@ $node-color-12: #e0deda;
         position: absolute;
         right: 0;
         top: 0;
+        width: 180px;
+        margin: 0;
         display: none;
 
         &.focus{
@@ -427,6 +429,9 @@ $node-color-12: #e0deda;
         }
 
         .form-control{
+          padding-right: 5px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
           max-width: 145px;
         }
         .btn{

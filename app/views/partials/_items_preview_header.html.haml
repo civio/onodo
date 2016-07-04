@@ -10,12 +10,22 @@
         = t 'common.stories'
       %a.btn.btn-default.btn-transparent{ href: "#{params[:controller] == 'pages' ? '/explore/visualizations' : params[:action] =~ /dashboard/ ? visualizations_dashboard_path : visualizations_users_path(@user)}" }
         = t 'common.visualizations'
+
+  /  .btn-search
+  /    %span.search-icon
+  %form.form-inline.search-form
+    .form-group
+      %input.form-control{type: "text", placeholder: 'search'}
+    %button.btn.btn-default{type: "submit" }
+      %span.search-icon
+
   / .search-input.pull-right
   /   .input-group
   /     %input.form-control{:type => "text"}
   /     %span.input-group-btn
-  /       %button.btn.btn-default{:type => "button"}
+  /       %button.btn.btn-default{:type => "submit"}
   /         %span.search-icon
+
   / .items-orderby.pull-right
   /   Order by
   /   %a.active{href: '#', title: 'The popularity is based on the number of embeded & social shares', data: {toggle: 'tooltip', placement: 'bottom'}}

@@ -255,26 +255,27 @@ a.user-label{
 // Search Input
 
 .search-form{
-  width: 180px;
-  margin-left: $grid-gutter-width;
+  position: relative;
+  width: 100%;
+  margin: $grid-gutter-width 0;
+  border: 2px solid $brand-primary;
+  border-radius: 2px + $btn-line-height/2;
 
-  // Search box styles
-  .form-control,
-  .btn{
-    border-color: $brand-primary;
+  .form-group{
+    display: block;
+    margin-bottom: 0;
   }
 
   .form-control{
-    padding: 2px 5px 0 10px;
+    display: inline-block;
+    width: 100%;
+    padding: 0 34px 0 10px;
     font-size: 0.857em;
-    line-height: -2px + $btn-line-height;
+    line-height: $btn-line-height;
     height: auto;
     color: $brand-primary;
-    border-width: 2px;
-    border-right: none;
-    border-radius: 0;
-    border-top-left-radius: 2px + $btn-line-height/2;
-    border-bottom-left-radius: 2px + $btn-line-height/2;
+    border: none;
+    border-radius: 2px + $btn-line-height/2;
 
     &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
       color:    $brand-primary;
@@ -298,27 +299,40 @@ a.user-label{
   .btn{
     display: block;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -2px;
+    right: -2px;
     height: 4px + $btn-line-height;
-    width: 40px;
+    width: 36px;
     min-width: 0;
-    padding: 0 10px 0 5px;
+    padding: 0 0 0 8px;
     color: $brand-primary;
-    border-left: none;
+    border: none;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background: transparent;
 
-    &:hover{
-      color: $text-color;
+    &:hover .search-icon{
+      opacity: 0.8;
     }
+  }
+
+  .search-icon{
+    display: block;
+    @include clearfix;
+    @include retina-sprite( $icon-search-group );
+  }
+}
+
+@media (min-width: $screen-sm-min) {
+  .search-form{
+    float: right;
+    width: 200px;
+    margin: 0;
   }
 }
 
 
 // Dropdown Select
-
 
 .dropdown.dropdown-select{
   color: $gray;
