@@ -108,8 +108,9 @@ class VisualizationConfiguration extends Backbone.View
     @sliderLinkdistance.setValue parseFloat(@parameters.linkDistance)
     @sliderLinkstrength.setValue parseFloat(@parameters.linkStrength)
 
-  render: (_parameters) ->
-    @parameters = _parameters
+  render: (_parameters, _parametersDefault) ->
+    @parameters        = _parameters
+    @parametersDefault = _parametersDefault
     # Add custom field to nodes color column selector
     @setCustomFields()
     @updateNodesColorColumn()

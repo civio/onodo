@@ -81,7 +81,7 @@ class VisualizationEdit extends VisualizationBase
     super()
     # Setup Visualization Configuration
     @visualizationConfiguration.model = @visualization
-    @visualizationConfiguration.render @parameters
+    @visualizationConfiguration.render @parameters, @parametersDefault
     # Show visualization empty msg if there is no nodes or relations
     if @nodes.models.length == 0 and @relations.models.length == 0
       $('.visualization-graph-component .visualization-empty-msg').fadeIn().find('a').click @scrollToEdit
