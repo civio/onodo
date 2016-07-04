@@ -19,7 +19,7 @@ es:
       number_of_relations: Número de relaciones
       show_nodes_label: Nombres de nodos
       show_nodes_image: Imágenes de nodos
-      relations_line_style: Estilo de líneas de relaciones
+      relations_line_style: Estilo de líneas
       line_styles:
         solid: Sólido
         dashed: Discontinuo
