@@ -1,4 +1,6 @@
 class Story < ActiveRecord::Base
+  include Searchable
+
   belongs_to :author, foreign_key: :author_id, class_name: User
   belongs_to :visualization
   has_many :chapters, -> { order(:number) }, dependent: :destroy

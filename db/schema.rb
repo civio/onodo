@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160629182410) do
+ActiveRecord::Schema.define(version: 20160704191201) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+  enable_extension "pg_trgm"
 
   create_table "chapters", force: :cascade do |t|
     t.string   "name",        null: false
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(version: 20160629182410) do
   end
 
   add_index "stories", ["author_id"], name: "index_stories_on_author_id", using: :btree
+  add_index "stories", ["name"], name: "index_stories_on_name", using: :gin, opclasses: {"name"=>"gin_trgm_ops"}
   add_index "stories", ["visualization_id"], name: "index_stories_on_visualization_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -148,6 +150,7 @@ ActiveRecord::Schema.define(version: 20160629182410) do
   end
 
   add_index "visualizations", ["author_id"], name: "index_visualizations_on_author_id", using: :btree
+  add_index "visualizations", ["name"], name: "index_visualizations_on_name", using: :gin, opclasses: {"name"=>"gin_trgm_ops"}
 
   add_foreign_key "chapters", "stories"
 end

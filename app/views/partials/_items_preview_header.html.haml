@@ -13,9 +13,9 @@
 
   /  .btn-search
   /    %span.search-icon
-  %form.form-inline.search-form
+  %form.form-inline.search-form{action: show_visualizations ? explore_visualizations_path : explore_stories_path }
     .form-group
-      %input.form-control{type: "text", placeholder: t('.search')}
+      %input.form-control{name: :search, type: "text", placeholder: t('.search')}
     %button.btn.btn-default{type: "submit" }
       %span.search-icon
 
