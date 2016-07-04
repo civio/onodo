@@ -29,7 +29,7 @@
 
       &.btn{
         padding: 0;
-        margin: 10px 15px 8px;
+        margin: $grid-gutter-width/3;
         line-height: $btn-line-height;
 
         &.btn-default{
@@ -65,7 +65,7 @@
       padding-bottom: 0;
     }
     .navbar-nav {
-      margin-left: $grid-gutter-width/2;
+      margin-left: $grid-gutter-width/6;
       height: $navbar-height;
     }
     .navbar-collapse {
