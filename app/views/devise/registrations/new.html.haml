@@ -2,7 +2,7 @@
   .row
     .col-sm-6.col-sm-offset-3
       .page-header.text-center
-        %h2= t '.sign_up'
+        %h2= t 'common.signup'
         %p.lead= t '.lead'
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {:class => 'form-default'}) do |f|
         = devise_error_messages!
@@ -30,7 +30,7 @@
               %a{ href: "/terms-of-service/modal", data: {toggle: "modal", target: "#terms-of-service-modal"} }
                 = t '.terms_and_conditions'
         .actions
-          = f.submit t('.sign_up'), class: "btn btn-default btn-primary"
+          = f.submit t('common.signup'), class: "btn btn-default btn-primary"
           %hr
           .devise-links
             = render "devise/shared/links"
