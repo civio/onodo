@@ -26,6 +26,15 @@ class PagesController < ApplicationController
     render :layout => false
   end
 
+  # GET /terms-of-service
+  def terms_of_service
+  end
+
+  # GET /privacy-policy
+  def privacy_policy
+    render "privacy_policy_#{I18n.locale}"
+  end
+
   # GET /locale/:locale
   def change_locale
     locale = params[:locale].downcase

@@ -4,7 +4,7 @@
     = t 'common.terms_of_service'
 .modal-body
   .terms-of-service-modal-content
-    = render 'terms_of_service_content'
+    = render "terms_of_service_content_#{I18n.locale}"
 .modal-footer
   %button.btn.btn-primary{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
     Ok
