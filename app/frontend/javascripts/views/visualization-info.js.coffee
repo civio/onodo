@@ -42,7 +42,7 @@ class VisualizationInfo extends Backbone.View
       if @node_custom_fields and @node_custom_fields.length > 0
         templateAttr.custom_fields = []
         @node_custom_fields.forEach (field) =>
-          if @model.get(field.name)
+          if @model.get(field.name) != null
             templateAttr.custom_fields.push {key: field.name, value: @model.get(field.name)}
       # Compile the template using Handlebars
       template = HandlebarsTemplate templateAttr
