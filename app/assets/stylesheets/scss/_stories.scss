@@ -356,3 +356,11 @@
     right: 0;
   }
 }
+
+.stories .visualization-graph .visualization-graph-component .relation{
+  opacity: 1;
+
+  &.disabled{
+    opacity: 0.2;
+  }
+}
