@@ -76,6 +76,9 @@ gem 'mini_magick'
 # ActiveRecord singleton support
 gem 'acts_as_singleton'
 
+# Language detection
+gem 'http_accept_language'
+
 # Serve assets in Heroku and handle logging
 gem 'rails_12factor', group: :production
 

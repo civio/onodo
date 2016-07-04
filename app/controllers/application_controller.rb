@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_locale
-    I18n.locale = session[:locale] || I18n.default_locale
+    I18n.locale = session[:locale] || http_accept_language.compatible_language_from(I18n.available_locales) || I18n.default_locale
   end
 
   def gallery_editor_role?
