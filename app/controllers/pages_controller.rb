@@ -38,7 +38,7 @@ class PagesController < ApplicationController
   # GET /locale/:locale
   def change_locale
     locale = params[:locale].downcase
-    locale = :en unless ['es', 'en'].include? locale
+    locale = I18n.default_locale unless I18n.locale_available? locale
     session[:locale] = locale
     redirect_to request.referer || root_path
   end
