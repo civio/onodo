@@ -25,5 +25,12 @@ class PagesController < ApplicationController
   def terms_of_service_modal
     render :layout => false
   end
-  
+
+  # GET /locale/:locale
+  def change_locale
+    locale = params[:locale].downcase
+    locale = :en unless ['es', 'en'].include? locale
+    session[:locale] = locale
+    redirect_to request.referer || root_path
+  end
 end

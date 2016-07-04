@@ -77,6 +77,8 @@ Rails.application.routes.draw do
   get '/terms-of-service/modal'  => 'pages#terms_of_service_modal'
   get '/privacy-policy'          => 'pages#privacy_policy'
 
+  get '/locale/:locale', to: 'pages#change_locale', as: :change_locale
+
   # API routes
   namespace :api, defaults: { format: :json } do
     resources :visualizations, only: [ :show, :update ] do

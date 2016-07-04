@@ -21,6 +21,8 @@
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
             =t 'common.contact'
       %ul.nav.navbar-nav.navbar-right
+        %li
+          = link_to('ES', change_locale_path(locale: 'ES')) + " | " + link_to('EN', change_locale_path(locale: 'EN'))
         -if current_user.nil?
           %li
             = link_to t('common.login'), new_user_session_path, class: "btn btn-transparent"

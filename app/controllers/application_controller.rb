@@ -5,7 +5,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :gallery_editor_role?
 
+  before_action :set_locale
+
   private
+
+  def set_locale
+    I18n.locale = session[:locale] || I18n.default_locale
+  end
 
   def gallery_editor_role?
     Gallery.instance.user_ids.include?(current_user.id)
