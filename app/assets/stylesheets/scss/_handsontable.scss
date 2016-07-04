@@ -12,6 +12,14 @@
     border: none;
     padding: 0 0 0 $grid-gutter-width/3;
 
+    // Hide dropdownMenu in first two columns (delete & duplicate)
+    &:nth-child(1),
+    &:nth-child(2){
+      .changeType{
+        display: none;
+      }
+    }
+
     .relative{
       padding: 0;
     }
@@ -37,6 +45,17 @@
   .htDirection .htCheckboxRendererInput,
   .htVisible .htCheckboxRendererInput{
     display: none;
+  }
+
+  .htFiltersMenuCondition .htUISelectCaption{
+    line-height: 25px;
+  }
+
+  .htFiltersMenuActionBar .htUIInput.htUIButton input{
+    padding: 0;
+    height: 25px;
+    line-height: 25px;
+    width: 60px;
   }
 }
 
