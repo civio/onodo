@@ -16,6 +16,8 @@ en:
         user: User
     confirmations:
       confirmed: "Your account was successfully confirmed."
+      new:
+        resend_confirmation_instructions: Reenvíame los pasos para confirmar mi cuenta
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
     failure:
@@ -30,10 +32,26 @@ en:
       unconfirmed: "You have to confirm your account before continuing."
     mailer:
       confirmation_instructions:
+        action: Confirmo mi cuenta
+        greeting: "¡Bienvenido a Onodo, %{recipient}!"
+        instruction: 'Confirma el correo electrónico de su cuenta siguiendo este enlace:'
         subject: "Confirmation instructions"
-      reset_password_instructions:
+      password_change:
+        greeting: Hola, %{recipient}!
+        message: Te avisamos de que tu contraseña ha sido cambiada
         subject: "Reset password instructions"
+      reset_password_instructions:
+        action: Cambiar mi contraseña
+        greeting: "¡Hola, %{recipient}!"
+        instruction: Has solicitado modificar tu contraseña. ¡Dicho y hecho! Puedes hacerlo a través del siguiente enlace
+        instruction_2: Si no has solicitado este cambio, por favor ignora este correo electrónico. Nos habremos despistado
+        instruction_3: Tu contraseña no será cambiada hasta que no accedas al enlace y crees tú mismo una nueva
+        subject: Instrucciones para recuperar tu contraseña
       unlock_instructions:
+        action: Desbloquear mi cuenta
+        greeting: "¡Hola, %{recipient}!"
+        instruction: 'Haz clic en el siguiente enlace para desbloquear tu cuenta:'
+        message: ¡Ups! Tu cuenta ha sido bloqueada después de demasiados intentos fallidos para acceder
         subject: "Unlock Instructions"
     omniauth_callbacks:
       failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
@@ -46,6 +64,17 @@ en:
       updated_not_active: "Your password was changed successfully."
     registrations:
       destroyed: "Bye! Your account was successfully cancelled. We hope to see you again soon."
+      edit:
+        are_you_sure: "¿Estás seguro? ¿En serio?"
+        cancel_my_account: Quiero anular mi cuenta
+        currently_waiting_confirmation_for_email: 'Esperando la confirmacion de: %{email} '
+        leave_blank_if_you_don_t_want_to_change_it: Deja esto en blanco si no deseas cambiarlo
+        title: Editar %{resource}
+        unhappy: Infeliz
+        update: Actualizar
+        we_need_your_current_password_to_confirm_your_changes: Necesitamos tu contraseña actual para confirmar estos cambios
+      new:
+        sign_up: Regístrate
       signed_up: "Welcome! You have signed up successfully."
       signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
       signed_up_but_locked: "You have signed up successfully. However, we could not sign you in because your account is locked."
@@ -53,9 +82,23 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
       updated: "You updated your account successfully."
     sessions:
+      already_signed_out: Sesión finalizada.
+      new:
+        sign_in: Iniciar sesión
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
+    shared:
+      links:
+        back: Atrás
+        didn_t_receive_confirmation_instructions: "¿No has recibido las instrucciones de confirmación?"
+        didn_t_receive_unlock_instructions: "¿No has recibido las instrucciones para desbloquear?"
+        forgot_your_password: "¿Has olvidado tu contraseña?"
+        sign_in: Inicia sesión
+        sign_in_with_provider: Iniciar sesión con %{provider}
+        sign_up: Regístrate
     unlocks:
+      new:
+        resend_unlock_instructions: Reenviadme las instrucciones para desbloquear mi cuenta.
       send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions about how to unlock it in a few minutes."
       unlocked: "Your account has been unlocked successfully. Please sign in to continue."

@@ -1,0 +1,9 @@
+es:
+  devise:
+    passwords:
+      edit:
+        change_my_password: Cambiar mi contraseña
+        description: Esta será tu constraseña para Onodo a partir de ahora
+        change_your_password: Cambia tu contraseña
+        confirm_new_password: Confirma tu nueva contraseña
+        new_password: Nueva contraseña

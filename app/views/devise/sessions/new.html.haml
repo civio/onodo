@@ -1,7 +1,7 @@
 .login.devise-page.container
   .row
     .page-header.text-center
-      %h2= t '.sign_in'
+      %h2= t 'common.login'
       %p.lead= t '.lead'
     .col-sm-6.col-sm-offset-3
       = form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => 'form-default'}) do |f|
@@ -19,7 +19,7 @@
         %p
           = link_to t('devise.shared.links.forgot_your_password'), new_password_path(resource_name)
         .actions
-          = f.submit t('.sign_in'), class: "btn btn-default btn-primary"
+          = f.submit t('common.login'), class: "btn btn-default btn-primary"
           %hr
           .devise-links
             = render "devise/shared/links"

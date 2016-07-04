@@ -3,3 +3,5 @@ en:
     passwords:
       new:
         lead: Enter the email you registered & we will send you a link to restore it
+        forgot_your_password: "¿Has olvidado tu contraseña?"
+        send_me_reset_password_instructions: Envíame las instrucciones para restablecer mi contraseña
