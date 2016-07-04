@@ -530,6 +530,51 @@ $node-color-12: #e0deda;
     }
   }
 
+  .panel{
+    border-radius: 0;
+    border-color: $gray-lighter;
+    @include box-shadow( 0 0 10px rgba(0, 0, 0, 0.2) );
+  }
+  
+  .panel-heading{
+    color: $gray;
+    border-radius: 0;
+    border: none;
+    padding: $grid-gutter-width/2 $grid-gutter-width/3;
+    background: $gray-lighter;  // $gray-blue-dark;
+    @include clearfix();
+
+    .close{
+      border-radius: $grid-gutter-width/2;
+      text-indent: -9999px;
+      opacity: 1;
+      @include retina-sprite( $icon-close-brand-group );
+      @include transition( background-color 0.3s ease-out );
+
+      &:hover{
+        background-color: white;
+      }
+    }
+
+    .btn-primary{
+      color: $brand-primary;
+      background: transparent;
+      min-width: auto;
+      padding: 0 $grid-gutter-width/2;
+
+      .btn-icon-pencil{
+        float: left;
+        margin-top: 5px;
+        margin-right: $grid-gutter-width/3;
+        @include retina-sprite( $icon-pencil-group );
+      }
+
+      &:hover{
+        background: white;
+      }
+    }
+  }
+
   .visualization-graph-panel-configuration{
     position: absolute;
     top: 0;
@@ -539,7 +584,6 @@ $node-color-12: #e0deda;
     max-width: 400px;
     overflow-y: auto;
     overflow-x: hidden;
-    border-radius: 0;
     z-index: 100;
     @include transition( right 0.4s ease-out );
 
@@ -549,14 +593,7 @@ $node-color-12: #e0deda;
 
     .panel-heading h4{
       margin: $grid-gutter-width/6 0;
-    }
-
-    .close{
-      position: absolute;
-      right: $grid-gutter-width/2;
-      top: $grid-gutter-width/2;
-      opacity: 1;
-      @include retina-sprite( $icon-close-group );
+      float: left;
     }
 
     .nav-tabs{
@@ -605,6 +642,7 @@ $node-color-12: #e0deda;
       margin-top: $grid-gutter-width/3;
     }
   }
+  
 }
 
 .visualization-graph-info{
@@ -615,8 +653,6 @@ $node-color-12: #e0deda;
   width: 100%;
   max-width: 350px;
   margin: 0;
-  border-radius: 0;
-  border-color: $gray-lighter;
   color: $gray;
   //background:  $gray-blue;
   background: white;
@@ -624,51 +660,9 @@ $node-color-12: #e0deda;
   overflow-y: auto;
   overflow-x: hidden;
   @include transition( right 0.4s ease-out );
-  @include box-shadow( 0 0 10px rgba(0, 0, 0, 0.2) );
 
   &.active{
     right: 0;
-  }
-
-  .panel-heading{
-    color: $gray;
-    border-radius: 0;
-    border: none;
-    padding: $grid-gutter-width/2 $grid-gutter-width/3;
-    background: $gray-lighter;  // $gray-blue-dark;
-    @include clearfix();
-
-    .close{
-      border-radius: $grid-gutter-width/2;
-      text-indent: -9999px;
-      opacity: 1;
-      @include retina-sprite( $icon-close-brand-group );
-      @include transition( background-color 0.3s ease-out );
-
-      &:hover{
-        background-color: white;
-      }
-    }
-
-    .btn-primary{
-      color: white;
-      border-color: white;
-      background: transparent;
-      min-width: auto;
-      padding: 0 $grid-gutter-width/2;
-
-      .btn-icon-pencil{
-        float: left;
-        margin-top: 5px;
-        margin-right: $grid-gutter-width/3;
-        @include retina-sprite( $icon-pencil-white-group );
-
-      }
-
-      &:hover{
-        background: darken( $gray-blue-dark, 15% );
-      }
-    }
   }
 
   .panel-body{
