@@ -312,32 +312,20 @@
     background: $brand-primary;
     border-radius: 0;
     border: none;
-    padding: $grid-gutter-width;
+    padding: $grid-gutter-width $grid-gutter-width 2*$grid-gutter-width/3;
     font-weight: 300;
 
-    .col-sm-4 {
-      margin-bottom: $grid-gutter-width/2;
-    }
-    .col-sm-5 {
+    .contact-item{
       display: inline-block;
       vertical-align: top;
-    }
-    .col-sm-6 {
-      margin-top: $grid-gutter-width/3;
-      margin-bottom: $grid-gutter-width/3;
+      margin-top: $grid-gutter-width/2;
       margin-right: $grid-gutter-width;
-      display: inline-block;
-      vertical-align: top;
+
       p {
         @include clearfix();
         position: relative;
         padding-left: $grid-gutter-width;
       }
-    }
-    .col-sm-3 {
-      margin-top: $grid-gutter-width/3;
-      display: inline-block;
-      vertical-align: top;
     }
 
     h3{
@@ -372,16 +360,18 @@
     }
 
     .icon-email {
-      margin-top: 2px;
+      margin-top: 0;
       @include retina-sprite( $icon-mail-group );
     }
     .icon-maps {
+      margin-top: -4px;
       @include retina-sprite( $icon-location-group );
     }
 
     .social-links{
       @include clearfix();
       padding: 0;
+      margin-top: -8px;
       list-style: none;
 
       li{
@@ -431,56 +421,6 @@
 
       &:hover{
         opacity: 1;
-      }
-    }
-  }
-  @media (min-width: $screen-sm-min) {
-    .well {
-      padding: 2*$grid-gutter-width $grid-gutter-width;
-      .border{
-        border-right: 1px solid mix( $brand-primary, white, 80% );
-      }
-      .col-sm-5,
-      .col-sm-4,
-      .col-sm-6,
-      .col-sm-3 {
-        min-height: 150px;
-      }
-      .col-sm-5 {
-        display: block;
-      }
-      .col-sm-4 {
-        margin-bottom: 0;
-      }
-      .col-sm-6 {
-        margin: 0;
-        margin-bottom: 0;
-        display: block;
-        p {
-          padding-left: 0;
-        }
-      }
-      .col-sm-3 {
-        margin-top: 0;
-        display: block;
-      }
-      .icon-email,
-      .icon-maps{
-        position: relative;
-        margin-bottom: $grid-gutter-width/2;
-      }
-      .icon-email {
-        margin-top: 8px;
-      }
-      .icon-maps {
-        margin-top: 2px;
-      }
-      .social-links {
-        margin-top: 42px;
-      }
-      .close {
-        top: $grid-gutter-width;
-        right: $grid-gutter-width;
       }
     }
   }

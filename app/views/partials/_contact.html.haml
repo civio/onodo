@@ -1,21 +1,19 @@
 #contact.collapse
   .well.container-fluid
     .row
-      .col-sm-4.border
-        %h3= t '.title'
-        %p= t '.text'
-      .col-sm-5
-        .row
-          .col-sm-6.border
-            %p
-              %span.icon-email
-              %a{:href => "mailto:contacto@civio.es"}
-                contacto@civio.es
-          .col-sm-6.border
-            %span.icon-maps
-            %a{href: 'https://civio.es', title: t('common.civio_foundation'), target: '_blank'}
-              civio.es
-      .col-sm-3
+      %h3= t '.title'
+      %p= t '.text'
+      .contact-item
+        %p
+          %span.icon-email
+          %a{href: "mailto:contacto@civio.es"}
+            contacto@civio.es
+      .contact-item
+        %p
+          %span.icon-maps
+          %a{href: 'https://civio.es', title: t('common.civio_foundation'), target: '_blank'}
+            civio.es
+      .contact-item
         %ul.social-links
           %li
             %a.twitter{href: 'https://twitter.com/Onodo_', title: 'Twitter Onodo', target: '_blnk'}
