@@ -673,7 +673,7 @@ $node-color-12: #e0deda;
   .panel-body{
 
     .name{
-      margin: 0 0 $grid-gutter-width/2;
+      margin: $grid-gutter-width/6 0 $grid-gutter-width/2;
     }
 
     .description{

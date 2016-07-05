@@ -257,10 +257,6 @@
     }
   }
 
-  .panel-body{
-    padding: $grid-gutter-width/3;
-  }
-
   .chapters-list{
     padding: 0;
 
@@ -308,7 +304,10 @@
   }
 
   .chapter-content{
-    padding: $grid-gutter-width/6;
+
+    h3{
+      margin: $grid-gutter-width/6 0 $grid-gutter-width/2;
+    }
 
     .actions{
       margin-top: $grid-gutter-width/2;
