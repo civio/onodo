@@ -1,4 +1,4 @@
-- if params[:search]
+- unless params[:search].blank?
   %h3.search-result-title
     - if items.blank?
       = t('.search_no_result_title', search: params[:search]).html_safe
