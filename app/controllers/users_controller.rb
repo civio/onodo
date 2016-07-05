@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  PAGE_SIZE = 4
+  PAGE_SIZE = 6
 
   before_action :authenticate_user!, except: [:show, :show_visualizations, :show_stories]
   before_action :set_user, only: [:show, :show_visualizations, :show_stories]

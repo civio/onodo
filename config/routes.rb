@@ -64,7 +64,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/explore'                 => 'pages#explore_stories'
+  get '/explore'                 => 'pages#explore_visualizations'
   get '/explore/visualizations/' => 'pages#explore_visualizations'
   get '/explore/stories/'        => 'pages#explore_stories'
   get '/gallery'                 => 'pages#gallery'

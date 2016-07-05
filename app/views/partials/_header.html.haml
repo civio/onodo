@@ -42,8 +42,8 @@
                   = link_to t('.configure_gallery'), edit_gallery_path
               %li
                 = link_to t('common.create_visualization'), new_visualization_path, :class => 'active'
-              %li
-                = link_to t('common.create_story'), new_story_path, :class => 'active'
+              /%li
+              /  = link_to t('common.create_story'), new_story_path, :class => 'active'
               %li
                 = link_to t('.logout'), destroy_user_session_path, :method => 'delete'
         %ul#lang-selector.nav.navbar-nav

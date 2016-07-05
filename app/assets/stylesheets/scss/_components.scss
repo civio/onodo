@@ -10,7 +10,7 @@
 // Boton Circle LG
 
 .btn-circle-lg{
-
+   
   .btn-circle-lg-icon{
     position: relative;
     display: block;
@@ -45,9 +45,25 @@
 
   .btn-circle-lg-title{
     display: block;
+    color: $brand-primary;
     font-size: 0.857em;
     text-transform: uppercase;
     padding: $grid-gutter-width/2 0;
+
+    .soon{
+      color: $gray;
+      font-weight: 300;
+    }
+  }
+
+  &.disabled{
+    .btn-circle-lg-icon{
+      opacity: 0.7;
+    }
+
+    &:hover .btn-circle-lg-icon{
+      background: transparent;
+    }
   }
 
   &.btn-circle-lg-story .btn-circle-lg-icon-sprite{

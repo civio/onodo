@@ -1,0 +1,8 @@
+@import 'bootstrap/variables';
+@import '_variables';
+
+.pages .search-form{
+  float: none;
+  width: 320px;
+  margin-top: -$grid-gutter-width;
+}
