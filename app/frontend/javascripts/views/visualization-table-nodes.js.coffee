@@ -4,20 +4,24 @@ VisualizationModalNodeImage = require './visualization-modal-node-image.js'
 
 class VisualizationTableNodes extends VisualizationTableBase
 
-  el:               '.visualization-table-nodes'
-  nodes_types:      null
-  table_col_headers:  ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image']
-  columns:          {
-    'delete'      : 0
-    'duplicate'   : 1
-    'node'        : 2
-    'type'        : 3
-    'description' : 4
-    'visible'     : 5
-    'image'       : 6
-  }
+  el:                '.visualization-table-nodes'
+  nodes_types:       null
+  table_col_headers: null
+  columns:
+    'delete'         : 0
+    'duplicate'      : 1
+    'node'           : 2
+    'type'           : 3
+    'description'    : 4
+    'visible'        : 5
+    'image'          : 6
 
   constructor: (@model, @collection) ->
+    # Set columns names based on current language
+    if $('body').hasClass('lang-en')
+      @table_col_headers = ['', '', 'Node', 'Type', 'Description', 'Visible', 'Image']
+    else
+      @table_col_headers = ['', '', 'Nodo', 'Tipo', 'Descripción', 'Visible', 'Imagen']
     super @model, @collection, 'node'    # Add Image Modal View
     @visualizationModalNodeImage = new VisualizationModalNodeImage
     @visualizationModalNodeImage.on 'update',  @onVisualizationModalNodeImageUpdate

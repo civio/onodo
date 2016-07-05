@@ -3,22 +3,26 @@ VisualizationTableBase   = require './visualization-table-base.js'
 
 class VisualizationTableRelations extends VisualizationTableBase
 
-  el:               '.visualization-table-relations'
-  relations_types:  null
-  nodes:            null
-  table_col_headers:  ['', '', 'Source', 'Relationship', 'Target', 'Date', 'Direction']
-  duplicate:        null
-  columns:          {
-    'delete'    : 0
-    'duplicate' : 1
-    'source'    : 2
-    'type'      : 3
-    'target'    : 4
-    'date'      : 5
-    'direction' : 6
-  }
+  el:                '.visualization-table-relations'
+  relations_types:   null
+  nodes:             null
+  table_col_headers: null
+  duplicate:         null
+  columns:
+    'delete'         : 0
+    'duplicate'      : 1
+    'source'         : 2
+    'type'           : 3
+    'target'         : 4
+    'date'           : 5
+    'direction'      : 6
 
   constructor: (@model, @collection) ->
+    # Set columns names based on current language
+    if $('body').hasClass('lang-en')
+      @table_col_headers = ['', '', 'Source', 'Relationship', 'Target', 'Date', 'Direction']
+    else
+      @table_col_headers = ['', '', 'Origen', 'Relación', 'Destino', 'Fecha', 'Dirección']
     super @model, @collection, 'relation'
     $('#add-custom-column-relations-form').submit @onAddCustomColumn
 

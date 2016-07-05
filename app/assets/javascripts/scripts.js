@@ -6,12 +6,14 @@ $(document).ready(function(){
   // Skip if layout is embed
   if ($('body').hasClass('embed')) return;
 
+  var lang = $('body').hasClass('lang-es') ? 'es' : 'en';
+
   //Cookie bar activate
   $.cookieBar({
     //Configuration
-    message: 'We use cookies to track usage and preferences.', //Message displayed on bar
+    message: (lang == 'en') ? 'We use cookies to track usage and preferences.' : '¡Sorpresa! Nosotros también usamos cookies.', //Message displayed on bar
     acceptButton: true, //Set to true to show accept/enable button
-    acceptText: 'I Understand', //Text on accept/enable button
+    acceptText: (lang == 'en') ? 'I Understand' : 'Entendido', //Text on accept/enable button
     //acceptFunction: null, //Function on accept/enable button
     //declineButton: false, //Set to true to show decline/disable button
     //declineText: 'Disable Cookies', //Text on decline/disable button
@@ -25,7 +27,7 @@ $(document).ready(function(){
     //acceptAnyClick: false, //Set to true to silently accept cookies when visitor click on any place
     expireDays: 365, //Number of days for cookieBar cookie to be stored for
     //renewOnVisit: false, //Set to true to renew the cookie on every visit
-    //forceShow: false, //Force cookieBar to show regardless of user cookie preference
+    //forceShow: true, //Force cookieBar to show regardless of user cookie preference
     effect: 'slide', //Options: slide, fade, hide
     element: 'body', //Element to append/prepend cookieBar to. Remember "." for class or "#" for id.
     //append: false, //Set to true for cookieBar HTML to be placed at base of website. Actual position may change according to CSS

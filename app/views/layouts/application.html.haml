@@ -2,7 +2,7 @@
 %html
   %head
     = render 'partials/head'
-  %body{ :class => controller.controller_path+' '+controller.action_name, "data-visualization-id": (@visualization.id unless @visualization.nil?), "data-story-id": (@story.id unless @story.nil?) }
+  %body{ :class => controller.controller_path+' '+controller.action_name+' lang-'+I18n.locale.to_s, "data-visualization-id": (@visualization.id unless @visualization.nil?), "data-story-id": (@story.id unless @story.nil?) }
     = render 'partials/header'
     = render 'partials/alerts'
     = yield
