@@ -1,6 +1,10 @@
 en:
   home:
     index:
+      create_visualization: Crea una visualización
+      explore: Explora
+      gallery: Galería
+      demo: Prueba la demo
       titles:
         main: Relationships are complicated
         lead: Let's create visualizations to understand them

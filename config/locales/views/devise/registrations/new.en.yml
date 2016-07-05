@@ -3,5 +3,8 @@ en:
     registrations:
       new:
         lead: Create your relationships visualizations & tell meaningful stories through them
+        name: Name
+        characters_minimum: (%{length} characters minimum)
+        password_confirmation: Password confirmation
         accept: I accept the
         terms_and_conditions: terms and conditions

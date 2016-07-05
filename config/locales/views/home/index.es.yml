@@ -1,6 +1,10 @@
 es:
   home:
     index:
+      create_visualization: Crea una visualización
+      explore: Explora
+      gallery: Galería
+      demo: Prueba la demo
       titles:
         main: Cada red cuenta una historia
         lead: Crea mapas de relaciones de forma rápida y sencilla para contar la tuya

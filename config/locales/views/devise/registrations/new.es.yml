@@ -3,5 +3,8 @@ es:
     registrations:
       new:
         lead: Crea tus propios gráficos de redes y cuenta historias interesantes con ellos
+        name: Nombre
+        characters_minimum: (%{length} carácteres mínimo)
+        password_confirmation: Confirma la contraseña
         accept: Acepto los
         terms_and_conditions: términos y condiciones

@@ -7,19 +7,19 @@
       = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {:class => 'form-default'}) do |f|
         = devise_error_messages!
         .form-group
-          = f.label :name
+          = f.label :name, t('.name')
           = f.text_field :name, autofocus: true, class: "form-control"
         .form-group
           = f.label :email
           = f.email_field :email, class: "form-control"
         .form-group
-          = f.label :password
+          = f.label :password, t('common.password')
           - if @validatable
             %em
-              (#{@minimum_password_length} characters minimum)
+              = t '.characters_minimum', length: @minimum_password_length
           = f.password_field :password, autocomplete: "off", class: "form-control"
         .form-group
-          = f.label :password_confirmation
+          = f.label :password_confirmation, t('.password_confirmation')
           = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"
         -# TODO! Add terms & conditions modal
         - if devise_mapping.rememberable?

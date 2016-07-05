@@ -9,7 +9,7 @@
           = f.label :email
           = f.email_field :email, autofocus: true, class: "form-control"
         .form-group
-          = f.label :password
+          = f.label :password, t('common.password')
           = f.password_field :password, autocomplete: "off", class: "form-control"
         - if devise_mapping.rememberable?
           .checkbox

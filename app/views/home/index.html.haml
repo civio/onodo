@@ -10,13 +10,14 @@
         %a.btn.btn-primary{:href => new_user_registration_path, :title => t('common.signup')}
           = t 'common.signup'
       - else
-        %a.btn.btn-primary{:href => new_visualization_path, :title => t('common.create_visualization')}
-          = t 'common.create_visualization'
-      %a.btn.btn-primary{:href => "/explore", :title => t('common.explore')}
-        = t 'common.explore'
-      /%a.btn.btn-primary{:href => "#", :title => t(:demo)}= t :demo
-      %a.btn.btn-primary{:href => "/gallery", :title => t('common.gallery')}
-        = t 'common.gallery'
+        %a.btn.btn-primary{:href => new_visualization_path, :title => t('.create_visualization')}
+          = t '.create_visualization'
+      %a.btn.btn-primary{:href => "/explore", :title => t('.explore')}
+        = t '.explore'
+      /%a.btn.btn-primary{:href => "#", :title => t('.demo')}
+      /  = t '.demo'
+      %a.btn.btn-primary{:href => "/gallery", :title => t('.gallery')}
+        = t '.gallery'
   .row.features.features-easey.text-center
     %h3= t '.titles.features'
     .container
