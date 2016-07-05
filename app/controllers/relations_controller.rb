@@ -23,7 +23,11 @@ class RelationsController < ApplicationController
   end
 
   def require_relation_ownership!
-    redirect_to visualization_path(@relation.visualization) if @relation.visualization.author != current_user
+    redirect_to visualization_path(@relation.visualization) unless authorized
+  end
+
+  def authorized
+    (@relation.visualization.author == current_user) || (@relation.visualization.author == demo_user)
   end
 
   def relation_params

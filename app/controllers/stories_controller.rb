@@ -79,7 +79,11 @@ class StoriesController < ApplicationController
   end
 
   def require_story_ownership
-    redirect_to story_path(@story) if @story.author != current_user
+    redirect_to story_path(@story) unless authorized
+  end
+
+  def authorized
+    (@story.author == current_user) || (@story.author == demo_user)
   end
 
   def story_params

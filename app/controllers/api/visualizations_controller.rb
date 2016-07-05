@@ -25,7 +25,11 @@ class Api::VisualizationsController < ApiController
   end
 
   def require_visualization_ownership!
-    render :show and return if @visualization.author != current_user
+    render :show and return unless authorized
+  end
+
+  def authorized
+    (@visualization.author == current_user) || (@visualization.author == demo_user)
   end
 
   def visualization_params

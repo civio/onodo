@@ -70,7 +70,11 @@ class ChaptersController < ApplicationController
   end
 
   def require_story_ownership!
-    redirect_to story_path(@chapter.story) if @chapter.story.author != current_user
+    redirect_to story_path(@chapter.story) unless authorized
+  end
+
+  def authorized
+    (@chapter.story.author == current_user) || (@chapter.story.author == demo_user)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

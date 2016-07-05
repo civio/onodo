@@ -54,7 +54,11 @@ class Api::RelationsController < ApiController
   end
 
   def require_relation_ownership!
-    render :show and return if @relation.visualization.author != current_user
+    render :show and return unless authorized
+  end
+
+  def authorized
+    (@relation.visualization.author == current_user) || (@relation.visualization.author == demo_user)
   end
 
   def relation_params

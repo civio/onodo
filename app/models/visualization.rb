@@ -10,6 +10,10 @@ class Visualization < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name, scope: :author
 
+  def self.next_id
+    connection.select_value("SELECT nextval('visualizations_id_seq')").to_i
+  end
+
   def nodes
     dataset.nodes.order(:name)
   end

@@ -52,7 +52,11 @@ class NodesController < ApplicationController
   end
 
   def require_node_ownership!
-    redirect_to visualization_path(@node.visualization) if @node.visualization.author != current_user
+    redirect_to visualization_path(@node.visualization) unless authorized
+  end
+
+  def authorized
+    (@node.visualization.author == current_user) || (@node.visualization.author == demo_user)
   end
 
   def node_params

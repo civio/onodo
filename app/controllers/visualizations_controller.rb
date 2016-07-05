@@ -86,7 +86,11 @@ class VisualizationsController < ApplicationController
   end
 
   def require_visualization_ownership!
-    redirect_to visualization_path(@visualization) if @visualization.author != current_user
+    redirect_to visualization_path(@visualization) unless authorized
+  end
+
+  def authorized
+    (@visualization.author == current_user) || (@visualization.author == demo_user)
   end
 
   def provided_dataset

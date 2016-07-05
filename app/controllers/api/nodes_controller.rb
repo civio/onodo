@@ -56,7 +56,11 @@ class Api::NodesController < ApiController
   end
 
   def require_node_ownership!
-    render :show and return if @node.visualization.author != current_user
+    render :show and return unless authorized
+  end
+
+  def authorized
+    (@node.visualization.author == current_user) || (@node.visualization.author == demo_user)
   end
 
   def node_params

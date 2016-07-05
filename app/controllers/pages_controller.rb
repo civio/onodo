@@ -25,6 +25,15 @@ class PagesController < ApplicationController
 
   # GET /demo
   def demo
+    id = Visualization.next_id
+    name = "Demo onodo-viz-#{id}"
+    dataset = Dataset.new
+
+    sign_in(demo_user) unless current_user
+
+    @visualization = Visualization.create(id: id, name: name, dataset: dataset, author: demo_user)
+
+    redirect_to edit_visualization_path(@visualization)
   end
 
   # GET /terms-of-service/modal
