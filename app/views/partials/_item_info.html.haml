@@ -26,13 +26,19 @@
               = t 'common.draft'
             = link_to t('.publish'), {controller: controller, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
       %div{class: grid_class}
-        %button.btn.btn-default.btn-invert.btn-collapse.collapsed.pull-right{ type: "button", "aria-controls" => "visualization-table-view", data: { toggle: "collapse", target: "#visualization-table-view" } }
-          %span.collapsible-label
-            %span.collapsible-label-icon
-            = t '.view_data_table'
-          %span.collapsed-label
-            %span.collapsed-label-icon
-            = t '.hide_data_table'
+        - if defined? current_user and current_user == item.author
+          .text-right
+            %a.btn.btn-default.btn-primary{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item), title: t('common.edit_visualization')}
+              %i.icon-edit
+              = t (defined? story) ? 'common.edit_story' : 'common.edit_visualization'
+        .text-right
+          %button.btn.btn-default.btn-invert.btn-collapse.collapsed{ type: "button", "aria-controls" => "visualization-table-view", data: { toggle: "collapse", target: "#visualization-table-view" } }
+            %span.collapsible-label
+              %span.collapsible-label-icon
+              = t '.view_data_table'
+            %span.collapsed-label
+              %span.collapsed-label-icon
+              = t '.hide_data_table'
 
 = render 'partials/item_table_view', visualization: (defined? story) ? item.visualization : item, node_custom_fields: (defined? story) ? item.visualization.dataset.node_custom_fields : item.dataset.node_custom_fields, relation_custom_fields: (defined? story) ? item.visualization.dataset.relation_custom_fields : item.dataset.relation_custom_fields
 
@@ -43,7 +49,7 @@
         .col-md-8.col-lg-9
           %h3= t 'common.description'
           - if defined? current_user and current_user == item.author
-            %a.btn-edit-circle{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info', title: t('.edit_info', class_name: item.class.to_s.downcase), data: {toggle: "tooltip", placement: "right"} }
+            %a.btn-edit-circle{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info', title: t('.edit_info'), data: {toggle: "tooltip", placement: "right"} }
               .btn-edit-circle-icon
           .visualization-description-content= item.description.html_safe
         - if defined? current_user and current_user == item.author

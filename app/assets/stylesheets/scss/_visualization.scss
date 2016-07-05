@@ -726,14 +726,14 @@ body.fullscreen{
 }
 
 .visualization-info{
-  padding: $grid-gutter-width 0;
+  padding: $grid-gutter-width 0 2*$grid-gutter-width/3;
 
   .row > div {
     margin-bottom: 5+$grid-gutter-width/2;
     display: inline-block;
     vertical-align: top;
     &:last-child {
-      margin-bottom: 0;
+      margin-bottom: $grid-gutter-width/3;
       display: block;
     }
     @media (min-width: $screen-sm-min) {
@@ -797,11 +797,22 @@ body.fullscreen{
     @include retina-sprite( $icon-table-group );
   }
 
+  .btn{
+    .icon-edit{
+      display: inline-block;
+      position: relative;
+      top: 4px;
+      margin-right: 5px;
+      @include retina-sprite( $icon-pencil-white-group );
+    }
+
+    &:hover .icon-edit{
+      @include retina-sprite( $icon-pencil-group );
+    }
+  }
+
   .btn-collapse{
     margin-top: $grid-gutter-width/2;
-    @media (min-width: $screen-sm-min) {
-      margin-top: 1.5*$grid-gutter-width;
-    }
   }
 
   .collapsed-label-icon,
@@ -815,6 +826,13 @@ body.fullscreen{
     position: relative;
     margin-right: 5px;
     top: 2px;
+  }
+
+  .text-right{
+    text-align: left;
+    @media (min-width: $screen-sm-min) {
+      text-align: right;
+    }
   }
 }
 
