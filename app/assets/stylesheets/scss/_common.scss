@@ -5,6 +5,11 @@
 @import '_variables';
 @import 'scss/sprites';
 
+html{
+  // Set footer background as default html background for templates with small height
+  background: $gray-dark;
+}
+
 body{
   font-family: $font-family-sans-serif;
   letter-spacing: 0.02em;
