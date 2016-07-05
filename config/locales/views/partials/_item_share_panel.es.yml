@@ -4,9 +4,9 @@ es:
       share: 'Compartir' 
       share_in: 'Comparte tu visualización en %{network_name}'
       share_twitter_msg: ' - hecho con @Onodo_ (una herramienta de @civio)'
-      embed_this: 'Inserta esta %{class_name}'
+      embed_this: 'Inserta esta visualización'
       permalink: Enlace permanente
-      public_to_share: 'La %{class_name} debe ser pública para insertarla o compartirla'
+      public_to_share: 'La visualización debe ser pública para insertarla o compartirla'
       publish_now: 'Publicar ahora'
       embed_height: 'Altura de la visualización'
       embed_show_title: 'Mostrar título de la visualización'

@@ -1123,6 +1123,10 @@ body.fullscreen{
 // Share & Embed Panel
 #visualization-share {
 
+  .panel-heading{
+    background: none;
+  }
+
   h4{
     font-size: 1.4em;
     line-height: 1.375em;

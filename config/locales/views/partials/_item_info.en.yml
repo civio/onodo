@@ -7,5 +7,5 @@ en:
       publish: Publish
       view_data_table: View Data Table
       hide_data_table: Hide Data Table
-      edit_info: 'Edit %{class_name} info'
+      edit_info: 'Edit info'
       based_on: Based on
