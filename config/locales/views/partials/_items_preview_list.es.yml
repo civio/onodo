@@ -1,6 +1,9 @@
 es:
   partials:
     items_preview_list:
+      search_no_result_title: No hemos encontrado ningún resultado relacionado con <strong>%{search}</strong>.
+      search_single_result_title: Hemos encontrado 1 resultado relacionado con <strong>%{search}</strong>.
+      search_result_title: Hemos encontrado %{length} resultados relacionados con <strong>%{search}</strong>.
       no_visualizations_yet: No has creado ninguna visualización aún
       no_stories_yet: No has creado ninguna historia aún
       user_no_visualizations_yet: Este usuario no ha creado ninguna visualización aún

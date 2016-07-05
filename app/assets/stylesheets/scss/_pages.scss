@@ -1,8 +1,24 @@
 @import 'bootstrap/variables';
 @import '_variables';
 
-.pages .search-form{
-  float: none;
-  width: 320px;
-  margin-top: -$grid-gutter-width;
+.pages{
+
+  .search-form{
+    float: none;
+    width: 320px;
+    margin-top: -$grid-gutter-width;
+  }
+
+  .search-result-title{
+    display: block;
+    color: $gray-dark;
+    margin-bottom: 4*$grid-gutter-width/3;
+    margin-top: -$grid-gutter-width/2;
+    font-size: 1.286em;
+
+    strong{
+      color: $gray-darker;
+      font-weight: 400;
+    }
+  }
 }
