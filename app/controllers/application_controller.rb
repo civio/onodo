@@ -5,9 +5,14 @@ class ApplicationController < ActionController::Base
 
   helper_method :gallery_editor_role?
 
+  before_action :check_demo_user
   before_action :set_locale
 
   private
+
+  def check_demo_user
+    sign_out(current_user) if (current_user == demo_user) && (params[:controller] !~ /^api\//) && !(params[:controller] == 'pages' && params[:action] == 'demo')
+  end
 
   def set_locale
     I18n.locale = session[:locale] || http_accept_language.compatible_language_from(I18n.available_locales) || I18n.default_locale
