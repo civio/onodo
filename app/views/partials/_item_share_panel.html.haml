@@ -1,49 +1,50 @@
-#visualization-share.panel.panel-default.panel-share
-  .panel-heading
-    %button.close{type: "button", "aria-label" => t('common.close')}
-      %span{"aria-hidden" => "true"}
-        &times
-  - if item.published?
-    .panel-body
-      %h4.text-center
-        = t '.share'
-      %ul.social-networks-btns
-        %li
-          %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+t('.share_twitter_msg')+'&url='+request.original_url, title: t('.share_in', network_name: 'Twitter'), target: '_blank'}
-            %span.icon
-              Twitter
-        %li
-          %a.facebook{href: 'https://www.facebook.com/dialog/share?app_id=1541273426175561&display=popup&href='+request.original_url+'&redirect_uri='+request.original_url, title: t('.share_in', network_name: 'Facebook'), target: '_blank'}
-            %span.icon
-              Facebook
-        %li
-          %a.gplus{href: 'https://plus.google.com/share?url='+request.original_url, title: t('.share_in', network_name: 'Google +'), target: '_blank'}
-            %span.icon
-              Google +
-      - unless defined? story
+- unless defined? current_user and current_user.name == 'demo'
+  #visualization-share.panel.panel-default.panel-share
+    .panel-heading
+      %button.close{type: "button", "aria-label" => t('common.close')}
+        %span{"aria-hidden" => "true"}
+          &times
+    - if item.published?
+      .panel-body
         %h4.text-center
-          = t '.embed_this'
-        %textarea#embed-code.form-control{ rows: 4 }
-          <iframe src="#{request.base_url}#{visualization_path(item)}/embed/" width="100%" height="450px" scrolling="no" marginheight="0" frameborder="0"></iframe>
-        %form.embed-form
-          .form-group
-            %label{ for: "embed-height" }
-              = t '.embed_height'
-            %input#embed-height.form-control{ type: "number", value: 450 }
-          .checkbox
-            %label
-              %input{ type: "checkbox", checked: "checked" }
-                = t '.embed_show_title'
-      .form-group
-        %label{ for: "" }
-          = t '.permalink'
-        - if defined? story
-          %input.form-control{ type: "text", value: request.base_url+story_path(item)+'/' }
-        - else
-          %input.form-control{ type: "text", value: request.base_url+visualization_path(item)+'/' }
-  - else
-    .panel-body.draft
-      .panel-body-draft-container
-        %h4
-          = t '.public_to_share'
-        = link_to t('.publish_now'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
+          = t '.share'
+        %ul.social-networks-btns
+          %li
+            %a.twitter{href: 'https://twitter.com/intent/tweet?text='+item.name+t('.share_twitter_msg')+'&url='+request.original_url, title: t('.share_in', network_name: 'Twitter'), target: '_blank'}
+              %span.icon
+                Twitter
+          %li
+            %a.facebook{href: 'https://www.facebook.com/dialog/share?app_id=1541273426175561&display=popup&href='+request.original_url+'&redirect_uri='+request.original_url, title: t('.share_in', network_name: 'Facebook'), target: '_blank'}
+              %span.icon
+                Facebook
+          %li
+            %a.gplus{href: 'https://plus.google.com/share?url='+request.original_url, title: t('.share_in', network_name: 'Google +'), target: '_blank'}
+              %span.icon
+                Google +
+        - unless defined? story
+          %h4.text-center
+            = t '.embed_this'
+          %textarea#embed-code.form-control{ rows: 4 }
+            <iframe src="#{request.base_url}#{visualization_path(item)}/embed/" width="100%" height="450px" scrolling="no" marginheight="0" frameborder="0"></iframe>
+          %form.embed-form
+            .form-group
+              %label{ for: "embed-height" }
+                = t '.embed_height'
+              %input#embed-height.form-control{ type: "number", value: 450 }
+            .checkbox
+              %label
+                %input{ type: "checkbox", checked: "checked" }
+                  = t '.embed_show_title'
+        .form-group
+          %label{ for: "" }
+            = t '.permalink'
+          - if defined? story
+            %input.form-control{ type: "text", value: request.base_url+story_path(item)+'/' }
+          - else
+            %input.form-control{ type: "text", value: request.base_url+visualization_path(item)+'/' }
+    - else
+      .panel-body.draft
+        .panel-body-draft-container
+          %h4
+            = t '.public_to_share'
+          = link_to t('.publish_now'), {controller: controller.controller_name, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}

@@ -15,6 +15,7 @@ var config = {
   entry: {
     'app-visualization':        './app/frontend/javascripts/app-visualization.js',
     'app-visualization-edit':   './app/frontend/javascripts/app-visualization-edit.js',
+    'app-visualization-demo':   './app/frontend/javascripts/app-visualization-demo.js',
     'app-visualization-embed':  './app/frontend/javascripts/app-visualization-embed.js',
     'app-story':                './app/frontend/javascripts/app-story.js',
     'app-story-edit':           './app/frontend/javascripts/app-story-edit.js',

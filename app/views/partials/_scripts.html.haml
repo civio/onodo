@@ -19,6 +19,9 @@
 - elsif controller.controller_name == 'chapters'
   - if controller.action_name == 'new' or controller.action_name == 'edit'
     = javascript_include_tag *webpack_asset_paths('app-story-chapter')
+- elsif controller.controller_name == 'pages'
+  - if controller.action_name == 'demo'
+    = javascript_include_tag *webpack_asset_paths('app-visualization-demo')
 - unless defined? embed
   = javascript_include_tag *webpack_asset_paths('app-upload')
 

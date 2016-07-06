@@ -33,7 +33,7 @@ class PagesController < ApplicationController
 
     @visualization = Visualization.create(id: id, name: name, dataset: dataset, author: demo_user)
 
-    redirect_to edit_visualization_path(@visualization)
+    render 'visualizations/edit'
   end
 
   # GET /terms-of-service/modal

@@ -21,7 +21,7 @@
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
             =t 'common.contact'
       %ul.nav.navbar-nav.navbar-right
-        -if current_user.nil?
+        -if current_user.nil? or (defined? current_user and current_user.name == 'demo')
           %li
             = link_to t('common.login'), new_user_session_path, class: "btn btn-transparent"
           %li
