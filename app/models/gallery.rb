@@ -2,10 +2,10 @@ class Gallery < ActiveRecord::Base
   acts_as_singleton
 
   def visualizations
-    Visualization.find(visualization_ids)
+    Visualization.where(id: visualization_ids)
   end
 
   def stories
-   Story.find(story_ids)
+   Story.where(id: story_ids)
   end
 end
