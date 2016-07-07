@@ -1,4 +1,3 @@
-Handsontable  = require './../dist/handsontable.full.js'
 Slider        = require 'bootstrap-slider'
 Switch        = require 'bootstrap-switch'
 
