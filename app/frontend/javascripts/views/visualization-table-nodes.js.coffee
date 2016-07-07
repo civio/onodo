@@ -116,7 +116,6 @@ class VisualizationTableNodes extends VisualizationTableBase
         if @duplicate.get('image')
           @table.setDataAtRowProp index, 'image', @duplicate.get('image')
         @table.setDataAtRowProp index, 'visible', @duplicate.get('visible')
-        console.log 'now set duplicate values'
         @duplicate = null
       else
         @table.setDataAtRowProp index, 'visible', true
@@ -175,7 +174,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Function to show modal with description edit form
   showDescriptionModal: (index) =>
-    console.log 'showDescriptionModal', index
+    #console.log 'showDescriptionModal', index
     $modal = $('#table-description-modal')
     # Load description edit form via ajax in modal
     $modal.find('.modal-body').load '/nodes/'+@getIdAtRow(index)+'/edit/description/', () =>
@@ -193,7 +192,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Update listener for Image Edition Modal
   onVisualizationModalNodeImageUpdate: (e) =>
-    console.log 'onVisualizationModalNodeImageUpdate'
+    #console.log 'onVisualizationModalNodeImageUpdate'
     @table.setDataAtRowProp e.index, 'image', e.value   # update image value in table
 
   # Method for deleting images on server when Image Modal is closed before confirm

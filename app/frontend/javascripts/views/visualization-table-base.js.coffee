@@ -25,8 +25,8 @@ class VisualizationTableBase extends Backbone.View
       height: 360
       stretchH: 'all'
       columnSorting: true
-      filters: true
-      dropdownMenu: ['remove_col', '---------', 'filter_by_condition', 'filter_action_bar']
+      #filters: true
+      #dropdownMenu: ['remove_col', '---------', 'filter_by_condition', 'filter_action_bar']
     @table_options.colHeaders  = @table_col_headers
     @table_options.columns     = @getTableColumns()
 
