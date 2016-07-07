@@ -17,6 +17,10 @@ class Api::VisualizationsController < ApiController
     render :show
   end
 
+  def network_analysis
+    NetworkAnalysis.new(@dataset).calculate_metrics
+  end
+
   private
 
   def set_visualization_and_dataset
