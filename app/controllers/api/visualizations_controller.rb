@@ -18,7 +18,27 @@ class Api::VisualizationsController < ApiController
   end
 
   def network_analysis
-    NetworkAnalysis.new(@dataset).calculate_metrics
+    results, metrics_names = NetworkAnalysis.new(@dataset).calculate_metrics
+
+    # Create the new custom fields, if needed
+    # TODO: Refactor to avoid duplication with code above
+    network_metrics = metrics_names.map do |metric_name|
+      { "name" => metric_to_custom_field_name(metric_name), "type" => "number" }
+    end
+    @dataset.node_custom_fields = (@dataset.node_custom_fields + network_metrics).uniq
+    @dataset.save!
+
+    # Populate the custom fields with the generated values.
+    # To make sure we delete potentially existing stale values, we don't iterate through the results,
+    # we iterate through all the nodes, cleaning existing values as we go.
+    @dataset.nodes.each do |node|
+      node_metrics = results[node.id.to_s] || {}
+      metrics_names.each do |metric_name|
+        custom_field_name = metric_to_custom_field_name(metric_name)
+        node.custom_fields[custom_field_name] = node_metrics[metric_name]
+      end
+      node.save!
+    end
   end
 
   private
@@ -40,4 +60,9 @@ class Api::VisualizationsController < ApiController
     params.require(:visualization).permit(:name, :description, :published, :author_id, :parameters)
   end
 
+  # TODO: We're using the metric name as the custom field name, with an underscore prefix to avoid
+  # crashing with potential user-generated fields. Should review/discuss this.
+  def metric_to_custom_field_name(metric_name)
+    '_'+metric_name
+  end
 end
