@@ -3,6 +3,8 @@
 #
 # Dependencies:
 # - pip install python-igraph
+#
+# A nice introduction to igraph: http://igraph.org/python/doc/tutorial/tutorial.html
 
 import igraph
 import sys
