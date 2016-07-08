@@ -1,4 +1,3 @@
-#demo-overlay
 %ul#demo-steps
   %li{ data: {selector: '.visualization-table-scrollbar a', title: t('.step_1.title'), placement: 'top'} }
     = t '.step_1.content'
@@ -38,11 +37,32 @@
     = t '.step_18.content'
   %li{ data: {selector: '.visualization-graph-info .close', title: t('.step_19.title'), placement: 'bottom'} }
     = t '.step_19.content'
-  %li{ data: {selector: '.visualization-graph-menu-actions .btn-configure', title: t('.step_20.title'), placement: 'bottom'} }
-    = t '.step_20.content'
-  %li{ data: {selector: '.visualization-graph-panel-configuration #nodes-color', title: t('.step_21.title'), placement: 'top'} }
-    = t '.step_21.content'
-  %li{ data: {selector: '.visualization-graph-component .nodes-cont', title: t('.step_22.title'), placement: 'top'} }
-    = t '.step_22.content'
-  /%li{ data: {selector: '.visualization-graph-panel-configuration #showNodesLabel', title: t('.step_23.title'), placement: 'top'} }
-  /  = t '.step_23.content'
+
+#demo-intro-modal.delete-modal.modal.fade{ tabindex: "-1", role: "dialog"}
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
+        %h4.modal-title
+          = t '.intro.title'
+      .modal-body
+        %p= t '.intro.content'
+      .modal-footer
+        %button.btn.btn-primary{type: "button", "data-dismiss" => "modal"}
+          Ok
+
+#demo-end-modal.delete-modal.modal.fade{ tabindex: "-1", role: "dialog"}
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
+        %h4.modal-title
+          = t '.end.title'
+      .modal-body
+        %p= t '.end.content'
+      .modal-footer
+        %a.btn.btn-block.btn-primary{ href: new_user_registration_path(), title: t('.end.singup') }
+          = t '.end.singup'
+        %hr
+        %button.btn-block.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal"}
+          = t '.end.continue'

@@ -18,16 +18,24 @@ class VisualizationDemo
         content:   $el.html()
       }
 
-    console.log 'Hola demo!', @steps
-
-    @addPopover @steps[@current_step]
+    # show intro modal & wait until hidden to add popover 
+    $('#demo-intro-modal').modal('show').on('hidden.bs.modal', =>
+      @addPopover @steps[@current_step]
+    )
 
   addPopover: (step) ->
     console.log 'addPopover', @current_step
 
+    # hide previous popup
     if @current_step > 0
       $(@steps[@current_step-1].selector).popover('hide').popover('destroy')
 
+    # go to end-modal
+    if @current_step == @steps.length-1
+      $('#demo-end-modal').modal('show')
+      return
+
+    # set popover data
     $(step.selector)
       .data('content', step.content)
       .data('title', step.title)
@@ -35,12 +43,11 @@ class VisualizationDemo
       .data('template', @template)
       .data('container', 'body')
 
-    $(step.selector).popover().popover('show')
+    # launch popover
+    $(step.selector).popover('show')
 
-    if @current_step < @steps.length-1
-      console.log 'add click event'
-      $('.popover-demo').one 'click', (e) =>
-        console.log 'next demo step'
-        @addPopover @steps[++@current_step]
+    # listen to click in popover to go to next step
+    $('.popover-demo').one 'click', (e) =>
+      @addPopover @steps[++@current_step]
 
 module.exports = VisualizationDemo

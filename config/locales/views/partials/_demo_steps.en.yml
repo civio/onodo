@@ -61,20 +61,8 @@ en:
       step_19:
         title: Cierra la pestaña
         content: También puedes hacerlo haciendo click en cualquier parte de la visualización.
-      step_20:
-        title: Ve a configuración
-        content: Vamos a ver para qué sirven estos tipos que has incluído.
-      step_21:
-        title: Elige un tipo de color
-        content: Por defecto, está relacionado con la columna "tipo", pero puede estar vinculada a otras.
-      step_22:
-        title: ¡Observa!
-        content: Ya puedes ver cómo tus nodos cambian de color dependiendo del tipo, lo que te permite agrupar.
-      step_23:
-        title: Oculta el nombre de los nodos
-        content: También puedes cambiar los tamaños, que se vean sus imágenes en los círculos...
       end:
         title: ¡Listo!
         content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."
-        singup: Regístrate y empieza a crear tus propias visualizaciones.
-        continue: Sigue probando la demo de forma libre.
+        singup: Regístrate y empieza a crear tus propias visualizaciones
+        continue: Sigue probando la demo de forma libre
