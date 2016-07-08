@@ -1,6 +1,6 @@
 .visualization-header
   .container-fluid
-    - if defined? current_user and current_user.name == 'demo'
+    - if defined? @demo
       %h2.pull-left
         Demo
     - else

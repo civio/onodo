@@ -10,7 +10,7 @@
       .form-group
         %input.form-control{type: "text", placeholder: t('.search_node')}
       %button.btn.btn-default{type: "button"}
-  - unless defined? current_user and current_user.name == 'demo'
+  - unless defined? @demo
     %button.btn.btn-default.btn-transparent.btn-share{type: "button"}
       %span.title
         = t '.share'

@@ -31,6 +31,7 @@ class PagesController < ApplicationController
 
     sign_in(demo_user) unless current_user
 
+    @demo = true
     @visualization = Visualization.create(id: id, name: name, dataset: dataset, author: demo_user)
 
     render 'visualizations/edit'

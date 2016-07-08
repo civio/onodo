@@ -1554,3 +1554,13 @@ body.pages.demo{
     margin-bottom: 2*$grid-gutter-width/3;
   }
 }
+
+// Demo Popover
+.popover-demo{
+  .popover-title{
+    color: $brand-primary;
+    font-size: 18px;
+    font-weight: 400;
+    background: white;
+  }
+}

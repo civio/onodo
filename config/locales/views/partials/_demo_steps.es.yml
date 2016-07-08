@@ -1,0 +1,80 @@
+es:
+  partials:
+    demo_steps:
+      intro:
+        title: ¡Bienvenido!
+        content: "Esta es la pantalla de edición y visualización simultánea de Onodo. Te vamos a guiar paso a paso, desde una tabla vacía, por sus componentes principales. Recuerda que también puedes empezar a trabajar subiendo tu propia base de datos y que esto es una demo: toca lo que quieras, nada se guarda. Lo que pasa en las demos es efímero como una hoja de sauce."
+      step_1: 
+        title: Haz scroll
+        content: Baja y empieza a editar la tabla de nodos y relaciones.
+      step_2:
+        title: Crea tu primer nodo
+        content: Empieza creando el primer componente de tu visualización.
+      step_3:
+        title: ¡Mira!
+        content: Ya puedes ver tu nodo en la visualización.
+      step_4:
+        title: Ponle nombre
+        content: Puedes elegir el que quieras. Por ejemplo, Luke Skywalker.
+      step_5:
+        title: Crea otro nodo
+        content: Una relación no existe si dos nodos no se unen.
+      step_6:
+        title: Ponle nombre
+        content: Por ejemplo, Darth Vader.
+      step_7:
+        title: Crea un tercer nodo
+        content: El último, lo prometemos.
+      step_8:
+        title: Dale nombre
+        content: ¿Qué te parece Leia?
+      step_9:
+        title: Ve a la pestaña relaciones
+        content: Vamos a vincular nuestros nodos.
+      step_10:
+        title: Añade una relación
+        content: Empezamos a darle forma a la red.
+      step_11:
+        title: Elige un nodo origen
+        content: Por ejemplo, puedes elegir a Darth Vader.
+      step_12:
+        title: Elige un nodo destino
+        content: En nuestro ejemplo, puede ser Luke Skywalker.
+      step_13:
+        title: Añade el tipo de relación
+        content: ¡Ojo, spoiler! Puedes elegir "padre de", por ejemplo.
+      step_14:
+        title: Añade otra relación
+        content: Por ejemplo, entre Luke y Leia. Ya tienes tu red básica.
+      step_15:
+        title: Vuelve a la pestaña nodos
+        content: Vamos a enriquecer a nuestros protagonistas.
+      step_16:
+        title: Añade una descripción
+        content: En Onodo, también podrás añadir fotos.
+      step_17:
+        title: Haz click en tu nodo
+        content: Esta es su ficha. Podrás ver la descripción que has escrito.
+      step_18:
+        title: Ponles tipo
+        content: Por ejemplo, puedes marcar quiénes son sith y quienes jedi.
+      step_19:
+        title: Cierra la pestaña
+        content: También puedes hacerlo haciendo click en cualquier parte de la visualización.
+      step_20:
+        title: Ve a configuración
+        content: Vamos a ver para qué sirven estos tipos que has incluído.
+      step_21:
+        title: Elige un tipo de color
+        content: Por defecto, está relacionado con la columna "tipo", pero puede estar vinculada a otras.
+      step_22:
+        title: ¡Observa!
+        content: Ya puedes ver cómo tus nodos cambian de color dependiendo del tipo, lo que te permite agrupar.
+      step_23:
+        title: Oculta el nombre de los nodos
+        content: También puedes cambiar los tamaños, que se vean sus imágenes en los círculos...
+      end:
+        title: ¡Listo!
+        content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."
+        singup: Regístrate y empieza a crear tus propias visualizaciones.
+        continue: Sigue probando la demo de forma libre.
