@@ -37,9 +37,14 @@ And then run the application:
 
 ### Network analysis installation
 
-The network analysis is done by a separate module, implemented in Python using the igraph library. In order to test this functionality, make sure you have Python installed, and add the bindings to igraph:
+The network analysis is done by a separate module, implemented in Python using the [igraph][1] library. In order to test this functionality, make sure you have Python installed, and add the bindings to igraph:
 
     $ pip install python-igraph
+
+Note: there are [Ruby bindings][2] for igraph, but they haven't been updated in years.
+
+[1]: http://igraph.org
+[2]: https://github.com/alexgutteridge/igraph
 
 ### Purge & Update DB with seed file
 
