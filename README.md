@@ -35,6 +35,12 @@ And then run the application:
 
     $ foreman start -f Procfile.dev
 
+### Network analysis installation
+
+The network analysis is done by a separate module, implemented in Python using the igraph library. In order to test this functionality, make sure you have Python installed, and add the bindings to igraph:
+
+    $ pip install python-igraph
+
 ### Purge & Update DB with seed file
 
     $ rake db:purge db:create db:migrate db:seed
