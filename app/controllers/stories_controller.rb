@@ -50,7 +50,7 @@ class StoriesController < ApplicationController
   # DELETE /stories/:id/
   def destroy
     @story.destroy
-    redirect_to user_path(current_user), notice: t('.success')
+    redirect_to dashboard_path(), notice: t('.success')
   end
 
   # POST /stories/:id/publish

@@ -64,7 +64,7 @@ class VisualizationsController < ApplicationController
   # DELETE /visualizations/:id/
   def destroy
     @visualization.destroy
-    redirect_to user_path(current_user), notice: t('.success')
+    redirect_to dashboard_path(), notice: t('.success')
   end
 
   # POST /visualizations/:id/publish
