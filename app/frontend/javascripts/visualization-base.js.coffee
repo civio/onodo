@@ -21,9 +21,9 @@ class VisualizationBase
   visualizationInfo:          null
   parameters: null
   parametersDefault: {
-    nodesColor:         'solid-1'
-    nodesColorColumn:   'type'
-    nodesSize:          11
+    nodesColor:         'qualitative'
+    nodesColorColumn:   'node_type'
+    nodesSize:          1
     nodesSizeColumn:    'relations'
     showNodesLabel:     1
     showNodesImage:     1
