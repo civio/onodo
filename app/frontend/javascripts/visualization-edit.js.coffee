@@ -158,6 +158,7 @@ class VisualizationEdit extends VisualizationBase
     @nodes.once 'sync', (model) =>
       console.log 'onNodesAdd', model.id, model
       @visualizationCanvas.addNode model.attributes
+      @visualizationActions.updateSearchData()
     , @
 
   onNodeChangeName: (node) ->
@@ -166,6 +167,7 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateNodesLabels()
     # Update Panel Info name
     @updateInfoNode node
+    @visualizationActions.updateSearchData()
 
   onNodeChangeType: (node) ->
     console.log 'onNodeChangeType', node.attributes.name
@@ -186,6 +188,7 @@ class VisualizationEdit extends VisualizationBase
       # Hide Panel Info if visible for current node
       if @visualizationInfo.isVisible() and @visualizationInfo.node.id == node.id
         @visualizationInfo.hide()
+    @visualizationActions.updateSearchData()
 
   onNodeChangeImage: (node) ->
     console.log 'onNodeChangeImage', node
@@ -205,6 +208,7 @@ class VisualizationEdit extends VisualizationBase
   onNodesRemove: (node) ->
     console.log 'onNodesRemove', node.attributes.name
     @visualizationCanvas.removeNode node.attributes
+    @visualizationActions.updateSearchData()
     # Hide Panel Info if visible for current node
     if @visualizationInfo.isVisible() and @visualizationInfo.node.id == node.id
       @visualizationInfo.hide()

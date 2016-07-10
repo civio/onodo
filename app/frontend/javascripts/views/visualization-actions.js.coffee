@@ -9,30 +9,38 @@ class VisualizationActions extends Backbone.View
 
   initialize: ->
     @share_panel = $('#visualization-share')
-    @search_form = @$el.find('.search-form')
+    @search_form = @$el.find('.search-form input')
     # Setup Share Panel Show/Hide
     @$el.find('.btn-share').click      @onPanelShareShow
     @share_panel.find('.close').click  @onPanelShareHide
     # Setup Search Input Events
-    @search_form.find('input').focusin( @onSearchNodeFocus ).focusout( @onSearchNodeUnfocus )
+    @search_form.focusin( @onSearchNodeFocus ).focusout( @onSearchNodeUnfocus )
 
   render: ->
+    @setupTypehead()
+
+  setupTypehead: ->
+    # search only visible nodes
+    data = @collection.models.filter (d) -> return d.get('visible')
     # constructs typeahead suggestion engine
     bloodhound = new Bloodhound {
       datumTokenizer: Bloodhound.tokenizers.whitespace
       queryTokenizer: Bloodhound.tokenizers.whitespace
-      local: @collection.models.map (d) -> return d.get('name')
+      local: data.map (d) -> return d.get('name')
     }
     # typeahead setup
-    @search_form.find('input').typeahead({
+    @search_form.typeahead({
         hint: true,
         highlight: true,
         minLength: 1
       },
       {
-        name: 'states',
         source: bloodhound
-      }).on('typeahead:selected', @onSearchSelected)
+      }).on 'typeahead:selected', @onSearchSelected
+
+  updateSearchData: ->
+    @search_form.typeahead 'destroy'
+    @setupTypehead()
 
   # Panel Share Events
   onPanelShareShow: =>
@@ -43,16 +51,16 @@ class VisualizationActions extends Backbone.View
 
   # Search Node Events
   onSearchNodeFocus: =>
-    @search_form.addClass 'focus'
+    @search_form.parent().addClass 'focus'
 
   onSearchNodeUnfocus: =>
-    if @search_form.find('input').val().trim() == ''
-      @search_form.removeClass 'focus'
+    if @search_form.val().trim() == ''
+      @search_form.parent().removeClass 'focus'
 
   onSearchSelected: (e, value) =>
     node = @collection.findWhere({name: value})
     if node
-      @search_form.find('input').typeahead('val', '')
+      @search_form.typeahead('val', '')
       # trigger visualization.actions.search event to force hover node
       Backbone.trigger 'visualization.actions.search', {node: node}
       # trigger visualization.node.showInfo event to show panel node info
