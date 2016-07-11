@@ -1,0 +1,12 @@
+en:
+  activerecord:
+    attributes:
+      chapter:
+        name: Title
+      story:
+        name: Title
+    errors:
+      messages:
+        blank: can't be blank
+        taken: is taken
+        accepted: must be accepted

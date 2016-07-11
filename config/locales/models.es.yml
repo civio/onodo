@@ -1,0 +1,18 @@
+es:
+  activerecord:
+    attributes:
+      chapter:
+        name: Título
+      dataset:
+        visualization: Visualización
+      story:
+        name: Título
+      user:
+        name: Nombre
+        password: Contraseña
+        terms_of_service: Términos y condiciones
+    errors:
+      messages:
+        blank: no puede estar vacío
+        taken: ya existe
+        accepted: han de aceptarse
