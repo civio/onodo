@@ -9,4 +9,4 @@ $(document).ready ->
   visualization.render()
   $( window ).resize visualization.resize
 
-  demo = new VisualizationDemo()
+  demo = new VisualizationDemo visualization.nodes, visualization.relations

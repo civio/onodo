@@ -6,7 +6,10 @@ class VisualizationDemo
   steps:        []
   template:     '<div class="popover popover-demo" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
 
-  constructor:  ->
+  constructor: (_nodes, _relations) ->
+    
+    @nodes     = _nodes
+    @relations = _relations
     
     # setup steps based on #demo-steps list
     $('#demo-steps li').each (index, element) =>
@@ -44,10 +47,61 @@ class VisualizationDemo
       .data('container', 'body')
 
     # launch popover
-    $(step.selector).popover('show')
+    setTimeout =>
+      $(step.selector).popover('show')
+      @setPopoverCallback()
+    , 600
 
-    # listen to click in popover to go to next step
-    $('.popover-demo').one 'click', (e) =>
-      @addPopover @steps[++@current_step]
+  setPopoverCallback: ->
+
+    if @current_step == 0
+      $(window).one 'scroll', =>
+        @addNextPopover()
+    else if @current_step == 1 || @current_step == 4 || @current_step == 6
+      $('#visualization-add-node-btn').one 'click', =>
+        @addNextPopover()
+    else if @current_step == 2
+      setTimeout =>
+        @addNextPopover()
+      , 2000
+    else if @current_step == 3 || @current_step == 5 || @current_step == 7
+      @nodes.once 'change:name', =>
+        @addNextPopover()
+    else if @current_step == 8
+      $('.visualization-table .visualization-table-header a[href="#relations"]').one 'click', =>
+        @addNextPopover()
+    else if @current_step == 9 || @current_step == 13
+      $('#visualization-add-relation-btn').one 'click', =>
+        @addNextPopover()
+    else if @current_step == 10
+      @relations.once 'change:source_id', =>
+        @addNextPopover()
+    else if @current_step == 11
+      @relations.once 'change:target_id', =>
+        @addNextPopover()
+    else if @current_step == 12
+       @relations.once 'change:relation_type', =>
+        @addNextPopover()
+    else if @current_step == 14
+      $('.visualization-table .visualization-table-header a[href="#nodes"]').one 'click', =>
+        @addNextPopover()
+      # change relation source & target
+    else if @current_step == 15
+      @nodes.once 'change:description', =>
+        @addNextPopover()
+    else if @current_step == 16
+      $('.visualization-graph-component .nodes-cont .node').one 'click', =>
+        @addNextPopover()
+      # click on node
+    else if @current_step == 17
+      @nodes.once 'change:node_type', =>
+        @addNextPopover()
+    else
+      # listen to click in popover to go to next step
+      $('.popover-demo').one 'click', (e) =>
+        @addNextPopover()
+
+  addNextPopover: ->
+    @addPopover @steps[++@current_step]
 
 module.exports = VisualizationDemo
