@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   private
 
   def check_demo_user
-    sign_out(current_user) if (current_user == demo_user) && (params[:controller] !~ /^api\//) && !(params[:controller] == 'pages' && params[:action] == 'demo')
+    sign_out(current_user) if (current_user == demo_user) && (params[:controller] !~ /^api\//) && !(params[:controller] == 'pages' && params[:action] == 'demo') && !(params[:controller] == 'nodes' && params[:action] == 'edit_description')
   end
 
   def set_locale
