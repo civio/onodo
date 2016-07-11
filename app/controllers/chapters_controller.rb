@@ -15,13 +15,15 @@ class ChaptersController < ApplicationController
 
     @chapter.nodes = nodes_in(@chapter.relations)
 
+    @story = @chapter.story
+
     if @chapter.save
-      redirect_to edit_story_path(@chapter.story), notice: t('.success')
+      redirect_to edit_story_path(@story), notice: t('.success')
     else
       flash[:alert] = @chapter.errors.full_messages.to_sentence
       flash[:alert] = t('.image_error') if @chapter.errors.include? :image
       render json: { location: "#{request.fullpath}/new" } and return if xhr_request?
-      render :new
+      render :new, location: new_story_chapter_path(@story)
     end
   end
 
