@@ -108,5 +108,5 @@ es:
       not_found: no se ha encontrado
       not_locked: no estaba bloqueada
       not_saved:
-        one: 'Ha ocurrido un error al tratar de guardar %{resource}:'
-        other: 'Hemos detectado %{count} errores al tratar de guardar %{resource}:'
+        one: 'Ha ocurrido un error al tratar de guardar tu %{resource}:'
+        other: 'Hemos detectado %{count} errores al tratar de guardar tu %{resource}:'

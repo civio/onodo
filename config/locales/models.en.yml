@@ -1,12 +1,16 @@
 en:
   activerecord:
+    models:
+      user: Account
     attributes:
       chapter:
         name: Title
+      visualization:
+        name: Title
       story:
         name: Title
-    errors:
-      messages:
-        blank: can't be blank
-        taken: is taken
-        accepted: must be accepted
+  errors:
+    messages:
+      blank: can't be blank
+      taken: is taken
+      accepted: must be accepted

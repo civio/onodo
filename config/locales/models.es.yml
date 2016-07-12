@@ -1,18 +1,27 @@
 es:
   activerecord:
+    models:
+      user: Cuenta
     attributes:
       chapter:
-        name: Título
+        name: título
       dataset:
-        visualization: Visualización
+        visualization: visualización
+      visualization:
+        name: título
       story:
-        name: Título
+        name: título
       user:
-        name: Nombre
-        password: Contraseña
-        terms_of_service: Términos y condiciones
-    errors:
-      messages:
-        blank: no puede estar vacío
-        taken: ya existe
-        accepted: han de aceptarse
+        name: nombre
+        email: email
+        password: contraseña
+        terms_of_service: términos y condiciones
+  errors:
+    format: "%{message}"
+    messages:
+      blank: "El %{attribute} no puede estar vacío"
+      taken: "El %{attribute} ya existe"
+      accepted: "Has de aceptar los %{attribute}"
+    attributes:
+      password:
+        blank: "La %{attribute} no puede estar vacía"
