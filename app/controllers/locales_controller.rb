@@ -14,12 +14,13 @@ class LocalesController < ApplicationController
   ROUTES_FOR_SIGN_UP = ['/users']
 
   def normalized_path
+    return if @path.blank?
     return @path + '/new' if path_matches ROUTES_FOR_NEW
     return @path + '/sign_up' if path_matches ROUTES_FOR_SIGN_UP
     path
   end
 
   def path_matches routes_list
-    routes_list.any?{ |r| @path.ends_with?(r) }
+    routes_list.any?{ |r| @path && @path.ends_with?(r) }
   end
 end
