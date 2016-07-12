@@ -70,7 +70,9 @@ class VisualizationBase
     @visualizationCanvas.render()
     @visualizationActions.render()
     # Setup Visualization Events
-    @setupVisualizationEvents()
+    @bindVisualizationEvents()
+    # Trigger synced event for Stories
+    Backbone.trigger 'visualization.synced'
 
   # Format data from nodes & relations collections for VisualizationCanvas
   getVisualizationCanvasData: ( nodes, relations ) ->
@@ -98,7 +100,7 @@ class VisualizationBase
     @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
     @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
 
-  setupVisualizationEvents: ->
+  bindVisualizationEvents: ->
     # Subscribe VisualizationCanvas Events
     Backbone.on 'visualization.node.showInfo',         @onNodeShowInfo, @
     Backbone.on 'visualization.node.hideInfo',         @onNodeHideInfo, @
@@ -108,8 +110,17 @@ class VisualizationBase
     Backbone.on 'visualization.navigation.fullscreen', @onFullscreen, @
     # Subscribe Actions Events
     Backbone.on 'visualization.actions.search',        @onNodeSearch, @
-    # Trigger synced event for Stories
-    Backbone.trigger 'visualization.synced'
+
+  unbindVisualizationEvents: ->
+    # Unsubscribe VisualizationCanvas Events
+    Backbone.off 'visualization.node.showInfo'
+    Backbone.off 'visualization.node.hideInfo'
+    # Unsubscribe Navigation Events
+    Backbone.off 'visualization.navigation.zoomin'
+    Backbone.off 'visualization.navigation.zoomout'
+    Backbone.off 'visualization.navigation.fullscreen'
+    # Unsubscribe Actions Events
+    Backbone.off 'visualization.actions.search'
 
   # Canvas Events
   onNodeShowInfo: (e) ->

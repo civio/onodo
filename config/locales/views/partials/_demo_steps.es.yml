@@ -12,7 +12,7 @@ es:
         content: Empieza creando el primer componente de tu visualización.
       step_3:
         title: ¡Mira!
-        content: Ya puedes ver tu nodo en la visualización.
+        content: 'Ya puedes ver tu nodo en la visualización'
       step_4:
         title: Ponle nombre
         content: Puedes elegir el que quieras. Por ejemplo, Luke Skywalker.
@@ -23,44 +23,38 @@ es:
         title: Ponle nombre
         content: Por ejemplo, Darth Vader.
       step_7:
-        title: Crea un tercer nodo
-        content: El último, lo prometemos.
-      step_8:
-        title: Dale nombre
-        content: ¿Qué te parece Leia?
-      step_9:
         title: Ve a la pestaña relaciones
         content: Vamos a vincular nuestros nodos.
-      step_10:
+      step_8:
         title: Añade una relación
         content: Empezamos a darle forma a la red.
-      step_11:
+      step_9:
         title: Elige un nodo origen
         content: Por ejemplo, puedes elegir a Darth Vader.
-      step_12:
+      step_10:
         title: Elige un nodo destino
         content: En nuestro ejemplo, puede ser Luke Skywalker.
-      step_13:
+      step_11:
         title: Añade el tipo de relación
         content: ¡Ojo, spoiler! Puedes elegir "padre de", por ejemplo.
-      step_14:
-        title: Añade otra relación
-        content: Por ejemplo, entre Luke y Leia. Ya tienes tu red básica.
-      step_15:
+      step_12:
         title: Vuelve a la pestaña nodos
         content: Vamos a enriquecer a nuestros protagonistas.
-      step_16:
+      step_13:
         title: Añade una descripción
-        content: En Onodo, también podrás añadir fotos.
-      step_17:
-        title: Haz click en tu nodo
+        content: Puedes incluir información complementaria sobre tu nodo.
+      step_14:
+        title: Haz click en un nodo
         content: Esta es su ficha. Podrás ver la descripción que has escrito.
-      step_18:
+      step_15:
         title: Ponles tipo
         content: Por ejemplo, puedes marcar quiénes son sith y quienes jedi.
-      step_19:
-        title: Cierra la pestaña
-        content: También puedes hacerlo haciendo click en cualquier parte de la visualización.
+      step_16:
+        title: Dale gas
+        content: Para probar todos los componentes, vamos a cargar una de nuestras redes de ejemplo
+      step_17:
+        title: Abre la configuración
+        content: Aquí podrás personalizar colores, tamaños, estilos de línea...
       end:
         title: ¡Listo!
         content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."

@@ -12,7 +12,9 @@ class VisualizationStory extends Visualization
     @visualizationCanvas.setOffsetX 230 # translate left half the width of Story Info panel 
     @visualizationCanvas.render false
     # Setup Visualization Events
-    @setupVisualizationEvents()
+    @bindVisualizationEvents()
+    # Trigger synced event for Stories
+    Backbone.trigger 'visualization.synced'
 
   # Setup a chapter nodes & relations in Visualization Canvas
   showChapter: (nodes, relations) ->

@@ -1557,6 +1557,8 @@ body.pages.demo{
 
 // Demo Popover
 .popover-demo{
+  z-index: 1040;
+  
   .popover-title{
     color: $brand-primary;
     font-size: 18px;

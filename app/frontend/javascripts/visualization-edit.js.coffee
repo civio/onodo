@@ -50,23 +50,58 @@ class VisualizationEdit extends VisualizationBase
     @tableRelations.render()
     # Listen to Network Analysis modal switches events
     $('#network-analysis-modal .switch').bootstrapSwitch()
+    @bindCollectionEvents()
+    super()
+    # Setup Visualization Configuration
+    @visualizationConfiguration.model = @visualization
+    @visualizationConfiguration.render @parameters, @parametersDefault
+    # Show visualization empty msg if there is no nodes or relations
+    if @nodes.models.length == 0 and @relations.models.length == 0
+      $('.visualization-graph-component .visualization-empty-msg').fadeIn().find('a').click @scrollToEdit
+      @nodes.once 'add', ->
+        $('.visualization-graph-component .visualization-empty-msg').fadeOut()
+
+  bindCollectionEvents: ->
     # Listen to Collection events (handle tables changes)
-    @nodes.bind 'add',                      @onNodesAdd, @
-    @nodes.bind 'change:name',              @onNodeChangeName, @
-    @nodes.bind 'change:node_type',         @onNodeChangeType, @
-    @nodes.bind 'change:description',       @onNodeChangeDescription, @
-    @nodes.bind 'change:visible',           @onNodeChangeVisible, @
-    @nodes.bind 'change:image',             @onNodeChangeImage, @
-    @nodes.bind 'remove',                   @onNodesRemove, @
-    @relations.bind 'change:source_id',     @onRelationsChangeNode, @
-    @relations.bind 'change:target_id',     @onRelationsChangeNode, @
-    @relations.bind 'change:relation_type', @onRelationsChangeType, @
-    @relations.bind 'change:direction',     @onRelationsChangeDirection, @
-    @relations.bind 'remove',               @onRelationsRemove, @
-    @visualization.bind 'change:node_custom_fields', @onVisualizationChangeNodeCustomField, @
+    @nodes.on 'add',                      @onNodesAdd, @
+    @nodes.on 'change:name',              @onNodeChangeName, @
+    @nodes.on 'change:node_type',         @onNodeChangeType, @
+    @nodes.on 'change:description',       @onNodeChangeDescription, @
+    @nodes.on 'change:visible',           @onNodeChangeVisible, @
+    @nodes.on 'change:image',             @onNodeChangeImage, @
+    @nodes.on 'remove',                   @onNodesRemove, @
+    @relations.on 'change:source_id',     @onRelationsChangeNode, @
+    @relations.on 'change:target_id',     @onRelationsChangeNode, @
+    @relations.on 'change:relation_type', @onRelationsChangeType, @
+    @relations.on 'change:direction',     @onRelationsChangeDirection, @
+    @relations.on 'remove',               @onRelationsRemove, @
+    @visualization.on 'change:node_custom_fields', @onVisualizationChangeNodeCustomField, @
     # Add event handler for each custom_field
     @visualization.get('node_custom_fields').forEach (custom_field) =>
-      @nodes.bind 'change:'+custom_field.name, @onNodeChangeCustomField, @
+      @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
+
+  unbindCollectionEvents: ->
+    # Listen to Collection events (handle tables changes)
+    @nodes.off 'add'
+    @nodes.off 'change:name'
+    @nodes.off 'change:node_type'
+    @nodes.off 'change:description'
+    @nodes.off 'change:visible'
+    @nodes.off 'change:image'
+    @nodes.off 'remove'
+    @relations.off 'change:source_id'
+    @relations.off 'change:target_id'
+    @relations.off 'change:relation_type'
+    @relations.off 'change:direction'
+    @relations.off 'remove'
+    @visualization.off 'change:node_custom_fields'
+    # Add event handler for each custom_field
+    @visualization.get('node_custom_fields').forEach (custom_field) =>
+      @nodes.off 'change:'+custom_field.name
+
+  # Override bindVisualizationEvents to add config events
+  bindVisualizationEvents: ->
+    super()
     # Listen to Config Panel events
     Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesColorColumn',      @onUpdateNodesColorColumn, @
@@ -78,15 +113,20 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
+
+  unbindVisualizationEvents: ->
     super()
-    # Setup Visualization Configuration
-    @visualizationConfiguration.model = @visualization
-    @visualizationConfiguration.render @parameters, @parametersDefault
-    # Show visualization empty msg if there is no nodes or relations
-    if @nodes.models.length == 0 and @relations.models.length == 0
-      $('.visualization-graph-component .visualization-empty-msg').fadeIn().find('a').click @scrollToEdit
-      @nodes.once 'add', ->
-        $('.visualization-graph-component .visualization-empty-msg').fadeOut()
+    # Listen to Config Panel events
+    Backbone.off 'visualization.config.updateNodesColor'
+    Backbone.off 'visualization.config.updateNodesColorColumn'
+    Backbone.off 'visualization.config.updateNodesSize'
+    Backbone.off 'visualization.config.updateNodesSizeColumn'
+    Backbone.off 'visualization.config.toogleNodesLabel'
+    Backbone.off 'visualization.config.toogleNodesImage'
+    Backbone.off 'visualization.config.toogleNodesWithoutRelation'
+    Backbone.off 'visualization.config.updateRelationsCurvature'
+    Backbone.off 'visualization.config.updateRelationsLineStyle'
+    Backbone.off 'visualization.config.updateForceLayoutParam'
 
   resize: =>
     #console.log 'resize'
@@ -148,12 +188,39 @@ class VisualizationEdit extends VisualizationBase
       @tableNodes.hide()
       @tableRelations.show()
 
+  updateData: ->
+    demo_id = 80
+    # unbind events
+    @unbindCollectionEvents()
+    @unbindVisualizationEvents()
+    # clear current nodes & relations
+    @nodes.reset()
+    @relations.reset()
+    @onNodeHideInfo()
+    @visualizationCanvas.clear()
+    # update collections data
+    syncCounter = _.after 2, @onUpdatedData
+    @nodes.fetch          {url: '/api/visualizations/'+demo_id+'/nodes/',     success: syncCounter}
+    @relations.fetch      {url: '/api/visualizations/'+demo_id+'/relations/', success: syncCounter}
+      
+  onUpdatedData: =>
+    # update tables collections
+    @tableNodes.render()
+    @tableRelations.render()
+    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
+    @visualizationCanvas.render()
+    @visualizationActions.updateSearchData()
+    # bind events again
+    @bindCollectionEvents()
+    @bindVisualizationEvents()
+    Backbone.trigger 'visualization.synced'
 
   # Events Handlers Methods
   # ---------------------
 
   # Nodes Collection Events
   onNodesAdd: (node) ->
+    console.log 'nodes add'
     # We need to wait until sync event to get node id
     @nodes.once 'sync', (model) =>
       console.log 'onNodesAdd', model.id, model

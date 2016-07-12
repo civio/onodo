@@ -4,39 +4,41 @@
   %li{ data: {selector: '#visualization-add-node-btn', title: t('.step_2.title'), placement: 'top'} }
     = t '.step_2.content'
   %li{ data: {selector: '.visualization-graph-component .nodes-cont', title: t('.step_3.title'), placement: 'bottom'} }
-    = t '.step_3.content'
+    %p
+      = t '.step_3.content'
+    %a.btn.btn-primary{href: "#"}
+      OK
   %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(2)', title: t('.step_4.title'), placement: 'top'} }
     = t '.step_4.content'
   %li{ data: {selector: '#visualization-add-node-btn', title: t('.step_5.title'), placement: 'top'} }
     = t '.step_5.content'
   %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(2)', title: t('.step_6.title'), placement: 'top'} }
     = t '.step_6.content'
-  %li{ data: {selector: '#visualization-add-node-btn', title: t('.step_7.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table .visualization-table-header a[href="#relations"]', title: t('.step_7.title'), placement: 'top'} }
     = t '.step_7.content'
-  %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(2)', title: t('.step_8.title'), placement: 'top'} }
+  %li{ data: {selector: '#visualization-add-relation-btn', title: t('.step_8.title'), placement: 'top'} }
     = t '.step_8.content'
-  %li{ data: {selector: '.visualization-table .visualization-table-header a[href="#relations"]', title: t('.step_9.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table-relations .ht_clone_top thead th:eq(2)', title: t('.step_9.title'), placement: 'top'} }
     = t '.step_9.content'
-  %li{ data: {selector: '#visualization-add-relation-btn', title: t('.step_10.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table-relations .ht_clone_top thead th:eq(4)', title: t('.step_10.title'), placement: 'top'} }
     = t '.step_10.content'
-  %li{ data: {selector: '.visualization-table-relations .ht_clone_top thead th:eq(2)', title: t('.step_11.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table-relations .ht_clone_top thead th:eq(3)', title: t('.step_11.title'), placement: 'top'} }
     = t '.step_11.content'
-  %li{ data: {selector: '.visualization-table-relations .ht_clone_top thead th:eq(4)', title: t('.step_12.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table .visualization-table-header a[href="#nodes"]', title: t('.step_12.title'), placement: 'top'} }
     = t '.step_12.content'
-  %li{ data: {selector: '.visualization-table-relations .ht_clone_top thead th:eq(3)', title: t('.step_13.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(4)', title: t('.step_13.title'), placement: 'top'} }
     = t '.step_13.content'
-  %li{ data: {selector: '#visualization-add-relation-btn', title: t('.step_14.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-graph-component .nodes-cont', title: t('.step_14.title'), placement: 'bottom'} }
     = t '.step_14.content'
-  %li{ data: {selector: '.visualization-table .visualization-table-header a[href="#nodes"]', title: t('.step_15.title'), placement: 'top'} }
+  %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(3)', title: t('.step_15.title'), placement: 'top'} }
     = t '.step_15.content'
-  %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(4)', title: t('.step_16.title'), placement: 'top'} }
-    = t '.step_16.content'
-  %li{ data: {selector: '.visualization-graph-component .nodes-cont', title: t('.step_17.title'), placement: 'bottom'} }
+  %li{ data: {selector: '.visualization-graph-component .nodes-cont', title: t('.step_16.title'), placement: 'bottom'} }
+    %p
+      = t '.step_16.content'
+    %a.btn.btn-primary{href: "#"}
+      OK
+  %li{ data: {selector: '.visualization-graph .visualization-graph-menu-actions .btn-configure', title: t('.step_17.title'), placement: 'left'} }
     = t '.step_17.content'
-  %li{ data: {selector: '.visualization-table-nodes .ht_clone_top thead th:eq(3)', title: t('.step_18.title'), placement: 'top'} }
-    = t '.step_18.content'
-  %li{ data: {selector: '.visualization-graph-info .close', title: t('.step_19.title'), placement: 'bottom'} }
-    = t '.step_19.content'
 
 #demo-intro-modal.delete-modal.modal.fade{ tabindex: "-1", role: "dialog"}
   .modal-dialog{role: "document"}

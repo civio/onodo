@@ -9,4 +9,13 @@ $(document).ready ->
   visualization.render()
   $( window ).resize visualization.resize
 
-  demo = new VisualizationDemo visualization.nodes, visualization.relations
+  # wait until visualization synced to create demo
+  Backbone.once 'visualization.synced', =>
+
+    demo = new VisualizationDemo visualization.nodes, visualization.relations
+
+    # listen to loadData event to update new data
+    Backbone.once 'visualization.demo.loadData', =>
+      visualization.updateData()
+      Backbone.once 'visualization.synced', =>
+        demo.addNextPopover()

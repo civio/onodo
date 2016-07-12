@@ -173,6 +173,10 @@ class VisualizationCanvas extends Backbone.View
 
     # console.log 'initializeData'
 
+    @data_nodes              = []
+    @data_relations          = []
+    @data_relations_visibles = []
+
     # Setup Nodes
     data.nodes.forEach (d) =>
       if d.visible
@@ -198,6 +202,16 @@ class VisualizationCanvas extends Backbone.View
 
     #console.log 'current nodes', @data_nodes
     #console.log 'current relations', @data_relations_visibles
+
+  clear: ->
+    # Add loading class
+    @$el.addClass 'loading'
+    # Clear all containers
+    @container.remove()
+    @relations_cont.remove()
+    @relations_labels_cont.remove()
+    @nodes_cont.remove()
+    @nodes_labels_cont.remove()
 
   render: ( restarForce ) ->
     @updateImages()
