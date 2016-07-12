@@ -50,7 +50,7 @@ Rails.application.routes.draw do
 
   resources :datasets, only: [:show], defaults: { format: :xlsx }
 
-  resources :nodes, :only => [:index, :edit, :update] do
+  resources :nodes, :only => [:edit, :update] do
     collection do
       get ':id/edit/description' => 'nodes#edit_description'
       get ':id/edit/image'       => 'nodes#edit_image'
