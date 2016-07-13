@@ -207,7 +207,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     # get column name from form input text
     column_name           = $(e.target).find('#add-custom-column-name').val()
     column_type           = $(e.target).find('#add-custom-column-type').val()
-    column_name_formatted = column_name.replace(/\s+/g, '_').toLowerCase()
+    column_name_formatted = @getCustomFieldNameAsParam(column_name)
+
     # clear name input text value
     $('#add-custom-column-name').val('')
     # push column name in table_col_headers array
@@ -229,6 +230,22 @@ class VisualizationTableNodes extends VisualizationTableBase
     @model.trigger 'change:node_custom_fields'
     # hide modal
     $('#table-add-column-nodes-modal').modal 'hide'
+
+  addNetworkAnalysisColumns: (columns) ->
+    columns.forEach (column) =>
+      # if column is not in table_col_headers array add to it
+      if @table_col_headers.indexOf(column.name) == -1
+        # push column name in table_col_headers array
+        @table_col_headers.push @getCustomFieldNameAsLabel(column.name)
+        # push new column data in columns array
+        @table_options.columns.push { data: @getCustomFieldNameAsParam(column.name), readOnly: true }
+    # update colHeaders array
+    @table_options.colHeaders = @table_col_headers
+    # update table options
+    if @table
+      @table.updateSettings @table_options
+    # trigger events for visualization configuration panel
+    @model.trigger 'change:node_custom_fields'
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

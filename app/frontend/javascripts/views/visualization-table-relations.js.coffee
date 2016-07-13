@@ -242,7 +242,8 @@ class VisualizationTableRelations extends VisualizationTableBase
     # get column name from form input text
     column_name           = $(e.target).find('#add-custom-column-name').val()
     column_type           = $(e.target).find('#add-custom-column-type').val()
-    column_name_formatted = column_name.replace(/\s+/g, '_').toLowerCase()
+    column_name_formatted = @getCustomFieldNameAsParam(column_name)
+    
     # clear name input text value
     $('#add-custom-column-name').val('')
     # push column name in table_col_headers array

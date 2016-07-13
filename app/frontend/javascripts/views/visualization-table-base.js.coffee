@@ -51,14 +51,19 @@ class VisualizationTableBase extends Backbone.View
   setupCustomFields: (custom_fields) => 
     if custom_fields
       custom_fields.forEach (custom_field) =>
-        @table_col_headers.push       custom_field.name.replace(/_+/g, ' ')
+        @table_col_headers.push     @getCustomFieldNameAsLabel(custom_field.name)
         @table_options.columns.push { data: custom_field.name, type: @cell_types[custom_field.type] }
+
+  getCustomFieldNameAsLabel: (name) ->
+    return name.replace(/_+/g, ' ')
+
+  getCustomFieldNameAsParam: (name) ->
+    return name.replace(/\s+/g, '_').toLowerCase()
 
   getTableColumns: =>
     return []
 
   onTableCreateRow: (index, amount) =>
-    console.log 'onTableCreateRow', @table_type, index, amount
     # Create a new model in collection
     @createRow index
 
@@ -75,7 +80,7 @@ class VisualizationTableBase extends Backbone.View
 
   onTableRemoveRow: (index, amount) =>
     # we need to get model id from row in order to remove the right model
-    console.log 'onTableRemoveRow', @table_type, index, amount
+    #console.log 'onTableRemoveRow', @table_type, index, amount
     model_id = @getIdAtRow index
     model = @collection.get model_id
     if model  
@@ -109,7 +114,7 @@ class VisualizationTableBase extends Backbone.View
     @duplicate = row_model
     # add new row after current one
     @table.alter('insert_row', row+1, 1 )
-    console.log 'duplicate row', row, row_model
+    #console.log 'duplicate row', row, row_model
 
   getIdAtRow: (index) ->
     return @table.getDataAtRowProp(index, 'id')

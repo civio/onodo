@@ -359,6 +359,7 @@ class VisualizationEdit extends VisualizationBase
 
   onNetworkAnalysisSuccess: (e) ->
     console.log 'onNetworkAnalysisSuccess', e.node_custom_fields
+    @tableNodes.addNetworkAnalysisColumns e.node_custom_fields
 
 
   # Auxiliar Info Node method
