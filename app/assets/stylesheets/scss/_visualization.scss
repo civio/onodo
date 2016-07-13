@@ -1534,6 +1534,10 @@ body.pages.demo{
 // Network Analysis Modal
 #network-analysis-modal{
 
+  .modal-body{
+    padding: 2*$grid-gutter-width/3 $grid-gutter-width $grid-gutter-width/3;
+  }
+
   .modal-title{
     color: $gray;
     font-size: 1em;
@@ -1565,6 +1569,13 @@ body.pages.demo{
 
   .bootstrap-switch{
     margin-bottom: 2*$grid-gutter-width/3;
+  }
+
+  .alert{
+    font-size: 0.857em;
+    font-weight: 400;
+    padding: $grid-gutter-width/3 $grid-gutter-width/2;
+    margin: 2*$grid-gutter-width/3 0 $grid-gutter-width/6;
   }
 }
 
