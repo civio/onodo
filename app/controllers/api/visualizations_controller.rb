@@ -41,6 +41,16 @@ class Api::VisualizationsController < ApiController
     end
   end
 
+  def demo_data
+    source = Visualization.find(ENV['DEMO_DATA_ID'])
+    target = @visualization
+
+    head :bad_request and return if (target.author != demo_user)
+
+    target.dataset = source.dataset.deep_clone include: [:nodes, relations: [:source, :target]], use_dictionary: true
+    head :no_content
+  end
+
   private
 
   def set_visualization_and_dataset
