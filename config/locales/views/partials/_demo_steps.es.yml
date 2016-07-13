@@ -36,7 +36,7 @@ es:
         content: En nuestro ejemplo, puede ser Luke Skywalker.
       step_11:
         title: Añade el tipo de relación
-        content: ¡Ojo, spoiler! Puedes elegir "padre de", por ejemplo.
+        content: ¡Ojo, spoiler! Puedes escribir "padre de", por ejemplo.
       step_12:
         title: Vuelve a la pestaña nodos
         content: Vamos a enriquecer a nuestros protagonistas.
@@ -45,7 +45,7 @@ es:
         content: Puedes incluir información complementaria sobre tu nodo.
       step_14:
         title: Haz click en un nodo
-        content: Esta es su ficha. Podrás ver la descripción que has escrito.
+        content: Podrás ver su ficha y la descripción que has escrito.
       step_15:
         title: Ponles tipo
         content: Por ejemplo, puedes marcar quiénes son sith y quienes jedi.
