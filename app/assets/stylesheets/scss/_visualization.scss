@@ -1518,6 +1518,19 @@ body.pages.demo{
   }
 }
 
+#table-add-column-nodes-modal,
+#table-add-column-relations-modal{
+  .modal-body{
+    form{
+      margin-bottom: 2*$grid-gutter-width/3;
+
+      .btn-primary{
+        margin-top: $grid-gutter-width/6;
+      }
+    }
+  }
+}
+
 // Network Analysis Modal
 #network-analysis-modal{
 
