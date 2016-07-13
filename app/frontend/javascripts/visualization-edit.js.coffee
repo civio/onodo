@@ -202,8 +202,7 @@ class VisualizationEdit extends VisualizationBase
       @tableNodes.hide()
       @tableRelations.show()
 
-  updateData: ->
-    demo_id = 80
+  clearData: ->
     # unbind events
     @unbindCollectionEvents()
     @unbindVisualizationEvents()
@@ -212,10 +211,12 @@ class VisualizationEdit extends VisualizationBase
     @relations.reset()
     @onNodeHideInfo()
     @visualizationCanvas.clear()
+
+  updateData: ->
     # update collections data
     syncCounter = _.after 2, @onUpdatedData
-    @nodes.fetch          {url: '/api/visualizations/'+demo_id+'/nodes/',     success: syncCounter}
-    @relations.fetch      {url: '/api/visualizations/'+demo_id+'/relations/', success: syncCounter}
+    @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
+    @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
       
   onUpdatedData: =>
     # update tables collections

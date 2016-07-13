@@ -16,6 +16,15 @@ $(document).ready ->
 
     # listen to loadData event to update new data
     Backbone.once 'visualization.demo.loadData', =>
-      visualization.updateData()
-      Backbone.once 'visualization.synced', =>
-        demo.addNextPopover()
+      # clear visualization data
+      visualization.clearData()
+      # send petition to duplicate demo data
+      $.ajax {
+        url: '/api/visualizations/'+visualization.id+'/demo-data/',
+        success: ->
+          # update visualization data
+          visualization.updateData()
+          # when visualization synced load next demo step
+          Backbone.once 'visualization.synced', =>
+            demo.addNextPopover()
+      }
