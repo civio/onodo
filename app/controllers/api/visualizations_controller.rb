@@ -23,7 +23,7 @@ class Api::VisualizationsController < ApiController
     # Create the new custom fields, if needed
     # TODO: Refactor to avoid duplication with code above
     network_metrics = metrics_names.map do |metric_name|
-      { "name" => metric_to_custom_field_name(metric_name), "type" => "number" }
+      { "name" => metric_to_custom_field_name(metric_name), "type" => "number", "readonly" => true }
     end
     @dataset.node_custom_fields = (@dataset.node_custom_fields + network_metrics).uniq
     @dataset.save!

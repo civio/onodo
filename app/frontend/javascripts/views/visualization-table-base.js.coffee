@@ -52,7 +52,10 @@ class VisualizationTableBase extends Backbone.View
     if custom_fields
       custom_fields.forEach (custom_field) =>
         @table_col_headers.push     @getCustomFieldNameAsLabel(custom_field.name)
-        @table_options.columns.push { data: custom_field.name, type: @cell_types[custom_field.type] }
+        obj =  { data: custom_field.name, type: @cell_types[custom_field.type] }
+        if custom_field.readonly
+          obj.readOnly = true
+        @table_options.columns.push obj
 
   getCustomFieldNameAsLabel: (name) ->
     return name.replace(/_+/g, ' ')
