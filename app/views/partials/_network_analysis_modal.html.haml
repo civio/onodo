@@ -54,6 +54,6 @@
                 %span.icon-question
             = check_box_tag :distance, 'distance', true, class: 'switch', data: { "size" => "small" }
       .modal-footer
-        %button.btn.btn-primary{ type: "submit" }
+        %a#network-analysis-modal-submit.btn.btn-primary{ href: "#", title: t('.submit') }
           = t '.submit'
         %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}= t 'common.cancel'

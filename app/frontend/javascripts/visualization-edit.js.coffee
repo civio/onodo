@@ -2,6 +2,7 @@ VisualizationBase            = require './visualization-base.js'
 VisualizationConfiguration   = require './views/visualization-configuration.js'
 VisualizationTableNodes      = require './views/visualization-table-nodes.js'
 VisualizationTableRelations  = require './views/visualization-table-relations.js'
+VisualizationNetworkAnalysis = require './views/visualization-network-analysis.js'
 BootstrapSwitch              = require 'bootstrap-switch'
 
 class VisualizationEdit extends VisualizationBase
@@ -11,6 +12,7 @@ class VisualizationEdit extends VisualizationBase
   tableHeaderHeight:            40
 
   visualizationConfiguration:   null
+  visualizationNetworkAnalysis: null
 
   tableNodes:      null
   tableRelations:  null
@@ -37,12 +39,22 @@ class VisualizationEdit extends VisualizationBase
     # Setup Visualization Configuration panel Show/Hide
     $('.visualization-graph-menu-actions .btn-configure').click @onPanelConfigureShow
     $('.visualization-graph-panel-configuration .close').click  @onPanelConfigureHide
+    # Setup Visualization Network Analysis
+    @visualizationNetworkAnalysis = new VisualizationNetworkAnalysis()
+    @visualizationNetworkAnalysis.id = @id
+    @visualizationNetworkAnalysis.render()
     # Setup scrollbar link
     $('.visualization-table-scrollbar a').click @scrollToEdit 
     # Setup scroll handler
     @$window.scroll @onScroll
     # Setup Table Tab Selector
     $('#visualization-table-selector > li > a').click @updateTable
+    # Network analysis handler
+    $('#network-analysis-modal-submit').click @getNetworkAnalysis
+
+  getNetworkAnalysis: (e) =>
+    e.preventDefault()
+
 
   onSync: =>
     # Render Tables & Graph when all collections ready
@@ -113,6 +125,7 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
+    Backbone.on 'visualization.networkanalysis.success',            @onNetworkAnalysisSuccess, @
 
   unbindVisualizationEvents: ->
     super()
@@ -127,6 +140,7 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.config.updateRelationsCurvature'
     Backbone.off 'visualization.config.updateRelationsLineStyle'
     Backbone.off 'visualization.config.updateForceLayoutParam'
+    Backbone.off 'visualization.networkanalysis.success'
 
   resize: =>
     #console.log 'resize'
@@ -341,6 +355,9 @@ class VisualizationEdit extends VisualizationBase
 
   onUpdateForceLayoutParam: (e) ->
     @visualizationCanvas.updateForceLayoutParameter e.name, e.value
+
+  onNetworkAnalysisSuccess: (e) ->
+    console.log 'onNetworkAnalysisSuccess', e.node_custom_fields
 
 
   # Auxiliar Info Node method
