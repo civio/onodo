@@ -55,6 +55,9 @@ es:
       step_17:
         title: Abre la configuración
         content: Aquí podrás personalizar colores, tamaños, estilos de línea...
+      step_18:
+        title: Cambia el tamaño de los nodos
+        content: Por defecto depende del numero de relaciones pero puedes definir un tamaño fijo
       end:
         title: ¡Listo!
         content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."

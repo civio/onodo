@@ -33,9 +33,7 @@ class VisualizationDemo
 
     # go to end-modal
     if @current_step == @steps.length
-      setTimeout ->
-        $('#demo-end-modal').modal('show')
-      , 5000
+      $('#demo-end-modal').modal('show')
       return
 
     # set popover data
@@ -101,6 +99,9 @@ class VisualizationDemo
         Backbone.trigger 'visualization.demo.loadData'
     else if @current_step == 16
       $('.visualization-graph-menu-actions .btn-configure').click (e) =>
+        @addNextPopover()
+    else if @current_step == 17
+      Backbone.once 'visualization.config.updateNodesSize', =>
         @addNextPopover()
 
   addNextPopover: ->
