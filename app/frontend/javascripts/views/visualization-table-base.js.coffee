@@ -58,7 +58,7 @@ class VisualizationTableBase extends Backbone.View
         @table_options.columns.push obj
 
   getCustomFieldNameAsLabel: (name) ->
-    return name.replace(/_+/g, ' ')
+    return name.replace(/_+/g, ' ').toLowerCase()
 
   getCustomFieldNameAsParam: (name) ->
     return name.replace(/\s+/g, '_').toLowerCase()

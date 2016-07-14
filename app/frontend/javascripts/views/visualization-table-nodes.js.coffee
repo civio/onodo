@@ -204,46 +204,51 @@ class VisualizationTableNodes extends VisualizationTableBase
   # Show Add Custom Column Modal handler
   onAddCustomColumn: (e) =>
     e.preventDefault()
-    # get column name from form input text
-    column_name           = $(e.target).find('#add-custom-column-name').val()
-    column_type           = $(e.target).find('#add-custom-column-type').val()
-    column_name_formatted = @getCustomFieldNameAsParam(column_name)
-
+    # add custom field to table
+    @addCustomColumns [{
+      'name': $(e.target).find('#add-custom-column-name').val()
+      'type': $(e.target).find('#add-custom-column-type').val()
+    }]
     # clear name input text value
     $('#add-custom-column-name').val('')
-    # push column name in table_col_headers array
-    @table_col_headers.push column_name
-    @table_options.colHeaders = @table_col_headers
-    # push new column data in columns array
-    @table_options.columns.push { data: column_name_formatted } 
-    #console.log 'onAddCustomColumn', e.target, @table_options
-    # update table options
-    if @table
-      @table.updateSettings @table_options
-    # update custom_fields in visualization model 
-    custom_fields = @model.get('node_custom_fields')
-    custom_fields.push {'name': column_name_formatted, 'type': column_type}
-    # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    #console.log 'save custom_fields in DB', custom_fields
-    @model.save {node_custom_fields: custom_fields}, {patch: true}
-    # trigger events for visualization configuration panel
-    @model.trigger 'change:node_custom_fields'
     # hide modal
     $('#table-add-column-nodes-modal').modal 'hide'
 
-  addNetworkAnalysisColumns: (columns) ->
+  # Add Network Analysis result Custom Columns
+  addNetworkAnalysisColumns: (columns) =>
+    @addCustomColumns columns, true
+
+  # Add Custom Columns to table
+  addCustomColumns: (columns, read_only) ->
+    # get visualization model node_custom_fields
+    node_custom_fields = @model.get('node_custom_fields')
+    # loop through each custom_field
     columns.forEach (column) =>
+      # get custom field name as label (replacing _ symbol with black spaces)
+      column_name_as_label = @getCustomFieldNameAsLabel(column.name)
       # if column is not in table_col_headers array add to it
-      if @table_col_headers.indexOf(column.name) == -1
+      if @table_col_headers.indexOf(column_name_as_label) == -1
+        # get custom field name as param (replacing black spaces with _)
+        column_name_as_param = @getCustomFieldNameAsParam(column.name)
         # push column name in table_col_headers array
-        @table_col_headers.push @getCustomFieldNameAsLabel(column.name)
+        @table_col_headers.push column_name_as_label
         # push new column data in columns array
-        @table_options.columns.push { data: @getCustomFieldNameAsParam(column.name), readOnly: true }
+        obj = { data: column_name_as_param }
+        if read_only
+          obj.readOnly = true
+        @table_options.columns.push obj
+        # update custom_fields in visualization model 
+        obj = { name: column_name_as_param, type: column.type }
+        if read_only
+          obj.readonly = true
+        node_custom_fields.push obj  
     # update colHeaders array
     @table_options.colHeaders = @table_col_headers
     # update table options
     if @table
       @table.updateSettings @table_options
+    # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
+    @model.save {node_custom_fields: node_custom_fields}, {patch: true}
     # trigger events for visualization configuration panel
     @model.trigger 'change:node_custom_fields'
 

@@ -283,7 +283,7 @@ class VisualizationEdit extends VisualizationBase
     @updateInfoNode node
 
   # When a node_custom_field is added, we add a listener to new custom_field
-  onVisualizationChangeNodeCustomField: (visualization) =>
+  onVisualizationChangeNodeCustomField: =>
     field = @visualization.get('node_custom_fields').slice(-1)[0]
     @nodes.bind 'change:'+field.name, @onNodeChangeCustomField, @
 
