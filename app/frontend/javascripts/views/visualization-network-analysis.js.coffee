@@ -10,7 +10,10 @@ class VisualizationNetworkAnalysis extends Backbone.View
 
   getNetworkAnalysis: (e) =>
     e.preventDefault()
-    # add loader!
+    @$el.find('#network-analysis-modal-submit').off 'click'
+    # get checkbox data
+    @$el.find('.modal-body').fadeTo(250, 0)
+    @$el.find('.modal-content').addClass 'loading'
     console.log 'getNetworkAnalysis'
     $.ajax {
       url:     '/api/visualizations/'+@id+'/network-analysis/'
@@ -18,8 +21,10 @@ class VisualizationNetworkAnalysis extends Backbone.View
     }
     
   onNetworkAnalysisSuccess: (data) =>
-    @$el.modal('hide')
-    # remove loader!
+    @$el.modal 'hide'
+    @$el.find('.modal-content').removeClass 'loading'
+    @$el.find('.modal-body').fadeTo(0, 1)
+    @$el.find('#network-analysis-modal-submit').click @getNetworkAnalysis
     Backbone.trigger 'visualization.networkanalysis.success', {node_custom_fields: data.node_custom_fields}
 
 

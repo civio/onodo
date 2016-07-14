@@ -1538,6 +1538,10 @@ body.pages.demo{
     padding: 2*$grid-gutter-width/3 $grid-gutter-width $grid-gutter-width/3;
   }
 
+  .modal-content.loading{
+    background: url(/images/loader.gif) no-repeat center center white;
+  }
+
   .modal-title{
     color: $gray;
     font-size: 1em;
