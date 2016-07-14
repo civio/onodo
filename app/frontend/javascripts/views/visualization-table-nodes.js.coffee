@@ -216,7 +216,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Add Network Analysis result Custom Columns
   addNetworkAnalysisColumns: (columns) =>
-    @addCustomColumns columns, 'node_custom_fields', true
+    @addCustomColumns columns, 'node_custom_fields', true, true
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>

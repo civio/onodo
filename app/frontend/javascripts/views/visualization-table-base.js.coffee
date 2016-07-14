@@ -136,7 +136,7 @@ class VisualizationTableBase extends Backbone.View
     $modal.modal 'show'
 
   # Add Custom Columns to table
-  addCustomColumns: (columns, custom_fields_type, read_only) ->
+  addCustomColumns: (columns, custom_fields_type, read_only, skip_sync) ->
     # get visualization model node_custom_fields or relation_custom_fields
     custom_fields = @model.get custom_fields_type
     # loop through each custom_field
@@ -151,13 +151,13 @@ class VisualizationTableBase extends Backbone.View
         @table_col_headers.push column_name_as_label
         # push new column data in columns array
         obj = { data: column_name_as_param }
-        if read_only
-          obj.readOnly = true
+        if column.readonly
+          obj.readOnly = column.readonly
         @table_options.columns.push obj
         # update custom_fields in visualization model 
         obj = { name: column_name_as_param, type: column.type }
-        if read_only
-          obj.readonly = true
+        if column.readonly
+          obj.readonly = column.readonly
         custom_fields.push obj  
     # update colHeaders array
     @table_options.colHeaders = @table_col_headers
@@ -165,7 +165,8 @@ class VisualizationTableBase extends Backbone.View
     if @table
       @table.updateSettings @table_options
     # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    @model.save {custom_fields_type: custom_fields}, {patch: true}
+    unless skip_sync
+      @model.save {custom_fields_type: custom_fields}, {patch: true}
     # trigger events for visualization configuration panel
     @model.trigger 'change:'+custom_fields_type
 
