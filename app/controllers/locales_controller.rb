@@ -17,7 +17,7 @@ class LocalesController < ApplicationController
     return if @path.blank?
     return @path + '/new' if path_matches ROUTES_FOR_NEW
     return @path + '/sign_up' if path_matches ROUTES_FOR_SIGN_UP
-    path
+    @path
   end
 
   def path_matches routes_list
