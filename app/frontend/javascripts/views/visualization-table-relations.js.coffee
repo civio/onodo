@@ -239,30 +239,13 @@ class VisualizationTableRelations extends VisualizationTableBase
    # Show Add Custom Column Modal handler
   onAddCustomColumn: (e) =>
     e.preventDefault()
-    # get column name from form input text
-    column_name           = $(e.target).find('#add-custom-column-name').val()
-    column_type           = $(e.target).find('#add-custom-column-type').val()
-    column_name_formatted = @getCustomFieldNameAsParam(column_name)
-    
+    # add custom field to table
+    @addCustomColumns [{
+      'name': $(e.target).find('#add-custom-column-name').val()
+      'type': $(e.target).find('#add-custom-column-type').val()
+    }], 'relation_custom_fields'
     # clear name input text value
     $('#add-custom-column-name').val('')
-    # push column name in table_col_headers array
-    @table_col_headers.push column_name
-    @table_options.colHeaders = @table_col_headers
-    # push new column data in columns array
-    @table_options.columns.push { data: column_name_formatted } 
-    #console.log 'onAddCustomColumn', e.target, @table_options
-    # update table options
-    if @table
-      @table.updateSettings @table_options
-    # update custom_fields in visualization model 
-    custom_fields = @model.get('relation_custom_fields')
-    custom_fields.push {'name': column_name_formatted, 'type': column_type}
-    # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    #console.log 'save custom_fields in DB', custom_fields
-    @model.save {relation_custom_fields: custom_fields}, {patch: true}
-    # trigger events for visualization configuration panel
-    # @model.trigger 'change:relation_custom_fields' # we don't need to listen to relations custom fields
     # hide modal
     $('#table-add-column-relations-modal').modal 'hide'
 

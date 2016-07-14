@@ -135,6 +135,40 @@ class VisualizationTableBase extends Backbone.View
     # Show confirmation modal
     $modal.modal 'show'
 
+  # Add Custom Columns to table
+  addCustomColumns: (columns, custom_fields_type, read_only) ->
+    # get visualization model node_custom_fields or relation_custom_fields
+    custom_fields = @model.get custom_fields_type
+    # loop through each custom_field
+    columns.forEach (column) =>
+      # get custom field name as label (replacing _ symbol with black spaces)
+      column_name_as_label = @getCustomFieldNameAsLabel(column.name)
+      # if column is not in table_col_headers array add to it
+      if @table_col_headers.indexOf(column_name_as_label) == -1
+        # get custom field name as param (replacing black spaces with _)
+        column_name_as_param = @getCustomFieldNameAsParam(column.name)
+        # push column name in table_col_headers array
+        @table_col_headers.push column_name_as_label
+        # push new column data in columns array
+        obj = { data: column_name_as_param }
+        if read_only
+          obj.readOnly = true
+        @table_options.columns.push obj
+        # update custom_fields in visualization model 
+        obj = { name: column_name_as_param, type: column.type }
+        if read_only
+          obj.readonly = true
+        custom_fields.push obj  
+    # update colHeaders array
+    @table_options.colHeaders = @table_col_headers
+    # update table options
+    if @table
+      @table.updateSettings @table_options
+    # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
+    @model.save {custom_fields_type: custom_fields}, {patch: true}
+    # trigger events for visualization configuration panel
+    @model.trigger 'change:'+custom_fields_type
+
   # Custom Renderer for duplicate cells
   rowDuplicateRenderer: (instance, td, row, col, prop, value, cellProperties) =>
     # Add duplicate icon

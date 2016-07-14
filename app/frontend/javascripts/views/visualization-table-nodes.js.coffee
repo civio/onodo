@@ -208,7 +208,7 @@ class VisualizationTableNodes extends VisualizationTableBase
     @addCustomColumns [{
       'name': $(e.target).find('#add-custom-column-name').val()
       'type': $(e.target).find('#add-custom-column-type').val()
-    }]
+    }], 'node_custom_fields'
     # clear name input text value
     $('#add-custom-column-name').val('')
     # hide modal
@@ -216,41 +216,7 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Add Network Analysis result Custom Columns
   addNetworkAnalysisColumns: (columns) =>
-    @addCustomColumns columns, true
-
-  # Add Custom Columns to table
-  addCustomColumns: (columns, read_only) ->
-    # get visualization model node_custom_fields
-    node_custom_fields = @model.get('node_custom_fields')
-    # loop through each custom_field
-    columns.forEach (column) =>
-      # get custom field name as label (replacing _ symbol with black spaces)
-      column_name_as_label = @getCustomFieldNameAsLabel(column.name)
-      # if column is not in table_col_headers array add to it
-      if @table_col_headers.indexOf(column_name_as_label) == -1
-        # get custom field name as param (replacing black spaces with _)
-        column_name_as_param = @getCustomFieldNameAsParam(column.name)
-        # push column name in table_col_headers array
-        @table_col_headers.push column_name_as_label
-        # push new column data in columns array
-        obj = { data: column_name_as_param }
-        if read_only
-          obj.readOnly = true
-        @table_options.columns.push obj
-        # update custom_fields in visualization model 
-        obj = { name: column_name_as_param, type: column.type }
-        if read_only
-          obj.readonly = true
-        node_custom_fields.push obj  
-    # update colHeaders array
-    @table_options.colHeaders = @table_col_headers
-    # update table options
-    if @table
-      @table.updateSettings @table_options
-    # (we use patch true to save only custom_fields attr instead of the whole Visualization model)
-    @model.save {node_custom_fields: node_custom_fields}, {patch: true}
-    # trigger events for visualization configuration panel
-    @model.trigger 'change:node_custom_fields'
+    @addCustomColumns columns, 'node_custom_fields', true
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
