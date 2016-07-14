@@ -50,7 +50,7 @@
         %h4.modal-title
           = t '.intro.title'
       .modal-body
-        %p= t '.intro.content'
+        %p= raw t('.intro.content')
       .modal-footer
         %button.btn.btn-primary{type: "button", "data-dismiss" => "modal"}
           Ok
