@@ -55,6 +55,15 @@ class Api::VisualizationsController < ApiController
     head :no_content
   end
 
+  def clear_custom_fields
+    @dataset.node_custom_fields = []
+    @dataset.relation_custom_fields = []
+    @dataset.nodes.map{ |n| n.custom_fields = {} }
+    @dataset.relations.map{ |r| r.custom_fields = {} }
+    @dataset.save
+    head :no_content
+  end
+
   private
 
   def set_visualization_and_dataset
