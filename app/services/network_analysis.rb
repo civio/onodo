@@ -13,11 +13,25 @@ class NetworkAnalysis
 
   # Returns a hash with an array of calculated metrics for each node id in the graph,
   # and the list of metrics calculated.
-  def calculate_metrics
+  def calculate_metrics(selected_metrics_list)
+    # Convert the list of selected metrics to the format needed by the network analysis engine
+    metrics_shortnames = {
+      'clusters' => 'm',
+      'degree' => 'd',
+      'relevance' => 'r',
+      'betweenness' => 'b',
+      'closeness' => 'c',
+      'coreness' => 'k',
+      'distance' => 'l'
+    }
+    selected_metrics = ''
+    selected_metrics_list.each {|m| selected_metrics += metrics_shortnames[m] }
+
+    # Call the engine to calculate the metrics
     results = {}
     column_names = nil
     python_filename = Rails.root.join('lib', 'network_analysis', 'network_metrics_onodo.py').to_s
-    Open3.popen3('python', python_filename) do |stdin, stdout, stderr, wait_thread|
+    Open3.popen3('python', python_filename, selected_metrics) do |stdin, stdout, stderr, wait_thread|
       # Send the list of relations to the processor.
       # One line per relation, two node ids separated with a space.
       @relations.each do |relation|
@@ -37,6 +51,11 @@ class NetworkAnalysis
           column_names.each_with_index {|column, i| values_as_dictionary[column] = values[i] }
           results[values[0]] = values_as_dictionary
         end
+      end
+
+      # Output stderr messages
+      stderr.each do |line|
+        $stderr.puts "Error: #{line}"
       end
     end
 

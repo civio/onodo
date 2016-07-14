@@ -18,7 +18,11 @@ class Api::VisualizationsController < ApiController
   end
 
   def network_analysis
-    results, metrics_names = NetworkAnalysis.new(@dataset).calculate_metrics
+    # Get list of selected metrics
+    selected_metrics = params.map {|p| p[1]=='1' ? p[0] : nil }.compact
+
+    # Calculate selected metrics
+    results, metrics_names = NetworkAnalysis.new(@dataset).calculate_metrics(selected_metrics)
 
     # Create the new custom fields, if needed
     # TODO: Refactor to avoid duplication with code above

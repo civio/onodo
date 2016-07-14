@@ -1,5 +1,5 @@
 # Use as:
-#   $ python network_metrics_onodo.py < game-of-thrones-edges.txt
+#   $ python network_metrics_onodo.py mdrbckl < game-of-thrones-edges.txt
 #
 # Dependencies:
 # - pip install python-igraph
@@ -16,7 +16,7 @@ verbose = False
 # PARAMETERS - DEFAULT VALUES
 # Set to True for the network to be considered as directed.
 directed = False		
-# The metrics to be computed. By default, all are included (mdrbck).
+# The metrics to be computed. By default, all are included (mdrbckl).
 #   m: clusters (Louvain Modularity)
 #   d: degree
 #   r: relevance
@@ -24,7 +24,7 @@ directed = False
 #   c:closeness
 #   k: coreness (k-index)
 #   l: distance (path length) from base_node
-metrics = 'mdrbckl'
+metrics = sys.argv[1]
 # Set to 'False' for ignoring edges direction when computing betweenness in a directed network.
 betweenness_directed = True
 # Set to 'IN' or 'OUT' to consider the length of incoming or outgoing paths (respectively) when
