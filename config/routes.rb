@@ -88,7 +88,7 @@ Rails.application.routes.draw do
       get 'nodes/types', to: 'nodes#types'
       get 'relations', to: 'relations#index'
       get 'relations/types', to: 'relations#types'
-      get 'network-analysis', on: :member
+      post 'network-analysis', on: :member
       get 'demo-data', on: :member
     end
     resources :stories, only: [ :show, :create ] do

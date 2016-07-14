@@ -1,61 +1,61 @@
 #network-analysis-modal.modal.fade{ tabindex: "-1", role: "dialog"}
   .modal-dialog.modal-lg{role: "document"}
     .modal-content
-      .modal-header
-        %h4.modal-title
-          = t '.title'
-        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
-      .modal-body
-        .row.modal-description
-          .col-sm-8.col-sm-offset-2
-            %p.text-center
-              = t '.description'
-            %p.alert.alert-warning
-              = t '.advice'
-        .row
-          .col-sm-4
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.clusters_explanation')} }
-                = label_tag :clusters, t('.clusters')
-                %span.icon-question
-            = check_box_tag :clusters, 'clusters', true, class: 'switch', data: { "size" => "small" }
-          .col-sm-4
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.degree_explanation')} }
-                = label_tag :degree, t('.degree')
-                %span.icon-question
-            = check_box_tag :degree, 'degree', true, class: 'switch', data: { "size" => "small" }
-          .col-sm-4
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.relevance_explanation')} }
-                = label_tag :relevance, t('.relevance')
-                %span.icon-question
-            = check_box_tag :relevance, 'relevance', true, class: 'switch', data: { "size" => "small" }
-          .col-sm-4
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.betweenness_explanation')} }
-                = label_tag :betweenness, t('.betweenness')
-                %span.icon-question
-            = check_box_tag :betweenness, 'betweenness', true, class: 'switch', data: { "size" => "small" }
-          .col-sm-4
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.closeness_explanation')} }
-                = label_tag :closeness, t('.closeness')
-                %span.icon-question
-            = check_box_tag :closeness, 'closeness', true, class: 'switch', data: { "size" => "small" }
-          .col-sm-4
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.coreness_explanation')} }
-                = label_tag :coreness, t('.coreness')
-                %span.icon-question
-            = check_box_tag :coreness, 'coreness', true, class: 'switch', data: { "size" => "small" }
-          .col-sm-12
-            %p
-              %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.distance_explanation')} }
-                = label_tag :distance, t('.distance')
-                %span.icon-question
-            = check_box_tag :distance, 'distance', true, class: 'switch', data: { "size" => "small" }
-      .modal-footer
-        %a#network-analysis-modal-submit.btn.btn-primary{ href: "#", title: t('.submit') }
-          = t '.submit'
-        %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}= t 'common.cancel'
+      = form_tag '/api/visualizations/'+@visualization.id.to_s+'/network-analysis/', method: 'post', id: 'network-analysis-form' do
+        .modal-header
+          %h4.modal-title
+            = t '.title'
+          %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => "Close"}
+        .modal-body
+          .row.modal-description
+            .col-sm-8.col-sm-offset-2
+              %p.text-center
+                = t '.description'
+              %p.alert.alert-warning
+                = t '.advice'
+          .row
+            .col-sm-4
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.clusters_explanation')} }
+                  = label_tag :clusters, t('.clusters')
+                  %span.icon-question
+              = check_box_tag :clusters, '1', true, class: 'switch', data: { "size" => "small" }
+            .col-sm-4
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.degree_explanation')} }
+                  = label_tag :degree, t('.degree')
+                  %span.icon-question
+              = check_box_tag :degree, '1', true, class: 'switch', data: { "size" => "small" }
+            .col-sm-4
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.relevance_explanation')} }
+                  = label_tag :relevance, t('.relevance')
+                  %span.icon-question
+              = check_box_tag :relevance, '1', true, class: 'switch', data: { "size" => "small" }
+            .col-sm-4
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.betweenness_explanation')} }
+                  = label_tag :betweenness, t('.betweenness')
+                  %span.icon-question
+              = check_box_tag :betweenness, '1', true, class: 'switch', data: { "size" => "small" }
+            .col-sm-4
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.closeness_explanation')} }
+                  = label_tag :closeness, t('.closeness')
+                  %span.icon-question
+              = check_box_tag :closeness, '1', true, class: 'switch', data: { "size" => "small" }
+            .col-sm-4
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.coreness_explanation')} }
+                  = label_tag :coreness, t('.coreness')
+                  %span.icon-question
+              = check_box_tag :coreness, '1', true, class: 'switch', data: { "size" => "small" }
+            .col-sm-12
+              %p
+                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.distance_explanation')} }
+                  = label_tag :distance, t('.distance')
+                  %span.icon-question
+              = check_box_tag :distance, '1', true, class: 'switch', data: { "size" => "small" }
+        .modal-footer
+          = submit_tag t('.submit'), class: "btn btn-default btn-primary"
+          %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}= t 'common.cancel'
