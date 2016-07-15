@@ -50,12 +50,12 @@
                   = label_tag :coreness, t('.coreness')
                   %span.icon-question
               = check_box_tag :coreness, '1', true, class: 'switch', data: { "size" => "small" }
-            .col-sm-12
-              %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.distance_explanation')} }
-                  = label_tag :distance, t('.distance')
-                  %span.icon-question
-              = check_box_tag :distance, '1', true, class: 'switch', data: { "size" => "small" }
+            / .col-sm-12
+            /   %p
+            /     %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.distance_explanation')} }
+            /       = label_tag :distance, t('.distance')
+            /       %span.icon-question
+            /   = check_box_tag :distance, '1', true, class: 'switch', data: { "size" => "small" }
         .modal-footer
           = submit_tag t('.submit'), class: "btn btn-default btn-primary"
           %a.btn.btn-primary.btn-invert{type: 'button', 'data-dismiss' => 'modal', 'aria-label' => 'Close'}= t 'common.cancel'
