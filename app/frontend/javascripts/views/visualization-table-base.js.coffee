@@ -136,7 +136,7 @@ class VisualizationTableBase extends Backbone.View
     $modal.modal 'show'
 
   # Add Custom Columns to table
-  addCustomColumns: (columns, custom_fields_type, read_only, skip_sync) ->
+  addCustomColumns: (columns, custom_fields_type, skip_sync) ->
     # get visualization model node_custom_fields or relation_custom_fields
     custom_fields = @model.get custom_fields_type
     # loop through each custom_field

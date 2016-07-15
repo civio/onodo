@@ -10,7 +10,6 @@ class VisualizationNetworkAnalysis extends Backbone.View
 
   onNetworkAnalysisSubmit: (e) =>
     e.preventDefault()
-    console.log 'onNetworkAnalysisSubmit'
     @$el.find('.modal-body, .modal-footer').fadeTo(250, 0)
     @$el.find('.modal-content').addClass 'loading'
     $.ajax {
@@ -24,7 +23,7 @@ class VisualizationNetworkAnalysis extends Backbone.View
     @$el.modal 'hide'
     @$el.find('.modal-content').removeClass 'loading'
     @$el.find('.modal-body, .modal-footer').fadeTo(0, 1)
-    Backbone.trigger 'visualization.networkanalysis.success', {node_custom_fields: data.node_custom_fields}
+    Backbone.trigger 'visualization.networkanalysis.success', {visualization: data.visualization, nodes: data.nodes}
 
 
 module.exports = VisualizationNetworkAnalysis

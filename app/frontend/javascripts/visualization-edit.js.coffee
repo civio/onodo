@@ -358,8 +358,7 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateForceLayoutParameter e.name, e.value
 
   onNetworkAnalysisSuccess: (e) ->
-    console.log 'onNetworkAnalysisSuccess', e.node_custom_fields
-    @tableNodes.addNetworkAnalysisColumns e.node_custom_fields
+    @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
 
 
   # Auxiliar Info Node method

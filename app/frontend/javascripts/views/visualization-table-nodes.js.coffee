@@ -215,8 +215,17 @@ class VisualizationTableNodes extends VisualizationTableBase
     $('#table-add-column-nodes-modal').modal 'hide'
 
   # Add Network Analysis result Custom Columns
-  addNetworkAnalysisColumns: (columns) =>
-    @addCustomColumns columns, 'node_custom_fields', true, true
+  addNetworkAnalysisColumns: (visualization, nodes) =>
+    # add new nodes custom_fields to table
+    @addCustomColumns visualization.node_custom_fields, 'node_custom_fields', true
+    # update visualization model !??
+    @model.set visualization
+    # update nodes collection
+    @collection.set nodes
+    # update table data & render it
+    @table_options.data = @collection.toJSON()
+    @table.updateSettings @table_options
+    @table.render()
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
