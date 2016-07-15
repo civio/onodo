@@ -54,7 +54,9 @@ class VisualizationTableBase extends Backbone.View
         @table_col_headers.push     @getCustomFieldNameAsLabel(custom_field.name)
         obj =  { data: custom_field.name, type: @cell_types[custom_field.type] }
         if custom_field.readonly
-          obj.readOnly = true
+          obj.readOnly = custom_field.readonly
+        if custom_field.format
+          obj.format = custom_field.format
         @table_options.columns.push obj
 
   getCustomFieldNameAsLabel: (name) ->
@@ -150,17 +152,23 @@ class VisualizationTableBase extends Backbone.View
         # push column name in table_col_headers array
         @table_col_headers.push column_name_as_label
         # push new column data in columns array
-        obj = { data: column_name_as_param }
+        obj = { data: column_name_as_param, type: @cell_types[column.type] }
         if column.readonly
           obj.readOnly = column.readonly
+        if column.format
+          obj.format = column.format
         @table_options.columns.push obj
         # update custom_fields in visualization model 
-        obj = { name: column_name_as_param, type: column.type }
-        if column.readonly
-          obj.readonly = column.readonly
-        custom_fields.push obj  
+        unless skip_sync
+          obj = { name: column_name_as_param, type: column.type }
+          if column.readonly
+            obj.readonly = column.readonly
+          if column.format
+            obj.format = column.format
+          custom_fields.push obj  
     # update colHeaders array
     @table_options.colHeaders = @table_col_headers
+    console.log 'addCustomColumns', @table_options
     # update table options
     if @table
       @table.updateSettings @table_options
