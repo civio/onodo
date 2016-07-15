@@ -645,17 +645,15 @@ class VisualizationCanvas extends Backbone.View
         #console.log 'color_scale_domain', _.uniq(color_scale_domain)
       else
         @color_scale = d3.scaleQuantize().range @COLOR_QUANTITATIVE
-        @color_scale.domain [0, d3.max(color_scale_domain)]
+        # get max scale value avoiding undefined result
+        color_scale_max = d3.max(color_scale_domain)
+        unless color_scale_max
+          color_scale_max = 0
+        @color_scale.domain [0, color_scale_max]
         #console.log 'color_scale_domain', d3.max(color_scale_domain)
       # @color_scale = d3.scaleViridis()
       #   .domain([d3.max(color_scale_domain), 0])
     
-  updateNodesType: ->
-    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      @nodes
-        .style 'fill',   @getNodeFill
-        .style 'stroke', @getNodeStroke
-
   updateNodesColor: (value) =>
     @parameters.nodesColor = value
     @updateNodesColorValue()

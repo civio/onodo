@@ -252,8 +252,10 @@ class VisualizationEdit extends VisualizationBase
     @visualizationActions.updateSearchData()
 
   onNodeChangeType: (node) ->
-    console.log 'onNodeChangeType', node.attributes.name
-    @visualizationCanvas.updateNodesType()
+    # Update node color if nodesColor is a qualitative or quantitative scale & depends on nodes_type
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == 'node_type' 
+      @visualizationCanvas.updateNodesColorValue()
+    # Update Panel Info description
     @updateInfoNode node
 
   onNodeChangeDescription: (node) ->
@@ -278,7 +280,11 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateNodes()
     @visualizationCanvas.updateForce true
 
-  onNodeChangeCustomField: (node) ->
+  onNodeChangeCustomField: (node, value, options) ->
+    changed_custom_field =  Object.keys(node.changedAttributes())[0]
+    # Update node color if nodesColor is a qualitative or quantitative scale & depends on changed custom_field
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == changed_custom_field 
+      @visualizationCanvas.updateNodesColorValue()
     # Update Panel Info description
     @updateInfoNode node
 
