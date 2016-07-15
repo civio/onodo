@@ -21,16 +21,17 @@ class VisualizationBase
   visualizationInfo:          null
   parameters: null
   parametersDefault: {
-    nodesColor:         'qualitative'
-    nodesColorColumn:   'node_type'
-    nodesSize:          1
-    nodesSizeColumn:    'relations'
-    showNodesLabel:     1
-    showNodesImage:     1
-    relationsCurvature: 1
-    relationsLineStyle: 0
-    linkDistance:       100
-    linkStrength:       -30
+    nodesColor:             'qualitative'
+    nodesColorColumn:       'node_type'
+    nodesSize:              1
+    nodesSizeColumn:        'relations'
+    showNodesLabel:         1
+    showNodesLabelComplete: 0
+    showNodesImage:         1
+    relationsCurvature:     1
+    relationsLineStyle:     0
+    linkDistance:           100
+    linkStrength:           -30
   }
 
   constructor: (_id) ->
@@ -89,16 +90,17 @@ class VisualizationBase
   setupParameters: ->
     @parameters = @parameters || {}
     # setup parameters
-    @parameters.nodesColor          = @parameters.nodesColor || @parametersDefault.nodesColor
-    @parameters.nodesColorColumn    = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
-    @parameters.nodesSize           = @parameters.nodesSize || @parametersDefault.nodesSize
-    @parameters.nodesSizeColumn     = @parameters.nodesSizeColumn || @parametersDefault.nodesSizeColumn
-    @parameters.showNodesLabel      = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
-    @parameters.showNodesImage      = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
-    @parameters.relationsCurvature  = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
-    @parameters.relationsLineStyle  = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
-    @parameters.linkDistance        = @parameters.linkDistance || @parametersDefault.linkDistance
-    @parameters.linkStrength        = @parameters.linkStrength || @parametersDefault.linkStrength
+    @parameters.nodesColor              = @parameters.nodesColor || @parametersDefault.nodesColor
+    @parameters.nodesColorColumn        = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
+    @parameters.nodesSize               = @parameters.nodesSize || @parametersDefault.nodesSize
+    @parameters.nodesSizeColumn         = @parameters.nodesSizeColumn || @parametersDefault.nodesSizeColumn
+    @parameters.showNodesLabel          = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
+    @parameters.showNodesLabelComplete  = if typeof @parameters.showNodesLabelComplete != 'undefined' then @parameters.showNodesLabelComplete else @parametersDefault.showNodesLabelComplete
+    @parameters.showNodesImage          = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
+    @parameters.relationsCurvature      = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
+    @parameters.relationsLineStyle      = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
+    @parameters.linkDistance            = @parameters.linkDistance || @parametersDefault.linkDistance
+    @parameters.linkStrength            = @parameters.linkStrength || @parametersDefault.linkStrength
 
   bindVisualizationEvents: ->
     # Subscribe VisualizationCanvas Events

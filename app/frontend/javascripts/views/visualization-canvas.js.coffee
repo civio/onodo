@@ -423,7 +423,7 @@ class VisualizationCanvas extends Backbone.View
   addRelationData: (relation) ->
     # We have to add relations to @data.relations which stores all the relations
     index = @data_relations.indexOf relation
-    console.log 'addRelationData', index
+    #console.log 'addRelationData', index
     # Set source & target as nodes objetcs instead of index number --> !!! We need this???
     relation.source  = @getNodeById relation.source_id
     relation.target  = @getNodeById relation.target_id
@@ -432,7 +432,6 @@ class VisualizationCanvas extends Backbone.View
       @data_relations.push relation
     # Add relation to data_relations_visibles array if both nodes exist and are visibles
     if relation.source and relation.target and relation.source.visible and relation.target.visible
-      console.log 'addRelationVisible'
       @data_relations_visibles.push relation
       @addRelationToLinkedByIndex relation.source_id, relation.target_id
       #@setLinkIndex()
@@ -440,15 +439,15 @@ class VisualizationCanvas extends Backbone.View
   # maybe we need to split removeVisibleRelationaData & removeRelationData
   removeRelationData: (relation) =>
     # remove relation from data_relations
-    console.log 'remove relation from data_relations', @data_relations
+    #console.log 'remove relation from data_relations', @data_relations
     index = @data_relations.indexOf relation
-    console.log 'index', index
+    #console.log 'index', index
     if index != -1
       @data_relations.splice index, 1
     @removeVisibleRelationData relation
 
   removeVisibleRelationData: (relation) =>
-    console.log 'remove relation from data_relations_visibles', @data_relations_visibles
+    #console.log 'remove relation from data_relations_visibles', @data_relations_visibles
     # remove relation from data_relations_visibles
     index = @data_relations_visibles.indexOf relation
     if index != -1
@@ -486,13 +485,13 @@ class VisualizationCanvas extends Backbone.View
         @data_relations_visibles[i].linkindex = 1
 
   addNode: (node) ->
-    console.log 'addNode', node
+    #console.log 'addNode', node
     @addNodeData node
     @render true
     # !!! We need to check if this node has some relation
 
   removeNode: (node) ->
-    console.log 'removeNode', node
+    #console.log 'removeNode', node
     # unfocus node to remove
     if @node_active == node.id
       @unfocusNode()
@@ -508,7 +507,7 @@ class VisualizationCanvas extends Backbone.View
       return d.source_id != node.id and d.target_id != node.id
 
   addRelation: (relation) ->
-    console.log 'addRelation', relation
+    #console.log 'addRelation', relation
     @addRelationData relation
     # update nodes relations size if needed to take into acount the added relation
     if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
@@ -516,7 +515,7 @@ class VisualizationCanvas extends Backbone.View
     @render true
 
   removeRelation: (relation) ->
-    console.log 'removeRelation', relation
+    #console.log 'removeRelation', relation
     @removeRelationData relation
     @updateRelationsLabelsData()
     # update nodes relations size if needed to take into acount the removed relation
@@ -525,7 +524,7 @@ class VisualizationCanvas extends Backbone.View
     @render true
 
   showNode: (node) ->
-    console.log 'show node', node
+    #console.log 'show node', node
     # add node to data_nodes array
     @addNodeData node
     # check node relations (in data.relations)
@@ -550,7 +549,6 @@ class VisualizationCanvas extends Backbone.View
       @onNodeOver node
     # set node active
     @node_active = node
-    console.log 'focus node', @node_active
     @nodes_cont.selectAll('.node.active')
       .classed 'active', false
     @nodes_cont.selectAll('#node-'+node.id)
@@ -562,7 +560,6 @@ class VisualizationCanvas extends Backbone.View
 
   unfocusNode: ->
     if @node_active
-      console.log 'unfocus node', @node_active
       @nodes_cont.selectAll('#node-'+@node_active.id)
         .style 'stroke',  @getNodeStroke
       @nodes_cont.selectAll('.node.active')
@@ -695,6 +692,9 @@ class VisualizationCanvas extends Backbone.View
 
   toogleNodesLabel: (value) =>
     @nodes_labels.classed 'hide', !value
+
+  toogleNodesLabelComplete: (value) =>
+    @nodes_labels.attr 'class', @getNodeLabelClass
 
   toogleNodesImage: (value) =>
     @parameters.showNodesImage = value
@@ -898,6 +898,8 @@ class VisualizationCanvas extends Backbone.View
     str = 'node-label'
     if !@parameters.showNodesLabel
       str += ' hide'
+    if @parameters.showNodesLabelComplete 
+      str += ' complete'
     if d.disabled
       str += ' disabled'
     if @parameters.nodesSize == 1
@@ -977,7 +979,7 @@ class VisualizationCanvas extends Backbone.View
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * @degrees_const
     #return Math.acos( (p1.x * p2.x + p1.y * p2.y) / ( Math.sqrt(p1.x*p1.x + p1.y*p1.y) * Math.sqrt(p2.x*p2.x + p2.y*p2.y) ) ) * 180 / Math.PI
 
-  formatNodesLabels: (nodes) ->
+  formatNodesLabels: (nodes) =>
     nodes.each () ->
       node = d3.select(this)
       name = node.text()

@@ -18,6 +18,7 @@ en:
         extra_large: Extra Large
       number_of_relations: Number of relations
       show_nodes_label: Show Nodes Label
+      show_nodes_label_complete: Show Complete Nodes Label
       show_nodes_image: Show Nodes Image
       relations_line_style: Relations line style
       line_styles:

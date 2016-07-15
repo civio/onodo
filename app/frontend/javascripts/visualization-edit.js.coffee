@@ -120,6 +120,7 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateNodesSize',             @onUpdateNodesSize, @
     Backbone.on 'visualization.config.updateNodesSizeColumn',       @onUpdateNodesSizeColumn, @
     Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabel, @
+    Backbone.on 'visualization.config.toogleNodesLabelComplete',    @onToogleNodesLabelComplete, @
     Backbone.on 'visualization.config.toogleNodesImage',            @onToogleNodesImage, @
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
@@ -347,6 +348,9 @@ class VisualizationEdit extends VisualizationBase
 
   onToogleNodesLabel: (e) ->
     @visualizationCanvas.toogleNodesLabel e.value
+
+  onToogleNodesLabelComplete: (e) ->
+    @visualizationCanvas.toogleNodesLabelComplete e.value
 
   onToogleNodesImage: (e) ->
     @visualizationCanvas.toogleNodesImage e.value

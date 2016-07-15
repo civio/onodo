@@ -98,18 +98,23 @@
                   %p
                     = t '.number_of_relations'
         %hr
-        .row
-          .col-sm-6
+        .row.switch-container
+          .col-sm-8
             %p.configuration-label.configuration-switch-label
               = t '.show_nodes_label'
-          .col-sm-6.text-right
+          .col-sm-4.text-right
             = check_box_tag :showNodesLabel, 1, false, data: { "size" => "small" }
-        %hr
-        .row
-          .col-sm-6
+        .row.switch-container
+          .col-sm-8
+            %p.configuration-label.configuration-switch-label
+              = t '.show_nodes_label_complete'
+          .col-sm-4.text-right
+            = check_box_tag :showNodesLabelComplete, 0, false, data: { "size" => "small" }
+        .row.switch-container
+          .col-sm-8
             %p.configuration-label.configuration-switch-label
               = t '.show_nodes_image'
-          .col-sm-6.text-right
+          .col-sm-4.text-right
             = check_box_tag :showNodesImage, 1, false, data: { "size" => "small" }
       #settings-relations.tab-pane.fade{ role: "tabpanel" }
         / .form-group

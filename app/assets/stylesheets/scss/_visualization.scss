@@ -300,6 +300,16 @@ $node-color-12: #e0deda;
         }
       }
 
+      &.complete{
+        tspan{
+          opacity: 1;
+
+          &.ellipsis{
+            opacity: 0;
+          }
+        }
+      }
+
       &.weaken,
       &.disabled{
         opacity: 0;
@@ -320,6 +330,8 @@ $node-color-12: #e0deda;
           }
         }
       }
+
+      
 
       &.size-1{
         fill: lighten( $gray-dark, 10% );
@@ -586,6 +598,7 @@ $node-color-12: #e0deda;
     bottom: 0;
     right: -400px;
     width: 100%;
+    margin: 0;
     max-width: 400px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -645,6 +658,10 @@ $node-color-12: #e0deda;
     .nodes-color-column-container,
     .nodes-size-column-container{
       margin-top: $grid-gutter-width/3;
+    }
+
+    .switch-container{
+      margin-bottom: $grid-gutter-width/3;
     }
   }
   
@@ -1259,10 +1276,6 @@ body.fullscreen{
     text-transform: uppercase;
     line-height: 32px;
     margin-bottom: 0;
-
-    &.configuration-switch-label{
-      padding-top: 5px;
-    }
   }
 
   hr{
