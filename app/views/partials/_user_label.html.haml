@@ -1,4 +1,4 @@
-%a.user-label{ href: (defined? header) ? dashboard_path : user_path(user), title: user.name }
+%a.user-label{ href: (defined? header) ? dashboard_path : user_path(user), title: user.name, target: (defined? target) ? target : '_self' }
   - if defined? align and align == 'left'
     .user-picture
       %img{ src: user.avatar_url(:small)}

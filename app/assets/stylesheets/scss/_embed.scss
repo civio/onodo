@@ -2,6 +2,10 @@
 @import '_variables';
 @import 'scss/sprites';
 
+html{
+  background: transparent;
+}
+
 body.embed{
   overflow: hidden;
   
