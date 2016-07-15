@@ -114,44 +114,12 @@
     font-weight: normal;
   }
 
-  .form-inline{
-    display: inline-block;
-    vertical-align: middle;
-    .form-group {
-      margin: 0;
-    }
-    label{
-      font-size: 0.857em;
-      font-weight: normal;
-      text-transform: none;
-    }
-    .email{
-      border: none;
-      min-width: 160px;
-      height: 28px;
-      margin-left: 6px;
-      padding: 0 $grid-gutter-width/2;
-      border-radius: 14px;
-      color: $gray;
-      line-height: 28px;
-      font-size: 0.714em;
-      margin: 0 0 $grid-gutter-width/3 6px;
-    }
-    .btn-default{
-      font-size: 0.714em;
-      background: transparent;
-      color: #fff;
-      border-color: #fff;
-      margin-left: 6px;
-      padding: 0 $grid-gutter-width/2;
-      min-width: auto;
-      height: $grid-gutter-width;
-      line-height: -2px+$grid-gutter-width;
+  .newsletter{
+    font-size: 0.857em;
 
-      &:hover{
-        color: $gray-dark;
-        background: #fff;
-      }
+    a:hover{
+      text-decoration: none;
+      color: $gray-light;
     }
   }
 
@@ -194,9 +162,6 @@
     }
     .form-inline {
       margin-bottom: $grid-gutter-width/2;
-    }
-    .footer-info {
-      margin: 0;
     }
   }
 }
