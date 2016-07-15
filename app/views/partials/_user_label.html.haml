@@ -1,24 +1,11 @@
-- if defined? header 
-  .user-label
-    - if defined? align and align == 'left'
-      .user-picture
-        %img{ src: user.avatar_url(:small)}
-      %span.user-name
-        = user.name
-    - else
-      %span.user-name
-        = user.name
-      .user-picture
-        %img{ src: user.avatar_url(:small) }
-- else
-  %a.user-label{ href: user_path(user), title: user.name, target: '_blank' }
-    - if defined? align and align == 'left'
-      .user-picture
-        %img{ src: user.avatar_url(:small)}
-      %span.user-name
-        = user.name
-    - else
-      %span.user-name
-        = user.name
-      .user-picture
-        %img{ src: user.avatar_url(:small) }
+%a.user-label{ href: (defined? header) ? dashboard_path : user_path(user), title: user.name }
+  - if defined? align and align == 'left'
+    .user-picture
+      %img{ src: user.avatar_url(:small)}
+    %span.user-name
+      = user.name
+  - else
+    %span.user-name
+      = user.name
+    .user-picture
+      %img{ src: user.avatar_url(:small) }
