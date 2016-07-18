@@ -487,3 +487,12 @@ label{
   }
 
 }
+
+// Tooltip
+.tooltip{
+  .tooltip-inner{
+    text-align: left;
+    border-radius: 5px;
+    padding: $grid-gutter-width/3 $grid-gutter-width/2;
+  }
+}

@@ -16,43 +16,43 @@
           .row
             .col-sm-4
               %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.clusters_explanation')} }
+                %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.clusters_explanation')} }
                   = label_tag :clusters, t('.clusters')
                   %span.icon-question
               = check_box_tag :clusters, '1', true, class: 'switch', data: { "size" => "small" }
             .col-sm-4
               %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.degree_explanation')} }
+                %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.degree_explanation')} }
                   = label_tag :degree, t('.degree')
                   %span.icon-question
               = check_box_tag :degree, '1', true, class: 'switch', data: { "size" => "small" }
             .col-sm-4
               %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.relevance_explanation')} }
+                %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.relevance_explanation')} }
                   = label_tag :relevance, t('.relevance')
                   %span.icon-question
               = check_box_tag :relevance, '1', true, class: 'switch', data: { "size" => "small" }
             .col-sm-4
               %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.betweenness_explanation')} }
+                %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.betweenness_explanation')} }
                   = label_tag :betweenness, t('.betweenness')
                   %span.icon-question
               = check_box_tag :betweenness, '1', true, class: 'switch', data: { "size" => "small" }
             .col-sm-4
               %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.closeness_explanation')} }
+                %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.closeness_explanation')} }
                   = label_tag :closeness, t('.closeness')
                   %span.icon-question
               = check_box_tag :closeness, '1', true, class: 'switch', data: { "size" => "small" }
             .col-sm-4
               %p
-                %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.coreness_explanation')} }
+                %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.coreness_explanation')} }
                   = label_tag :coreness, t('.coreness')
                   %span.icon-question
               = check_box_tag :coreness, '1', true, class: 'switch', data: { "size" => "small" }
             / .col-sm-12
             /   %p
-            /     %span{ data: {toggle: "tooltip", placement: "right", "original-title": t('.distance_explanation')} }
+            /     %span{ data: {toggle: "tooltip", placement: "top", "original-title": t('.distance_explanation')} }
             /       = label_tag :distance, t('.distance')
             /       %span.icon-question
             /   = check_box_tag :distance, '1', true, class: 'switch', data: { "size" => "small" }
