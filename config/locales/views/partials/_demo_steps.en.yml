@@ -60,6 +60,6 @@ en:
         content: By default it depends on the number of link but you can define a fixed size
       end:
         title: Ready!
-        content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."
+        content: "You already know all the basic steps to create a network. But Onodo offers much more: network analysis, custom columns , settings... And, if you start to create your own networks, you can embed them into any website."
         singup: Register and begin to create your own visualizations
-        continue: Continue to use the demo if needbe. 
+        continue: Continue to use the demo if needbe.
