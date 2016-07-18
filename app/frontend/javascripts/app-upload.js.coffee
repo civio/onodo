@@ -17,7 +17,8 @@ image_options_with = (param_name) ->
       if theDropzone.getQueuedFiles().length > 0
         theDropzone.processQueue()
       else
-        e.srcElement.parentElement.submit()
+        target = e.target || e.srcElement
+        target.parentElement.submit()
       return
     mockFile =
       name: '__mockfile__'
