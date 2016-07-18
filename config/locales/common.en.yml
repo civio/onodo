@@ -15,7 +15,7 @@ en:
     login: Login
     signup: Sign up
 
-    meta_description: Relationships are complicated
+    meta_description: Every network tells a story
     meta_keywords: "onodo, visualizatin, networks"
 
     story: Story
@@ -29,8 +29,8 @@ en:
     edit_description: Edit Description
     node: Node
     nodes: Nodes
-    relationship: Relationship
-    relationships: Relationships
+    relationship: Link
+    relationships: Links
     civio_foundation: Civio Citizen Foundation
 
     cancel: Cancel

@@ -2,64 +2,64 @@ en:
   partials:
     demo_steps:
       intro:
-        title: ¡Bienvenido!
-        content: "Esta es la pantalla de edición y visualización simultánea de Onodo. <br/>Te vamos a guiar paso a paso, desde una tabla vacía, por sus componentes principales. <br/>Recuerda que también puedes empezar a trabajar subiendo tu propia base de datos y que esto es una demo: toca lo que quieras, nada se guarda. <br/>Los datos de la demo se perderán en el tiempo como lágrimas en la lluvia."
+        title: Welcome!
+        content: "This is the simultanous editing and visualization screen. <br/>We will guide you step by step from the empty table through all of its main components. <br/>Remember that you may also begin to work on a visualization by uploading your own data file and that this is a demo: edit as you please, nothing will be saved. <br/>The data from the demo will be lost in time, like tears in the rain."
       step_1: 
-        title: Haz scroll
-        content: Baja y empieza a editar la tabla de nodos y relaciones.
+        title: Scroll
+        content: Scroll down and begin to edit the table of nodes and links.
       step_2:
-        title: Crea tu primer nodo
-        content: Empieza creando el primer componente de tu visualización.
+        title: Create your first node
+        content: Start by creating the very first component of your visualization.
       step_3:
-        title: ¡Mira!
-        content: 'Ya puedes ver tu nodo en la visualización'
+        title: Look!
+        content: 'Now you can see your node in the visualization'
       step_4:
-        title: Ponle nombre
-        content: Puedes elegir el que quieras. Por ejemplo, Luke Skywalker.
+        title: Name it
+        content: You can name your visualization anything you'd like. For example, Luke Skywalker.
       step_5:
-        title: Crea otro nodo
-        content: Una relación no existe si dos nodos no se unen.
+        title: Create another node
+        content: A link does not exist unless two different nodes are connected.
       step_6:
-        title: Ponle nombre
-        content: Por ejemplo, Darth Vader.
+        title: Name it
+        content: For example, Darth Vader.
       step_7:
-        title: Ve a la pestaña relaciones
-        content: Vamos a vincular nuestros nodos.
+        title: Go to the links tab
+        content: Let's link our nodes.
       step_8:
-        title: Añade una relación
-        content: Empezamos a darle forma a la red.
+        title: Add a link
+        content: We begin to shape the network.
       step_9:
-        title: Elige un nodo origen
-        content: Por ejemplo, puedes elegir a Darth Vader.
+        title: Select a source node
+        content: For example, you can pick Darth Vader as the origen.
       step_10:
-        title: Elige un nodo destino
-        content: En nuestro ejemplo, puede ser Luke Skywalker.
+        title: Select a target node
+        content: In our example, it could be Luke Skywalker.
       step_11:
-        title: Añade el tipo de relación
-        content: ¡Ojo, spoiler! Puedes escribir "padre de", por ejemplo.
+        title: Add the type of link
+        content: Look out, spoiler! You can write "father of" for example.
       step_12:
-        title: Vuelve a la pestaña nodos
-        content: Vamos a enriquecer a nuestros protagonistas.
+        title: Return to the nodes tab
+        content: We will further develop our main characters.
       step_13:
-        title: Añade una descripción
-        content: Puedes incluir información complementaria sobre tu nodo.
+        title: Add a description
+        content: You may include complimentary information about your node.
       step_14:
-        title: Haz click en un nodo
-        content: Podrás ver su ficha y la descripción que has escrito.
+        title: Click on the node 
+        content: You will see its icon and the description that you have written.
       step_15:
-        title: Ponles tipo
-        content: Por ejemplo, puedes marcar quiénes son sith y quienes jedi.
+        title: Categorize the nodes
+        content: For example, you may list your nodes as either a sith or a jedi.
       step_16:
-        title: Dale gas
-        content: Para probar todos los componentes, vamos a cargar una de nuestras redes de ejemplo
+        title: Go on
+        content: To try all of the network's components, we will load one of our networks for example.
       step_17:
-        title: Abre la configuración
-        content: Aquí podrás personalizar colores, tamaños, estilos de línea...
+        title: Open the configuration tab
+        content: Here you will be able to personalize the colors, sizes, line styles...
       step_18:
-        title: Cambia el tamaño de los nodos
-        content: Por defecto depende del numero de relaciones pero puedes definir un tamaño fijo
+        title: Change your node size
+        content: By default it depends on the number of link but you can define a fixed size
       end:
-        title: ¡Listo!
+        title: Ready!
         content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."
-        singup: Regístrate y empieza a crear tus propias visualizaciones
-        continue: Sigue probando la demo de forma libre
+        singup: Register and begin to create your own visualizations
+        continue: Continue to use the demo if needbe. 

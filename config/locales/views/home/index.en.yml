@@ -1,33 +1,34 @@
 en:
   home:
     index:
-      create_visualization: Crea una visualización
-      explore: Explora
-      gallery: Galería
-      demo: Prueba la demo
+      create_visualization: Create a visualization
+      explore: Explore
+      gallery: Gallery
+      demo: Try a demo
       titles:
-        main: Relationships are complicated
+        main: Every network tells a story
         lead: Let's create visualizations to understand them
         features: We make it easy
-        gallery: These are the latest additions to our gallery
+        great: Level up
+        gallery: The best visualizations
       features:
         easey:
           first:
             title: 1. Quick creation
-            text: Using our node & relationship table template, you are ready to go. Import it, duplicate it from another visualization or create it from scratch
+            text: Using our node & link table template, you are ready to go. Import it, duplicate it from another visualization or create it from scratch
           second:
-            title: 2. Rich information
-            text: You can add to each node all the data you need (text, media & links)
+            title: 2. Personalization
+            text: Give your visualization color. Add photos to each node, body of text, or extra information. Personalize your networks
           third:
             title: 3. Share it anywhere
             text: Share & embed the visualization or story wherever you want. We provide you some stats to track it
         great:
           first:
-            title: Collaborations
-            text: You can add collaborators to your visualization o duplicate the users visualizations to start your own
-          second:
             title: Live preview
-            text: View the final result of the visualization as you edit the nodes & relationships
+            text: View the final result of the visualization as you edit the nodes & links
+          second:
+            title: Tell a story
+            text: You can create your own story with chapters that reveal how the relationship network developed. Let your chapters tell the best stories.
           third:
-            title: Do you want to tell a story?
-            text: You can create your own story with chapters that reveal how the relationship network developed
+            title: Analyze
+            text: Who is at the center of your network? How are the nodes connected? Take it a step further and draw conclusions from your data.

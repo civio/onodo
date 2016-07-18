@@ -2,7 +2,7 @@ en:
   partials:
     item_graph_panel_configuration:
       title: Settings
-      relations: Relations
+      relations: Links
       advanced: Advanced
       nodes_color: Nodes Color
       colors:
@@ -16,11 +16,11 @@ en:
         medium: Medium
         large: Large
         extra_large: Extra Large
-      number_of_relations: Number of relations
+      number_of_relations: Number of links
       show_nodes_label: Show Nodes Label
       show_nodes_label_complete: Show Complete Nodes Label
       show_nodes_image: Show Nodes Image
-      relations_line_style: Relations line style
+      relations_line_style: Links line style
       line_styles:
         solid: Solid
         dashed: Dashed
