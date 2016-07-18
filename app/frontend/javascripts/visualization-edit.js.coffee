@@ -25,7 +25,6 @@ class VisualizationEdit extends VisualizationBase
   # ----------------------
 
   constructor: (_id) ->
-    console.log 'Visualization Edit'
     super _id
     # Setup tables
     @tableNodes      = new VisualizationTableNodes     {model: @visualization, collection: @nodes}
@@ -236,16 +235,16 @@ class VisualizationEdit extends VisualizationBase
 
   # Nodes Collection Events
   onNodesAdd: (node) ->
-    console.log 'nodes add'
+    #console.log 'nodes add'
     # We need to wait until sync event to get node id
     @nodes.once 'sync', (model) =>
-      console.log 'onNodesAdd', model.id, model
+      #console.log 'onNodesAdd', model.id, model
       @visualizationCanvas.addNode model.attributes
       @visualizationActions.updateSearchData()
     , @
 
   onNodeChangeName: (node) ->
-    console.log 'onNodeChangeName', node
+    #console.log 'onNodeChangeName', node
     # Update nodes labels
     @visualizationCanvas.updateNodesLabels()
     # Update Panel Info name
@@ -260,12 +259,12 @@ class VisualizationEdit extends VisualizationBase
     @updateInfoNode node
 
   onNodeChangeDescription: (node) ->
-    console.log 'onNodeChangeDescription', node.attributes.description
+    #console.log 'onNodeChangeDescription', node.attributes.description
     # Update Panel Info description
     @updateInfoNode node
 
   onNodeChangeVisible: (node) ->
-    console.log 'onNodeChangeVisibe', node
+    #console.log 'onNodeChangeVisibe', node
     if node.attributes.visible
       @visualizationCanvas.showNode node.attributes
     else
@@ -276,7 +275,7 @@ class VisualizationEdit extends VisualizationBase
     @visualizationActions.updateSearchData()
 
   onNodeChangeImage: (node) ->
-    console.log 'onNodeChangeImage', node
+    #console.log 'onNodeChangeImage', node
     @visualizationCanvas.updateImages()
     @visualizationCanvas.updateNodes()
     @visualizationCanvas.updateForce true
@@ -295,7 +294,7 @@ class VisualizationEdit extends VisualizationBase
     @nodes.bind 'change:'+field.name, @onNodeChangeCustomField, @
 
   onNodesRemove: (node) ->
-    console.log 'onNodesRemove', node.attributes.name
+    #console.log 'onNodesRemove', node.attributes.name
     @visualizationCanvas.removeNode node.attributes
     @visualizationActions.updateSearchData()
     # Hide Panel Info if visible for current node
@@ -304,7 +303,7 @@ class VisualizationEdit extends VisualizationBase
 
   # Relations Collection Events
   onRelationsChangeNode: (relation) ->
-    console.log 'onRelationsChange', relation
+    #console.log 'onRelationsChange', relation
     # check if we have both source_id and target_id
     if relation.attributes.source_id and relation.attributes.target_id
       # Remove relation if exist in graph
@@ -313,7 +312,7 @@ class VisualizationEdit extends VisualizationBase
       @visualizationCanvas.addRelation relation.attributes
 
   onRelationsChangeType: (relation) ->
-    console.log 'onRelationsChangeType', relation
+    #console.log 'onRelationsChangeType', relation
     @visualizationCanvas.updateRelationsLabelsData()
 
   onRelationsChangeDirection: (relation) ->

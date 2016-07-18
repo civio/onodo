@@ -28,7 +28,7 @@ class StoryInfo extends Backbone.View
   render: ->
     # Update template & render if we have a model
     if @model
-      console.log 'render', @model.get('id')
+      #console.log 'render', @model.get('id')
       # Get chapter index
       @index = parseInt @model.get('number')
       # Set current chapter active in chapters-list

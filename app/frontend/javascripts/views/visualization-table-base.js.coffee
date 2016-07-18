@@ -168,7 +168,7 @@ class VisualizationTableBase extends Backbone.View
           custom_fields.push obj  
     # update colHeaders array
     @table_options.colHeaders = @table_col_headers
-    console.log 'addCustomColumns', @table_options
+    #console.log 'addCustomColumns', @table_options
     # update table options
     if @table
       @table.updateSettings @table_options

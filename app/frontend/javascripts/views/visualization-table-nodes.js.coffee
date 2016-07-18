@@ -135,7 +135,7 @@ class VisualizationTableNodes extends VisualizationTableBase
         @addNodesType value
       obj = {}
       obj[ key ] = value
-      console.log 'updateCell', obj, cell_model
+      #console.log 'updateCell', obj, cell_model
       # Save model with updated attributes in order to delegate in Collection trigger 'change' events
       cell_model.save obj, {patch: true}
 

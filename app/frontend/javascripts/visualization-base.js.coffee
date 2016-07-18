@@ -35,7 +35,6 @@ class VisualizationBase
   }
 
   constructor: (_id) ->
-    console.log 'setup visualization base'
     @id = _id
     # Setup Visualization Model
     @visualization      = new Visualization()
@@ -126,7 +125,7 @@ class VisualizationBase
 
   # Canvas Events
   onNodeShowInfo: (e) ->
-    console.log 'onNodeShowInfo', typeof e.node
+    #console.log 'onNodeShowInfo', typeof e.node
     node = @nodes.get(e.node)
     @visualizationCanvas.focusNode node
     @visualizationInfo.show node, @visualization.get('node_custom_fields')

@@ -36,13 +36,13 @@ class VisualizationModalNodeImage extends Backbone.View
     @$el.find('#node-image-form').submit()
 
   onNodeImageURLUpdated: (e) =>
-    console.log 'node_remote_image_url change!', $(e.target).val()
+    #console.log 'node_remote_image_url change!', $(e.target).val()
     @$el.find('#upload-error-msg').addClass('hide')
     @$el.find('#node-image-form').submit()
 
   onImageUploaded: (e) =>
     e.preventDefault()
-    console.log 'onImageModalUploadConfirm', $.parseJSON($(e.target).contents().text())
+    #console.log 'onImageModalUploadConfirm', $.parseJSON($(e.target).contents().text())
     @image = $.parseJSON($(e.target).contents().text()).image
     if @image == null
       @$el.find('#upload-error-msg').removeClass('hide')
@@ -56,7 +56,7 @@ class VisualizationModalNodeImage extends Backbone.View
     @$el.modal 'hide'
 
   onChangeImage: (e) =>
-    console.log 'onChangeImage'
+    #console.log 'onChangeImage'
     e.preventDefault()
     # Hide Change & Delete btns & Show Upload contents
     @$el.find('#change-image, #delete-image').addClass('hide')
@@ -69,7 +69,7 @@ class VisualizationModalNodeImage extends Backbone.View
 
   onDeleteImage: (e) =>
     e.preventDefault()
-    console.log 'Delete image'
+    #console.log 'Delete image'
     @deleteImage()
     @$el.modal 'hide'
 
@@ -83,11 +83,10 @@ class VisualizationModalNodeImage extends Backbone.View
     @$el.find('#node_image').off      'change'
     # Delete image when modal hidden & image has not be confirmed
     unless @imageAdded
-      console.log 'delete image'
+      #console.log 'delete image'
       @.trigger 'delete', {id: @nodeId}
 
   addImage: =>
-    console.log 
     @.trigger 'update', {index: @index, value: @image}
     @imageAdded = true
 

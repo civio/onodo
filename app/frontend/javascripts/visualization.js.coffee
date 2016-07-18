@@ -3,7 +3,6 @@ VisualizationBase = require './visualization-base.js'
 class Visualization extends VisualizationBase
 
   constructor: (_id) ->
-    console.log 'Visualization'
     super _id
     # activate table tabs selector
     $('#visualization-table-selector a').click (e) ->
