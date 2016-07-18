@@ -3,18 +3,18 @@ en:
     network_analysis_modal:
       title: Network Analysis
       description: You can add custom columns based on Network Analysis metrics to your nodes table & use this metrics as nodes color or size
-      clusters_explanation: Clusters human explanation ...
+      clusters_explanation: Groups the nodes into blocks or clusters by the number of relationships they have among them.
       clusters: Clusters
-      degree_explanation: Degree human explanation ...
-      degree: Degree
-      relevance_explanation: Relevance human explanation ...
+      degree_explanation: The number of connections of each node
+      degree: Number of connections
+      relevance_explanation: The number of relations of each node, like degree, but connections with central nodes count more. It is not based on the number of connections, but on their importance.
       relevance: Relevance
-      betweenness_explanation: Betweenness human explanation ...
+      betweenness_explanation: How many times a node is located along the shortest path between two nodes.
       betweenness: Betweenness
-      closeness_explanation: Closeness human explanation ...
+      closeness_explanation: How close a node is to the other nodes in the network or how many steps it takes from a node to reach the other nodes on average.
       closeness: Closeness
-      coreness_explanation: Coreness (k-index) human explanation ...
+      coreness_explanation: Measures how much a node is in the core of a network. A node has k-index k if it is connected to at least k other nodes which also have k-index at least k. So, a high k-index means that a node is part of an inner core of the network, made of a group of nodes that have many connections with each other.
       coreness: Coreness (k-index)
-      distance_explanation: Distance from specific node human explanation ...
+      distance_explanation: The minimum number of ties required to connect any node of the network to the selected one.
       distance: Distance from specific node
       submit: Calculate

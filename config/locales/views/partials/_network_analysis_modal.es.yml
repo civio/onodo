@@ -4,18 +4,18 @@ es:
       title: Análisis de redes
       description: Puedes añadir columnas basadas en métricas de análisis de redes a tu tabla de nodos y usarlas para definir el color y el tamaño de los nodos
       advice: Si editas los nodos o relaciones después de realizar el cálculo, éste quedará obsoleto y deberás volver generarlo
-      clusters_explanation: Clústers significa ...
-      clusters: Clústers
-      degree_explanation: Grado significa ...
-      degree: Grado
-      relevance_explanation: Relevancia significa ...
-      relevance: Relevance
-      betweenness_explanation: Betweenness significa ...
-      betweenness: Betweenness
-      closeness_explanation: Closeness significa ...
-      closeness: Closeness
-      coreness_explanation: Coreness (k-index) significa ...
-      coreness: Coreness (k-index)
-      distance_explanation: Distancia de un nodo específico mide ...
+      clusters_explanation: Agrupa los nodos en bloques o clusters por el número de relaciones que tienen entre ellos.
+      clusters: Grupos
+      degree_explanation: Calcula el número de relaciones de cada nodo.
+      degree: Número de conexiones
+      relevance_explanation: Calcula el número de relaciones de cada nodo, pero aquellas con nodos centrales de la red cuentan más. No se basa solo en el número, sino en su importancia.
+      relevance: Relevancia
+      betweenness_explanation: Calcula cuántas veces un nodo es el nexo más corto entre dos nodos.
+      betweenness: Intermediación
+      closeness_explanation: Calcula cómo de cerca está un nodo del resto o, dicho de otra forma, cuántos pasos necesita para llegar al resto de nodos, de media.
+      closeness: Cercanía
+      coreness_explanation: Mide cómo de central es un nodo en la red. Su índice dependerá de a cuántos nodos está conectado con, al menos, ese mismo índice. Si es alto, significa que está relacionado con muchos nodos que tienen muchas relaciones.
+      coreness: Centralidad (k-index)
+      distance_explanation: Calcula el número mínimo de relaciones necesarias para conectar cualquier nodo de la red al nodo seleccionado.
       distance: Distancia de un nodo específico
       submit: Calcular
