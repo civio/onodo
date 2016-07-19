@@ -9,8 +9,8 @@ class Api::VisualizationsController < ApiController
   def update
     node_custom_fields     = params[:visualization][:node_custom_fields] || []
     relation_custom_fields = params[:visualization][:relation_custom_fields] || []
-    @dataset.node_custom_fields     = node_custom_fields.map{ |cf| { "name" => cf["name"].downcase.gsub(' ', '_'), "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string" } }
-    @dataset.relation_custom_fields = relation_custom_fields.map{ |cf| { "name" => cf["name"].downcase.gsub(' ', '_'), "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string" } }
+    @dataset.node_custom_fields     = node_custom_fields.map {|cf| clean_custom_field_argument(cf) }
+    @dataset.relation_custom_fields = relation_custom_fields.map {|cf| clean_custom_field_argument(cf) }
     @dataset.save
     params[:visualization].except!(:node_custom_fields, :relation_custom_fields)
     @visualization.update(visualization_params)
@@ -25,9 +25,13 @@ class Api::VisualizationsController < ApiController
     results, metrics_names = NetworkAnalysis.new(@dataset).calculate_metrics(selected_metrics)
 
     # Create the new custom fields, if needed
-    # TODO: Refactor to avoid duplication with code above
     network_metrics = metrics_names.map do |metric_name|
-      { "name" => metric_to_custom_field_name(metric_name), "type" => "number", "readonly" => "true", "format" => "0.00" }
+      {
+        "name" => metric_to_custom_field_name(metric_name),
+        "type" => "number",
+        "readonly" => "true",
+        "format" => "0.00"
+      }
     end
     @dataset.node_custom_fields = (@dataset.node_custom_fields + network_metrics).uniq
     @dataset.save!
@@ -99,5 +103,12 @@ class Api::VisualizationsController < ApiController
   # crashing with potential user-generated fields. Should review/discuss this.
   def metric_to_custom_field_name(metric_name)
     '_'+metric_name
+  end
+
+  def clean_custom_field_argument(cf)
+    {
+      "name" => cf["name"].downcase.gsub(' ', '_'),
+      "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string"
+    }
   end
 end
