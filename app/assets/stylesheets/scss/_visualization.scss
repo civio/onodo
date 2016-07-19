@@ -884,7 +884,7 @@ body.fullscreen{
     color: $gray;
     font-size: 1.571em;
     font-weight: 300;
-    margin: $grid-gutter-width 0;
+    margin: $grid-gutter-width 0 2*$grid-gutter-width/3;
   }
 
   .btn-edit-circle{
@@ -894,7 +894,6 @@ body.fullscreen{
   .visualization-description-content{
     clear: both;
     color: $gray;
-    font-size: 0.929em;
     font-weight: 300;
 
     strong{
