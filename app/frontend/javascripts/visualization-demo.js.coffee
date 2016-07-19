@@ -59,7 +59,7 @@ class VisualizationDemo
       $('#visualization-add-node-btn').one 'click', =>
         @addNextPopover()
     else if @current_step == 2
-      $('.popover-demo .popover-content a').click (e) =>
+      $('.popover-demo .popover-content a').one 'click', (e) =>
         e.preventDefault()
         @addNextPopover()
     else if @current_step == 3 || @current_step == 5
@@ -93,12 +93,12 @@ class VisualizationDemo
       @nodes.once 'change:node_type', =>
         @addNextPopover()
     else if @current_step == 15
-      $('.popover-demo .popover-content a').click (e) =>
+      $('.popover-demo .popover-content a').one 'click', (e) =>
         e.preventDefault()
         $(@steps[@current_step].selector).popover('hide').popover('destroy')
         Backbone.trigger 'visualization.demo.loadData'
     else if @current_step == 16
-      $('.visualization-graph-menu-actions .btn-configure').click (e) =>
+      $('.visualization-graph-menu-actions .btn-configure').one 'click', =>
         @addNextPopover()
     else if @current_step == 17
       Backbone.once 'visualization.config.updateNodesSize', =>
