@@ -5,6 +5,8 @@ en:
         title: Settings
         lead: Edit your profile settings
         field:
+          name:
+            title: Nombre
           media:
             title: Profile avatar
             description: Your avatar photo should be about 500px wide, 500px tall and under 1MB
