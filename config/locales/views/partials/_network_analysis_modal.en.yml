@@ -3,6 +3,7 @@ en:
     network_analysis_modal:
       title: Network Analysis
       description: You can add custom columns based on Network Analysis metrics to your nodes table & use this metrics as nodes color or size
+      advice: If you edit nodes or links after the calculation, it will become obsolete and you will need to generate it again
       clusters_explanation: Groups the nodes into blocks or clusters by the number of relationships they have among them.
       clusters: Clusters
       degree_explanation: The number of connections of each node

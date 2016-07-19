@@ -4,10 +4,10 @@ en:
       create_visualization: Create a visualization
       explore: Explore
       gallery: Gallery
-      demo: Try a demo
+      demo: Try the demo
       titles:
         main: Every network tells a story
-        lead: Let's create visualizations to understand them
+        lead: Build one quickly and easily to tell yours
         features: We make it easy
         great: Level up
         gallery: The best visualizations
@@ -15,20 +15,20 @@ en:
         easey:
           first:
             title: 1. Quick creation
-            text: Using our node & link table template, you are ready to go. Import it, duplicate it from another visualization or create it from scratch
+            text: Fill the table and the network will pop up. Or import your own file and in two steps you will have your visualization ready.
           second:
             title: 2. Personalization
-            text: Give your visualization color. Add photos to each node, body of text, or extra information. Personalize your networks
+            text: Give your visualization color. Add photos to each node, descriptions or extra information. Personalize your networks.
           third:
             title: 3. Share it anywhere
-            text: Share & embed the visualization or story wherever you want. We provide you some stats to track it
+            text: Embed the visualization or story wherever you want or share it with everywhere.
         great:
           first:
             title: Live preview
-            text: View the final result of the visualization as you edit the nodes & links
+            text: While editing, you see the result. The best way to ensure, in real time, you are on track.
           second:
             title: Tell a story
-            text: You can create your own story with chapters that reveal how the relationship network developed. Let your chapters tell the best stories.
+            text: Create chapters and let the networks help you tell the best stories.
           third:
             title: Analyze
             text: Who is at the center of your network? How are the nodes connected? Take it a step further and draw conclusions from your data.

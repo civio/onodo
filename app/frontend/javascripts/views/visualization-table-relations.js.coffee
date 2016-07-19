@@ -20,7 +20,7 @@ class VisualizationTableRelations extends VisualizationTableBase
   constructor: (@model, @collection) ->
     # Set columns names based on current language
     if $('body').hasClass('lang-en')
-      @table_col_headers = ['', '', 'Source', 'Relationship', 'Target', 'Date', 'Direction']
+      @table_col_headers = ['', '', 'Source', 'Link', 'Target', 'Date', 'Direction']
     else
       @table_col_headers = ['', '', 'Origen', 'Relación', 'Destino', 'Fecha', 'Dirección']
     super @model, @collection, 'relation'

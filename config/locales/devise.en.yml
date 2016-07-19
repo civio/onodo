@@ -17,7 +17,7 @@ en:
     confirmations:
       confirmed: "Your account was successfully confirmed."
       new:
-        resend_confirmation_instructions: Reenvíame los pasos para confirmar mi cuenta
+        resend_confirmation_instructions: Resend the email to confirm my account
       send_instructions: "You will receive an email with instructions about how to confirm your account in a few minutes."
       send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes."
     failure:
@@ -42,14 +42,14 @@ en:
         subject: "Reset password instructions"
       reset_password_instructions:
         action: Cambiar mi contraseña
-        greeting: "¡Hola, %{recipient}!"
+        greeting: "Hi, %{recipient}!"
         instruction: Has solicitado modificar tu contraseña. ¡Dicho y hecho! Puedes hacerlo a través del siguiente enlace
         instruction_2: Si no has solicitado este cambio, por favor ignora este correo electrónico. Nos habremos despistado
         instruction_3: Tu contraseña no será cambiada hasta que no accedas al enlace y crees tú mismo una nueva
         subject: Instrucciones para recuperar tu contraseña
       unlock_instructions:
         action: Desbloquear mi cuenta
-        greeting: "¡Hola, %{recipient}!"
+        greeting: "Hi, %{recipient}!"
         instruction: 'Haz clic en el siguiente enlace para desbloquear tu cuenta:'
         message: ¡Ups! Tu cuenta ha sido bloqueada después de demasiados intentos fallidos para acceder
         subject: "Unlock Instructions"
@@ -74,7 +74,7 @@ en:
         update: Actualizar
         we_need_your_current_password_to_confirm_your_changes: Necesitamos tu contraseña actual para confirmar estos cambios
       new:
-        sign_up: Regístrate
+        sign_up: Sign up
       signed_up: "Welcome! You have signed up successfully."
       signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
       signed_up_but_locked: "You have signed up successfully. However, we could not sign you in because your account is locked."
@@ -84,18 +84,18 @@ en:
     sessions:
       already_signed_out: Sesión finalizada.
       new:
-        sign_in: Iniciar sesión
+        sign_in: Login
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
     shared:
       links:
         back: Atrás
-        didn_t_receive_confirmation_instructions: "¿No has recibido las instrucciones de confirmación?"
+        didn_t_receive_confirmation_instructions: You have not received confirmation instructions?
         didn_t_receive_unlock_instructions: "¿No has recibido las instrucciones para desbloquear?"
-        forgot_your_password: "¿Has olvidado tu contraseña?"
-        sign_in: Inicia sesión
+        forgot_your_password: Have you forgotten your password?
+        sign_in: Login
         sign_in_with_provider: Iniciar sesión con %{provider}
-        sign_up: Regístrate
+        sign_up: Sign up
     unlocks:
       new:
         resend_unlock_instructions: Reenviadme las instrucciones para desbloquear mi cuenta.

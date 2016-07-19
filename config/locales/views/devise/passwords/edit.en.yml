@@ -2,8 +2,8 @@ en:
   devise:
     passwords:
       edit:
-        change_my_password: Cambiar mi contraseña
+        change_my_password: Change my password
         description: This will be your Onodo password from now on
-        change_your_password: Cambia tu contraseña
-        confirm_new_password: Confirma tu nueva contraseña
-        new_password: Nueva contraseña
+        change_your_password: Change your password
+        confirm_new_password: Confirm your new password
+        new_password: New password

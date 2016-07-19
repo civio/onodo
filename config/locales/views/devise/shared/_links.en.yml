@@ -2,5 +2,5 @@ en:
   devise:
     shared:
       links:
-        already_user: Already a user? Then let us take yout to
+        already_user: Already a user? Then let us take you to
         not_user: Not in Onodo yet? Let us invite you to

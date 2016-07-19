@@ -2,6 +2,6 @@ en:
   devise:
     passwords:
       new:
-        lead: Enter the email you registered & we will send you a link to restore it
-        forgot_your_password: "¿Has olvidado tu contraseña?"
-        send_me_reset_password_instructions: Envíame las instrucciones para restablecer mi contraseña
+        lead: Enter the email you use to sign up in Onodo & we will send you a link to restore it
+        forgot_your_password: Have you forgotten your password?
+        send_me_reset_password_instructions: Send me instructions to regenerate my password
