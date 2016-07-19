@@ -14,7 +14,7 @@ es:
       betweenness: Intermediación
       closeness_explanation: Calcula cómo de cerca está un nodo del resto o, dicho de otra forma, cuántos pasos necesita para llegar al resto de nodos, de media.
       closeness: Cercanía
-      coreness_explanation: Mide cómo de nuclear es un nodo en la red. El índice explica que el nodo tiene k conexiones a nodos con k conexiones a nodos con k conexiones (cuanto más alto sea su valor, más próximo es el nodo al núcleo de la red).
+      coreness_explanation: Mide en qué capa de la red está un nodo. La capa de mayor k es el núcleo de la red. La capa k la forman nodos con al menos k conexiones cada uno entre ellos.
       coreness: Nuclearidad (k-index)
       distance_explanation: Calcula el número mínimo de relaciones necesarias para conectar cualquier nodo de la red al nodo seleccionado.
       distance: Distancia de un nodo específico

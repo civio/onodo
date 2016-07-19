@@ -14,7 +14,7 @@ en:
       betweenness: Betweenness
       closeness_explanation: How close a node is to the other nodes in the network or how many steps it takes from a node to reach the other nodes on average.
       closeness: Closeness
-      coreness_explanation: Measures how close the node is to the core of the network. If a node has a value k in this index, it means it's connected to at least k other nodes which also have a k-index of at least k (i.e. the higher the value, the closer the node is to the core of the network).
+      coreness_explanation: Measures in which layer of the network is a node. The layer of highest k index is the core of the network. The layer with a k number is composed by the nodes with at least this k number of conections each one among them.
       coreness: Coreness (k-index)
       distance_explanation: The minimum number of ties required to connect any node of the network to the selected one.
       distance: Distance from specific node
