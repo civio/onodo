@@ -4,4 +4,4 @@ json.visualization do
   json.node_custom_fields @dataset.node_custom_fields
   json.relation_custom_fields @dataset.relation_custom_fields
 end
-json.nodes @dataset.nodes, partial: 'api/nodes/node', as: :node
+json.nodes @dataset.nodes.order(:name), partial: 'api/nodes/node', as: :node
