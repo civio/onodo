@@ -84,6 +84,7 @@ class VisualizationsController < ApplicationController
     copy = @visualization.deep_clone include: [dataset: [:nodes, relations: [:source, :target]]], use_dictionary: true
     copy.name = t('.copy_of') + " " + copy.name
     copy.published = false
+    copy.author = current_user
     if copy.save
       redirect_to edit_visualization_path(copy), notice: t('.success')
     else
