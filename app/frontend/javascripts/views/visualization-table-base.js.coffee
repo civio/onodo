@@ -17,11 +17,17 @@ class VisualizationTableBase extends Backbone.View
 
   constructor: (@model, @collection, table_type) ->
     super(@model, @collection)
+    lang = if $('body').hasClass('lang-es') then 'es' else 'en'
     @table_type = table_type
     #console.log 'VisualizationTableBase', table_type
     @table_options =
       #minSpareRows: 1
-      contextMenu: [ 'row_above', 'row_below']  #, 'undo', 'redo' ]
+      contextMenu: #[ 'row_above', 'row_below']  #, 'undo', 'redo' ]
+        items:
+          'row_above':
+            name: if lang == 'en' then 'Insert row above' else 'Inserta una columna encima'
+          'row_below':
+            name: if lang == 'en' then 'Insert row below' else 'Inserta una columna debajo'
       height: 360
       stretchH: 'all'
       columnSorting: true
