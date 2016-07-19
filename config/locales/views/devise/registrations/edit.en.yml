@@ -7,6 +7,8 @@ en:
         field:
           name:
             title: Name
+          email:
+            title: Email
           media:
             title: Profile avatar
             description: Your avatar photo should be about 500px wide, 500px tall and under 1MB

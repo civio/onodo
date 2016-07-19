@@ -6,7 +6,9 @@ es:
         lead: Edita tu perfil de usuario
         field:
           name:
-            title: Name
+            title: Nombre
+          email:
+            title: Email
           media:
             title: Imagen de perfil
             description: Tu imagen de perfil debe medir 500px por 500px y pesar menos de 1MB
