@@ -158,21 +158,21 @@ class VisualizationTableRelations extends VisualizationTableBase
       if key == 'relation_type' && !_.contains(@relations_types, value)
         @addRelationsType value
       # Setup parameters to store in model
-      obj = {}
-      if key == 'source_name' or key == 'target_name'
-        node = @nodes.filter((d) -> return d.get('name') == value)  # get node by node name
-        console.log 'updateModel', node
-        if node.length > 0
-          if key == 'source_name'
-            obj.source_id = node[0].id
-            obj.source_name = node[0].get('name')
-          else
-            obj.target_id = node[0].id
-            obj.target_name = node[0].get('name')
-      else
-        obj[ key ] = value
-      # Save model with updated attributes in order to delegate in Collection trigger 'change' events
-      cell_model.save obj, {patch: true}
+      if cell_model
+        obj = {}
+        if key == 'source_name' or key == 'target_name'
+          node = @nodes.filter((d) -> return d.get('name') == value)  # get node by node name
+          if node.length > 0
+            if key == 'source_name'
+              obj.source_id = node[0].id
+              obj.source_name = node[0].get('name')
+            else
+              obj.target_id = node[0].id
+              obj.target_name = node[0].get('name')
+        else
+          obj[ key ] = value
+        # Save model with updated attributes in order to delegate in Collection trigger 'change' events
+        cell_model.save obj, {patch: true}
 
   addRelationsType: (type) ->
     @relations_types.push type
@@ -225,13 +225,14 @@ class VisualizationTableRelations extends VisualizationTableBase
           'from': $(e.target).find('#relation_from').val()
           'to':   if date_at then $(e.target).find('#relation_from').val() else $(e.target).find('#relation_to').val()
         }
-        # update date value in table when change is available
-        model.once 'change:date', (model) =>
-          @table.setDataAtRowProp index, 'date', model.get('date')
-        # update model
-        model.save model_date, {patch: true}
-        # hide modal
-        $modal.modal 'hide'
+        if model
+          # update date value in table when change is available
+          model.once 'change:date', (model) =>
+            @table.setDataAtRowProp index, 'date', model.get('date')
+          # update model
+          model.save model_date, {patch: true}
+          # hide modal
+          $modal.modal 'hide'
         return
     # Show modal
     $modal.modal 'show'
