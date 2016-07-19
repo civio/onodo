@@ -4,17 +4,17 @@ en:
       title: Network Analysis
       description: You can add custom columns based on Network Analysis metrics to your nodes table & use this metrics as nodes color or size
       advice: If you edit nodes or links after the calculation, it will become obsolete and you will need to generate it again
-      clusters_explanation: Groups the nodes into blocks or clusters by the number of relationships they have among them.
+      clusters_explanation: Assign the nodes into blocks or clusters (groups of nodes with many links among them and only a few with the rest of the network).
       clusters: Clusters
       degree_explanation: The number of connections of each node
       degree: Number of connections
-      relevance_explanation: The number of relations of each node, like degree, but connections with central nodes count more. It is not based on the number of connections, but on their importance.
+      relevance_explanation: The relevance of each node based in its number of connections and the relevance of the nodes it's connected to (whose relevance is, again, based on their connections).
       relevance: Relevance
       betweenness_explanation: How many times a node is located along the shortest path between two nodes.
       betweenness: Betweenness
       closeness_explanation: How close a node is to the other nodes in the network or how many steps it takes from a node to reach the other nodes on average.
       closeness: Closeness
-      coreness_explanation: Measures how much a node is in the core of a network. A node has k-index k if it is connected to at least k other nodes which also have k-index at least k. So, a high k-index means that a node is part of an inner core of the network, made of a group of nodes that have many connections with each other.
+      coreness_explanation: Measures how close the node is to the core of the network. If a node has a value k in this index, it means it's connected to at least k other nodes which also have a k-index of at least k (i.e. the higher the value, the closer the node is to the core of the network).
       coreness: Coreness (k-index)
       distance_explanation: The minimum number of ties required to connect any node of the network to the selected one.
       distance: Distance from specific node

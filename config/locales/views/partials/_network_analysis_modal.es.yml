@@ -4,18 +4,18 @@ es:
       title: Análisis de redes
       description: Puedes añadir columnas basadas en métricas de análisis de redes a tu tabla de nodos y usarlas para definir el color y el tamaño de los nodos
       advice: Si editas los nodos o relaciones después de realizar el cálculo, éste quedará obsoleto y deberás volver generarlo
-      clusters_explanation: Agrupa los nodos en bloques o clusters por el número de relaciones que tienen entre ellos.
+      clusters_explanation: Asigna los nodos en bloques o clusters por el número de relaciones que tienen entre ellos.
       clusters: Grupos
       degree_explanation: Calcula el número de relaciones de cada nodo.
       degree: Número de conexiones
-      relevance_explanation: Calcula el número de relaciones de cada nodo, pero aquellas con nodos centrales de la red cuentan más. No se basa solo en el número, sino en su importancia.
+      relevance_explanation: Calcula la relevancia de cada nodo en base al número de conexiones y la relevancia de los nodos a los que está contextado (según su número de conexiones).
       relevance: Relevancia
-      betweenness_explanation: Calcula cuántas veces un nodo es el nexo más corto entre dos nodos.
+      betweenness_explanation: Calcula cuántas veces un nodo está en el camino más corto entre dos nodos.
       betweenness: Intermediación
       closeness_explanation: Calcula cómo de cerca está un nodo del resto o, dicho de otra forma, cuántos pasos necesita para llegar al resto de nodos, de media.
       closeness: Cercanía
-      coreness_explanation: Mide cómo de central es un nodo en la red. Su índice dependerá de a cuántos nodos está conectado con, al menos, ese mismo índice. Si es alto, significa que está relacionado con muchos nodos que tienen muchas relaciones.
-      coreness: Centralidad (k-index)
+      coreness_explanation: Mide cómo de nuclear es un nodo en la red. El índice explica que el nodo tiene k conexiones a nodos con k conexiones a nodos con k conexiones (cuanto más alto sea su valor, más próximo es el nodo al núcleo de la red).
+      coreness: Nuclearidad (k-index)
       distance_explanation: Calcula el número mínimo de relaciones necesarias para conectar cualquier nodo de la red al nodo seleccionado.
       distance: Distancia de un nodo específico
       submit: Calcular

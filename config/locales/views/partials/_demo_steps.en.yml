@@ -15,7 +15,7 @@ en:
         content: 'Now you can see your node in the visualization'
       step_4:
         title: Name it
-        content: You can name your visualization anything you'd like. For example, Luke Skywalker.
+        content: You can name your node anything you'd like. For example, Luke Skywalker.
       step_5:
         title: Create another node
         content: A link does not exist unless two different nodes are connected.
