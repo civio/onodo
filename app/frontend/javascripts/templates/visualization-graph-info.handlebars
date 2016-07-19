@@ -8,10 +8,21 @@
   {{{ description }}}
 </div>
 <div class="custom-fields">
-{{#if type}}
-  <p><strong>Type</strong>: {{{ type }}}</p>
-{{/if}}
-{{#each custom_fields}}
-  <p><strong>{{key}}</strong>: {{value}}</p>
-{{/each}}
+  <table class="table">
+    <tbody>
+      {{#if type}}
+        <tr>
+          <td><strong>Type</strong></td>
+          <td class="text-right">{{{ type }}}</td>
+        </tr>
+      {{/if}}
+      {{#each custom_fields}}
+        <tr>
+          <td><strong>{{ key }}</strong></td>
+          <td class="text-right">{{{ value }}}</td>
+        </tr>
+      {{/each}}
+      </div>
+    </tbody>
+  </table>
 </div>
