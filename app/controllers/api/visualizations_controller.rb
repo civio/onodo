@@ -106,9 +106,15 @@ class Api::VisualizationsController < ApiController
   end
 
   def clean_custom_field_argument(cf)
-    {
+    clean_field = {
       "name" => cf["name"].downcase.gsub(' ', '_'),
-      "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string"
+      "type" => ["string", "number", "boolean"].any?{ |t| t == cf["type"].downcase } ? cf["type"].downcase : "string",
     }
+
+    # Deal with optional fields. We could populate them anyway, but we'd rather keep it clean.
+    clean_field["readonly"] = (cf["readonly"].downcase=="true" ? "true" : "false") unless cf["readonly"].nil?
+    clean_field["format"] = cf["format"] unless cf["format"].nil?
+
+    clean_field
   end
 end
