@@ -819,34 +819,52 @@ body.fullscreen{
   }
 
   .btn{
-    .icon-edit{
+    .icon-edit,
+    .icon-duplicate{
       display: inline-block;
       position: relative;
       top: 4px;
       margin-right: 5px;
-      @include retina-sprite( $icon-pencil-white-group );
     }
 
+    .icon-edit{
+      @include retina-sprite( $icon-pencil-white-group );
+    }
     &:hover .icon-edit{
       @include retina-sprite( $icon-pencil-group );
+    }
+
+    .icon-duplicate{
+      @include retina-sprite( $icon-duplicate-white-group );
+    }
+    &:hover .icon-duplicate{
+      @include retina-sprite( $icon-duplicate-group );
     }
   }
 
   .btn-collapse{
-    margin-top: $grid-gutter-width/2;
-  }
+    margin-bottom: $grid-gutter-width/2;
 
-  .collapsed-label-icon,
-  .collapsible-label-icon{
-    @include retina-sprite( $icon-table-group );
-  }
+    .collapsed-label-icon,
+    .collapsible-label-icon{
+      @include retina-sprite( $icon-table-group );
+    }
 
-  .collapsed-label-icon,
-  .collapsible-label-icon{
-    display: inline-block;
-    position: relative;
-    margin-right: 5px;
-    top: 2px;
+    .collapsed-label-icon,
+    .collapsible-label-icon{
+      display: inline-block;
+      position: relative;
+      margin-right: 5px;
+      top: 2px;
+    }
+
+    &:hover,
+    &:focus{
+      .collapsed-label-icon,
+      .collapsible-label-icon{
+        @include retina-sprite( $icon-table-white-group );
+      }
+    }
   }
 
   .text-right{

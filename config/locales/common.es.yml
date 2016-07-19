@@ -26,6 +26,8 @@ es:
     visualizations: Visualizaciones
     create_visualization: Crear visualización
     edit_visualization: Editar visualización
+    duplicate_story: Duplicar historia
+    duplicate_visualization: Duplicar visualización
     edit_description: Editar descripción
     node: Nodo
     nodes: Nodos

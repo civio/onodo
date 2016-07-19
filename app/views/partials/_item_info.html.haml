@@ -26,11 +26,6 @@
               = t 'common.draft'
             = link_to t('.publish'), {controller: controller, action: "publish", id: item.id}, {method: :post, class: "btn btn-default btn-primary"}
       %div{class: grid_class}
-        - if defined? current_user and current_user == item.author
-          .text-right
-            %a.btn.btn-default.btn-primary{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item), title: t('common.edit_visualization')}
-              %i.icon-edit
-              = t (defined? story) ? 'common.edit_story' : 'common.edit_visualization'
         .text-right
           %button.btn.btn-default.btn-invert.btn-collapse.collapsed{ type: "button", "aria-controls" => "visualization-table-view", data: { toggle: "collapse", target: "#visualization-table-view" } }
             %span.collapsible-label
@@ -39,6 +34,16 @@
             %span.collapsed-label
               %span.collapsed-label-icon
               = t '.hide_data_table'
+        - if defined? current_user and current_user == item.author
+          .text-right
+            %a.btn.btn-default.btn-primary{ href: (defined? story) ? edit_story_path(item) : edit_visualization_path(item), title: t('common.edit_visualization')}
+              %i.icon-edit
+              = t (defined? story) ? 'common.edit_story' : 'common.edit_visualization'
+        - elsif defined? current_user and current_user != item.author
+          .text-right
+            %a.btn.btn-default.btn-primary{ href: (defined? story) ? duplicate_story_path(item) : duplicate_visualization_path(item), data: { method: :post }, title: (defined? story) ? t('common.duplicate_story') : t('common.duplicate_visualization')}
+              %i.icon-duplicate
+              = t (defined? story) ? t('common.duplicate_story') : t('common.duplicate_visualization')
 
 = render 'partials/item_table_view', visualization: (defined? story) ? item.visualization : item, node_custom_fields: (defined? story) ? item.visualization.dataset.node_custom_fields : item.dataset.node_custom_fields, relation_custom_fields: (defined? story) ? item.visualization.dataset.relation_custom_fields : item.dataset.relation_custom_fields
 
@@ -54,10 +59,10 @@
           .visualization-description-content= item.description.html_safe
         - if defined? current_user and current_user == item.author
           .visualization-description-buttons.col-md-4.col-lg-3
-            %p
-              %a.btn.btn-default.btn-invert{ href: new_story_path }
-                %span.btn-icon-story
-                = t 'common.create_story'
+            / %p
+            /   %a.btn.btn-default.btn-invert{ href: new_story_path }
+            /     %span.btn-icon-story
+            /     = t 'common.create_story'
             %p
               %a.btn.btn-default.btn-invert{ href: new_visualization_path }
                 %span.btn-icon-visualization

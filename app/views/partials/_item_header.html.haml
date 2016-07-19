@@ -36,7 +36,7 @@
                 %i.icon-edit
             %li
               %a{href: (defined? story) ? duplicate_story_path(item) : duplicate_visualization_path(item), data: { method: :post } }
-                = (defined? story) ? t('.duplicate_story') : t('.duplicate_visualization')
+                = (defined? story) ? t('common.duplicate_story') : t('common.duplicate_visualization')
                 %i.icon-duplicate
             - if defined? story
               %li
