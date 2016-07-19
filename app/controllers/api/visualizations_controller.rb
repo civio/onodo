@@ -35,6 +35,9 @@ class Api::VisualizationsController < ApiController
     # Populate the custom fields with the generated values.
     # To make sure we delete potentially existing stale values, we don't iterate through the results,
     # we iterate through all the nodes, cleaning existing values as we go.
+    # Note: careful when editing hstore values, see commits f6c23f6 and c3f6067
+    #   http://stackoverflow.com/questions/20251296/how-can-i-update-a-data-records-value-with-ruby-on-rails-4-0-1-postgresql-hstor
+    #   https://github.com/rails/rails/issues/6127
     @dataset.nodes.each do |node|
       node_metrics = results[node.id.to_s] || {}
       node_custom_fields = node.custom_fields
