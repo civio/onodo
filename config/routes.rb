@@ -93,6 +93,7 @@ Rails.application.routes.draw do
       post 'network-analysis', on: :member
       get 'demo-data', on: :member
       get 'clear-custom-fields', on: :member
+      get 'clear-network-analysis', on: :member
     end
     resources :stories, only: [ :show, :create ] do
       resources :chapters, only: [ :index ]

@@ -69,6 +69,13 @@ class Api::VisualizationsController < ApiController
     head :no_content
   end
 
+  def clear_network_analysis
+    @dataset.node_custom_fields = @dataset.node_custom_fields.reject{ |cf| cf['name'][0] == '_' }
+    @dataset.nodes.map{ |n| n.custom_fields = n.custom_fields.reject{ |k,_| k[0] == '_' } }
+    @dataset.save
+    head :no_content
+  end
+
   private
 
   def set_visualization_and_dataset
