@@ -14,6 +14,9 @@ class NetworkAnalysis
   # Returns a hash with an array of calculated metrics for each node id in the graph,
   # and the list of metrics calculated.
   def calculate_metrics(selected_metrics_list)
+    # Check whether there is anything to analyze
+    return {}, [] if @relations.empty?
+
     # Convert the list of selected metrics to the format needed by the network analysis engine
     metrics_shortnames = {
       'clusters' => 'm',
