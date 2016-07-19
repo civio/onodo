@@ -104,6 +104,9 @@ class VisualizationTableNodes extends VisualizationTableBase
     row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'visible': true, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
+      # set focus on new row name column
+      @table.selectCell index, 2
+      # set row id
       @table.setDataAtRowProp index, 'id', row_model.id
       # set duplicated values
       if @duplicate

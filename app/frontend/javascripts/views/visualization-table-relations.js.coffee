@@ -123,6 +123,9 @@ class VisualizationTableRelations extends VisualizationTableBase
     row_model = @collection.create {dataset_id: @model.get('dataset_id'), 'direction': false, wait: true}
     # We wait until model is synced in server to get its id
     @collection.once 'sync', () ->
+      # set focus on new row source column
+      @table.selectCell index, 2
+      # set row id
       @table.setDataAtRowProp index, 'id', row_model.id
       # set duplicated values
       if @duplicate
