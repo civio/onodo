@@ -37,10 +37,12 @@ class Api::VisualizationsController < ApiController
     # we iterate through all the nodes, cleaning existing values as we go.
     @dataset.nodes.each do |node|
       node_metrics = results[node.id.to_s] || {}
+      node_custom_fields = {}
       metrics_names.each do |metric_name|
         custom_field_name = metric_to_custom_field_name(metric_name)
-        node.custom_fields[custom_field_name] = node_metrics[metric_name]
+        node_custom_fields[custom_field_name] = node_metrics[metric_name]
       end
+      node.custom_fields = node_custom_fields
       node.save!
     end
   end
