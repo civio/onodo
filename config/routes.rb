@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       post 'publish'
       post 'unpublish'
     end
+    post 'duplicate', on: :member
   end
 
   resources :stories, :only => [:show, :edit, :new, :create, :update, :destroy] do
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
       post 'publish'
       post 'unpublish'
     end
+    post 'duplicate', on: :member
     resources :chapters, :only => [:new, :create]
   end
 

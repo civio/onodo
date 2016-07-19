@@ -1,7 +1,12 @@
 es:
   visualizations:
     create:
-      success: Visualización creada
+      success: Se ha creado la visualización
 
     destroy:
-      success: Visualización eliminada
+      success: Se ha eliminado la visualización
+
+    duplicate:
+      copy_of: Copia de
+      success: Se ha duplicado la visualización
+      failure: Se ha producido un error al tratar de duplicar la visualización

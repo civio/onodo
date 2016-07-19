@@ -5,3 +5,8 @@ en:
 
     destroy:
       success: Your story has been deleted.
+
+    duplicate:
+      copy_of: Copy of
+      success: The story has been duplicated!
+      failure: An error occurred while trying to duplicate the story.

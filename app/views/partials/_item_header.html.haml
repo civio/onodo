@@ -34,10 +34,10 @@
               %a.active{ href: (defined? story) ? edit_story_path(item)+'/info' : edit_visualization_path(item)+'/info' }
                 = t '.edit_info', class_name: item.class.to_s.downcase
                 %i.icon-edit
-            / %li
-            /   %a{href: (defined? story) ? new_story_path : new_visualization_path}
-            /     Duplicate #{item.class.to_s.downcase}
-            /     %i.icon-duplicate
+            %li
+              %a{href: (defined? story) ? duplicate_story_path(item) : duplicate_visualization_path(item), data: { method: :post } }
+                = (defined? story) ? t('.duplicate_story') : t('.duplicate_visualization')
+                %i.icon-duplicate
             - if defined? story
               %li
                 %a{href: new_story_chapter_path(item)}

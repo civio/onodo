@@ -2,7 +2,7 @@ class VisualizationsController < ApplicationController
 
   before_action :authenticate_user!, except: [:show, :embed]
   before_action :set_visualization, except: [:new, :create]
-  before_action :require_visualization_ownership!, except: [:show, :embed, :new, :create]
+  before_action :require_visualization_ownership!, except: [:show, :embed, :new, :create, :duplicate]
 
   # GET /visualizations/:id
   def show
@@ -77,6 +77,19 @@ class VisualizationsController < ApplicationController
   def unpublish
     @visualization.update_attributes(:published => false)
     redirect_to visualization_path(@visualization)
+  end
+
+  # POST /visualizations/:id/duplicate
+  def duplicate
+    copy = @visualization.deep_clone include: [dataset: [:nodes, relations: [:source, :target]]], use_dictionary: true
+    copy.name = t('.copy_of') + " " + copy.name
+    copy.published = false
+    if copy.save
+      redirect_to edit_visualization_path(copy), notice: t('.success')
+    else
+      flash[:alert] = t('.failure')
+      redirect_to request.referer || visualization_path(@visualization)
+    end
   end
 
   private

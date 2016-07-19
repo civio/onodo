@@ -2,7 +2,7 @@ class StoriesController < ApplicationController
 
   before_action :authenticate_user!, except: [:show]
   before_action :set_story, except: [:new, :create]
-  before_action :require_story_ownership, except: [:show, :new, :create]
+  before_action :require_story_ownership, except: [:show, :new, :create, :duplicate]
 
   # GET /stories/:id
   def show
@@ -68,6 +68,19 @@ class StoriesController < ApplicationController
       redirect_to story_path( @story )
     else
       redirect_to edit_story_path( @story )
+    end
+  end
+
+  # POST /stories/:id/duplicate
+  def duplicate
+    copy = @story.deep_clone include: [:chapters], use_dictionary: true
+    copy.name = t('.copy_of') + " " + copy.name
+    copy.published = false
+    if copy.save
+      redirect_to edit_story_path(copy), notice: t('.success')
+    else
+      flash[:alert] = t('.failure')
+      redirect_to request.referer || story_path(@story)
     end
   end
 

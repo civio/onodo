@@ -5,3 +5,8 @@ en:
 
     destroy:
       success: Your visualization has been deleted.
+
+    duplicate:
+      copy_of: Copy of
+      success: The visualization has been duplicated!
+      failure: An error occurred while trying to duplicate the visualization.

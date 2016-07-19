@@ -1,7 +1,12 @@
 es:
   stories:
     create:
-      success: Historia creada
+      success: Se ha creado la historia
 
     destroy:
-      success: Historia eliminada
+      success: Se ha eliminado la historia
+
+    duplicate:
+      copy_of: Copia de
+      success: Se ha duplicado la historia
+      failure: Se ha producido un error al tratar de duplicar la historia
