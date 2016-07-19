@@ -18,7 +18,7 @@ user = User.create!( name: 'A user',
 
 ### Miles Davis Relations
 
-milesViz = Visualization.create!( name: 'Miles Davis Relations', author: admin )
+milesViz = Visualization.create!( name: 'Miles Davis Relations', author: admin, published: true )
 
 milesDB = Dataset.create!( visualization: milesViz )
 
@@ -201,4 +201,5 @@ Node.create!( name: 'Fredo Corleone',
 
 milesStory = Story.create!( name: 'The Miles Davis Story',
                             visualization: milesViz,
-                            author: admin )
+                            author: admin,
+                            published: true )
