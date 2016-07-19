@@ -2,9 +2,11 @@ es:
   devise:
     registrations:
       edit:
-        title: Configuración
+        title_settings: Configuración
         lead: Edita tu perfil de usuario
         field:
+          name:
+            title: Name
           media:
             title: Imagen de perfil
             description: Tu imagen de perfil debe medir 500px por 500px y pesar menos de 1MB

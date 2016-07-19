@@ -2,11 +2,11 @@ en:
   devise:
     registrations:
       edit:
-        title: Settings
+        title_settings: Settings
         lead: Edit your profile settings
         field:
           name:
-            title: Nombre
+            title: Name
           media:
             title: Profile avatar
             description: Your avatar photo should be about 500px wide, 500px tall and under 1MB

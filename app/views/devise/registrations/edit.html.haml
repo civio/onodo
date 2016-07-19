@@ -2,7 +2,7 @@
   .row
     .col-sm-6.col-sm-offset-3
       .page-header.text-center
-        %h2= t '.title'
+        %h2= t '.title_settings'
         %p.lead= t '.lead'
       = form_for resource, as: resource_name, url: registration_path(resource_name), html: { id: 'user-dropzone', class: 'form-default dropzone',method: :patch, multipart: true } do |f|
         = devise_error_messages!
@@ -26,10 +26,10 @@
                 .clearfix
           %hr
         .form-group
-          = f.label :name
+          = f.label :name, t('.field.name')
           = f.text_field :name, autofocus: true, class: "form-control"
         .form-group
-          = f.label :email
+          = f.label :email, t('.field.email')
           = f.email_field :email, class: "form-control"
         // TODO!!! Add change password btn
         /.form-group
