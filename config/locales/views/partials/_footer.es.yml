@@ -1,8 +1,8 @@
 es:
   partials:
     footer:
-      copywrite_notice: © 2015 | Onodo es un proyecto de la Fundación Ciudadana Civio
+      copywrite_notice: © 2015 | Onodo es un proyecto de la Fundación Ciudadana Civio y Eurecat
       follow_us: 'Síguenos:'
       subscribe: 'Recibe novedades en tu correo'
       send: Enviar
-      funding_notice: Este proyecto ha sido financiación con el Séptimo Programa Marco de la Unión Europea para investigación, desarrollo tecnológico y demostración bajo el acuerdo de subvención no. 611333.
+      funding_notice: Este proyecto ha sido financiado por el Séptimo Programa Marco de la Unión Europea para investigación, desarrollo tecnológico y demostración bajo el acuerdo de subvención número 611333.

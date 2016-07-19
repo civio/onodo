@@ -21,14 +21,14 @@ en:
             text: Give your visualization color. Add photos to each node, descriptions or extra information. Personalize your networks.
           third:
             title: 3. Share it anywhere
-            text: Embed the visualization or story wherever you want or share it with everywhere.
+            text: Embed the visualization or story wherever you want or share it with everyone.
         great:
           first:
             title: Live preview
-            text: While editing, you see the result. The best way to ensure, in real time, you are on track.
+            text: See the final result as you edit. The best way to ensure, in real time, you are on track.
           second:
             title: Tell a story
-            text: Create chapters and let the networks help you tell the best stories.
+            text: Create chapters and let networks help you tell the best stories.
           third:
             title: Analyze
             text: Who is at the center of your network? How are the nodes connected? Take it a step further and draw conclusions from your data.

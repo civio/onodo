@@ -3,5 +3,5 @@ en:
     passwords:
       new:
         lead: Enter the email you use to sign up in Onodo & we will send you a link to restore it
-        forgot_your_password: Have you forgotten your password?
+        forgot_your_password: Did you forget your password?
         send_me_reset_password_instructions: Send me instructions to regenerate my password

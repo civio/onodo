@@ -7,7 +7,7 @@ en:
         field:
           media:
             title: Profile avatar
-            description: Your avatar photo should be about 500px wide 500px tall and under 1MB
+            description: Your avatar photo should be about 500px wide, 500px tall and under 1MB
             browse: Browse
             upload: Upload from your computer
             submit: Upload Photo

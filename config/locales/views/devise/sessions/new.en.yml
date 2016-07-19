@@ -2,5 +2,5 @@ en:
   devise:
     sessions:
       new:
-        lead: Create your network visualizations & tell cool stories through them
+        lead: Create network visualizations and tell cool stories through them
         remember_me: Remember Me

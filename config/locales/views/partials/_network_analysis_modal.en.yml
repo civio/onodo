@@ -2,19 +2,19 @@ en:
   partials:
     network_analysis_modal:
       title: Network Analysis
-      description: You can add custom columns based on Network Analysis metrics to your nodes table & use this metrics as nodes color or size
-      advice: If you edit nodes or links after the calculation, it will become obsolete and you will need to generate it again
+      description: You can add custom columns based on Network Analysis metrics to your nodes table and use these metrics to control the color and size of nodes
+      advice: If you edit nodes or links after the calculation, the network analysis data will become obsolete and you will need to generate it again
       clusters_explanation: Assign the nodes into blocks or clusters (groups of nodes with many links among them and only a few with the rest of the network).
       clusters: Clusters
       degree_explanation: The number of connections of each node
       degree: Number of connections
-      relevance_explanation: The relevance of each node based in its number of connections and the relevance of the nodes it's connected to (whose relevance is, again, based on their connections).
+      relevance_explanation: The relevance of each node based in its number of connections and the relevance of the nodes it's connected to (whose relevance is, in turn, based on their connections).
       relevance: Relevance
       betweenness_explanation: How many times a node is located along the shortest path between two nodes.
       betweenness: Betweenness
       closeness_explanation: How close a node is to the other nodes in the network or how many steps it takes from a node to reach the other nodes on average.
       closeness: Closeness
-      coreness_explanation: Measures in which layer of the network is a node. The layer of highest k index is the core of the network. The layer with a k number is composed by the nodes with at least this k number of conections each one among them.
+      coreness_explanation: Indicates the layer of the network a node belongs to. The layer with highest k index is the core of the network. Layer k includes those nodes with at least k conections to other nodes in the same layer.
       coreness: Coreness (k-index)
       distance_explanation: The minimum number of ties required to connect any node of the network to the selected one.
       distance: Distance from specific node

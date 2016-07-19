@@ -90,9 +90,9 @@ en:
     shared:
       links:
         back: Atrás
-        didn_t_receive_confirmation_instructions: You have not received confirmation instructions?
+        didn_t_receive_confirmation_instructions: Missing the confirmation instructions?
         didn_t_receive_unlock_instructions: "¿No has recibido las instrucciones para desbloquear?"
-        forgot_your_password: Have you forgotten your password?
+        forgot_your_password: Did you forget your password?
         sign_in: Login
         sign_in_with_provider: Iniciar sesión con %{provider}
         sign_up: Sign up
