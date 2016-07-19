@@ -12,10 +12,11 @@
 
 = render 'partials/item_info', item: @visualization
 
-.visualization-related-items
-  %p.section-title
-    = t '.relateds'
-  .container
-    = render 'partials/item_preview_carousel', items: @related_items
+- unless @related_items.blank?
+  .visualization-related-items
+    %p.section-title
+      = t '.relateds'
+    .container
+      = render 'partials/item_preview_carousel', items: @related_items
 
 = render 'partials/item_delete_modal', item: @visualization
