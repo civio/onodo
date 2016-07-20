@@ -967,10 +967,14 @@ class VisualizationCanvas extends Backbone.View
       maxValue = d3.max @data_nodes, (d) => return d[@parameters.nodesSizeColumn]
     else 
       maxValue = 0
+    # avoid undefined values
+    unless maxValue
+      maxValue = 0
+    # set nodes size scale
     @scale_nodes_size = d3.scaleLinear()
       .domain [0, maxValue]
       .range [5, 20]
-    # set label size scale
+    # set labels size scale
     @scale_labels_size = d3.scaleQuantize()
       .domain [0, maxValue]
       .range [1, 2, 3, 4]
