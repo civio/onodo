@@ -61,6 +61,9 @@ class Api::VisualizationsController < ApiController
     head :bad_request and return if (target.author != demo_user)
 
     target.dataset = source.dataset.deep_clone include: [:nodes, relations: [:source, :target]], use_dictionary: true
+    target.dataset.nodes.each{ |n| n.image = source.nodes.find_by(name: n.name).image }
+    target.dataset.save
+
     head :no_content
   end
 

@@ -85,6 +85,7 @@ class VisualizationsController < ApplicationController
     copy.name = t('.copy_of') + " " + copy.name
     copy.published = false
     copy.author = current_user
+    copy.dataset.nodes.each{ |n| n.image = @visualization.nodes.find_by(name: n.name).image }
     if copy.save
       redirect_to edit_visualization_path(copy), notice: t('.success')
     else
