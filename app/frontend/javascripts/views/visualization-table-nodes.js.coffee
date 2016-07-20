@@ -221,12 +221,12 @@ class VisualizationTableNodes extends VisualizationTableBase
 
   # Add Network Analysis result Custom Columns
   addNetworkAnalysisColumns: (visualization, nodes) =>
-    # add new nodes custom_fields to table
-    @addCustomColumns visualization.node_custom_fields, 'node_custom_fields', true
     # update visualization model !??
     @model.set visualization
     # update nodes collection
     @collection.set nodes
+    # add new nodes custom_fields to table
+    @addCustomColumns visualization.node_custom_fields, 'node_custom_fields', true
     # update table data & render it
     @table_options.data = @collection.toJSON()
     @table.updateSettings @table_options

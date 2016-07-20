@@ -290,8 +290,10 @@ class VisualizationEdit extends VisualizationBase
 
   # When a node_custom_field is added, we add a listener to new custom_field
   onVisualizationChangeNodeCustomField: =>
-    field = @visualization.get('node_custom_fields').slice(-1)[0]
-    @nodes.bind 'change:'+field.name, @onNodeChangeCustomField, @
+    # update custom_fields listeners
+    @visualization.get('node_custom_fields').forEach (custom_field) =>
+      @nodes.off 'change:'+custom_field.name
+      @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
 
   onNodesRemove: (node) ->
     #console.log 'onNodesRemove', node.attributes.name

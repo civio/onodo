@@ -163,10 +163,10 @@ class VisualizationConfiguration extends Backbone.View
 
   setCustomFields: ->
     if @model.get('node_custom_fields')
-      $nodesColorColumn = $('#nodes-color-column .dropdown-menu')
-      $nodesSizeColumn = $('#nodes-size-column .dropdown-menu')
-      @model.get('node_custom_fields').forEach (field) ->
-        str = '<li data-value="'+field.name+'"><p>'+field.name.replace(/_+/g,' ')+'</p></li>'
+      $nodesColorColumn = @$el.find('#nodes-color-column .dropdown-menu')
+      $nodesSizeColumn = @$el.find('#nodes-size-column .dropdown-menu')
+      @model.get('node_custom_fields').forEach (field) =>
+        str = @getCustomFieldElement field.name
         $nodesColorColumn.append str
         $nodesSizeColumn.append str
 
@@ -186,10 +186,20 @@ class VisualizationConfiguration extends Backbone.View
     $(this).parent().parent().trigger 'change'
 
   onCustomFieldAdded: (e) =>
-    field = @model.get('node_custom_fields').slice(-1)[0].name
-    if field
-      $el = $('<li data-value="'+field+'"><p>'+field.replace(/_+/g,' ')+'</p></li>')
-      $el.click @onDropdownSelectChange
-      $('#nodes-color-column .dropdown-menu').append $el
+    $nodesColorColumn = @$el.find('#nodes-color-column .dropdown-menu')
+    $nodesSizeColumn = @$el.find('#nodes-size-column .dropdown-menu')
+    @model.get('node_custom_fields').forEach (custom_field) =>
+      # if custom_field is not in dropdowns we have to add it
+      if $nodesColorColumn.find("li[data-value='" + custom_field.name + "']").length == 0
+        # add custom_field to nodes color & nodes size selectors
+        str = @getCustomFieldElement custom_field.name
+        $nodesColorColumn.append str
+        $nodesSizeColumn.append str
+    # reset click listener for dropdown-selects
+    @$el.find('.dropdown-select .dropdown-menu li').off 'click'
+    @$el.find('.dropdown-select .dropdown-menu li').click @onDropdownSelectChange
+
+  getCustomFieldElement: (custom_field_name) ->
+    return '<li data-value="'+custom_field_name+'"><p>'+custom_field_name.replace(/_+/g,' ')+'</p></li>'
 
 module.exports = VisualizationConfiguration
