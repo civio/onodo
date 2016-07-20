@@ -48,14 +48,14 @@ class UsersController < ApplicationController
   end
 
   def visualizations_for user, published:, page: nil
-    visualizations = user.visualizations
+    visualizations = user.visualizations.order(created_at: :desc)
     visualizations = visualizations.published if published
 
     visualizations.page(page).per(PAGE_SIZE)
   end
 
   def stories_for user, published:, page: nil
-    stories = user.stories
+    stories = user.stories.order(created_at: :desc)
     stories = stories.published if published
 
     stories.page(page).per(PAGE_SIZE)

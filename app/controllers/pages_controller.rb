@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   # GET /explore
   def explore_visualizations
-    @items = Visualization.published
+    @items = Visualization.published.order(created_at: :desc)
     @items = @items.search(params[:search]) if params[:search].present?
     #@items = @items.order("published_at DESC").includes(:photo).page(params[:page]).per(9)
     @items = @items.page(params[:page]).per(6)
@@ -10,7 +10,7 @@ class PagesController < ApplicationController
   end
 
   def explore_stories
-    @items = Story.published
+    @items = Story.published.order(created_at: :desc)
     @items = @items.search(params[:search]) if params[:search].present?
     @items = @items.page(params[:page]).per(6)
     @show_visualizations = false
