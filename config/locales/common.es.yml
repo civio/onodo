@@ -68,3 +68,9 @@ es:
     terms_of_service: Términos y condiciones
     password: Contraseña
 
+    cluster: Grupos
+    degree: Conexiones
+    relevance: Relevancia
+    betweenness: Intermediación
+    closeness: Cercanía
+    coreness: Nuclearidad

@@ -67,3 +67,10 @@ en:
     download: Download
     terms_of_service: Terms of service
     password: Password
+
+    cluster: Clusters
+    degree: Connections
+    relevance: Relevance
+    betweenness: Betweenness
+    closeness: Closeness
+    coreness: Coreness

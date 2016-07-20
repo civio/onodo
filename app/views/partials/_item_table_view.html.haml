@@ -26,7 +26,10 @@
               %th= t 'common.description'
               %th= t 'common.visible'
               - node_custom_fields && node_custom_fields.each do |field|
-                %th= field["name"].gsub('_', ' ').capitalize
+                - if field['readonly']
+                  %th= t('common.'+field['name'].gsub('_', '')).capitalize
+                - else
+                  %th= field['name'].gsub('_', ' ').capitalize
           %tbody
             - visualization.nodes.each do |node|
               %tr

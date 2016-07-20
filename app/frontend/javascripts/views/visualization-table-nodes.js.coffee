@@ -15,6 +15,27 @@ class VisualizationTableNodes extends VisualizationTableBase
     'description'    : 4
     'visible'        : 5
     'image'          : 6
+  network_analysis_names:
+    '_cluster':
+      'en': 'clusters'
+      'es': 'grupos'
+    '_degree':
+      'en': 'connections'
+      'es': 'conexiones'
+    '_relevance':
+      'en': 'relevance'
+      'es': 'relevancia'
+    '_betweenness':
+      'en': 'betweenness'
+      'es': 'intermediación'
+    '_closeness':
+      'en': 'closeness'
+      'es': 'cercanía'
+    '_coreness':
+      'en': 'coreness'
+      'es': 'nuclearidad'
+
+
 
   constructor: (@model, @collection) ->
     # Set columns names based on current language
@@ -231,6 +252,16 @@ class VisualizationTableNodes extends VisualizationTableBase
     @table_options.data = @collection.toJSON()
     @table.updateSettings @table_options
     @table.render()
+
+  # Override getCustomFieldNameAsLabel in order to translate network analysis names
+  getCustomFieldNameAsLabel: (name) ->
+    if name == '_cluster' || name == '_degree' || name == '_relevance' || name == '_betweenness' || name == '_closeness' || name == '_coreness'
+      lang = if $('body').hasClass('lang-en') then 'en' else 'es'
+      name = @network_analysis_names[name][lang]
+    else
+      name = name.replace(/_+/g, ' ').toLowerCase()
+    console.log 'getCustomFieldNameAsLabel', name
+    return name
 
   # Custom Renderer for description cells
   rowDescriptionRenderer: (instance, td, row, col, prop, value, cellProperties) =>
