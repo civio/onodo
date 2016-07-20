@@ -370,6 +370,7 @@ class VisualizationEdit extends VisualizationBase
 
   onNetworkAnalysisSuccess: (e) ->
     @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
+    $('#visualization-table-selector > li > a[href=#nodes]').trigger 'click'
 
 
   # Auxiliar Info Node method
