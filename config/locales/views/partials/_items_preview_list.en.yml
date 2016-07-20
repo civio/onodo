@@ -1,9 +1,9 @@
 en:
   partials:
     items_preview_list:
-      search_no_result_title: No hemos encontrado ningún resultado relacionado con <strong>%{search}</strong>.
-      search_single_result_title: Hemos encontrado 1 resultado relacionado con <strong>%{search}</strong>.
-      search_result_title: Hemos encontrado %{length} resultados relacionados con <strong>%{search}</strong>.
+      search_no_result_title: We couldn't find any result for <strong>%{search}</strong>.
+      search_single_result_title: We found one result for <strong>%{search}</strong>.
+      search_result_title: We found %{length} results for <strong>%{search}</strong>.
       no_visualizations_yet: You haven't create any visualization yet
       no_stories_yet: You haven't create any story yet
       user_no_visualizations_yet: This user hasn't created any visualization yet
