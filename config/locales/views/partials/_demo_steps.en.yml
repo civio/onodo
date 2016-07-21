@@ -3,13 +3,13 @@ en:
     demo_steps:
       intro:
         title: Welcome!
-        content: "This is the simultanous editing and visualization screen. <br/>We will guide you step by step from the empty table through all of its main components. <br/>Remember that you may also begin to work on a visualization by uploading your own data file and that this is a demo: edit as you please, nothing will be saved. <br/>The data from the demo will be lost in time, like tears in the rain."
+        content: "This is the simultaneous editing and visualization screen. <br/>We will guide you step by step from the empty table through all of its main components. <br/>Remember that you may also begin to work on a visualization by uploading your own data file and that this is a demo: edit as you please, nothing will be saved. <br/>The data from the demo will be lost in time, like tears in the rain."
       step_1: 
         title: Scroll
         content: Scroll down and begin to edit the table of nodes and links.
       step_2:
         title: Create your first node
-        content: Start by creating the very first component of your visualization.
+        content: Start by creating the very first element of your visualization.
       step_3:
         title: Look!
         content: 'Now you can see your node in the visualization'
@@ -30,7 +30,7 @@ en:
         content: We begin to shape the network.
       step_9:
         title: Select a source node
-        content: For example, you can pick Darth Vader as the origen.
+        content: For example, you can pick Darth Vader as the origin.
       step_10:
         title: Select a target node
         content: In our example, it could be Luke Skywalker.
@@ -42,7 +42,7 @@ en:
         content: We will further develop our main characters.
       step_13:
         title: Add a description
-        content: You may include complimentary information about your node.
+        content: You may include additional information about your node.
       step_14:
         title: Click on the node 
         content: You will see its icon and the description that you have written.
@@ -51,15 +51,15 @@ en:
         content: For example, you may list your nodes as either a sith or a jedi.
       step_16:
         title: Go on
-        content: To try all of the network's components, we will load one of our networks for example.
+        content: To try all of the network's components, we will load one of our networks as an example.
       step_17:
         title: Open the configuration tab
         content: Here you will be able to personalize the colors, sizes, line styles...
       step_18:
-        title: Change your node size
-        content: By default it depends on the number of link but you can define a fixed size
+        title: Change the nodes' sizes
+        content: By default they depend on the number of links, but you can define a fixed size.
       end:
         title: Ready!
-        content: "You already know all the basic steps to create a network. But Onodo offers much more: network analysis, custom columns , settings... And, if you start to create your own networks, you can embed them into any website."
-        singup: Register and begin to create your own visualizations
-        continue: Continue to use the demo if needbe.
+        content: "You already know all the basic steps to create a network. But Onodo offers much more: network analysis, custom columns, settings... And, once you create your own networks, you can embed them into any website."
+        singup: Register and create your own visualizations
+        continue: Continue to use the demo if you feel like.
