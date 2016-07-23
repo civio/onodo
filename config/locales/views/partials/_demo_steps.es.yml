@@ -3,7 +3,7 @@ es:
     demo_steps:
       intro:
         title: ¡Bienvenido!
-        content: "Esta es la pantalla de edición y visualización simultánea de Onodo. <br/>Te vamos a guiar paso a paso, desde una tabla vacía, por sus componentes principales. <br/>Recuerda que también puedes empezar a trabajar subiendo tu propia base de datos y que esto es una demo: toca lo que quieras, nada se guarda. <br/>Los datos de la demo se perderán en el tiempo como lágrimas en la lluvia."
+        content: "Esta es la pantalla de edición y visualización simultánea de Onodo.<br/>Te vamos a guiar paso a paso, desde una tabla vacía, por sus componentes principales.<br/>Recuerda que también puedes empezar a trabajar subiendo tu propia base de datos y que esto es una demo: toca lo que quieras, nada se guarda.<br/>Los datos de la demo se perderán en el tiempo como lágrimas en la lluvia."
       step_1: 
         title: Haz scroll
         content: Baja y empieza a editar la tabla de nodos y relaciones.
@@ -12,7 +12,7 @@ es:
         content: Empieza creando el primer componente de tu visualización.
       step_3:
         title: ¡Mira!
-        content: 'Ya puedes ver tu nodo en la visualización'
+        content: Ya puedes ver tu nodo en la visualización.
       step_4:
         title: Ponle nombre
         content: Puedes elegir el que quieras. Por ejemplo, Luke Skywalker.
@@ -51,13 +51,13 @@ es:
         content: Por ejemplo, puedes marcar quiénes son sith y quienes jedi.
       step_16:
         title: Dale gas
-        content: Para probar todos los componentes, vamos a cargar una de nuestras redes de ejemplo
+        content: Para probar todos los componentes, vamos a cargar una de nuestras redes de ejemplo.
       step_17:
         title: Abre la configuración
         content: Aquí podrás personalizar colores, tamaños, estilos de línea...
       step_18:
         title: Cambia el tamaño de los nodos
-        content: Por defecto depende del numero de relaciones pero puedes definir un tamaño fijo
+        content: Por defecto depende del número de relaciones pero puedes definir un tamaño fijo.
       end:
         title: ¡Listo!
         content: "Ya conoces todos los pasos básicos para crear una red. Pero Onodo ofrece mucho más: análisis de redes, columnas personalizadas, opciones de configuración de la visualización... Y, si empiezas a crear tus propias redes, podrás insertarlas en cualquier página web."

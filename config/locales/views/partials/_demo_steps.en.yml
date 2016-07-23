@@ -3,7 +3,7 @@ en:
     demo_steps:
       intro:
         title: Welcome!
-        content: "This is the simultaneous editing and visualization screen. <br/>We will guide you step by step from the empty table through all of its main components. <br/>Remember that you may also begin to work on a visualization by uploading your own data file and that this is a demo: edit as you please, nothing will be saved. <br/>The data from the demo will be lost in time, like tears in the rain."
+        content: "This is Onodo's simultaneous editing and visualization screen.<br/>We will guide you step by step through its main components, starting with an empty table.<br/>Remember that you may also begin to work on a visualization by uploading your own data file and that this is a demo: edit as you please, nothing will be saved.<br/>The data from the demo will be lost in time, like tears in the rain."
       step_1: 
         title: Scroll
         content: Scroll down and begin to edit the table of nodes and links.
@@ -12,7 +12,7 @@ en:
         content: Start by creating the very first element of your visualization.
       step_3:
         title: Look!
-        content: 'Now you can see your node in the visualization'
+        content: Now you can see your node in the visualization.
       step_4:
         title: Name it
         content: You can name your node anything you'd like. For example, Luke Skywalker.
@@ -51,7 +51,7 @@ en:
         content: For example, you may list your nodes as either a sith or a jedi.
       step_16:
         title: Go on
-        content: To try all of the network's components, we will load one of our networks as an example.
+        content: To try some other features, we will load one of our networks as an example.
       step_17:
         title: Open the configuration tab
         content: Here you will be able to personalize the colors, sizes, line styles...
