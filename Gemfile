@@ -85,6 +85,9 @@ gem 'deep_cloneable'
 # Serve assets in Heroku and handle logging
 gem 'rails_12factor', group: :production
 
+# New Relic monitoring
+gem 'newrelic_rpm'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
