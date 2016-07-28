@@ -48,7 +48,6 @@ class PagesController < ApplicationController
 
   # GET /privacy-policy
   def privacy_policy
-    render "privacy_policy_#{I18n.locale}"
   end
 
   # GET /locale/:locale

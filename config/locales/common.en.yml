@@ -66,6 +66,7 @@ en:
     confirm: "Yes"
     download: Download
     terms_of_service: Terms of service
+    privacy_policy: Privacy policy
     password: Password
 
     cluster: Clusters
