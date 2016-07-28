@@ -233,7 +233,7 @@
     text-transform: uppercase;
     vertical-align: top;
     line-height:$user-picture-size + (2*$user-picture-border);
-    padding: 0 $grid-gutter-width/3;
+    padding: 0 $grid-gutter-width/6;
     @include transition( color, 0.3s, ease-out );
   }
 

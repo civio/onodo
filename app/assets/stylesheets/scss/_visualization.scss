@@ -715,8 +715,16 @@ $node-color-12: #e0deda;
     .custom-fields{
       font-weight: 300;
 
-      .table tbody{
-        border-bottom: 1px solid $table-border-color;
+      // Custom Fields Table
+      .table{ 
+        > tbody{
+          border-bottom: 1px solid $table-border-color;
+
+          > tr > td{
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
       }
 
       strong{

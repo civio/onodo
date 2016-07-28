@@ -30,7 +30,7 @@ body.embed{
 
     .visualization-graph-menu-navigation,
     .visualization-graph-menu-actions{
-      top: 2.5*$grid-gutter-width;
+      top: (2*$grid-gutter-width) + ($grid-gutter-width/3);
     }
 
     .visualization-graph-container {
@@ -70,7 +70,7 @@ body.embed{
   }
 
   .onodo-icon{
-    right: $grid-gutter-width/2;
+    right: 2*$grid-gutter-width/3;
     bottom: $grid-gutter-width/2;
     text-indent: -9999px;
     overflow: hidden;
