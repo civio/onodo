@@ -43,7 +43,7 @@ class VisualizationInfo extends Backbone.View
         templateAttr.custom_fields = []
         @node_custom_fields.forEach (field) =>
           val = @model.get(field.name)
-          unless val == null or val == undefined
+          unless val == null or val == undefined or val == ''
             templateAttr.custom_fields.push {key: field.name.replace(/_+/g, ' '), value: val}
       # Compile the template using Handlebars
       template = HandlebarsTemplate templateAttr
