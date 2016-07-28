@@ -40,7 +40,11 @@
                   %span{ class: node.visible ? "icon-visible active" : "icon-visible" }
                     = t 'common.visibility'
                 - node_custom_fields && node_custom_fields.each do |field|
-                  %td= node.custom_fields[field["name"]].to_s
+                  - if field['readonly']
+                    %td= number_with_precision(node.custom_fields[field["name"]], :precision => 2)
+                  - else
+                    %td= node.custom_fields[field["name"]].to_s
+
       #relations.tab-pane{ role: "tabpanel" }
         %table.table
           %thead
