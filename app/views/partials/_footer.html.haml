@@ -22,9 +22,9 @@
                 = t 'common.contact'
           %ul.col-sm-6
             %li
-              = link_to t('common.login'), new_user_session_path
+              = link_to t('common.terms_of_service'), terms_of_service_path
             %li
-              = link_to t('common.signup'), new_user_registration_path
+              = link_to t('common.privacy_policy'), privacy_policy_path
       %section.col-sm-4
         .social-icons
           %p
@@ -34,9 +34,6 @@
             %li
               %a.twitter{href: 'https://twitter.com/Onodo_', title: 'Twitter Onodo', target: '_blank'}
                 =t(:witter)
-            / %li
-            /   %a.facebook{href: '#'}
-            /     Facebook
         %p.newsletter
           %a{href: '//civio.us4.list-manage.com/subscribe?u=9416fe6b76f2c3f985c1f8e0f&id=d9f51512d0', title: t('.subscribe'), target: '_blank'}
             = t '.subscribe'
