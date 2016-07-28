@@ -235,6 +235,8 @@ class VisualizationTableNodes extends VisualizationTableBase
       'name': $(e.target).find('#add-custom-column-name').val()
       'type': $(e.target).find('#add-custom-column-type').val()
     }], 'node_custom_fields'
+    # re-render table
+    @updateTable()
     # clear name input text value
     $('#add-custom-column-name').val('')
     # hide modal
@@ -251,7 +253,8 @@ class VisualizationTableNodes extends VisualizationTableBase
     # update table data & render it
     @table_options.data = @collection.toJSON()
     @table.updateSettings @table_options
-    @table.render()
+    # re-render table
+    @updateTable()
 
   # Override getCustomFieldNameAsLabel in order to translate network analysis names
   getCustomFieldNameAsLabel: (name) ->
@@ -260,7 +263,6 @@ class VisualizationTableNodes extends VisualizationTableBase
       name = @network_analysis_names[name][lang]
     else
       name = name.replace(/_+/g, ' ').toLowerCase()
-    console.log 'getCustomFieldNameAsLabel', name
     return name
 
   # Custom Renderer for description cells

@@ -248,10 +248,13 @@ class VisualizationTableRelations extends VisualizationTableBase
       'name': $(e.target).find('#add-custom-column-name').val()
       'type': $(e.target).find('#add-custom-column-type').val()
     }], 'relation_custom_fields'
+    # re-render table
+    @updateTable()
     # clear name input text value
     $('#add-custom-column-name').val('')
     # hide modal
     $('#table-add-column-relations-modal').modal 'hide'
+    @resize()
 
   # Custom Renderer for date cells
   rowDateRenderer: (instance, td, row, col, prop, value, cellProperties) =>

@@ -111,8 +111,17 @@ class VisualizationTableBase extends Backbone.View
     @resize()
 
   resize: =>
-    #console.log 'resize table'
-    @$el.height @table_height - (@$el.offset().top - @table_offset_top)
+    # setup element height
+    @$el.height @table_height - (@$el.offset().top - @table_offset_top) - 15
+
+  updateTable: ->
+    # resize table in order to add horizontal scroll if needed
+    @resize()
+    # re-render the table
+    @table.render()
+    # set table horizontal scroll to the right side
+    $wtHolder = @$el.find('.ht_master .wtHolder')
+    $wtHolder.scrollLeft $wtHolder.width()
 
   addRow: ->
     @table.alter('insert_row', 0, 1 )

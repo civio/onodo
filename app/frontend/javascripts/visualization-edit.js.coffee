@@ -143,7 +143,6 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.networkanalysis.success'
 
   resize: =>
-    #console.log 'resize'
     windowHeight = $(window).height()
     if !$('body').hasClass('fullscreen')
       @visualizationHeaderHeight = $('.visualization-graph .visualization-header').outerHeight()
@@ -369,9 +368,10 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateForceLayoutParameter e.name, e.value
 
   onNetworkAnalysisSuccess: (e) ->
-    @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
+    # Activate nodes tab
     $('#visualization-table-selector > li > a[href=#nodes]').trigger 'click'
-
+    # Update vusalization model & nodes collection in Nodes Table
+    @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
 
   # Auxiliar Info Node method
   updateInfoNode: (node) ->
