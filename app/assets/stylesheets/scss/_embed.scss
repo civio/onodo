@@ -19,7 +19,7 @@ body.embed{
 
     h2{
       color: $brand-primary;
-      font-size: 2em;
+      font-size: 1.75em;
       background: white;
       padding: 0 $grid-gutter-width/6;
       border-radius: 4px;
@@ -43,6 +43,8 @@ body.embed{
 
     .visualization-graph-component{
       height: 100%;
+      border-top: none;
+      border-bottom: none;
     }
 
     &.notitle{
