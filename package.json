@@ -1,13 +1,25 @@
 {
   "name": "Onodo",
-  "description": "Onodo",
+  "version": "1.0.0",
+  "description": "Every network tells a story",
+  "keywords": [
+    "onodo",
+    "visualization",
+    "network"
+  ],
   "homepage": "http://onodo.org/",
+  "license": "AGPL-3.0",
+  "author": {
+    "name": "Civio",
+    "url": "http://www.civio.es/"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/civio/onodo.git"
   },
-  "version": "1.0.0",
-  "keywords": [],
+  "scripts": {
+    "prepublish": "rollup -c -m -o app/frontend/javascripts/dist/d3.js"
+  },
   "devDependencies": {
     "webpack": "~1.12",
     "stats-webpack-plugin": "~0.2",
@@ -19,7 +31,9 @@
     "exports-loader": "~0.6.2",
     "script-loader": "~0.6.1",
     "grunt": "~0.4.5",
-    "grunt-spritesmith": "~6.3.1"
+    "grunt-spritesmith": "~6.3.1",
+    "rollup": "^0.26.3",
+    "rollup-plugin-node-resolve": "^1.5.0"
   },
   "dependencies": {
     "jquery": "~2.2.0",
@@ -33,6 +47,18 @@
     "handlebars": "~4.0.5",
     "dropzone": "~4.3.0",
     "typeahead.js": "~0.11.1",
-    "d3": "~4.0.0"
+    "d3-array": "^1.0.0",
+    "d3-collection": "^1.0.0",
+    "d3-color": "^1.0.0",
+    "d3-drag": "^1.0.0",
+    "d3-ease": "^1.0.0",
+    "d3-force": "^1.0.0",
+    "d3-scale": "^1.0.1",
+    "d3-selection": "^1.0.0",
+    "d3-selection-multi": "^0.4.1",
+    "d3-shape": "^1.0.0",
+    "d3-timer": "^1.0.1",
+    "d3-transition": "^1.0.0",
+    "d3-zoom": "^1.0.2"
   }
 }

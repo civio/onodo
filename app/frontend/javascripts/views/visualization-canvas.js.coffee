@@ -1,4 +1,4 @@
-d3 = require 'd3'
+d3 = require '../dist/d3'
 
 class VisualizationCanvas extends Backbone.View
 
