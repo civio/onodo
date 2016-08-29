@@ -82,4 +82,11 @@ body.embed{
   .panel.panel-share{
     z-index: 99;
   }
+
+  &.fullscreen{
+
+    .visualization-graph{
+      position: static;
+    }
+  }
 }
