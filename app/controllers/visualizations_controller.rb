@@ -69,8 +69,13 @@ class VisualizationsController < ApplicationController
 
   # POST /visualizations/:id/publish
   def publish
-    @visualization.update_attributes(published: true)
-    redirect_to visualization_path(@visualization)
+    if @visualization.author == demo_user
+      flash[:alert] = t('.failure')
+      redirect_to :back
+    else
+      @visualization.update_attributes(published: true)
+      redirect_to visualization_path(@visualization)
+    end
   end
   
   # POST /visualizations/:id/unpublish

@@ -10,3 +10,6 @@ es:
       copy_of: Copia de
       success: Se ha duplicado la visualización
       failure: Se ha producido un error al tratar de duplicar la visualización
+
+    publish:
+      failure: No se puede publicar la visualización
