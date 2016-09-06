@@ -3,6 +3,7 @@ class ChaptersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :set_chapter, except: [:new, :create]
   before_action :require_story_ownership!, except: [:show, :new, :create]
+  before_action :require_story_published!, only: [:show]
 
   def new
     @story = Story.find(params[:story_id])
@@ -73,6 +74,10 @@ class ChaptersController < ApplicationController
 
   def require_story_ownership!
     redirect_to story_path(@chapter.story) unless authorized
+  end
+
+  def require_story_published!
+    redirect_to root_path unless (@chapter.story.published || authorized)
   end
 
   def authorized

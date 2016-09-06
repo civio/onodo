@@ -3,6 +3,7 @@ class VisualizationsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :embed]
   before_action :set_visualization, except: [:new, :create]
   before_action :require_visualization_ownership!, except: [:show, :embed, :new, :create, :duplicate]
+  before_action :require_visualization_published!, only: [:show, :embed, :duplicate]
 
   # GET /visualizations/:id
   def show
@@ -107,6 +108,10 @@ class VisualizationsController < ApplicationController
 
   def require_visualization_ownership!
     redirect_to visualization_path(@visualization) unless authorized
+  end
+
+  def require_visualization_published!
+    redirect_to root_path unless (@visualization.published || authorized)
   end
 
   def authorized

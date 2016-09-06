@@ -2,6 +2,7 @@ class Api::VisualizationsController < ApiController
 
   before_action :set_visualization_and_dataset
   before_action :require_visualization_ownership!, except: [:show]
+  before_action :require_visualization_published!, only: [:show]
 
   def show
   end
@@ -92,6 +93,10 @@ class Api::VisualizationsController < ApiController
 
   def require_visualization_ownership!
     render :show and return unless authorized
+  end
+
+  def require_visualization_published!
+    render json: {} unless (@visualization.published || authorized)
   end
 
   def authorized

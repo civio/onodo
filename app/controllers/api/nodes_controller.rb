@@ -2,14 +2,17 @@ class Api::NodesController < ApiController
 
   before_action :set_node, except: [:index, :types, :create]
   before_action :require_node_ownership!, except: [:index, :types, :create, :show]
+  before_action :require_visualization_published!, only: [:show]
 
   def index
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: [] and return unless (dataset.visualization.published || (dataset.visualization.author == current_user) || (dataset.visualization.author == demo_user))
     @nodes = dataset.nodes.order(:name)
   end
 
   def types
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: [] and return unless (dataset.visualization.published || (dataset.visualization.author == current_user) || (dataset.visualization.author == demo_user))
     @node_types = dataset.nodes
                       .select(:node_type)
                       .map(&:node_type)
@@ -57,6 +60,10 @@ class Api::NodesController < ApiController
 
   def require_node_ownership!
     render :show and return unless authorized
+  end
+
+  def require_visualization_published!
+    render json: {} unless (@node.visualization.published || authorized)
   end
 
   def authorized

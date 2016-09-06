@@ -2,9 +2,11 @@ class Api::RelationsController < ApiController
 
   before_action :set_relation, except: [:index, :types, :create]
   before_action :require_relation_ownership!, except: [:index, :types, :create, :show]
+  before_action :require_visualization_published!, only: [:show]
 
   def index
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: [] and return unless (dataset.visualization.published || (dataset.visualization.author == current_user) || (dataset.visualization.author == demo_user))
     @relations = dataset.relations
                      .includes(:source, :target)
                      .order('nodes.name', 'targets_relations.name')
@@ -12,6 +14,7 @@ class Api::RelationsController < ApiController
 
   def types
     dataset = Dataset.find_by(visualization_id: params[:visualization_id])
+    render json: [] and return unless (dataset.visualization.published || (dataset.visualization.author == current_user) || (dataset.visualization.author == demo_user))
     @relation_types = dataset.relations
                  .select(:relation_type)
                  .map(&:relation_type)
@@ -55,6 +58,10 @@ class Api::RelationsController < ApiController
 
   def require_relation_ownership!
     render :show and return unless authorized
+  end
+
+  def require_visualization_published!
+    render json: {} unless (@relation.visualization.published || authorized)
   end
 
   def authorized

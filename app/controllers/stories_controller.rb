@@ -2,7 +2,8 @@ class StoriesController < ApplicationController
 
   before_action :authenticate_user!, except: [:show]
   before_action :set_story, except: [:new, :create]
-  before_action :require_story_ownership, except: [:show, :new, :create, :duplicate]
+  before_action :require_story_ownership!, except: [:show, :new, :create, :duplicate]
+  before_action :require_story_published!, only: [:show, :duplicate]
 
   # GET /stories/:id
   def show
@@ -92,8 +93,12 @@ class StoriesController < ApplicationController
     @story = Story.find(params[:id])
   end
 
-  def require_story_ownership
+  def require_story_ownership!
     redirect_to story_path(@story) unless authorized
+  end
+
+  def require_story_published!
+    redirect_to root_path unless (@story.published || authorized)
   end
 
   def authorized
