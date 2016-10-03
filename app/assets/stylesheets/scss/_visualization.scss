@@ -369,6 +369,30 @@ $node-color-12: #e0deda;
       stroke: $gray-semi-light;
       stroke-width: 2px;
     }
+
+    .legend{
+      .legend-bkg{
+        fill: white;
+        opacity: 0.8;
+      }
+      .legend-title{
+        fill: $text-color;
+        font-size: 0.75em;
+        text-transform: uppercase;
+      }
+      .legend-item{
+        circle{
+          fill: $gray-light;
+        }
+        text{
+          fill: $gray;
+          font-size: 0.786em;
+          font-weight: 300;
+          letter-spacing: 0;
+          alignment-baseline: middle;
+        }
+      }
+    }
   }
 
   .visualization-graph-menu-navigation,

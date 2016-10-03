@@ -23,6 +23,8 @@ class VisualizationCanvas extends Backbone.View
   svg:                    null
   defs:                   null
   container:              null
+  legend:                 null
+  legend_cont:            null
   data:                   null
   data_nodes:             []
   data_nodes_map:         d3.map()
@@ -161,7 +163,14 @@ class VisualizationCanvas extends Backbone.View
     @relations_labels_cont = @container.append('g').attr('class', 'relations-labels-cont')
     @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
     @nodes_labels_cont     = @container.append('g').attr('class', 'nodes-labels-cont')
-    
+    @legend                = @svg.append('g').attr('class', 'legend')
+
+    # Setup legend background & containers 
+    @legend_cont = @legend.append('g').attr('class', 'legend-container')
+    @legend_cont.append('rect').attr('class', 'legend-bkg')
+    @legend_cont.append('g').attr('class', 'legend-size')
+    @legend_cont.append('g').attr('class', 'legend-color')
+
     # Translate svg
     @rescale()
 
@@ -219,6 +228,7 @@ class VisualizationCanvas extends Backbone.View
     @updateNodes()
     @updateNodesLabels()
     @updateForce restarForce
+    @updateLegend()
 
   updateImages: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
@@ -395,8 +405,99 @@ class VisualizationCanvas extends Backbone.View
       @force.alpha(0.3).restart()
 
 
-  # Nodes / Relations methods
-  # --------------------------
+  updateLegend: ->
+    # Setup size legend
+    if @scale_nodes_size
+      console.log 'updateLegend size', @scale_nodes_size.domain(), @scale_nodes_size.range()
+
+      # create legend size group
+      legend_size = @legend_cont.select('.legend-size')
+
+      # add legend size title
+      legend_size.append('text')
+        .attr 'class', 'legend-title'
+        .text @parameters.nodesSizeColumn
+
+      min_size = @scale_nodes_size.range()[0]
+      max_size = @scale_nodes_size.range()[1]
+      steps = (max_size - min_size)/3
+      i = min_size
+      offset = 15
+      
+      # loop through all sizes
+      while i <= max_size
+        # create legend item group
+        legend_item = legend_size.append('g')
+          .attr 'class', 'legend-item' 
+          .attr  'transform', 'translate(0, ' + offset + ')'
+        # add circle to legend item group
+        legend_item.append('circle')
+          .attr  'r', i
+          .attr  'cx', max_size
+          #.attr  'cy', 5+max_size
+        # add text to legend item group
+        legend_item.append('text')
+          .attr  'transform', 'translate(' + (10+(2*max_size)) + ', 0)'
+          .text  @scale_nodes_size.invert(i).toFixed(1)
+        # update counters 
+        offset += (2*i) + 10
+        i += steps
+    else
+      @legend.select('.legend-size').selectAll('circle').remove()
+
+    # Setup color legend
+    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      console.log 'updateLegend color', @color_scale.domain(), @color_scale.range()
+
+      # create legend color group
+      legend_color = @legend_cont.select('.legend-color')
+
+      # add legend size title
+      legend_color.append('text')
+        .attr 'class', 'legend-title'
+        .text @parameters.nodesColorColumn
+
+      # create legend items group
+      legend_color_items = legend_color.selectAll('.legend-item')
+        .data(@color_scale.domain())
+        .enter()
+          .append('g')
+            .attr 'class', 'legend-item' 
+            .attr  'transform', (d, i) -> return 'translate(0, ' + (10+(15*i)) + ')'
+          
+      # add rect color to legend item group
+      legend_color_items.append('rect')
+        .attr 'width', 12
+        .attr 'height', 12
+        .style 'fill', (d) => return @color_scale(d)
+
+      # add text to legend item group
+      legend_color_items.append('text')
+        .attr  'transform', 'translate(20, 6)'
+        .text  (d) -> return d
+
+    # get legends dimensions
+    legend_size_box = legend_size.node().getBBox()
+    legend_color_box = legend_color.node().getBBox()
+
+    legend_width = legend_size_box.width + legend_color_box.width + 30
+    legend_height = if legend_size_box.height > legend_color_box.height then legend_size_box.height + 15 else legend_color_box.height + 15
+
+    # set legends position
+    legend_color.attr 'transform', 'translate(10, 15)'
+    legend_size.attr 'transform', 'translate(' + (legend_color_box.width+20) + ', 15)'
+    
+    #legend_size.attr 'transform', 'translate(10, 15)'
+    #legend_color.attr 'transform', 'translate(' + (legend_size_box.width+30) + ', 15)'
+
+    # set legend background dimensions
+    @legend_cont.select('.legend-bkg')
+      .attr 'width', legend_width
+      .attr 'height', legend_height
+    
+    # set legend container position
+    @legend_cont.attr 'transform', 'translate(' + -legend_width + ', ' + -legend_height + ')'
+
 
   updateData: (nodes, relations) ->
     # console.log 'canvas current Data', @data_nodes, @data_relations
@@ -610,6 +711,7 @@ class VisualizationCanvas extends Backbone.View
     @relations_labels_cont.attr 'transform', translateStr
     @nodes_cont.attr            'transform', translateStr
     @nodes_labels_cont.attr     'transform', translateStr
+    @legend.attr                'transform', 'translate(' + @viewport.width + ',' + @viewport.height + ')'
 
   rescaleTransition: ->
     @container.transition()
