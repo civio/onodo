@@ -22,3 +22,27 @@
     }
   }
 }
+
+// Documentation Page
+
+.documentation-page{
+  margin-bottom: $grid-gutter-width;
+
+  h3{
+    font-size: 1.375em;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin: 0 0 4*$grid-gutter-width/3;
+
+    .blue{
+      color: $gray-blue;
+      font-weight: 300;
+    }
+  }
+
+  hr{
+    margin-top: 4*$grid-gutter-width/3;
+    margin-bottom: 4*$grid-gutter-width/3;
+    border-color: $gray-blue;
+  }
+}

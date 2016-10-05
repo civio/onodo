@@ -18,6 +18,9 @@
           %a{:href => "/gallery", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'gallery')}
             =t 'common.gallery'
         %li
+          %a{:href => "/documentation", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'documentation')}
+            =t 'common.documentation'
+        %li
           %a{:href => "#contact", "data-toggle" => "collapse", "aria-expanded" => "true", "aria-controls" => "contact"}
             =t 'common.contact'
       %ul.nav.navbar-nav.navbar-right
