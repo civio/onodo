@@ -33,7 +33,3 @@ export {
 export * from "d3-transition";
 
 export * from "d3-zoom";
-
-export {
-  default as legend
-} from "d3-svg-legend";
