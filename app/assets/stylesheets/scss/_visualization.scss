@@ -684,7 +684,6 @@ $node-color-12: #e0deda;
 
     li{
       clear: both;
-      position: relative;
       list-style: none;
       font-size: 0.786em;
       letter-spacing: 0.01em;
@@ -694,55 +693,99 @@ $node-color-12: #e0deda;
     .panel-body{
       padding: 0 $grid-gutter-width/3 $grid-gutter-width/3;
     }
+  }
 
-    .visualization-graph-legend-title{
-      font-size: 0.857em;
-      margin-bottom: 8px;
-    }
+  .visualization-graph-legend-title{
+    font-size: 0.857em;
+    margin-bottom: 8px;
+  }
 
-    .visualization-graph-legend-color,
-    .visualization-graph-legend-size{
-      display: none;
-      padding-top: $grid-gutter-width/3
-    }
+  .visualization-graph-legend-color,
+  .visualization-graph-legend-size{
+    display: none;
+    padding-top: $grid-gutter-width/3
+  }
 
-    .visualization-graph-legend-size{
-      li{
-        margin-bottom: 5px;
-
-        &:last-child{
-          margin-bottom: 0;
-        }
-      }
-    }
-
-    .visualization-graph-legend-color{
-      li{
-        line-height: 12px;
-        margin-bottom: 3px;
-      }
-    }
-
-    .visualization-graph-legend-square{
-      display: block;
-      float: left;
-      width: 12px;
-      height: 12px;
+  .visualization-graph-legend-color{
+    li{
+      line-height: 12px;
       margin-bottom: 3px;
-      margin-right: 5px;
     }
+  }
 
+  .visualization-graph-legend-size{
+    ul{
+      position: relative;
+      height: 40px;
+    }
+    li{
+      position: relative;
+      height: 40px;
+      margin-bottom: 0;
+    }
+  }
+
+  .visualization-graph-legend-square{
+    display: block;
+    float: left;
+    width: 12px;
+    height: 12px;
+    margin-bottom: 3px;
+    margin-right: 5px;
+  }
+
+  .visualization-graph-legend-circle{
+    display: block;
+    position: absolute;
+  }
+
+  .visualization-graph-legend-circle{
+    top: 0;
+    left: 0;
+    border: 1px solid $gray-light;
+  }
+
+  .visualization-graph-legend-size-amount{
+    display: block;
+    margin-left: 50px;
+    line-height: 1em;
+  }
+
+  .visualization-graph-legend-lg{
     .visualization-graph-legend-circle{
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      background: $gray-light;
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
     }
-
     .visualization-graph-legend-size-amount{
-      margin-left: 50px;
-    }  
+      //top: 0;
+    }
+  }
+  .visualization-graph-legend-md{
+    top: -40px;
+    .visualization-graph-legend-circle{
+      top: 15px;
+      left: 7.5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 12.5px;
+    }
+    .visualization-graph-legend-size-amount{
+      padding-top: 15px;
+    }
+  }
+  .visualization-graph-legend-sm{
+    top: -80px;
+    .visualization-graph-legend-circle{
+      top: 30px;
+      left: 15px;
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+    }
+    .visualization-graph-legend-size-amount{
+      padding-top: 30px;
+    }
   }
 }
 

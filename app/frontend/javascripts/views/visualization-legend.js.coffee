@@ -19,42 +19,26 @@ class VisualizationLegend extends Backbone.View
 
     # Setup size legend
     if scale_size
-      console.log 'updateLegend size', scale_size.domain(), scale_size.range()
-
+      
       # create legend size group
       legend_size = @$el.find('.visualization-graph-legend-size').show()
-      legend_size.find('ul li').remove()
 
       # add legend size title
       legend_size.find('.visualization-graph-legend-title').html( @parameters.nodesSizeColumn.replace('_',' ').trim().capitalize() )
 
-      min_size = scale_size.range()[0]
-      max_size = scale_size.range()[1]
-      steps = (max_size - min_size)*0.5
-      i = max_size
+      sm_size = scale_size.domain()[0]
+      lg_size = scale_size.domain()[1]
+      md_size = sm_size + ((lg_size - sm_size)*0.5)
       
-      # loop through all sizes
-      while i >= min_size
-        # create legend item
-        legend_item = $('<li></li>')
-        # add circle & amount to legend item 
-        legend_item_circle = $('<span class="visualization-graph-legend-circle"></span>')
-        legend_item_circle.css( {'width': (2*i)+'px', 'height': (2*i)+'px', 'border-radius': i+'px', 'left': (max_size-i)+'px'} )
-        legend_item_amount = $('<span class="visualization-graph-legend-size-amount"></span>')
-        legend_item_amount.html( scale_size.invert(i).toFixed(1) ).css('line-height', (2*i)+'px')
-        legend_item.append( legend_item_circle )
-        legend_item.append( legend_item_amount )
-        legend_size.find('ul').append( legend_item )
-        # update counter
-        i -= steps
+      legend_size.find('.visualization-graph-legend-lg .visualization-graph-legend-size-amount').html( if lg_size%1 != 0 then lg_size.toFixed(1) else lg_size )
+      legend_size.find('.visualization-graph-legend-md .visualization-graph-legend-size-amount').html( if md_size%1 != 0 then md_size.toFixed(1) else md_size )
+      legend_size.find('.visualization-graph-legend-sm .visualization-graph-legend-size-amount').html( if sm_size%1 != 0 then sm_size.toFixed(1) else sm_size )
     else
       @$el.find('.visualization-graph-legend-size').hide()
 
     # Setup color legend
     if ( @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative' ) and scale_color.domain().length > 1
-      
-      console.log 'updateLegend color', scale_color.domain(), scale_color.range()
-
+    
       # create legend color group
       legend_color = @$el.find('.visualization-graph-legend-color').show()
       legend_color.find('ul li').remove()
@@ -77,7 +61,6 @@ class VisualizationLegend extends Backbone.View
 
       # loop through all colors
       items.forEach (item, i) =>
-        console.log item, i
         # create legend item
         legend_item = $('<li></li>')
         # add circle & amount to legend item 
