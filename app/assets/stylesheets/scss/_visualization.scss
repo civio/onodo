@@ -369,30 +369,6 @@ $node-color-12: #e0deda;
       stroke: $gray-semi-light;
       stroke-width: 2px;
     }
-
-    .legend{
-      .legend-bkg{
-        fill: white;
-        opacity: 0.8;
-      }
-      .legend-title{
-        fill: $text-color;
-        font-size: 0.75em;
-        text-transform: uppercase;
-      }
-      .legend-item{
-        circle{
-          fill: $gray-light;
-        }
-        text{
-          fill: $gray;
-          font-size: 0.786em;
-          font-weight: 300;
-          letter-spacing: 0;
-          alignment-baseline: middle;
-        }
-      }
-    }
   }
 
   .visualization-graph-menu-navigation,
@@ -688,7 +664,81 @@ $node-color-12: #e0deda;
       margin-bottom: $grid-gutter-width/3;
     }
   }
-  
+
+  .visualization-graph-legend{
+    display: none;
+    position: absolute;
+    bottom: $grid-gutter-width/3;
+    right: $grid-gutter-width/3;
+    margin: 0;
+    background: rgba(255,255,255,0.86);
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    border-color: $gray-lighter;
+
+    ul{
+      margin: 0;
+      padding: 0;
+    }
+
+    li{
+      clear: both;
+      position: relative;
+      list-style: none;
+      font-size: 0.786em;
+      letter-spacing: 0.01em;
+      font-weight: 300;
+      margin-bottom: 3px;
+    }
+
+    .panel-body{
+      padding: $grid-gutter-width/3;
+    }
+
+    .visualization-graph-legend-title{
+      font-size: 0.857em;
+      margin-bottom: 8px;
+    }
+
+    .visualization-graph-legend-color,
+    .visualization-graph-legend-size{
+      display: none;
+    }
+
+    .visualization-graph-legend-size{
+      margin-top: $grid-gutter-width/3;
+
+      li{
+        margin-bottom: 5px;
+
+        &:last-child{
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .visualization-graph-legend-square{
+      display: block;
+      float: left;
+      width: 14px;
+      height: 14px;
+      margin-top: 1px;
+      margin-right: 5px;
+    }
+
+    .visualization-graph-legend-circle{
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: $gray-light;
+    }
+
+    .visualization-graph-legend-size-amount{
+      margin-left: 50px;
+    }  
+  }
 }
 
 .visualization-graph-info{

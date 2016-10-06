@@ -6,6 +6,7 @@ RelationsCollection          = require './collections/relations-collection.js'
 VisualizationCanvas          = require './views/visualization-canvas.js'
 VisualizationNavigation      = require './views/visualization-navigation.js'
 VisualizationActions         = require './views/visualization-actions.js'
+VisualizationLegend          = require './views/visualization-legend.js'
 VisualizationShare           = require './views/visualization-share.js'
 VisualizationInfo            = require './views/visualization-info.js'
 
@@ -15,6 +16,7 @@ class VisualizationBase
   edit:                       false
   nodes:                      null
   visualizationCanvas:        null
+  visualizationLegend:        null
   visualizationNavigation:    null
   visualizationActions:       null
   visualizationShare:         null
@@ -43,6 +45,7 @@ class VisualizationBase
     @relations          = new RelationsCollection()
     # Setup Views
     @visualizationCanvas         = new VisualizationCanvas()
+    @VisualizationLegend         = new VisualizationLegend()
     @visualizationNavigation     = new VisualizationNavigation()
     @visualizationActions        = new VisualizationActions {collection: @nodes}
     @visualizationShare          = new VisualizationShare()
@@ -68,6 +71,8 @@ class VisualizationBase
     # Setup VisualizationCanvas
     @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
     @visualizationCanvas.render()
+    @VisualizationLegend.setup @parameters
+    @VisualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
     @visualizationActions.render()
     # Setup Visualization Events
     @bindVisualizationEvents()
