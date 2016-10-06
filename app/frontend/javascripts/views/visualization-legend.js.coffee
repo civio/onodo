@@ -9,7 +9,7 @@ class VisualizationLegend extends Backbone.View
 
   render: ( scale_size, scale_color ) ->
 
-    unless scale_size and scale_color
+    if !scale_size and !scale_color
       @$el.hide()
       return
 
