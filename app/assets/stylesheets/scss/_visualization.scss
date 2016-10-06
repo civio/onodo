@@ -689,11 +689,10 @@ $node-color-12: #e0deda;
       font-size: 0.786em;
       letter-spacing: 0.01em;
       font-weight: 300;
-      margin-bottom: 3px;
     }
 
     .panel-body{
-      padding: $grid-gutter-width/3;
+      padding: 0 $grid-gutter-width/3 $grid-gutter-width/3;
     }
 
     .visualization-graph-legend-title{
@@ -704,11 +703,10 @@ $node-color-12: #e0deda;
     .visualization-graph-legend-color,
     .visualization-graph-legend-size{
       display: none;
+      padding-top: $grid-gutter-width/3
     }
 
     .visualization-graph-legend-size{
-      margin-top: $grid-gutter-width/3;
-
       li{
         margin-bottom: 5px;
 
@@ -718,12 +716,19 @@ $node-color-12: #e0deda;
       }
     }
 
+    .visualization-graph-legend-color{
+      li{
+        line-height: 12px;
+        margin-bottom: 3px;
+      }
+    }
+
     .visualization-graph-legend-square{
       display: block;
       float: left;
-      width: 14px;
-      height: 14px;
-      margin-top: 1px;
+      width: 12px;
+      height: 12px;
+      margin-bottom: 3px;
       margin-right: 5px;
     }
 
