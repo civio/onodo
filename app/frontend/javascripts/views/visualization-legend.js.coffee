@@ -9,7 +9,7 @@ class VisualizationLegend extends Backbone.View
 
   render: ( scale_size, scale_color ) ->
 
-    if !scale_size and !scale_color
+    if (!scale_color or scale_color.domain().length <= 1 ) and (!scale_size or scale_size.domain()[0] == scale_size.domain()[1])
       @$el.hide()
       return
 
@@ -18,8 +18,8 @@ class VisualizationLegend extends Backbone.View
     @$el.show()
 
     # Setup size legend
-    if scale_size
-      
+    if scale_size and scale_size.domain()[0] != scale_size.domain()[1]
+
       # create legend size group
       legend_size = @$el.find('.visualization-graph-legend-size').show()
 
