@@ -557,7 +557,7 @@ $node-color-12: #e0deda;
     color: $gray;
     border-radius: 0;
     border: none;
-    padding: $grid-gutter-width/2 $grid-gutter-width/3;
+    padding: ($grid-gutter-width/3)+2 $grid-gutter-width/3;
     background: $gray-lighter;  // $gray-blue-dark;
     @include clearfix();
 
@@ -1120,13 +1120,14 @@ body.fullscreen{
 
         > a{
           font-size: 0.857em;
+          line-height: 1em;
           text-transform: uppercase;
           border: 2px solid $brand-primary;
           border-bottom: none;
           border-radius: 6px 6px 0 0;
           min-width: 120px;
           text-align: center;
-          padding: 12px;
+          padding: 12px 10px 10px;
 
           &:hover{
             color: $brand-primary;
@@ -1424,13 +1425,13 @@ body.fullscreen{
   .configuration-label{
     font-size: 0.875em;
     text-transform: uppercase;
-    line-height: 32px;
+    line-height: 31px;
     margin-bottom: 0;
   }
 
   hr{
-    margin-top: $grid-gutter-width/2;
-    margin-bottom: $grid-gutter-width/2;
+    margin-top: 2+($grid-gutter-width/3);
+    margin-bottom: 2+($grid-gutter-width/3);
   }
 
   #nodes-color{
