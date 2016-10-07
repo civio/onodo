@@ -20,6 +20,7 @@ en:
       show_nodes_label: Show Nodes Label
       show_nodes_label_complete: Show Complete Nodes Label
       show_nodes_image: Show Nodes Image
+      show_legend: Show Legend
       relations_line_style: Links line style
       line_styles:
         solid: Solid

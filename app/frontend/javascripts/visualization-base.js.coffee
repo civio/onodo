@@ -30,6 +30,7 @@ class VisualizationBase
     showNodesLabel:         1
     showNodesLabelComplete: 0
     showNodesImage:         1
+    showLegend:             1
     relationsCurvature:     1
     relationsLineStyle:     0
     linkDistance:           100
@@ -101,6 +102,7 @@ class VisualizationBase
     @parameters.showNodesLabel          = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
     @parameters.showNodesLabelComplete  = if typeof @parameters.showNodesLabelComplete != 'undefined' then @parameters.showNodesLabelComplete else @parametersDefault.showNodesLabelComplete
     @parameters.showNodesImage          = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
+    @parameters.showLegend              = if typeof @parameters.showLegend != 'undefined' then @parameters.showLegend else @parametersDefault.showLegend
     @parameters.relationsCurvature      = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
     @parameters.relationsLineStyle      = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance            = @parameters.linkDistance || @parametersDefault.linkDistance
