@@ -11,8 +11,8 @@ body.embed{
   
   .visualization-header {
     position: absolute;
-    top: 2*$grid-gutter-width/3;
-    left: $grid-gutter-width/3;
+    top: $grid-gutter-width/2;
+    left: $grid-gutter-width/6;
     padding: 0;
     background: transparent;
     z-index: 90;
@@ -28,9 +28,14 @@ body.embed{
 
   .visualization-graph{
 
-    .visualization-graph-menu-navigation,
+    .visualization-graph-menu-navigation{
+      top: 2*$grid-gutter-width;
+      left: $grid-gutter-width/3;
+    }
+
     .visualization-graph-menu-actions{
-      top: (2*$grid-gutter-width) + ($grid-gutter-width/3);
+      top: (2*$grid-gutter-width) - ($grid-gutter-width/3);
+      right: $grid-gutter-width/3;
     }
 
     .visualization-graph-container {
@@ -59,6 +64,10 @@ body.embed{
     z-index: 99;
   }
 
+  .visualization-graph-legend{
+    bottom: 60px;
+  }
+
   .user-label,
   .onodo-icon{
     position: absolute;
@@ -67,13 +76,13 @@ body.embed{
   }
 
   .user-label{
-    left: $grid-gutter-width/3;
-    bottom: $grid-gutter-width/6;
+    left: $grid-gutter-width/6;
+    bottom: 0;
   }
 
   .onodo-icon{
-    right: 2*$grid-gutter-width/3;
-    bottom: $grid-gutter-width/2;
+    right: $grid-gutter-width/3;
+    bottom: $grid-gutter-width/3;
     text-indent: -9999px;
     overflow: hidden;
     @include retina-sprite( $logo-embed-group );
