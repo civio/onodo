@@ -38,12 +38,19 @@ class VisualizationLegend extends Backbone.View
 
     # Setup color legend
     if ( @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative' ) and scale_color.domain().length > 1
-    
-      # create legend color group
+
+      console.log @parameters.nodesColor, scale_color.domain()
+
+      # Avoid quantitative scales with same values
+      if scale_color.domain().length == 2 and scale_color.domain()[0] == scale_color.domain()[1]
+        @$el.find('.visualization-graph-legend-color').hide()
+        return
+
+      # Create legend color group
       legend_color = @$el.find('.visualization-graph-legend-color').show()
       legend_color.find('ul li').remove()
 
-      # add legend color title
+      # Add legend color title
       legend_color.find('.visualization-graph-legend-title').html( @parameters.nodesColorColumn.replace('_',' ').trim().capitalize() )
 
       items = scale_color.domain()
