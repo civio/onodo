@@ -30,16 +30,14 @@ class VisualizationLegend extends Backbone.View
       lg_size = scale_size.domain()[1]
       md_size = sm_size + ((lg_size - sm_size)*0.5)
       
-      legend_size.find('.visualization-graph-legend-lg .visualization-graph-legend-size-amount').html( if lg_size%1 != 0 then lg_size.toFixed(1) else lg_size )
-      legend_size.find('.visualization-graph-legend-md .visualization-graph-legend-size-amount').html( if md_size%1 != 0 then md_size.toFixed(1) else md_size )
-      legend_size.find('.visualization-graph-legend-sm .visualization-graph-legend-size-amount').html( if sm_size%1 != 0 then sm_size.toFixed(1) else sm_size )
+      legend_size.find('.visualization-graph-legend-lg .visualization-graph-legend-size-amount').html( @formatNumber(lg_size) )
+      legend_size.find('.visualization-graph-legend-md .visualization-graph-legend-size-amount').html( @formatNumber(md_size) )
+      legend_size.find('.visualization-graph-legend-sm .visualization-graph-legend-size-amount').html( @formatNumber(sm_size) )
     else
       @$el.find('.visualization-graph-legend-size').hide()
 
     # Setup color legend
     if ( @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative' ) and scale_color.domain().length > 1
-
-      console.log @parameters.nodesColor, scale_color.domain()
 
       # Avoid quantitative scales with same values
       if scale_color.domain().length == 2 and scale_color.domain()[0] == scale_color.domain()[1]
@@ -57,14 +55,14 @@ class VisualizationLegend extends Backbone.View
 
       # Insert values inside domain for quantitative scales
       if @parameters.nodesColor == 'quantitative'
-        items = items.reverse()
-        steps = (items[1] - items[0]) / 5
-        max = items.pop()
-        items.push Math.round(items[0]+steps)
-        items.push Math.round(items[1]+steps)
-        items.push Math.round(items[2]+steps)
-        items.push Math.round(items[3]+steps)
-        items.push max
+        items = items.sort (a, b) -> return b - a 
+        steps = (items[0] - items[1]) / 5
+        min = items.pop()
+        items.push @formatNumber(items[0]-steps)
+        items.push @formatNumber(items[1]-steps)
+        items.push @formatNumber(items[2]-steps)
+        items.push @formatNumber(items[3]-steps)
+        items.push min
 
       # loop through all colors
       items.forEach (item, i) =>
@@ -79,6 +77,10 @@ class VisualizationLegend extends Backbone.View
     else
       @$el.find('.visualization-graph-legend-color').hide()
 
+
+  formatNumber: (number) ->
+    number = parseFloat(number)
+    return if number%1 != 0 then number.toFixed(1) else number
 
   String.prototype.capitalize = () ->
     return this.charAt(0).toUpperCase() + this.slice(1)
