@@ -88,8 +88,9 @@ class VisualizationEdit extends VisualizationBase
     @relations.on 'remove',               @onRelationsRemove, @
     @visualization.on 'change:node_custom_fields', @onVisualizationChangeNodeCustomField, @
     # Add event handler for each custom_field
-    @visualization.get('node_custom_fields').forEach (custom_field) =>
-      @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
+    if @visualization.get('node_custom_fields')
+      @visualization.get('node_custom_fields').forEach (custom_field) =>
+        @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
 
   unbindCollectionEvents: ->
     # Listen to Collection events (handle tables changes)
@@ -107,8 +108,9 @@ class VisualizationEdit extends VisualizationBase
     @relations.off 'remove'
     @visualization.off 'change:node_custom_fields'
     # Add event handler for each custom_field
-    @visualization.get('node_custom_fields').forEach (custom_field) =>
-      @nodes.off 'change:'+custom_field.name
+    if @visualization.get('node_custom_fields')
+      @visualization.get('node_custom_fields').forEach (custom_field) =>
+        @nodes.off 'change:'+custom_field.name
 
   # Override bindVisualizationEvents to add config events
   bindVisualizationEvents: ->
@@ -290,9 +292,10 @@ class VisualizationEdit extends VisualizationBase
   # When a node_custom_field is added, we add a listener to new custom_field
   onVisualizationChangeNodeCustomField: =>
     # update custom_fields listeners
-    @visualization.get('node_custom_fields').forEach (custom_field) =>
-      @nodes.off 'change:'+custom_field.name
-      @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
+    if @visualization.get('node_custom_fields')
+      @visualization.get('node_custom_fields').forEach (custom_field) =>
+        @nodes.off 'change:'+custom_field.name
+        @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
 
   onNodesRemove: (node) ->
     #console.log 'onNodesRemove', node.attributes.name
