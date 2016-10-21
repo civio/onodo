@@ -129,6 +129,7 @@ class XlsxDatasetImporter
 
     nodes = nodes_sheet.parse(header_search: columns, clean: false)[1..-1]
     nodes = nodes.map do |h|
+      h["Name"] = h["Name"].to_i.to_s if h["Name"].is_a? Numeric
       result = h.map { |k,v| [ !(k.capitalize=="Type") ? k.downcase.gsub(' ', '_').to_sym : :node_type, v.is_a?(String) ? v.strip : v ] }.to_h
       result[:custom_fields] = @node_custom_field_names.map{ |cf| val = result[cf]; [cf, val.is_a?(Float) ? "%.#{val.truncate.to_s.size + 2}g" % val : val ] }.to_h
       result[:visible] = result[:visible] == 0 ? false : true
@@ -145,6 +146,8 @@ class XlsxDatasetImporter
 
     relations = relations_sheet.parse(header_search: columns, clean: false)[1..-1]
     relations = relations.map do |h|
+      h["Source"] = h["Source"].to_i.to_s if h["Source"].is_a? Numeric
+      h["Target"] = h["Target"].to_i.to_s if h["Target"].is_a? Numeric
       result = h.map { |k,v| [ (k.capitalize=="Directed") ? :direction : (k.capitalize=="Type") ? :relation_type : (k.capitalize=="Date") ? :at : k.downcase.gsub(' ', '_').to_sym, v.is_a?(String) ? v.strip : v ] }.to_h
       result[:source] = @nodes.find{ |n| n.name == result[:source] } || (m = Node.new(name: result[:source]); @nodes << m; m)
       result[:target] = @nodes.find{ |n| n.name == result[:target] } || (m = Node.new(name: result[:target]); @nodes << m; m)
