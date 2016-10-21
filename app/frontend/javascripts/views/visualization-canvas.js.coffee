@@ -46,6 +46,7 @@ class VisualizationCanvas extends Backbone.View
   node_active:            null
   scale_nodes_size:       null
   scale_labels_size:      null
+  scale_relations_size:   null
   degrees_const:          180 / Math.PI
   # Viewport object to store drag/zoom values
   viewport:
@@ -148,12 +149,16 @@ class VisualizationCanvas extends Backbone.View
       .append 'path'
         .attr 'd', 'M -10 -8 L 0 0 L -10 8'
 
-    # if nodesSize = 1, set nodes size
+    # if nodesSize = 1, set nodes size scale
     if @parameters.nodesSize == 1
       # set relations attribute in nodes
       if @parameters.nodesSizeColumn == 'relations'
         @setNodesRelations()
       @setScaleNodesSize()
+
+    # if relationsSizeColumn is defined set relations size scale
+    if @parameters.relationsSizeColumn
+      @setScaleRelationsSize()
 
     # Setup containers
     @container             = @svg.append('g')
@@ -306,12 +311,14 @@ class VisualizationCanvas extends Backbone.View
       .attr 'id',           (d) -> return 'relation-'+d.id
       .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
       .attr 'marker-end',   (d) -> return if d.direction then 'url(#arrow)' else ''
+      .attr 'stroke-width', (d) => return if @parameters.relationsSizeColumn and d[@parameters.relationsSizeColumn] then @scale_relations_size d[@parameters.relationsSizeColumn] else 1
 
     # ENTER new elements present in new data.
     @relations.enter().append('path')
       .attr 'id',           (d) -> return 'relation-'+d.id
       .attr 'class',        (d) -> return if d.disabled then 'relation disabled' else 'relation'
       .attr 'marker-end',   (d) -> return if d.direction then 'url(#arrow)' else ''
+      .attr 'stroke-width', (d) => return if @parameters.relationsSizeColumn and d[@parameters.relationsSizeColumn] then @scale_relations_size d[@parameters.relationsSizeColumn] else 1
 
     @relations = @relations_cont.selectAll('.relation')
 
@@ -962,11 +969,9 @@ class VisualizationCanvas extends Backbone.View
       d.target.relations += 1
     
   setScaleNodesSize: =>
-    # set node size scale
+    # get nodes size scale maximum value
     if @data_nodes.length > 0
       maxValue = d3.max @data_nodes, (d) => return d[@parameters.nodesSizeColumn]
-    else 
-      maxValue = 0
     # avoid undefined values
     unless maxValue
       maxValue = 0
@@ -978,6 +983,20 @@ class VisualizationCanvas extends Backbone.View
     @scale_labels_size = d3.scaleQuantize()
       .domain [0, maxValue]
       .range [1, 2, 3, 4]
+
+  setScaleRelationsSize: =>
+    # get relations width scale maximum value
+    if @data_relations_visibles.length > 0
+      maxValue = d3.max @data_relations_visibles, (d) => return d.duracion   # Make dynamic!!!!
+    # avoid undefined values
+    unless maxValue
+      maxValue = 0
+    # set relations width scale
+    @scale_relations_size = d3.scaleLinear()
+      .domain [0, maxValue]
+      .range [1, 12]
+
+    console.log 'setScaleRelationsSize', @scale_relations_size.domain()
 
   getAngleBetweenPoints: (p1, p2) ->
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * @degrees_const

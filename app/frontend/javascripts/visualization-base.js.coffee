@@ -25,6 +25,7 @@ class VisualizationBase
     nodesColorColumn:       'node_type'
     nodesSize:              1
     nodesSizeColumn:        'relations'
+    relationsSizeColumn:    'duracion'  # Make dynamic !!!!
     showNodesLabel:         1
     showNodesLabelComplete: 0
     showNodesImage:         1
@@ -93,6 +94,7 @@ class VisualizationBase
     @parameters.nodesColorColumn        = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
     @parameters.nodesSize               = @parameters.nodesSize || @parametersDefault.nodesSize
     @parameters.nodesSizeColumn         = @parameters.nodesSizeColumn || @parametersDefault.nodesSizeColumn
+    @parameters.relationsSizeColumn     = @parameters.relationsSizeColumn || @parametersDefault.relationsSizeColumn
     @parameters.showNodesLabel          = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
     @parameters.showNodesLabelComplete  = if typeof @parameters.showNodesLabelComplete != 'undefined' then @parameters.showNodesLabelComplete else @parametersDefault.showNodesLabelComplete
     @parameters.showNodesImage          = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
