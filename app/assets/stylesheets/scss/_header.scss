@@ -18,6 +18,7 @@
   }
 
   .navbar-nav{
+    text-align: center;
 
     > li > a{
       color: $text-color;
@@ -147,7 +148,7 @@
   height: 51px;
   margin-left: $grid-gutter-width/2;
   margin-right: $grid-gutter-width/2;
-  margin-bottom: $grid-gutter-width/3;
+  //margin-bottom: $grid-gutter-width/3;
 
   &:before{
     content: "";
@@ -185,9 +186,8 @@
     display: none;
     margin: 0;
   }
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $screen-md-min) {
     margin-left: 0 !important;
-    margin-bottom: 0;
   }
 }
 
@@ -315,12 +315,13 @@
     border: none;
     padding: $grid-gutter-width $grid-gutter-width 2*$grid-gutter-width/3;
     font-weight: 300;
+    text-align: center;
 
     .contact-item{
       display: inline-block;
       vertical-align: top;
       margin-top: $grid-gutter-width/2;
-      margin-right: $grid-gutter-width;
+      margin-left: $grid-gutter-width/2;
 
       p {
         @include clearfix();

@@ -50,6 +50,10 @@ class PagesController < ApplicationController
   def privacy_policy
   end
 
+  # GET /documentation
+  def documentation
+  end
+
   # GET /locale/:locale
   def change_locale
     locale = params[:locale].downcase
