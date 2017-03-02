@@ -2,34 +2,36 @@
   .page-header
     %h2
       = t 'common.documentation'
+    %p.lead
+      = t '.description'
 .page-items
   .container.documentation-page
     .row
-      .col-lg-8.col-md-10
+      .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
         %h3
           %span.blue
             1.
           = t '.videos.first.title'
         .video-responsive
-          <iframe width="750" height="411" src="https://www.youtube.com/embed/pdgji4RL-_Q" frameborder="0" allowfullscreen></iframe>
+          <iframe width="750" height="411" src="https://www.youtube.com/embed/#{t('.videos.first.id')}?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         %hr
         %h3
           %span.blue
             2.
           = t '.videos.second.title'
         .video-responsive
-          <iframe width="750" height="411" src="https://www.youtube.com/embed/pdgji4RL-_Q" frameborder="0" allowfullscreen></iframe>
+          <iframe width="750" height="411" src="https://www.youtube.com/embed/#{t('.videos.second.id')}?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         %hr
         %h3
           %span.blue
             3.
           = t '.videos.third.title'
         .video-responsive
-          <iframe width="750" height="411" src="https://www.youtube.com/embed/pdgji4RL-_Q" frameborder="0" allowfullscreen></iframe>
+          <iframe width="750" height="411" src="https://www.youtube.com/embed/#{t('.videos.third.id')}?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
         %hr
         %h3
           %span.blue
             4.
           = t '.videos.fourth.title'
         .video-responsive
-          <iframe width="750" height="411" src="https://www.youtube.com/embed/pdgji4RL-_Q" frameborder="0" allowfullscreen></iframe>
+          <iframe width="750" height="411" src="https://www.youtube.com/embed/#{t('.videos.fourth.id')}?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>

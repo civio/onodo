@@ -80,7 +80,7 @@ Rails.application.routes.draw do
   get '/terms-of-service'        => 'pages#terms_of_service'
   get '/terms-of-service/modal'  => 'pages#terms_of_service_modal'
   get '/privacy-policy'          => 'pages#privacy_policy'
-  get '/documentation'           => 'pages#documentation'
+  get '/tutorials'               => 'pages#documentation'
 
   get '/locale/:locale', to: 'locales#change_locale', as: :change_locale
 

@@ -1,16 +1,17 @@
 en:
   pages:
     documentation:
+      description: Onodo is easy to use. These videos will make it easier.
       videos: 
         first:
-          title: Visualizations from scratch
-          id: pdgji4RL-_Q
+          title: Creating a visualization from scratch
+          id: a3qGYQ4OX3Y
         second:
-          title: Edit your visualization
-          id: pdgji4RL-_Q
+          title: Editing your visualization
+          id: xeC8aKckb_E
         third:
-          title: Custom fields
-          id: pdgji4RL-_Q
+          title: Customizing your network
+          id: aZXUfmN-hAs
         fourth:
           title: Share your visualization
-          id: pdgji4RL-_Q
+          id: b9jR3p3jYsA
