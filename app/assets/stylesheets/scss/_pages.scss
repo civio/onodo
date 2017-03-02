@@ -5,8 +5,12 @@
 
   .search-form{
     float: none;
-    width: 320px;
-    margin-top: -$grid-gutter-width;
+    width: 100%;
+    margin: -$grid-gutter-width auto 0;
+
+    @media (min-width: $screen-xs) {
+      width: 320px;
+    }
   }
 
   .search-result-title{
@@ -15,6 +19,7 @@
     margin-bottom: 4*$grid-gutter-width/3;
     margin-top: -$grid-gutter-width/2;
     font-size: 1.286em;
+    text-align: center;
 
     strong{
       color: $gray-darker;
@@ -27,16 +32,13 @@
 
 .documentation-page{
   margin-bottom: $grid-gutter-width;
+  text-align: center;
 
   h3{
-    font-size: 1.375em;
-    font-weight: 400;
-    text-transform: uppercase;
     margin: 0 0 4*$grid-gutter-width/3;
 
     .blue{
-      color: $gray-blue;
-      font-weight: 300;
+      color: $brand-primary;
     }
   }
 
