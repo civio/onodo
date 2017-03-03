@@ -1,0 +1,17 @@
+es:
+  pages:
+    documentation:
+      description: Onodo es muy fácil de usar. Estos vídeos te ayudan a hacerlo.
+      videos: 
+        first:
+          title: Cómo crear una visualización desde cero
+          id: XumJJT5_Ri8
+        second:
+          title: Cómo editar tu visualización
+          id: qlhaGNbCpMw
+        third:
+          title: Cómo personalizar tu red
+          id: iTtU2rLUsDA
+        fourth:
+          title: Comparte tu visualización
+          id: YQs3M4ZmpU8

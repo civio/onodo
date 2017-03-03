@@ -793,9 +793,8 @@ $node-color-12: #e0deda;
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -360px;
+  right: -110%;
   width: 100%;
-  max-width: 350px;
   margin: 0;
   color: $gray;
   background: white;
@@ -854,6 +853,11 @@ $node-color-12: #e0deda;
         text-transform: uppercase;
       }
     }
+  }
+
+  @media (min-width: $screen-sm-min) {
+    right: -360px;
+    max-width: 350px;
   }
 }
 
