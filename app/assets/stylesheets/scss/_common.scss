@@ -217,7 +217,7 @@ button,
 
 .dropdown-menu{
   padding: 0;
-  margin-top: 10px !important;
+  margin-top: $grid-gutter-width/6 !important;
   border: none;
   background: transparent;
 
