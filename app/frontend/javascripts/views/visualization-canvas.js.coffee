@@ -181,6 +181,9 @@ class VisualizationCanvas extends Backbone.View
     data.nodes.forEach (d) =>
       if d.visible
         @addNodeData d
+      # force empties node_types to null to avoid 2 non-defined types 
+      if d.node_type == ''
+        d.node_type = null
 
     # Setup color scale
     @setColorScale()
