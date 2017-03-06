@@ -668,8 +668,8 @@ $node-color-12: #e0deda;
   .visualization-graph-legend{
     display: none;
     position: absolute;
-    bottom: $grid-gutter-width/3;
-    right: $grid-gutter-width/3;
+    bottom: $grid-gutter-width/6;
+    left: $grid-gutter-width/6;
     margin: 0;
     background: rgba(255,255,255,0.86);
     -webkit-box-shadow: none;
@@ -683,7 +683,6 @@ $node-color-12: #e0deda;
     }
 
     li{
-      clear: both;
       list-style: none;
       font-size: 0.786em;
       letter-spacing: 0.01em;
@@ -691,7 +690,7 @@ $node-color-12: #e0deda;
     }
 
     .panel-body{
-      padding: 0 $grid-gutter-width/3 $grid-gutter-width/3;
+      padding: 0 0 $grid-gutter-width/3;
     }
   }
 
@@ -703,11 +702,15 @@ $node-color-12: #e0deda;
   .visualization-graph-legend-color,
   .visualization-graph-legend-size{
     display: none;
-    padding-top: $grid-gutter-width/3
+    float: left;
+    padding-top: $grid-gutter-width/6;
+    margin: 0 $grid-gutter-width/3;
   }
 
   .visualization-graph-legend-color{
     li{
+      float: left;
+      width: 26px;
       line-height: 12px;
       margin-bottom: 3px;
     }
@@ -720,18 +723,18 @@ $node-color-12: #e0deda;
     }
     li{
       position: relative;
-      height: 40px;
       margin-bottom: 0;
+      height: 40px;
     }
   }
 
   .visualization-graph-legend-square{
     display: block;
-    float: left;
-    width: 12px;
-    height: 12px;
-    margin-bottom: 3px;
-    margin-right: 5px;
+    //float: left;
+    width: 25px;
+    height: 6px;
+    //margin-bottom: 3px;
+    //margin-right: 5px;
   }
 
   .visualization-graph-legend-circle{
@@ -752,10 +755,12 @@ $node-color-12: #e0deda;
   }
 
   .visualization-graph-legend-lg{
+    color: mix( $gray-light, $text-color, 50% );
     .visualization-graph-legend-circle{
       width: 40px;
       height: 40px;
       border-radius: 20px;
+      border-color: mix( $gray-light, $gray, 65% );
     }
     .visualization-graph-legend-size-amount{
       //top: 0;
@@ -763,12 +768,14 @@ $node-color-12: #e0deda;
   }
   .visualization-graph-legend-md{
     top: -40px;
+    color: mix( $gray-light, $text-color, 70% );
     .visualization-graph-legend-circle{
       top: 15px;
       left: 7.5px;
       width: 25px;
       height: 25px;
       border-radius: 12.5px;
+      border-color: mix( $gray-light, $gray, 85% );
     }
     .visualization-graph-legend-size-amount{
       padding-top: 15px;
@@ -776,6 +783,7 @@ $node-color-12: #e0deda;
   }
   .visualization-graph-legend-sm{
     top: -80px;
+    color: mix( $gray-light, $text-color, 90% );
     .visualization-graph-legend-circle{
       top: 30px;
       left: 15px;
