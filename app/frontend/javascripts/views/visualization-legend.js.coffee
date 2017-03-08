@@ -17,6 +17,9 @@ class VisualizationLegend extends Backbone.View
 
     @$el.show()
 
+    # listen to click on collapse btn
+    @$el.find('.panel-heading, .panel-body .visualization-graph-legend-collapse-btn').click @onCollapseBtnClick
+
     # Setup size legend
     if scale_size and scale_size.domain()[0] != scale_size.domain()[1]
 
@@ -86,6 +89,10 @@ class VisualizationLegend extends Backbone.View
           legend_color.find('ul').append legend_item
     else
       @$el.find('.visualization-graph-legend-color').hide()
+
+
+  onCollapseBtnClick: (e) =>
+    @$el.toggleClass 'collapsed'
 
 
   formatNumber: (number) ->

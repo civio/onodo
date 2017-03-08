@@ -1,0 +1,5 @@
+en:
+  partials:
+    item_graph_legend:
+      hide: Hide legend
+      show: Show legend

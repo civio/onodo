@@ -1,0 +1,5 @@
+es:
+  partials:
+    item_graph_legend:
+      hide: Ocultar leyenda
+      show: Ver leyenda

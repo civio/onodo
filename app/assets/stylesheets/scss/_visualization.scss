@@ -672,10 +672,8 @@ $node-color-12: #e0deda;
     left: 0;
     margin: 0;
     background: white;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
     border-color: $gray-lighter;
+    @include box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
 
     ul{
       margin: 0;
@@ -689,13 +687,41 @@ $node-color-12: #e0deda;
       font-weight: 300;
     }
 
+    .panel-heading{
+      display: none;
+      background: none;
+      padding: $grid-gutter-width/6 25px $grid-gutter-width/6 $grid-gutter-width/3;
+      cursor: pointer;
+
+      &:hover .visualization-graph-legend-collapse-btn{
+        color: $text-color;
+      }
+    }
+
     .panel-body{
-      padding: 0 $grid-gutter-width/6 $grid-gutter-width/3;
+      padding: 0 $grid-gutter-width/2 $grid-gutter-width/3 $grid-gutter-width/6;
+    }
+
+    &.collapsed{
+      .panel-heading{
+        display: block;
+      }
+      .panel-body{
+        display: none;
+      }
+    }
+
+    @media (min-width: $screen-md-min) {
+      max-width: 50%;
     }
   }
 
+  .visualization-graph-legend .panel-heading,
   .visualization-graph-legend-title{
+    color: $text-color;
     font-size: 0.857em;
+  }
+  .visualization-graph-legend-title{
     margin-bottom: 8px;
   }
 
@@ -822,6 +848,33 @@ $node-color-12: #e0deda;
     }
     .visualization-graph-legend-size-amount{
       padding-top: 30px;
+    }
+  }
+
+  .visualization-graph-legend-collapse-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    color: $gray-blue-dark;
+    font-size: 11px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: none;
+    border: none;
+    @include transition(color 0.3s ease-out);
+
+    .glyphicon-triangle-bottom{
+      top: 6px;
+    }
+    .glyphicon-triangle-top{
+      top: 4px;
+    }
+
+    &:hover{
+      color: $text-color;
     }
   }
 }

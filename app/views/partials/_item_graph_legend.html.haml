@@ -1,6 +1,8 @@
 .visualization-graph-legend.panel.panel-default
-  //.panel-heading
-  //  Legend
+  .panel-heading
+    = t '.show'
+    %button.visualization-graph-legend-collapse-btn{ type: "button" }
+      %i.glyphicon.glyphicon-triangle-top
   .panel-body
     .visualization-graph-legend-size
       %p.visualization-graph-legend-title
@@ -19,3 +21,5 @@
       %p.visualization-graph-legend-title
         Node type
       %ul
+    %button.visualization-graph-legend-collapse-btn{ type: "button", title: t('.hide'), data: {toggle: "tooltip", placement: "top"} }
+      %i.glyphicon.glyphicon-triangle-bottom
