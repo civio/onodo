@@ -42,16 +42,21 @@ class VisualizationLegend extends Backbone.View
     else
       @$el.find('.visualization-graph-legend-size').hide()
 
+    # get scale color domain filtering empty values
+    color_domain = scale_color.domain().filter (d) -> !Number.isNaN(d) and d != null and d != ''
+
     # Setup color legend
-    if ( @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative' ) and scale_color.domain().length > 1
+    if ( @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative' ) and color_domain.length > 1
+
+      console.log color_domain
+
+      # Avoid quantitative scales with same values
+      if color_domain.length == 2 and color_domain[0] == color_domain[1]
+        @$el.find('.visualization-graph-legend-color').hide()
+        return
 
       # add class color to element
       @$el.addClass 'color'
-
-      # Avoid quantitative scales with same values
-      if scale_color.domain().length == 2 and scale_color.domain()[0] == scale_color.domain()[1]
-        @$el.find('.visualization-graph-legend-color').hide()
-        return
 
       # Create legend color group
       legend_color = @$el.find('.visualization-graph-legend-color').show()
@@ -61,32 +66,29 @@ class VisualizationLegend extends Backbone.View
       # Add legend color title
       legend_color.find('.visualization-graph-legend-title').html( @parameters.nodesColorColumn.replace('_',' ').trim().capitalize() )
 
-      items = scale_color.domain()
-
       # Insert values inside domain for quantitative scales
       if @parameters.nodesColor == 'quantitative'
-        items = items.sort (a, b) -> return a - b 
-        steps = (items[0] - items[1]) / 5
-        min = items.pop()
-        items.push @formatNumber(items[0]-steps)
-        items.push @formatNumber(items[1]-steps)
-        items.push @formatNumber(items[2]-steps)
-        items.push @formatNumber(items[3]-steps)
-        items.push min
+        color_domain = color_domain.sort (a, b) -> return a - b 
+        steps = (color_domain[0] - color_domain[1]) / 5
+        min = color_domain.pop()
+        color_domain.push @formatNumber(color_domain[0]-steps)
+        color_domain.push @formatNumber(color_domain[1]-steps)
+        color_domain.push @formatNumber(color_domain[2]-steps)
+        color_domain.push @formatNumber(color_domain[3]-steps)
+        color_domain.push min
 
       # loop through all colors
-      items.forEach (item, i) =>
-        if item != null and item != ''
-          # create legend item
-          legend_item = $('<li></li>')
-          # add circle & amount to legend item 
-          legend_item_color = $('<span class="visualization-graph-legend-square"></span>')
-          legend_item_color.css('background-color': scale_color(item) )
-          legend_item.append legend_item_color
-          # skip first item label if scale is quantitative
-          if i > 0 || @parameters.nodesColor == 'qualitative'
-            legend_item.append item
-          legend_color.find('ul').append legend_item
+      color_domain.forEach (item, i) =>
+        # create legend item
+        legend_item = $('<li></li>')
+        # add circle & amount to legend item 
+        legend_item_color = $('<span class="visualization-graph-legend-square"></span>')
+        legend_item_color.css('background-color': scale_color(item) )
+        legend_item.append legend_item_color
+        # skip first item label if scale is quantitative
+        if i > 0 || @parameters.nodesColor == 'qualitative'
+          legend_item.append item
+        legend_color.find('ul').append legend_item
     else
       @$el.find('.visualization-graph-legend-color').hide()
 
