@@ -795,12 +795,13 @@ $node-color-12: #e0deda;
   .visualization-graph-legend-circle{
     display: block;
     position: absolute;
-  }
-
-  .visualization-graph-legend-circle{
     top: 0;
     left: 0;
     border: 1px solid $gray-light;
+  }
+
+  .visualization-graph .visualization-graph-legend-circle{
+
   }
 
   .visualization-graph-legend-size-amount{
