@@ -783,6 +783,7 @@ $node-color-12: #e0deda;
   .visualization-graph-legend.size.color {
     .visualization-graph-legend-size{
       margin-right: 2*$grid-gutter-width/3;
+      max-width: 96px;
     }
     .visualization-graph-legend-color{
       margin-left: 0;

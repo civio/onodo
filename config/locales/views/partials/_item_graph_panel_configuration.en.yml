@@ -16,7 +16,6 @@ en:
         medium: Medium
         large: Large
         extra_large: Extra Large
-      number_of_relations: Number of links
       show_nodes_label: Show Nodes Label
       show_nodes_label_complete: Show Complete Nodes Label
       show_nodes_image: Show Nodes Image

@@ -128,7 +128,9 @@ class VisualizationLegend extends Backbone.View
 
 
   setLegendTitle: (el, name) ->
-    el.find('.visualization-graph-legend-title').html name.replace('_',' ').trim().capitalize()
+    title = el.find('.visualization-graph-legend-title')
+    str = if title.data(name.replace('_','-')) then title.data(name.replace('_','-')) else name.replace('_',' ').trim().capitalize()
+    title.html str
 
   formatNumber: (number) ->
     number = parseFloat(number)
