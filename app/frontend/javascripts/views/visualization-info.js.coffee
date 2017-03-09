@@ -36,7 +36,7 @@ class VisualizationInfo extends Backbone.View
         name:         @model.get('name')
         description:  @model.get('description')
         type:         @model.get('node_type')
-        image:        if @model.get('image') then @model.get('image').huge.url else null
+        image:        @getImage @model
       }
       # if available node_custom_fields, add to templateAttr.node_custom_fields object
       if @node_custom_fields and @node_custom_fields.length > 0
@@ -49,5 +49,15 @@ class VisualizationInfo extends Backbone.View
       template = HandlebarsTemplate templateAttr
       @$el.find('.panel-body').html template
     return this
+
+  getImage: (model) ->
+    # if image is defined and is an object with image.huge.url attribute get that
+    if @model.get('image') and @model.get('image').huge
+      @model.get('image').huge.url
+    # if image is defined but is a string get the string
+    else if typeof @model.get('image') == 'string'
+      @model.get('image')
+    else
+      null
 
 module.exports = VisualizationInfo

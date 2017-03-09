@@ -223,6 +223,7 @@ class VisualizationCanvas extends Backbone.View
     @updateNodesLabels()
     @updateForce restarForce
 
+
   updateImages: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
@@ -235,7 +236,7 @@ class VisualizationCanvas extends Backbone.View
     # UPDATE old elements present in new data
     patterns.attr('id', (d) -> return 'node-pattern-'+d.id)
       .selectAll('image')
-        .attr('xlink:href', (d) -> return d.image.small.url)
+        .attr('xlink:href', (d) => return @getImage(d))
     
     # ENTER new elements present in new data.
     patterns.enter().append('pattern')
@@ -250,7 +251,7 @@ class VisualizationCanvas extends Backbone.View
         .attr('y', '0')
         .attr('width', '30')
         .attr('height', '30')
-        .attr('xlink:href', (d) -> return d.image.small.url)
+        .attr('xlink:href', (d) => return @getImage(d))
 
 
   updateNodes: ->
@@ -1018,6 +1019,15 @@ class VisualizationCanvas extends Backbone.View
         if i == 0
           tspan.attr('dx', 0)
 
+  getImage: (d) ->
+    # if image is defined and is an object with image.small.url attribute get that
+    if d.image and d.image.small.url
+      d.image.small.url
+    # if image is defined but is a string get the string
+    else if typeof d.image == 'string'
+      d.image
+    else
+      null
 
   String.prototype.capitalize = () ->
     return this.charAt(0).toUpperCase() + this.slice(1)
