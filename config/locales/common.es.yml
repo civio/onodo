@@ -69,6 +69,7 @@ es:
     privacy_policy: Política de privacidad
     documentation: Tutoriales
     password: Contraseña
+    number_of_relations: Número de relaciones
 
     cluster: Grupos
     degree: Conexiones

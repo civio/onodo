@@ -6,11 +6,10 @@
   .visualization-graph-container
     = render 'partials/item_graph_menu_navigation'
     = render 'partials/item_graph_menu_actions'
+    = render 'partials/item_graph_legend'
     .visualization-graph-component.loading
       %svg
   = render 'partials/item_graph_info'
-
-= render 'partials/user_label', :user => @visualization.author, :align => 'left', :target => '_blank'
 
 = render 'partials/embed_icon', item: @visualization
 

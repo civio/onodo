@@ -16,10 +16,10 @@ es:
         medium: Mediano
         large: Grande
         extra_large: Muy grande
-      number_of_relations: Número de relaciones
       show_nodes_label: Nombres de nodos
       show_nodes_label_complete: Nombres de nodos completo
       show_nodes_image: Imágenes de nodos
+      show_legend: Mostrar leyenda
       relations_line_style: Estilo de líneas
       line_styles:
         solid: Sólido

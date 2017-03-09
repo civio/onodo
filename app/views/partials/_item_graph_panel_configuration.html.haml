@@ -91,12 +91,12 @@
             #nodes-size-column.dropdown.dropdown-select
               %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
                 %span.text
-                  = t '.number_of_relations'
+                  = t 'common.number_of_relations'
                 %span.caret
               %ul.dropdown-menu
                 %li.active{ 'data-value': 'relations' }
                   %p
-                    = t '.number_of_relations'
+                    = t 'common.number_of_relations'
         %hr
         .row.switch-container
           .col-sm-8
@@ -116,6 +116,12 @@
               = t '.show_nodes_image'
           .col-sm-4.text-right
             = check_box_tag :showNodesImage, 1, false, data: { "size" => "small" }
+        .row.switch-container
+          .col-sm-8
+            %p.configuration-label.configuration-switch-label
+              = t '.show_legend'
+          .col-sm-4.text-right
+            = check_box_tag :showLegend, 1, false, data: { "size" => "small" }
       #settings-relations.tab-pane.fade{ role: "tabpanel" }
         / .form-group
         /   %label{ for: "curvature"}

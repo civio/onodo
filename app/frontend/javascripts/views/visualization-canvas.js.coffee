@@ -161,7 +161,7 @@ class VisualizationCanvas extends Backbone.View
     @relations_labels_cont = @container.append('g').attr('class', 'relations-labels-cont')
     @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
     @nodes_labels_cont     = @container.append('g').attr('class', 'nodes-labels-cont')
-    
+
     # Translate svg
     @rescale()
 
@@ -181,6 +181,9 @@ class VisualizationCanvas extends Backbone.View
     data.nodes.forEach (d) =>
       if d.visible
         @addNodeData d
+      # force empties node_types to null to avoid 2 non-defined types 
+      if d.node_type == ''
+        d.node_type = null
 
     # Setup color scale
     @setColorScale()
@@ -220,6 +223,7 @@ class VisualizationCanvas extends Backbone.View
     @updateNodesLabels()
     @updateForce restarForce
 
+
   updateImages: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
@@ -232,7 +236,7 @@ class VisualizationCanvas extends Backbone.View
     # UPDATE old elements present in new data
     patterns.attr('id', (d) -> return 'node-pattern-'+d.id)
       .selectAll('image')
-        .attr('xlink:href', (d) -> return d.image.small.url)
+        .attr('xlink:href', (d) => return @getImage(d))
     
     # ENTER new elements present in new data.
     patterns.enter().append('pattern')
@@ -247,7 +251,7 @@ class VisualizationCanvas extends Backbone.View
         .attr('y', '0')
         .attr('width', '30')
         .attr('height', '30')
-        .attr('xlink:href', (d) -> return d.image.small.url)
+        .attr('xlink:href', (d) => return @getImage(d))
 
 
   updateNodes: ->
@@ -393,10 +397,6 @@ class VisualizationCanvas extends Backbone.View
     # restart force
     if restarForce
       @force.alpha(0.3).restart()
-
-
-  # Nodes / Relations methods
-  # --------------------------
 
   updateData: (nodes, relations) ->
     # console.log 'canvas current Data', @data_nodes, @data_relations
@@ -1019,5 +1019,17 @@ class VisualizationCanvas extends Backbone.View
         if i == 0
           tspan.attr('dx', 0)
 
+  getImage: (d) ->
+    # if image is defined and is an object with image.small.url attribute get that
+    if d.image and d.image.small.url
+      d.image.small.url
+    # if image is defined but is a string get the string
+    else if typeof d.image == 'string'
+      d.image
+    else
+      null
+
+  String.prototype.capitalize = () ->
+    return this.charAt(0).toUpperCase() + this.slice(1)
 
 module.exports = VisualizationCanvas

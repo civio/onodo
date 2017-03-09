@@ -6,6 +6,7 @@ RelationsCollection          = require './collections/relations-collection.js'
 VisualizationCanvas          = require './views/visualization-canvas.js'
 VisualizationNavigation      = require './views/visualization-navigation.js'
 VisualizationActions         = require './views/visualization-actions.js'
+VisualizationLegend          = require './views/visualization-legend.js'
 VisualizationShare           = require './views/visualization-share.js'
 VisualizationInfo            = require './views/visualization-info.js'
 
@@ -15,6 +16,7 @@ class VisualizationBase
   edit:                       false
   nodes:                      null
   visualizationCanvas:        null
+  visualizationLegend:        null
   visualizationNavigation:    null
   visualizationActions:       null
   visualizationShare:         null
@@ -28,6 +30,7 @@ class VisualizationBase
     showNodesLabel:         1
     showNodesLabelComplete: 0
     showNodesImage:         1
+    showLegend:             1
     relationsCurvature:     1
     relationsLineStyle:     0
     linkDistance:           100
@@ -43,6 +46,7 @@ class VisualizationBase
     @relations          = new RelationsCollection()
     # Setup Views
     @visualizationCanvas         = new VisualizationCanvas()
+    @VisualizationLegend         = new VisualizationLegend()
     @visualizationNavigation     = new VisualizationNavigation()
     @visualizationActions        = new VisualizationActions {collection: @nodes}
     @visualizationShare          = new VisualizationShare()
@@ -68,6 +72,8 @@ class VisualizationBase
     # Setup VisualizationCanvas
     @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
     @visualizationCanvas.render()
+    @VisualizationLegend.setup @parameters
+    @VisualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
     @visualizationActions.render()
     # Setup Visualization Events
     @bindVisualizationEvents()
@@ -96,6 +102,7 @@ class VisualizationBase
     @parameters.showNodesLabel          = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
     @parameters.showNodesLabelComplete  = if typeof @parameters.showNodesLabelComplete != 'undefined' then @parameters.showNodesLabelComplete else @parametersDefault.showNodesLabelComplete
     @parameters.showNodesImage          = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
+    @parameters.showLegend              = if typeof @parameters.showLegend != 'undefined' then @parameters.showLegend else @parametersDefault.showLegend
     @parameters.relationsCurvature      = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
     @parameters.relationsLineStyle      = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance            = @parameters.linkDistance || @parametersDefault.linkDistance

@@ -61,6 +61,11 @@ class VisualizationConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.toogleNodesImage', {value: @parameters.showNodesImage}
     @updateParameters()
 
+  onToogleShowLegend: (e, state) =>
+    @parameters.showLegend = state
+    Backbone.trigger 'visualization.config.toogleShowLegend', {value: @parameters.showLegend}
+    @updateParameters()
+
   onChangeRelationsCurvature: (e) =>
     @parameters.relationsCurvature = $(e.target).val()
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
@@ -91,6 +96,7 @@ class VisualizationConfiguration extends Backbone.View
     @updateParameters()
   
   updateParameters: =>
+    console.log 'parameters', @parameters
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
   setupSliders: ->
@@ -124,6 +130,7 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#showNodesLabel').bootstrapSwitch()
     @$el.find('#showNodesLabelComplete').bootstrapSwitch()
     @$el.find('#showNodesImage').bootstrapSwitch()
+    @$el.find('#showLegend').bootstrapSwitch()
 
     # Setup dropdown selects (nodes color, nodes color column & nodes size) & initialize it
     @$el.find('.dropdown-select .dropdown-menu li').click @onDropdownSelectChange
@@ -139,6 +146,7 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#showNodesLabel').bootstrapSwitch         'state', @parameters.showNodesLabel
     @$el.find('#showNodesLabelComplete').bootstrapSwitch 'state', @parameters.showNodesLabelComplete
     @$el.find('#showNodesImage').bootstrapSwitch         'state', @parameters.showNodesImage
+    @$el.find('#showLegend').bootstrapSwitch             'state', @parameters.showLegend
     
     # Setup sliders
     @setupSliders()
@@ -152,6 +160,7 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#showNodesLabel').on           'switchChange.bootstrapSwitch', @onToogleNodesLabel
     @$el.find('#showNodesLabelComplete').on   'switchChange.bootstrapSwitch', @onToogleNodesLabelComplete
     @$el.find('#showNodesImage').on           'switchChange.bootstrapSwitch', @onToogleNodesImage
+    @$el.find('#showLegend').on               'switchChange.bootstrapSwitch', @onToogleShowLegend
     @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
     # Handle reset defaults
     @$el.find('#reset-defaults').click        @onResetDefaults

@@ -1,0 +1,23 @@
+.visualization-graph-legend.panel.panel-default
+  .panel-heading
+    = t '.show'
+    %button.visualization-graph-legend-collapse-btn{ type: "button" }
+      %i.glyphicon.glyphicon-triangle-top
+  .panel-body
+    .visualization-graph-legend-size
+      %p.visualization-graph-legend-title{ data: {'node-type': t('common.type'), relations: t('common.number_of_relations')} }
+      %ul
+        %li.visualization-graph-legend-lg
+          %span.visualization-graph-legend-circle
+          %span.visualization-graph-legend-size-amount
+        %li.visualization-graph-legend-md
+          %span.visualization-graph-legend-circle
+          %span.visualization-graph-legend-size-amount
+        %li.visualization-graph-legend-sm
+          %span.visualization-graph-legend-circle
+          %span.visualization-graph-legend-size-amount
+    .visualization-graph-legend-color
+      %p.visualization-graph-legend-title{ data: {'node-type': t('common.type'), relations: t('common.number_of_relations')} }
+      %ul
+    %button.visualization-graph-legend-collapse-btn{ type: "button", title: t('.hide'), data: {toggle: "tooltip", placement: "top"} }
+      %i.glyphicon.glyphicon-triangle-bottom

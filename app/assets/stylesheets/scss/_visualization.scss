@@ -557,7 +557,7 @@ $node-color-12: #e0deda;
     color: $gray;
     border-radius: 0;
     border: none;
-    padding: $grid-gutter-width/2 $grid-gutter-width/3;
+    padding: ($grid-gutter-width/3)+2 $grid-gutter-width/3;
     background: $gray-lighter;  // $gray-blue-dark;
     @include clearfix();
 
@@ -664,7 +664,221 @@ $node-color-12: #e0deda;
       margin-bottom: $grid-gutter-width/3;
     }
   }
-  
+
+  .visualization-graph-legend{
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    background: white;
+    border-color: $gray-lighter;
+    @include box-shadow(0 0 6px rgba(0, 0, 0, 0.2));
+
+    ul{
+      margin: 0;
+      padding: 0;
+    }
+
+    li{
+      list-style: none;
+      font-size: 0.786em;
+      letter-spacing: 0.01em;
+      font-weight: 300;
+    }
+
+    .panel-heading{
+      display: none;
+      background: none;
+      padding: $grid-gutter-width/6 25px $grid-gutter-width/6 $grid-gutter-width/3;
+      cursor: pointer;
+
+      &:hover .visualization-graph-legend-collapse-btn{
+        color: $text-color;
+      }
+    }
+
+    .panel-body{
+      padding: 0 $grid-gutter-width/2 $grid-gutter-width/3 $grid-gutter-width/6;
+    }
+
+    &.collapsed{
+      .panel-heading{
+        display: block;
+      }
+      .panel-body{
+        display: none;
+      }
+    }
+
+    @media (min-width: $screen-md-min) {
+      max-width: 50%;
+    }
+  }
+
+  .visualization-graph-legend .panel-heading,
+  .visualization-graph-legend-title{
+    color: $text-color;
+    font-size: 0.857em;
+  }
+  .visualization-graph-legend-title{
+    margin-bottom: 8px;
+  }
+
+  .visualization-graph-legend-color,
+  .visualization-graph-legend-size{
+    display: none;
+    float: left;
+    padding-top: 7px;
+    margin: 0 $grid-gutter-width/3;
+  }
+
+  .visualization-graph-legend-color{
+    li{
+      float: left;
+      width: 28px;
+      line-height: 12px;
+    }
+  }
+
+  .visualization-graph-legend-size{
+    ul{
+      position: relative;
+      height: 40px;
+    }
+    li{
+      position: relative;
+      margin-bottom: 0;
+      height: 40px;
+    }
+  }
+
+  .visualization-graph-legend-square{
+    display: block;
+    width: 27px;
+    height: 7px;
+    margin-top: 2px;
+    margin-bottom: 6px;
+  }
+
+  .visualization-graph-legend-color.qualitative {
+    float: none;
+
+    li{
+      width: auto;
+      line-height: 12px;
+      margin-right: 6px;
+    }
+
+    .visualization-graph-legend-square{
+      float: left;
+      width: 12px;
+      height: 12px;
+      border-radius: 6px;
+      margin-top: 0;
+      margin-right: 2px;
+    }
+  }
+
+  .visualization-graph-legend.size.color {
+    .visualization-graph-legend-size{
+      margin-right: 2*$grid-gutter-width/3;
+      max-width: 96px;
+    }
+    .visualization-graph-legend-color{
+      margin-left: 0;
+    }
+    .visualization-graph-legend-color.qualitative {
+      padding-left: 96px;
+    }
+  }
+
+  .visualization-graph-legend-circle{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid $gray-light;
+  }
+
+  .visualization-graph .visualization-graph-legend-circle{
+
+  }
+
+  .visualization-graph-legend-size-amount{
+    display: block;
+    margin-left: 50px;
+    line-height: 1em;
+  }
+
+  .visualization-graph-legend-lg{
+    color: $text-color;
+    .visualization-graph-legend-circle{
+      width: 40px;
+      height: 40px;
+      border-radius: 20px;
+      border-color: mix( $gray-light, $gray, 65% );
+    }
+    .visualization-graph-legend-size-amount{
+      //top: 0;
+    }
+  }
+  .visualization-graph-legend-md{
+    top: -40px;
+    color: mix( $text-color, $gray-light, 65% );
+    .visualization-graph-legend-circle{
+      top: 15px;
+      left: 7.5px;
+      width: 25px;
+      height: 25px;
+      border-radius: 12.5px;
+      border-color: mix( $gray-light, $gray, 85% );
+    }
+    .visualization-graph-legend-size-amount{
+      padding-top: 15px;
+    }
+  }
+  .visualization-graph-legend-sm{
+    top: -80px;
+    color: mix( $text-color, $gray-light, 40% );
+    .visualization-graph-legend-circle{
+      top: 30px;
+      left: 15px;
+      width: 10px;
+      height: 10px;
+      border-radius: 5px;
+    }
+    .visualization-graph-legend-size-amount{
+      padding-top: 30px;
+    }
+  }
+
+  .visualization-graph-legend-collapse-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0;
+    color: $gray-blue-dark;
+    font-size: 11px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: none;
+    border: none;
+    @include transition(color 0.3s ease-out);
+
+    .glyphicon-triangle-bottom{
+      top: 6px;
+    }
+    .glyphicon-triangle-top{
+      top: 4px;
+    }
+
+    &:hover{
+      color: $text-color;
+    }
+  }
 }
 
 .visualization-graph-info{
@@ -675,9 +889,8 @@ $node-color-12: #e0deda;
   width: 100%;
   margin: 0;
   color: $gray;
-  //background:  $gray-blue;
   background: white;
-  background: rgba(255, 255, 255, 0.9);
+  //background: rgba(255, 255, 255, 0.9);
   overflow-y: auto;
   overflow-x: hidden;
   @include transition( right 0.4s ease-out );
@@ -1003,13 +1216,14 @@ body.fullscreen{
 
         > a{
           font-size: 0.857em;
+          line-height: 1em;
           text-transform: uppercase;
           border: 2px solid $brand-primary;
           border-bottom: none;
           border-radius: 6px 6px 0 0;
           min-width: 120px;
           text-align: center;
-          padding: 12px;
+          padding: 12px 10px 10px;
 
           &:hover{
             color: $brand-primary;
@@ -1307,13 +1521,13 @@ body.fullscreen{
   .configuration-label{
     font-size: 0.875em;
     text-transform: uppercase;
-    line-height: 32px;
+    line-height: 31px;
     margin-bottom: 0;
   }
 
   hr{
-    margin-top: $grid-gutter-width/2;
-    margin-bottom: $grid-gutter-width/2;
+    margin-top: 2+($grid-gutter-width/3);
+    margin-bottom: 2+($grid-gutter-width/3);
   }
 
   #nodes-color{
