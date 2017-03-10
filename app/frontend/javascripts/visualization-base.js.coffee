@@ -62,7 +62,7 @@ class VisualizationBase
     @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
 
   resize: =>
-    if @visualizationCanvas and @visualizationCanvas.svg
+    if @visualizationCanvas and @visualizationCanvas.canvas
       @visualizationCanvas.resize()
 
   onSync: =>
