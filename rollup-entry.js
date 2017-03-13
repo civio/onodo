@@ -15,6 +15,8 @@ export {
   forceSimulation
 } from "d3-force";
 
+export * from "d3-quadtree";
+
 export {
   scaleLinear,
   scaleOrdinal,
