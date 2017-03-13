@@ -34,7 +34,7 @@ class VisualizationInfo extends Backbone.View
       # set template attributes
       templateAttr = {
         name:         @model.get('name')
-        description:  @model.get('description').replace(/&lt;iframe/g, '<iframe').replace(/&lt;\/iframe&gt;/g, '</iframe>')
+        description:  if @model.get('description') then @model.get('description').replace(/&lt;iframe/g, '<iframe').replace(/&lt;\/iframe&gt;/g, '</iframe>') else @model.get('description')
         type:         @model.get('node_type')
         image:        @getImage @model
       }
