@@ -140,6 +140,22 @@ class VisualizationCanvasBase extends Backbone.View
     # Remove loading class
     @$el.removeClass 'loading'
 
+    # a FPS meter
+    fpsMeter = d3.select(@el).append('div')
+      .style 'font-family', 'monospace'
+      .style 'position', 'absolute'
+      .style 'top', '0'
+      .style 'padding', '8px'
+      .style 'background', 'black'
+      .style 'color', 'white'
+    ticks = []
+    d3.timer (t) ->
+      ticks.push t
+      if ticks.length > 15
+        ticks.shift()
+      avgFrameLength = (ticks[ticks.length-1] - ticks[0])/ticks.length
+      fpsMeter.html Math.round(1/avgFrameLength*1000) + ' fps'
+
 
   initializeData: (data) ->
 

@@ -30,6 +30,8 @@ export {
   line
 } from "d3-shape";
 
+export * from "d3-timer";
+
 export * from "d3-transition";
 
 export * from "d3-zoom";

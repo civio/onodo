@@ -57,7 +57,7 @@
     "d3-selection": "^1.0.0",
     "d3-selection-multi": "^0.4.1",
     "d3-shape": "^1.0.0",
-    "d3-timer": "^1.0.1",
+    "d3-timer": "^1.0.5",
     "d3-transition": "^1.0.0",
     "d3-zoom": "^1.0.2"
   }
