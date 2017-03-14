@@ -27,6 +27,8 @@ Then install and run locally, get a copy of the code, install the dependencies:
     $ npm install -g webpack
     $ npm install
 
+If there's any problem installing `nokogiri` dependency in Mac OS try to run `xcode-select --install` (as explained [here](http://stackoverflow.com/questions/40038953/installing-nokogiri-on-mac-os-sierra-10-12))
+
 Set up the database:
 
     $ rake db:setup
