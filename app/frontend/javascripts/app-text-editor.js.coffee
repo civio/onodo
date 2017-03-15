@@ -1,1 +1,1 @@
-Trix = require 'script!trix'
+Trix = require 'script-loader!trix'

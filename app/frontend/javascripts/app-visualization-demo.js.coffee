@@ -1,6 +1,6 @@
 VisualizationEdit = require './visualization-edit.js'
 VisualizationDemo = require './visualization-demo.js'
-Trix              = require 'script!trix'
+Trix              = require 'script-loader!trix'
 
 $(document).ready ->
 
