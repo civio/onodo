@@ -1,4 +1,4 @@
-Trix         = require 'script!trix'
+Trix         = require 'script-loader!trix'
 datepicker   = require 'bootstrap-datepicker'
 moment       = require 'moment'
 moment_range = require 'moment-range'
