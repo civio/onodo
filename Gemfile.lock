@@ -316,5 +316,8 @@ DEPENDENCIES
   web-console (~> 2.0)
   webpack-rails
 
+RUBY VERSION
+   ruby 2.2.3p173
+
 BUNDLED WITH
-   1.11.2
+   1.14.6
