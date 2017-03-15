@@ -34,7 +34,7 @@ class VisualizationInfo extends Backbone.View
       # set template attributes
       templateAttr = {
         name:         @model.get('name')
-        description:  if @model.get('description') then @model.get('description').replace(/&lt;iframe/g, '<iframe').replace(/&lt;\/iframe&gt;/g, '</iframe>') else @model.get('description')
+        description:  @getDescription @model.get('description')
         type:         @model.get('node_type')
         image:        @getImage @model
       }
@@ -49,6 +49,15 @@ class VisualizationInfo extends Backbone.View
       template = HandlebarsTemplate templateAttr
       @$el.find('.panel-body').html template
     return this
+
+
+  getDescription: (str) ->
+    if str 
+      str = str
+        .replace(/<a\s+href=/gi, '<a target="_blank" href=')  # add target blank to links
+        .replace(/&lt;iframe/g, '<iframe')                    # escape iframe tags
+        .replace(/&lt;\/iframe&gt;/g, '</iframe>')  
+    return str
 
   getImage: (model) ->
     # if image is defined and is an object with image.huge.url attribute get that
