@@ -18,7 +18,7 @@
     "url": "https://github.com/civio/onodo.git"
   },
   "scripts": {
-    "prepublish": "rollup -c -m -o app/frontend/javascripts/dist/d3.js"
+    "prepare": "rollup -c -m -o app/frontend/javascripts/dist/d3.js"
   },
   "devDependencies": {
     "babel-core": "^6.24.0",
