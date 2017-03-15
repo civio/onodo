@@ -1,5 +1,5 @@
 VisualizationEdit = require './visualization-edit.js'
-Trix              = require 'script!trix'
+Trix              = require 'script-loader!trix'
 
 $(document).ready ->
 

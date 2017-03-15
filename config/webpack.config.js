@@ -38,24 +38,28 @@ var config = {
   },
 
   resolve: {
-    root: path.join(__dirname, '..', 'app','frontend','javascripts'),
-    extensions: ['', '.coffee', '.js'],
+    modules: [
+      path.join(__dirname, '..', 'app','frontend','javascripts'),
+      'node_modules'
+    ],
+    extensions: ['.coffee', '.js'],
     alias: {
       'handlebars': 'handlebars/runtime.js'
     }
   },
 
   module: {
-    loaders: [
-      {
-        test:   /\.coffee$/,
+    rules: [{
+      test: /\.coffee$/,
+      use: [{ 
         loader: 'coffee-loader'
-      },
-      {
-        test:   /\.handlebars$/,
+      }]
+    }, {
+      test: /\.handlebars$/,
+      use: [{ 
         loader: 'handlebars-loader'
-      }
-    ]
+      }]
+    }]
   },
 
   plugins: [
