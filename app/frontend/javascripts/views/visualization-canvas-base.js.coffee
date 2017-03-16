@@ -130,11 +130,6 @@ class VisualizationCanvasBase extends Backbone.View
       # force empties node_types to null to avoid 2 non-defined types 
       if d.node_type == ''
         d.node_type = null
-      # add default state value
-      # state 0  -> normal state
-      # state 1  -> highlighted state
-      # state -1 -> weaken state
-      d.state = 0
 
     # Setup color scale
     @setColorScale()
@@ -144,6 +139,8 @@ class VisualizationCanvasBase extends Backbone.View
       # Set source & target as nodes objetcs instead of index number
       d.source = @getNodeById d.source_id
       d.target = @getNodeById d.target_id
+      d.state = 0
+      d.color = '#cccccc'
       # Add all relations to data_relations array
       @data_relations.push d
       # Add relation to data_relations_visibles array if both nodes exist and are visibles
@@ -405,7 +402,16 @@ class VisualizationCanvasBase extends Backbone.View
       return 1
     else if a.size < b.size
       return -1
-    return 0
+    else
+      return 0
+
+  sortRelations: (a, b) ->
+    if a.state > b.state
+      return 1
+    else if a.state < b.state
+      return -1
+    else
+      return 0
 
 
   # Resize Methods

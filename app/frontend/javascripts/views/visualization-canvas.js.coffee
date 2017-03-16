@@ -55,11 +55,11 @@ class VisualizationCanvas extends VisualizationCanvasBase
   setNodeState: (d) =>
     if @node_hovered
       if @areNodesRelated(d, @node_hovered)
-        d.state = 1
+        d.state = 1  # highlighted state
       else
-        d.state = -1
+        d.state = -1 # weaken state
     else
-      d.state = 0
+      d.state = 0    # normal state
 
   setNodeFill: (d) =>
     if d.disabled
@@ -91,7 +91,29 @@ class VisualizationCanvas extends VisualizationCanvasBase
     else
       val = @scale_labels_size d[@parameters.nodesSizeColumn]
       d.fontSize = [11,12,13,15][val]
-      d.fontColor = ['#676767','#5a5a5a','#4d4d4d','#404040'][val]  
+      d.fontColor = ['#676767','#5a5a5a','#4d4d4d','#404040'][val]
+
+  setRelationState: (d) ->
+    if @node_active 
+      if d.source_id == @node_active.id or d.target_id == @node_active.id
+        d.state = 1  # highlighted state
+      else
+        d.state = -1 # weaken state
+    else if @node_hovered
+      if d.source_id == @node_hovered.id or d.target_id == @node_hovered.id
+        d.state = 1  # highlighted state
+      else
+        d.state = -1 # weaken state
+    else
+      d.state = 0    # normal state
+
+  setRelationColor: (d) ->
+    if d.state == 0
+      d.color = '#cccccc' # normal state
+    else if d.state == 1
+      d.color = '#b0b0b0' # highlighted state
+    else
+      d.color = '#eeeeee' # weaken state
       
 
   # Drawing methods
@@ -151,14 +173,14 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
-    @context.strokeStyle = '#ccc'
-    @context.lineWidth = 1
-    @context.beginPath()
     @data_relations_visibles.forEach (link) =>
+      @context.strokeStyle = link.color
+      @context.lineWidth = 1
+      @context.beginPath()
       @context.moveTo link.source.x, link.source.y
       @context.lineTo link.target.x, link.target.y
-    @context.stroke()
-    @context.closePath()
+      @context.stroke()
+      @context.closePath()
 
   updateNodesColorValue: =>
     super()
@@ -199,6 +221,11 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @data_nodes.forEach (d) =>
       @setNodeState d
       @setNodeStroke d
+    # update relations colors
+    @data_relations_visibles.forEach (d) =>
+      @setRelationState d
+      @setRelationColor d
+    @data_relations_visibles.sort @sortRelations
     # update canvas if force layout stoped
     if @force.alpha() < @force.alphaMin()
       @onTick()
