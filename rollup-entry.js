@@ -2,6 +2,10 @@ export * from "d3-array";
 
 export * from "d3-collection";
 
+export {
+  rgb
+} from "d3-color";
+
 export * from "d3-drag";
 
 export {

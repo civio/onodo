@@ -43,6 +43,7 @@ class VisualizationCanvasBase extends Backbone.View
   parameters:             null
   color_scale:            null
   node_active:            null
+  node_hovered:           null
   scale_nodes_size:       null
   scale_labels_size:      null
   degrees_const:          180 / Math.PI
@@ -74,52 +75,11 @@ class VisualizationCanvasBase extends Backbone.View
 
     @parameters = _parameters
 
-    # Setup Data
-    @initializeData _data
+    @setupData _data
 
-    # Setup Viewport attributes
-    @viewport.width     = @$el.width()
-    @viewport.height    = @$el.height()
-    @viewport.center.x  = @viewport.width*0.5
-    @viewport.center.y  = @viewport.height*0.5
+    @setupViewport()
 
-    # Setup force
-    @forceLink = d3.forceLink()
-      .id       (d) -> return d.id
-      .distance ()  => return @parameters.linkDistance
-
-    @forceManyBody = d3.forceManyBody()
-      # (https://github.com/d3/d3-force#manyBody_strength)
-      .strength () => return @parameters.linkStrength
-      # set maximum distance between nodes over which this force is considered
-      # (https://github.com/d3/d3-force#manyBody_distanceMax)
-      .distanceMax 500
-      #.theta        @parameters.theta
-
-    @force = d3.forceSimulation()
-      .force 'link',    @forceLink
-      .force 'charge',  @forceManyBody
-      .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
-      .on    'tick',    @onTick
-
-    # Reduce number of force ticks until the system freeze
-    # (https://github.com/d3/d3-force#simulation_alphaDecay)
-    @force.alphaDecay 0.03
-
-    # @force = d3.layout.force()
-    #   .linkDistance @parameters.linkDistance
-    #   .linkStrength @parameters.linkStrength
-    #   .friction     @parameters.friction
-    #   .charge       @parameters.charge
-    #   .theta        @parameters.theta
-    #   .gravity      @parameters.gravity
-    #   .size         [@viewport.width, @viewport.height]
-    #   .on           'tick', @onTick
-
-    @forceDrag = d3.drag()
-      .on('start',  @onNodeDragStart)
-      .on('drag',   @onNodeDragged)
-      .on('end',    @onNodeDragEnd)
+    @setupForce()
 
     # Setup Canvas or SVG
     @setupCanvas()
@@ -157,9 +117,7 @@ class VisualizationCanvasBase extends Backbone.View
       fpsMeter.html Math.round(1/avgFrameLength*1000) + ' fps'
 
 
-  initializeData: (data) ->
-
-    # console.log 'initializeData'
+  setupData: (data) ->
 
     @data_nodes              = []
     @data_relations          = []
@@ -172,6 +130,11 @@ class VisualizationCanvasBase extends Backbone.View
       # force empties node_types to null to avoid 2 non-defined types 
       if d.node_type == ''
         d.node_type = null
+      # add default state value
+      # state 0  -> normal state
+      # state 1  -> highlighted state
+      # state -1 -> weaken state
+      d.state = 0
 
     # Setup color scale
     @setColorScale()
@@ -194,6 +157,51 @@ class VisualizationCanvasBase extends Backbone.View
     #console.log 'current nodes', @data_nodes
     #console.log 'current relations', @data_relations_visibles
 
+
+  setupViewport: ->
+    @viewport.width     = @$el.width()
+    @viewport.height    = @$el.height()
+    @viewport.center.x  = @viewport.width*0.5
+    @viewport.center.y  = @viewport.height*0.5
+
+  setupForce: ->
+    # Setup force
+    @forceLink = d3.forceLink()
+      .id       (d) -> return d.id
+      .distance ()  => return @parameters.linkDistance
+
+    @forceManyBody = d3.forceManyBody()
+      # (https://github.com/d3/d3-force#manyBody_strength)
+      .strength () => return @parameters.linkStrength
+      # set maximum distance between nodes over which this force is considered
+      # (https://github.com/d3/d3-force#manyBody_distanceMax)
+      .distanceMax 500
+      #.theta        @parameters.theta
+
+    @force = d3.forceSimulation()
+      .force 'link',    @forceLink
+      .force 'charge',  @forceManyBody
+      .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
+      .on    'tick',    @onTick
+
+    # Reduce number of force ticks until the system freeze
+    # (https://github.com/d3/d3-force#simulation_alphaDecay)
+    @force.alphaDecay 0.03
+
+    # @force = d3.layout.force()
+    #   .linkDistance @parameters.linkDistance
+    #   .linkStrength @parameters.linkStrength
+    #   .friction     @parameters.friction
+    #   .charge       @parameters.charge
+    #   .theta        @parameters.theta
+    #   .gravity      @parameters.gravity
+    #   .size         [@viewport.width, @viewport.height]
+    #   .on           'tick', @onTick
+
+    @forceDrag = d3.drag()
+      .on('start',  @onNodeDragStart)
+      .on('drag',   @onNodeDragged)
+      .on('end',    @onNodeDragEnd)
 
   # Override with Canvas or SVG
   setupCanvas: ->
@@ -395,7 +403,7 @@ class VisualizationCanvasBase extends Backbone.View
   sortNodes: (a, b) ->
     if a.size > b.size
       return 1
-    else if a.size > b.size
+    else if a.size < b.size
       return -1
     return 0
 
@@ -593,32 +601,6 @@ class VisualizationCanvasBase extends Backbone.View
     if !d3.event.active
       @force.alphaTarget(0)
 
-  # Override with Canvas or SVG onNodeOver
-  onNodeOver: (d) =>
-    # skip if any node is active
-    if @node_active
-      return
-    # add relations labels  
-    @updateRelationsLabels @getNodeRelations(d.id)
-
-  # Override with Canvas or SVG onNodeOut
-  onNodeOut: (d) =>
-    # skip if any node is active
-    if @node_active
-      return
-    # clear relations labels
-    @updateRelationsLabels {}
-
-  onNodeClick: (d) =>
-    # Avoid trigger click on dragEnd
-    if d3.event.defaultPrevented 
-      return
-    Backbone.trigger 'visualization.node.showInfo', {node: d.id}
-
-  onNodeDoubleClick: (d) =>
-    # unfix the node position when the node is double clicked
-    @force.unfix d
-
   # Override with Canvas or SVG tick Function
   onTick: =>
   
@@ -680,6 +662,11 @@ class VisualizationCanvasBase extends Backbone.View
         color = @color_scale d[@parameters.nodesColorColumn]
       else
         color = @COLOR_SOLID[@parameters.nodesColor]
+    else if @node_hovered and d.id == @node_hovered.id
+      if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+        color = @color_scale d[@parameters.nodesColorColumn]
+      else
+        color = @COLOR_SOLID[@parameters.nodesColor]
     else
       color = 'transparent'
     return color
@@ -695,19 +682,14 @@ class VisualizationCanvasBase extends Backbone.View
       fill = @COLOR_SOLID[@parameters.nodesColor]
     return fill
 
-  setNodesSize: =>
-    # set size in nodes data
-    @data_nodes.forEach (d) =>
-      # fixed nodes size 
-      if @parameters.nodesSize != 1
-        d.size = @parameters.nodesSize
-      # nodes size based on number of relations or custom_fields
-      else
-        val = if d[@parameters.nodesSizeColumn] then d[@parameters.nodesSizeColumn] else 0
-        d.size = @scale_nodes_size val
-    # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
-    if @parameters.nodesSize == 1
-      @data_nodes = @data_nodes.sort @sortNodes
+  setNodeSize: (d) ->
+    # fixed nodes size 
+    if @parameters.nodesSize != 1
+      d.size = @parameters.nodesSize
+    # nodes size based on number of relations or custom_fields
+    else
+      val = if d[@parameters.nodesSizeColumn] then d[@parameters.nodesSizeColumn] else 0
+      d.size = @scale_nodes_size val
 
   getRelationLabelTransform: (d) =>
     x = (d.source.x+d.target.x)*0.5
@@ -742,7 +724,7 @@ class VisualizationCanvasBase extends Backbone.View
     # set labels size scale
     @scale_labels_size = d3.scaleQuantize()
       .domain [0, maxValue]
-      .range [1, 2, 3, 4]
+      .range [0, 1, 2, 3]
 
   getAngleBetweenPoints: (p1, p2) ->
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * @degrees_const

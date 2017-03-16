@@ -85,7 +85,12 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
 
   updateNodes: ->
     # Set nodes size
-    @setNodesSize()
+    @data_nodes.forEach (d) =>
+      @setNodeSize(d)
+
+    # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
+    if @parameters.nodesSize == 1
+      @data_nodes.sort @sortNodes
 
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
 
@@ -339,7 +344,11 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     super()
 
   onNodeOver: (d) =>
-    super(d)
+    # skip if any node is active
+    if @node_active
+      return
+    # add relations labels  
+    @updateRelationsLabels @getNodeRelations(d.id)
     # highlight related nodes labels
     @nodes_labels.classed 'weaken', true
     @nodes_labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
@@ -347,13 +356,28 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     @relations.classed 'weaken', true
     @relations.classed 'highlighted', (o) => return o.source_id == d.id || o.target_id == d.id
 
+
   onNodeOut: (d) =>
-    super(d)
+    # skip if any node is active
+    if @node_active
+      return
+    # clear relations labels
+    @updateRelationsLabels {}
     # clear nodes & relations classes
     @nodes_labels.classed 'weaken', false
     @nodes_labels.classed 'highlighted', false
     @relations.classed 'weaken', false
     @relations.classed 'highlighted', false
+
+  onNodeClick: (d) =>
+    # Avoid trigger click on dragEnd
+    if d3.event.defaultPrevented 
+      return
+    Backbone.trigger 'visualization.node.showInfo', {node: d.id}
+
+  onNodeDoubleClick: (d) =>
+    # unfix the node position when the node is double clicked
+    @force.unfix d
 
 
   # Tick Function
