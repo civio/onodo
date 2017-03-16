@@ -3,9 +3,9 @@ VisualizationCanvasBase = require './visualization-canvas-base.js'
 
 class VisualizationCanvas extends VisualizationCanvasBase
 
-  context:    null
-  quadtree:   null
-  nodeActive: null
+  context:      null
+  quadtree:     null
+  node_hovered: null
 
 
   setupCanvas: ->
@@ -47,20 +47,25 @@ class VisualizationCanvas extends VisualizationCanvasBase
     mouse = d3.mouse @canvas.node()
     @setQuadtree()
     node = @quadtree.find mouse[0], mouse[1]
-    if @nodeActive and @nodeActive.id == node.id
+    if @node_hovered and @node_hovered.id == node.id
       return
     @data_nodes.forEach (d) -> d.disabled = true 
-    @nodeActive = node
-    @nodeActive.disabled = false
+    @node_hovered = node
+    @areNodesRelated(d, o)
+    @node_hovered.disabled = false
     @updateNodesColorValue()
-    @onTick()
+    # update canvas if force layout stoped
+    if @force.alpha() < @force.alphaMin()
+      @onTick()
 
   onCanvasLeave: (e) =>
     console.log 'onCanvasOut'
-    @nodeActive = null
+    @node_hovered = null
     @data_nodes.forEach (d) -> d.disabled = false 
     @updateNodesColorValue()
-    @onTick()
+    # update canvas if force layout stoped
+    if @force.alpha() < @force.alphaMin()
+      @onTick()
 
 
   updateNodes: ->
@@ -150,7 +155,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @context.closePath()
 
     # Draw Labels
-    if @parameters.showNodesLabel or @nodeActive
+    if @parameters.showNodesLabel or @node_hovered
       @nodes.each (d, i, n) =>
         if !d.disabled
           node = d3.select(n[i])
