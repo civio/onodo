@@ -125,9 +125,12 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.clearRect 0, 0, @viewport.width, @viewport.height
   
     @drawRelations()
-
+    
+    if @node_active or @node_hovered
+      @drawRelationsLabels()
+    
     @drawNodes()
-
+    
     if @parameters.showNodesLabel or @node_hovered
       @drawNodesLabels()
 
@@ -159,17 +162,17 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawNodesLabels: ->
     # set styles
-    @context.lineWidth = 1
-    @context.strokeStyle = 'rgba(255,255,255,0.85)'
-    @context.textAlign = 'center'
+    @context.lineWidth    = 1
+    @context.strokeStyle  = 'rgba(255,255,255,0.85)'
+    @context.textAlign    = 'center'
     @context.textBaseline = 'top'
-    @data_nodes.forEach (d) =>
-      # don't draw labels of weaken nodes
-      if d.state > -1
-        @context.fillStyle = d.fontColor
-        @context.font      = '300 '+d.fontSize+'px Montserrat'
-        @context.strokeText  d.name, d.x, d.y+d.size+1
-        @context.fillText  d.name, d.x, d.y+d.size
+    @data_nodes
+      .filter (d) -> d.state != -1 # don't draw labels of weaken nodes
+      .forEach (d) =>
+        @context.fillStyle  = d.fontColor
+        @context.font       = '300 '+d.fontSize+'px Montserrat'
+        @context.strokeText d.name, d.x, d.y+d.size+1
+        @context.fillText   d.name, d.x, d.y+d.size
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
@@ -182,11 +185,22 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @context.stroke()
       @context.closePath()
 
-  updateNodesColorValue: =>
-    super()
-    @data_nodes.forEach (d) =>
-      @setNodeFill d
-      @setNodeStroke d
+  drawRelationsLabels: ->
+    @context.textAlign    = 'center'
+    @context.textBaseline = 'bottom'
+    @context.fillStyle    = '#aaaaaa'
+    @context.font         = '300 9px Montserrat'
+    @data_relations_visibles
+      .filter (d) -> d.state == 1 and d.relation_type # only draw labels of highlighted relations
+      .forEach (d) =>
+        angle = Math.atan2(d.target.y - d.source.y, d.target.x - d.source.x)
+        if angle > Math.PI/2 or angle < -Math.PI/2
+          angle += Math.PI
+        @context.save()
+        @context.translate (d.source.x+d.target.x)*0.5, (d.source.y+d.target.y)*0.5
+        @context.rotate angle
+        @context.fillText d.relation_type, 0, 0
+        @context.restore()
 
 
   # Canvas Mouse Events
@@ -225,6 +239,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @data_relations_visibles.forEach (d) =>
       @setRelationState d
       @setRelationColor d
+    # sort relations to put highlighted on top
+    # that's make some weird effects in force layout during animation
     @data_relations_visibles.sort @sortRelations
     # update canvas if force layout stoped
     if @force.alpha() < @force.alphaMin()
