@@ -70,6 +70,9 @@ class VisualizationCanvasBase extends Backbone.View
       x: 0
       y: 0
     scale: 1
+    translate:
+      x: 0
+      y: 0
 
   setup: (_data, _parameters) ->
 
@@ -573,9 +576,8 @@ class VisualizationCanvasBase extends Backbone.View
   # ---------------
 
   # Canvas Drag Events
-
-  # Override with Canvas or SVG onCanvasDragStart
   onCanvasDragStart: =>
+    @canvas.style 'cursor','move'
 
   onCanvasDragged: =>
     @viewport.x  += d3.event.dx
@@ -587,6 +589,7 @@ class VisualizationCanvasBase extends Backbone.View
 
   # Override with Canvas or SVG onCanvasDragEnd
   onCanvasDragEnd: =>
+    @canvas.style 'cursor','default'
     # Skip if viewport has no translation
     if @viewport.dx == 0 and @viewport.dy == 0
       Backbone.trigger 'visualization.node.hideInfo'

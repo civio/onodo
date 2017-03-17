@@ -335,14 +335,6 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
   # Events Methods
   # ---------------
 
-  # Canvas Drag Events
-  onCanvasDragStart: =>
-    @canvas.style('cursor','move')
-
-  onCanvasDragEnd: =>
-    @canvas.style('cursor','default')
-    super()
-
   onNodeOver: (d) =>
     # skip if any node is active
     if @node_active

@@ -10,6 +10,13 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # -------------------
 
   setupCanvas: ->
+
+    # set canvas drag
+    canvasDrag = d3.drag()
+      .on 'start', @onCanvasDragStart
+      .on 'drag',  @onCanvasDragged
+      .on 'end',   @onCanvasDragEnd
+
     # Setup canvas
     @canvas = d3.select(@el).append('canvas')
       .attr 'width',  @viewport.width
@@ -18,7 +25,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
       .on   'mousemove',  @onCanvasMove
       .on   'mouseleave', @onCanvasLeave
       .on   'click',      @onCanvasClick
-      #.call canvasDrag
+      .call canvasDrag
+
     # Setup canvas context
     @context = @canvas.node().getContext('2d')
 
@@ -123,7 +131,9 @@ class VisualizationCanvas extends VisualizationCanvasBase
   onTick: =>
     # clear canvas
     @context.clearRect 0, 0, @viewport.width, @viewport.height
-  
+    @context.save()
+    @context.translate @viewport.translate.x, @viewport.translate.y
+
     @drawRelations()
     
     if @node_active or @node_hovered
@@ -133,6 +143,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
     
     if @parameters.showNodesLabel or @node_hovered
       @drawNodesLabels()
+
+    @context.restore()
 
     # Draw quadtree
     ###
@@ -203,6 +215,20 @@ class VisualizationCanvas extends VisualizationCanvasBase
         @context.restore()
 
 
+  # Resize Methods
+  # ---------------
+
+  rescale: ->
+    @viewport.translate.x = @viewport.origin.x + @viewport.x - @viewport.offsetx - @viewport.offsetnode.x
+    @viewport.translate.y = @viewport.origin.y + @viewport.y - @viewport.offsety - @viewport.offsetnode.y
+    if @force.alpha() < @force.alphaMin()
+      @onTick()
+
+  rescaleTransition: ->
+    # implement transition here
+    @rescale()
+
+
   # Canvas Mouse Events
   # -------------------
 
@@ -213,7 +239,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # get mouse point
     mouse = d3.mouse @canvas.node()
     @setQuadtree()
-    node = @quadtree.find mouse[0], mouse[1]
+    node = @quadtree.find mouse[0]-@viewport.translate.x, mouse[1]-@viewport.translate.y
     # check @node_active !!!
     #if @node_active
     #  return
@@ -241,7 +267,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @setRelationColor d
     # sort relations to put highlighted on top
     # that's make some weird effects in force layout during animation
-    @data_relations_visibles.sort @sortRelations
+    #@data_relations_visibles.sort @sortRelations
     # update canvas if force layout stoped
     if @force.alpha() < @force.alphaMin()
       @onTick()
