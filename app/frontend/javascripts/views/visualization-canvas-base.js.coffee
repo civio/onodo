@@ -181,7 +181,7 @@ class VisualizationCanvasBase extends Backbone.View
     @force = d3.forceSimulation()
       .force 'link',    @forceLink
       .force 'charge',  @forceManyBody
-      .force 'center',  d3.forceCenter(@viewport.center.x, @viewport.center.y)
+      .force 'center',  d3.forceCenter(0,0)
       .on    'tick',    @onTick
 
     # Reduce number of force ticks until the system freeze

@@ -132,8 +132,11 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # clear canvas
     @context.clearRect 0, 0, @viewport.width, @viewport.height
     @context.save()
-    @context.translate @viewport.translate.x, @viewport.translate.y
 
+    # translate & scale viewport
+    @context.translate @viewport.center.x+@viewport.translate.x, @viewport.center.y+@viewport.translate.y
+    @context.scale @viewport.scale, @viewport.scale
+    
     @drawRelations()
     
     if @node_active or @node_hovered
@@ -145,18 +148,6 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @drawNodesLabels()
 
     @context.restore()
-
-    # Draw quadtree
-    ###
-    if @quadtree
-      @context.strokeStyle = '#ccc'
-      @context.beginPath()
-      @quadtree.visit (node, x0, y0, x1, y1) =>
-        @context.rect x0, y0, x1-x0, y1-y0  
-      @context.stroke()
-      @context.closePath()
-    ###
-
 
   drawNodes: ->
     @data_nodes.forEach (d) =>
@@ -215,7 +206,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
         @context.restore()
 
 
-  # Resize Methods
+  # Resize & Navigation Methods
   # ---------------
 
   rescale: ->
@@ -228,6 +219,12 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # implement transition here
     @rescale()
 
+  zoom: (value) ->
+    super(value)
+    if @force.alpha() < @force.alphaMin()
+      @onTick()
+
+
 
   # Canvas Mouse Events
   # -------------------
@@ -239,7 +236,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # get mouse point
     mouse = d3.mouse @canvas.node()
     @setQuadtree()
-    node = @quadtree.find mouse[0]-@viewport.translate.x, mouse[1]-@viewport.translate.y
+    node = @quadtree.find (@viewport.scale*mouse[0])-@viewport.translate.x, (@viewport.scale*mouse[1])-@viewport.translate.y
     # check @node_active !!!
     #if @node_active
     #  return
