@@ -37,9 +37,9 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   setQuadtree: ->
     @quadtree = d3.quadtree()
-      .extent [[-1, -1], [@viewport.width+1, @viewport.height+1]]
-      .x (d) -> d.x
-      .y (d) -> d.y
+      .extent [[0, 0], [@viewport.scale*@viewport.width, @viewport.scale*@viewport.height]]
+      .x (d) => @viewport.scale*d.x
+      .y (d) => @viewport.scale*d.y
       .addAll @data_nodes
 
 
@@ -236,7 +236,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # get mouse point
     mouse = d3.mouse @canvas.node()
     @setQuadtree()
-    node = @quadtree.find (@viewport.scale*mouse[0])-@viewport.translate.x, (@viewport.scale*mouse[1])-@viewport.translate.y
+    node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y
     # check @node_active !!!
     #if @node_active
     #  return
