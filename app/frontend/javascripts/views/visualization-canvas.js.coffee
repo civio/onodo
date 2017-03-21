@@ -127,6 +127,10 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # Drawing methods
   # -------------------
 
+  redraw: ->
+    if @force.alpha() < @force.alphaMin()
+      @onTick()
+
   # Tick Function
   onTick: =>
     # clear canvas
@@ -212,8 +216,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   rescale: ->
     @viewport.translate.x = @viewport.origin.x + @viewport.x - @viewport.offsetx - @viewport.offsetnode.x
     @viewport.translate.y = @viewport.origin.y + @viewport.y - @viewport.offsety - @viewport.offsetnode.y
-    if @force.alpha() < @force.alphaMin()
-      @onTick()
+    @redraw()
 
   rescaleTransition: ->
     # implement transition here
@@ -221,14 +224,47 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   zoom: (value) ->
     super(value)
-    if @force.alpha() < @force.alphaMin()
-      @onTick()
-
+    @redraw()
 
 
   # Canvas Mouse Events
   # -------------------
 
+  # Canvas Drag Events
+  onCanvasDragStart: =>
+    if @node_hovered
+      @force
+        .alphaTarget 0.1
+        .restart()
+    unless @node_hovered
+      @canvas.style 'cursor', 'move'
+
+  onCanvasDragged: =>
+    if @node_hovered
+      @node_hovered.fx = (d3.event.x - @viewport.center.x - @viewport.translate.x) / @viewport.scale
+      @node_hovered.fy = (d3.event.y - @viewport.center.y - @viewport.translate.y) / @viewport.scale
+      @redraw()
+    else
+      @viewport.x  += d3.event.dx
+      @viewport.y  += d3.event.dy
+      @viewport.dx += d3.event.dx
+      @viewport.dy += d3.event.dy
+      @rescale()
+
+  onCanvasDragEnd: =>
+    if @node_hovered
+      @force.alphaTarget 0
+    else
+      @canvas.style 'cursor','default'
+      #@force.alphaTarget(0)
+      # Skip if viewport has no translation
+      if @viewport.dx == 0 and @viewport.dy == 0
+        Backbone.trigger 'visualization.node.hideInfo'
+        return
+      # TODO! Add viewportMove action to history
+      @viewport.dx = @viewport.dy = 0;
+
+  # Canvas Mouse Events
   onCanvasEnter: =>
     @onCanvasMove()
 
@@ -281,8 +317,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # that's make some weird effects in force layout during animation
     #@data_relations_visibles.sort @sortRelations
     # update canvas if force layout stoped
-    if @force.alpha() < @force.alphaMin()
-      @onTick()
+    @redraw()
 
 
 module.exports = VisualizationCanvas
