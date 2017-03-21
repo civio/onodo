@@ -47,7 +47,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # -------------------
   
   updateNodes: ->
-    console.log 'updateNodes'
+    #console.log 'updateNodes'
 
     @data_nodes.forEach (d) =>
       @setNodeState d
@@ -236,16 +236,31 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # get mouse point
     mouse = d3.mouse @canvas.node()
     @setQuadtree()
-    node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y
+    node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y, @viewport.scale*40
+    
     # check @node_active !!!
     #if @node_active
-    #  return
+
+    # clear node hovered if node is undefined
+    if node == undefined
+      @updateNodeHovered null
+      return
+
     if @node_hovered and @node_hovered.id == node.id
       return
     @updateNodeHovered node
 
   onCanvasLeave: (e) =>
     @updateNodeHovered null
+
+  onCanvasClick: (e) =>
+    # Avoid trigger click on dragEnd
+    #if d3.event.defaultPrevented 
+    #  return
+    if @node_hovered
+      Backbone.trigger 'visualization.node.showInfo', {node: @node_hovered.id }
+    else
+      Backbone.trigger 'visualization.node.hideInfo'
 
   updateNodeHovered: (node) ->
     @node_hovered = node
