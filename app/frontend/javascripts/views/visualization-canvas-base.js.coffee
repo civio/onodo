@@ -569,7 +569,12 @@ class VisualizationCanvasBase extends Backbone.View
   
   # Override with Canvas or SVG zoom
   zoom: (value) ->
-    @viewport.scale = value
+    if value > 2
+      @viewport.scale = 2
+    else if value < 0.5
+      @viewport.scale = 0.5
+    else
+      @viewport.scale = value
     
 
   # Events Methods
