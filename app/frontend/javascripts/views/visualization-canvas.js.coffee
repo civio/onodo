@@ -49,27 +49,33 @@ class VisualizationCanvas extends VisualizationCanvasBase
   
   updateNodes: ->
     #console.log 'updateNodes'
-
     @data_nodes.forEach (d) =>
       @setNodeState d
       @setNodeSize d
       @setNodeFill d
       @setNodeStroke d
       @setNodeFont d
-      @setNodeLabel d
-    
+      @setNodeLabel d  
     # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
       @data_nodes.sort @sortNodes
 
+  updateNodesState: ->
+    @data_nodes.forEach (d) =>
+      @setNodeState d
+      @setNodeStroke d
+    @data_relations_visibles.forEach (d) =>
+      @setRelationState d
+      @setRelationColor d
+
   setNodeState: (d) ->
-    if @node_hovered
-      if @areNodesRelated(d, @node_hovered)
-        d.state = 1  # highlighted state
-      else
-        d.state = -1 # weaken state
-    else
-      d.state = 0    # normal state
+    d.state = 0    # normal state
+    if @node_active or @node_hovered
+      d.state = -1 # weaken state
+      if @node_active and @areNodesRelated(d, @node_active)
+        d.state = 1 # highlighted state
+      if @node_hovered and @areNodesRelated(d, @node_hovered)
+        d.state = 1 # highlighted state
 
   setNodeFill: (d) ->
     if d.disabled
@@ -132,18 +138,13 @@ class VisualizationCanvas extends VisualizationCanvasBase
     return lines
 
   setRelationState: (d) ->
-    if @node_active 
-      if d.source_id == @node_active.id or d.target_id == @node_active.id
-        d.state = 1  # highlighted state
-      else
-        d.state = -1 # weaken state
-    else if @node_hovered
-      if d.source_id == @node_hovered.id or d.target_id == @node_hovered.id
-        d.state = 1  # highlighted state
-      else
-        d.state = -1 # weaken state
-    else
-      d.state = 0    # normal state
+    d.state = 0    # normal state
+    if @node_active or @node_hovered
+      d.state = -1 # weaken state
+      if @node_active and (d.source_id == @node_active.id or d.target_id == @node_active.id)
+        d.state = 1 # highlighted state
+      if @node_hovered and (d.source_id == @node_hovered.id or d.target_id == @node_hovered.id)
+        d.state = 1 # highlighted state
 
   setRelationColor: (d) ->
     if d.state == 0
@@ -178,7 +179,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     
     @drawNodes()
     
-    if @parameters.showNodesLabel or @node_hovered
+    if @parameters.showNodesLabel or @node_active or @node_hovered
       @drawNodesLabels()
 
     @context.restore()
@@ -210,7 +211,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   drawNodeLabel: (d) =>
     @context.fillStyle = d.fontColor
     @context.font      = '300 '+d.fontSize+'px Montserrat'
-    if @node_hovered and d.long_label
+    if (@node_hovered or @node_active) and d.long_label
       d.long_label.forEach (line, i) =>
         @context.strokeText line, d.x, d.y+d.size+(i*d.fontSize)+1
         @context.fillText   line, d.x, d.y+d.size+(i*d.fontSize)
@@ -255,9 +256,19 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @viewport.translate.y = @viewport.origin.y + @viewport.y - @viewport.offsety - @viewport.offsetnode.y
     @redraw()
 
-  rescaleTransition: ->
-    # implement transition here
-    @rescale()
+  rescaleTransition: (offsetX, offsetY) ->
+    interpolateX = d3.interpolateNumber @viewport.offsetnode.x, offsetX
+    interpolateY = d3.interpolateNumber @viewport.offsetnode.y, offsetY
+    t = d3.timer (elapsed) =>
+      if elapsed < 300
+        val = elapsed/300
+        @viewport.offsetnode.x = interpolateX val
+        @viewport.offsetnode.y = interpolateY val
+      else
+        @viewport.offsetnode.x = offsetX
+        @viewport.offsetnode.y = offsetY
+        t.stop()
+      @rescale()
 
   zoom: (value) ->
     super(value)
@@ -303,17 +314,18 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   # Canvas Mouse Events
   onCanvasEnter: =>
+    #if @node_active
+    #  return
     @onCanvasMove()
 
   onCanvasMove: =>
+    #if @node_active
+    #  return
     # get mouse point
     mouse = d3.mouse @canvas.node()
     @setQuadtree()
     node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y, @viewport.scale*40
     
-    # check @node_active !!!
-    #if @node_active
-
     # clear node hovered if node is undefined
     if node == undefined
       @updateNodeHovered null
@@ -324,6 +336,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @updateNodeHovered node
 
   onCanvasLeave: (e) =>
+    #if @node_active
+    #  return
     @updateNodeHovered null
 
   onCanvasClick: (e) =>
@@ -340,21 +354,46 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @data_nodes.sort @sortNodes
     # move node hovered at the end of the data nodes array
     if @node_hovered
+      @canvas.style 'cursor', 'pointer'
       @data_nodes.splice @data_nodes.indexOf(@node_hovered), 1
       @data_nodes.push @node_hovered
+    else
+      @canvas.style 'cursor', 'auto'
     # update nodes state & stroke
-    @data_nodes.forEach (d) =>
-      @setNodeState d
-      @setNodeStroke d
-    # update relations colors
-    @data_relations_visibles.forEach (d) =>
-      @setRelationState d
-      @setRelationColor d
+    @updateNodesState()
     # sort relations to put highlighted on top
     # that's make some weird effects in force layout during animation
     #@data_relations_visibles.sort @sortRelations
     # update canvas if force layout stoped
     @redraw()
+
+  focusNode: (node) ->
+    if @node_active
+      @node_active = null
+    # set node active
+    @node_active = node
+    @node_hovered = null
+    @canvas.style 'cursor', 'auto'
+    # update nodes state & stroke
+    @updateNodesState()
+    # center viewport in node
+    @centerNode node
+
+  unfocusNode: ->
+    if @node_active
+      @node_active = null
+      # update nodes state & stroke
+      @updateNodesState()
+      # center viewport
+      @centerNode null
+
+  centerNode: (node) ->
+    if node
+      offsetX = (@viewport.scale * node.get('x')) + @viewport.x + 175 # 175 = $('.visualization-graph-info').height() / 2
+      offsetY = (@viewport.scale * node.get('y')) + @viewport.y
+    else
+      offsetX = offsetY = 0
+    @rescaleTransition offsetX, offsetY
 
 
 module.exports = VisualizationCanvas

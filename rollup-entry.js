@@ -19,6 +19,10 @@ export {
   forceSimulation
 } from "d3-force";
 
+export {
+  interpolateNumber
+} from "d3-interpolate";
+
 export * from "d3-quadtree";
 
 export {
