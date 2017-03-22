@@ -55,7 +55,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @setNodeFill d
       @setNodeStroke d
       @setNodeFont d
-      @setNodeLabel d  
+      @setNodeLabel d
+      @setNodeImage d
     # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
       @data_nodes.sort @sortNodes
@@ -80,12 +81,17 @@ class VisualizationCanvas extends VisualizationCanvasBase
   setNodeFill: (d) ->
     if d.disabled
       d.fill = '#d3d7db'
-    #else if @parameters.showNodesImage and d.image != null
-    #  fill = 'url(#node-pattern-'+d.id+')'
     else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       d.fill = @color_scale d[@parameters.nodesColorColumn] 
     else
       d.fill = @COLOR_SOLID[@parameters.nodesColor]
+
+  setNodeImage: (d) ->
+    if @parameters.showNodesImage
+      d.img = @getImage d
+      if d.img
+        d.imgObj = new Image()
+        d.imgObj.src = d.img
 
   setNodeStroke: (d) ->
     if @node_active and d.id == @node_active.id
@@ -167,21 +173,20 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # clear canvas
     @context.clearRect 0, 0, @viewport.width, @viewport.height
     @context.save()
-
     # translate & scale viewport
     @context.translate @viewport.center.x+@viewport.translate.x, @viewport.center.y+@viewport.translate.y
     @context.scale @viewport.scale, @viewport.scale
-    
+    # draw relations
     @drawRelations()
-    
+    # draw relations labels
     if @node_active or @node_hovered
       @drawRelationsLabels()
-    
+    # draw nodes
     @drawNodes()
-    
+    # draw nodes labels
     if @parameters.showNodesLabel or @node_active or @node_hovered
       @drawNodesLabels()
-
+    # context restore
     @context.restore()
 
   drawNodes: ->
@@ -197,6 +202,12 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @context.fill()
       @context.stroke()
       @context.closePath()
+      # draw image
+      if d.img
+        @context.save()
+        @context.clip()
+        @context.drawImage d.imgObj, d.x-d.size, d.y-d.size, 2*d.size, 2*d.size
+        @context.restore()
 
   drawNodesLabels: ->
     # set styles
