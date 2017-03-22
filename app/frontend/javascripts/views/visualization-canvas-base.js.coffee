@@ -183,6 +183,7 @@ class VisualizationCanvasBase extends Backbone.View
       .force 'charge',  @forceManyBody
       .force 'center',  d3.forceCenter(0,0)
       .on    'tick',    @onTick
+      #.stop()
 
     # Reduce number of force ticks until the system freeze
     # (https://github.com/d3/d3-force#simulation_alphaDecay)
@@ -247,6 +248,13 @@ class VisualizationCanvasBase extends Backbone.View
     # restart force
     if restarForce
       @force.alpha(0.3).restart()
+    ###
+    # Run statci force layout https://bl.ocks.org/mbostock/1667139
+    ticks = Math.ceil(Math.log(@force.alphaMin()) / Math.log(1 - @force.alphaDecay()))
+    for i in [0...ticks]
+      @force.tick()
+    @onTick()
+    ###
 
   updateData: (nodes, relations) ->
     # console.log 'canvas current Data', @data_nodes, @data_relations

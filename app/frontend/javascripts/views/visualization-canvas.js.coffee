@@ -3,8 +3,9 @@ VisualizationCanvasBase = require './visualization-canvas-base.js'
 
 class VisualizationCanvas extends VisualizationCanvasBase
 
-  context:      null
-  quadtree:     null
+  LABEL_MAX_WIDTH: 130
+  context:         null
+  quadtree:        null
 
   # Setup methods
   # -------------------
@@ -55,12 +56,13 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @setNodeFill d
       @setNodeStroke d
       @setNodeFont d
+      @setNodeLabel d
     
     # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
       @data_nodes.sort @sortNodes
 
-  setNodeState: (d) =>
+  setNodeState: (d) ->
     if @node_hovered
       if @areNodesRelated(d, @node_hovered)
         d.state = 1  # highlighted state
@@ -69,7 +71,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     else
       d.state = 0    # normal state
 
-  setNodeFill: (d) =>
+  setNodeFill: (d) ->
     if d.disabled
       d.fill = '#d3d7db'
     #else if @parameters.showNodesImage and d.image != null
@@ -79,7 +81,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     else
       d.fill = @COLOR_SOLID[@parameters.nodesColor]
 
-  setNodeStroke: (d) =>
+  setNodeStroke: (d) ->
     if @node_active and d.id == @node_active.id
       d.strokeWidth = 20
       color = d3.rgb d.fill
@@ -92,7 +94,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
       d.strokeWidth = 1
       d.stroke = 'transparent'
 
-  setNodeFont: (d) =>
+  setNodeFont: (d) ->
     if @parameters.nodesSize != 1
       d.fontSize = 12
       d.fontColor = '#404040'
@@ -100,6 +102,34 @@ class VisualizationCanvas extends VisualizationCanvasBase
       val = @scale_labels_size d[@parameters.nodesSizeColumn]
       d.fontSize = [11,12,13,15][val]
       d.fontColor = ['#676767','#5a5a5a','#4d4d4d','#404040'][val]
+
+  setNodeLabel: (d) ->
+    @context.font = '300 '+d.fontSize+'px Montserrat'
+    metrics = @context.measureText d.name
+    if metrics.width <= @LABEL_MAX_WIDTH
+      d.short_label = d.name
+      d.long_label  = null
+    else
+      d.long_label  = @getNodeLongLabel d.name
+      d.short_label = d.long_label[0]+' ...'
+      
+  getNodeLongLabel: (text) ->
+    lines      = []
+    line       = ''
+    words      = text.split ' '
+    words.forEach (word, i) =>
+      if i > 0
+        test = line + ' ' + word
+        metrics = @context.measureText test
+        if metrics.width > @LABEL_MAX_WIDTH
+          lines.push line
+          line = word
+        else
+          line = test
+      else
+        test = line = word
+    lines.push line
+    return lines
 
   setRelationState: (d) ->
     if @node_active 
@@ -175,11 +205,18 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.textBaseline = 'top'
     @data_nodes
       .filter (d) -> d.state != -1 # don't draw labels of weaken nodes
-      .forEach (d) =>
-        @context.fillStyle  = d.fontColor
-        @context.font       = '300 '+d.fontSize+'px Montserrat'
-        @context.strokeText d.name, d.x, d.y+d.size+1
-        @context.fillText   d.name, d.x, d.y+d.size
+      .forEach @drawNodeLabel
+
+  drawNodeLabel: (d) =>
+    @context.fillStyle = d.fontColor
+    @context.font      = '300 '+d.fontSize+'px Montserrat'
+    if @node_hovered and d.long_label
+      d.long_label.forEach (line, i) =>
+        @context.strokeText line, d.x, d.y+d.size+(i*d.fontSize)+1
+        @context.fillText   line, d.x, d.y+d.size+(i*d.fontSize)
+    else
+      @context.strokeText d.short_label, d.x, d.y+d.size+1
+      @context.fillText   d.short_label, d.x, d.y+d.size
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
