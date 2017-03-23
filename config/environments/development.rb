@@ -44,5 +44,5 @@ Rails.application.configure do
 
   # Webpack dev server
   config.webpack.dev_server.enabled = !ENV['DEBUG']
-  config.webpack.dev_server.port = 3080
+  config.webpack.dev_server.port = 3808
 end
