@@ -6,7 +6,7 @@ var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
 
 // must match config.webpack.dev_server.port
-var devServerPort = 3080;
+var devServerPort = 3808;
 
 // set TARGET=production on the environment to add asset fingerprints
 var production = process.env.TARGET === 'production';
