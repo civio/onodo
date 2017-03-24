@@ -60,6 +60,6 @@ class NodesController < ApplicationController
   end
 
   def node_params
-    params.require(:node).permit(:name, :description, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
+    params.require(:node).permit(:name, :description, :image, :node_type, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
   end
 end

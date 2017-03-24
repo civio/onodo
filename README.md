@@ -12,6 +12,7 @@ Onodo
 * Handsontable
 * Webpack
 * PostgreSQL
+* Imagemagick
 
 ### Installation instructions
 
