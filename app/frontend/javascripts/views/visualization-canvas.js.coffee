@@ -3,6 +3,8 @@ VisualizationCanvasBase = require './visualization-canvas-base.js'
 
 class VisualizationCanvas extends VisualizationCanvasBase
 
+  TWO_PI:          2*Math.PI
+  HALF_PI:         Math.PI*0.5
   LABEL_MAX_WIDTH: 130
   context:         null
   quadtree:        null
@@ -19,14 +21,15 @@ class VisualizationCanvas extends VisualizationCanvasBase
       .on 'end',   @onCanvasDragEnd
 
     # Setup canvas
-    @canvas = d3.select(@el).append('canvas')
-      .attr 'width',  @viewport.width
-      .attr 'height', @viewport.height
-      .on   'mouseenter', @onCanvasEnter
-      .on   'mousemove',  @onCanvasMove
-      .on   'mouseleave', @onCanvasLeave
-      .on   'click',      @onCanvasClick
-      .call canvasDrag
+    @canvas = d3.select(@el)
+      .select('canvas')
+        .attr 'width',  @viewport.width
+        .attr 'height', @viewport.height
+        .on   'mouseenter', @onCanvasEnter
+        .on   'mousemove',  @onCanvasMove
+        .on   'mouseleave', @onCanvasLeave
+        .on   'click',      @onCanvasClick
+        .call canvasDrag
 
     # Setup canvas context
     @context = @canvas.node().getContext('2d')
@@ -171,25 +174,47 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # Tick Function
   onTick: =>
     # clear canvas
-    @context.clearRect 0, 0, @viewport.width, @viewport.height
+    # @context.clearRect 0, 0, @viewport.width, @viewport.height
+    # draw background
+    @context.textAlign = 'center'
+    @context.fillStyle = '#fff'
+    @context.fillRect 0, 0, @viewport.width, @viewport.height
     @context.save()
     # translate & scale viewport
-    @context.translate @viewport.center.x+@viewport.translate.x, @viewport.center.y+@viewport.translate.y
+    @context.translate (@viewport.center.x+@viewport.translate.x)|0, (@viewport.center.y+@viewport.translate.y)|0
     @context.scale @viewport.scale, @viewport.scale
-    # draw relations
-    @drawRelations()
-    # draw relations labels
+    # draw relations, label & nodes
     if @node_active or @node_hovered
+      @drawRelationsActive()
       @drawRelationsLabels()
-    # draw nodes
-    @drawNodes()
-    # draw nodes labels
-    if @parameters.showNodesLabel or @node_active or @node_hovered
+      @drawNodesActive()
       @drawNodesLabels()
+    else
+      @drawRelations()
+      @drawNodes()
+      if @parameters.showNodesLabel
+        @drawNodesLabels()
     # context restore
     @context.restore()
 
   drawNodes: ->
+    @data_nodes.forEach (d) =>
+      # set styles
+      @context.fillStyle = d.fill
+      # draw node
+      @context.beginPath()
+      @context.moveTo d.x|0, d.y|0
+      @context.arc d.x|0, d.y|0, d.size|0, 0, @TWO_PI, true
+      @context.fill()
+      @context.closePath()
+      # draw image
+      if d.img
+        @context.save()
+        @context.clip()
+        @context.drawImage d.imgObj, (d.x-d.size)|0, (d.y-d.size)|0, (2*d.size)|0, (2*d.size)|0
+        @context.restore()
+
+  drawNodesActive: ->
     @data_nodes.forEach (d) =>
       # set styles
       @context.lineWidth = d.strokeWidth
@@ -197,8 +222,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @context.fillStyle = d.fill
       # draw node
       @context.beginPath()
-      @context.moveTo d.x, d.y
-      @context.arc d.x, d.y, d.size, 0, 2*Math.PI, true
+      @context.moveTo d.x|0, d.y|0
+      @context.arc d.x|0, d.y|0, d.size|0, 0, @TWO_PI, true
       @context.fill()
       @context.stroke()
       @context.closePath()
@@ -206,33 +231,51 @@ class VisualizationCanvas extends VisualizationCanvasBase
       if d.img
         @context.save()
         @context.clip()
-        @context.drawImage d.imgObj, d.x-d.size, d.y-d.size, 2*d.size, 2*d.size
+        @context.drawImage d.imgObj, (d.x-d.size)|0, (d.y-d.size)|0, (2*d.size)|0, (2*d.size)|0
         @context.restore()
 
   drawNodesLabels: ->
     # set styles
     @context.lineWidth    = 1
     @context.strokeStyle  = 'rgba(255,255,255,0.85)'
-    @context.textAlign    = 'center'
     @context.textBaseline = 'top'
     @data_nodes
       .filter (d) -> d.state != -1 # don't draw labels of weaken nodes
       .forEach @drawNodeLabel
 
   drawNodeLabel: (d) =>
+    ypos = null
     @context.fillStyle = d.fontColor
     @context.font      = '300 '+d.fontSize+'px Montserrat'
     if (@parameters.showNodesLabelComplete or @node_hovered or @node_active) and d.long_label
       d.long_label.forEach (line, i) =>
-        @context.strokeText line, d.x, d.y+d.size+(i*d.fontSize)+1
-        @context.fillText   line, d.x, d.y+d.size+(i*d.fontSize)
+        ypos = (d.y+d.size+(i*d.fontSize))|0
+        @context.strokeText line, d.x|0, ypos+1
+        @context.fillText   line, d.x|0, ypos
     else
-      @context.strokeText d.short_label, d.x, d.y+d.size+1
-      @context.fillText   d.short_label, d.x, d.y+d.size
+      ypos = (d.y+d.size)|0
+      @context.strokeText d.short_label, d.x|0, ypos+1
+      @context.fillText   d.short_label, d.x|0, ypos
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
-    @context.save()
+    @context.lineWidth = 1
+    if @parameters.relationsLineStyle == 1
+      @context.lineCap = 'square'
+      @context.setLineDash [4, 3]
+    else if @parameters.relationsLineStyle == 2
+      @context.lineCap = 'round'
+      @context.setLineDash [0.25, 3]
+    @context.strokeStyle = '#cccccc'
+    @context.beginPath()
+    @data_relations_visibles.forEach (link) =>
+      @context.moveTo link.source.x|0, link.source.y|0
+      @context.lineTo link.target.x|0, link.target.y|0
+    @context.stroke()
+    @context.closePath()
+
+  drawRelationsActive: ->
+    # make stroke color dynamic based on nodes state !!!
     @context.lineWidth = 1
     if @parameters.relationsLineStyle == 1
       @context.lineCap = 'square'
@@ -243,14 +286,12 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @data_relations_visibles.forEach (link) =>
       @context.strokeStyle = link.color
       @context.beginPath()
-      @context.moveTo link.source.x, link.source.y
-      @context.lineTo link.target.x, link.target.y
+      @context.moveTo link.source.x|0, link.source.y|0
+      @context.lineTo link.target.x|0, link.target.y|0
       @context.stroke()
       @context.closePath()
-    @context.restore()
 
   drawRelationsLabels: ->
-    @context.textAlign    = 'center'
     @context.textBaseline = 'bottom'
     @context.fillStyle    = '#aaaaaa'
     @context.font         = '300 9px Montserrat'
@@ -258,10 +299,10 @@ class VisualizationCanvas extends VisualizationCanvasBase
       .filter (d) -> d.state == 1 and d.relation_type # only draw labels of highlighted relations
       .forEach (d) =>
         angle = Math.atan2(d.target.y - d.source.y, d.target.x - d.source.x)
-        if angle > Math.PI/2 or angle < -Math.PI/2
+        if angle > @HALF_PI or angle < -@HALF_PI
           angle += Math.PI
         @context.save()
-        @context.translate (d.source.x+d.target.x)*0.5, (d.source.y+d.target.y)*0.5
+        @context.translate ((d.source.x+d.target.x)*0.5)|0, ((d.source.y+d.target.y)*0.5)|0
         @context.rotate angle
         @context.fillText d.relation_type, 0, 0
         @context.restore()
@@ -271,8 +312,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # ---------------
 
   rescale: ->
-    @viewport.translate.x = @viewport.origin.x + @viewport.x - @viewport.offsetx - @viewport.offsetnode.x
-    @viewport.translate.y = @viewport.origin.y + @viewport.y - @viewport.offsety - @viewport.offsetnode.y
+    @viewport.translate.x = (@viewport.origin.x + @viewport.x - @viewport.offsetx - @viewport.offsetnode.x) | 0
+    @viewport.translate.y = (@viewport.origin.y + @viewport.y - @viewport.offsety - @viewport.offsetnode.y) | 0
     @redraw()
 
   rescaleTransition: (offsetX, offsetY) ->

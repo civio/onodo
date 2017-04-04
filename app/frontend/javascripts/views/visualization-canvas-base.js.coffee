@@ -159,10 +159,10 @@ class VisualizationCanvasBase extends Backbone.View
 
 
   setupViewport: ->
-    @viewport.width     = @$el.width()
-    @viewport.height    = @$el.height()
-    @viewport.center.x  = @viewport.width*0.5
-    @viewport.center.y  = @viewport.height*0.5
+    @viewport.width     = @$el.width()|0
+    @viewport.height    = @$el.height()|0
+    @viewport.center.x  = (@$el.width()*0.5)|0
+    @viewport.center.y  = (@$el.height()*0.5)|0
 
   setupForce: ->
     # Setup force
@@ -431,10 +431,10 @@ class VisualizationCanvasBase extends Backbone.View
   resize: ->
     #console.log 'VisualizationGraphCanvas resize'
     # Update Viewport attributes
-    @viewport.width     = @$el.width()
-    @viewport.height    = @$el.height()
-    @viewport.origin.x  = (@viewport.width*0.5) - @viewport.center.x
-    @viewport.origin.y  = (@viewport.height*0.5) - @viewport.center.y
+    @viewport.width     = @$el.width()|0
+    @viewport.height    = @$el.height()|0
+    @viewport.origin.x  = ((@$el.width()*0.5) - @viewport.center.x)|0
+    @viewport.origin.y  = ((@$el.height()*0.5) - @viewport.center.y)|0
 
     # Update canvas
     @canvas.attr 'width', @viewport.width
@@ -462,7 +462,7 @@ class VisualizationCanvasBase extends Backbone.View
       @container.attr 'transform', @getContainerTransform()
 
    getContainerTransform: ->
-    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx-@viewport.offsetnode.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety-@viewport.offsetnode.y) + ')scale(' + @viewport.scale + ')'
+    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx-@viewport.offsetnode.x)|0 + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety-@viewport.offsetnode.y)|0 + ')scale(' + @viewport.scale + ')'
 
 
   # Config Methods
