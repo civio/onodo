@@ -222,7 +222,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   drawNodeLabel: (d) =>
     @context.fillStyle = d.fontColor
     @context.font      = '300 '+d.fontSize+'px Montserrat'
-    if (@node_hovered or @node_active) and d.long_label
+    if (@parameters.showNodesLabelComplete or @node_hovered or @node_active) and d.long_label
       d.long_label.forEach (line, i) =>
         @context.strokeText line, d.x, d.y+d.size+(i*d.fontSize)+1
         @context.fillText   line, d.x, d.y+d.size+(i*d.fontSize)
@@ -232,14 +232,22 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
+    @context.save()
+    @context.lineWidth = 1
+    if @parameters.relationsLineStyle == 1
+      @context.lineCap = 'square'
+      @context.setLineDash [4, 3]
+    else if @parameters.relationsLineStyle == 2
+      @context.lineCap = 'round'
+      @context.setLineDash [0.25, 3]
     @data_relations_visibles.forEach (link) =>
       @context.strokeStyle = link.color
-      @context.lineWidth = 1
       @context.beginPath()
       @context.moveTo link.source.x, link.source.y
       @context.lineTo link.target.x, link.target.y
       @context.stroke()
       @context.closePath()
+    @context.restore()
 
   drawRelationsLabels: ->
     @context.textAlign    = 'center'
