@@ -93,6 +93,9 @@ class VisualizationBase
 
   # Parameters methods
   setupParameters: ->
+    # setup dynamic default parameters (showNodesLabel)
+    if @nodes.length > 150
+      @parametersDefault.showNodesLabel = false
     @parameters = @parameters || {}
     # setup parameters
     @parameters.nodesColor              = @parameters.nodesColor || @parametersDefault.nodesColor
