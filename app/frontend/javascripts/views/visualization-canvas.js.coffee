@@ -5,6 +5,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   TWO_PI:          2*Math.PI
   HALF_PI:         Math.PI*0.5
+  SIXTH_PI:        Math.PI/6
   LABEL_MAX_WIDTH: 130
   context:         null
   quadtree:        null
@@ -199,40 +200,46 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawNodes: ->
     @data_nodes.forEach (d) =>
+      x = d.x|0
+      y = d.y|0
+      size = d.size|0
       # set styles
       @context.fillStyle = d.fill
       # draw node
       @context.beginPath()
-      @context.moveTo d.x|0, d.y|0
-      @context.arc d.x|0, d.y|0, d.size|0, 0, @TWO_PI, true
+      @context.moveTo x, y
+      @context.arc x, y, size, 0, @TWO_PI, true
       @context.fill()
       @context.closePath()
       # draw image
       if d.img
-        @context.save()
-        @context.clip()
-        @context.drawImage d.imgObj, (d.x-d.size)|0, (d.y-d.size)|0, (2*d.size)|0, (2*d.size)|0
-        @context.restore()
+        @drawNodeImage d.imgObj, x-size, y-size, 2*size
 
   drawNodesActive: ->
     @data_nodes.forEach (d) =>
+      x = d.x|0
+      y = d.y|0
+      size = d.size|0
       # set styles
       @context.lineWidth = d.strokeWidth
       @context.strokeStyle = d.stroke
       @context.fillStyle = d.fill
       # draw node
       @context.beginPath()
-      @context.moveTo d.x|0, d.y|0
-      @context.arc d.x|0, d.y|0, d.size|0, 0, @TWO_PI, true
+      @context.moveTo x, y
+      @context.arc x, y, size, 0, @TWO_PI, true
       @context.fill()
       @context.stroke()
       @context.closePath()
       # draw image
       if d.img
-        @context.save()
-        @context.clip()
-        @context.drawImage d.imgObj, (d.x-d.size)|0, (d.y-d.size)|0, (2*d.size)|0, (2*d.size)|0
-        @context.restore()
+        @drawNodeImage d.imgObj, x-size, y-size, 2*size
+
+  drawNodeImage: (img, x, y, size) ->
+    @context.save()
+    @context.clip()
+    @context.drawImage img, x, y, size, size
+    @context.restore()
 
   drawNodesLabels: ->
     # set styles
@@ -245,17 +252,20 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawNodeLabel: (d) =>
     ypos = null
+    x = d.x|0
+    y = d.y|0
+    size = d.size|0
     @context.fillStyle = d.fontColor
     @context.font      = '300 '+d.fontSize+'px Montserrat'
     if (@parameters.showNodesLabelComplete or @node_hovered or @node_active) and d.long_label
       d.long_label.forEach (line, i) =>
-        ypos = (d.y+d.size+(i*d.fontSize))|0
-        @context.strokeText line, d.x|0, ypos+1
-        @context.fillText   line, d.x|0, ypos
+        ypos = y+size+(i*d.fontSize)
+        @context.strokeText line, x, ypos+1
+        @context.fillText   line, x, ypos
     else
-      ypos = (d.y+d.size)|0
-      @context.strokeText d.short_label, d.x|0, ypos+1
-      @context.fillText   d.short_label, d.x|0, ypos
+      ypos = y+size
+      @context.strokeText d.short_label, x, ypos+1
+      @context.fillText   d.short_label, x, ypos
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
@@ -269,8 +279,10 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.strokeStyle = '#cccccc'
     @context.beginPath()
     @data_relations_visibles.forEach (link) =>
-      @context.moveTo link.source.x|0, link.source.y|0
-      @context.lineTo link.target.x|0, link.target.y|0
+      if link.direction
+        @drawRelationArrow link.source, link.target
+      else
+        @drawRelation link.source, link.target
     @context.stroke()
     @context.closePath()
 
@@ -286,10 +298,39 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @data_relations_visibles.forEach (link) =>
       @context.strokeStyle = link.color
       @context.beginPath()
-      @context.moveTo link.source.x|0, link.source.y|0
-      @context.lineTo link.target.x|0, link.target.y|0
+      if link.direction
+        @drawRelationArrow link.source, link.target
+      else
+        @drawRelation link.source, link.target
       @context.stroke()
       @context.closePath()
+
+  drawRelation: (source, target) ->
+    @context.moveTo source.x|0, source.y|0
+    @context.lineTo target.x|0, target.y|0
+
+  drawRelationArrow: (source, target) ->
+    # vector auxiliar methods from https://stackoverflow.com/questions/13165913/draw-an-arrow-between-two-circles
+    length  = ({x,y}) -> Math.sqrt(x*x + y*y)
+    sum     = ({x:x1,y:y1}, {x:x2,y:y2}) -> {x:x1+x2, y:y1+y2}
+    diff    = ({x:x1,y:y1}, {x:x2,y:y2}) -> {x:x1-x2, y:y1-y2}
+    prod    = ({x,y}, scalar) -> {x:x*scalar, y:y*scalar}
+    div     = ({x,y}, scalar) -> {x:x/scalar, y:y/scalar}
+    unit    = (vector) -> div(vector, length(vector))
+    scale   = (vector, scalar) -> prod(unit(vector), scalar)
+    free    = ([coord1, coord2]) -> diff(coord2, coord1)
+
+    v2 = scale free([source, target]), target.size
+    p2 = diff target, v2
+  
+    dx = p2.x-source.x
+    dy = p2.y-source.y
+    angle = Math.atan2 dy, dx
+    @context.moveTo source.x|0, source.y|0
+    @context.lineTo p2.x, p2.y
+    @context.lineTo p2.x-6*Math.cos(angle-@SIXTH_PI), p2.y-6*Math.sin(angle-@SIXTH_PI)
+    @context.moveTo p2.x, p2.y
+    @context.lineTo p2.x-6*Math.cos(angle+@SIXTH_PI), p2.y-6*Math.sin(angle+@SIXTH_PI)
 
   drawRelationsLabels: ->
     @context.textBaseline = 'bottom'
