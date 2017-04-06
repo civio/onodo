@@ -181,8 +181,10 @@ class VisualizationEdit extends VisualizationBase
 
   # Scroll Event Handler
   onScroll: =>
-    if @visualizationCanvas
-      @visualizationCanvas.setOffsetY @$window.scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
+    if @$window.scrollTop() > @mainHeaderHeight + @visualizationHeaderHeight
+      $('.visualization-graph').css 'top', @$window.scrollTop() - @mainHeaderHeight
+    else
+      $('.visualization-graph').css 'top', ''
 
   # Update table on table selector change
   updateTable: (e) =>
@@ -329,13 +331,13 @@ class VisualizationEdit extends VisualizationBase
 
   # Panel Events
   onPanelConfigureShow: =>
-    $('html, body').animate { scrollTop: 0 }, 600
+    $('html, body').animate { scrollTop: 0 }, 400
     @visualizationConfiguration.$el.addClass 'active'
-    @visualizationCanvas.setOffsetX 200 # half the width of Panel Configuration
+    $('.visualization-graph-component').css 'margin-left', -200
 
   onPanelConfigureHide: =>
     @visualizationConfiguration.$el.removeClass 'active'
-    @visualizationCanvas.setOffsetX 0
+    $('.visualization-graph-component').css 'margin-left', 0
 
   onUpdateNodesColor: (e) ->
     @visualizationCanvas.updateNodesColor e.value

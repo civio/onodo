@@ -280,6 +280,9 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
       .ease     d3.easeQuadOut
       .attr     'transform', @getContainerTransform()
 
+  getContainerTransform: ->
+    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetnode.x)|0 + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsetnode.y)|0 + ')scale(' + @viewport.scale + ')'
+
   
   # Config Methods
   # ---------------

@@ -61,8 +61,6 @@ class VisualizationCanvasBase extends Backbone.View
     y: 0
     dx: 0
     dy: 0
-    offsetx: 0
-    offsety: 0
     offsetnode:
       x: 0
       y: 0
@@ -450,19 +448,6 @@ class VisualizationCanvasBase extends Backbone.View
    
   # Override with Canvas or SVG rescaleTransition
   rescaleTransition: ->
- 
-
-  setOffsetX: (offset) ->
-    @viewport.offsetx = if offset < 0 then 0 else offset
-    @rescaleTransition()
-
-  setOffsetY: (offset) ->
-    @viewport.offsety = if offset < 0 then 0 else offset
-    if @container
-      @container.attr 'transform', @getContainerTransform()
-
-   getContainerTransform: ->
-    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetx-@viewport.offsetnode.x)|0 + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsety-@viewport.offsetnode.y)|0 + ')scale(' + @viewport.scale + ')'
 
 
   # Config Methods

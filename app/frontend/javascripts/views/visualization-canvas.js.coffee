@@ -353,8 +353,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # ---------------
 
   rescale: ->
-    @viewport.translate.x = (@viewport.origin.x + @viewport.x - @viewport.offsetx - @viewport.offsetnode.x) | 0
-    @viewport.translate.y = (@viewport.origin.y + @viewport.y - @viewport.offsety - @viewport.offsetnode.y) | 0
+    @viewport.translate.x = (@viewport.origin.x + @viewport.x - @viewport.offsetnode.x) | 0
+    @viewport.translate.y = (@viewport.origin.y + @viewport.y - @viewport.offsetnode.y) | 0
     @redraw()
 
   rescaleTransition: (offsetX, offsetY) ->

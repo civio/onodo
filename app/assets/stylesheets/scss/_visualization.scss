@@ -226,6 +226,7 @@ $node-color-12: #e0deda;
     height: 560px;
     border-top: 1px solid $gray-lighter;
     border-bottom: 1px solid $gray-lighter;
+    @include transition( margin-left 0.4s ease-out );
 
     &.loading{
       background: url(/images/loader.gif) no-repeat center center transparent;
@@ -954,7 +955,10 @@ $node-color-12: #e0deda;
 }
 
 body.fullscreen{
+  position: fixed;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 
   .visualization-graph{
     position: fixed;
@@ -966,7 +970,6 @@ body.fullscreen{
 
     .visualization-graph-menu-navigation .btn.fullscreen{
       @include retina-sprite( $icon-fullscreen-back-group );
-
     }
   }
 }
@@ -1216,7 +1219,7 @@ body.fullscreen{
 
         > a{
           font-size: 0.857em;
-          line-height: 1em;
+          height: 42px;
           text-transform: uppercase;
           border: 2px solid $brand-primary;
           border-bottom: none;
@@ -1665,7 +1668,7 @@ body.pages.demo{
 
     &.affix{
       position: fixed;
-      top: -86px;
+      //top: -86px;
     }
   }
   &.fullscreen {
