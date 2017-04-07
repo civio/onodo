@@ -127,11 +127,12 @@ class VisualizationTableBase extends Backbone.View
     @table.alter('insert_row', 0, 1 )
 
   # Duplicate row
-  duplicateRow: (row) ->  
+  duplicateRow: (row) ->
     # store duplicate model in duplicate variable in order to add row values when model sync in createRow
     row_id = @getIdAtRow row
     row_model = @collection.get(row_id)
     @duplicate = row_model
+    row_model.set 'image', null # we can't duplicate images (by now) so we prefer to remove it
     # add new row after current one
     @table.alter('insert_row', row+1, 1 )
     #console.log 'duplicate row', row, row_model
