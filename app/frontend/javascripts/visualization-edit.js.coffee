@@ -1,4 +1,9 @@
 VisualizationBase            = require './visualization-base.js'
+VisualizationCanvasEdit      = require './views/visualization-canvas-edit.js'
+VisualizationNavigation      = require './views/visualization-navigation.js'
+VisualizationActions         = require './views/visualization-actions.js'
+VisualizationShare           = require './views/visualization-share.js'
+VisualizationInfo            = require './views/visualization-info.js'
 VisualizationConfiguration   = require './views/visualization-configuration.js'
 VisualizationTableNodes      = require './views/visualization-table-nodes.js'
 VisualizationTableRelations  = require './views/visualization-table-relations.js'
@@ -25,7 +30,15 @@ class VisualizationEdit extends VisualizationBase
   # ----------------------
 
   constructor: (_id) ->
-    super _id
+    @id = _id
+    @setupData()
+    # Setup Views
+    @visualizationCanvas         = new VisualizationCanvasEdit()
+    @visualizationNavigation     = new VisualizationNavigation()
+    @visualizationActions        = new VisualizationActions {collection: @nodes}
+    @visualizationShare          = new VisualizationShare()
+    @visualizationInfo           = new VisualizationInfo()
+
     # Setup tables
     @tableNodes      = new VisualizationTableNodes     {model: @visualization, collection: @nodes}
     @tableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
@@ -249,7 +262,7 @@ class VisualizationEdit extends VisualizationBase
   onNodeChangeName: (node) ->
     #console.log 'onNodeChangeName', node
     # Update nodes labels
-    @visualizationCanvas.updateNodesLabels()
+    @visualizationCanvas.updateNodeLabel node
     # Update Panel Info name
     @updateInfoNode node
     @visualizationActions.updateSearchData()
@@ -279,9 +292,7 @@ class VisualizationEdit extends VisualizationBase
 
   onNodeChangeImage: (node) ->
     #console.log 'onNodeChangeImage', node
-    @visualizationCanvas.updateImages()
-    @visualizationCanvas.updateNodes()
-    @visualizationCanvas.updateForce true
+    @visualizationCanvas.updateNodeImage node
 
   onNodeChangeCustomField: (node, value, options) ->
     changed_custom_field =  Object.keys(node.changedAttributes())[0]

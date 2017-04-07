@@ -5,19 +5,23 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
 
   defs:                   null
 
+  container:              null
+  nodes_cont:             null
+  nodes_labels_cont:      null
+  relations_cont:         null
+  relations_labels_cont:  null
+
+  degrees_const:          180 / Math.PI
+
+
+  # Setup methods
+  # -------------------
+
   setupCanvas: ->
-
-    canvasDrag = d3.drag()
-      .on('start',  @onCanvasDragStart)
-      .on('drag',   @onCanvasDragged)
-      .on('end',    @onCanvasDragEnd)
-
     # Setup SVG
     @canvas = d3.select(@el).append('svg')
       .attr 'width',  @viewport.width
       .attr 'height', @viewport.height
-      .call canvasDrag
-
     # Define Arrow Markers
     @defs = @canvas.append('defs')
     # Setup arrow 
@@ -32,16 +36,12 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
         .attr 'orient', 'auto'
       .append 'path'
         .attr 'd', 'M -10 -8 L 0 0 L -10 8'
-
-
-  setupContainers: ->
     # Setup containers
     @container             = @canvas.append('g')
     @relations_cont        = @container.append('g').attr('class', 'relations-cont '+@getRelationsLineStyle(@parameters.relationsLineStyle))
     @relations_labels_cont = @container.append('g').attr('class', 'relations-labels-cont')
     @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
     @nodes_labels_cont     = @container.append('g').attr('class', 'nodes-labels-cont')
-
 
   clear: ->
     super()
@@ -52,6 +52,9 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     @nodes_cont.remove()
     @nodes_labels_cont.remove()
 
+  render: ( restarForce ) ->
+    @updateImages()
+    super()
 
   updateImages: ->
     # Use General Update Pattern 4.0 (https://bl.ocks.org/mbostock/a8a5baa4c4a470cda598)
@@ -122,11 +125,6 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
       # set nodes color based on parameters.nodesColor value or image as pattern if defined
       .style 'fill',    @getNodeFill
       .style 'stroke',  @getNodeStroke
-      .on   'mouseover',  @onNodeOver
-      .on   'mouseout',   @onNodeOut
-      .on   'click',      @onNodeClick
-      .on   'dblclick',   @onNodeDoubleClick
-      .call @forceDrag
 
     @nodes = @nodes_cont.selectAll('.node')
 
@@ -224,45 +222,6 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     @relations_labels = @relations_labels_cont.selectAll('.relation-label')
 
 
-  focusNode: (node) ->
-    if @node_active
-      # clear previous focused nodes
-      @nodes_cont.selectAll('#node-'+@node_active.id)
-        .style 'stroke',  @getNodeStroke
-      @node_active = null
-      # force node over
-      @onNodeOver node
-    # set node active
-    @node_active = node
-    @nodes_cont.selectAll('.node.active')
-      .classed 'active', false
-    @nodes_cont.selectAll('#node-'+node.id)
-      .classed 'active', true
-      .style   'stroke', @getNodeStroke
-    @updateRelationsLabelsData()
-    # center viewport in node
-    @centerNode node
-
-  unfocusNode: ->
-    if @node_active
-      @nodes_cont.selectAll('#node-'+@node_active.id)
-        .style 'stroke',  @getNodeStroke
-      @nodes_cont.selectAll('.node.active')
-        .classed 'active', false
-      @node_active = null
-      @onNodeOut()
-      # center viewport
-      @centerNode null
-
-  centerNode: (node) ->
-    if node
-      @viewport.offsetnode.x = (@viewport.scale * (node.get('x') - @viewport.center.x)) + @viewport.x + 175 # 175 = $('.visualization-graph-info').height() / 2
-      @viewport.offsetnode.y = (@viewport.scale * (node.get('y') - @viewport.center.y)) + @viewport.y
-    else
-      @viewport.offsetnode.x = @viewport.offsetnode.y = 0
-    @rescaleTransition()
-
-
   # Resize Methods
   # ---------------
 
@@ -281,103 +240,14 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
       .attr     'transform', @getContainerTransform()
 
   getContainerTransform: ->
-    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetnode.x)|0 + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsetnode.y)|0 + ')scale(' + @viewport.scale + ')'
-
+    return 'translate(' + (@viewport.center.x+@viewport.origin.x+@viewport.x-@viewport.offsetnode.x) + ',' + (@viewport.center.y+@viewport.origin.y+@viewport.y-@viewport.offsetnode.y) + ')scale(' + @viewport.scale + ')'
   
-  # Config Methods
-  # ---------------
-
-  updateNodesColorValue: =>
-    super()
-    @nodes
-      .style 'fill',   @getNodeFill
-      .style 'stroke', @getNodeStroke
-
-
-  updateNodesSizeValue: =>
-    # if nodesSize = 1, set nodes size based on its number of relations
-    if @parameters.nodesSize == 1
-      if @parameters.nodesSizeColumn == 'relations'
-        @setNodesRelations()
-      @setScaleNodesSize()
-      @updateNodes()
-      @updateForce true
-    else
-      # set nodes size & update nodes radius
-      @setNodesSize()
-      @nodes.attr 'r', (d) -> return d.size
-    # # update nodes labels position
-    @nodes_labels.attr 'class', @getNodeLabelClass
-    @nodes_labels.selectAll('.first-line')
-      .attr 'dy', @getNodeLabelYPos
-    # update relations arrows position
-    @relations.attr 'd', @drawRelationPath
-
-  toogleNodesLabel: (value) =>
-    @nodes_labels.classed 'hide', !value
-
-  toogleNodesLabelComplete: (value) =>
-    @nodes_labels.attr 'class', @getNodeLabelClass
-
-
-  updateRelationsLineStyle: (value) ->
-    @relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
-
-
-  # Navigation Methods
-  # ---------------
-  
-  zoom: (value) ->
-    super(value)
-    @container
-      .transition()
-        .duration 500
-        .attr     'transform', @getContainerTransform()
-
 
   # Events Methods
   # ---------------
 
-  onNodeOver: (d) =>
-    # skip if any node is active
-    if @node_active
-      return
-    # add relations labels  
-    @updateRelationsLabels @getNodeRelations(d.id)
-    # highlight related nodes labels
-    @nodes_labels.classed 'weaken', true
-    @nodes_labels.classed 'highlighted', (o) => return @areNodesRelated(d, o)
-    # highlight node relations
-    @relations.classed 'weaken', true
-    @relations.classed 'highlighted', (o) => return o.source_id == d.id || o.target_id == d.id
-
-
-  onNodeOut: (d) =>
-    # skip if any node is active
-    if @node_active
-      return
-    # clear relations labels
-    @updateRelationsLabels {}
-    # clear nodes & relations classes
-    @nodes_labels.classed 'weaken', false
-    @nodes_labels.classed 'highlighted', false
-    @relations.classed 'weaken', false
-    @relations.classed 'highlighted', false
-
-  onNodeClick: (d) =>
-    # Avoid trigger click on dragEnd
-    if d3.event.defaultPrevented 
-      return
-    Backbone.trigger 'visualization.node.showInfo', {node: d.id}
-
-  onNodeDoubleClick: (d) =>
-    # unfix the node position when the node is double clicked
-    @force.unfix d
-
-
   # Tick Function
   onTick: =>
-    #console.log 'on tick'
     # Set relations path & arrow markers
     @relations
       .attr 'd', @drawRelationPath
@@ -394,13 +264,89 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     if @relations_labels
       @relations_labels
         .attr 'transform', @getRelationLabelTransform
+
+  drawRelationPath: (d) =>
+    # vector auxiliar methods from https://stackoverflow.com/questions/13165913/draw-an-arrow-between-two-circles
+    length  = ({x,y}) -> Math.sqrt(x*x + y*y)
+    sum     = ({x:x1,y:y1}, {x:x2,y:y2}) -> {x:x1+x2, y:y1+y2}
+    diff    = ({x:x1,y:y1}, {x:x2,y:y2}) -> {x:x1-x2, y:y1-y2}
+    prod    = ({x,y}, scalar) -> {x:x*scalar, y:y*scalar}
+    div     = ({x,y}, scalar) -> {x:x/scalar, y:y/scalar}
+    unit    = (vector) -> div(vector, length(vector))
+    scale   = (vector, scalar) -> prod(unit(vector), scalar)
+    free    = ([coord1, coord2]) -> diff(coord2, coord1)
+
+    if d.direction
+      v2 = scale free([d.source, d.target]), d.target.size
+      p2 = diff d.target, v2
+      return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + p2.x + ' ' + p2.y
+    else
+      return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y
+
+  getRelationLabelTransform: (d) =>
+    x = (d.source.x+d.target.x)*0.5
+    y = (d.source.y+d.target.y)*0.5
+    angle = @getAngleBetweenPoints(d.source, d.target)
+    if angle > 90 or angle < -90
+      angle += 180
+    return "translate(#{ x },#{ y }) rotate(#{ angle })"
+
+  getRelationsLineStyle: (value) ->
+    lineStyle = switch
+      when value == 0 then 'line-solid'
+      when value == 1 then 'line-dashed'
+      else 'line-dotted' 
+    return lineStyle
   
 
   # Auxiliar Methods
   # ----------------
 
+  getAngleBetweenPoints: (p1, p2) ->
+    return Math.atan2(p2.y - p1.y, p2.x - p1.x) * @degrees_const
+    #return Math.acos( (p1.x * p2.x + p1.y * p2.y) / ( Math.sqrt(p1.x*p1.x + p1.y*p1.y) * Math.sqrt(p2.x*p2.x + p2.y*p2.y) ) ) * 180 / Math.PI
+
   getNodeLabelYPos: (d) =>
     return parseInt(@nodes_cont.select('#node-'+d.id).attr('r'))+13
+
+  getNodeLabelClass: (d) =>
+    #console.log 'getNodeLabelClass', @parameters.nodesSize 
+    str = 'node-label'
+    if !@parameters.showNodesLabel
+      str += ' hide'
+    if @parameters.showNodesLabelComplete 
+      str += ' complete'
+    if d.disabled
+      str += ' disabled'
+    if @parameters.nodesSize == 1
+      str += ' size-'+@scale_labels_size(d[@parameters.nodesSizeColumn])
+    return str
+
+  getNodeStroke: (d) =>
+    if @node_active and d.id == @node_active.id
+      if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+        color = @color_scale d[@parameters.nodesColorColumn]
+      else
+        color = @COLOR_SOLID[@parameters.nodesColor]
+    else if @node_hovered and d.id == @node_hovered.id
+      if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+        color = @color_scale d[@parameters.nodesColorColumn]
+      else
+        color = @COLOR_SOLID[@parameters.nodesColor]
+    else
+      color = 'transparent'
+    return color
+
+  getNodeFill: (d) =>
+    if d.disabled
+      fill = '#d3d7db'
+    else if @parameters.showNodesImage and d.image != null
+      fill = 'url(#node-pattern-'+d.id+')'
+    else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      fill = @color_scale d[@parameters.nodesColorColumn] 
+    else
+      fill = @COLOR_SOLID[@parameters.nodesColor]
+    return fill
     
   formatNodesLabels: (nodes) =>
     nodes.each () ->
@@ -437,5 +383,6 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
         # reset dx if label is not multiline
         if i == 0
           tspan.attr('dx', 0)
+
 
 module.exports = VisualizationCanvasSVG

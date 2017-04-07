@@ -10,17 +10,16 @@ class VisualizationCanvas extends VisualizationCanvasBase
   context:         null
   quadtree:        null
 
+
   # Setup methods
   # -------------------
 
   setupCanvas: ->
-
-    # set canvas drag
+    # setup canvas drag events
     canvasDrag = d3.drag()
       .on 'start', @onCanvasDragStart
       .on 'drag',  @onCanvasDragged
       .on 'end',   @onCanvasDragEnd
-
     # Setup canvas
     @canvas = d3.select(@el)
       .select('canvas')
@@ -30,15 +29,9 @@ class VisualizationCanvas extends VisualizationCanvasBase
         .on   'mousemove',  @onCanvasMove
         .on   'mouseleave', @onCanvasLeave
         .on   'click',      @onCanvasClick
-        .call canvasDrag
-
+        .call  canvasDrag
     # Setup canvas context
     @context = @canvas.node().getContext('2d')
-
-  setupContainers: ->
-    # Setup a custom element container that will not be attached to the DOM, to which we can bind the data
-    customElement = document.createElement 'custom'
-    @container    = d3.select customElement
 
   setQuadtree: ->
     @quadtree = d3.quadtree()
@@ -50,20 +43,30 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   # Nodes methods
   # -------------------
+
+  # Override with Canvas or SVG updateRelations
+  updateRelations: ->
   
+  # Override with Canvas or SVG updateNodesLabels
+  updateNodesLabels: ->
+
+  # Override with Canvas or SVG updateNodesLabels
+  updateRelationsLabels: (data) ->
+
   updateNodes: ->
-    #console.log 'updateNodes'
-    @data_nodes.forEach (d) =>
-      @setNodeState d
-      @setNodeSize d
-      @setNodeFill d
-      @setNodeStroke d
-      @setNodeFont d
-      @setNodeLabel d
-      @setNodeImage d
+    @data_nodes.forEach @updateNode
     # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
       @data_nodes.sort @sortNodes
+
+  updateNode: (d) =>
+    @setNodeState d
+    @setNodeSize d
+    @setNodeFill d
+    @setNodeStroke d
+    @setNodeFont d
+    @setNodeLabel d
+    @setNodeImage d
 
   updateNodesState: ->
     @data_nodes.forEach (d) =>
@@ -115,19 +118,21 @@ class VisualizationCanvas extends VisualizationCanvasBase
       d.fontSize = 12
       d.fontColor = '#404040'
     else
-      val = @scale_labels_size d[@parameters.nodesSizeColumn]
+      val = if d[@parameters.nodesSizeColumn] then @scale_labels_size d[@parameters.nodesSizeColumn] else 0
       d.fontSize = [11,12,13,15][val]
       d.fontColor = ['#676767','#5a5a5a','#4d4d4d','#404040'][val]
 
   setNodeLabel: (d) ->
-    @context.font = '300 '+d.fontSize+'px Montserrat'
-    metrics = @context.measureText d.name
-    if metrics.width <= @LABEL_MAX_WIDTH
-      d.short_label = d.name
-      d.long_label  = null
-    else
-      d.long_label  = @getNodeLongLabel d.name
-      d.short_label = d.long_label[0]+' ...'
+    if d.name and d.name != ''
+      @context.font = '300 '+d.fontSize+'px Montserrat'
+      metrics = @context.measureText d.name
+      if metrics.width <= @LABEL_MAX_WIDTH
+        d.short_label = d.name
+        d.long_label  = null
+      else
+        d.long_label  = @getNodeLongLabel d.name
+        d.short_label = d.long_label[0]+' ...'
+
       
   getNodeLongLabel: (text) ->
     lines      = []
@@ -251,21 +256,22 @@ class VisualizationCanvas extends VisualizationCanvasBase
       .forEach @drawNodeLabel
 
   drawNodeLabel: (d) =>
-    ypos = null
-    x = d.x|0
-    y = d.y|0
-    size = d.size|0
-    @context.fillStyle = d.fontColor
-    @context.font      = '300 '+d.fontSize+'px Montserrat'
-    if (@parameters.showNodesLabelComplete or @node_hovered or @node_active) and d.long_label
-      d.long_label.forEach (line, i) =>
-        ypos = y+size+(i*d.fontSize)
-        @context.strokeText line, x, ypos+1
-        @context.fillText   line, x, ypos
-    else
-      ypos = y+size
-      @context.strokeText d.short_label, x, ypos+1
-      @context.fillText   d.short_label, x, ypos
+    if d.name and d.name != ''
+      ypos = null
+      x = d.x|0
+      y = d.y|0
+      size = d.size|0
+      @context.fillStyle = d.fontColor
+      @context.font      = '300 '+d.fontSize+'px Montserrat'
+      if (@parameters.showNodesLabelComplete or @node_hovered or @node_active) and d.long_label
+        d.long_label.forEach (line, i) =>
+          ypos = y+size+(i*d.fontSize)
+          @context.strokeText line, x, ypos+1
+          @context.fillText   line, x, ypos
+      else
+        ypos = y+size
+        @context.strokeText d.short_label, x, ypos+1
+        @context.fillText   d.short_label, x, ypos
 
   drawRelations: ->
     # make stroke color dynamic based on nodes state !!!
@@ -349,7 +355,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
         @context.restore()
 
 
-  # Resize & Navigation Methods
+  # Resize Methods
   # ---------------
 
   rescale: ->
@@ -371,12 +377,28 @@ class VisualizationCanvas extends VisualizationCanvasBase
         t.stop()
       @rescale()
 
+
+  # Navigation Methods
+  # ---------------
+
+  zoomIn: ->
+    @zoom @viewport.scale*1.2
+    
+  zoomOut: ->
+    @zoom @viewport.scale/1.2
+  
+  # Override with Canvas or SVG zoom
   zoom: (value) ->
-    super(value)
+    if value > 2
+      @viewport.scale = 2
+    else if value < 0.5
+      @viewport.scale = 0.5
+    else
+      @viewport.scale = value
     @redraw()
 
 
-  # Canvas Mouse Events
+  # Mouse Events Listeners
   # -------------------
 
   # Canvas Drag Events
@@ -386,7 +408,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
         .alphaTarget 0.1
         .restart()
     unless @node_hovered
-      @canvas.style 'cursor', 'move'
+      @canvas.style 'cursor','move'
 
   onCanvasDragged: =>
     if @node_hovered
@@ -399,13 +421,13 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @viewport.dx += d3.event.dx
       @viewport.dy += d3.event.dy
       @rescale()
+    d3.event.sourceEvent.stopPropagation()  # silence other listeners
 
   onCanvasDragEnd: =>
     if @node_hovered
       @force.alphaTarget 0
     else
       @canvas.style 'cursor','default'
-      #@force.alphaTarget(0)
       # Skip if viewport has no translation
       if @viewport.dx == 0 and @viewport.dy == 0
         Backbone.trigger 'visualization.node.hideInfo'
@@ -428,12 +450,14 @@ class VisualizationCanvas extends VisualizationCanvasBase
     node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y, @viewport.scale*40
     
     # clear node hovered if node is undefined
-    if node == undefined
-      @updateNodeHovered null
+    if node == undefined 
+      if @node_hovered != null
+        @updateNodeHovered null
       return
 
     if @node_hovered and @node_hovered.id == node.id
       return
+
     @updateNodeHovered node
 
   onCanvasLeave: (e) =>

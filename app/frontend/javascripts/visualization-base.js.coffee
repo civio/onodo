@@ -39,18 +39,21 @@ class VisualizationBase
 
   constructor: (_id) ->
     @id = _id
+    @setupData()
+    # Setup Views
+    @visualizationCanvas         = new VisualizationCanvas()
+    @visualizationLegend         = new VisualizationLegend()
+    @visualizationNavigation     = new VisualizationNavigation()
+    @visualizationActions        = new VisualizationActions {collection: @nodes}
+    @visualizationShare          = new VisualizationShare()
+    @visualizationInfo           = new VisualizationInfo()
+
+  setupData: ->
     # Setup Visualization Model
     @visualization      = new Visualization()
     # Setup Collections
     @nodes              = new NodesCollection()
     @relations          = new RelationsCollection()
-    # Setup Views
-    @visualizationCanvas         = new VisualizationCanvas()
-    @VisualizationLegend         = new VisualizationLegend()
-    @visualizationNavigation     = new VisualizationNavigation()
-    @visualizationActions        = new VisualizationActions {collection: @nodes}
-    @visualizationShare          = new VisualizationShare()
-    @visualizationInfo           = new VisualizationInfo()
 
   render: ->
     # force resize
@@ -72,8 +75,9 @@ class VisualizationBase
     # Setup VisualizationCanvas
     @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
     @visualizationCanvas.render()
-    @VisualizationLegend.setup @parameters
-    @VisualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
+    if @visualizationLegend
+      @visualizationLegend.setup @parameters
+      @visualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
     @visualizationActions.render()
     # Setup Visualization Events
     @bindVisualizationEvents()
