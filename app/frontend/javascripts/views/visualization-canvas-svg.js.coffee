@@ -10,6 +10,10 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
   nodes_labels_cont:      null
   relations_cont:         null
   relations_labels_cont:  null
+  nodes:                  null
+  nodes_labels:           null
+  relations:              null
+  relations_labels:       null
 
   degrees_const:          180 / Math.PI
 
@@ -54,6 +58,7 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
 
   render: ( restarForce ) ->
     @updateImages()
+    @updateRelations()
     super()
 
   updateImages: ->

@@ -33,20 +33,24 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # Setup canvas context
     @context = @canvas.node().getContext('2d')
 
-  setQuadtree: ->
     @quadtree = d3.quadtree()
       .extent [[0, 0], [@viewport.scale*@viewport.width, @viewport.scale*@viewport.height]]
       .x (d) => @viewport.scale*d.x
       .y (d) => @viewport.scale*d.y
-      .addAll @data_nodes
+      
 
-
+ 
   # Nodes methods
   # -------------------
 
   # Override with Canvas or SVG updateRelations
   updateRelations: ->
-  
+    @data_relations_visibles.forEach @updateRelation
+
+  updateRelation: (d) =>
+    @setRelationState d
+    @setRelationColor d
+
   # Override with Canvas or SVG updateNodesLabels
   updateNodesLabels: ->
 
@@ -446,7 +450,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     #  return
     # get mouse point
     mouse = d3.mouse @canvas.node()
-    @setQuadtree()
+    @quadtree.addAll @data_nodes
     node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y, @viewport.scale*40
     
     # clear node hovered if node is undefined

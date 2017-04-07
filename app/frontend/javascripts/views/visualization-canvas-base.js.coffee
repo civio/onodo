@@ -26,10 +26,6 @@ class VisualizationCanvasBase extends Backbone.View
   data_nodes_map:         d3.map()
   data_relations:         []
   data_relations_visibles:[]
-  nodes:                  null
-  nodes_labels:           null
-  relations:              null
-  relations_labels:       null
   force:                  null
   forceDrag:              null
   forceLink:              null
@@ -130,14 +126,14 @@ class VisualizationCanvasBase extends Backbone.View
       # Set source & target as nodes objetcs instead of index number
       d.source = @getNodeById d.source_id
       d.target = @getNodeById d.target_id
-      d.state = 0
-      d.color = '#cccccc'
+      #d.state = 0
+      #d.color = '#cccccc'
       # Add all relations to data_relations array
       @data_relations.push d
       # Add relation to data_relations_visibles array if both nodes exist and are visibles
       if d.source and d.target and d.source.visible and d.target.visible
         @data_relations_visibles.push d
-        @addRelationToLinkedByIndex d.source_id, d.target_id
+        @addRelationToLinkedByIndex d.source_id, d.target_idç
 
     # Add linkindex to relations
     #@setLinkIndex()
@@ -202,8 +198,7 @@ class VisualizationCanvasBase extends Backbone.View
 
 
   render: ( restarForce ) ->
-    console.log 'render', restarForce
-    @updateRelations()
+    #console.log 'render', restarForce
     @updateNodes()
     @updateNodesLabels()
     @updateForce restarForce
@@ -329,6 +324,8 @@ class VisualizationCanvasBase extends Backbone.View
     # Update canvas
     @canvas.attr 'width', @viewport.width
     @canvas.attr 'height', @viewport.height
+
+    @quadtree.extent [[0, 0], [@viewport.scale*@viewport.width, @viewport.scale*@viewport.height]]
     
     @rescale()
     # Update force size

@@ -1,4 +1,3 @@
-d3 = require '../dist/d3'
 VisualizationCanvas = require './visualization-canvas.js'
 
 class VisualizationCanvasEdit extends VisualizationCanvas
@@ -52,18 +51,16 @@ class VisualizationCanvasEdit extends VisualizationCanvas
 
   updateNodeLabel: (node) ->
     node = @getNodeById node.id
-    if node.length > 0
-      @setNodeLabel node[0]
+    if node
+      @setNodeLabel node
       @redraw()
 
   updateNodeImage: (node) ->
     node = @getNodeById node.id
-    if node.length > 0
-      @setNodeImage node[0]
+    if node
+      @setNodeImage node
       @redraw()
 
-  getNodeById: (id) ->
-    return @data_nodes.filter (d) -> d.id == id
 
   # Relation Methods
   # ---------------
@@ -83,7 +80,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
       @data_relations_visibles.push relation
       @addRelationToLinkedByIndex relation.source_id, relation.target_id
       #@setLinkIndex()
-  
+
   # maybe we need to split removeVisibleRelationaData & removeRelationData
   removeRelationData: (relation) =>
     # remove relation from data_relations
@@ -100,7 +97,8 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     # update nodes relations size if needed to take into acount the added relation
     if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
       @setNodesRelations()
-    @render true
+    @updateRelation relation
+    @redraw()
 
   removeRelation: (relation) ->
     #console.log 'removeRelation', relation
@@ -109,7 +107,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     # update nodes relations size if needed to take into acount the removed relation
     if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
       @setNodesRelations()
-    @render true
+    @redraw()
 
   removeVisibleRelationData: (relation) =>
     #console.log 'remove relation from data_relations_visibles', @data_relations_visibles
@@ -197,7 +195,6 @@ class VisualizationCanvasEdit extends VisualizationCanvas
 
   updateForceLayoutParameter: (param, value) ->
     #console.log 'updateForceLayoutParameter', param, value
-
     #@force.stop()
     if param == 'linkDistance'
       @forceLink.distance () -> return value
@@ -205,7 +202,6 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     else if param == 'linkStrength'
       @forceManyBody.strength () -> return value
       @force.force 'charge', @forceManyBody
-
     # else if param == 'friction'
     #   @force.friction value
     # else if param == 'charge'
