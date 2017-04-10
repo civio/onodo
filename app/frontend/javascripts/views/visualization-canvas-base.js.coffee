@@ -23,7 +23,7 @@ class VisualizationCanvasBase extends Backbone.View
   canvas:                 null
   data:                   null
   data_nodes:             []
-  data_nodes_map:         d3.map()
+  data_nodes_visibles:    []
   data_relations:         []
   data_relations_visibles:[]
   force:                  null
@@ -75,12 +75,8 @@ class VisualizationCanvasBase extends Backbone.View
     # Setup Canvas or SVG
     @setupCanvas()
 
-    # if nodesSize = 1, set nodes size
-    if @parameters.nodesSize == 1
-      # set relations attribute in nodes
-      if @parameters.nodesSizeColumn == 'relations'
-        @setNodesRelations()
-      @setScaleNodesSize()
+    # set nodes size scale
+    @setScaleNodesSize()
   
     # Translate svg
     @rescale()
@@ -109,38 +105,16 @@ class VisualizationCanvasBase extends Backbone.View
     @data_nodes              = []
     @data_relations          = []
     @data_relations_visibles = []
-
     # Setup Nodes
-    data.nodes.forEach (d) =>
-      if d.visible
-        @addNodeData d
-      # force empties node_types to null to avoid 2 non-defined types 
-      if d.node_type == ''
-        d.node_type = null
-
+    data.nodes.forEach @addNodeData
+    # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
+    data.relations.forEach @addRelationData
     # Setup color scale
     @setColorScale()
-
-    # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
-    data.relations.forEach (d) =>
-      # Set source & target as nodes objetcs instead of index number
-      d.source = @getNodeById d.source_id
-      d.target = @getNodeById d.target_id
-      #d.state = 0
-      #d.color = '#cccccc'
-      # Add all relations to data_relations array
-      @data_relations.push d
-      # Add relation to data_relations_visibles array if both nodes exist and are visibles
-      if d.source and d.target and d.source.visible and d.target.visible
-        @data_relations_visibles.push d
-        @addRelationToLinkedByIndex d.source_id, d.target_idç
-
     # Add linkindex to relations
     #@setLinkIndex()
-
     #console.log 'current nodes', @data_nodes
     #console.log 'current relations', @data_relations_visibles
-
 
   setupViewport: ->
     @viewport.width     = @$el.width()|0
@@ -236,22 +210,36 @@ class VisualizationCanvasBase extends Backbone.View
     # Setup disable values in nodes
     @data_nodes.forEach (node) ->
       node.disabled = nodes.indexOf(node.id) == -1
-    # Setup disable values in relations
+    # Setup disable values in relations -> CHECKOUT THIS!!! (we must store this in data_relations & update data_relations_visible based on this)
     @data_relations_visibles.forEach (relation) ->
       relation.disabled = relations.indexOf(relation.id) == -1    
 
-  addNodeData: (node) ->
+  addNodeData: (node) =>
     # check if node is present in @data_nodes
     #console.log 'addNodeData', node.id, node
     if node
-      @data_nodes_map.set node.id, node
+      # force empties node_types to null to avoid 2 non-defined types 
+      if node.node_type == ''
+        node.node_type = null
       @data_nodes.push node
+      if node.visible
+        @data_nodes_visibles.push node
+
+  addRelationData: (relation) =>
+    relation.source = @getNodeById relation.source_id
+    relation.target = @getNodeById relation.target_id
+    # Add relations with both source & target to data_relations array
+    @data_relations.push relation
+    # Add relation to data_relations_visibles array if both nodes exist and are visibles
+    if relation.source and relation.target and relation.source.visible and relation.target.visible
+      @data_relations_visibles.push relation
+      @addRelationToLinkedByIndex relation.source_id, relation.target_id
 
   addRelationToLinkedByIndex: (source, target) ->
     # count number of relations between 2 nodes
     @linkedByIndex[source+','+target] = ++@linkedByIndex[source+','+target] || 1
 
-  # Chekcout this!!! We don't use it
+  ### Chekcout this!!! We don't use it
   # Add a linkindex property to relations
   # Based on https://github.com/zhanghuancs/D3.js-Node-MultiLinks-Node
   setLinkIndex: ->
@@ -274,6 +262,7 @@ class VisualizationCanvasBase extends Backbone.View
         @data_relations_visibles[i].linkindex = @data_relations_visibles[i-1].linkindex + 1
       else
         @data_relations_visibles[i].linkindex = 1
+  ###
 
   sortNodes: (a, b) ->
     if a.size > b.size
@@ -350,7 +339,8 @@ class VisualizationCanvasBase extends Backbone.View
   # ----------------
 
   getNodeById: (id) ->
-    return @data_nodes_map.get id
+    node = @data_nodes.filter (d) -> d.id == id
+    return if node.length > 0 then node[0] else null
 
   areNodesRelated: (a, b) ->
     return @linkedByIndex[a.id + ',' + b.id] || @linkedByIndex[b.id + ',' + a.id] || a.id == b.id
@@ -374,6 +364,11 @@ class VisualizationCanvasBase extends Backbone.View
       d.target.relations += 1
     
   setScaleNodesSize: =>
+    if @parameters.nodesSize != 1
+      return
+    # set relations attribute in nodes
+    if @parameters.nodesSizeColumn == 'relations'
+      @setNodesRelations()
     # set node size scale
     if @data_nodes.length > 0
       maxValue = d3.max @data_nodes, (d) => return d[@parameters.nodesSizeColumn]

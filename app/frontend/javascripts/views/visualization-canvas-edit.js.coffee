@@ -5,49 +5,62 @@ class VisualizationCanvasEdit extends VisualizationCanvas
   # Node Methods
   # ---------------
 
-  removeNodeData: (node) ->
-    @data_nodes_map.remove node.id
-    # We can't use Array.splice because this function could be called inside a loop over nodes & causes drop
-    @data_nodes = @data_nodes.filter (d) =>
-      return d.id != node.id
-
   addNode: (node) ->
     #console.log 'addNode', node
-    console.log 'addNode', node
     @addNodeData node
     @render true
-    # !!! We need to check if this node has some relation
 
   removeNode: (node) ->
     # unfocus node to remove
     if @node_active == node.id
       @unfocusNode()
+    # remove node
     @removeNodeData node
+    # remove node relations
     @removeNodeRelations node
-    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
-      @setNodesRelations()
+    # update scale nodes size
+    @setScaleNodesSize()
     @render true
-
-  removeNodeRelations: (node) =>
-    # update data_relations_visibles removing relations with removed node
-    @data_relations_visibles = @data_relations_visibles.filter (d) =>
-      return d.source_id != node.id and d.target_id != node.id
 
   showNode: (node) ->
     #console.log 'show node', node
-    # add node to data_nodes array
-    @addNodeData node
-    # check node relations (in data.relations)
-    @data_relations.forEach (relation) =>
-      # if node is present in some relation we add it to data_relations and/or data_relations_visibles array
-      if relation.source_id  == node.id or relation.target_id == node.id
-        @addRelationData relation
-    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
-      @setNodesRelations()
+    # add node to data_nodes_visible array
+    @addNodeVisibleData node
+    # add node relations to data_relations_visible array
+    @updateDataRelationsVisible()
+    # update scale nodes size
+    @setScaleNodesSize()
     @render true
 
   hideNode: (node) ->
-    @removeNode node
+    # unfocus node to remove
+    if @node_active == node.id
+      @unfocusNode()
+    # remove node from data:nodes_visible array
+    @removeNodeVisibleData node
+    # remove node relations from data_relations_visible array
+    @updateDataRelationsVisible()
+    # update scale nodes size
+    @setScaleNodesSize()
+    @render true
+
+  addNodeVisibleData: (node) =>
+    @data_nodes_visibles.push node
+
+  removeNodeData: (node) ->
+    #@data_nodes_map.remove node.id
+    # We can't use Array.splice because this function could be called inside a loop over nodes & causes drop -> CHECKOUT!!!
+    @data_nodes = @data_nodes.filter (d) -> return d.id != node.id
+    if node.visible
+      @removeNodeVisibleData node
+
+  removeNodeVisibleData: (node) ->
+    @data_nodes_visibles = @data_nodes_visibles.filter (d) -> return d.id != node.id
+
+  removeNodeRelations: (node) =>
+    # remove relations with removed node in data_relations & data_relations_visibles arrays
+    @data_relations = @data_relations.filter (d) -> return d.source_id != node.id and d.target_id != node.id
+    @updateDataRelationsVisible()
 
   updateNodeLabel: (node) ->
     node = @getNodeById node.id
@@ -65,23 +78,21 @@ class VisualizationCanvasEdit extends VisualizationCanvas
   # Relation Methods
   # ---------------
 
-  addRelationData: (relation) ->
-    # We have to add relations to @data.relations which stores all the relations
-    index = @data_relations.indexOf relation
-    #console.log 'addRelationData', index
-    # Set source & target as nodes objetcs instead of index number --> !!! We need this???
-    relation.source  = @getNodeById relation.source_id
-    relation.target  = @getNodeById relation.target_id
-    # Add relations to data_relations array if not present yet
-    if index == -1
-      @data_relations.push relation
-    # Add relation to data_relations_visibles array if both nodes exist and are visibles
-    if relation.source and relation.target and relation.source.visible and relation.target.visible
-      @data_relations_visibles.push relation
-      @addRelationToLinkedByIndex relation.source_id, relation.target_id
-      #@setLinkIndex()
+  addRelation: (relation) ->
+    #console.log 'addRelation', relation
+    @addRelationData relation
+    @setScaleNodesSize()
+    # set relation states
+    @updateRelation relation
+    @render true
 
-  # maybe we need to split removeVisibleRelationaData & removeRelationData
+  removeRelation: (relation) ->
+    #console.log 'removeRelation', relation
+    @removeRelationData relation
+    @setScaleNodesSize()
+    @render true
+
+   # maybe we need to split removeVisibleRelationaData & removeRelationData
   removeRelationData: (relation) =>
     # remove relation from data_relations
     #console.log 'remove relation from data_relations', @data_relations
@@ -89,26 +100,9 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     #console.log 'index', index
     if index != -1
       @data_relations.splice index, 1
-    @removeVisibleRelationData relation
+    @updateDataRelationsVisible()
 
-  addRelation: (relation) ->
-    #console.log 'addRelation', relation
-    @addRelationData relation
-    # update nodes relations size if needed to take into acount the added relation
-    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
-      @setNodesRelations()
-    @updateRelation relation
-    @redraw()
-
-  removeRelation: (relation) ->
-    #console.log 'removeRelation', relation
-    @removeRelationData relation
-    @updateRelationsLabelsData()
-    # update nodes relations size if needed to take into acount the removed relation
-    if @parameters.nodesSize == 1 and @parameters.nodesSizeColumn == 'relations'
-      @setNodesRelations()
-    @redraw()
-
+  # CHECKOUT THIS!!!
   removeVisibleRelationData: (relation) =>
     #console.log 'remove relation from data_relations_visibles', @data_relations_visibles
     # remove relation from data_relations_visibles
@@ -116,10 +110,10 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     if index != -1
       @data_relations_visibles.splice index, 1
 
-  updateRelationsLabelsData: ->
-    if @node_active
-      @updateRelationsLabels @getNodeRelations(@node_active.id)
-
+  # update data_relations_visibles filtering data_relations array
+  updateDataRelationsVisible: ->
+    @data_relations_visibles = @data_relations.filter (d) -> d.source and d.target and d.source.visible and d.target.visible
+  
 
   # Config Methods
   # ---------------
@@ -140,29 +134,12 @@ class VisualizationCanvasEdit extends VisualizationCanvas
 
   updateNodesSize: (value) =>
     @parameters.nodesSize = parseInt(value)
-    @updateNodesSizeValue()
+    @setScaleNodesSize()
+    @redraw()
 
   updateNodesSizeColumn: (value) =>
-    @updateNodesSizeValue()
-
-  updateNodesSizeValue: =>
-    # if nodesSize = 1, set nodes size based on its number of relations
-    if @parameters.nodesSize == 1
-      if @parameters.nodesSizeColumn == 'relations'
-        @setNodesRelations()
-      @setScaleNodesSize()
-      @updateNodes()
-      @updateForce true
-    else
-      # set nodes size & update nodes radius
-      @setNodesSize()
-      @nodes.attr 'r', (d) -> return d.size
-    # # update nodes labels position
-    @nodes_labels.attr 'class', @getNodeLabelClass
-    @nodes_labels.selectAll('.first-line')
-      .attr 'dy', @getNodeLabelYPos
-    # update relations arrows position
-    @relations.attr 'd', @drawRelationPath
+    @setScaleNodesSize()
+    @redraw()
 
   toogleNodesLabel: (value) =>
     @nodes_labels.classed 'hide', !value
@@ -221,8 +198,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
 
   # Checkout!!! We don't use this method
   hasNodeRelations: (node) ->
-    return @data_relations_visibles.some (d) ->
-      return d.source_id == node.id || d.target_id == node.id
+    return @data_relations_visibles.some (d) -> return d.source_id == node.id || d.target_id == node.id
 
 
 module.exports = VisualizationCanvasEdit

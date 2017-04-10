@@ -246,6 +246,7 @@ class VisualizationEdit extends VisualizationBase
     @bindVisualizationEvents()
     Backbone.trigger 'visualization.synced'
 
+
   # Events Handlers Methods
   # ---------------------
 
@@ -333,8 +334,7 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateRelationsLabelsData()
 
   onRelationsChangeDirection: (relation) ->
-    @visualizationCanvas.updateRelations()
-    @visualizationCanvas.updateForce true
+    @visualizationCanvas.redraw()
 
   onRelationsRemove: (relation) ->
     @visualizationCanvas.removeRelation relation.attributes

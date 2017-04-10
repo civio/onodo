@@ -58,10 +58,10 @@ class VisualizationCanvas extends VisualizationCanvasBase
   updateRelationsLabels: (data) ->
 
   updateNodes: ->
-    @data_nodes.forEach @updateNode
+    @data_nodes_visibles.forEach @updateNode
     # Reorder nodes data if size is dynamic (in order to add bigger nodes after small ones)
     if @parameters.nodesSize == 1
-      @data_nodes.sort @sortNodes
+      @data_nodes_visibles.sort @sortNodes
 
   updateNode: (d) =>
     @setNodeState d
@@ -73,7 +73,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @setNodeImage d
 
   updateNodesState: ->
-    @data_nodes.forEach (d) =>
+    @data_nodes_visibles.forEach (d) =>
       @setNodeState d
       @setNodeStroke d
     @data_relations_visibles.forEach (d) =>
@@ -208,7 +208,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.restore()
 
   drawNodes: ->
-    @data_nodes.forEach (d) =>
+    @data_nodes_visibles.forEach (d) =>
       x = d.x|0
       y = d.y|0
       size = d.size|0
@@ -225,7 +225,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
         @drawNodeImage d.imgObj, x-size, y-size, 2*size
 
   drawNodesActive: ->
-    @data_nodes.forEach (d) =>
+    @data_nodes_visibles.forEach (d) =>
       x = d.x|0
       y = d.y|0
       size = d.size|0
@@ -255,7 +255,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.lineWidth    = 1
     @context.strokeStyle  = 'rgba(255,255,255,0.85)'
     @context.textBaseline = 'top'
-    @data_nodes
+    @data_nodes_visibles
       .filter (d) -> d.state != -1 # don't draw labels of weaken nodes
       .forEach @drawNodeLabel
 
@@ -450,7 +450,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     #  return
     # get mouse point
     mouse = d3.mouse @canvas.node()
-    @quadtree.addAll @data_nodes
+    @quadtree.addAll @data_nodes_visibles
     node = @quadtree.find mouse[0]-@viewport.center.x-@viewport.translate.x, mouse[1]-@viewport.center.y-@viewport.translate.y, @viewport.scale*40
     
     # clear node hovered if node is undefined
@@ -480,12 +480,14 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   updateNodeHovered: (node) ->
     @node_hovered = node
-    @data_nodes.sort @sortNodes
+    @data_nodes_visibles.sort @sortNodes
     # move node hovered at the end of the data nodes array
     if @node_hovered
       @canvas.style 'cursor', 'pointer'
-      @data_nodes.splice @data_nodes.indexOf(@node_hovered), 1
-      @data_nodes.push @node_hovered
+      ### TESTING !!!!
+      @data_nodes_visibles.splice @data_nodes_visibles.indexOf(@node_hovered), 1
+      @data_nodes_visibles.push @node_hovered
+      ###
     else
       @canvas.style 'cursor', 'auto'
     # update nodes state & stroke
