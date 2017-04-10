@@ -102,13 +102,11 @@ class VisualizationCanvasEdit extends VisualizationCanvas
       @data_relations.splice index, 1
     @updateDataRelationsVisible()
 
-  # CHECKOUT THIS!!!
-  removeVisibleRelationData: (relation) =>
-    #console.log 'remove relation from data_relations_visibles', @data_relations_visibles
-    # remove relation from data_relations_visibles
-    index = @data_relations_visibles.indexOf relation
-    if index != -1
-      @data_relations_visibles.splice index, 1
+  updateRelationNode: (relation) ->
+    # remove relation data
+    @removeRelationData relation
+    # add again updated relation
+    @addRelation relation
 
   # update data_relations_visibles filtering data_relations array
   updateDataRelationsVisible: ->

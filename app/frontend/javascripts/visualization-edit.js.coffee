@@ -324,10 +324,8 @@ class VisualizationEdit extends VisualizationBase
     #console.log 'onRelationsChange', relation
     # check if we have both source_id and target_id
     if relation.attributes.source_id and relation.attributes.target_id
-      # Remove relation if exist in graph
-      @visualizationCanvas.removeVisibleRelationData relation.attributes
-      # Add relation
-      @visualizationCanvas.addRelation relation.attributes
+      # Update relation node
+      @visualizationCanvas.updateRelationNode relation.attributes
 
   onRelationsChangeType: (relation) ->
     #console.log 'onRelationsChangeType', relation
