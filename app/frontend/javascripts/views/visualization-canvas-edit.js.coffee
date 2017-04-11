@@ -48,7 +48,6 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @data_nodes_visibles.push node
 
   removeNodeData: (node) ->
-    #@data_nodes_map.remove node.id
     # We can't use Array.splice because this function could be called inside a loop over nodes & causes drop -> CHECKOUT!!!
     @data_nodes = @data_nodes.filter (d) -> return d.id != node.id
     if node.visible
@@ -128,25 +127,23 @@ class VisualizationCanvasEdit extends VisualizationCanvas
 
   updateNodesColorValue: =>
     @setColorScale()
-    @data_nodes.forEach (d) =>
+    @data_nodes_visibles.forEach (d) =>
       @setNodeFill d
       @setNodeStroke d
-      @redraw()
+    @redraw()
 
   updateNodesSize: (value) =>
-    @parameters.nodesSize = parseInt(value)
-    @setScaleNodesSize()
-    @redraw()
-
+    @parameters.nodesSize = +value
+    @updateNodesSizeValue()
+    
   updateNodesSizeColumn: (value) =>
+    @updateNodesSizeValue()
+
+  updateNodesSizeValue: ->
     @setScaleNodesSize()
+    @data_nodes_visibles.forEach (d) =>
+      @setNodeSize d
     @redraw()
-
-  toogleNodesLabel: (value) =>
-    @nodes_labels.classed 'hide', !value
-
-  toogleNodesLabelComplete: (value) =>
-    @nodes_labels.attr 'class', @getNodeLabelClass
 
   toogleNodesImage: (value) =>
     @parameters.showNodesImage = value

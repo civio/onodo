@@ -360,10 +360,10 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateNodesSizeColumn e.value
 
   onToogleNodesLabel: (e) ->
-    @visualizationCanvas.toogleNodesLabel e.value
+    @visualizationCanvas.redraw()
 
   onToogleNodesLabelComplete: (e) ->
-    @visualizationCanvas.toogleNodesLabelComplete e.value
+    @visualizationCanvas.redraw()
 
   onToogleNodesImage: (e) ->
     @visualizationCanvas.toogleNodesImage e.value
