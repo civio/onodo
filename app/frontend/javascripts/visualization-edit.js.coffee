@@ -194,10 +194,9 @@ class VisualizationEdit extends VisualizationBase
 
   # Scroll Event Handler
   onScroll: =>
-    if @$window.scrollTop() > @mainHeaderHeight + @visualizationHeaderHeight
-      $('.visualization-graph').css 'top', @$window.scrollTop() - @mainHeaderHeight
-    else
-      $('.visualization-graph').css 'top', ''
+    if @visualizationCanvas
+      offset = @$window.scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
+      $('.visualization-graph-component').css 'margin-top', if offset > 0 then -(offset*0.5)|0 else ''
 
   # Update table on table selector change
   updateTable: (e) =>

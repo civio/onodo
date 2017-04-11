@@ -955,10 +955,7 @@ $node-color-12: #e0deda;
 }
 
 body.fullscreen{
-  position: fixed;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
 
   .visualization-graph{
     position: fixed;
@@ -1668,7 +1665,7 @@ body.pages.demo{
 
     &.affix{
       position: fixed;
-      //top: -86px;
+      top: -86px;
     }
   }
   &.fullscreen {
