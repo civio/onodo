@@ -883,6 +883,14 @@ $node-color-12: #e0deda;
   }
 }
 
+.visualization-graph-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
 .visualizations.edit .visualization-graph .visualization-graph-legend{
   bottom: $grid-gutter-width/6;
 }
