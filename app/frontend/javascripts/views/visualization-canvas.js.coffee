@@ -23,12 +23,13 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # Setup canvas
     @canvas = d3.select(@el)
       .select('canvas')
-        .attr 'width',  @viewport.width
-        .attr 'height', @viewport.height
-        .on   'mouseenter', @onCanvasEnter
-        .on   'mousemove',  @onCanvasMove
-        .on   'mouseleave', @onCanvasLeave
-        .on   'click',      @onCanvasClick
+        .attr  'width',  @viewport.width
+        .attr  'height', @viewport.height
+        .style 'display', 'block'
+        .on    'mouseenter', @onCanvasEnter
+        .on    'mousemove',  @onCanvasMove
+        .on    'mouseleave', @onCanvasLeave
+        .on    'click',      @onCanvasClick
         .call  canvasDrag
     # Setup canvas context
     @context = @canvas.node().getContext('2d')
@@ -37,25 +38,17 @@ class VisualizationCanvas extends VisualizationCanvasBase
       .extent [[0, 0], [@viewport.scale*@viewport.width, @viewport.scale*@viewport.height]]
       .x (d) => @viewport.scale*d.x
       .y (d) => @viewport.scale*d.y
-      
 
  
   # Nodes methods
   # -------------------
 
-  # Override with Canvas or SVG updateRelations
   updateRelations: ->
     @data_relations_visibles.forEach @updateRelation
 
   updateRelation: (d) =>
     @setRelationState d
     @setRelationColor d
-
-  # Override with Canvas or SVG updateNodesLabels
-  updateNodesLabels: ->
-
-  # Override with Canvas or SVG updateNodesLabels
-  updateRelationsLabels: (data) ->
 
   updateNodes: ->
     @data_nodes_visibles.forEach @updateNode
@@ -141,7 +134,6 @@ class VisualizationCanvas extends VisualizationCanvasBase
         d.long_label  = @getNodeLongLabel d.name
         d.short_label = d.long_label[0]+' ...'
 
-      
   getNodeLongLabel: (text) ->
     lines      = []
     line       = ''
@@ -338,7 +330,6 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
     v2 = scale free([source, target]), target.size
     p2 = diff target, v2
-  
     dx = p2.x-source.x
     dy = p2.y-source.y
     angle = Math.atan2 dy, dx
@@ -396,8 +387,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     
   zoomOut: ->
     @zoom @viewport.scale/1.2
-  
-  # Override with Canvas or SVG zoom
+
   zoom: (value) ->
     if value > 2
       @viewport.scale = 2
@@ -447,13 +437,9 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   # Canvas Mouse Events
   onCanvasEnter: =>
-    #if @node_active
-    #  return
     @onCanvasMove()
 
   onCanvasMove: =>
-    #if @node_active
-    #  return
     # get mouse point
     mouse = d3.mouse @canvas.node()
     @quadtree.addAll @data_nodes_visibles
@@ -471,14 +457,12 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @updateNodeHovered node
 
   onCanvasLeave: (e) =>
-    #if @node_active
-    #  return
     @updateNodeHovered null
 
   onCanvasClick: (e) =>
     # Avoid trigger click on dragEnd
-    #if d3.event.defaultPrevented 
-    #  return
+    if d3.event.defaultPrevented 
+      return
     if @node_hovered
       Backbone.trigger 'visualization.node.showInfo', {node: @node_hovered.id }
     else

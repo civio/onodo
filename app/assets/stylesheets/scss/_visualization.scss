@@ -232,6 +232,10 @@ $node-color-12: #e0deda;
       background: url(/images/loader.gif) no-repeat center center transparent;
     }
 
+    canvas{
+      display: none;
+    }
+
     .visualization-empty-msg{
       display: none;
       position: absolute;

@@ -125,11 +125,11 @@ class VisualizationCanvasBase extends Backbone.View
     @viewport.center.y  = (@$el.height()*0.5)|0
 
   setupForce: ->
-    # Setup force
+    # Setup force links
     @forceLink = d3.forceLink()
       .id       (d) -> return d.id
       .distance ()  => return @parameters.linkDistance
-
+    # Setup force many bodys
     @forceManyBody = d3.forceManyBody()
       # (https://github.com/d3/d3-force#manyBody_strength)
       .strength () => return @parameters.linkStrength
@@ -137,60 +137,27 @@ class VisualizationCanvasBase extends Backbone.View
       # higher values increase performance
       # (https://github.com/d3/d3-force#manyBody_distanceMax)
       .distanceMax 1000
-      #.theta        @parameters.theta
-
+      #.theta      @parameters.theta
+    # Setup force simulation
     @force = d3.forceSimulation()
       .force 'link',    @forceLink
       .force 'charge',  @forceManyBody
       .force 'center',  d3.forceCenter(0,0)
       .on    'tick',    @onTick
       #.stop()
-
     # Reduce number of force ticks until the system freeze
     # (https://github.com/d3/d3-force#simulation_alphaDecay)
     @force.alphaDecay 0.06
-
-    # @force = d3.layout.force()
-    #   .linkDistance @parameters.linkDistance
-    #   .linkStrength @parameters.linkStrength
-    #   .friction     @parameters.friction
-    #   .charge       @parameters.charge
-    #   .theta        @parameters.theta
-    #   .gravity      @parameters.gravity
-    #   .size         [@viewport.width, @viewport.height]
-    #   .on           'tick', @onTick
-
+    # Setup force drag
     @forceDrag = d3.drag()
       .on 'start',  @onNodeDragStart
       .on 'drag',   @onNodeDragged
       .on 'end',    @onNodeDragEnd
 
-  # Override with Canvas or SVG
-  setupCanvas: ->
-
-  # Override with Canvas or SVG clear
-  clear: ->
-    # Add loading class
-    @$el.addClass 'loading'
-
-
   render: ( restarForce ) ->
     #console.log 'render', restarForce
     @updateNodes()
-    @updateNodesLabels()
     @updateForce restarForce
-
-  # Override with Canvas or SVG updateNodes
-  updateNodes: ->
-
-  # Override with Canvas or SVG updateRelations
-  updateRelations: ->
-  
-  # Override with Canvas or SVG updateNodesLabels
-  updateNodesLabels: ->
-    
-  # Override with Canvas or SVG updateNodesLabels
-  updateRelationsLabels: (data) ->
 
   updateForce: (restarForce) ->
     # update force nodes & links
@@ -212,7 +179,7 @@ class VisualizationCanvasBase extends Backbone.View
       .alpha 0.15
       .restart()
 
-  # Used in app-visualization-demo & visualization-story
+  # Used in visualization-story -> CHECKOUT THIS!!! 
   updateData: (nodes, relations) ->
     # console.log 'canvas current Data', @data_nodes, @data_relations
     # Setup disable values in nodes
@@ -328,20 +295,6 @@ class VisualizationCanvasBase extends Backbone.View
     # Update force size
     #@force.size [@viewport.width, @viewport.height] 
 
-
-  # Override with Canvas or SVG rescale
-  rescale: ->
-   
-  # Override with Canvas or SVG rescaleTransition
-  rescaleTransition: ->
-    
-
-  # Events Methods
-  # ---------------
-
-  # Override with Canvas or SVG tick Function
-  onTick: =>
-  
 
   # Auxiliar Methods
   # ----------------

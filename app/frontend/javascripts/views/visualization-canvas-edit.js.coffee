@@ -2,6 +2,14 @@ VisualizationCanvas = require './visualization-canvas.js'
 
 class VisualizationCanvasEdit extends VisualizationCanvas
 
+  # clear all nodes & relations (needed for app-visualization-demo)
+  clear: ->
+    # hide canvas
+    @canvas.style 'display', ''
+    # add loading class
+    @$el.addClass 'loading'
+
+
   # Node Methods
   # ---------------
 

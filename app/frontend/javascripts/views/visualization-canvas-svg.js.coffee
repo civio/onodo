@@ -47,15 +47,6 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     @nodes_cont            = @container.append('g').attr('class', 'nodes-cont')
     @nodes_labels_cont     = @container.append('g').attr('class', 'nodes-labels-cont')
 
-  clear: ->
-    super()
-    # Clear all containers
-    @container.remove()
-    @relations_cont.remove()
-    @relations_labels_cont.remove()
-    @nodes_cont.remove()
-    @nodes_labels_cont.remove()
-
   render: ( restarForce ) ->
     @updateImages()
     @updateRelations()
