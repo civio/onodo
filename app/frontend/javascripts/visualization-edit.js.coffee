@@ -329,7 +329,7 @@ class VisualizationEdit extends VisualizationBase
 
   onRelationsChangeType: (relation) ->
     #console.log 'onRelationsChangeType', relation
-    @visualizationCanvas.updateRelationsLabelsData()
+    @visualizationCanvas.updateRelationsLabelsData relation.attributes
 
   onRelationsChangeDirection: (relation) ->
     @visualizationCanvas.redraw()

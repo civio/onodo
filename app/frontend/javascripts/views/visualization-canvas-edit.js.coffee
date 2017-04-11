@@ -111,6 +111,10 @@ class VisualizationCanvasEdit extends VisualizationCanvas
   updateDataRelationsVisible: ->
     @data_relations_visibles = @data_relations.filter (d) -> d.source and d.target and d.source.visible and d.target.visible
   
+  updateRelationsLabelsData: (relation) ->
+    # redraw only if relation source or target are an active node
+    if @node_active and (@node_active.id == relation.source_id or @node_active.id == relation.target_id)
+      @redraw()
 
   # Config Methods
   # ---------------
