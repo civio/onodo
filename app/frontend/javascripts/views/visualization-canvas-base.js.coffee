@@ -132,8 +132,9 @@ class VisualizationCanvasBase extends Backbone.View
       # (https://github.com/d3/d3-force#manyBody_strength)
       .strength () => return @parameters.linkStrength
       # set maximum distance between nodes over which this force is considered
+      # higher values increase performance
       # (https://github.com/d3/d3-force#manyBody_distanceMax)
-      .distanceMax 500
+      .distanceMax 1000
       #.theta        @parameters.theta
 
     @force = d3.forceSimulation()
@@ -145,7 +146,7 @@ class VisualizationCanvasBase extends Backbone.View
 
     # Reduce number of force ticks until the system freeze
     # (https://github.com/d3/d3-force#simulation_alphaDecay)
-    @force.alphaDecay 0.05
+    @force.alphaDecay 0.06
 
     # @force = d3.layout.force()
     #   .linkDistance @parameters.linkDistance
