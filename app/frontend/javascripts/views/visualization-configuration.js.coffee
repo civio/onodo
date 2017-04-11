@@ -66,9 +66,11 @@ class VisualizationConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.toogleShowLegend', {value: @parameters.showLegend}
     @updateParameters()
 
+  ###
   onChangeRelationsCurvature: (e) =>
     @parameters.relationsCurvature = $(e.target).val()
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
+  ###
 
   onChangeRelationsLineStyle: (e) =>
     @parameters.relationsLineStyle = parseInt $(e.target).val()
@@ -96,7 +98,7 @@ class VisualizationConfiguration extends Backbone.View
     @updateParameters()
   
   updateParameters: =>
-    console.log 'parameters', @parameters
+    #console.log 'parameters', @parameters
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
   setupSliders: ->

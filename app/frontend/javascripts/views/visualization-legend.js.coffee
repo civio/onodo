@@ -41,6 +41,10 @@ class VisualizationLegend extends Backbone.View
         @$el.find('.visualization-graph-legend-color').hide()
 
 
+  toggle: ->
+    @$el.toggle()
+
+
   setupSizeLegend: (scale_size) ->
     # add class size & show legend size group
     legend_size = @$el.addClass('size').find('.visualization-graph-legend-size').show()

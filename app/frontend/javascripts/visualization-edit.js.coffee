@@ -1,5 +1,6 @@
 VisualizationBase            = require './visualization-base.js'
 VisualizationCanvasEdit      = require './views/visualization-canvas-edit.js'
+VisualizationLegend          = require './views/visualization-legend.js'
 VisualizationNavigation      = require './views/visualization-navigation.js'
 VisualizationActions         = require './views/visualization-actions.js'
 VisualizationShare           = require './views/visualization-share.js'
@@ -34,6 +35,7 @@ class VisualizationEdit extends VisualizationBase
     @setupData()
     # Setup Views
     @visualizationCanvas         = new VisualizationCanvasEdit()
+    @visualizationLegend         = new VisualizationLegend()
     @visualizationNavigation     = new VisualizationNavigation()
     @visualizationActions        = new VisualizationActions {collection: @nodes}
     @visualizationShare          = new VisualizationShare()
@@ -136,8 +138,11 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabel, @
     Backbone.on 'visualization.config.toogleNodesLabelComplete',    @onToogleNodesLabelComplete, @
     Backbone.on 'visualization.config.toogleNodesImage',            @onToogleNodesImage, @
+    Backbone.on 'visualization.config.toogleShowLegend',            @onToogleShowLegend, @
+    ###
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
+    ###
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
     Backbone.on 'visualization.networkanalysis.success',            @onNetworkAnalysisSuccess, @
@@ -151,8 +156,11 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.config.updateNodesSizeColumn'
     Backbone.off 'visualization.config.toogleNodesLabel'
     Backbone.off 'visualization.config.toogleNodesImage'
+    Backbone.off 'visualization.config.toogleShowLegend'
+    ###
     Backbone.off 'visualization.config.toogleNodesWithoutRelation'
     Backbone.off 'visualization.config.updateRelationsCurvature'
+    ###
     Backbone.off 'visualization.config.updateRelationsLineStyle'
     Backbone.off 'visualization.config.updateForceLayoutParam'
     Backbone.off 'visualization.networkanalysis.success'
@@ -367,12 +375,17 @@ class VisualizationEdit extends VisualizationBase
 
   onToogleNodesImage: (e) ->
     @visualizationCanvas.toogleNodesImage e.value
+
+  onToogleShowLegend: (e) ->
+    @visualizationLegend.toggle()
   
+  ###
   onToogleNodesWithoutRelation: (e) ->
     @visualizationCanvas.toogleNodesWithoutRelation e.value
 
   onUpdateRelationsCurvature: (e) ->
     @visualizationCanvas.updateRelationsCurvature e.value
+  ###
 
   onUpdateRelationsLineStyle: (e) ->
     @visualizationCanvas.updateRelationsLineStyle e.value

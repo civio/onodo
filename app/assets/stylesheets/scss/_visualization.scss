@@ -700,7 +700,7 @@ $node-color-12: #e0deda;
     }
 
     .panel-body{
-      padding: 0 $grid-gutter-width/2 $grid-gutter-width/3 $grid-gutter-width/6;
+      padding: 0 $grid-gutter-width/2 $grid-gutter-width/6 $grid-gutter-width/6;
     }
 
     &.collapsed{
@@ -788,9 +788,10 @@ $node-color-12: #e0deda;
     }
     .visualization-graph-legend-color{
       margin-left: 0;
+      margin-right: 0;
     }
     .visualization-graph-legend-color.qualitative {
-      padding-left: 96px;
+      padding-left: 126px;
     }
   }
 
@@ -880,6 +881,10 @@ $node-color-12: #e0deda;
       color: $text-color;
     }
   }
+}
+
+.visualizations.edit .visualization-graph .visualization-graph-legend{
+  bottom: $grid-gutter-width/6;
 }
 
 .visualization-graph-info{
