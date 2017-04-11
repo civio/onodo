@@ -105,6 +105,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
         if callback
           d.imgObj.addEventListener 'load', callback
         d.imgObj.src = d.img
+    else
+      d.img = null
 
   setNodeStroke: (d) ->
     if @node_active and d.id == @node_active.id
@@ -197,17 +199,25 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.scale @viewport.scale, @viewport.scale
     # draw relations, label & nodes
     if @node_active or @node_hovered
+      @drawRelationsStyle()
       @drawRelationsActive()
       @drawRelationsLabels()
+      @drawNodesStyle()
       @drawNodesActive()
       @drawNodesLabels()
     else
+      @drawRelationsStyle()
       @drawRelations()
+      @drawNodesStyle()
       @drawNodes()
       if @parameters.showNodesLabel
         @drawNodesLabels()
     # context restore
     @context.restore()
+
+  drawNodesStyle: ->
+    @context.lineCap = 'round'
+    @context.setLineDash []
 
   drawNodes: ->
     @data_nodes_visibles.forEach (d) =>
@@ -279,7 +289,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
         @context.strokeText d.short_label, x, ypos+1
         @context.fillText   d.short_label, x, ypos
 
-  drawRelations: ->
+  drawRelationsStyle: ->
     # make stroke color dynamic based on nodes state !!!
     @context.lineWidth = 1
     if @parameters.relationsLineStyle == 1
@@ -288,6 +298,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
     else if @parameters.relationsLineStyle == 2
       @context.lineCap = 'round'
       @context.setLineDash [0.25, 3]
+
+  drawRelations: ->
     @context.strokeStyle = '#cccccc'
     @context.beginPath()
     @data_relations_visibles.forEach (link) =>
@@ -299,14 +311,6 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @context.closePath()
 
   drawRelationsActive: ->
-    # make stroke color dynamic based on nodes state !!!
-    @context.lineWidth = 1
-    if @parameters.relationsLineStyle == 1
-      @context.lineCap = 'square'
-      @context.setLineDash [4, 3]
-    else if @parameters.relationsLineStyle == 2
-      @context.lineCap = 'round'
-      @context.setLineDash [0.25, 3]
     @data_relations_visibles.forEach (link) =>
       @context.strokeStyle = link.color
       @context.beginPath()
@@ -411,7 +415,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   onCanvasDragStart: =>
     if @node_hovered
       @force
-        .alphaTarget 0.1
+        .alphaTarget 0.05
         .restart()
     unless @node_hovered
       @canvas.style 'cursor','move'

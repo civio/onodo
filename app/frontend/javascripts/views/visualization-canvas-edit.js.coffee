@@ -147,26 +147,27 @@ class VisualizationCanvasEdit extends VisualizationCanvas
 
   toogleNodesImage: (value) =>
     @parameters.showNodesImage = value
-    @updateNodes()
+    @data_nodes_visibles.forEach (d) =>
+      @setNodeImage d
+    @redraw()
   
-  # toogleNodesWithoutRelation: (value) =>
-  #   if value
-  #     @data_nodes.forEach (d) =>
-  #       if !@hasNodeRelations(d)
-  #         @removeNode d
-  #   else
-  #     # TODO!!! Check visibility before add a node
-  #     @data_nodes.forEach (d) =>
-  #       if !@hasNodeRelations(d)
-  #         @addNode d
-  #   @render()
+  ###
+  toogleNodesWithoutRelation: (value) =>
+    if value
+      @data_nodes_visibles.forEach (d) =>
+        if !@hasNodeRelations(d)
+          @removeNode d
+    else
+      # TODO!!! Check visibility before add a node
+      @data_nodes_visibles.forEach (d) =>
+        if !@hasNodeRelations(d)
+          @addNode d
+    @render()
 
   updateRelationsCurvature: (value) ->
     @parameters.relationsCurvature = value
-    #@onTick()
-
-  updateRelationsLineStyle: (value) ->
-    #@relations_cont.attr 'class', 'relations-cont '+@getRelationsLineStyle(value)
+    @redraw()
+  ###
 
   updateForceLayoutParameter: (param, value) ->
     #console.log 'updateForceLayoutParameter', param, value
@@ -185,7 +186,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     #   @force.theta value
     # else if param == 'gravity'
     #  @force.gravity value
-    @force.alpha(0.15).restart()
+    @restartForce()
 
 
   # Auxiliar Methods

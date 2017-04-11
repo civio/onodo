@@ -388,7 +388,7 @@ class VisualizationEdit extends VisualizationBase
   ###
 
   onUpdateRelationsLineStyle: (e) ->
-    @visualizationCanvas.updateRelationsLineStyle e.value
+    @visualizationCanvas.redraw()
 
   onUpdateForceLayoutParam: (e) ->
     @visualizationCanvas.updateForceLayoutParameter e.name, e.value
