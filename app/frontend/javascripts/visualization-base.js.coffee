@@ -33,7 +33,7 @@ class VisualizationBase
     showLegend:             1
     relationsCurvature:     1
     relationsLineStyle:     0
-    linkDistance:           100
+    linkDistance:           120
     linkStrength:           -30
   }
 

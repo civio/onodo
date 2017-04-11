@@ -145,7 +145,7 @@ class VisualizationCanvasBase extends Backbone.View
 
     # Reduce number of force ticks until the system freeze
     # (https://github.com/d3/d3-force#simulation_alphaDecay)
-    @force.alphaDecay 0.03
+    @force.alphaDecay 0.05
 
     # @force = d3.layout.force()
     #   .linkDistance @parameters.linkDistance
@@ -158,9 +158,9 @@ class VisualizationCanvasBase extends Backbone.View
     #   .on           'tick', @onTick
 
     @forceDrag = d3.drag()
-      .on('start',  @onNodeDragStart)
-      .on('drag',   @onNodeDragged)
-      .on('end',    @onNodeDragEnd)
+      .on 'start',  @onNodeDragStart
+      .on 'drag',   @onNodeDragged
+      .on 'end',    @onNodeDragEnd
 
   # Override with Canvas or SVG
   setupCanvas: ->
@@ -191,11 +191,11 @@ class VisualizationCanvasBase extends Backbone.View
 
   updateForce: (restarForce) ->
     # update force nodes & links
-    @force.nodes(@data_nodes)
+    @force.nodes @data_nodes
     @force.force('link').links(@data_relations_visibles)
     # restart force
     if restarForce
-      @force.alpha(0.3).restart()
+      @restartForce()
     ###
     # Run statci force layout https://bl.ocks.org/mbostock/1667139
     ticks = Math.ceil(Math.log(@force.alphaMin()) / Math.log(1 - @force.alphaDecay()))
@@ -203,6 +203,11 @@ class VisualizationCanvasBase extends Backbone.View
       @force.tick()
     @onTick()
     ###
+
+  restartForce: ->
+    @force
+      .alpha 0.15
+      .restart()
 
   # Used in app-visualization-demo & visualization-story
   updateData: (nodes, relations) ->
