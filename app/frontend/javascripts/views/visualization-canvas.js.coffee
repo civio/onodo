@@ -97,11 +97,13 @@ class VisualizationCanvas extends VisualizationCanvasBase
     else
       d.fill = @COLOR_SOLID[@parameters.nodesColor]
 
-  setNodeImage: (d) ->
+  setNodeImage: (d, callback) ->
     if @parameters.showNodesImage
       d.img = @getImage d
       if d.img
         d.imgObj = new Image()
+        if callback
+          d.imgObj.addEventListener 'load', callback
         d.imgObj.src = d.img
 
   setNodeStroke: (d) ->
@@ -177,7 +179,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   # Drawing methods
   # -------------------
 
-  redraw: ->
+  redraw: =>
     if @force.alpha() < @force.alphaMin()
       @onTick()
 

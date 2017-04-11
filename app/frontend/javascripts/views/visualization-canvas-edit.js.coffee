@@ -71,8 +71,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
   updateNodeImage: (node) ->
     node = @getNodeById node.id
     if node
-      @setNodeImage node
-      @redraw()
+      @setNodeImage node, @redraw
 
 
   # Relation Methods
