@@ -472,6 +472,7 @@ $node-color-12: #e0deda;
 
     .btn-share,
     .btn-configure,
+    .btn-fix-nodes,
     .btn-story-info{
       float: right;
       background-color: white;
@@ -503,20 +504,25 @@ $node-color-12: #e0deda;
       }
     }
 
-    .btn-share .icon-share{
-      @include retina-sprite( $icon-share-group );
-      display: inline-block;
-      position: relative;
-      top: 2px;
-      right: -1px;
-    }
-
-    .btn-configure .icon-configure{
-      @include retina-sprite( $icon-configuration-group );
+    .btn-share .icon-share,
+    .btn-configure .icon-configure,
+    .btn-fix-nodes .icon-fix-nodes{
       display: inline-block;
       position: relative;
       top: 2px;
       right: 0px;
+    }
+
+    .btn-share .icon-share{
+      @include retina-sprite( $icon-share-group );
+      right: -1px;
+    }
+    .btn-configure .icon-configure{
+      @include retina-sprite( $icon-configuration-group );
+    }
+    .btn-fix-nodes .icon-fix-nodes{
+      @include retina-sprite( $icon-fix-nodes-group );
+      right: 1px;
     }
 
     .btn-story-info{
