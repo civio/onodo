@@ -160,6 +160,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
         d.state = 1 # highlighted state
       if @node_hovered and (d.source_id == @node_hovered.id or d.target_id == @node_hovered.id)
         d.state = 1 # highlighted state
+    else if d.disabled
+      d.state = -1 # weaken state
 
   setRelationColor: (d) ->
     if d.state == 0
@@ -168,7 +170,6 @@ class VisualizationCanvas extends VisualizationCanvasBase
       d.color = '#b0b0b0' # highlighted state
     else
       d.color = '#eeeeee' # weaken state
-      
 
   # Drawing methods
   # -------------------
@@ -189,17 +190,16 @@ class VisualizationCanvas extends VisualizationCanvasBase
     # translate & scale viewport
     @context.translate (@viewport.center.x+@viewport.translate.x)|0, (@viewport.center.y+@viewport.translate.y)|0
     @context.scale @viewport.scale, @viewport.scale
-    # draw relations, label & nodes
+    # draw relations
+    @drawRelationsStyle()
+    @drawRelations()
+    # draw relations labels, nodes & noes labels
     if @node_active or @node_hovered
-      @drawRelationsStyle()
-      @drawRelationsActive()
       @drawRelationsLabels()
       @drawNodesStyle()
       @drawNodesActive()
       @drawNodesLabels()
     else
-      @drawRelationsStyle()
-      @drawRelations()
       @drawNodesStyle()
       @drawNodes()
       if @parameters.showNodesLabel
@@ -264,6 +264,9 @@ class VisualizationCanvas extends VisualizationCanvasBase
       .forEach @drawNodeLabel
 
   drawNodeLabel: (d) =>
+    # Skip labels for disabled nodes except hovered
+    if d.disabled and d.state != 1
+      return
     if d.name and d.name != ''
       ypos = null
       x = d.x|0
@@ -292,17 +295,6 @@ class VisualizationCanvas extends VisualizationCanvasBase
       @context.setLineDash [0.25, 3]
 
   drawRelations: ->
-    @context.strokeStyle = '#cccccc'
-    @context.beginPath()
-    @data_relations_visibles.forEach (link) =>
-      if link.direction
-        @drawRelationArrow link.source, link.target
-      else
-        @drawRelation link.source, link.target
-    @context.stroke()
-    @context.closePath()
-
-  drawRelationsActive: ->
     @data_relations_visibles.forEach (link) =>
       @context.strokeStyle = link.color
       @context.beginPath()

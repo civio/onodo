@@ -157,6 +157,7 @@ class VisualizationCanvasBase extends Backbone.View
   render: ( restarForce ) ->
     #console.log 'render', restarForce
     @updateNodes()
+    @updateRelations()
     @updateForce restarForce
 
   updateForce: (restarForce) ->
@@ -179,15 +180,21 @@ class VisualizationCanvasBase extends Backbone.View
       .alpha 0.15
       .restart()
 
-  # Used in visualization-story -> CHECKOUT THIS!!! 
+  # Used in visualization-story to update visualization states
   updateData: (nodes, relations) ->
-    # console.log 'canvas current Data', @data_nodes, @data_relations
+    #console.log 'updateData',nodes, relations
     # Setup disable values in nodes
-    @data_nodes.forEach (node) ->
+    @data_nodes_visibles.forEach (node) ->
       node.disabled = nodes.indexOf(node.id) == -1
-    # Setup disable values in relations -> CHECKOUT THIS!!! (we must store this in data_relations & update data_relations_visible based on this)
+    # Setup disable values in relations
     @data_relations_visibles.forEach (relation) ->
       relation.disabled = relations.indexOf(relation.id) == -1    
+    # update nodes fill & redraw
+    @data_nodes_visibles.forEach (d) =>
+      @setNodeFill d
+    # update relations state & stroke
+    @updateRelations()
+    @redraw()
 
   addNodeData: (node) =>
     # check if node is present in @data_nodes
