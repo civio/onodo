@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160705162558) do
+ActiveRecord::Schema.define(version: 20170412151306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20160705162558) do
     t.integer  "dataset_id"
     t.string   "image"
     t.hstore   "custom_fields"
+    t.integer  "posx"
+    t.integer  "posy"
   end
 
   add_index "nodes", ["custom_fields"], name: "index_nodes_on_custom_fields", using: :gist
