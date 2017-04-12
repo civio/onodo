@@ -71,7 +71,7 @@ class Api::NodesController < ApiController
   end
 
   def node_params
-    params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
+    params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :posx, :posy, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
   end
 
 end
