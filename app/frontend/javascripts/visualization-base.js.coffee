@@ -25,6 +25,7 @@ class VisualizationBase
   parametersDefault: {
     nodesColor:             'qualitative'
     nodesColorColumn:       'node_type'
+    nodesFixed:             false
     nodesSize:              1
     nodesSizeColumn:        'relations'
     showNodesLabel:         1
@@ -73,7 +74,7 @@ class VisualizationBase
     @parameters = $.parseJSON @visualization.get('parameters')
     @setupParameters()
     # Setup VisualizationCanvas
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
+    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters, @nodes
     @visualizationCanvas.render()
     if @visualizationLegend
       @visualizationLegend.setup @parameters
@@ -104,6 +105,7 @@ class VisualizationBase
     # setup parameters
     @parameters.nodesColor              = @parameters.nodesColor || @parametersDefault.nodesColor
     @parameters.nodesColorColumn        = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
+    @parameters.nodesFixed              = @parameters.nodesFixed || @parametersDefault.nodesFixed
     @parameters.nodesSize               = @parameters.nodesSize || @parametersDefault.nodesSize
     @parameters.nodesSizeColumn         = @parameters.nodesSizeColumn || @parametersDefault.nodesSizeColumn
     @parameters.showNodesLabel          = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel

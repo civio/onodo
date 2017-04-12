@@ -130,6 +130,8 @@ class VisualizationEdit extends VisualizationBase
   # Override bindVisualizationEvents to add config events
   bindVisualizationEvents: ->
     super()
+    # Listen to Action events
+    Backbone.on 'visualization.actions.fixNodes',                   @onFixNodes, @
     # Listen to Config Panel events
     Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesColorColumn',      @onUpdateNodesColorColumn, @
@@ -149,6 +151,8 @@ class VisualizationEdit extends VisualizationBase
 
   unbindVisualizationEvents: ->
     super()
+    # Listen to Action events
+    Backbone.off 'visualization.actions.fixNodes'
     # Listen to Config Panel events
     Backbone.off 'visualization.config.updateNodesColor'
     Backbone.off 'visualization.config.updateNodesColorColumn'
@@ -354,6 +358,10 @@ class VisualizationEdit extends VisualizationBase
   onPanelConfigureHide: =>
     @visualizationConfiguration.$el.removeClass 'active'
     $('.visualization-graph-component').css 'margin-left', 0
+
+  onFixNodes: (e) ->
+    @visualizationConfiguration.updateParameter 'nodesFixed', !@parameters.nodesFixed
+    #@visualizationConfiguration.updateParameter 'nodesFixed', e.value
 
   onUpdateNodesColor: (e) ->
     @visualizationCanvas.updateNodesColor e.value

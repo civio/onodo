@@ -6,15 +6,19 @@ class VisualizationActions extends Backbone.View
   el:          '.visualization-graph-menu-actions'
   search_form: null
   share_panel: null
+  fix_nodes:   null
 
   initialize: ->
     @share_panel = $('#visualization-share')
     @search_form = @$el.find('.search-form input')
+    @fix_nodes   = @$el.find('.btn-fix-nodes')
     # Setup Share Panel Show/Hide
     @$el.find('.btn-share').click      @onPanelShareShow
     @share_panel.find('.close').click  @onPanelShareHide
     # Setup Search Input Events
     @search_form.focusin( @onSearchNodeFocus ).focusout( @onSearchNodeUnfocus )
+    # Setup Fix Nodes Events
+    @fix_nodes.click @onFixNodesClick
 
   render: ->
     @setupTypehead()
@@ -65,5 +69,8 @@ class VisualizationActions extends Backbone.View
       Backbone.trigger 'visualization.actions.search', {node: node}
       # trigger visualization.node.showInfo event to show panel node info
       Backbone.trigger 'visualization.node.showInfo', {node: node.id}
+
+  onFixNodesClick: ->
+    Backbone.trigger 'visualization.actions.fixNodes', {value: true}
 
 module.exports = VisualizationActions

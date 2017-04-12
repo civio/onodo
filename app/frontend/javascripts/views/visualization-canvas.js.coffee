@@ -180,6 +180,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   # Tick Function
   onTick: =>
+    #console.log 'onTick'
     # clear canvas
     # @context.clearRect 0, 0, @viewport.width, @viewport.height
     # draw background
@@ -395,17 +396,23 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   # Canvas Drag Events
   onCanvasDragStart: =>
-    if @node_hovered
+    if !@node_hovered
+      @canvas.style 'cursor','move'
+    else if !@parameters.nodesFixed
       @force
         .alphaTarget 0.05
-        .restart()
-    unless @node_hovered
-      @canvas.style 'cursor','move'
+        .restart()      
 
   onCanvasDragged: =>
     if @node_hovered
-      @node_hovered.fx = (d3.event.x - @viewport.center.x - @viewport.translate.x) / @viewport.scale
-      @node_hovered.fy = (d3.event.y - @viewport.center.y - @viewport.translate.y) / @viewport.scale
+      x = (d3.event.x - @viewport.center.x - @viewport.translate.x) / @viewport.scale
+      y = (d3.event.y - @viewport.center.y - @viewport.translate.y) / @viewport.scale
+      if !@parameters.nodesFixed
+        @node_hovered.fx = x
+        @node_hovered.fy = y
+      else
+        @node_hovered.x = x
+        @node_hovered.y = y
       @redraw()
     else
       @viewport.x  += d3.event.dx
@@ -416,9 +423,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     d3.event.sourceEvent.stopPropagation()  # silence other listeners
 
   onCanvasDragEnd: =>
-    if @node_hovered
-      @force.alphaTarget 0
-    else
+    if !@node_hovered
       @canvas.style 'cursor','default'
       # Skip if viewport has no translation
       if @viewport.dx == 0 and @viewport.dy == 0
@@ -426,6 +431,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
         return
       # TODO! Add viewportMove action to history
       @viewport.dx = @viewport.dy = 0;
+    else if !@parameters.nodesFixed
+      @force.alphaTarget 0
 
   # Canvas Mouse Events
   onCanvasEnter: =>

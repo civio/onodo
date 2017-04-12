@@ -1,3 +1,4 @@
+d3 = require '../dist/d3'
 VisualizationCanvas = require './visualization-canvas.js'
 
 class VisualizationCanvasEdit extends VisualizationCanvas
@@ -123,6 +124,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     if @node_active and (@node_active.id == relation.source_id or @node_active.id == relation.target_id)
       @redraw()
 
+
   # Config Methods
   # ---------------
     
@@ -195,6 +197,32 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     # else if param == 'gravity'
     #  @force.gravity value
     @restartForce()
+
+
+  # Mouse Events Listeners
+  # -------------------
+
+  # STORE NODES POSITION
+  onCanvasDragEnd: =>
+    if @node_hovered
+      if !@parameters.nodesFixed
+        @force.alphaTarget 0
+      else
+        # get node hovered as Node model
+        node = @nodes_collection.get @node_hovered
+        # save xpos & ypos in node model
+        node.save {
+            'posx': @node_hovered.x
+            'posy': @node_hovered.y
+          }, true
+    else
+      @canvas.style 'cursor','default'
+      # Skip if viewport has no translation
+      if @viewport.dx == 0 and @viewport.dy == 0
+        Backbone.trigger 'visualization.node.hideInfo'
+        return
+      # TODO! Add viewportMove action to history
+      @viewport.dx = @viewport.dy = 0;
 
 
   # Auxiliar Methods

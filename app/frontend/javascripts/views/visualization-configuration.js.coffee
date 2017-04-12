@@ -101,6 +101,11 @@ class VisualizationConfiguration extends Backbone.View
     #console.log 'parameters', @parameters
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
+  updateParameter: (key, value) ->
+    console.log 'updateParameter', key, value
+    @parameters[key] = value
+    @updateParameters()
+
   setupSliders: ->
     # Initialize sliders
     #@sliderCurvature    = new Slider '#curvature'

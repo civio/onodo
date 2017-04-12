@@ -20,6 +20,6 @@ class VisualizationStory extends Visualization
   showChapter: (nodes, relations) ->
     # Update VisualizationCanvas data based on chapter nodes & relations
     @visualizationCanvas.updateData nodes, relations
-    @visualizationCanvas.render()
+    @visualizationCanvas.redraw()
 
 module.exports = VisualizationStory
