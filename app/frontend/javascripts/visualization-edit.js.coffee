@@ -360,8 +360,8 @@ class VisualizationEdit extends VisualizationBase
     $('.visualization-graph-component').css 'margin-left', 0
 
   onFixNodes: (e) ->
-    @visualizationConfiguration.updateParameter 'nodesFixed', !@parameters.nodesFixed
-    #@visualizationConfiguration.updateParameter 'nodesFixed', e.value
+    @visualizationConfiguration.updateParameter 'nodesFixed', e.value
+    @visualizationCanvas.render()
 
   onUpdateNodesColor: (e) ->
     @visualizationCanvas.updateNodesColor e.value
