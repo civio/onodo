@@ -28,6 +28,8 @@ class VisualizationActions extends Backbone.View
     if @parameters.nodesFixed
       @$fix_nodes.addClass 'fixed'
     @setupTypehead()
+    # show actions menu
+    @$el.addClass 'visible'
 
   setupTypehead: ->
     # search only visible nodes

@@ -79,6 +79,7 @@ class VisualizationBase
     if @visualizationLegend
       @visualizationLegend.setup @parameters
       @visualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
+    @visualizationNavigation.render()
     @visualizationActions.render @parameters
     # Setup Visualization Events
     @bindVisualizationEvents()

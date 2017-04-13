@@ -2,9 +2,6 @@ class VisualizationNavigation extends Backbone.View
 
   el: '.visualization-graph-menu-navigation'
 
-  initialize: ->
-    @render()
-
   render: -> 
     @$el.find('.zoomin').click ->
       $(this).trigger 'blur'
@@ -15,6 +12,8 @@ class VisualizationNavigation extends Backbone.View
     @$el.find('.fullscreen').click ->
       $(this).trigger 'blur'
       Backbone.trigger 'visualization.navigation.fullscreen'
+    # show configuration menu
+    @$el.addClass 'visible'
     return this
 
 module.exports = VisualizationNavigation
