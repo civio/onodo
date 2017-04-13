@@ -504,6 +504,18 @@ $node-color-12: #e0deda;
       }
     }
 
+    .btn-fix-nodes:hover .title-unfix{
+      display: none;
+    }
+    .btn-fix-nodes.fixed:hover{
+      .title-fix{
+        display: none;
+      }
+      .title-unfix{
+        display: inline;
+      }
+    }
+
     .btn-share .icon-share,
     .btn-configure .icon-configure,
     .btn-fix-nodes .icon-fix-nodes{
@@ -523,6 +535,9 @@ $node-color-12: #e0deda;
     .btn-fix-nodes .icon-fix-nodes{
       @include retina-sprite( $icon-fix-nodes-group );
       right: 1px;
+    }
+    .btn-fix-nodes.fixed .icon-fix-nodes{
+      @include retina-sprite( $icon-fix-nodes-fixed-group );
     }
 
     .btn-story-info{

@@ -102,7 +102,7 @@ class VisualizationConfiguration extends Backbone.View
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
 
   updateParameter: (key, value) ->
-    console.log 'updateParameter', key, value
+    #console.log 'updateParameter', key, value
     @parameters[key] = value
     @updateParameters()
 

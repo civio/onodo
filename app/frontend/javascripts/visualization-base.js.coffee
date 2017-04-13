@@ -79,7 +79,7 @@ class VisualizationBase
     if @visualizationLegend
       @visualizationLegend.setup @parameters
       @visualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
-    @visualizationActions.render()
+    @visualizationActions.render @parameters
     # Setup Visualization Events
     @bindVisualizationEvents()
     # Trigger synced event for Stories
