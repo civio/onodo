@@ -21,12 +21,12 @@ class VisualizationCanvasBase extends Backbone.View
   COLOR_QUANTITATIVE: ['#fff0c2', '#ffe795', '#fedf69', '#fed63c', '#b5ba7c', '#6d9ebb', '#2482fb', '#2b64c5', '#31458f', '#382759']
 
   canvas:                 null
-  data:                   null
+  nodes_collection:       null
+  relations_collection:   null
   data_nodes:             []
   data_nodes_visibles:    []
   data_relations:         []
   data_relations_visibles:[]
-  nodes_collection:       null
   force:                  null
   forceDrag:              null
   forceLink:              null
@@ -64,12 +64,12 @@ class VisualizationCanvasBase extends Backbone.View
       y: 0
 
 
-  setup: (_data, _parameters, _nodes) ->
-    console.log _nodes
-    @parameters       = _parameters
-    @nodes_collection = _nodes
+  setup: (_nodesCollection, _relationsCollection, _parameters) ->
+    @nodes_collection     = _nodesCollection
+    @relations_collection = _relationsCollection
+    @parameters           = _parameters
     # Setup data
-    @setupData _data
+    @setupData()
     # Setup viewport
     @setupViewport()
     # Setup force layout
@@ -100,14 +100,19 @@ class VisualizationCanvasBase extends Backbone.View
       fpsMeter.html Math.round(1/avgFrameLength*1000) + ' fps'
     ###
 
-  setupData: (data) ->
+  setupData: ->
     @data_nodes              = []
     @data_relations          = []
     @data_relations_visibles = []
-    # Setup Nodes
-    data.nodes.forEach @addNodeData
-    # Setup Relations: change relations source & target N based id to 0 based ids & setup linkedByIndex object
-    data.relations.forEach @addRelationData
+    # setup nodes data from nodes_collection
+    @nodes_collection.forEach (d) =>
+      @addNodeData d.attributes
+    # setup relations data from relations_collection 
+    # (change relations source & target N based id to 0 based ids & setup linkedByIndex object)
+    @relations_collection.forEach (d) =>
+      d.attributes.source = d.attributes.source_id-1
+      d.attributes.target = d.attributes.target_id-1
+      @addRelationData d.attributes
     # Setup color scale
     @setColorScale()
     # Add linkindex to relations

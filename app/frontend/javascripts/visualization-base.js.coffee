@@ -74,7 +74,7 @@ class VisualizationBase
     @parameters = $.parseJSON @visualization.get('parameters')
     @setupParameters()
     # Setup VisualizationCanvas
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters, @nodes
+    @visualizationCanvas.setup @nodes, @relations, @parameters
     @visualizationCanvas.render()
     if @visualizationLegend
       @visualizationLegend.setup @parameters
@@ -84,17 +84,6 @@ class VisualizationBase
     @bindVisualizationEvents()
     # Trigger synced event for Stories
     Backbone.trigger 'visualization.synced'
-
-  # Format data from nodes & relations collections for VisualizationCanvas
-  getVisualizationCanvasData: ( nodes, relations ) ->
-    data =
-      nodes:      nodes.map     (d) -> return d.attributes
-      relations:  relations.map (d) -> return d.attributes
-    # Fix relations source & target index (based on 1 instead of 0)
-    data.relations.forEach (d) ->
-      d.source = d.source_id-1
-      d.target = d.target_id-1
-    return data
 
   # Parameters methods
   setupParameters: ->

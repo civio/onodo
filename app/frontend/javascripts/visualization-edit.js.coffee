@@ -249,7 +249,7 @@ class VisualizationEdit extends VisualizationBase
     # update tables collections
     @tableNodes.render()
     @tableRelations.render()
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
+    @visualizationCanvas.setup @nodes, @relations, @parameters
     @visualizationCanvas.render()
     @visualizationActions.updateSearchData()
     # bind events again
