@@ -17,7 +17,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
   addNode: (node) ->
     #console.log 'addNode', node
     @addNodeData node
-    @render true
+    @render 0.15
 
   removeNode: (node) ->
     # unfocus node to remove
@@ -29,7 +29,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @removeNodeRelations node
     # update scale nodes size
     @setScaleNodesSize()
-    @render true
+    @render 0.15
 
   showNode: (node) ->
     #console.log 'show node', node
@@ -39,7 +39,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @updateDataRelationsVisible()
     # update scale nodes size
     @setScaleNodesSize()
-    @render true
+    @render 0.15
 
   hideNode: (node) ->
     # unfocus node to remove
@@ -51,7 +51,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @updateDataRelationsVisible()
     # update scale nodes size
     @setScaleNodesSize()
-    @render true
+    @render 0.15
 
   addNodeVisibleData: (node) =>
     @data_nodes_visibles.push node
@@ -81,6 +81,37 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     if node
       @setNodeImage node, @redraw
 
+  fixNodes: ->
+    # store current nodes position
+    data = []
+    @data_nodes_visibles.forEach (node) =>
+      model = @nodes_collection.get node
+      #TODO!!! -> create an API endpoint to update position of all nodes in a visualization
+      ###
+      data.push {
+        id: node.id
+        x: node.x|0
+        y: node.y|0
+      }
+      ###
+      model.save {
+          posx: node.x
+          posy: node.y
+        }, true
+    #console.log JSON.stringify(data)
+    @render()
+
+  unfixNodes: ->
+    # center node before call to render in visualization-edit onFixNodes method
+    @data_nodes_visibles.forEach (node) ->
+      # reset node position & velocity
+      node.x = node.vx = NaN
+      node.y = node.vy = NaN
+      # remove fixed positions
+      node.fx = null
+      node.fy = null
+    @render 1
+    
 
   # Relation Methods
   # ---------------
@@ -91,13 +122,13 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @setScaleNodesSize()
     # set relation states
     @updateRelation relation
-    @render true
+    @render 0.15
 
   removeRelation: (relation) ->
     #console.log 'removeRelation', relation
     @removeRelationData relation
     @setScaleNodesSize()
-    @render true
+    @render 0.15
 
    # maybe we need to split removeVisibleRelationaData & removeRelationData
   removeRelationData: (relation) =>
@@ -196,7 +227,7 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     #   @force.theta value
     # else if param == 'gravity'
     #  @force.gravity value
-    @restartForce()
+    @restartForce 0.15
 
 
   # Mouse Events Listeners

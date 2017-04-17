@@ -158,40 +158,35 @@ class VisualizationCanvasBase extends Backbone.View
     if @parameters.nodesFixed
       @force.stop()
 
-  render: ( restarForce ) ->
+  render: (forceAlpha) ->
     #console.log 'render', restarForce
     @updateNodes()
     @updateRelations()
-    @updateForce restarForce
+    @updateForce forceAlpha
 
-  updateForce: (restarForce) ->
-    console.log 'updateForce', restarForce
+  updateForce: (forceAlpha) ->
     # update force nodes & links
     @force.nodes @data_nodes
     @force.force('link').links(@data_relations_visibles)
     # restart force
-    if restarForce or @parameters.nodesFixed
-      @restartForce()
+    if @parameters.nodesFixed
+      @setFixedNodes()
+    else if forceAlpha
+      @restartForce forceAlpha
 
-  restartForce: ->
-    console.log 'restartForce', @parameters.nodesFixed
-    unless @parameters.nodesFixed
-      # Restart force layout
-      @force
-        .alpha 0.15
-        .restart()
-    else
-      # CHECK!!! if we need to run static force layout (we can skip in case all nodes has posx/posy)
-      # Run static force layout https://bl.ocks.org/mbostock/1667139
-      ticks = Math.ceil(Math.log(@force.alphaMin()) / Math.log(1 - @force.alphaDecay()))
-      console.log 'loop through', ticks, 'ticks'
-      for i in [0...ticks]
-        @force.tick()
-      @data_nodes_visibles.forEach (d) =>
-        if d.posx and d.posy
-          d.x = d.posx
-          d.y = d.posy
-      @onTick()
+  # restart force layout
+  restartForce: (forceAlpha) ->
+    @force
+      .alpha forceAlpha #0.15
+      .restart()
+
+  setFixedNodes: ->
+    @force.alpha 0
+    @data_nodes_visibles.forEach (d) =>
+        d.x = d.posx
+        d.y = d.posy
+    @onTick()
+
 
   # Used in visualization-story to update visualization states
   updateData: (nodes, relations) ->

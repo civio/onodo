@@ -3,11 +3,12 @@ Bloodhound = require 'typeahead.js/dist/bloodhound.min.js'
 
 class VisualizationActions extends Backbone.View
 
-  el:           '.visualization-graph-menu-actions'
-  parameters:   null
-  $search_form: null
-  $share_panel: null
-  $fix_nodes:   null
+  el:               '.visualization-graph-menu-actions'
+  parameters:       null
+  $search_form:     null
+  $share_panel:     null
+  $fix_nodes:       null
+  $fix_nodes_modal: null
 
   initialize: ->
     @$share_panel = $('#visualization-share')
@@ -22,6 +23,10 @@ class VisualizationActions extends Backbone.View
       .focusout @onSearchNodeUnfocus
     # Setup Fix Nodes Events
     @$fix_nodes.click @onFixNodesClick
+    # Setup Fix nodes modal event listenters
+    @$fix_nodes_modal = $('#nodes-fixed-modal')
+    @$fix_nodes_modal.find('#btn-ok').click      @onFixNodesModalConfirm
+    @$fix_nodes_modal.find('#btn-confirm').click @onFixNodesModalConfirm
 
   render: (_parameters) ->
     @parameters = _parameters
@@ -79,7 +84,25 @@ class VisualizationActions extends Backbone.View
       Backbone.trigger 'visualization.node.showInfo', {node: node.id}
 
   onFixNodesClick: =>
+    if @parameters.nodesFixed
+      @$fix_nodes_modal.find('.modal-title .fix-title').hide()
+      @$fix_nodes_modal.find('.modal-title .unfix-title').show()
+      @$fix_nodes_modal.find('.nodes-fix').hide()
+      @$fix_nodes_modal.find('.nodes-unfix').show()
+      @$fix_nodes_modal.find('#btn-ok').hide()
+      @$fix_nodes_modal.find('#btn-confirm').show()
+    else
+      @$fix_nodes_modal.find('.modal-title .fix-title').show()
+      @$fix_nodes_modal.find('.modal-title .unfix-title').hide()
+      @$fix_nodes_modal.find('.nodes-fix').show()
+      @$fix_nodes_modal.find('.nodes-unfix').hide()
+      @$fix_nodes_modal.find('#btn-ok').show()
+      @$fix_nodes_modal.find('#btn-confirm').hide()
+    @$fix_nodes_modal.modal 'show'
+
+  onFixNodesModalConfirm: =>
     @$fix_nodes.toggleClass 'fixed'
+    @$fix_nodes_modal.modal 'hide'
     Backbone.trigger 'visualization.actions.fixNodes', {value: !@parameters.nodesFixed}
 
 module.exports = VisualizationActions

@@ -10,7 +10,7 @@ class VisualizationStory extends Visualization
     # Setup VisualizationCanvas
     @visualizationCanvas.setup @nodes, @relations, @parameters
     $('.visualization-graph-component').css 'margin-left', -230 # translate left half the width of Story Info panel
-    @visualizationCanvas.render false
+    @visualizationCanvas.render()
     # Setup Visualization Events
     @bindVisualizationEvents()
     # Trigger synced event for Stories

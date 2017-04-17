@@ -63,7 +63,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     @setNodeStroke d
     @setNodeFont d
     @setNodeLabel d
-    @setNodeImage d
+    @setNodeImage d, if @parameters.nodesFixed then @redraw else null # if nodesFixed we must redraw when image is loaded
 
   updateNodesState: ->
     @data_nodes_visibles.forEach (d) =>

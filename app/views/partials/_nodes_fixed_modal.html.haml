@@ -1,0 +1,27 @@
+#nodes-fixed-modal.delete-modal.modal.fade{ tabindex: "-1", role: "dialog"}
+  .modal-dialog{role: "document"}
+    .modal-content
+      .modal-header
+        %h4.modal-title
+          %span.fix-title
+            = t 'common.fix_nodes'
+          %span.unfix-title
+            = t 'common.unfix_nodes'
+        %button.close{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
+      .modal-body
+        .nodes-fix
+          %p
+            = t '.nodes_fix'
+        .nodes-unfix
+          %p
+            = t '.nodes_unfix'
+          %p
+            %strong
+              = t 'common.confirm_question'
+      .modal-footer
+        %button#btn-ok.btn.btn-default.btn-primary{type: "button"}
+          = t 'common.ok'
+        %button#btn-confirm.btn.btn-danger{type: "button"}
+          = t 'common.confirm'
+        %button.btn.btn-primary.btn-invert{type: "button", "data-dismiss" => "modal", "aria-label" => t('common.close')}
+          = t 'common.cancel'

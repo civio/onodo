@@ -35,7 +35,10 @@ es:
     relationships: Relaciones
     civio_foundation: Fundación Ciudadana Civio
     demo: Visita guiada
+    fix_nodes: Fijar los nodos
+    unfix_nodes: Desfijar los nodos
 
+    ok: Ok
     cancel: Cancelar
     close: Cerrar
     draft: Borrador
@@ -65,6 +68,7 @@ es:
     previous: Anterior
     next: Siguiente
     confirm: Confirmar
+    confirm_question: ¿Estás seguro?
     download: Descargar
     terms_of_service: Términos y condiciones
     privacy_policy: Política de privacidad
