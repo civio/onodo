@@ -321,12 +321,12 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
   getNodeStroke: (d) =>
     if @node_active and d.id == @node_active.id
       if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-        color = @color_scale d[@parameters.nodesColorColumn]
+        color = @scale_color d[@parameters.nodesColorColumn]
       else
         color = @COLOR_SOLID[@parameters.nodesColor]
     else if @node_hovered and d.id == @node_hovered.id
       if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-        color = @color_scale d[@parameters.nodesColorColumn]
+        color = @scale_color d[@parameters.nodesColorColumn]
       else
         color = @COLOR_SOLID[@parameters.nodesColor]
     else
@@ -339,7 +339,7 @@ class VisualizationCanvasSVG extends VisualizationCanvasBase
     else if @parameters.showNodesImage and d.image != null
       fill = 'url(#node-pattern-'+d.id+')'
     else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      fill = @color_scale d[@parameters.nodesColorColumn] 
+      fill = @scale_color d[@parameters.nodesColorColumn] 
     else
       fill = @COLOR_SOLID[@parameters.nodesColor]
     return fill

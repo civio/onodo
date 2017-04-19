@@ -32,7 +32,9 @@ class VisualizationBase
     showNodesLabelComplete: 0
     showNodesImage:         1
     showLegend:             1
-    relationsCurvature:     1
+    #relationsCurvature:     1
+    relationsWidth:         0
+    relationsWidthColumn:   null
     relationsLineStyle:     0
     linkDistance:           120
     linkStrength:           -30
@@ -78,7 +80,7 @@ class VisualizationBase
     @visualizationCanvas.render()
     if @visualizationLegend
       @visualizationLegend.setup @parameters
-      @visualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
+      @visualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.scale_color
     @visualizationNavigation.render()
     @visualizationActions.render @parameters
     # Setup Visualization Events
@@ -103,6 +105,8 @@ class VisualizationBase
     @parameters.showNodesImage          = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
     @parameters.showLegend              = if typeof @parameters.showLegend != 'undefined' then @parameters.showLegend else @parametersDefault.showLegend
     @parameters.relationsCurvature      = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
+    @parameters.relationsWidth          = @parameters.relationsWidth || @parametersDefault.relationsWidth
+    @parameters.relationsWidthColumn    = @parameters.relationsWidthColumn || @parametersDefault.relationsWidthColumn
     @parameters.relationsLineStyle      = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance            = @parameters.linkDistance || @parametersDefault.linkDistance
     @parameters.linkStrength            = @parameters.linkStrength || @parametersDefault.linkStrength

@@ -33,11 +33,12 @@ class VisualizationCanvasBase extends Backbone.View
   forceManyBody:          null
   linkedByIndex:          {}
   parameters:             null
-  color_scale:            null
   node_active:            null
   node_hovered:           null
+  scale_color:            null
   scale_nodes_size:       null
   scale_labels_size:      null
+  scale_relations_width:  null
   # Viewport object to store drag/zoom values
   viewport:
     width: 0
@@ -113,8 +114,10 @@ class VisualizationCanvasBase extends Backbone.View
       d.attributes.source = d.attributes.source_id-1
       d.attributes.target = d.attributes.target_id-1
       @addRelationData d.attributes
-    # Setup color scale
-    @setColorScale()
+    # setup color scale
+    @setScaleColor()
+    # setup relations width scale
+    @setScaleRelationsWidth()
     # Add linkindex to relations
     #@setLinkIndex()
     #console.log 'current nodes', @data_nodes
@@ -270,24 +273,6 @@ class VisualizationCanvasBase extends Backbone.View
     else
       return 0
 
-  setColorScale: ->
-    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      color_scale_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
-      if @parameters.nodesColor == 'qualitative' 
-        @color_scale = d3.scaleOrdinal().range @COLOR_QUALITATIVE
-        @color_scale.domain _.uniq(color_scale_domain)
-        #console.log 'color_scale_domain', _.uniq(color_scale_domain)
-      else
-        @color_scale = d3.scaleQuantize().range @COLOR_QUANTITATIVE
-        # get max scale value avoiding undefined result
-        color_scale_max = d3.max(color_scale_domain)
-        unless color_scale_max
-          color_scale_max = 0
-        @color_scale.domain [0, color_scale_max]
-        #console.log 'color_scale_domain', d3.max(color_scale_domain)
-      # @color_scale = d3.scaleViridis()
-      #   .domain([d3.max(color_scale_domain), 0])
-
 
   # Resize Methods
   # ---------------
@@ -361,6 +346,34 @@ class VisualizationCanvasBase extends Backbone.View
     @scale_labels_size = d3.scaleQuantize()
       .domain [0, maxValue]
       .range [0, 1, 2, 3]
+
+  setScaleColor: ->
+    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      scale_color_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
+      if @parameters.nodesColor == 'qualitative' 
+        @scale_color = d3.scaleOrdinal().range @COLOR_QUALITATIVE
+        @scale_color.domain _.uniq(scale_color_domain)
+        #console.log 'scale_color_domain', _.uniq(scale_color_domain)
+      else
+        @scale_color = d3.scaleQuantize().range @COLOR_QUANTITATIVE
+        # get max scale value avoiding undefined result
+        scale_color_max = d3.max(scale_color_domain)
+        unless scale_color_max
+          scale_color_max = 0
+        @scale_color.domain [0, scale_color_max]
+        #console.log 'scale_color_domain', d3.max(scale_color_domain)
+      # @scale_color = d3.scaleViridis()
+      #   .domain([d3.max(scale_color_domain), 0])
+
+  setScaleRelationsWidth: ->
+    if @parameters.relationsWidth == 1 and @parameters.relationsWidthColumn
+      scale_relations_width_domain = @data_relations.map (d) => return if d[@parameters.relationsWidthColumn] then d[@parameters.relationsWidthColumn] else 0
+      @scale_relations_width = d3.scalePow()
+        .exponent 2
+        .range [1, 5]
+        .domain [d3.min(scale_relations_width_domain), d3.max(scale_relations_width_domain)]
+    else
+      @scale_relations_width = null
 
   getImage: (d) ->
     # if image is defined and is an object with image.small.url attribute get that

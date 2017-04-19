@@ -28,6 +28,7 @@ export * from "d3-quadtree";
 export {
   scaleLinear,
   scaleOrdinal,
+  scalePow,
   scaleQuantize
 } from "d3-scale";
 

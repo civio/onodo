@@ -104,8 +104,12 @@ class VisualizationEdit extends VisualizationBase
     @visualization.on 'change:node_custom_fields', @onVisualizationChangeNodeCustomField, @
     # Add event handler for each custom_field
     if @visualization.get('node_custom_fields')
-      @visualization.get('node_custom_fields').forEach (custom_field) =>
-        @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
+      @visualization.get('node_custom_fields').forEach (field) =>
+        @nodes.on 'change:'+field.name, @onNodeChangeCustomField, @
+    # Add event handler for each relation custom_field
+    if @visualization.get('relation_custom_fields')
+      @visualization.get('relation_custom_fields').forEach (field) =>
+        @relations.on 'change:'+field.name, @onRelationChangeCustomField, @
 
   unbindCollectionEvents: ->
     # Listen to Collection events (handle tables changes)
@@ -122,10 +126,14 @@ class VisualizationEdit extends VisualizationBase
     @relations.off 'change:direction'
     @relations.off 'remove'
     @visualization.off 'change:node_custom_fields'
-    # Add event handler for each custom_field
+    # Add event handler for each node custom_field
     if @visualization.get('node_custom_fields')
-      @visualization.get('node_custom_fields').forEach (custom_field) =>
-        @nodes.off 'change:'+custom_field.name
+      @visualization.get('node_custom_fields').forEach (field) =>
+        @nodes.off 'change:'+field.name
+    # Add event handler for each relation custom_field
+    if @visualization.get('relation_custom_fields')
+      @visualization.get('relation_custom_fields').forEach (field) =>
+        @relations.off 'change:'+field.name
 
   # Override bindVisualizationEvents to add config events
   bindVisualizationEvents: ->
@@ -145,6 +153,8 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
     ###
+    Backbone.on 'visualization.config.updateRelationsWidth',        @onUpdateRelationsWidth, @
+    Backbone.on 'visualization.config.updateRelationsWidthColumn',  @onUpdateRelationsWidth, @
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
     Backbone.on 'visualization.networkanalysis.success',            @onNetworkAnalysisSuccess, @
@@ -165,6 +175,8 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.config.toogleNodesWithoutRelation'
     Backbone.off 'visualization.config.updateRelationsCurvature'
     ###
+    Backbone.off 'visualization.config.updateRelationsWidth'
+    Backbone.off 'visualization.config.updateRelationsWidthColumn'
     Backbone.off 'visualization.config.updateRelationsLineStyle'
     Backbone.off 'visualization.config.updateForceLayoutParam'
     Backbone.off 'visualization.networkanalysis.success'
@@ -307,12 +319,18 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateNodeImage node
 
   onNodeChangeCustomField: (node, value, options) ->
-    changed_custom_field =  Object.keys(node.changedAttributes())[0]
-    # Update node color if nodesColor is a qualitative or quantitative scale & depends on changed custom_field
-    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == changed_custom_field 
+    field = Object.keys(node.changedAttributes())[0]
+    # Update node color if nodesColor is a qualitative or quantitative scale & depends on changed field
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == field 
       @visualizationCanvas.updateNodesColorValue()
     # Update Panel Info description
     @updateInfoNode node
+
+  onRelationChangeCustomField: (node, value, options) ->
+    field = Object.keys(node.changedAttributes())[0]
+    # Update relations width if relationsWidth is 1 & depends on changed field
+    if @parameters.relationsWidth == 1 and @parameters.relationsWidthColumn == field
+      @visualizationCanvas.updateRelationsWidth()
 
   # When a node_custom_field is added, we add a listener to new custom_field
   onVisualizationChangeNodeCustomField: =>
@@ -397,6 +415,9 @@ class VisualizationEdit extends VisualizationBase
   onUpdateRelationsCurvature: (e) ->
     @visualizationCanvas.updateRelationsCurvature e.value
   ###
+
+  onUpdateRelationsWidth: (e) ->
+    @visualizationCanvas.updateRelationsWidth()
 
   onUpdateRelationsLineStyle: (e) ->
     @visualizationCanvas.redraw()

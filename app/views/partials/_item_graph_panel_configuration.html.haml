@@ -130,6 +130,35 @@
         .row
           .col-sm-6
             %p.configuration-label
+              = t '.relations_width'
+          .col-sm-6.text-right
+            #relations-width.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                  = t '.normal'
+                %span.caret
+              %ul.dropdown-menu
+                %li{ 'data-value': 0 }
+                  %p
+                    = t '.normal'
+                %li{ 'data-value': 1 }
+                  %p
+                    = t '.based_on_column'
+        .row.relations-width-column-container
+          .col-sm-6
+            %p.configuration-label
+              = t '.based_on_column'
+          .col-sm-6.text-right
+            #relations-width-column.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                  = t '.no_number_columns'
+                %span.caret
+              %ul.dropdown-menu
+        %hr
+        .row
+          .col-sm-6
+            %p.configuration-label
               = t '.relations_line_style'
           .col-sm-6.text-right
             %select#relations-line-style.form-control

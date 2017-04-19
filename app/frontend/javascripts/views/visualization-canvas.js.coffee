@@ -49,6 +49,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
   updateRelation: (d) =>
     @setRelationState d
     @setRelationColor d
+    @setRelationWidth d
 
   updateNodes: ->
     @data_nodes_visibles.forEach @updateNode
@@ -86,7 +87,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
     if d.disabled
       d.fill = '#d3d7db'
     else if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
-      d.fill = @color_scale d[@parameters.nodesColorColumn] 
+      d.fill = @scale_color d[@parameters.nodesColorColumn] 
     else
       d.fill = @COLOR_SOLID[@parameters.nodesColor]
 
@@ -170,6 +171,10 @@ class VisualizationCanvas extends VisualizationCanvasBase
       d.color = '#b0b0b0' # highlighted state
     else
       d.color = '#eeeeee' # weaken state
+
+  setRelationWidth: (d) =>
+    d.width = if @scale_relations_width and d[@parameters.relationsWidthColumn] then @scale_relations_width d[@parameters.relationsWidthColumn] else 1
+
 
   # Drawing methods
   # -------------------
@@ -287,7 +292,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawRelationsStyle: ->
     # make stroke color dynamic based on nodes state !!!
-    @context.lineWidth = 1
+    unless @scale_relations_width
+      @context.lineWidth = 1
     if @parameters.relationsLineStyle == 1
       @context.lineCap = 'square'
       @context.setLineDash [4, 3]
@@ -297,6 +303,8 @@ class VisualizationCanvas extends VisualizationCanvasBase
 
   drawRelations: ->
     @data_relations_visibles.forEach (link) =>
+      if @scale_relations_width
+        @context.lineWidth = link.width
       @context.strokeStyle = link.color
       @context.beginPath()
       if link.direction
@@ -343,7 +351,7 @@ class VisualizationCanvas extends VisualizationCanvasBase
         if angle > @HALF_PI or angle < -@HALF_PI
           angle += Math.PI
         @context.save()
-        @context.translate ((d.source.x+d.target.x)*0.5)|0, ((d.source.y+d.target.y)*0.5)|0
+        @context.translate ((d.source.x+d.target.x)*0.5)|0, ((d.source.y+d.target.y-d.width)*0.5)|0
         @context.rotate angle
         @context.fillText d.relation_type, 0, 0
         @context.restore()
