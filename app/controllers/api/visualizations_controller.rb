@@ -55,6 +55,19 @@ class Api::VisualizationsController < ApiController
     end
   end
 
+  def set_nodes_position
+    # get list of nodes
+    nodes = params[:nodes]
+    
+    nodes.each do |n|
+      # update node position
+      node = Node.find(n['id'])
+      node.update(posx: n['x'], posy: n['y'])
+    end
+
+    head :no_content
+  end
+
   def demo_data
     source = Visualization.find(ENV['DEMO_DATA_ID'])
     target = @visualization
