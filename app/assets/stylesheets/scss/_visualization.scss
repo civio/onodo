@@ -1892,6 +1892,19 @@ body.pages.demo{
   }
 }
 
+// Nodes Fixed modal
+#nodes-fixed-modal .loading{
+  .modal-body{
+    background: url(/images/loader.gif) no-repeat center bottom white;
+    padding-bottom: $grid-gutter-width;
+    margin-bottom: $grid-gutter-width;
+  }
+
+  .modal-footer{
+    display: none;
+  }
+}
+
 // Demo Popover
 .popover-demo{
   z-index: 1040;

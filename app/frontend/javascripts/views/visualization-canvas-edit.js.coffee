@@ -85,20 +85,25 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     # store current nodes position
     data = []
     @data_nodes_visibles.forEach (node) =>
-      model = @nodes_collection.get node
-      #TODO!!! -> create an API endpoint to update position of all nodes in a visualization
-      ###
-      data.push {
+      # update nodex posx & posy
+      node.posx = node.x|0
+      node.posy = node.y|0
+      # set node data
+      data.push
         id: node.id
-        x: node.x|0
-        y: node.y|0
-      }
-      ###
-      model.save {
-          posx: node.x
-          posy: node.y
-        }, true
-    #console.log JSON.stringify(data)
+        x: node.posx
+        y: node.posy
+    # send API request to set nodes position
+    $.ajax
+      type:         'POST'
+      url:          '/api/visualizations/'+$('body').data('visualization-id')+'/set-nodes-position/'
+      data:         JSON.stringify({nodes: data})
+      dataType:     'json'
+      contentType:  'application/json'
+      complete:      @onFixNodesSucess
+
+  onFixNodesSucess: =>
+    Backbone.trigger 'visualization.canvas.fixNodesSuccess'
     @render()
 
   unfixNodes: ->

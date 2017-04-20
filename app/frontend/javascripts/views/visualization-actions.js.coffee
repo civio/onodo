@@ -98,11 +98,19 @@ class VisualizationActions extends Backbone.View
       @$fix_nodes_modal.find('.nodes-unfix').hide()
       @$fix_nodes_modal.find('#btn-ok').show()
       @$fix_nodes_modal.find('#btn-confirm').hide()
+    @$fix_nodes_modal.find('.modal-content').removeClass 'loading'
     @$fix_nodes_modal.modal 'show'
 
   onFixNodesModalConfirm: =>
+    # hide model if nodes fixed (wait for visualization.canvas.fixNodesSuccess event if not foxed)
+    if @parameters.nodesFixed
+      @hideModal()
+    else
+      @$fix_nodes_modal.find('.modal-content').addClass 'loading'
+    Backbone.trigger 'visualization.actions.fixNodes', {value: !@parameters.nodesFixed}
+
+  hideModal: ->
     @$fix_nodes.toggleClass 'fixed'
     @$fix_nodes_modal.modal 'hide'
-    Backbone.trigger 'visualization.actions.fixNodes', {value: !@parameters.nodesFixed}
 
 module.exports = VisualizationActions

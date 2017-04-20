@@ -158,6 +158,7 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
     Backbone.on 'visualization.networkanalysis.success',            @onNetworkAnalysisSuccess, @
+    Backbone.on 'visualization.canvas.fixNodesSuccess',             @onCanvasFixNodesSuccess, @
 
   unbindVisualizationEvents: ->
     super()
@@ -180,6 +181,7 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.config.updateRelationsLineStyle'
     Backbone.off 'visualization.config.updateForceLayoutParam'
     Backbone.off 'visualization.networkanalysis.success'
+    Backbone.off 'visualization.canvas.fixNodesSuccess'
 
   resize: =>
     windowHeight = $(window).height()
@@ -430,6 +432,9 @@ class VisualizationEdit extends VisualizationBase
     $('#visualization-table-selector > li > a[href=#nodes]').trigger 'click'
     # Update vusalization model & nodes collection in Nodes Table
     @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
+
+  onCanvasFixNodesSuccess: (e) ->
+    @visualizationActions.hideModal()
 
   # Auxiliar Info Node method
   updateInfoNode: (node) ->
