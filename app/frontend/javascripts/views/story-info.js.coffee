@@ -39,9 +39,8 @@ class StoryInfo extends Backbone.View
         id:           @model.get('id')
         name:         @model.get('name')
         description:  @model.get('description')
-        image:        @model.get('image').huge.url
+        image:        if @model.get('image') then @model.get('image').huge.url else null
         edit:         @edit
-        #image: if @node.get('image') then @node.get('image').huge.url else null
       }
       @$el.find('.panel-body .index-content, .panel-heading .index-header').addClass 'hide'
       @$el.find('.panel-body .chapter-content, .panel-heading .chapter-header').removeClass 'hide'
