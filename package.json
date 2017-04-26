@@ -55,11 +55,13 @@
     "d3-drag": "^1.0.0",
     "d3-ease": "^1.0.0",
     "d3-force": "^1.0.0",
+    "d3-interpolate": "^1.1.4",
     "d3-scale": "^1.0.1",
+    "d3-quadtree": "^1.0.3",
     "d3-selection": "^1.0.0",
     "d3-selection-multi": "^0.4.1",
     "d3-shape": "^1.0.0",
-    "d3-timer": "^1.0.1",
+    "d3-timer": "^1.0.5",
     "d3-transition": "^1.0.0",
     "d3-zoom": "^1.0.2"
   }

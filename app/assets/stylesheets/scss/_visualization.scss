@@ -226,9 +226,14 @@ $node-color-12: #e0deda;
     height: 560px;
     border-top: 1px solid $gray-lighter;
     border-bottom: 1px solid $gray-lighter;
+    @include transition( margin-left 0.4s ease-out );
 
     &.loading{
       background: url(/images/loader.gif) no-repeat center center transparent;
+    }
+
+    canvas{
+      display: none;
     }
 
     .visualization-empty-msg{
@@ -378,7 +383,12 @@ $node-color-12: #e0deda;
   }
 
   .visualization-graph-menu-navigation{
-    left: $grid-gutter-width/2;
+    left: -$grid-gutter-width;
+    @include transition( left 0.3s ease-out );
+
+    &.visible{
+      left: $grid-gutter-width/2;
+    }
 
     .btn{
       display: block;
@@ -412,8 +422,13 @@ $node-color-12: #e0deda;
   }
 
   .visualization-graph-menu-actions{
-    right: $grid-gutter-width/2;
+    right: -1.5*$grid-gutter-width;
     width: 45px;
+    @include transition( right 0.3s ease-out );
+
+    &.visible{
+      right: $grid-gutter-width/2;
+    }
 
     .btn-search{
       position: relative;
@@ -467,6 +482,7 @@ $node-color-12: #e0deda;
 
     .btn-share,
     .btn-configure,
+    .btn-fix-nodes,
     .btn-story-info{
       float: right;
       background-color: white;
@@ -498,20 +514,40 @@ $node-color-12: #e0deda;
       }
     }
 
-    .btn-share .icon-share{
-      @include retina-sprite( $icon-share-group );
-      display: inline-block;
-      position: relative;
-      top: 2px;
-      right: -1px;
+    .btn-fix-nodes:hover .title-unfix{
+      display: none;
+    }
+    .btn-fix-nodes.fixed:hover{
+      .title-fix{
+        display: none;
+      }
+      .title-unfix{
+        display: inline;
+      }
     }
 
-    .btn-configure .icon-configure{
-      @include retina-sprite( $icon-configuration-group );
+    .btn-share .icon-share,
+    .btn-configure .icon-configure,
+    .btn-fix-nodes .icon-fix-nodes{
       display: inline-block;
       position: relative;
       top: 2px;
       right: 0px;
+    }
+
+    .btn-share .icon-share{
+      @include retina-sprite( $icon-share-group );
+      right: -1px;
+    }
+    .btn-configure .icon-configure{
+      @include retina-sprite( $icon-configuration-group );
+    }
+    .btn-fix-nodes .icon-fix-nodes{
+      @include retina-sprite( $icon-fix-nodes-group );
+      right: 1px;
+    }
+    .btn-fix-nodes.fixed .icon-fix-nodes{
+      @include retina-sprite( $icon-fix-nodes-fixed-group );
     }
 
     .btn-story-info{
@@ -656,7 +692,8 @@ $node-color-12: #e0deda;
     }
 
     .nodes-color-column-container,
-    .nodes-size-column-container{
+    .nodes-size-column-container,
+    .relations-width-column-container{
       margin-top: $grid-gutter-width/3;
     }
 
@@ -699,7 +736,7 @@ $node-color-12: #e0deda;
     }
 
     .panel-body{
-      padding: 0 $grid-gutter-width/2 $grid-gutter-width/3 $grid-gutter-width/6;
+      padding: 0 $grid-gutter-width/2 $grid-gutter-width/6 $grid-gutter-width/6;
     }
 
     &.collapsed{
@@ -787,9 +824,10 @@ $node-color-12: #e0deda;
     }
     .visualization-graph-legend-color{
       margin-left: 0;
+      margin-right: 0;
     }
     .visualization-graph-legend-color.qualitative {
-      padding-left: 96px;
+      padding-left: 126px;
     }
   }
 
@@ -881,6 +919,18 @@ $node-color-12: #e0deda;
   }
 }
 
+.visualization-graph-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.visualizations.edit .visualization-graph .visualization-graph-legend{
+  bottom: $grid-gutter-width/6;
+}
+
 .visualization-graph-info{
   position: absolute;
   top: 0;
@@ -966,7 +1016,6 @@ body.fullscreen{
 
     .visualization-graph-menu-navigation .btn.fullscreen{
       @include retina-sprite( $icon-fullscreen-back-group );
-
     }
   }
 }
@@ -1216,7 +1265,7 @@ body.fullscreen{
 
         > a{
           font-size: 0.857em;
-          line-height: 1em;
+          height: 42px;
           text-transform: uppercase;
           border: 2px solid $brand-primary;
           border-bottom: none;
@@ -1840,6 +1889,19 @@ body.pages.demo{
     font-weight: 400;
     padding: $grid-gutter-width/3 $grid-gutter-width/2;
     margin: 2*$grid-gutter-width/3 0 $grid-gutter-width/6;
+  }
+}
+
+// Nodes Fixed modal
+#nodes-fixed-modal .loading{
+  .modal-body{
+    background: url(/images/loader.gif) no-repeat center bottom white;
+    padding-bottom: $grid-gutter-width;
+    margin-bottom: $grid-gutter-width;
+  }
+
+  .modal-footer{
+    display: none;
   }
 }
 

@@ -4,15 +4,9 @@
     = render 'partials/item_graph_menu_navigation'
     = render 'partials/item_graph_menu_actions', edit: true
     = render 'partials/item_graph_panel_configuration'
-    //= render 'partials/item_graph_legend'
+    = render 'partials/item_graph_legend', edit: true
     = render 'partials/item_share_panel', item: @visualization
-    .visualization-graph-component.loading
-      %svg
-      .visualization-empty-msg
-        %p
-          = t '.empty'
-        %a{ href: '#' }
-          = t '.start_creating'
+    = render 'partials/item_graph_canvas', message: true
     = render 'partials/item_graph_info', edit: true
 = render 'partials/item_table_edit'
 = render 'partials/item_table_description_modal'
@@ -24,5 +18,6 @@
 = render 'partials/item_delete_node_modal'
 = render 'partials/item_delete_relation_modal'
 = render 'partials/network_analysis_modal'
+= render 'partials/nodes_fixed_modal'
 - if @demo
   = render 'partials/demo_steps'

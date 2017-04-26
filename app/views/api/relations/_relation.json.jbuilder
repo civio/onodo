@@ -1,4 +1,6 @@
-fields = relation.attributes.keys.map(&:to_sym) - [:custom_fields]
+json.ignore_nil!
+
+fields = relation.attributes.keys.map(&:to_sym) - [:custom_fields] - [:created_at] - [:updated_at] - [:dataset_id]
 
 json.extract! relation, *fields
 

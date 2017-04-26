@@ -1,5 +1,5 @@
 en:
-  visualizations:
-    edit:
+  partials:
+    item_graph_canvas:
       empty: This visualization is empty
       start_creating: Start creating nodes and links

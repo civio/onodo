@@ -25,32 +25,38 @@ class VisualizationBase
   parametersDefault: {
     nodesColor:             'qualitative'
     nodesColorColumn:       'node_type'
+    nodesFixed:             false
     nodesSize:              1
     nodesSizeColumn:        'relations'
     showNodesLabel:         1
     showNodesLabelComplete: 0
     showNodesImage:         1
     showLegend:             1
-    relationsCurvature:     1
+    #relationsCurvature:     1
+    relationsWidth:         0
+    relationsWidthColumn:   null
     relationsLineStyle:     0
-    linkDistance:           100
+    linkDistance:           120
     linkStrength:           -30
   }
 
   constructor: (_id) ->
     @id = _id
+    @setupData()
+    # Setup Views
+    @visualizationCanvas         = new VisualizationCanvas()
+    @visualizationLegend         = new VisualizationLegend()
+    @visualizationNavigation     = new VisualizationNavigation()
+    @visualizationActions        = new VisualizationActions {collection: @nodes}
+    @visualizationShare          = new VisualizationShare()
+    @visualizationInfo           = new VisualizationInfo()
+
+  setupData: ->
     # Setup Visualization Model
     @visualization      = new Visualization()
     # Setup Collections
     @nodes              = new NodesCollection()
     @relations          = new RelationsCollection()
-    # Setup Views
-    @visualizationCanvas         = new VisualizationCanvas()
-    @VisualizationLegend         = new VisualizationLegend()
-    @visualizationNavigation     = new VisualizationNavigation()
-    @visualizationActions        = new VisualizationActions {collection: @nodes}
-    @visualizationShare          = new VisualizationShare()
-    @visualizationInfo           = new VisualizationInfo()
 
   render: ->
     # force resize
@@ -62,7 +68,7 @@ class VisualizationBase
     @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
 
   resize: =>
-    if @visualizationCanvas and @visualizationCanvas.svg
+    if @visualizationCanvas and @visualizationCanvas.canvas
       @visualizationCanvas.resize()
 
   onSync: =>
@@ -70,33 +76,28 @@ class VisualizationBase
     @parameters = $.parseJSON @visualization.get('parameters')
     @setupParameters()
     # Setup VisualizationCanvas
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
+    @visualizationCanvas.setup @nodes, @relations, @parameters
     @visualizationCanvas.render()
-    @VisualizationLegend.setup @parameters
-    @VisualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.color_scale
-    @visualizationActions.render()
+    if @visualizationLegend
+      @visualizationLegend.setup @parameters
+      @visualizationLegend.render @visualizationCanvas.scale_nodes_size, @visualizationCanvas.scale_color
+    @visualizationNavigation.render()
+    @visualizationActions.render @parameters
     # Setup Visualization Events
     @bindVisualizationEvents()
     # Trigger synced event for Stories
     Backbone.trigger 'visualization.synced'
 
-  # Format data from nodes & relations collections for VisualizationCanvas
-  getVisualizationCanvasData: ( nodes, relations ) ->
-    data =
-      nodes:      nodes.map     (d) -> return d.attributes
-      relations:  relations.map (d) -> return d.attributes
-    # Fix relations source & target index (based on 1 instead of 0)
-    data.relations.forEach (d) ->
-      d.source = d.source_id-1
-      d.target = d.target_id-1
-    return data
-
   # Parameters methods
   setupParameters: ->
+    # setup dynamic default parameters (showNodesLabel)
+    if @nodes.length > 150
+      @parametersDefault.showNodesLabel = false
     @parameters = @parameters || {}
     # setup parameters
     @parameters.nodesColor              = @parameters.nodesColor || @parametersDefault.nodesColor
     @parameters.nodesColorColumn        = @parameters.nodesColorColumn || @parametersDefault.nodesColorColumn
+    @parameters.nodesFixed              = @parameters.nodesFixed || @parametersDefault.nodesFixed
     @parameters.nodesSize               = @parameters.nodesSize || @parametersDefault.nodesSize
     @parameters.nodesSizeColumn         = @parameters.nodesSizeColumn || @parametersDefault.nodesSizeColumn
     @parameters.showNodesLabel          = if typeof @parameters.showNodesLabel != 'undefined' then @parameters.showNodesLabel else @parametersDefault.showNodesLabel
@@ -104,6 +105,8 @@ class VisualizationBase
     @parameters.showNodesImage          = if typeof @parameters.showNodesImage != 'undefined' then @parameters.showNodesImage else @parametersDefault.showNodesImage
     @parameters.showLegend              = if typeof @parameters.showLegend != 'undefined' then @parameters.showLegend else @parametersDefault.showLegend
     @parameters.relationsCurvature      = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
+    @parameters.relationsWidth          = @parameters.relationsWidth || @parametersDefault.relationsWidth
+    @parameters.relationsWidthColumn    = @parameters.relationsWidthColumn || @parametersDefault.relationsWidthColumn
     @parameters.relationsLineStyle      = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance            = @parameters.linkDistance || @parametersDefault.linkDistance
     @parameters.linkStrength            = @parameters.linkStrength || @parametersDefault.linkStrength
@@ -154,7 +157,7 @@ class VisualizationBase
 
   # Actions Events
   onNodeSearch: (e) =>
-    @visualizationCanvas.onNodeOver e.node
+    @visualizationCanvas.focusNode e.node
     #@visualizationCanvas.centerNode e.node
 
 module.exports = VisualizationBase

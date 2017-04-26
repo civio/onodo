@@ -1,0 +1,5 @@
+es:
+  partials:
+    nodes_fixed_modal:
+      nodes_fix: Guardaremos la posición actual de cada nodo así como la nueva posición de un nodo cada vez que lo muevas para que todo el mundo pueda verlo en la posición que tú decidas.
+      nodes_unfix: Borraremos la posición de cada nodo y volveremos a activar la posición automática de los nodos. Ten en cuenta que no podrás recuperar la posición actual de los nodos.
