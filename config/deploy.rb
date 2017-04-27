@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock '3.5.0'
+lock '3.8.0'
 
 set :application, 'onodo'
 set :repo_url, 'git@github.com:civio/onodo.git'
