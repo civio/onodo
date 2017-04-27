@@ -32,7 +32,7 @@ If there's any problem installing `nokogiri` dependency in Mac OS try to run `xc
 
 Set up the database:
 
-    $ bundle exec rake db:setup
+    $ bundle exec rake db:migrate db:seed
 
 And then run the application:
 

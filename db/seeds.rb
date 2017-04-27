@@ -4,22 +4,16 @@
 ### Users
 
 admin = User.create!( name: 'Admin',
-                    email: 'admin@onodo.org', 
-                    password: 'password', 
+                    email: 'admin@onodo.org',
+                    password: 'password',
                     password_confirmation: 'password',
                     confirmed_at: DateTime.now )
 
-user = User.create!( name: 'A user', 
-                    email: 'user@example.com', 
-                    password: 'password', 
+user = User.create!( name: 'A user',
+                    email: 'user@example.com',
+                    password: 'password',
                     password_confirmation: 'password',
                     confirmed_at: DateTime.now )
-
-demo = User.create!( name: 'demo',
-                     email: 'demo@onodo.org',
-                     password: 'password',
-                     password_confirmation: 'password',
-                     confirmed_at: DateTime.now )
 
 
 ### Miles Davis Relations
@@ -29,72 +23,72 @@ milesViz = Visualization.create!( name: 'Miles Davis Relations', author: admin, 
 milesDB = Dataset.create!( visualization: milesViz )
 
 miles = Node.create!( name: 'Miles Davis',
-                          description: '', 
+                          description: '',
                           node_type: 'trumpet',
                           dataset: milesDB )
 
-bill = Node.create!( name: 'Bill Evans', 
-                          description: '', 
+bill = Node.create!( name: 'Bill Evans',
+                          description: '',
                           node_type: 'piano',
                           dataset: milesDB )
 
-herbie = Node.create!( name: 'Herbie Hancock', 
-                          description: '', 
+herbie = Node.create!( name: 'Herbie Hancock',
+                          description: '',
                           node_type: 'piano',
                           dataset: milesDB )
 
-red = Node.create!( name: 'Red Garland', 
-                          description: '', 
+red = Node.create!( name: 'Red Garland',
+                          description: '',
                           node_type: 'piano',
                           dataset: milesDB )
 
-trane = Node.create!( name: 'John Coltrane', 
-                          description: '', 
+trane = Node.create!( name: 'John Coltrane',
+                          description: '',
                           node_type: 'tenor sax',
                           dataset: milesDB)
 
-add = Node.create!( name: 'Cannonball Adderley', 
-                          description: '', 
+add = Node.create!( name: 'Cannonball Adderley',
+                          description: '',
                           node_type: 'alto sax',
                           dataset: milesDB )
 
-wayne = Node.create!( name: 'Wayne Shorter', 
-                          description: '', 
+wayne = Node.create!( name: 'Wayne Shorter',
+                          description: '',
                           node_type: 'tenor sax',
                           dataset: milesDB )
 
-kenny = Node.create!( name: 'Kenny Garret', 
-                          description: '', 
+kenny = Node.create!( name: 'Kenny Garret',
+                          description: '',
                           node_type: 'alto sax',
                           dataset: milesDB )
 
-ron = Node.create!( name: 'Ron Carter', 
-                          description: '', 
+ron = Node.create!( name: 'Ron Carter',
+                          description: '',
                           node_type: 'bass',
                           dataset: milesDB )
 
-paul = Node.create!( name: 'Paul Chambers', 
-                          description: '', 
+paul = Node.create!( name: 'Paul Chambers',
+                          description: '',
                           node_type: 'bass',
                           dataset: milesDB )
 
-dave = Node.create!( name: 'Dave Holland', 
-                          description: '', 
+dave = Node.create!( name: 'Dave Holland',
+                          description: '',
                           node_type: 'bass',
                           dataset: milesDB )
 
-jimmy = Node.create!( name: 'Jimmy Cobb', 
-                          description: '', 
+jimmy = Node.create!( name: 'Jimmy Cobb',
+                          description: '',
                           node_type: 'drums',
                           dataset: milesDB )
 
-tony = Node.create!( name: 'Tony Williams', 
-                          description: '', 
+tony = Node.create!( name: 'Tony Williams',
+                          description: '',
                           node_type: 'drums',
                           dataset: milesDB )
 
-jack = Node.create!( name: 'Jack de Johnette', 
-                          description: '', 
+jack = Node.create!( name: 'Jack de Johnette',
+                          description: '',
                           node_type: 'drums',
                           dataset: milesDB )
 
@@ -173,32 +167,32 @@ godfatherViz = Visualization.create!( name: 'The Godfather Characters',
 godfatherDB = Dataset.create!( visualization: godfatherViz )
 
 Node.create!( name: 'Anthony Corleone',
-              description: '', 
+              description: '',
               node_type: 'Corleone',
               dataset: godfatherDB )
 
-Node.create!( name: 'Carmella Corleone', 
-              description: '', 
+Node.create!( name: 'Carmella Corleone',
+              description: '',
               node_type: 'Corleone',
               dataset: godfatherDB )
 
-Node.create!( name: 'Connie Corleone', 
-              description: '', 
+Node.create!( name: 'Connie Corleone',
+              description: '',
               node_type: 'Corleone',
               dataset: godfatherDB )
 
-Node.create!( name: 'Sonny Corleone', 
-              description: '', 
+Node.create!( name: 'Sonny Corleone',
+              description: '',
               node_type: 'Corleone',
               dataset: godfatherDB )
 
-Node.create!( name: 'Michael Corleone', 
-              description: '', 
+Node.create!( name: 'Michael Corleone',
+              description: '',
               node_type: 'Corleone',
               dataset: godfatherDB )
 
-Node.create!( name: 'Fredo Corleone', 
-              description: '', 
+Node.create!( name: 'Fredo Corleone',
+              description: '',
               node_type: 'Corleone',
               dataset: godfatherDB )
 
