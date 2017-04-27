@@ -28,8 +28,13 @@
 *.map
 app-bundle.js
 
-# Ignore node modules folder and nvm version
+# Ignore tooling versions
 .nvmrc
+.node-version
+.python-version
+.ruby-version
+
+# Ignore node modules
 /node_modules
 
 # Ignore half-sizer droplet
