@@ -5,14 +5,14 @@ Onodo
 
 ### Stack
 
-* Ruby 2.2.3
-* Rails 4.2
-* Backbone.js
-* D3.js
+* Ruby 2.4.1
+* Rails 4.2.x
+* Backbone.js 1.2.2
+* D3.js 4.x
 * Handsontable
-* Webpack
-* PostgreSQL
-* Imagemagick
+* Webpack 2.x
+* PostgreSQL 9.x
+* Imagemagick 6.x
 
 ### Installation instructions
 
@@ -32,11 +32,11 @@ If there's any problem installing `nokogiri` dependency in Mac OS try to run `xc
 
 Set up the database:
 
-    $ rake db:setup
+    $ bundle exec rake db:setup
 
 And then run the application:
 
-    $ foreman start -f Procfile.dev
+    $ bundle exec foreman start -f Procfile.dev
 
 ### Network analysis installation
 
@@ -51,4 +51,4 @@ Note: there are [Ruby bindings][2] for igraph, but they haven't been updated in 
 
 ### Purge & Update DB with seed file
 
-    $ rake db:purge db:create db:migrate db:seed
+    $ bundle exec rake db:purge db:create db:migrate db:seed
