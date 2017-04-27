@@ -51,12 +51,12 @@ var config = {
   module: {
     rules: [{
       test: /\.coffee$/,
-      use: [{ 
+      use: [{
         loader: 'coffee-loader'
       }]
     }, {
       test: /\.handlebars$/,
-      use: [{ 
+      use: [{
         loader: 'handlebars-loader'
       }]
     }]
@@ -91,7 +91,7 @@ if (production) {
       'process.env': { NODE_ENV: JSON.stringify('production') }
     }),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin()
   );
 } else {
   config.devServer = {
