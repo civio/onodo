@@ -56,7 +56,7 @@ class VisualizationInfo extends Backbone.View
       str = str
         .replace(/<a\s+href=/gi, '<a target="_blank" href=')  # add target blank to links
         .replace(/&lt;iframe/g, '<iframe')                    # escape iframe tags
-        .replace(/&lt;\/iframe&gt;/g, '</iframe>')  
+        .replace(/&gt;&lt;\/iframe&gt;/g, '></iframe>')
     return str
 
   getImage: (model) ->
