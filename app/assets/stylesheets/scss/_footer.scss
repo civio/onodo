@@ -31,8 +31,8 @@
   }
   .civio-icon{
     margin-top: 20px;
-    @include retina-sprite( $icon-civio-footer-group );
-
+    background: url(/images/civio-logo.png) no-repeat 0 0 transparent;
+    //@include retina-sprite( $icon-civio-footer-group );
   }
 
   .social-icons{
