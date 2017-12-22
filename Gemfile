@@ -1,50 +1,51 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
 ruby '2.4.3'
 
-source 'https://rubygems.org'
+gem 'rails', '~> 4.2.10'
 
-gem 'rails', '~> 4.2.8'
-
-gem 'sass-rails', '~> 5.0.6'
+gem 'sass-rails', '~> 5.0.7'
 gem 'bootstrap-sass', '~> 3.3.7'
-gem 'haml-rails', '~> 0.9.0'
-gem 'coffee-rails', '~> 4.2.1'
-gem 'jquery-rails', '~> 4.2.2'
+gem 'haml-rails', '~> 1.0'
+gem 'coffee-rails', '~> 4.2.2'
+gem 'jquery-rails', '~> 4.3.1'
 gem 'rails-backbone', '~> 1.2.0'
-gem 'webpack-rails', '~> 0.9.10'
-gem 'uglifier', '~> 3.1.9'
+gem 'webpack-rails', '~> 0.9.11'
+gem 'uglifier', '~> 4.0.2'
 
 gem 'acts_as_singleton', '~> 0.0.8'
-gem 'deep_cloneable', '~> 2.2.2'
-gem 'jbuilder', '~> 2.6.3'
-gem 'http_accept_language', '~> 2.1.0'
-gem 'responders', '~> 2.3.0'
-gem 'devise', '~> 4.2.1'
-gem 'pg', '~> 0.20.0'
-gem 'kaminari', '~> 1.0.1'
-gem 'carrierwave', '~> 1.0.0'
-gem 'mini_magick', '~> 4.6.1'
-gem 'axlsx', '~> 2.0.1'
+gem 'deep_cloneable', '~> 2.3.1'
+gem 'jbuilder', '~> 2.7.0'
+gem 'http_accept_language', '~> 2.1.1'
+gem 'responders', '~> 2.4.0'
+gem 'devise', '~> 4.3.0'
+gem 'pg', '0.20'
+gem 'kaminari', '~> 1.1.1'
+gem 'carrierwave', '~> 1.2.1'
+gem 'mini_magick', '~> 4.8.0'
+gem 'axlsx', github: 'randym/axlsx'
 gem 'roo', '~> 1.13.2'
 
-gem 'newrelic_rpm', '~> 4.0.0'
+gem 'newrelic_rpm', '~> 4.7.0.339'
 
 group :development, :test do
-  gem 'byebug', '~> 9.0.6'
-  gem 'rspec-rails', '~> 3.5.2'
+  gem 'byebug', '~> 9.1.0'
+  gem 'rspec-rails', '~> 3.7.2'
 end
 
 group :development do
-  gem 'pry-rails', '~> 0.3.5'
+  gem 'pry-rails', '~> 0.3.6'
   gem 'web-console', '~> 3.3.0'
   gem 'erb2haml', '~> 0.1.5'
-  gem 'spring', '~> 2.0.1'
-  gem 'foreman', '~> 0.83.0'
+  gem 'spring', '~> 2.0.2'
+  gem 'foreman', '~> 0.84'
 
-  gem 'capistrano', '~> 3.8.0'
+  gem 'capistrano', '~> 3.10.1'
   gem 'capistrano-nvm', '~> 0.0.7'
   gem 'capistrano-npm', '~> 1.0.2'
   gem 'capistrano-rvm', '~> 0.1.2'
-  gem 'capistrano-rails', '~> 1.2.3'
+  gem 'capistrano-rails', '~> 1.3.1'
 end
 
 group :production do
