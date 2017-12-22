@@ -46,3 +46,7 @@ group :development do
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'capistrano-rails', '~> 1.2.3'
 end
+
+group :production do
+  gem 'unicorn', '~> 5.3.1'
+end
