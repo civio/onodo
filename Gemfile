@@ -17,7 +17,6 @@ gem 'acts_as_singleton', '~> 0.0.8'
 gem 'deep_cloneable', '~> 2.2.2'
 gem 'jbuilder', '~> 2.6.3'
 gem 'http_accept_language', '~> 2.1.0'
-gem 'charlock_holmes_bundle_icu', '~> 0.6.9'
 gem 'responders', '~> 2.3.0'
 gem 'devise', '~> 4.2.1'
 gem 'pg', '~> 0.20.0'
@@ -27,11 +26,7 @@ gem 'mini_magick', '~> 4.6.1'
 gem 'axlsx', '~> 2.0.1'
 gem 'roo', '~> 1.13.2'
 
-gem 'rails_12factor', '~> 0.0.3', group: :production
 gem 'newrelic_rpm', '~> 4.0.0'
-
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.2', group: :doc
 
 group :development, :test do
   gem 'byebug', '~> 9.0.6'
