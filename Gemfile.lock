@@ -316,7 +316,7 @@ DEPENDENCIES
   webpack-rails (~> 0.9.10)
 
 RUBY VERSION
-   ruby 2.2.3p173
+   ruby 2.4.3p205
 
 BUNDLED WITH
    1.15.4

@@ -7,7 +7,7 @@ server '178.62.21.72',
     auth_methods: %w(publickey)
  }
 
-set :rvm_ruby_version, '2.4.1'
+set :rvm_ruby_version, '2.4.3'
 
 set :nvm_node, 'v6.10.2'
 set :nvm_custom_path, '/usr/local/nvm'

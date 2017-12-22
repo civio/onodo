@@ -5,7 +5,7 @@ Onodo
 
 ### Stack
 
-* Ruby 2.4.1
+* Ruby 2.4.3
 * Rails 4.2.x
 * Backbone.js 1.2.2
 * D3.js 4.x
