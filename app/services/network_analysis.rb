@@ -32,7 +32,7 @@ class NetworkAnalysis
 
     # Call the engine to calculate the metrics
     results = {}
-    column_names = nil
+    column_names = []
     python_filename = Rails.root.join('lib', 'network_analysis', 'network_metrics_onodo.py').to_s
     Open3.popen3('python', python_filename, selected_metrics) do |stdin, stdout, stderr, wait_thread|
       # Send the list of relations to the processor.
@@ -47,7 +47,7 @@ class NetworkAnalysis
       stdout.each do |line|
         values = CSV.parse_line(line.strip)
         next if values.nil? # Ignore empty lines
-        if column_names.nil?
+        if column_names.empty?
           column_names = values
         else
           values_as_dictionary = {}
@@ -58,12 +58,12 @@ class NetworkAnalysis
 
       # Output stderr messages
       stderr.each do |line|
-        $stderr.puts "Error: #{line}"
+        Rails.logger.error "Error: #{line}"
       end
     end
 
     # The first column is the node id, remove it from the metrics list
-    metrics_names = column_names[1..-1]
+    metrics_names = column_names[1..-1] || []
 
     return results, metrics_names
   end
