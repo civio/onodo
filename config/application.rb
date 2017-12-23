@@ -41,5 +41,8 @@ module RailsRectTest
     config.webpack.dev_server.enabled = false
     config.webpack.output_dir = "#{Rails.root}/public/webpack"
     config.webpack.manifest_filename = "manifest.json"
+
+    # Disable IP spoofing check
+    config.action_dispatch.ip_spoofing_check = false
   end
 end
