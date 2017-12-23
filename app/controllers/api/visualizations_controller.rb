@@ -57,8 +57,8 @@ class Api::VisualizationsController < ApiController
 
   def set_nodes_position
     # get list of nodes
-    nodes = params[:nodes]
-    
+    nodes = params[:nodes] || []
+
     nodes.each do |n|
       # update node position
       node = Node.find(n['id'])
