@@ -1,23 +1,20 @@
 class Api::NodesController < ApiController
-
-  before_action :set_node, except: [:index, :types, :create]
-  before_action :require_node_ownership!, except: [:index, :types, :create, :show]
-  before_action :require_visualization_published!, only: [:show]
+  before_action :set_node, only: [:show, :update, :destroy]
+  before_action :set_dataset, only: [:index, :types]
+  before_action :check_node_ownership!, only: [:update, :destroy]
+  before_action :check_node_access!, only: [:show]
+  before_action :check_dataset_access!, only: [:index, :types]
 
   def index
-    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
-    render json: [] and return unless (dataset.visualization.published || (dataset.visualization.author == current_user) || (dataset.visualization.author == demo_user))
-    @nodes = dataset.nodes.order(:name)
+    @nodes = @dataset.nodes.order(:name)
   end
 
   def types
-    dataset = Dataset.find_by(visualization_id: params[:visualization_id])
-    render json: [] and return unless (dataset.visualization.published || (dataset.visualization.author == current_user) || (dataset.visualization.author == demo_user))
-    @node_types = dataset.nodes
-                      .select(:node_type)
-                      .map(&:node_type)
-                      .reject(&:blank?)
-                      .uniq
+    @node_types = @dataset.nodes
+                    .select(:node_type)
+                    .map(&:node_type)
+                    .reject(&:blank?)
+                    .uniq
   end
 
   def create
@@ -39,7 +36,6 @@ class Api::NodesController < ApiController
       data = params[:node][field]
       next if data.nil?
       current_custom_fields = current_custom_fields.merge({cf["name"] => data})
-      next
     end
     params[:node][:custom_fields] = current_custom_fields
 
@@ -55,23 +51,41 @@ class Api::NodesController < ApiController
   private
 
   def set_node
-    @node = Node.find(params[:id])
+    @node = Node.find_by!(id: params[:id])
+    @visualization = @node.visualization
   end
 
-  def require_node_ownership!
-    render :show and return unless authorized
+  def set_dataset
+    @dataset = Dataset.find_by!(visualization_id: params[:visualization_id])
+    @visualization = @dataset.visualization
   end
 
-  def require_visualization_published!
-    render json: {} unless (@node.visualization.published || authorized)
+  def check_node_ownership!
+    check_node_access!
+    halt_with :show if published? && !authorized?
   end
 
-  def authorized
-    (@node.visualization.author == current_user) || (@node.visualization.author == demo_user)
+  def check_node_access!
+    halt_with json: {} unless published? || authorized?
+  end
+
+  def check_dataset_access!
+    halt_with json: [] unless published? || authorized?
+  end
+
+  def authorized?
+    (@visualization.try(:author) == current_user) || (@visualization.try(:author) == demo_user)
+  end
+
+  def published?
+    @visualization.try(:published?)
+  end
+
+  def halt_with(response)
+    render response and return
   end
 
   def node_params
     params.require(:node).permit(:name, :description, :visible, :node_type, :visualization_id, :dataset_id, :posx, :posy, :image, :image_cache, :remote_image_url, :remove_image, custom_fields: params[:node][:custom_fields].try(:keys))
   end
-
 end
