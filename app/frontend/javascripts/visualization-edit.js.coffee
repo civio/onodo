@@ -58,7 +58,7 @@ class VisualizationEdit extends VisualizationBase
     @visualizationNetworkAnalysis.id = @id
     @visualizationNetworkAnalysis.render()
     # Setup scrollbar link
-    $('.visualization-table-scrollbar a').click @scrollToEdit 
+    $('.visualization-table-scrollbar a').click @scrollToEdit
     # Setup scroll handler
     @$window.scroll @onScroll
     # Setup Table Tab Selector
@@ -194,7 +194,7 @@ class VisualizationEdit extends VisualizationBase
       @tableNodes.setSize tableHeight, @$table.offset().top
       @tableRelations.setSize tableHeight, @$table.offset().top
       @visualizationCanvas.$el.height graphHeight
-    else 
+    else
       graphHeight = windowHeight
       @visualizationCanvas.$el.height graphHeight
     super()
@@ -203,7 +203,7 @@ class VisualizationEdit extends VisualizationBase
     super()
     @setupAffix()
 
-  
+
   # Edit Auxiliar Methods
   # ---------------------
 
@@ -258,7 +258,7 @@ class VisualizationEdit extends VisualizationBase
     syncCounter = _.after 2, @onUpdatedData
     @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
     @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
-      
+
   onUpdatedData: =>
     # update tables collections
     @tableNodes.render()
@@ -295,7 +295,7 @@ class VisualizationEdit extends VisualizationBase
 
   onNodeChangeType: (node) ->
     # Update node color if nodesColor is a qualitative or quantitative scale & depends on nodes_type
-    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == 'node_type' 
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == 'node_type'
       @visualizationCanvas.updateNodesColorValue()
     # Update Panel Info description
     @updateInfoNode node
@@ -323,7 +323,7 @@ class VisualizationEdit extends VisualizationBase
   onNodeChangeCustomField: (node, value, options) ->
     field = Object.keys(node.changedAttributes())[0]
     # Update node color if nodesColor is a qualitative or quantitative scale & depends on changed field
-    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == field 
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == field
       @visualizationCanvas.updateNodesColorValue()
     # Update Panel Info description
     @updateInfoNode node
@@ -379,7 +379,7 @@ class VisualizationEdit extends VisualizationBase
     $('.visualization-graph-component').css 'margin-left', 0
 
   # Fix Node events
-  onNodesFix: (e) => 
+  onNodesFix: (e) =>
     @visualizationConfiguration.updateParameter 'nodesFixed', e.value
     if e.value
       @visualizationCanvas.fixNodes()
@@ -409,7 +409,7 @@ class VisualizationEdit extends VisualizationBase
 
   onToogleShowLegend: (e) ->
     @visualizationLegend.toggle()
-  
+
   ###
   onToogleNodesWithoutRelation: (e) ->
     @visualizationCanvas.toogleNodesWithoutRelation e.value
@@ -429,7 +429,7 @@ class VisualizationEdit extends VisualizationBase
 
   onNetworkAnalysisSuccess: (e) ->
     # Activate nodes tab
-    $('#visualization-table-selector > li > a[href=#nodes]').trigger 'click'
+    $('#visualization-table-selector > li > a[href="#nodes"]').trigger 'click'
     # Update vusalization model & nodes collection in Nodes Table
     @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
 
@@ -442,5 +442,5 @@ class VisualizationEdit extends VisualizationBase
       #@visualizationInfo.model = node
       #@visualizationInfo.render()
       @visualizationInfo.show node, @visualization.get('node_custom_fields')
-  
+
 module.exports = VisualizationEdit
