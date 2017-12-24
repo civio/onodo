@@ -50,4 +50,5 @@ end
 
 group :production do
   gem 'unicorn', '~> 5.3.1'
+  gem 'honeybadger', '~> 3.2.0'
 end
