@@ -136,6 +136,9 @@ class XlsxDatasetImporter
       Node.new(result.slice(*node_attributes))
     end
     deduplicate_nodes(nodes)
+  rescue NoMethodError => e
+    Rails.logger.error("Node columns were: #{columns}")
+    raise e
   end
 
   def create_relations
@@ -159,6 +162,9 @@ class XlsxDatasetImporter
       Relation.new(result.slice(*relation_attributes))
     end
     deduplicate_relations(relations)
+  rescue NoMethodError => e
+    Rails.logger.error("Relation columns were: #{columns}")
+    raise e
   end
 
   def deduplicate_nodes(nodes)
