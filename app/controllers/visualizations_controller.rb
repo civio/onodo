@@ -13,9 +13,9 @@ class VisualizationsController < ApplicationController
 
   # GET /visualizations/:id/embed
   def embed
-    # # Set response headers to allow iframe being embedded cross-domain
+    # Set response headers to allow iframe being embedded cross-domain
     # http://stackoverflow.com/questions/16561066/ruby-on-rails-4-app-does-not-work-in-iframe
-    response.headers['X-Frame-Options'] = 'ALLOWALL'
+    response.headers.delete('X-Frame-Options')
     render layout: 'embed'
   end
 
@@ -78,7 +78,7 @@ class VisualizationsController < ApplicationController
       redirect_to visualization_path(@visualization)
     end
   end
-  
+
   # POST /visualizations/:id/unpublish
   def unpublish
     @visualization.update_attributes(:published => false)
