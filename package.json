@@ -7,11 +7,11 @@
     "visualization",
     "network"
   ],
-  "homepage": "http://onodo.org/",
+  "homepage": "https://onodo.org/",
   "license": "AGPL-3.0",
   "author": {
     "name": "Civio",
-    "url": "http://www.civio.es/"
+    "url": "https://www.civio.es/"
   },
   "repository": {
     "type": "git",
