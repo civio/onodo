@@ -10,7 +10,7 @@ class VisualizationLegend extends Backbone.View
 
   render: ( scale_size, scale_color ) ->
 
-    if !@parameters.showLegend or ((!scale_color or scale_color.domain().length <= 1 ) and (!scale_size or scale_size.domain()[0] == scale_size.domain()[1]))
+    if !@parameters.showLegend or scale_color == null or ((!scale_color or scale_color.domain().length <= 1 ) and (!scale_size or scale_size.domain()[0] == scale_size.domain()[1]))
       @$el.hide()
       return
 
