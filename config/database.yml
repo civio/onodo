@@ -7,7 +7,8 @@
 default: &default
   adapter: postgresql
   username: onodo
-  password:
+  password: onodo
+  host: db
   pool: 5
   timeout: 5000
 

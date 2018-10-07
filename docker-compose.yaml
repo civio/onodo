@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: pipo02mix/postgres:2.0.0
+    restart: always
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bundle exec foreman start -f Procfile.dev
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
