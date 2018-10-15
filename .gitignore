@@ -53,7 +53,7 @@ app-bundle.js
 #Ignore procfile for crossbrowsing tests
 Procfile-tests.dev
 
-# Ignore half-sizer droplet
+# Ignore D3 distribution javascript bundle
 /app/frontend/javascripts/dist/d3.js
 /app/frontend/javascripts/dist/d3.js.map
 

@@ -1,0 +1,57 @@
+version: '3.2'
+
+services:
+  postgres:
+    image: postgres:alpine
+    volumes:
+      - type: volume
+        source: db_data
+        target: /var/lib/postgresql/data
+
+  onodo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        appdir: "/srv/${APP}"
+    image: onodo:latest
+    volumes:
+      - type: bind
+        source: .
+        target: "/srv/${APP}"
+        consistency: delegated
+      - type: volume
+        source: bundle
+        target: /usr/local/bundle
+      - type: volume
+        source: node_modules
+        target: "/srv/${APP}/node_modules"
+      - type: volume
+        source: dist
+        target: "/srv/${APP}/app/frontend/javascripts/dist"
+    ports:
+      - '3000:3000'
+      - '3080:3080'
+    environment:
+      - HOST
+      - MAILER_DOMAIN
+      - MAILER_USERNAME
+      - MAILER_PASSWORD
+      - MAILER_SENDER
+      - DEMO_DATA_ID
+      - NEW_RELIC_LICENSE
+      - HONEYBADGER_API_KEY
+      - ANALYTICS_ID
+      - RAILS_ENV=development
+      - SECRET_KEY_BASE=asecuretokenwouldnormallygohere
+      - DEVISE_SECRET_KEY=asecuretokenwouldnormallygohere
+      - DATABASE_URL=postgres://postgres@postgres:5432
+    command: bundle exec foreman start -f Procfile.dev
+    depends_on:
+      - postgres
+
+volumes:
+  bundle:
+  node_modules:
+  dist:
+  db_data:

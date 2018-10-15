@@ -29,6 +29,8 @@ gem 'roo', '~> 1.13.2'
 
 gem 'newrelic_rpm', '~> 4.7.0.339'
 
+gem 'activerecord-nulldb-adapter'
+
 group :development, :test do
   gem 'byebug', '~> 9.1.0'
   gem 'rspec-rails', '~> 3.7.2'

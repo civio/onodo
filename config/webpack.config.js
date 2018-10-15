@@ -5,8 +5,9 @@ var path = require('path');
 var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
 
-// must match config.webpack.dev_server.port
-var devServerPort = 3808;
+// must match those in config.webpack.dev_server namespace (see config/environments/development.rb)
+var devServerHost = '0.0.0.0';
+var devServerPort = 3080;
 
 // set TARGET=production on the environment to add asset fingerprints
 var production = process.env.TARGET === 'production';
@@ -82,7 +83,7 @@ var config = {
 
 if (production) {
   config.plugins.push(
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: { warnings: false },
       sourceMap: false
@@ -90,7 +91,6 @@ if (production) {
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify('production') }
     }),
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin()
   );
 } else {
@@ -98,7 +98,7 @@ if (production) {
     port: devServerPort,
     headers: { 'Access-Control-Allow-Origin': '*' }
   };
-  config.output.publicPath = '//localhost:' + devServerPort + '/webpack/';
+  config.output.publicPath = '//' + devServerHost + ':' + devServerPort + '/webpack/';
   // Source maps
   config.devtool = 'cheap-module-eval-source-map';
 }
