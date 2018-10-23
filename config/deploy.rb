@@ -1,10 +1,10 @@
 # config valid only for current version of Capistrano
-lock '3.5.0'
+lock '3.10.1'
 
 set :application, 'onodo'
 set :repo_url, 'git@github.com:civio/onodo.git'
 
-set :linked_dirs, fetch(:linked_dirs, []).push('public/uploads', 'node_modules')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'public/uploads', 'public/webpack', 'node_modules', 'tmp/pids', 'tmp/cache', 'tmp/sockets')
 
 before 'deploy:reverted', 'npm:install'
 

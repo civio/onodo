@@ -1,5 +1,5 @@
 es:
-  visualizations:
-    edit:
+  partials:
+    item_graph_canvas:
       empty: Esta visualización está vacía
       start_creating: Empieza a crear nodos y relaciones

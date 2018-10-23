@@ -80,6 +80,7 @@ Rails.application.routes.draw do
   get '/terms-of-service'        => 'pages#terms_of_service'
   get '/terms-of-service/modal'  => 'pages#terms_of_service_modal'
   get '/privacy-policy'          => 'pages#privacy_policy'
+  get '/tutorials'               => 'pages#documentation'
 
   get '/locale/:locale', to: 'locales#change_locale', as: :change_locale
 
@@ -90,10 +91,11 @@ Rails.application.routes.draw do
       get 'nodes/types', to: 'nodes#types'
       get 'relations', to: 'relations#index'
       get 'relations/types', to: 'relations#types'
-      post 'network-analysis', on: :member
       get 'demo-data', on: :member
       get 'clear-custom-fields', on: :member
       get 'clear-network-analysis', on: :member
+      post 'network-analysis', on: :member
+      post 'set-nodes-position', on: :member
     end
     resources :stories, only: [ :show, :create ] do
       resources :chapters, only: [ :index ]

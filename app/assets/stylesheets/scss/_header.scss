@@ -14,10 +14,11 @@
   }
 
   .navbar-header{
-    padding-bottom: $grid-gutter-width/6;
+    padding-bottom: $grid-gutter-width/2;
   }
 
   .navbar-nav{
+    text-align: center;
 
     > li > a{
       color: $text-color;
@@ -58,7 +59,7 @@
       }
     }
   }
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $grid-float-breakpoint) {
     padding-bottom: $grid-gutter-width/2;
 
     .navbar-header{
@@ -118,7 +119,7 @@
     }
   }
 
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $grid-float-breakpoint) {
     width: auto;
     padding-top: 0;
     margin-bottom: 0;
@@ -147,7 +148,7 @@
   height: 51px;
   margin-left: $grid-gutter-width/2;
   margin-right: $grid-gutter-width/2;
-  margin-bottom: $grid-gutter-width/3;
+  //margin-bottom: $grid-gutter-width/3;
 
   &:before{
     content: "";
@@ -185,9 +186,8 @@
     display: none;
     margin: 0;
   }
-  @media (min-width: $screen-sm-min) {
+  @media (min-width: $grid-float-breakpoint) {
     margin-left: 0 !important;
-    margin-bottom: 0;
   }
 }
 
@@ -226,11 +226,8 @@
         @include retina-sprite( $icon-settings-group );
       }
     }
-    .dropdown-menu {
-      margin-top: 0 !important;
-    }
   }
-  @media (max-width: $screen-sm-min - 1) {
+  @media (max-width: $grid-float-breakpoint - 1) {
     margin: 0px -15px;
     padding: 0 $grid-gutter-width/2;
     .dropdown {
@@ -255,15 +252,22 @@
           box-sizing: content-box;
           padding: 0;
           border-radius: 18%;
-          margin: 3px 0 0;
+          margin: $grid-gutter-width/6 0 0;
         }
       }
     }
     .open {
       .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        text-align: center;
+        box-shadow: none;
         li {
           a {
             padding: $grid-gutter-width/3 $grid-gutter-width/2;
+            line-height: 20px;
+            color: #777;
           }
         }
         a,
@@ -315,12 +319,13 @@
     border: none;
     padding: $grid-gutter-width $grid-gutter-width 2*$grid-gutter-width/3;
     font-weight: 300;
+    text-align: center;
 
     .contact-item{
       display: inline-block;
       vertical-align: top;
       margin-top: $grid-gutter-width/2;
-      margin-right: $grid-gutter-width;
+      margin-left: $grid-gutter-width/2;
 
       p {
         @include clearfix();

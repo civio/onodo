@@ -34,7 +34,11 @@ en:
     relationship: Link
     relationships: Links
     civio_foundation: Civio Citizen Foundation
+    demo: Guided tour
+    fix_nodes: Fix nodes
+    unfix_nodes: Unfix nodes
 
+    ok: Ok
     cancel: Cancel
     close: Close
     draft: Draft
@@ -63,11 +67,14 @@ en:
     boolean: Boolean
     previous: Previous
     next: Next
-    confirm: "Yes"
+    confirm: Yes
+    confirm_question: Are you sure?
     download: Download
     terms_of_service: Terms of service
     privacy_policy: Privacy policy
+    documentation: Tutorials
     password: Password
+    number_of_relations: Number of links
 
     cluster: Clusters
     degree: Connections

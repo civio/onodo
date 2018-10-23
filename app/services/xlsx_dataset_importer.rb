@@ -125,7 +125,7 @@ class XlsxDatasetImporter
     return unless nodes_sheet?
 
     columns = sheet_columns(nodes_sheet_name)
-    @node_custom_field_names = columns.reject{ |f| node_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
+    @node_custom_field_names = columns.reject{ |f| node_columns.any?{ |c| f =~ c }}.compact.map{ |f| f.downcase.gsub(' ', '_').to_sym }
 
     nodes = nodes_sheet.parse(header_search: columns, clean: false)[1..-1]
     nodes = nodes.map do |h|
@@ -136,13 +136,16 @@ class XlsxDatasetImporter
       Node.new(result.slice(*node_attributes))
     end
     deduplicate_nodes(nodes)
+  rescue NoMethodError => e
+    Rails.logger.error("Node columns were: #{columns}")
+    raise e
   end
 
   def create_relations
     return unless relations_sheet?
 
     columns = sheet_columns(relations_sheet_name)
-    @relation_custom_field_names = columns.reject{ |f| relation_columns.any?{ |c| f =~ c }}.map{ |f| f.downcase.gsub(' ', '_').to_sym }
+    @relation_custom_field_names = columns.reject{ |f| relation_columns.any?{ |c| f =~ c }}.compact.map{ |f| f.downcase.gsub(' ', '_').to_sym }
 
     relations = relations_sheet.parse(header_search: columns, clean: false)[1..-1]
     relations = relations.map do |h|
@@ -159,6 +162,9 @@ class XlsxDatasetImporter
       Relation.new(result.slice(*relation_attributes))
     end
     deduplicate_relations(relations)
+  rescue NoMethodError => e
+    Rails.logger.error("Relation columns were: #{columns}")
+    raise e
   end
 
   def deduplicate_nodes(nodes)

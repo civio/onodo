@@ -5,7 +5,8 @@ var path = require('path');
 var webpack = require('webpack');
 var StatsPlugin = require('stats-webpack-plugin');
 
-// must match config.webpack.dev_server.port
+// must match those in config.webpack.dev_server namespace (see config/environments/development.rb)
+var devServerHost = '0.0.0.0';
 var devServerPort = 3080;
 
 // set TARGET=production on the environment to add asset fingerprints
@@ -38,24 +39,28 @@ var config = {
   },
 
   resolve: {
-    root: path.join(__dirname, '..', 'app','frontend','javascripts'),
-    extensions: ['', '.coffee', '.js'],
+    modules: [
+      path.join(__dirname, '..', 'app','frontend','javascripts'),
+      'node_modules'
+    ],
+    extensions: ['.coffee', '.js'],
     alias: {
       'handlebars': 'handlebars/runtime.js'
     }
   },
 
   module: {
-    loaders: [
-      {
-        test:   /\.coffee$/,
+    rules: [{
+      test: /\.coffee$/,
+      use: [{
         loader: 'coffee-loader'
-      },
-      {
-        test:   /\.handlebars$/,
+      }]
+    }, {
+      test: /\.handlebars$/,
+      use: [{
         loader: 'handlebars-loader'
-      }
-    ]
+      }]
+    }]
   },
 
   plugins: [
@@ -78,7 +83,7 @@ var config = {
 
 if (production) {
   config.plugins.push(
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compressor: { warnings: false },
       sourceMap: false
@@ -86,15 +91,14 @@ if (production) {
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify('production') }
     }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin()
   );
 } else {
   config.devServer = {
     port: devServerPort,
     headers: { 'Access-Control-Allow-Origin': '*' }
   };
-  config.output.publicPath = '//localhost:' + devServerPort + '/webpack/';
+  config.output.publicPath = '//' + devServerHost + ':' + devServerPort + '/webpack/';
   // Source maps
   config.devtool = 'cheap-module-eval-source-map';
 }

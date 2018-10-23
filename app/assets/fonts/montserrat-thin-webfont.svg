@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
-<svg xmlns="http://www.w3.org/2000/svg">
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "https://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<svg xmlns="https://www.w3.org/2000/svg">
 <metadata></metadata>
 <defs>
 <font id="montserratthin" horiz-adv-x="1241" >
@@ -473,4 +473,4 @@
 <hkern g1="parenleft" 	g2="a,agrave,aacute,acircumflex,atilde,adieresis,aring,ae" 	k="20" />
 <hkern g1="guilsinglright" 	g2="J" 	k="33" />
 </font>
-</defs></svg> 
+</defs></svg>

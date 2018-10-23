@@ -7,7 +7,9 @@ server '178.62.21.72',
     auth_methods: %w(publickey)
  }
 
-set :nvm_node, 'v4.4.7'
+set :rvm_ruby_version, '2.4.3'
+
+set :nvm_node, 'v6.12.2'
 set :nvm_custom_path, '/usr/local/nvm'
 set :nvm_map_bins, fetch(:nvm_map_bins, []).push('webpack')
 

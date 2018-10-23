@@ -1,4 +1,10 @@
 VisualizationBase            = require './visualization-base.js'
+VisualizationCanvasEdit      = require './views/visualization-canvas-edit.js'
+VisualizationLegend          = require './views/visualization-legend.js'
+VisualizationNavigation      = require './views/visualization-navigation.js'
+VisualizationActions         = require './views/visualization-actions.js'
+VisualizationShare           = require './views/visualization-share.js'
+VisualizationInfo            = require './views/visualization-info.js'
 VisualizationConfiguration   = require './views/visualization-configuration.js'
 VisualizationTableNodes      = require './views/visualization-table-nodes.js'
 VisualizationTableRelations  = require './views/visualization-table-relations.js'
@@ -25,7 +31,16 @@ class VisualizationEdit extends VisualizationBase
   # ----------------------
 
   constructor: (_id) ->
-    super _id
+    @id = _id
+    @setupData()
+    # Setup Views
+    @visualizationCanvas         = new VisualizationCanvasEdit()
+    @visualizationLegend         = new VisualizationLegend()
+    @visualizationNavigation     = new VisualizationNavigation()
+    @visualizationActions        = new VisualizationActions {collection: @nodes}
+    @visualizationShare          = new VisualizationShare()
+    @visualizationInfo           = new VisualizationInfo()
+
     # Setup tables
     @tableNodes      = new VisualizationTableNodes     {model: @visualization, collection: @nodes}
     @tableRelations  = new VisualizationTableRelations {model: @visualization, collection: @relations}
@@ -43,7 +58,7 @@ class VisualizationEdit extends VisualizationBase
     @visualizationNetworkAnalysis.id = @id
     @visualizationNetworkAnalysis.render()
     # Setup scrollbar link
-    $('.visualization-table-scrollbar a').click @scrollToEdit 
+    $('.visualization-table-scrollbar a').click @scrollToEdit
     # Setup scroll handler
     @$window.scroll @onScroll
     # Setup Table Tab Selector
@@ -89,8 +104,12 @@ class VisualizationEdit extends VisualizationBase
     @visualization.on 'change:node_custom_fields', @onVisualizationChangeNodeCustomField, @
     # Add event handler for each custom_field
     if @visualization.get('node_custom_fields')
-      @visualization.get('node_custom_fields').forEach (custom_field) =>
-        @nodes.on 'change:'+custom_field.name, @onNodeChangeCustomField, @
+      @visualization.get('node_custom_fields').forEach (field) =>
+        @nodes.on 'change:'+field.name, @onNodeChangeCustomField, @
+    # Add event handler for each relation custom_field
+    if @visualization.get('relation_custom_fields')
+      @visualization.get('relation_custom_fields').forEach (field) =>
+        @relations.on 'change:'+field.name, @onRelationChangeCustomField, @
 
   unbindCollectionEvents: ->
     # Listen to Collection events (handle tables changes)
@@ -107,14 +126,20 @@ class VisualizationEdit extends VisualizationBase
     @relations.off 'change:direction'
     @relations.off 'remove'
     @visualization.off 'change:node_custom_fields'
-    # Add event handler for each custom_field
+    # Add event handler for each node custom_field
     if @visualization.get('node_custom_fields')
-      @visualization.get('node_custom_fields').forEach (custom_field) =>
-        @nodes.off 'change:'+custom_field.name
+      @visualization.get('node_custom_fields').forEach (field) =>
+        @nodes.off 'change:'+field.name
+    # Add event handler for each relation custom_field
+    if @visualization.get('relation_custom_fields')
+      @visualization.get('relation_custom_fields').forEach (field) =>
+        @relations.off 'change:'+field.name
 
   # Override bindVisualizationEvents to add config events
   bindVisualizationEvents: ->
     super()
+    # Listen to Menu Actions events
+    Backbone.on 'visualization.actions.fixNodes',                   @onNodesFix, @
     # Listen to Config Panel events
     Backbone.on 'visualization.config.updateNodesColor',            @onUpdateNodesColor, @
     Backbone.on 'visualization.config.updateNodesColorColumn',      @onUpdateNodesColorColumn, @
@@ -123,14 +148,22 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.toogleNodesLabel',            @onToogleNodesLabel, @
     Backbone.on 'visualization.config.toogleNodesLabelComplete',    @onToogleNodesLabelComplete, @
     Backbone.on 'visualization.config.toogleNodesImage',            @onToogleNodesImage, @
+    Backbone.on 'visualization.config.toogleShowLegend',            @onToogleShowLegend, @
+    ###
     Backbone.on 'visualization.config.toogleNodesWithoutRelation',  @onToogleNodesWithoutRelation, @
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
+    ###
+    Backbone.on 'visualization.config.updateRelationsWidth',        @onUpdateRelationsWidth, @
+    Backbone.on 'visualization.config.updateRelationsWidthColumn',  @onUpdateRelationsWidth, @
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
     Backbone.on 'visualization.networkanalysis.success',            @onNetworkAnalysisSuccess, @
+    Backbone.on 'visualization.canvas.fixNodesSuccess',             @onCanvasFixNodesSuccess, @
 
   unbindVisualizationEvents: ->
     super()
+    # Listen to Menu Actions events
+    Backbone.off 'visualization.actions.fixNodes'
     # Listen to Config Panel events
     Backbone.off 'visualization.config.updateNodesColor'
     Backbone.off 'visualization.config.updateNodesColorColumn'
@@ -138,11 +171,17 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.config.updateNodesSizeColumn'
     Backbone.off 'visualization.config.toogleNodesLabel'
     Backbone.off 'visualization.config.toogleNodesImage'
+    Backbone.off 'visualization.config.toogleShowLegend'
+    ###
     Backbone.off 'visualization.config.toogleNodesWithoutRelation'
     Backbone.off 'visualization.config.updateRelationsCurvature'
+    ###
+    Backbone.off 'visualization.config.updateRelationsWidth'
+    Backbone.off 'visualization.config.updateRelationsWidthColumn'
     Backbone.off 'visualization.config.updateRelationsLineStyle'
     Backbone.off 'visualization.config.updateForceLayoutParam'
     Backbone.off 'visualization.networkanalysis.success'
+    Backbone.off 'visualization.canvas.fixNodesSuccess'
 
   resize: =>
     windowHeight = $(window).height()
@@ -155,7 +194,7 @@ class VisualizationEdit extends VisualizationBase
       @tableNodes.setSize tableHeight, @$table.offset().top
       @tableRelations.setSize tableHeight, @$table.offset().top
       @visualizationCanvas.$el.height graphHeight
-    else 
+    else
       graphHeight = windowHeight
       @visualizationCanvas.$el.height graphHeight
     super()
@@ -164,7 +203,7 @@ class VisualizationEdit extends VisualizationBase
     super()
     @setupAffix()
 
-  
+
   # Edit Auxiliar Methods
   # ---------------------
 
@@ -182,7 +221,8 @@ class VisualizationEdit extends VisualizationBase
   # Scroll Event Handler
   onScroll: =>
     if @visualizationCanvas
-      @visualizationCanvas.setOffsetY @$window.scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
+      offset = @$window.scrollTop() - @mainHeaderHeight - @visualizationHeaderHeight
+      $('.visualization-graph-component').css 'margin-top', if offset > 0 then -(offset*0.5)|0 else ''
 
   # Update table on table selector change
   updateTable: (e) =>
@@ -218,18 +258,19 @@ class VisualizationEdit extends VisualizationBase
     syncCounter = _.after 2, @onUpdatedData
     @nodes.fetch          {url: '/api/visualizations/'+@id+'/nodes/',     success: syncCounter}
     @relations.fetch      {url: '/api/visualizations/'+@id+'/relations/', success: syncCounter}
-      
+
   onUpdatedData: =>
     # update tables collections
     @tableNodes.render()
     @tableRelations.render()
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
+    @visualizationCanvas.setup @nodes, @relations, @parameters
     @visualizationCanvas.render()
     @visualizationActions.updateSearchData()
     # bind events again
     @bindCollectionEvents()
     @bindVisualizationEvents()
     Backbone.trigger 'visualization.synced'
+
 
   # Events Handlers Methods
   # ---------------------
@@ -247,14 +288,14 @@ class VisualizationEdit extends VisualizationBase
   onNodeChangeName: (node) ->
     #console.log 'onNodeChangeName', node
     # Update nodes labels
-    @visualizationCanvas.updateNodesLabels()
+    @visualizationCanvas.updateNodeLabel node
     # Update Panel Info name
     @updateInfoNode node
     @visualizationActions.updateSearchData()
 
   onNodeChangeType: (node) ->
     # Update node color if nodesColor is a qualitative or quantitative scale & depends on nodes_type
-    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == 'node_type' 
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == 'node_type'
       @visualizationCanvas.updateNodesColorValue()
     # Update Panel Info description
     @updateInfoNode node
@@ -277,17 +318,21 @@ class VisualizationEdit extends VisualizationBase
 
   onNodeChangeImage: (node) ->
     #console.log 'onNodeChangeImage', node
-    @visualizationCanvas.updateImages()
-    @visualizationCanvas.updateNodes()
-    @visualizationCanvas.updateForce true
+    @visualizationCanvas.updateNodeImage node
 
   onNodeChangeCustomField: (node, value, options) ->
-    changed_custom_field =  Object.keys(node.changedAttributes())[0]
-    # Update node color if nodesColor is a qualitative or quantitative scale & depends on changed custom_field
-    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == changed_custom_field 
+    field = Object.keys(node.changedAttributes())[0]
+    # Update node color if nodesColor is a qualitative or quantitative scale & depends on changed field
+    if (@parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative') and @parameters.nodesColorColumn == field
       @visualizationCanvas.updateNodesColorValue()
     # Update Panel Info description
     @updateInfoNode node
+
+  onRelationChangeCustomField: (node, value, options) ->
+    field = Object.keys(node.changedAttributes())[0]
+    # Update relations width if relationsWidth is 1 & depends on changed field
+    if @parameters.relationsWidth == 1 and @parameters.relationsWidthColumn == field
+      @visualizationCanvas.updateRelationsWidth()
 
   # When a node_custom_field is added, we add a listener to new custom_field
   onVisualizationChangeNodeCustomField: =>
@@ -310,32 +355,36 @@ class VisualizationEdit extends VisualizationBase
     #console.log 'onRelationsChange', relation
     # check if we have both source_id and target_id
     if relation.attributes.source_id and relation.attributes.target_id
-      # Remove relation if exist in graph
-      @visualizationCanvas.removeVisibleRelationData relation.attributes
-      # Add relation
-      @visualizationCanvas.addRelation relation.attributes
+      # Update relation node
+      @visualizationCanvas.updateRelationNode relation.attributes
 
   onRelationsChangeType: (relation) ->
     #console.log 'onRelationsChangeType', relation
-    @visualizationCanvas.updateRelationsLabelsData()
+    @visualizationCanvas.updateRelationsLabelsData relation.attributes
 
   onRelationsChangeDirection: (relation) ->
-    @visualizationCanvas.updateRelations()
-    @visualizationCanvas.updateForce true
+    @visualizationCanvas.redraw()
 
   onRelationsRemove: (relation) ->
     @visualizationCanvas.removeRelation relation.attributes
 
-
   # Panel Events
   onPanelConfigureShow: =>
-    $('html, body').animate { scrollTop: 0 }, 600
+    $('html, body').animate { scrollTop: 0 }, 400
     @visualizationConfiguration.$el.addClass 'active'
-    @visualizationCanvas.setOffsetX 200 # half the width of Panel Configuration
+    $('.visualization-graph-component').css 'margin-left', -200
 
   onPanelConfigureHide: =>
     @visualizationConfiguration.$el.removeClass 'active'
-    @visualizationCanvas.setOffsetX 0
+    $('.visualization-graph-component').css 'margin-left', 0
+
+  # Fix Node events
+  onNodesFix: (e) =>
+    @visualizationConfiguration.updateParameter 'nodesFixed', e.value
+    if e.value
+      @visualizationCanvas.fixNodes()
+    else
+      @visualizationCanvas.unfixNodes()
 
   onUpdateNodesColor: (e) ->
     @visualizationCanvas.updateNodesColor e.value
@@ -350,31 +399,42 @@ class VisualizationEdit extends VisualizationBase
     @visualizationCanvas.updateNodesSizeColumn e.value
 
   onToogleNodesLabel: (e) ->
-    @visualizationCanvas.toogleNodesLabel e.value
+    @visualizationCanvas.redraw()
 
   onToogleNodesLabelComplete: (e) ->
-    @visualizationCanvas.toogleNodesLabelComplete e.value
+    @visualizationCanvas.redraw()
 
   onToogleNodesImage: (e) ->
     @visualizationCanvas.toogleNodesImage e.value
-  
+
+  onToogleShowLegend: (e) ->
+    @visualizationLegend.toggle()
+
+  ###
   onToogleNodesWithoutRelation: (e) ->
     @visualizationCanvas.toogleNodesWithoutRelation e.value
 
   onUpdateRelationsCurvature: (e) ->
     @visualizationCanvas.updateRelationsCurvature e.value
+  ###
+
+  onUpdateRelationsWidth: (e) ->
+    @visualizationCanvas.updateRelationsWidth()
 
   onUpdateRelationsLineStyle: (e) ->
-    @visualizationCanvas.updateRelationsLineStyle e.value
+    @visualizationCanvas.redraw()
 
   onUpdateForceLayoutParam: (e) ->
     @visualizationCanvas.updateForceLayoutParameter e.name, e.value
 
   onNetworkAnalysisSuccess: (e) ->
     # Activate nodes tab
-    $('#visualization-table-selector > li > a[href=#nodes]').trigger 'click'
+    $('#visualization-table-selector > li > a[href="#nodes"]').trigger 'click'
     # Update vusalization model & nodes collection in Nodes Table
     @tableNodes.addNetworkAnalysisColumns e.visualization, e.nodes
+
+  onCanvasFixNodesSuccess: (e) ->
+    @visualizationActions.hideModal()
 
   # Auxiliar Info Node method
   updateInfoNode: (node) ->
@@ -382,5 +442,5 @@ class VisualizationEdit extends VisualizationBase
       #@visualizationInfo.model = node
       #@visualizationInfo.render()
       @visualizationInfo.show node, @visualization.get('node_custom_fields')
-  
+
 module.exports = VisualizationEdit

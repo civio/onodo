@@ -5,10 +5,8 @@
 #   gem 'sqlite3'
 #
 default: &default
-  adapter: postgresql
-  username: onodo
-  password: onodo
-  host: db
+  adapter: <%= ENV['DB_ADAPTER'] ||= 'postgresql' %>
+
   pool: 5
   timeout: 5000
 
@@ -25,6 +23,4 @@ test:
 
 production:
   <<: *default
-  username: rails
-  password: <%= ENV['APP_DATABASE_PASSWORD'] %>
-  database: onodo_production
+  url: <%= ENV['DATABASE_URL'] %>

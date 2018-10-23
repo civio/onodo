@@ -1,4 +1,4 @@
-Rails.application.configure do
+  Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -44,5 +44,11 @@ Rails.application.configure do
 
   # Webpack dev server
   config.webpack.dev_server.enabled = !ENV['DEBUG']
+  config.webpack.dev_server.host = '0.0.0.0'
   config.webpack.dev_server.port = 3080
+  config.webpack.dev_server.manifest_host = '0.0.0.0'
+  config.webpack.dev_server.manifest_port = 3080
+
+  # Web console whitelisting
+  config.web_console.whitelisted_ips = '192.168.0.0/16'
 end

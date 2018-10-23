@@ -1,2 +1,2 @@
-web: bundle exec spring rails server
-webpack: ./node_modules/.bin/webpack-dev-server --config config/webpack.config.js
+web: bundle exec spring rails server -b 0.0.0.0
+webpack: ./node_modules/.bin/webpack-dev-server --config config/webpack.config.js --host 0.0.0.0

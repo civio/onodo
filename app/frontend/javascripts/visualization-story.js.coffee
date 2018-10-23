@@ -8,9 +8,11 @@ class VisualizationStory extends Visualization
     @parameters = $.parseJSON @visualization.get('parameters')
     @setupParameters()
     # Setup VisualizationCanvas
-    @visualizationCanvas.setup @getVisualizationCanvasData(@nodes.models, @relations.models), @parameters
-    @visualizationCanvas.setOffsetX 230 # translate left half the width of Story Info panel 
-    @visualizationCanvas.render false
+    @visualizationCanvas.setup @nodes, @relations, @parameters
+    $('.visualization-graph-component').css 'margin-left', -230 # translate left half the width of Story Info panel
+    @visualizationCanvas.render()
+    @visualizationNavigation.render()
+    @visualizationActions.render @parameters
     # Setup Visualization Events
     @bindVisualizationEvents()
     # Trigger synced event for Stories
@@ -20,6 +22,6 @@ class VisualizationStory extends Visualization
   showChapter: (nodes, relations) ->
     # Update VisualizationCanvas data based on chapter nodes & relations
     @visualizationCanvas.updateData nodes, relations
-    @visualizationCanvas.render()
+    @visualizationCanvas.redraw()
 
 module.exports = VisualizationStory

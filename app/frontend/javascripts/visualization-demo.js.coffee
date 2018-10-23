@@ -26,7 +26,6 @@ class VisualizationDemo
     )
 
   addPopover: (step) ->
-
     # hide previous popup
     if @current_step > 0
       $(@steps[@current_step-1].selector).popover('hide').popover('destroy')
@@ -87,7 +86,7 @@ class VisualizationDemo
       @nodes.once 'change:description', =>
         @addNextPopover()
     else if @current_step == 13
-      $('.visualization-graph-component .nodes-cont .node').one 'click', =>
+      Backbone.once 'visualization.node.showInfo', =>
         @addNextPopover()
     else if @current_step == 14
       @nodes.once 'change:node_type', =>

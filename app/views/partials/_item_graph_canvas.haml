@@ -1,0 +1,10 @@
+.visualization-graph-component.loading
+  %canvas{ 'moz-opaque': true }
+  - if defined? @demo
+    .visualization-graph-center
+  - if defined? message
+    .visualization-empty-msg
+      %p
+        = t '.empty'
+      %a{ href: '#' }
+        = t '.start_creating'

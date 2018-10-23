@@ -38,6 +38,9 @@ $link-hover-decoration:  underline !default;
 // Tipography
 $font-family-sans-serif:   'Montserrat', Helvetica, Arial, sans-serif;
 
+// Grid System
+$grid-float-breakpoint: $screen-md-min; // Overrides grid float breakpoint
+
 // Components
 $border-radius-base:    0 !default;
 $border-radius-large:   0 !default;

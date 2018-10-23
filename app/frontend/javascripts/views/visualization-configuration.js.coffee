@@ -12,12 +12,6 @@ class VisualizationConfiguration extends Backbone.View
     @updateParameters()
     @updateNodesColorColumn()
 
-  updateNodesColorColumn: ->
-    if @parameters.nodesColor == 'quantitative' or @parameters.nodesColor == 'qualitative'
-        @$el.find('.nodes-color-column-container').removeClass 'hide'
-    else
-        @$el.find('.nodes-color-column-container').addClass 'hide'
-
   onChangeNodesColorColumn: (e) =>
     value = $(e.target).find('.active').data('value')
     if value == @parameters.nodesColorColumn
@@ -38,13 +32,21 @@ class VisualizationConfiguration extends Backbone.View
       return
     @parameters.nodesSizeColumn = value
     Backbone.trigger 'visualization.config.updateNodesSizeColumn', {value: @parameters.nodesSizeColumn}
-    @updateParameters() 
+    @updateParameters()
 
-  updateNodesSizeColumn: ->
-    if @parameters.nodesSize == 1
-        @$el.find('.nodes-size-column-container').removeClass 'hide'
-    else
-        @$el.find('.nodes-size-column-container').addClass 'hide'
+  onChangeRelationsWidth: (e) =>
+    @parameters.relationsWidth = parseInt $(e.target).find('.active').data('value')
+    Backbone.trigger 'visualization.config.updateRelationsWidth', {value: @parameters.relationsWidth}
+    @updateParameters()
+    @updateRelationsWidthColumn()
+
+  onChangeRelationsWidthColumn: (e) =>
+    value = $(e.target).find('.active').data('value')
+    if value == @parameters.relationsWidthColumn
+      return
+    @parameters.relationsWidthColumn = value
+    Backbone.trigger 'visualization.config.updateRelationsWidthColumn', {value: @parameters.relationsWidthColumn}
+    @updateParameters()
 
   onToogleNodesLabel: (e, state) =>
     @parameters.showNodesLabel = state
@@ -61,9 +63,16 @@ class VisualizationConfiguration extends Backbone.View
     Backbone.trigger 'visualization.config.toogleNodesImage', {value: @parameters.showNodesImage}
     @updateParameters()
 
+  onToogleShowLegend: (e, state) =>
+    @parameters.showLegend = state
+    Backbone.trigger 'visualization.config.toogleShowLegend', {value: @parameters.showLegend}
+    @updateParameters()
+
+  ###
   onChangeRelationsCurvature: (e) =>
     @parameters.relationsCurvature = $(e.target).val()
     Backbone.trigger 'visualization.config.updateRelationsCurvature', {value: @parameters.relationsCurvature}
+  ###
 
   onChangeRelationsLineStyle: (e) =>
     @parameters.relationsLineStyle = parseInt $(e.target).val()
@@ -91,7 +100,13 @@ class VisualizationConfiguration extends Backbone.View
     @updateParameters()
   
   updateParameters: =>
+    #console.log 'parameters', @parameters
     @model.save { parameters: JSON.stringify @parameters }, {patch: true}
+
+  updateParameter: (key, value) ->
+    #console.log 'updateParameter', key, value
+    @parameters[key] = value
+    @updateParameters()
 
   setupSliders: ->
     # Initialize sliders
@@ -119,18 +134,21 @@ class VisualizationConfiguration extends Backbone.View
     @setCustomFields()
     @updateNodesColorColumn()
     @updateNodesSizeColumn()
+    @updateRelationsWidthColumn()
 
     # Setup switches
     @$el.find('#showNodesLabel').bootstrapSwitch()
     @$el.find('#showNodesLabelComplete').bootstrapSwitch()
     @$el.find('#showNodesImage').bootstrapSwitch()
+    @$el.find('#showLegend').bootstrapSwitch()
 
     # Setup dropdown selects (nodes color, nodes color column & nodes size) & initialize it
     @$el.find('.dropdown-select .dropdown-menu li').click @onDropdownSelectChange
     @$el.find('#nodes-color .dropdown-menu li[data-value="' + @parameters.nodesColor + '"]').trigger 'click'
     @$el.find('#nodes-color-column .dropdown-menu li[data-value="' + @parameters.nodesColorColumn + '"]').trigger 'click'
     @$el.find('#nodes-size .dropdown-menu li[data-value="' + @parameters.nodesSize + '"]').trigger 'click'
-    @$el.find('#nodes-size-column .dropdown-menu li[data-value="' + @parameters.nodesSizeColumn + '"]').trigger 'click'
+    @$el.find('#relations-width .dropdown-menu li[data-value="' + @parameters.relationsWidth + '"]').trigger 'click'
+    @$el.find('#relations-width-column .dropdown-menu li[data-value="' + @parameters.relationsWidthColumn + '"]').trigger 'click'
     
     # Setup relations-line-style selectors
     @$el.find('#relations-line-style').val @parameters.relationsLineStyle
@@ -139,36 +157,50 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#showNodesLabel').bootstrapSwitch         'state', @parameters.showNodesLabel
     @$el.find('#showNodesLabelComplete').bootstrapSwitch 'state', @parameters.showNodesLabelComplete
     @$el.find('#showNodesImage').bootstrapSwitch         'state', @parameters.showNodesImage
+    @$el.find('#showLegend').bootstrapSwitch             'state', @parameters.showLegend
     
     # Setup sliders
     @setupSliders()
     @setupSlidersValues()
 
     # Visualization Styles
-    @$el.find('#nodes-color').change          @onChangeNodesColor
-    @$el.find('#nodes-color-column').change   @onChangeNodesColorColumn
-    @$el.find('#nodes-size').change           @onChangeNodesSize
-    @$el.find('#nodes-size-column').change    @onChangeNodesSizeColumn
-    @$el.find('#showNodesLabel').on           'switchChange.bootstrapSwitch', @onToogleNodesLabel
-    @$el.find('#showNodesLabelComplete').on   'switchChange.bootstrapSwitch', @onToogleNodesLabelComplete
-    @$el.find('#showNodesImage').on           'switchChange.bootstrapSwitch', @onToogleNodesImage
+    @$el.find('#nodes-color').change            @onChangeNodesColor
+    @$el.find('#nodes-color-column').change     @onChangeNodesColorColumn
+    @$el.find('#nodes-size').change             @onChangeNodesSize
+    @$el.find('#nodes-size-column').change      @onChangeNodesSizeColumn
+    @$el.find('#relations-width').change        @onChangeRelationsWidth
+    @$el.find('#relations-width-column').change @onChangeRelationsWidthColumn
+    @$el.find('#showNodesLabel').on             'switchChange.bootstrapSwitch', @onToogleNodesLabel
+    @$el.find('#showNodesLabelComplete').on     'switchChange.bootstrapSwitch', @onToogleNodesLabelComplete
+    @$el.find('#showNodesImage').on             'switchChange.bootstrapSwitch', @onToogleNodesImage
+    @$el.find('#showLegend').on                 'switchChange.bootstrapSwitch', @onToogleShowLegend
     @$el.find('#relations-line-style').change @onChangeRelationsLineStyle
     # Handle reset defaults
     @$el.find('#reset-defaults').click        @onResetDefaults
 
-    # Add new custom fields to nodes-color-column select when created
-    @model.on 'change:node_custom_fields', @onCustomFieldAdded
+    # Add new custom fields to selects when created
+    @model.on 'change:node_custom_fields', @onNodesCustomFieldAdded
+    @model.on 'change:relation_custom_fields', @onRelationsCustomFieldAdded
 
     return this
 
   setCustomFields: ->
     if @model.get('node_custom_fields')
+      str = ''
       $nodesColorColumn = @$el.find('#nodes-color-column .dropdown-menu')
       $nodesSizeColumn = @$el.find('#nodes-size-column .dropdown-menu')
       @model.get('node_custom_fields').forEach (field) =>
-        str = @getCustomFieldElement field.name
-        $nodesColorColumn.append str
-        $nodesSizeColumn.append str
+        str += @getCustomFieldElement field.name
+      $nodesColorColumn.append str
+      $nodesSizeColumn.append str
+    if @model.get('relation_custom_fields')
+      str = ''
+      $relationsWidthColumn = @$el.find('#relations-width-column .dropdown-menu')
+      @model.get('relation_custom_fields').forEach (field) =>
+        # get only numeric columns
+        if field.type == 'number'
+          str += @getCustomFieldElement field.name
+      $relationsWidthColumn.append str
 
   onDropdownSelectChange: (e) ->
     #console.log 'onDropdownSelectChange', e
@@ -185,19 +217,56 @@ class VisualizationConfiguration extends Backbone.View
     # trigger change event on dropdown-select
     $(this).parent().parent().trigger 'change'
 
-  onCustomFieldAdded: (e) =>
+  onNodesCustomFieldAdded: (e) =>
+    str = ''
     $nodesColorColumn = @$el.find('#nodes-color-column .dropdown-menu')
     $nodesSizeColumn = @$el.find('#nodes-size-column .dropdown-menu')
-    @model.get('node_custom_fields').forEach (custom_field) =>
+    @model.get('node_custom_fields').forEach (field) =>
       # if custom_field is not in dropdowns we have to add it
-      if $nodesColorColumn.find("li[data-value='" + custom_field.name + "']").length == 0
+      if $nodesColorColumn.find("li[data-value='" + field.name + "']").length == 0
         # add custom_field to nodes color & nodes size selectors
-        str = @getCustomFieldElement custom_field.name
-        $nodesColorColumn.append str
-        $nodesSizeColumn.append str
-    # reset click listener for dropdown-selects
+        str += @getCustomFieldElement field.name
+    $nodesColorColumn.append str
+    $nodesSizeColumn.append str
+    @resetDropdownsSelectChange()
+
+  onRelationsCustomFieldAdded: (e) =>
+    str = ''
+    $relationsWidthColumn = @$el.find('#relations-width-column .dropdown-menu')
+    @model.get('relation_custom_fields').forEach (field) =>
+      # if custom_field is not in dropdowns and is numeric we have to add it
+      if $relationsWidthColumn.find("li[data-value='" + field.name + "']").length == 0 and field.type == 'number'
+        str += @getCustomFieldElement field.name  
+    $relationsWidthColumn.append str
+    @resetDropdownsSelectChange()
+
+  # reset click listener for dropdown-selects
+  resetDropdownsSelectChange: ->
     @$el.find('.dropdown-select .dropdown-menu li').off 'click'
     @$el.find('.dropdown-select .dropdown-menu li').click @onDropdownSelectChange
+
+
+  # Update methods
+  # ----------------------
+
+  updateNodesColorColumn: ->
+    if @parameters.nodesColor == 'quantitative' or @parameters.nodesColor == 'qualitative'
+      @$el.find('.nodes-color-column-container').removeClass 'hide'
+    else
+      @$el.find('.nodes-color-column-container').addClass 'hide'
+
+  updateNodesSizeColumn: ->
+    if @parameters.nodesSize == 1
+      @$el.find('.nodes-size-column-container').removeClass 'hide'
+    else
+      @$el.find('.nodes-size-column-container').addClass 'hide'
+
+  updateRelationsWidthColumn: ->
+    if @parameters.relationsWidth == 1
+      @$el.find('.relations-width-column-container').removeClass 'hide'
+    else
+      @$el.find('.relations-width-column-container').addClass 'hide'
+
 
   getCustomFieldElement: (custom_field_name) ->
     return '<li data-value="'+custom_field_name+'"><p>'+custom_field_name.replace(/_+/g,' ')+'</p></li>'

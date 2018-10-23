@@ -7,6 +7,10 @@ require "capistrano/deploy"
 # Include support for console feature
 require 'capistrano/console'
 
+# Include support for Git
+require "capistrano/scm/git"
+install_plugin Capistrano::SCM::Git
+
 # Include tasks from other gems included in your Gemfile
 require 'capistrano/nvm'
 require 'capistrano/npm'
