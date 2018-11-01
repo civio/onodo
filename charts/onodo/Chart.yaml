@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Network to create graphs
+name: onodo
+version: v0.1.0

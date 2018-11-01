@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    draft: {{ default "draft-app" .Values.draft }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: {{ .Values.replicaCount }}
+  template:
+    metadata:
+      annotations:
+        buildID: {{ .Values.buildID }}
+      labels:
+        draft: {{ default "draft-app" .Values.draft }}
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command: 
+        - "/bin/sh"
+        args: 
+        - "-c" 
+        - "bundle exec foreman start -f Procfile.dev"
+        env:
+        - name: SECRET_KEY_BASE
+          value: "asecuretokenwouldnormallygohere"
+        - name: DEVISE_SECRET_KEY
+          value: "asecuretokenwouldnormallygohere"
+        - name: DATABASE_URL
+          value: "postgres://postgres@postgres:5432"
+        - name: RAILS_ENV
+          value: "production"
+        lifecycle:
+          postStart:
+            exec:
+              command: 
+              - "/bin/sh"
+              - "-c"
+              - "bundle exec rake db:create db:migrate db:seed"
+        ports:
+        - containerPort: {{ .Values.service.internalPort }}
+        - containerPort: {{ .Values.service.internalPort2 }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
