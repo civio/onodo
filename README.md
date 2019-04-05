@@ -57,7 +57,7 @@ The network analysis is done by a separate module, implemented in Python using t
 
     $ pip install python-igraph
 
-If you're developing using the provided provided Docker configuration everithing is already set up for you.
+If you're developing using the provided provided Docker configuration everything is already set up for you.
 
 Note: there are [Ruby bindings][2] for igraph, but they haven't been updated in years.
 
