@@ -33,15 +33,15 @@ And then run the application:
 
 If using Docker, make sure to build the image first:
 
-    $ docker compose build
+    $ docker-compose build
 
 Then set up the database:
 
-    $ docker compose run --rm onodo bundle exec rake db:create db:migrate db:seed
+    $ docker-compose run --rm onodo bundle exec rake db:create db:migrate db:seed
 
 And finally start the application:
 
-    $ docker compose up
+    $ docker-compose up
 
 To access the running application go to your browser and visit http://localhost:3000.
 

@@ -6,6 +6,7 @@
 #
 default: &default
   adapter: <%= ENV['DB_ADAPTER'] ||= 'postgresql' %>
+
   pool: 5
   timeout: 5000
 
