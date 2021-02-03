@@ -23,6 +23,8 @@ To install and run locally without Docker, once you've got a copy of the code fr
     $ bundle install
     $ npm install
 
+(If having trouble installing `ffi` in OS X, try [this](https://github.com/ffi/ffi/issues/611#issuecomment-694201967).)
+
 Set up the database:
 
     $ bundle exec rake db:create db:migrate db:seed
