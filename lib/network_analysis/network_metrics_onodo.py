@@ -52,7 +52,7 @@ base_node = 0
 # Read and parse the network
 g = G.Read(sys.stdin, 'ncol', directed = directed)
 if verbose:
-	print 'read network. %d nodes and %d edges' %(g.vcount(), g.ecount())
+	print('read network. %d nodes and %d edges' %(g.vcount(), g.ecount()))
 
 # Calculate metrics, and generate output header
 output = 'node'
@@ -133,4 +133,4 @@ for v in range(g.vcount()):
 	output += '\n'
 
 # Show results on screen
-print output
+print(output)
