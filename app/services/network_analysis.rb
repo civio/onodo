@@ -38,6 +38,9 @@ class NetworkAnalysis
       # Send the list of relations to the processor.
       # One line per relation, two node ids separated with a space.
       @relations.each do |relation|
+        # Ignore incomplete relations
+        next if relation.source_id.nil? or relation.target_id.nil?
+
         stdin.puts "#{relation.source_id} #{relation.target_id}"
       end
       stdin.close
