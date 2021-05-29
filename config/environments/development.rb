@@ -50,5 +50,5 @@ Rails.application.configure do
   config.webpack.dev_server.manifest_port = 3080
 
   # Web console whitelisting
-  config.web_console.whitelisted_ips = '192.168.0.0/16'
+  config.web_console.whitelisted_ips = ['192.168.0.0/16', '172.0.0.0/8']
 end
