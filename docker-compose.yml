@@ -3,6 +3,8 @@ version: '3.2'
 services:
   postgres:
     image: postgres:alpine
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - type: volume
         source: db_data
@@ -13,22 +15,22 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        appdir: "/srv/${APP}"
+        appdir: "/srv/onodo"
     image: onodo:latest
     volumes:
       - type: bind
         source: .
-        target: "/srv/${APP}"
+        target: "/srv/onodo"
         consistency: delegated
       - type: volume
         source: bundle
         target: /usr/local/bundle
       - type: volume
         source: node_modules
-        target: "/srv/${APP}/node_modules"
+        target: "/srv/onodo/node_modules"
       - type: volume
         source: dist
-        target: "/srv/${APP}/app/frontend/javascripts/dist"
+        target: "/srv/onodo/app/frontend/javascripts/dist"
     ports:
       - '3000:3000'
       - '3080:3080'
