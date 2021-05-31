@@ -148,6 +148,9 @@ class VisualizationConfiguration extends Backbone.View
     @$el.find('#nodes-color-column .dropdown-menu li[data-value="' + @parameters.nodesColorColumn + '"]').trigger 'click'
     @$el.find('#nodes-size .dropdown-menu li[data-value="' + @parameters.nodesSize + '"]').trigger 'click'
     @$el.find('#relations-width .dropdown-menu li[data-value="' + @parameters.relationsWidth + '"]').trigger 'click'
+    # NEW!!
+    @$el.find('#relations-color .dropdown-menu li[data-value="' + @parameters.nodesColor + '"]').trigger 'click'
+
     @$el.find('#relations-width-column .dropdown-menu li[data-value="' + @parameters.relationsWidthColumn + '"]').trigger 'click'
     
     # Setup relations-line-style selectors

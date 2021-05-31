@@ -144,6 +144,7 @@
                 %li{ 'data-value': 1 }
                   %p
                     = t '.based_on_column'
+
         .row.relations-width-column-container
           .col-sm-6
             %p.configuration-label
@@ -156,6 +157,37 @@
                 %span.caret
               %ul.dropdown-menu
         %hr
+
+        .row
+          .col-sm-6
+            %p.configuration-label
+              = t '.relations_color'
+          .col-sm-6.text-right
+            #relations-color.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                %span.caret
+              %ul.dropdown-menu
+                %li.color-solid
+                  %p
+                    = t '.colors.solid'
+                  %ul.color-solid-selector
+                    %li.color.color-1{ 'data-value': 'solid-1' }
+                    %li.color.color-2{ 'data-value': 'solid-2' }
+                    %li.color.color-3{ 'data-value': 'solid-3' }
+                    %li.color.color-4{ 'data-value': 'solid-4' }
+                    %li.color.color-5{ 'data-value': 'solid-5' }
+                    %li.color.color-6{ 'data-value': 'solid-7' }
+                    %li.color.color-7{ 'data-value': 'solid-9' }
+                    %li.color.color-8{ 'data-value': 'solid-10' }
+                %li.color-quantitative{ 'data-value': 'quantitative' }
+                  %p
+                    = t '.colors.quantitative'
+                %li.color-qualitative{ 'data-value': 'qualitative' }
+                  %p
+                    = t '.colors.qualitative'
+        %hr
+      
         .row
           .col-sm-6
             %p.configuration-label

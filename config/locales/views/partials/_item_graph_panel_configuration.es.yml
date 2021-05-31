@@ -22,6 +22,7 @@ es:
       show_nodes_image: Imágenes de nodos
       show_legend: Mostrar leyenda
       relations_width: Ancho de líneas
+      relations_color: Color de líneas NEW!!
       no_number_columns: No hay columnas numéricas
       relations_line_style: Estilo de líneas
       line_styles:

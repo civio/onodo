@@ -691,9 +691,11 @@ $node-color-12: #e0deda;
       text-transform: capitalize;
     }
 
+    // NEW!!
     .nodes-color-column-container,
     .nodes-size-column-container,
-    .relations-width-column-container{
+    .relations-width-column-container,
+    .relations-color-column-container {
       margin-top: $grid-gutter-width/3;
     }
 
@@ -1579,7 +1581,8 @@ body.fullscreen{
     margin-bottom: 2+($grid-gutter-width/3);
   }
 
-  #nodes-color{
+  // NEW!!
+  #nodes-color, #relations-color {
 
     .color-solid p{
       cursor: auto;
