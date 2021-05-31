@@ -164,13 +164,22 @@ class VisualizationCanvas extends VisualizationCanvasBase
     else if d.disabled
       d.state = -1 # weaken state
 
+  # Old method
+  #setRelationColor: (d) ->
+    #if d.state == 0
+      #d.color = '#cccccc' # normal state
+    #else if d.state == 1
+      #d.color = '#b0b0b0' # highlighted state
+    #else
+      #d.color = '#eeeeee' # weaken state
+
   setRelationColor: (d) ->
     if d.state == 0
-      d.color = '#cccccc' # normal state
+      d.color = 'orange' # normal state
     else if d.state == 1
-      d.color = '#b0b0b0' # highlighted state
+      d.color = 'red' # highlighted state
     else
-      d.color = '#eeeeee' # weaken state
+      d.color = 'yellow' # weaken state
 
   setRelationWidth: (d) =>
     d.width = if @scale_relations_width and d[@parameters.relationsWidthColumn] then @scale_relations_width d[@parameters.relationsWidthColumn] else 1

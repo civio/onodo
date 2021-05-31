@@ -172,7 +172,8 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @updateNodesColorValue()
 
   updateNodesColorValue: =>
-    @setScaleColor()
+  # NEW!!
+    @setScaleNodesColor()
     @data_nodes_visibles.forEach (d) =>
       @setNodeFill d
       @setNodeStroke d
@@ -195,6 +196,14 @@ class VisualizationCanvasEdit extends VisualizationCanvas
     @setScaleRelationsWidth()
     @data_relations_visibles.forEach (d) =>
       @setRelationWidth d
+    @redraw()
+
+  # NEW!!
+  updateRelationsColorValue: =>
+    @setScaleRelationsColor()
+    @data_relations_visibles.forEach (d) =>
+      # @setNodeFill d
+      # @setNodeStroke d
     @redraw()
 
   toogleNodesImage: (value) =>

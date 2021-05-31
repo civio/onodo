@@ -154,6 +154,11 @@ class VisualizationEdit extends VisualizationBase
     Backbone.on 'visualization.config.updateRelationsCurvature',    @onUpdateRelationsCurvature, @
     ###
     Backbone.on 'visualization.config.updateRelationsWidth',        @onUpdateRelationsWidth, @
+
+    ## NEW!!
+    Backbone.on 'visualization.config.updateRelationsColor',        @onUpdateRelationsColor, @
+    Backbone.on 'visualization.config.updateRelationsColorColumn',  @onUpdateRelationsColorColumn, @
+
     Backbone.on 'visualization.config.updateRelationsWidthColumn',  @onUpdateRelationsWidth, @
     Backbone.on 'visualization.config.updateRelationsLineStyle',    @onUpdateRelationsLineStyle, @
     Backbone.on 'visualization.config.updateForceLayoutParam',      @onUpdateForceLayoutParam, @
@@ -177,6 +182,11 @@ class VisualizationEdit extends VisualizationBase
     Backbone.off 'visualization.config.updateRelationsCurvature'
     ###
     Backbone.off 'visualization.config.updateRelationsWidth'
+
+    # NEW!!
+    Backbone.off 'visualization.config.updateRelationsColor'
+    Backbone.off 'visualization.config.updateRelationsColorColumn'
+
     Backbone.off 'visualization.config.updateRelationsWidthColumn'
     Backbone.off 'visualization.config.updateRelationsLineStyle'
     Backbone.off 'visualization.config.updateForceLayoutParam'
@@ -333,6 +343,10 @@ class VisualizationEdit extends VisualizationBase
     # Update relations width if relationsWidth is 1 & depends on changed field
     if @parameters.relationsWidth == 1 and @parameters.relationsWidthColumn == field
       @visualizationCanvas.updateRelationsWidth()
+    # NEW!! Repito if? o se puede refactorizar?
+    # Update relations color if relationsColor is a qualitative or quantitative scale & depends on changed field
+    if (@parameters.relationsColor == 'qualitative' or @parameters.relationsColor == 'quantitative') and @parameters.relationsColorColumn == field
+      @visualizationCanvas.updateRelationsWidth()
 
   # When a node_custom_field is added, we add a listener to new custom_field
   onVisualizationChangeNodeCustomField: =>
@@ -359,7 +373,12 @@ class VisualizationEdit extends VisualizationBase
       @visualizationCanvas.updateRelationNode relation.attributes
 
   onRelationsChangeType: (relation) ->
-    #console.log 'onRelationsChangeType', relation
+    console.log 'onRelationsChangeType', relation, @parameters
+    # NEW!!
+    # Update link color if relationsColor is a qualitative or quantitative scale & depends on relations_type
+    if (@parameters.relationsColor == 'qualitative' or @parameters.relationsColor == 'quantitative') and @parameters.relationsColorColumn == 'relation_type'
+      @visualizationCanvas.updateRelationsColorValue()
+    #
     @visualizationCanvas.updateRelationsLabelsData relation.attributes
 
   onRelationsChangeDirection: (relation) ->
@@ -420,6 +439,14 @@ class VisualizationEdit extends VisualizationBase
 
   onUpdateRelationsWidth: (e) ->
     @visualizationCanvas.updateRelationsWidth()
+
+  # NEW!
+  onUpdateRelationsColor: (e) ->
+    @visualizationCanvas.updateRelationsColor e.value
+  
+  onUpdateRelationsColorColumn: (e) ->
+    @visualizationCanvas.updateRelationsColorColumn e.value
+  #
 
   onUpdateRelationsLineStyle: (e) ->
     @visualizationCanvas.redraw()

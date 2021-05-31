@@ -35,6 +35,11 @@ class VisualizationBase
     #relationsCurvature:     1
     relationsWidth:         0
     relationsWidthColumn:   null
+
+    # NEW!!
+    relationsColor:         'solid'
+    relationsColorColumn:   null
+
     relationsLineStyle:     0
     linkDistance:           120
     linkStrength:           -30
@@ -106,6 +111,11 @@ class VisualizationBase
     @parameters.showLegend              = if typeof @parameters.showLegend != 'undefined' then @parameters.showLegend else @parametersDefault.showLegend
     @parameters.relationsCurvature      = @parameters.relationsCurvature || @parametersDefault.relationsCurvature
     @parameters.relationsWidth          = @parameters.relationsWidth || @parametersDefault.relationsWidth
+   
+    # NEW!!
+    @parameters.relationsColor              = @parameters.relationsColor || @parametersDefault.relationsColor
+    @parameters.relationsColorColumn        = @parameters.relationsColorColumn || @parametersDefault.relationsColorColumn
+
     @parameters.relationsWidthColumn    = @parameters.relationsWidthColumn || @parametersDefault.relationsWidthColumn
     @parameters.relationsLineStyle      = @parameters.relationsLineStyle || @parametersDefault.relationsLineStyle
     @parameters.linkDistance            = @parameters.linkDistance || @parametersDefault.linkDistance

@@ -144,7 +144,6 @@
                 %li{ 'data-value': 1 }
                   %p
                     = t '.based_on_column'
-
         .row.relations-width-column-container
           .col-sm-6
             %p.configuration-label
@@ -186,6 +185,21 @@
                 %li.color-qualitative{ 'data-value': 'qualitative' }
                   %p
                     = t '.colors.qualitative'
+
+        .row.relations-color-column-container
+          .col-sm-6
+            %p.configuration-label
+              = t '.based_on_column'
+          .col-sm-6.text-right
+            #relations-color-column.dropdown.dropdown-select
+              %button.btn.btn-default.dropdown-toggle{ type: 'button', 'data-toggle': 'dropdown', 'role': 'button' }
+                %span.text
+                  = t 'common.type'
+                %span.caret
+              %ul.dropdown-menu
+                %li.active{ 'data-value': 'node_type' }
+                  %p
+                    = t 'common.type'
         %hr
       
         .row

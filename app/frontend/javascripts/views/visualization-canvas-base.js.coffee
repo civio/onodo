@@ -115,9 +115,16 @@ class VisualizationCanvasBase extends Backbone.View
       d.attributes.target = d.attributes.target_id-1
       @addRelationData d.attributes
     # setup color scale
-    @setScaleColor()
+
+    # NEW!!
+    #@setScaleColor()
+    @setScaleNodesColor()
     # setup relations width scale
     @setScaleRelationsWidth()
+
+    # NEW!!
+    #@setScaleRelationsColor()
+
     # Add linkindex to relations
     #@setLinkIndex()
     #console.log 'current nodes', @data_nodes
@@ -347,7 +354,9 @@ class VisualizationCanvasBase extends Backbone.View
       .domain [0, maxValue]
       .range [0, 1, 2, 3]
 
-  setScaleColor: ->
+  # NEW!! 
+  # Rename setScaleColor y setScaleNodesColor and add new setScaleRelationsColor function as well
+  setScaleNodesColor: ->
     if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
       scale_color_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
       if @parameters.nodesColor == 'qualitative' 
@@ -364,6 +373,26 @@ class VisualizationCanvasBase extends Backbone.View
         #console.log 'scale_color_domain', d3.max(scale_color_domain)
       # @scale_color = d3.scaleViridis()
       #   .domain([d3.max(scale_color_domain), 0])
+
+    # NEW!! 
+    setScaleRelationsColor: ->
+    if @parameters.nodesColor == 'qualitative' or @parameters.nodesColor == 'quantitative'
+      scale_color_domain = @data_nodes.map (d) => return d[@parameters.nodesColorColumn]
+      if @parameters.nodesColor == 'qualitative' 
+        @scale_color = d3.scaleOrdinal().range @COLOR_QUALITATIVE
+        @scale_color.domain _.uniq(scale_color_domain)
+        #console.log 'scale_color_domain', _.uniq(scale_color_domain)
+      else
+        @scale_color = d3.scaleQuantize().range @COLOR_QUANTITATIVE
+        # get max scale value avoiding undefined result
+        scale_color_max = d3.max(scale_color_domain)
+        unless scale_color_max
+          scale_color_max = 0
+        @scale_color.domain [0, scale_color_max]
+        #console.log 'scale_color_domain', d3.max(scale_color_domain)
+      # @scale_color = d3.scaleViridis()
+      #   .domain([d3.max(scale_color_domain), 0])
+
 
   setScaleRelationsWidth: ->
     if @parameters.relationsWidth == 1 and @parameters.relationsWidthColumn
