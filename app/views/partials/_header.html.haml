@@ -12,9 +12,6 @@
     #navbar.navbar-collapse.collapse
       %ul.nav.navbar-nav
         %li
-          %a{:href => "/explore", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'explore')}
-            =t 'common.explore'
-        %li
           %a{:href => "/gallery", :class => ('active' unless controller.controller_name != 'pages' or controller.action_name != 'gallery')}
             =t 'common.gallery'
         %li
