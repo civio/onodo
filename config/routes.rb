@@ -66,9 +66,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/explore'                 => 'pages#explore_visualizations'
-  get '/explore/visualizations/' => 'pages#explore_visualizations'
-  get '/explore/stories/'        => 'pages#explore_stories'
   get '/gallery'                 => 'pages#gallery'
 
   get   '/gallery/edit', to: 'galleries#edit', as: :edit_gallery
