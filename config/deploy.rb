@@ -2,7 +2,7 @@
 lock '3.10.2'
 
 set :application, 'onodo'
-set :repo_url, 'git@github.com:civio/onodo.git'
+set :repo_url, 'https://github.com/civio/onodo.git'
 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'public/uploads', 'public/webpack', 'node_modules', 'tmp/pids', 'tmp/cache', 'tmp/sockets')
 
