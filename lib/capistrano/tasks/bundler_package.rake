@@ -5,7 +5,7 @@ namespace :bundler do
       within release_path do
         with fetch(:bundle_env_variables, {}) do
           options = []
-					options << "--gemfile #{fetch(:bundle_gemfile)}" if fetch(:bundle_gemfile)
+          options << "--gemfile #{fetch(:bundle_gemfile)}" if fetch(:bundle_gemfile)
           options << "--no-prune" if fetch(:bundle_cache_noprune)
           options << "--all" if fetch(:bundle_cache_all)
           options << "--path #{fetch(:bundle_path)}" if fetch(:bundle_path)
@@ -26,6 +26,5 @@ namespace :load do
   task :defaults do
     set :bundle_cache_all, true
     set :bundle_cache_noprune, false
-    set :bundle_package_flags, '--quiet'
   end
 end
