@@ -2,7 +2,7 @@ namespace :unicorn do
   desc "Restart application server"
   task :restart do
     on roles(fetch(:unicorn_roles)) do
-      execute :service, 'onodo', 'restart'
+      execute :sudo, :service, 'onodo', 'restart'
     end
   end
 end
