@@ -44,7 +44,7 @@
     "bootstrap-datepicker": "~1.6.1",
     "bootstrap-slider": "~7.0.1",
     "bootstrap-switch": "~3.3.4",
-    "moment": "~2.13.0",
+    "moment": "~2.29.2",
     "moment-range": "~2.2.0",
     "handlebars-loader": "~1.1.4",
     "handlebars": "~4.0.5",
