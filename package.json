@@ -27,7 +27,7 @@
     "coffee-script": "^1.12.7",
     "exports-loader": "^0.6.4",
     "expose-loader": "^0.7.3",
-    "grunt": "^1.0.1",
+    "grunt": "^1.5.2",
     "grunt-spritesmith": "^6.4.0",
     "imports-loader": "^0.7.1",
     "rollup": "^0.41.5",
