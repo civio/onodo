@@ -1,7 +1,7 @@
 Onodo
 =============
 
-**[Waffle](https://waffle.io/civio/onodo)**
+## Onodo development is discontinued! The project [is now closed](https://civio.es/novedades/2024/07/08/adios-a-onodo/).
 
 ### Stack
 
